@@ -1,0 +1,24 @@
+{
+  "is-main": true,
+  "import": [
+    "moonbitlang/x/fs",
+    "moonbitlang/x/sys",
+    "Yoorkin/ArgParser",
+    "moonbitlang/yacc/lib/driver",
+    {
+      "path": "moonbitlang/yacc/lib/driver/util",
+      "value": [
+        "println_to_stderr",
+        "exit"
+      ]
+    }
+  ],
+  "link": {
+    "native": {
+      "cc": "clang",
+      "cc-flags": "-O2 .mooncakes/moonbitlang/x/fs/internal/ffi/native_stub.c"
+    }
+  },
+  "bin-name": "moonyacc",
+  "bin-target": "js"
+}

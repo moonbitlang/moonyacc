@@ -1,0 +1,14 @@
+{
+  "pre-build": [
+    {
+      "command": "node $mod_dir/boot/moonlex.js $input | moonfmt > $output",
+      "input": "lexer.mbtx",
+      "output": "lexer.mbt"
+    },
+    {
+      "command": "node $mod_dir/boot/moonyacc.js $input | moonfmt > $output",
+      "input": "parser.mbty",
+      "output": "parser.mbt"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "import": [
+    "moonbitlang/yacc/lib/driver"
+  ],
+  "link": {
+    "js": {
+      "exports": [
+        "compile",
+        "default_mode",
+        "json_cst_mode",
+        "json_cst_no_payload_mode",
+        "json_cst_json_payload_mode"
+      ]
+    }
+  }
+}

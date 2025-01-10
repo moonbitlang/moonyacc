@@ -1,0 +1,17 @@
+{
+  "import": [
+    "moonbitlang/yacc/lib/grm",
+    "moonbitlang/yacc/lib/parser",
+    "moonbitlang/yacc/lib/codegen",
+    "moonbitlang/yacc/lib/lr1",
+    {
+      "path": "moonbitlang/yacc/lib/driver/util",
+      "alias": "_driver_util",
+      "value": [
+        "println_to_stderr",
+        "exit"
+      ]
+    },
+    "moonbitlang/yacc/lib/codegen/gen_mbt"
+  ]
+}

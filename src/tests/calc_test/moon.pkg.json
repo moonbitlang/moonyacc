@@ -1,0 +1,9 @@
+{
+  "pre-build": [
+    {
+      "command": "node $mod_dir/boot/moonyacc.js $input | moonfmt > $output",
+      "input": "calc.mbty",
+      "output": "calc.mbt"
+    }
+  ]
+}

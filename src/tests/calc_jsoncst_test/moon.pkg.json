@@ -1,0 +1,9 @@
+{
+  "pre-build": [
+    {
+      "command": "node $mod_dir/boot/moonyacc.js --mode json-cst --force-token-no-payload $input | moonfmt > $output",
+      "input": "calc_jsoncst.mbty",
+      "output": "calc_jsoncst.mbt"
+    }
+  ]
+}
