@@ -592,89 +592,178 @@ pub fn codegen(
   }
 
   // yy_parse
-  output.write_string(
-    #|fn yy_parse[T](
-    #|  read_token : () -> (Token, Position, Position),
-    #|  start_pos : Position,
-    #|  start : YYState,
-    #|  return_ : (YYObj) -> T
-    #|) -> T!ParseError {
-    #|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
-    #|  let data_stack : Array[(YYObj, Position, Position)] = []
-    #|  let mut last_pos = start_pos
-    #|  let mut state = start
-    #|  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token)] = None
-    #|  let mut last_shifted_state_stack = state_stack
-    #|  while true {
-    #|    let decision = match state(EOI) {
-    #|      ReduceNoLookahead(_) | Accept as t => t
-    #|      _ => {
-    #|        match lookahead {
-    #|          Some(la) => state(la.0)
-    #|          None => {
-    #|            let (token, start_pos, end_pos) = read_token()
-    #|            let (symbol, data) = yy_input(token, start_pos, end_pos)
-    #|            lookahead = Some((symbol, (data, start_pos, end_pos), token))
-    #|            state(symbol)
-    #|          }
-    #|        }
-    #|      }
-    #|    }
-    #|    match decision {
-    #|      Accept => return return_(data_stack.unsafe_pop().0)
-    #|      Shift(next_state) => {
-    #|        guard let Some(la) = lookahead
-    #|        data_stack.push(la.1)
-    #|        state_stack = Cons(next_state, state_stack)
-    #|        last_shifted_state_stack = state_stack
-    #|        state = next_state
-    #|        last_pos = la.1.2
-    #|        let (token, start_pos, end_pos) = read_token()
-    #|        let (symbol, data) = yy_input(token, start_pos, end_pos)
-    #|        lookahead = Some((symbol, (data, start_pos, end_pos), token))
-    #|      }
-    #|      Reduce(count, symbol, action)
-    #|      | ReduceNoLookahead(count, symbol, action) => {
-    #|        loop (count, symbol, action) {
-    #|          _ => {
-    #|            let args = data_stack[data_stack.length() - count:]
-    #|            let data = action(last_pos, args)
-    #|            let (start_pos, end_pos) = if args.length() == 0 {
-    #|              (last_pos, last_pos)
-    #|            } else {
-    #|              (args[0].1, args[args.length() - 1].2)
-    #|            }
-    #|            for i in 0..<count {
-    #|              ignore(data_stack.unsafe_pop())
-    #|              state_stack = state_stack.tail()
-    #|            }
-    #|            state = state_stack.unsafe_head()
-    #|            data_stack.push((data, start_pos, end_pos))
-    #|            match state(symbol) {
-    #|              Accept => return return_(data_stack.unsafe_pop().0)
-    #|              Shift(next_state) => {
-    #|                state_stack = Cons(next_state, state_stack)
-    #|                state = next_state
-    #|              }
-    #|              Reduce(count, symbol, action)
-    #|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
-    #|              _ => panic()
-    #|            }
-    #|          }
-    #|        }
-    #|      }
-    #|      Error => {
-    #|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-    #|        error!(last_shifted_state_stack, token, (start_pos, end_pos))
-    #|      }
-    #|    }
-    #|  }
-    #|  panic()
-    #|}
-    #|
-    #|
-    ,
-  )
+  match input_mode {
+    Array =>
+      output.write_string(
+        #|fn yy_parse[T](
+        #|  tokens : Array[(Token, Position, Position)],
+        #|  start : YYState,
+        #|  return_ : (YYObj) -> T
+        #|) -> T!ParseError {
+        #|  let mut cursor = 0
+        #|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
+        #|  let data_stack : Array[(YYObj, Position, Position)] = []
+        #|  let mut last_pos = tokens[0].1
+        #|  let mut state = start
+        #|  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token)] = None
+        #|  let mut last_shifted_state_stack = state_stack
+        #|  while true {
+        #|    let decision = match state(EOI) {
+        #|      ReduceNoLookahead(_) | Accept as t => t
+        #|      _ => {
+        #|        match lookahead {
+        #|          Some(la) => state(la.0)
+        #|          None => {
+        #|            let (token, start_pos, end_pos) = tokens[cursor]
+        #|            cursor += 1
+        #|            let (symbol, data) = yy_input(token, start_pos, end_pos)
+        #|            lookahead = Some((symbol, (data, start_pos, end_pos), token))
+        #|            state(symbol)
+        #|          }
+        #|        }
+        #|      }
+        #|    }
+        #|    match decision {
+        #|      Accept => return return_(data_stack.unsafe_pop().0)
+        #|      Shift(next_state) => {
+        #|        guard let Some(la) = lookahead
+        #|        data_stack.push(la.1)
+        #|        state_stack = Cons(next_state, state_stack)
+        #|        last_shifted_state_stack = state_stack
+        #|        state = next_state
+        #|        last_pos = la.1.2
+        #|        let (token, start_pos, end_pos) = tokens[cursor]
+        #|        cursor += 1
+        #|        let (symbol, data) = yy_input(token, start_pos, end_pos)
+        #|        lookahead = Some((symbol, (data, start_pos, end_pos), token))
+        #|      }
+        #|      Reduce(count, symbol, action)
+        #|      | ReduceNoLookahead(count, symbol, action) => {
+        #|        loop (count, symbol, action) {
+        #|          _ => {
+        #|            let args = data_stack[data_stack.length() - count:]
+        #|            let data = action(last_pos, args)
+        #|            let (start_pos, end_pos) = if args.length() == 0 {
+        #|              (last_pos, last_pos)
+        #|            } else {
+        #|              (args[0].1, args[args.length() - 1].2)
+        #|            }
+        #|            for i in 0..<count {
+        #|              ignore(data_stack.unsafe_pop())
+        #|              state_stack = state_stack.tail()
+        #|            }
+        #|            state = state_stack.unsafe_head()
+        #|            data_stack.push((data, start_pos, end_pos))
+        #|            match state(symbol) {
+        #|              Accept => return return_(data_stack.unsafe_pop().0)
+        #|              Shift(next_state) => {
+        #|                state_stack = Cons(next_state, state_stack)
+        #|                state = next_state
+        #|              }
+        #|              Reduce(count, symbol, action)
+        #|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
+        #|              _ => panic()
+        #|            }
+        #|          }
+        #|        }
+        #|      }
+        #|      Error => {
+        #|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
+        #|        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        #|      }
+        #|    }
+        #|  }
+        #|  panic()
+        #|}
+        #|
+        #|
+        ,
+      )
+    Pull =>
+      output.write_string(
+        #|fn yy_parse[T](
+        #|  read_token : () -> (Token, Position, Position),
+        #|  start_pos : Position,
+        #|  start : YYState,
+        #|  return_ : (YYObj) -> T
+        #|) -> T!ParseError {
+        #|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
+        #|  let data_stack : Array[(YYObj, Position, Position)] = []
+        #|  let mut last_pos = start_pos
+        #|  let mut state = start
+        #|  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token)] = None
+        #|  let mut last_shifted_state_stack = state_stack
+        #|  while true {
+        #|    let decision = match state(EOI) {
+        #|      ReduceNoLookahead(_) | Accept as t => t
+        #|      _ => {
+        #|        match lookahead {
+        #|          Some(la) => state(la.0)
+        #|          None => {
+        #|            let (token, start_pos, end_pos) = read_token()
+        #|            let (symbol, data) = yy_input(token, start_pos, end_pos)
+        #|            lookahead = Some((symbol, (data, start_pos, end_pos), token))
+        #|            state(symbol)
+        #|          }
+        #|        }
+        #|      }
+        #|    }
+        #|    match decision {
+        #|      Accept => return return_(data_stack.unsafe_pop().0)
+        #|      Shift(next_state) => {
+        #|        guard let Some(la) = lookahead
+        #|        data_stack.push(la.1)
+        #|        state_stack = Cons(next_state, state_stack)
+        #|        last_shifted_state_stack = state_stack
+        #|        state = next_state
+        #|        last_pos = la.1.2
+        #|        let (token, start_pos, end_pos) = read_token()
+        #|        let (symbol, data) = yy_input(token, start_pos, end_pos)
+        #|        lookahead = Some((symbol, (data, start_pos, end_pos), token))
+        #|      }
+        #|      Reduce(count, symbol, action)
+        #|      | ReduceNoLookahead(count, symbol, action) => {
+        #|        loop (count, symbol, action) {
+        #|          _ => {
+        #|            let args = data_stack[data_stack.length() - count:]
+        #|            let data = action(last_pos, args)
+        #|            let (start_pos, end_pos) = if args.length() == 0 {
+        #|              (last_pos, last_pos)
+        #|            } else {
+        #|              (args[0].1, args[args.length() - 1].2)
+        #|            }
+        #|            for i in 0..<count {
+        #|              ignore(data_stack.unsafe_pop())
+        #|              state_stack = state_stack.tail()
+        #|            }
+        #|            state = state_stack.unsafe_head()
+        #|            data_stack.push((data, start_pos, end_pos))
+        #|            match state(symbol) {
+        #|              Accept => return return_(data_stack.unsafe_pop().0)
+        #|              Shift(next_state) => {
+        #|                state_stack = Cons(next_state, state_stack)
+        #|                state = next_state
+        #|              }
+        #|              Reduce(count, symbol, action)
+        #|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
+        #|              _ => panic()
+        #|            }
+        #|          }
+        #|        }
+        #|      }
+        #|      Error => {
+        #|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
+        #|        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        #|      }
+        #|    }
+        #|  }
+        #|  panic()
+        #|}
+        #|
+        #|
+        ,
+      )
+  }
   output.write_string(
     $|fn error(stack : @immut/list.T[YYState], token : Token, loc : (Position, Position)) -> Unit!ParseError {
     $|  let expected = []
@@ -745,21 +834,39 @@ pub fn codegen(
       start=0,
       end=name.length() - "_prime".length(),
     )
-    output.write_string(
-      $|pub fn \{original_name}(read_token : () -> (Token, Position, Position), start_pos : Position) -> \{nonterminal_meta(name).data_type}!ParseError {
-      $|  yy_parse!(
-      $|    read_token,
-      $|    start_pos,
-      $|    yy_state_\{start_state.num},
-      $|    fn {
-      $|      YYObj_\{esc(nonterminal_meta(name).data_type)}(result) => result
-      $|      _ => panic()
-      $|    },
-      $|  )
-      $|}
-      $|
-      ,
-    )
+    match input_mode {
+      Array =>
+        output.write_string(
+          $|pub fn \{original_name}(tokens: Array[(Token, Position, Position)]) -> \{nonterminal_meta(name).data_type}!ParseError {
+          $|  yy_parse!(
+          $|    tokens,
+          $|    yy_state_\{start_state.num},
+          $|    fn {
+          $|      YYObj_\{esc(nonterminal_meta(name).data_type)}(result) => result
+          $|      _ => panic()
+          $|    },
+          $|  )
+          $|}
+          $|
+          ,
+        )
+      Pull =>
+        output.write_string(
+          $|pub fn \{original_name}(read_token : () -> (Token, Position, Position), start_pos : Position) -> \{nonterminal_meta(name).data_type}!ParseError {
+          $|  yy_parse!(
+          $|    read_token,
+          $|    start_pos,
+          $|    yy_state_\{start_state.num},
+          $|    fn {
+          $|      YYObj_\{esc(nonterminal_meta(name).data_type)}(result) => result
+          $|      _ => panic()
+          $|    },
+          $|  )
+          $|}
+          $|
+          ,
+        )
+    }
   }
 
   // Runtime functions
