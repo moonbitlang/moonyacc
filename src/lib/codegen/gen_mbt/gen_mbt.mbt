@@ -37,7 +37,7 @@ enum CodegenDecision {
 } derive(Eq, Compare)
 
 ///|
-fn to_string(self : CodegenDecision) -> String {
+fn CodegenDecision::to_string(self : CodegenDecision) -> String {
   match self {
     Accept => "Accept"
     Shift(state_num) => "Shift(yy_state_\{state_num})"

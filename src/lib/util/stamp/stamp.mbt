@@ -22,15 +22,15 @@ pub typealias T = Stamp
 let next_stamp : Ref[Int] = { val: 0 }
 
 ///|
-let initial_stamp : Stamp = Stamp::new()
+let initial_stamp : Stamp = new()
 
 ///|
-pub fn Stamp::initial() -> Stamp {
+pub fn initial() -> Stamp {
   initial_stamp
 }
 
 ///|
-pub fn Stamp::new() -> Stamp {
+pub fn new() -> Stamp {
   let stamp = next_stamp.val
   next_stamp.val += 1
   stamp
