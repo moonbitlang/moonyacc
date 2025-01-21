@@ -92,7 +92,7 @@ pub fn iter(self : SmallIntSet) -> Iter[Int] {
 }
 
 ///|
-pub fn SmallIntSet::from_iter(iter : Iter[Int]) -> SmallIntSet {
+pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
   let mut bitmask = 0
   for key in iter {
     let word_index = key >> 5

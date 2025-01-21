@@ -85,22 +85,22 @@ test "@small_int_set.iter/multi_word" {
   inspect!(elements, content="[31, 32, 63]")
 }
 
-test "@small_int_set.SmallIntSet::from_iter/basic" {
-  let set = @small_int_set.SmallIntSet::from_iter([1, 2, 3].iter())
+test "@small_int_set.from_iter/basic" {
+  let set = @small_int_set.from_iter([1, 2, 3].iter())
   inspect!(set.contains(1), content="true")
   inspect!(set.contains(2), content="true")
   inspect!(set.contains(3), content="true")
   inspect!(set.contains(4), content="false")
 }
 
-test "@small_int_set.SmallIntSet::from_iter/empty" {
-  let set = @small_int_set.SmallIntSet::from_iter(Iter::empty())
+test "@small_int_set.from_iter/empty" {
+  let set = @small_int_set.from_iter(Iter::empty())
   inspect!(set.is_empty(), content="true")
 }
 
-test "@small_int_set.SmallIntSet::from_iter/multi_word" {
+test "@small_int_set.from_iter/multi_word" {
   // Test with numbers that span multiple words (32-bit boundaries)
-  let set = @small_int_set.SmallIntSet::from_iter([31, 32, 33, 64].iter())
+  let set = @small_int_set.from_iter([31, 32, 33, 64].iter())
   inspect!(set.contains(31), content="true")
   inspect!(set.contains(32), content="true")
   inspect!(set.contains(33), content="true")
