@@ -64,18 +64,6 @@ fn esc(code : String) -> String {
 }
 
 ///|
-pub(all) enum Mode {
-  Default
-  JsonCst(token_payload_rewrite~ : TokenPayloadRewrite?)
-}
-
-///|
-pub(all) enum TokenPayloadRewrite {
-  NoPayload
-  JsonPayload
-}
-
-///|
 pub fn codegen_tokens(
   terminals : Array[@grm.Terminal],
   terminal_meta : (String) -> @codegen.TerminalMeta,
@@ -201,7 +189,7 @@ pub fn codegen(
   output : &Logger,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
-  mode~ : Mode = Default
+  mode~ : @codegen.Mode = Default
 ) -> Unit {
   let used_runtime_funcs = @sorted_set.new()
   let { terminal_meta, nonterminal_meta, production_meta, .. } = meta

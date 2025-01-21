@@ -13,6 +13,18 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+pub(all) enum Mode {
+  Default
+  JsonCst(token_payload_rewrite~ : TokenPayloadRewrite?)
+}
+
+///|
+pub(all) enum TokenPayloadRewrite {
+  NoPayload
+  JsonPayload
+}
+
+///|
 pub(all) typealias CodeFragment = String
 
 ///|
