@@ -23,7 +23,7 @@ fn compute_first_fn[T : AbstractLookaheadSet](
   fn first(symbols : ArrayView[@grm.Symbol]) {
     match symbols {
       [] => { set: T::empty(), nullable: true }
-      [symbol, .. as rest] =>
+      [symbol, .. rest] =>
         (match symbol {
           T(t) => { set: T::singleton(Input(t)), nullable: false }
           NT(nt) =>
