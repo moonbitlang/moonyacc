@@ -1601,9 +1601,7 @@ fn yy_parse[T](
         last_shifted_state_stack = state_stack
         state = next_state
         last_pos = la.1.2
-        let (token, start_pos, end_pos) = read_token()
-        let (symbol, data) = yy_input(token, start_pos, end_pos)
-        lookahead = Some((symbol, (data, start_pos, end_pos), token))
+        lookahead = None
       }
       Reduce(count, symbol, action)
       | ReduceNoLookahead(count, symbol, action) =>
