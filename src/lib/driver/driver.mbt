@@ -26,9 +26,16 @@ pub(all) enum TokenPayloadRewrite {
 }
 
 ///|
+pub(all) enum InputMode {
+  Array
+  Pull
+}
+
+///|
 pub fn compile(
   parser_spec_str : String,
   mode~ : Mode = Default,
+  input_mode~ : InputMode = Array,
   filename~ : String,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false
@@ -486,6 +493,10 @@ pub fn compile(
         JsonCst(token_payload_rewrite=Some(NoPayload))
       JsonCst(token_payload_rewrite=Some(JsonPayload)) =>
         JsonCst(token_payload_rewrite=Some(JsonPayload))
+    },
+    input_mode=match input_mode {
+      Array => Array
+      Pull => Pull
     },
     external_tokens~,
     no_comments~,

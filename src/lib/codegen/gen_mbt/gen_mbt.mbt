@@ -189,7 +189,8 @@ pub fn codegen(
   output : &Logger,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
-  mode~ : @codegen.Mode = Default
+  mode~ : @codegen.Mode = Default,
+  input_mode~ : @codegen.InputMode = Array
 ) -> Unit {
   let used_runtime_funcs = @sorted_set.new()
   let { terminal_meta, nonterminal_meta, production_meta, .. } = meta

@@ -25,6 +25,12 @@ pub(all) enum TokenPayloadRewrite {
 }
 
 ///|
+pub(all) enum InputMode {
+  Array
+  Pull
+}
+
+///|
 pub(all) typealias CodeFragment = String
 
 ///|
