@@ -19,6 +19,7 @@ fn main {
   let output_file = @ref.new("")
   let input_file = @ref.new("")
   let mode : Ref[@driver.Mode] = @ref.new(Default)
+  let input_mode : Ref[@driver.InputMode] = @ref.new(Array)
   let external_tokens : Ref[Bool] = @ref.new(false)
   let no_comments : Ref[Bool] = @ref.new(false)
   let token_payload_rewrite : Ref[@driver.TokenPayloadRewrite?] = @ref.new(None)
@@ -40,6 +41,21 @@ fn main {
           }
         }),
         "Specify mode (default, json-cst)",
+      ),
+      (
+        "--input-mode",
+        "--input-mode",
+        String(fn(input_mode_sym) {
+          match input_mode_sym {
+            "array" => input_mode.val = Array
+            "pull" => input_mode.val = Pull
+            _ => {
+              println_to_stderr("Unsupported input mode: \{input_mode_sym}")
+              exit(1)
+            }
+          }
+        }),
+        "Specify input mode (array, pull). Default is array",
       ),
       (
         "--external-tokens",
@@ -95,6 +111,7 @@ fn main {
   let output = @driver.compile(
     parser_spec_src,
     mode~,
+    input_mode=input_mode.val,
     filename=input_file.val,
     external_tokens=external_tokens.val,
     no_comments=no_comments.val,
