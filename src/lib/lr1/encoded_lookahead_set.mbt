@@ -70,8 +70,8 @@ fn EncodedLookaheadSet::end_of_input() -> EncodedLookaheadSet {
 ///|
 fn EncodedLookaheadSet::singleton(input : Lookahead) -> EncodedLookaheadSet {
   match input {
-    Input(t) => terminal(t)
-    EndOfInput => end_of_input()
+    Input(t) => EncodedLookaheadSet::terminal(t)
+    EndOfInput => EncodedLookaheadSet::end_of_input()
   }
 }
 
