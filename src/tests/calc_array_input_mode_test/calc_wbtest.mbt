@@ -24,7 +24,6 @@ test {
     (RPAREN, 6, 7),
     (STAR, 7, 8),
     (NUMBER(0), 8, 9),
-    (EOF, 9, 10),
   ]
   let result = start!(tokens)
   assert_eq!(result, 3)

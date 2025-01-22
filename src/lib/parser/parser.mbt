@@ -114,7 +114,7 @@ pub impl Show for TokenKind with output(self, logger) {
 }
 
 ///|
-pub(all) type! ParseError {
+pub type! ParseError {
   UnexpectedToken(Token, (Position, Position), Array[TokenKind])
 }
 
