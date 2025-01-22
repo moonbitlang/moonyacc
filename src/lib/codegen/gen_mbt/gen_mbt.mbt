@@ -227,8 +227,21 @@ pub fn codegen(
 
   // ParseError
   output.write_string(
-    $|pub(all) type! ParseError {
+    $|pub type! ParseError {
     $|  UnexpectedToken(Token, (Position, Position), Array[TokenKind])
+    $|
+    ,
+  )
+  match input_mode {
+    Array =>
+      output.write_string(
+        $|  UnexpectedEndOfInput(Position, Array[TokenKind])
+        $|
+        ,
+      )
+    Pull => ()
+  }
+  output.write_string(
     $|}\{inject_derive(ParseError)}
     $|
     $|
@@ -605,7 +618,7 @@ pub fn codegen(
         #|  let data_stack : Array[(YYObj, Position, Position)] = []
         #|  let mut last_pos = tokens[0].1
         #|  let mut state = start
-        #|  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token)] = None
+        #|  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token?)] = None
         #|  let mut last_shifted_state_stack = state_stack
         #|  while true {
         #|    let decision = match state(EOI) {
@@ -614,11 +627,16 @@ pub fn codegen(
         #|        match lookahead {
         #|          Some(la) => state(la.0)
         #|          None => {
-        #|            let (token, start_pos, end_pos) = tokens[cursor]
-        #|            cursor += 1
-        #|            let (symbol, data) = yy_input(token, start_pos, end_pos)
-        #|            lookahead = Some((symbol, (data, start_pos, end_pos), token))
-        #|            state(symbol)
+        #|            if cursor < tokens.length() {
+        #|              let (token, start_pos, end_pos) = tokens[cursor]
+        #|              cursor += 1
+        #|              let (symbol, data) = yy_input(token, start_pos, end_pos)
+        #|              lookahead = Some((symbol, (data, start_pos, end_pos), Some(token)))
+        #|              state(symbol)
+        #|            } else {
+        #|              lookahead = Some((EOI, (YYObj_Void, last_pos, last_pos), None))
+        #|              state(EOI)
+        #|            }
         #|          }
         #|        }
         #|      }
@@ -759,8 +777,21 @@ pub fn codegen(
         ,
       )
   }
+  match input_mode {
+    Array =>
+      output.write_string(
+        $|fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Position, Position)) -> Unit!ParseError {
+        $|
+        ,
+      )
+    Pull =>
+      output.write_string(
+        $|fn error(stack : @immut/list.T[YYState], token : Token, loc : (Position, Position)) -> Unit!ParseError {
+        $|
+        ,
+      )
+  }
   output.write_string(
-    $|fn error(stack : @immut/list.T[YYState], token : Token, loc : (Position, Position)) -> Unit!ParseError {
     $|  let expected = []
     $|  fn try_add(symbol : YYSymbol, kind : TokenKind) {
     $|    fn go(stack : @immut/list.T[YYState]) {
@@ -815,8 +846,24 @@ pub fn codegen(
     $|
     ,
   )
+  match input_mode {
+    Array =>
+      output.write_string(
+        $|  match token {
+        $|    None => raise UnexpectedEndOfInput(loc.1, expected)
+        $|    Some(token) => raise UnexpectedToken(token, loc, expected)
+        $|  }
+        $|
+        ,
+      )
+    Pull =>
+      output.write_string(
+        $|  raise UnexpectedToken(token, loc, expected)
+        $|
+        ,
+      )
+  }
   output.write_string(
-    $|  raise UnexpectedToken(token, loc, expected)
     $|}
     $|
     $|
