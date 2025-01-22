@@ -260,14 +260,14 @@ pub fn codegen(
         data_types.add(meta.data_type)
       }
       output.write_string(
-        $|type! YYObj_Void
+        $|priv type! YYObj_Void
         $|
         $|
         ,
       )
       for data_type in data_types {
         output.write_string(
-          $|type! YYObj_\{esc(data_type)} \{data_type}
+          $|priv type! YYObj_\{esc(data_type)} \{data_type}
           $|
           $|
           ,
@@ -289,7 +289,7 @@ pub fn codegen(
     $|
     $|typealias YYAction = (Position, ArrayView[(YYObj, Position, Position)]) -> YYObj
     $|
-    $|enum YYDecision {
+    $|priv enum YYDecision {
     $|  Accept
     $|  Shift(YYState)
     $|  Reduce(Int, YYSymbol, YYAction)
@@ -303,7 +303,7 @@ pub fn codegen(
 
   // YYSymbol
   output.write_string(
-    $|enum YYSymbol {
+    $|priv enum YYSymbol {
     $|
     ,
   )
