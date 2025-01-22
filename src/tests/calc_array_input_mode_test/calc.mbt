@@ -60,10 +60,10 @@ pub(all) type! ParseError {
 typealias YYObj = Error
 
 ///|
-type! YYObj_Void
+priv type! YYObj_Void
 
 ///|
-type! YYObj_Int Int
+priv type! YYObj_Int Int
 
 ///|
 typealias YYState = (YYSymbol) -> YYDecision
@@ -72,7 +72,7 @@ typealias YYState = (YYSymbol) -> YYDecision
 typealias YYAction = (Position, ArrayView[(YYObj, Position, Position)]) -> YYObj
 
 ///|
-enum YYDecision {
+priv enum YYDecision {
   Accept
   Shift(YYState)
   Reduce(Int, YYSymbol, YYAction)
@@ -81,7 +81,7 @@ enum YYDecision {
 }
 
 ///|
-enum YYSymbol {
+priv enum YYSymbol {
   T_EOF
   T_NUMBER
   T_PLUS

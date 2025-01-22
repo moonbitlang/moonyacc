@@ -69,7 +69,7 @@ typealias YYState = (YYSymbol) -> YYDecision
 typealias YYAction = (Position, ArrayView[(YYObj, Position, Position)]) -> YYObj
 
 ///|
-enum YYDecision {
+priv enum YYDecision {
   Accept
   Shift(YYState)
   Reduce(Int, YYSymbol, YYAction)
@@ -78,7 +78,7 @@ enum YYDecision {
 }
 
 ///|
-enum YYSymbol {
+priv enum YYSymbol {
   T_EOF
   T_NUMBER
   T_PLUS

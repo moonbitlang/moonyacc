@@ -122,58 +122,58 @@ pub(all) type! ParseError {
 typealias YYObj = Error
 
 ///|
-type! YYObj_Void
+priv type! YYObj_Void
 
 ///|
-type! YYObj_Rule Rule
+priv type! YYObj_Rule Rule
 
 ///|
-type! YYObj_Code_ Code?
+priv type! YYObj_Code_ Code?
 
 ///|
-type! YYObj_Clause Clause
+priv type! YYObj_Clause Clause
 
 ///|
-type! YYObj_String String
+priv type! YYObj_String String
 
 ///|
-type! YYObj_Symbol Symbol
+priv type! YYObj_Symbol Symbol
 
 ///|
-type! YYObj_Command Command
+priv type! YYObj_Command Command
 
 ///|
-type! YYObj_Symbol_ Symbol?
+priv type! YYObj_Symbol_ Symbol?
 
 ///|
-type! YYObj_ClauseItem ClauseItem
+priv type! YYObj_ClauseItem ClauseItem
 
 ///|
-type! YYObj_ParserSpec ParserSpec
+priv type! YYObj_ParserSpec ParserSpec
 
 ///|
-type! YYObj_ClauseAction ClauseAction
+priv type! YYObj_ClauseAction ClauseAction
 
 ///|
-type! YYObj_ClauseItemSymbol ClauseItemSymbol
+priv type! YYObj_ClauseItemSymbol ClauseItemSymbol
 
 ///|
-type! YYObj__immut_list_T_Rule_ @immut/list.T[Rule]
+priv type! YYObj__immut_list_T_Rule_ @immut/list.T[Rule]
 
 ///|
-type! YYObj__immut_list_T_Clause_ @immut/list.T[Clause]
+priv type! YYObj__immut_list_T_Clause_ @immut/list.T[Clause]
 
 ///|
-type! YYObj__immut_list_T_Symbol_ @immut/list.T[Symbol]
+priv type! YYObj__immut_list_T_Symbol_ @immut/list.T[Symbol]
 
 ///|
-type! YYObj__immut_list_T_Command_ @immut/list.T[Command]
+priv type! YYObj__immut_list_T_Command_ @immut/list.T[Command]
 
 ///|
-type! YYObj__immut_list_T_ClauseItem_ @immut/list.T[ClauseItem]
+priv type! YYObj__immut_list_T_ClauseItem_ @immut/list.T[ClauseItem]
 
 ///|
-type! YYObj__String__Array_SubstItem__ (String, Array[SubstItem])
+priv type! YYObj__String__Array_SubstItem__ (String, Array[SubstItem])
 
 ///|
 typealias YYState = (YYSymbol) -> YYDecision
@@ -182,7 +182,7 @@ typealias YYState = (YYSymbol) -> YYDecision
 typealias YYAction = (Position, ArrayView[(YYObj, Position, Position)]) -> YYObj
 
 ///|
-enum YYDecision {
+priv enum YYDecision {
   Accept
   Shift(YYState)
   Reduce(Int, YYSymbol, YYAction)
@@ -191,7 +191,7 @@ enum YYDecision {
 }
 
 ///|
-enum YYSymbol {
+priv enum YYSymbol {
   T_EOF
   T_IDENT
   T_STRING
