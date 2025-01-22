@@ -3,7 +3,6 @@ pub(all) typealias Position = Int
 
 ///|
 pub(all) enum Token {
-  EOF
   NUMBER(Int)
   PLUS
   MINUS
@@ -15,7 +14,6 @@ pub(all) enum Token {
 ///|
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
-    EOF => TK_EOF
     NUMBER(_) => TK_NUMBER
     PLUS => TK_PLUS
     MINUS => TK_MINUS
@@ -27,7 +25,6 @@ pub fn Token::kind(self : Token) -> TokenKind {
 
 ///|
 pub(all) enum TokenKind {
-  TK_EOF
   TK_NUMBER
   TK_PLUS
   TK_MINUS
@@ -40,7 +37,6 @@ pub(all) enum TokenKind {
 pub impl Show for TokenKind with output(self, logger) {
   logger.write_string(
     match self {
-      TK_EOF => "EOF"
       TK_NUMBER => "NUMBER"
       TK_PLUS => "\"+\""
       TK_MINUS => "\"-\""
@@ -52,8 +48,9 @@ pub impl Show for TokenKind with output(self, logger) {
 }
 
 ///|
-pub(all) type! ParseError {
+pub type! ParseError {
   UnexpectedToken(Token, (Position, Position), Array[TokenKind])
+  UnexpectedEndOfInput(Position, Array[TokenKind])
 } derive(Show)
 
 ///|
@@ -82,7 +79,6 @@ priv enum YYDecision {
 
 ///|
 priv enum YYSymbol {
-  T_EOF
   T_NUMBER
   T_PLUS
   T_MINUS
@@ -227,7 +223,6 @@ fn yy_input(
   _end_pos : Position
 ) -> (YYSymbol, YYObj) {
   match token {
-    EOF => (T_EOF, YYObj_Void)
     NUMBER(data) => (T_NUMBER, YYObj_Int(data))
     PLUS => (T_PLUS, YYObj_Void)
     MINUS => (T_MINUS, YYObj_Void)
@@ -237,14 +232,14 @@ fn yy_input(
   }
 }
 
-// [0, start → • add EOF, $]
-// [1, add → • add PLUS factor, EOF / PLUS / MINUS]
-// [2, add → • add MINUS factor, EOF / PLUS / MINUS]
-// [3, add → • factor, EOF / PLUS / MINUS]
-// [4, factor → • factor STAR term, EOF / PLUS / MINUS / STAR]
-// [5, factor → • term, EOF / PLUS / MINUS / STAR]
-// [6, term → • NUMBER, EOF / PLUS / MINUS / STAR]
-// [7, term → • LPAREN add RPAREN, EOF / PLUS / MINUS / STAR]
+// [0, start → • add, $]
+// [1, add → • add PLUS factor, $ / PLUS / MINUS]
+// [2, add → • add MINUS factor, $ / PLUS / MINUS]
+// [3, add → • factor, $ / PLUS / MINUS]
+// [4, factor → • factor STAR term, $ / PLUS / MINUS / STAR]
+// [5, factor → • term, $ / PLUS / MINUS / STAR]
+// [6, term → • NUMBER, $ / PLUS / MINUS / STAR]
+// [7, term → • LPAREN add RPAREN, $ / PLUS / MINUS / STAR]
 // [8, start_prime → • start, $]
 ///|
 fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
@@ -272,7 +267,7 @@ fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
 // [5, factor → • term, PLUS / MINUS / STAR / RPAREN]
 // [6, term → • NUMBER, PLUS / MINUS / STAR / RPAREN]
 // [7, term → • LPAREN add RPAREN, PLUS / MINUS / STAR / RPAREN]
-// [7, term → LPAREN • add RPAREN, EOF / PLUS / MINUS / STAR / RPAREN]
+// [7, term → LPAREN • add RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -285,32 +280,32 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [6, term → NUMBER •, EOF / PLUS / MINUS / STAR / RPAREN]
+// [6, term → NUMBER •, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_term, yy_action_6)
 }
 
-// [5, factor → term •, EOF / PLUS / MINUS / STAR / RPAREN]
+// [5, factor → term •, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_factor, yy_action_5)
 }
 
-// [3, add → factor •, EOF / PLUS / MINUS / RPAREN]
-// [4, factor → factor • STAR term, EOF / PLUS / MINUS / STAR / RPAREN]
+// [3, add → factor •, $ / PLUS / MINUS / RPAREN]
+// [4, factor → factor • STAR term, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(1, NT_add, yy_action_3)
+    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(1, NT_add, yy_action_3)
     _ => Error
   }
 }
 
-// [4, factor → factor STAR • term, EOF / PLUS / MINUS / STAR / RPAREN]
-// [6, term → • NUMBER, EOF / PLUS / MINUS / STAR / RPAREN]
-// [7, term → • LPAREN add RPAREN, EOF / PLUS / MINUS / STAR / RPAREN]
+// [4, factor → factor STAR • term, $ / PLUS / MINUS / STAR / RPAREN]
+// [6, term → • NUMBER, $ / PLUS / MINUS / STAR / RPAREN]
+// [7, term → • LPAREN add RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -321,7 +316,7 @@ fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [4, factor → factor STAR term •, EOF / PLUS / MINUS / STAR / RPAREN]
+// [4, factor → factor STAR term •, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(3, NT_factor, yy_action_4)
@@ -329,7 +324,7 @@ fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
 
 // [1, add → add • PLUS factor, PLUS / MINUS / RPAREN]
 // [2, add → add • MINUS factor, PLUS / MINUS / RPAREN]
-// [7, term → LPAREN add • RPAREN, EOF / PLUS / MINUS / STAR / RPAREN]
+// [7, term → LPAREN add • RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -340,17 +335,17 @@ fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [7, term → LPAREN add RPAREN •, EOF / PLUS / MINUS / STAR / RPAREN]
+// [7, term → LPAREN add RPAREN •, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(3, NT_term, yy_action_7)
 }
 
-// [2, add → add MINUS • factor, EOF / PLUS / MINUS / RPAREN]
-// [4, factor → • factor STAR term, EOF / PLUS / MINUS / STAR / RPAREN]
-// [5, factor → • term, EOF / PLUS / MINUS / STAR / RPAREN]
-// [6, term → • NUMBER, EOF / PLUS / MINUS / STAR / RPAREN]
-// [7, term → • LPAREN add RPAREN, EOF / PLUS / MINUS / STAR / RPAREN]
+// [2, add → add MINUS • factor, $ / PLUS / MINUS / RPAREN]
+// [4, factor → • factor STAR term, $ / PLUS / MINUS / STAR / RPAREN]
+// [5, factor → • term, $ / PLUS / MINUS / STAR / RPAREN]
+// [6, term → • NUMBER, $ / PLUS / MINUS / STAR / RPAREN]
+// [7, term → • LPAREN add RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -362,22 +357,22 @@ fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [2, add → add MINUS factor •, EOF / PLUS / MINUS / RPAREN]
-// [4, factor → factor • STAR term, EOF / PLUS / MINUS / STAR / RPAREN]
+// [2, add → add MINUS factor •, $ / PLUS / MINUS / RPAREN]
+// [4, factor → factor • STAR term, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_2)
+    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(3, NT_add, yy_action_2)
     _ => Error
   }
 }
 
-// [1, add → add PLUS • factor, EOF / PLUS / MINUS / RPAREN]
-// [4, factor → • factor STAR term, EOF / PLUS / MINUS / STAR / RPAREN]
-// [5, factor → • term, EOF / PLUS / MINUS / STAR / RPAREN]
-// [6, term → • NUMBER, EOF / PLUS / MINUS / STAR / RPAREN]
-// [7, term → • LPAREN add RPAREN, EOF / PLUS / MINUS / STAR / RPAREN]
+// [1, add → add PLUS • factor, $ / PLUS / MINUS / RPAREN]
+// [4, factor → • factor STAR term, $ / PLUS / MINUS / STAR / RPAREN]
+// [5, factor → • term, $ / PLUS / MINUS / STAR / RPAREN]
+// [6, term → • NUMBER, $ / PLUS / MINUS / STAR / RPAREN]
+// [7, term → • LPAREN add RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -389,34 +384,28 @@ fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [1, add → add PLUS factor •, EOF / PLUS / MINUS / RPAREN]
-// [4, factor → factor • STAR term, EOF / PLUS / MINUS / STAR / RPAREN]
+// [1, add → add PLUS factor •, $ / PLUS / MINUS / RPAREN]
+// [4, factor → factor • STAR term, $ / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_1)
+    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(3, NT_add, yy_action_1)
     _ => Error
   }
 }
 
-// [0, start → add • EOF, $]
-// [1, add → add • PLUS factor, EOF / PLUS / MINUS]
-// [2, add → add • MINUS factor, EOF / PLUS / MINUS]
+// [0, start → add •, $]
+// [1, add → add • PLUS factor, $ / PLUS / MINUS]
+// [2, add → add • MINUS factor, $ / PLUS / MINUS]
 ///|
 fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_MINUS => Shift(yy_state_10)
     T_PLUS => Shift(yy_state_12)
-    T_EOF => Shift(yy_state_15)
+    EOI => Reduce(1, NT_start, yy_action_0)
     _ => Error
   }
-}
-
-// [0, start → add EOF •, $]
-///|
-fn yy_state_15(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_start, yy_action_0)
 }
 
 ///|
@@ -430,7 +419,7 @@ fn yy_parse[T](
   let data_stack : Array[(YYObj, Position, Position)] = []
   let mut last_pos = tokens[0].1
   let mut state = start
-  let mut lookahead : (YYSymbol, (YYObj, Position, Position), Token)? = None
+  let mut lookahead : (YYSymbol, (YYObj, Position, Position), Token?)? = None
   let mut last_shifted_state_stack = state_stack
   while true {
     let decision = match state(EOI) {
@@ -438,13 +427,19 @@ fn yy_parse[T](
       _ =>
         match lookahead {
           Some(la) => state(la.0)
-          None => {
-            let (token, start_pos, end_pos) = tokens[cursor]
-            cursor += 1
-            let (symbol, data) = yy_input(token, start_pos, end_pos)
-            lookahead = Some((symbol, (data, start_pos, end_pos), token))
-            state(symbol)
-          }
+          None =>
+            if cursor < tokens.length() {
+              let (token, start_pos, end_pos) = tokens[cursor]
+              cursor += 1
+              let (symbol, data) = yy_input(token, start_pos, end_pos)
+              lookahead = Some(
+                (symbol, (data, start_pos, end_pos), Some(token)),
+              )
+              state(symbol)
+            } else {
+              lookahead = Some((EOI, (YYObj_Void, last_pos, last_pos), None))
+              state(EOI)
+            }
         }
     }
     match decision {
@@ -500,7 +495,7 @@ fn yy_parse[T](
 ///|
 fn error(
   stack : @immut/list.T[YYState],
-  token : Token,
+  token : Token?,
   loc : (Position, Position)
 ) -> Unit!ParseError {
   let expected = []
@@ -536,7 +531,6 @@ fn error(
 
   for
     term in [
-      (T_EOF, TK_EOF),
       (T_NUMBER, TK_NUMBER),
       (T_PLUS, TK_PLUS),
       (T_MINUS, TK_MINUS),
@@ -546,7 +540,10 @@ fn error(
     ] {
     try_add(term.0, term.1)
   }
-  raise UnexpectedToken(token, loc, expected)
+  match token {
+    None => raise UnexpectedEndOfInput(loc.1, expected)
+    Some(token) => raise UnexpectedToken(token, loc, expected)
+  }
 }
 
 ///|

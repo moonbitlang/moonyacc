@@ -3,7 +3,6 @@
 %position<Int>
 %start start
 
-%token EOF
 %token<Int> NUMBER
 %token PLUS         "+"
 %token MINUS        "-"
@@ -19,7 +18,7 @@
 %%
 
 start
-  : add EOF         { $1 }
+  : add             { $1 }
   ;
 
 add
