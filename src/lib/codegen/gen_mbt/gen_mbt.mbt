@@ -186,8 +186,9 @@ pub fn codegen(
   grammar : @grm.Grammar,
   automaton : @lr1.Automaton,
   meta : @codegen.MetaProvider,
-  output : &Logger,
+  output : @logger_with_cursor.LoggerWithCursor,
   source_map_builder~ : &@codegen.SourceMapBuilder,
+  grammar_filename~ : String,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
   mode~ : @codegen.Mode = Default,
@@ -413,7 +414,26 @@ pub fn codegen(
       }
     }
     output.write_string(
-      $|  YYObj_\{esc(nonterminal_meta(production.lhs.name).data_type)}({(); \{meta.body}})
+      "  YYObj_\{esc(nonterminal_meta(production.lhs.name).data_type)}({(); ",
+    )
+    for part in meta.body {
+      let (code, utf8_pos) = part
+      output.write_string(code)
+      match utf8_pos {
+        None => ()
+        Some(original_utf8_pos) => {
+          let generated_utf8_pos = output.cursor()
+          source_map_builder.add_mapping(
+            grammar_filename,
+            original_utf8_pos,
+            generated_utf8_pos,
+            code.length(),
+          )
+        }
+      }
+    }
+    output.write_string("})")
+    output.write_string(
       $|}
       $|
       $|

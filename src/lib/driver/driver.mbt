@@ -302,62 +302,74 @@ pub fn compile(
         }
       }
 
-      let code = match mode {
+      let body : Array[(String, Int?)] = []
+      match mode {
         OnlyTokens => panic()
         Default =>
           match clause.action.code {
-            None => "()"
-            Some({ code, subst, .. }) => {
-              let new_code_buf = StringBuilder::new()
+            None => body.push(("()", None))
+            Some({ code, subst, utf8_pos }) => {
               let mut last_index = 0
               for item in subst {
-                new_code_buf.write_substring(
-                  code,
-                  last_index,
-                  item.start - last_index,
-                )
+                if item.start > last_index {
+                  body.push(
+                    (
+                      code.substring(start=last_index, end=item.start),
+                      Some(utf8_pos + last_index),
+                    ),
+                  )
+                }
                 add_binding(item.desc)
-                new_code_buf.write_string(
-                  match item.desc {
-                    Dollar(index) => "_dollar\{index}"
-                    StartPos => "_start_pos"
-                    EndPos => "_end_pos"
-                    Loc => "(_start_pos, _end_pos)"
-                    StartPosOf(arg) =>
-                      "_start_pos_of_item\{item_ident_to_index(arg)}"
-                    EndPosOf(arg) =>
-                      "_end_pos_of_item\{item_ident_to_index(arg)}"
-                    LocOf(arg) => {
-                      let index = item_ident_to_index(arg)
-                      "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
-                    }
-                    SymbolStartPos => "_symbol_start_pos"
-                    Sloc => "(_symbol_start_pos, _end_pos)"
-                  },
+                body.push(
+                  (
+                    match item.desc {
+                      Dollar(index) => "_dollar\{index}"
+                      StartPos => "_start_pos"
+                      EndPos => "_end_pos"
+                      Loc => "(_start_pos, _end_pos)"
+                      StartPosOf(arg) =>
+                        "_start_pos_of_item\{item_ident_to_index(arg)}"
+                      EndPosOf(arg) =>
+                        "_end_pos_of_item\{item_ident_to_index(arg)}"
+                      LocOf(arg) => {
+                        let index = item_ident_to_index(arg)
+                        "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
+                      }
+                      SymbolStartPos => "_symbol_start_pos"
+                      Sloc => "(_symbol_start_pos, _end_pos)"
+                    },
+                    None,
+                  ),
                 )
                 last_index = item.end
               }
               if last_index < code.length() {
-                new_code_buf.write_substring(
-                  code,
-                  last_index,
-                  code.length() - last_index,
+                body.push(
+                  (
+                    code.substring(start=last_index, end=code.length()),
+                    Some(utf8_pos + last_index),
+                  ),
                 )
               }
-              new_code_buf.to_string()
             }
           }
         JsonCst(_) => {
           add_binding(StartPos)
           add_binding(EndPos)
-          #|{
-          #|  "type": "NONTERMINAL",
-          $|  "name": "\{lhs.name}",
-          $|  "prod_num": \{production.num},
-          $|  "children": args_to_json(_args),
-          $|  "start": _start_pos.to_json(),
-          $|  "end": _end_pos.to_json(),
-          #|}
+          body.push(
+            (
+              #|{
+              #|  "type": "NONTERMINAL",
+              $|  "name": "\{lhs.name}",
+              $|  "prod_num": \{production.num},
+              $|  "children": args_to_json(_args),
+              $|  "start": _start_pos.to_json(),
+              $|  "end": _end_pos.to_json(),
+              #|}
+              ,
+              None,
+            ),
+          )
         }
       }
       match mode {
@@ -372,7 +384,7 @@ pub fn compile(
             }
           }
       }
-      production_meta_map[num] = { bindings, body: code }
+      production_meta_map[num] = { bindings, body }
     }
   }
 
@@ -479,7 +491,8 @@ pub fn compile(
     production_meta: fn(num) { production_meta_map[num].unwrap() },
     derive_map,
   }
-  let output = StringBuilder::new()
+  let output_buffer = StringBuilder::new()
+  let output = @logger_with_cursor.new(output_buffer)
   let source_map = @codegen.SourceMap::new()
   @gen_mbt.codegen(
     grammar,
@@ -487,6 +500,7 @@ pub fn compile(
     meta,
     output,
     source_map_builder=source_map,
+    grammar_filename=filename,
     mode=match mode {
       OnlyTokens => panic()
       Default => Default
@@ -503,5 +517,5 @@ pub fn compile(
     external_tokens~,
     no_comments~,
   )
-  output.to_string()
+  output_buffer.to_string()
 }
