@@ -187,6 +187,7 @@ pub fn codegen(
   automaton : @lr1.Automaton,
   meta : @codegen.MetaProvider,
   output : &Logger,
+  source_map_builder~ : &@codegen.SourceMapBuilder,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
   mode~ : @codegen.Mode = Default,

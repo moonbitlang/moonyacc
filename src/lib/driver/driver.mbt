@@ -480,11 +480,13 @@ pub fn compile(
     derive_map,
   }
   let output = StringBuilder::new()
+  let source_map = @codegen.SourceMap::new()
   @gen_mbt.codegen(
     grammar,
     automaton,
     meta,
     output,
+    source_map_builder=source_map,
     mode=match mode {
       OnlyTokens => panic()
       Default => Default
