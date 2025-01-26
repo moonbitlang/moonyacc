@@ -1703,11 +1703,12 @@ fn token(phase : Ref[Int], lexbuf : Lexbuf) -> (Token, Int, Int)!LexError {
       ignore(t)
       let sb = StringBuilder::new()
       let subst = []
-      code_rbrace!(sb, subst, lexbuf.pos, lexbuf)
+      let base = lexbuf.pos
+      code_rbrace!(sb, subst, base, lexbuf)
       (
-        LBRACE_CODE_RBRACE((sb.to_string(), subst)),
+        LBRACE_CODE_RBRACE((sb.to_string(), base, subst)),
         _start_pos_of_t,
-        _end_pos_of_t,
+        lexbuf.pos,
       )
     }
     (23, __mbtlex_captures) => {

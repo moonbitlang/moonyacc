@@ -7,7 +7,7 @@ pub(all) enum Token {
   IDENT(String)
   STRING(String)
   LANGLE_CODE_RANGLE(String)
-  LBRACE_CODE_RBRACE((String, Array[SubstItem]))
+  LBRACE_CODE_RBRACE((String, Int, Array[SubstItem]))
   PERCENT_LBRACE_CODE_PERCENT_RBRACE(String)
   ARROW_CODE(String)
   PERCENT_PERCENT_CODE_EOF(String)
@@ -173,7 +173,7 @@ priv type! YYObj__immut_list_T_Command_ @immut/list.T[Command]
 priv type! YYObj__immut_list_T_ClauseItem_ @immut/list.T[ClauseItem]
 
 ///|
-priv type! YYObj__String__Array_SubstItem__ (String, Array[SubstItem])
+priv type! YYObj__String__Int__Array_SubstItem__ (String, Int, Array[SubstItem])
 
 ///|
 typealias YYState = (YYSymbol) -> YYDecision
@@ -644,12 +644,16 @@ fn yy_action_27(
 ) -> YYObj {
   let _start_pos = _args[0].1
   let _end_pos = _args[0].2
-  guard let YYObj__String__Array_SubstItem__(code) = _args[0].0
+  guard let YYObj__String__Int__Array_SubstItem__(code) = _args[0].0
   YYObj_ClauseAction(
     {
       ()
-      let (code, subst) = code
-      { code: Some({ code, subst }), start: _start_pos, end: _end_pos }
+      let (code, utf8_pos, subst) = code
+      {
+        code: Some({ code, utf8_pos, subst }),
+        start: _start_pos,
+        end: _end_pos,
+      }
     },
   )
 }
@@ -836,7 +840,7 @@ fn yy_input(
     STRING(data) => (T_STRING, YYObj_String(data))
     LANGLE_CODE_RANGLE(data) => (T_LANGLE_CODE_RANGLE, YYObj_String(data))
     LBRACE_CODE_RBRACE(data) =>
-      (T_LBRACE_CODE_RBRACE, YYObj__String__Array_SubstItem__(data))
+      (T_LBRACE_CODE_RBRACE, YYObj__String__Int__Array_SubstItem__(data))
     PERCENT_LBRACE_CODE_PERCENT_RBRACE(data) =>
       (T_PERCENT_LBRACE_CODE_PERCENT_RBRACE, YYObj_String(data))
     ARROW_CODE(data) => (T_ARROW_CODE, YYObj_String(data))

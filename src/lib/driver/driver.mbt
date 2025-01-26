@@ -307,7 +307,7 @@ pub fn compile(
         Default =>
           match clause.action.code {
             None => "()"
-            Some({ code, subst }) => {
+            Some({ code, subst, .. }) => {
               let new_code_buf = StringBuilder::new()
               let mut last_index = 0
               for item in subst {
