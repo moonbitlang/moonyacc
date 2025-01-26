@@ -147,33 +147,27 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
       nt.nullability = Null
     }
   }
-  fn get_transient_non_nullables() {
-    nonterminals.iter().filter(fn(nt) { nt.nullability == NonNullable })
+  fn is_nullable(symbol : Symbol) -> Bool {
+    match symbol {
+      T(_) => false
+      NT({ nullability: Null | Nullable, .. }) => true
+      NT({ nullability: NonNullable, .. }) => false
+    }
   }
 
-  @worklist.process(Iter::singleton(get_transient_non_nullables()), fn(
-    nts,
-    schedule
-  ) {
+  for {
     let mut changed = false
-    fn is_nullable(symbol : Symbol) -> Bool {
-      match symbol {
-        T(_) => false
-        NT({ nullability: Null | Nullable, .. }) => true
-        NT({ nullability: NonNullable, .. }) => false
-      }
-    }
-
-    for nt in nts {
+    for
+      nt in nonterminals.iter().filter(fn(nt) { nt.nullability == NonNullable }) {
       if nt.productions.iter().any(fn(p) { p.rhs.iter().all(is_nullable) }) {
         nt.nullability = Nullable
         changed = true
       }
     }
-    if changed {
-      schedule(get_transient_non_nullables())
+    if not(changed) {
+      break
     }
-  })
+  }
   let starts = starts.map(fn(name) {
     let start_nt = get_nonterminal(name)
     guard start_nt.productions.length() == 1 &&

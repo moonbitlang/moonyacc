@@ -1,5 +1,3 @@
 {
-  "import": [
-    "moonbitlang/yacc/lib/util/worklist"
-  ]
+  "import": []
 }
