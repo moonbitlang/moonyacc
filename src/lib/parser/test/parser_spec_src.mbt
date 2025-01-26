@@ -10,7 +10,7 @@ let parser_spec_src : String =
   #|%token<String> IDENT
   #|%token<String> STRING
   #|%token<String> LANGLE_CODE_RANGLE
-  #|%token<(String, Array[SubstItem])> LBRACE_CODE_RBRACE
+  #|%token<(String, Int, Array[SubstItem])> LBRACE_CODE_RBRACE
   #|%token<String> PERCENT_LBRACE_CODE_PERCENT_RBRACE
   #|%token<String> ARROW_CODE
   #|%token<String> PERCENT_PERCENT_CODE_EOF
@@ -93,8 +93,8 @@ let parser_spec_src : String =
   #|
   #|clause_action -> ClauseAction
   #|    : code=LBRACE_CODE_RBRACE {
-  #|        let (code, subst) = code
-  #|        { code: Some({ code, subst }), start: $startpos, end: $endpos }
+  #|        let (code, utf8_pos, subst) = code
+  #|        { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
   #|    }
   #|    | { { code: None, start: $startpos, end: $endpos } }
   #|    ;

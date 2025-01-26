@@ -89,6 +89,7 @@ pub(all) struct ClauseAction {
 ///|
 pub(all) struct CodeWithSubst {
   code : Code
+  utf8_pos : Int
   subst : Array[SubstItem]
 } derive(ToJson)
 

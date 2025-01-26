@@ -61,8 +61,9 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
     "{" as t => {
       let sb = StringBuilder::new()
       let subst = []
-      code_rbrace!(sb, subst, lexbuf.pos, lexbuf)
-      (LBRACE_CODE_RBRACE((sb.to_string(), subst)), $startpos(t), $endpos(t))
+      let base = lexbuf.pos
+      code_rbrace!(sb, subst, base, lexbuf)
+      (LBRACE_CODE_RBRACE((sb.to_string(), base, subst)), $startpos(t), lexbuf.pos)
     }
     ('"' [^ '"']+ '"') as t => { (STRING(t), $startpos(t), $endpos(t)) }
     _ as t => { raise(Unrecognized(t)) }

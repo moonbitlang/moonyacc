@@ -11,7 +11,8 @@
         "println_to_stderr",
         "exit"
       ]
-    }
+    },
+    "moonbitlang/yacc/lib/codegen"
   ],
   "link": {
     "native": {
