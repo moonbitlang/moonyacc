@@ -187,7 +187,7 @@ pub fn codegen(
   automaton : @lr1.Automaton,
   meta : @codegen.MetaProvider,
   output : @logger_with_cursor.LoggerWithCursor,
-  source_map_builder~ : &@codegen.SourceMapBuilder,
+  source_map_builder? : &@codegen.SourceMapBuilder,
   grammar_filename~ : String,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
@@ -423,12 +423,16 @@ pub fn codegen(
         None => ()
         Some(original_utf8_pos) => {
           let generated_utf8_pos = output.cursor()
-          source_map_builder.add_mapping(
-            grammar_filename,
-            original_utf8_pos,
-            generated_utf8_pos,
-            code.length(),
-          )
+          match source_map_builder {
+            None => ()
+            Some(source_map_builder) =>
+              source_map_builder.add_mapping(
+                grammar_filename,
+                original_utf8_pos,
+                generated_utf8_pos,
+                code.length(),
+              )
+          }
         }
       }
     }

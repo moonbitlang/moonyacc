@@ -38,7 +38,8 @@ pub fn compile(
   input_mode~ : InputMode = Array,
   filename~ : String,
   external_tokens~ : Bool = false,
-  no_comments~ : Bool = false
+  no_comments~ : Bool = false,
+  source_map_builder? : &@codegen.SourceMapBuilder
 ) -> String {
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
@@ -493,13 +494,12 @@ pub fn compile(
   }
   let output_buffer = StringBuilder::new()
   let output = @logger_with_cursor.new(output_buffer)
-  let source_map = @codegen.SourceMap::new()
   @gen_mbt.codegen(
     grammar,
     automaton,
     meta,
     output,
-    source_map_builder=source_map,
+    source_map_builder?,
     grammar_filename=filename,
     mode=match mode {
       OnlyTokens => panic()

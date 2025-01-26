@@ -17,6 +17,7 @@ fn main {
   let usage =
     #|Usage: moonyacc [options] <input-file>
   let output_file = @ref.new("")
+  let output_map_file : Ref[String?] = @ref.new(None)
   let input_file = @ref.new("")
   let mode : Ref[@driver.Mode] = @ref.new(Default)
   let input_mode : Ref[@driver.InputMode] = @ref.new(Array)
@@ -26,6 +27,12 @@ fn main {
   @ArgParser.parse(
     [
       ("--output-file", "-o", Set_string(output_file), "Output file"),
+      (
+        "--output-map-file",
+        "--output-map-file",
+        String(fn(file) { output_map_file.val = Some(file) }),
+        "Output source map file, if not specified, it will be the output file with .map.json extension",
+      ),
       (
         "--mode",
         "--mode",
@@ -108,17 +115,31 @@ fn main {
     JsonCst(_) => JsonCst(token_payload_rewrite=token_payload_rewrite.val)
     mode => mode
   }
+  let source_map = @codegen.SourceMap::new()
   let output = @driver.compile(
     parser_spec_src,
     mode~,
+    source_map_builder=source_map,
     input_mode=input_mode.val,
     filename=input_file.val,
     external_tokens=external_tokens.val,
     no_comments=no_comments.val,
   )
+  fn write_map_file(file : String) {
+    @fs.write_string_to_file(
+      path=file,
+      content=@json.stringify(source_map.to_json(), indent=2),
+    )
+  }
+
   if output_file.val == "" {
     println(output)
+    match output_map_file.val {
+      Some(file) => write_map_file(file)
+      None => ()
+    }
   } else {
     @fs.write_string_to_file(path=output_file.val, content=output)
+    write_map_file(output_map_file.val.or("\{output_file.val}.map.json"))
   }
 }
