@@ -418,7 +418,6 @@ pub fn codegen(
     )
     for part in meta.body {
       let (code, utf8_pos) = part
-      output.write_string(code)
       match utf8_pos {
         None => ()
         Some(original_utf8_pos) => {
@@ -435,8 +434,9 @@ pub fn codegen(
           }
         }
       }
+      output.write_string(code)
     }
-    output.write_string("})")
+    output.write_string("})\n")
     output.write_string(
       $|}
       $|
