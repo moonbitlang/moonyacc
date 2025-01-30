@@ -14980,7 +14980,6 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
               const part = _arr$5[_i$2];
               const _x$4 = part._0;
               const _x$5 = part._1;
-              moonbitlang$core$builtin$$Logger$write_string$143$(output, _x$4);
               if (_x$5 === undefined) {
               } else {
                 const _Some = _x$5;
@@ -14993,13 +14992,14 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
                   _x$7.method_0(_x$7.self, grammar_filename, _x$6, generated_utf8_pos, _x$4.length);
                 }
               }
+              moonbitlang$core$builtin$$Logger$write_string$143$(output, _x$4);
               _tmp$6 = _i$2 + 1 | 0;
               continue;
             } else {
               break;
             }
           }
-          moonbitlang$core$builtin$$Logger$write_string$143$(output, "})");
+          moonbitlang$core$builtin$$Logger$write_string$143$(output, "})\n");
           moonbitlang$core$builtin$$Logger$write_string$143$(output, "}\n\n");
         } else {
           break _L;
