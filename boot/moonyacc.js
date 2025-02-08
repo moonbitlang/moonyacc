@@ -12564,13 +12564,13 @@ function moonbitlang$yacc$lib$codegen$$SourceMap$new() {
 function moonbitlang$core$builtin$$ToJson$to_json$123$(_x_6) {
   const $36$map = moonbitlang$core$builtin$$Map$from_array$69$([]);
   moonbitlang$core$builtin$$Map$set$69$($36$map, "source", moonbitlang$core$string$$String$to_json(_x_6.source));
-  moonbitlang$core$builtin$$Map$set$69$($36$map, "original_utf8_pos", moonbitlang$core$int$$Int$to_json(_x_6.original_utf8_pos));
-  moonbitlang$core$builtin$$Map$set$69$($36$map, "generated_utf8_pos", moonbitlang$core$int$$Int$to_json(_x_6.generated_utf8_pos));
-  moonbitlang$core$builtin$$Map$set$69$($36$map, "utf8_length", moonbitlang$core$int$$Int$to_json(_x_6.utf8_length));
+  moonbitlang$core$builtin$$Map$set$69$($36$map, "original_offset", moonbitlang$core$int$$Int$to_json(_x_6.original_offset));
+  moonbitlang$core$builtin$$Map$set$69$($36$map, "generated_offset", moonbitlang$core$int$$Int$to_json(_x_6.generated_offset));
+  moonbitlang$core$builtin$$Map$set$69$($36$map, "length", moonbitlang$core$int$$Int$to_json(_x_6.length));
   return new $64$moonbitlang$47$core$47$builtin$46$Json$Object($36$map);
 }
 function moonbitlang$yacc$lib$codegen$$SourceMapBuilder$add_mapping$158$(self, source, original_offset_in_utf8, generated_offset_in_utf8, length_in_utf8) {
-  moonbitlang$core$array$$Array$push$123$(self.mappings, { source: source, original_utf8_pos: original_offset_in_utf8, generated_utf8_pos: generated_offset_in_utf8, utf8_length: length_in_utf8 });
+  moonbitlang$core$array$$Array$push$123$(self.mappings, { source: source, original_offset: original_offset_in_utf8, generated_offset: generated_offset_in_utf8, length: length_in_utf8 });
 }
 function moonbitlang$core$builtin$$Eq$op_equal$78$(_x_2, _x_3) {
   return _x_2 === _x_3;
