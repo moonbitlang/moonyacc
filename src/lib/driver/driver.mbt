@@ -500,7 +500,7 @@ pub fn compile(
     meta,
     output,
     source_map_builder?,
-    grammar_filename=filename,
+    grammar_filename=@_driver_util.path_basename(filename),
     mode=match mode {
       OnlyTokens => panic()
       Default => Default
