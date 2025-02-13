@@ -76,6 +76,7 @@ pub fn elaborate(
   for ast_rule in ast_spec.rules {
     let rule : Rule = {
       num: rule_by_name.size(),
+      inline: ast_rule.inline,
       name: ast_rule.nonterminal,
       type_: ast_rule.type_,
       clauses: [],
