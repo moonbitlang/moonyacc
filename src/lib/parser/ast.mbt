@@ -15,8 +15,8 @@
 ///|
 pub(all) struct ParserSpec {
   header : Code?
-  footer : Code?
-  commands : Array[Command]
+  trailer : Code?
+  decls : Array[Declaration]
   rules : Array[Rule]
 } derive(ToJson)
 
@@ -53,7 +53,7 @@ pub(all) struct SubstItem {
 pub(all) typealias Symbol = String
 
 ///|
-pub(all) enum Command {
+pub(all) enum Declaration {
   Start(Array[Symbol])
   Token(Array[Symbol], type_~ : Code?)
   Token1(Symbol, type_~ : Code?, image~ : String)

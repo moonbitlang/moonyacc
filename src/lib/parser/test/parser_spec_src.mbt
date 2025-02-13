@@ -32,7 +32,7 @@ let parser_spec_src : String =
   #|%%
   #|
   #|spec -> ParserSpec
-  #|    : header=header cmd_list=cmd_list "%%" rule_list=rule_list footer=footer EOF { { header, commands: cmd_list.to_array(), rules: rule_list.to_array(), footer } }
+  #|    : header=header decl_list=decl_list "%%" rule_list=rule_list trailer=trailer EOF { { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } }
   #|    ;
   #|
   #|header -> Code?
@@ -40,18 +40,18 @@ let parser_spec_src : String =
   #|    | { None }
   #|    ;
   #|
-  #|footer -> Code?
+  #|trailer -> Code?
   #|    : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
   #|    | code=PERCENT_PERCENT_CODE_EOF { Some(code) }
   #|    | { None }
   #|    ;
   #|
-  #|cmd_list -> @immut/list.T[Command]
-  #|    : cmd=cmd cmd_list=cmd_list { Cons(cmd, cmd_list) }
+  #|decl_list -> @immut/list.T[Declaration]
+  #|    : decl=decl decl_list=decl_list { Cons(decl, decl_list) }
   #|    | { Nil }
   #|    ;
   #|
-  #|cmd -> Command
+  #|decl -> Declaration
   #|    : "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
   #|    | "%token" type_=opt_type symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=type_) }
   #|    | "%token" type_=opt_type symbol=symbol image=STRING { Token1(symbol, type_=type_, image=image) }

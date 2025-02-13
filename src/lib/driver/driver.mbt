@@ -98,7 +98,7 @@ pub fn compile(
     }
   }
 
-  for cmd in spec.commands {
+  for cmd in spec.decls {
     match cmd {
       Token(names, type_~, ..) =>
         for name in names {
@@ -146,7 +146,7 @@ pub fn compile(
   let mut position_data_type = "Unit"
   let mut derive_map = @immut/hashmap.new()
   let prec_map = @sorted_map.new()
-  for cmd in spec.commands {
+  for cmd in spec.decls {
     match cmd {
       Token(_) | Token1(_) => ()
       Start(names) => starts.push_iter(names.iter())
@@ -456,7 +456,7 @@ pub fn compile(
     },
     footer: match mode {
       OnlyTokens => panic()
-      Default => spec.footer.or_default()
+      Default => spec.trailer.or_default()
       JsonCst(_) => ""
     },
     position_data_type,

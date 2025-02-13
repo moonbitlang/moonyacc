@@ -59,10 +59,10 @@ function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Symbo
   this._0 = param0;
 }
 Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Symbol_$46$YYObj__immut_list_T_Symbol_.prototype.$tag = 10;
-function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(param0) {
+function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(param0) {
   this._0 = param0;
 }
-Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command.prototype.$tag = 9;
+Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration.prototype.$tag = 9;
 function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_String$46$YYObj_String(param0) {
   this._0 = param0;
 }
@@ -75,10 +75,10 @@ function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Rule_
   this._0 = param0;
 }
 Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Rule_$46$YYObj__immut_list_T_Rule_.prototype.$tag = 6;
-function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Command_$46$YYObj__immut_list_T_Command_(param0) {
+function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Declaration_$46$YYObj__immut_list_T_Declaration_(param0) {
   this._0 = param0;
 }
-Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Command_$46$YYObj__immut_list_T_Command_.prototype.$tag = 5;
+Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Declaration_$46$YYObj__immut_list_T_Declaration_.prototype.$tag = 5;
 function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Code_$46$YYObj_Code_(param0) {
   this._0 = param0;
 }
@@ -384,47 +384,47 @@ function $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$14$(param0, param1) 
   this._1 = param1;
 }
 $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$14$.prototype.$tag = 1;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Start(param0) {
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Start(param0) {
   this._0 = param0;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Start.prototype.$tag = 0;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Token(param0, param1) {
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Start.prototype.$tag = 0;
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Token(param0, param1) {
   this._0 = param0;
   this._1 = param1;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Token.prototype.$tag = 1;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Token1(param0, param1, param2) {
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Token.prototype.$tag = 1;
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Token1(param0, param1, param2) {
   this._0 = param0;
   this._1 = param1;
   this._2 = param2;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Token1.prototype.$tag = 2;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Type(param0, param1) {
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Token1.prototype.$tag = 2;
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Type(param0, param1) {
   this._0 = param0;
   this._1 = param1;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Type.prototype.$tag = 3;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Derive(param0, param1) {
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Type.prototype.$tag = 3;
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Derive(param0, param1) {
   this._0 = param0;
   this._1 = param1;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Derive.prototype.$tag = 4;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Position(param0) {
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Derive.prototype.$tag = 4;
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Position(param0) {
   this._0 = param0;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Position.prototype.$tag = 5;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Left(param0) {
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Position.prototype.$tag = 5;
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Left(param0) {
   this._0 = param0;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Left.prototype.$tag = 6;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Right(param0) {
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Left.prototype.$tag = 6;
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Right(param0) {
   this._0 = param0;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Right.prototype.$tag = 7;
-function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Nonassoc(param0) {
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Right.prototype.$tag = 7;
+function $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Nonassoc(param0) {
   this._0 = param0;
 }
-$64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Nonassoc.prototype.$tag = 8;
+$64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Nonassoc.prototype.$tag = 8;
 const $64$moonbitlang$47$core$47$immut$47$list$46$T$Nil$15$ = { $tag: 0 };
 function $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$15$(param0, param1) {
   this._0 = param0;
@@ -650,9 +650,6 @@ function Error$$to_string(_e) {
     case 16: {
       return "moonbitlang/yacc/lib/parser.YYObj_Symbol_.YYObj_Symbol_";
     }
-    case 5: {
-      return "moonbitlang/yacc/lib/parser.YYObj__immut_list_T_Command_.YYObj__immut_list_T_Command_";
-    }
     case 15: {
       return "moonbitlang/yacc/lib/parser.YYObj__immut_list_T_ClauseItem_.YYObj__immut_list_T_ClauseItem_";
     }
@@ -674,11 +671,17 @@ function Error$$to_string(_e) {
     case 19: {
       return "moonbitlang/yacc/lib/parser.YYObj_ClauseItem.YYObj_ClauseItem";
     }
+    case 5: {
+      return "moonbitlang/yacc/lib/parser.YYObj__immut_list_T_Declaration_.YYObj__immut_list_T_Declaration_";
+    }
     case 21: {
       return "moonbitlang/yacc/lib/parser.YYObj_Void.YYObj_Void";
     }
     case 12: {
       return "moonbitlang/yacc/lib/parser.YYObj_Rule.YYObj_Rule";
+    }
+    case 9: {
+      return "moonbitlang/yacc/lib/parser.YYObj_Declaration.YYObj_Declaration";
     }
     case 10: {
       return "moonbitlang/yacc/lib/parser.YYObj__immut_list_T_Symbol_.YYObj__immut_list_T_Symbol_";
@@ -688,9 +691,6 @@ function Error$$to_string(_e) {
     }
     case 13: {
       return "moonbitlang/yacc/lib/parser.YYObj__immut_list_T_Clause_.YYObj__immut_list_T_Clause_";
-    }
-    case 9: {
-      return "moonbitlang/yacc/lib/parser.YYObj_Command.YYObj_Command";
     }
     case 4: {
       return "moonbitlang/yacc/lib/parser.YYObj_Code_.YYObj_Code_";
@@ -11254,8 +11254,8 @@ function moonbitlang$yacc$lib$parser$$yy_action_0(_last_pos, _args) {
     const _x = _YYObj_Code_._0;
     const _bind$2 = moonbitlang$core$array$$ArrayView$op_get$78$(_args, 1)._0;
     if (_bind$2.$tag === 5) {
-      const _YYObj__immut_list_T_Command_ = _bind$2;
-      const _x$2 = _YYObj__immut_list_T_Command_._0;
+      const _YYObj__immut_list_T_Declaration_ = _bind$2;
+      const _x$2 = _YYObj__immut_list_T_Declaration_._0;
       const _bind$3 = moonbitlang$core$array$$ArrayView$op_get$78$(_args, 3)._0;
       if (_bind$3.$tag === 6) {
         const _YYObj__immut_list_T_Rule_ = _bind$3;
@@ -11264,7 +11264,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_0(_last_pos, _args) {
         if (_bind$4.$tag === 4) {
           const _YYObj_Code_$2 = _bind$4;
           const _x$4 = _YYObj_Code_$2._0;
-          return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_ParserSpec$46$YYObj_ParserSpec({ header: _x, footer: _x$4, commands: moonbitlang$core$immut$list$$T$to_array$47$(_x$2), rules: moonbitlang$core$immut$list$$T$to_array$46$(_x$3) });
+          return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_ParserSpec$46$YYObj_ParserSpec({ header: _x, trailer: _x$4, decls: moonbitlang$core$immut$list$$T$to_array$47$(_x$2), rules: moonbitlang$core$immut$list$$T$to_array$46$(_x$3) });
         } else {
           return $panic();
         }
@@ -11317,13 +11317,13 @@ function moonbitlang$yacc$lib$parser$$yy_action_5(_last_pos, _args) {
 function moonbitlang$yacc$lib$parser$$yy_action_6(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$78$(_args, 0)._0;
   if (_bind.$tag === 9) {
-    const _YYObj_Command = _bind;
-    const _x = _YYObj_Command._0;
+    const _YYObj_Declaration = _bind;
+    const _x = _YYObj_Declaration._0;
     const _bind$2 = moonbitlang$core$array$$ArrayView$op_get$78$(_args, 1)._0;
     if (_bind$2.$tag === 5) {
-      const _YYObj__immut_list_T_Command_ = _bind$2;
-      const _x$2 = _YYObj__immut_list_T_Command_._0;
-      return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Command_$46$YYObj__immut_list_T_Command_(new $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$14$(_x, _x$2));
+      const _YYObj__immut_list_T_Declaration_ = _bind$2;
+      const _x$2 = _YYObj__immut_list_T_Declaration_._0;
+      return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Declaration_$46$YYObj__immut_list_T_Declaration_(new $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$14$(_x, _x$2));
     } else {
       return $panic();
     }
@@ -11332,14 +11332,14 @@ function moonbitlang$yacc$lib$parser$$yy_action_6(_last_pos, _args) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_action_7(_last_pos, _args) {
-  return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Command_$46$YYObj__immut_list_T_Command_($64$moonbitlang$47$core$47$immut$47$list$46$T$Nil$14$);
+  return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_Declaration_$46$YYObj__immut_list_T_Declaration_($64$moonbitlang$47$core$47$immut$47$list$46$T$Nil$14$);
 }
 function moonbitlang$yacc$lib$parser$$yy_action_8(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$78$(_args, 1)._0;
   if (_bind.$tag === 10) {
     const _YYObj__immut_list_T_Symbol_ = _bind;
     const _x = _YYObj__immut_list_T_Symbol_._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Start(moonbitlang$core$immut$list$$T$to_array$10$(_x)));
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Start(moonbitlang$core$immut$list$$T$to_array$10$(_x)));
   } else {
     return $panic();
   }
@@ -11353,7 +11353,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_9(_last_pos, _args) {
     if (_bind$2.$tag === 10) {
       const _YYObj__immut_list_T_Symbol_ = _bind$2;
       const _x$2 = _YYObj__immut_list_T_Symbol_._0;
-      return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Token(moonbitlang$core$immut$list$$T$to_array$10$(_x$2), _x));
+      return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Token(moonbitlang$core$immut$list$$T$to_array$10$(_x$2), _x));
     } else {
       return $panic();
     }
@@ -11374,7 +11374,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_10(_last_pos, _args) {
       if (_bind$3.$tag === 8) {
         const _YYObj_String = _bind$3;
         const _x$3 = _YYObj_String._0;
-        return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Token1(_x$2, _x, _x$3));
+        return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Token1(_x$2, _x, _x$3));
       } else {
         return $panic();
       }
@@ -11394,7 +11394,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_11(_last_pos, _args) {
     if (_bind$2.$tag === 10) {
       const _YYObj__immut_list_T_Symbol_ = _bind$2;
       const _x$2 = _YYObj__immut_list_T_Symbol_._0;
-      return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Type(moonbitlang$core$immut$list$$T$to_array$10$(_x$2), _x));
+      return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Type(moonbitlang$core$immut$list$$T$to_array$10$(_x$2), _x));
     } else {
       return $panic();
     }
@@ -11407,7 +11407,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_12(_last_pos, _args) {
   if (_bind.$tag === 8) {
     const _YYObj_String = _bind;
     const _x = _YYObj_String._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Position(_x));
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Position(_x));
   } else {
     return $panic();
   }
@@ -11417,7 +11417,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_13(_last_pos, _args) {
   if (_bind.$tag === 10) {
     const _YYObj__immut_list_T_Symbol_ = _bind;
     const _x = _YYObj__immut_list_T_Symbol_._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Left(moonbitlang$core$immut$list$$T$to_array$10$(_x)));
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Left(moonbitlang$core$immut$list$$T$to_array$10$(_x)));
   } else {
     return $panic();
   }
@@ -11427,7 +11427,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_14(_last_pos, _args) {
   if (_bind.$tag === 10) {
     const _YYObj__immut_list_T_Symbol_ = _bind;
     const _x = _YYObj__immut_list_T_Symbol_._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Right(moonbitlang$core$immut$list$$T$to_array$10$(_x)));
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Right(moonbitlang$core$immut$list$$T$to_array$10$(_x)));
   } else {
     return $panic();
   }
@@ -11437,7 +11437,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_15(_last_pos, _args) {
   if (_bind.$tag === 10) {
     const _YYObj__immut_list_T_Symbol_ = _bind;
     const _x = _YYObj__immut_list_T_Symbol_._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Nonassoc(moonbitlang$core$immut$list$$T$to_array$10$(_x)));
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Nonassoc(moonbitlang$core$immut$list$$T$to_array$10$(_x)));
   } else {
     return $panic();
   }
@@ -11451,7 +11451,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_16(_last_pos, _args) {
     if (_bind$2.$tag === 8) {
       const _YYObj_String$2 = _bind$2;
       const _x$2 = _YYObj_String$2._0;
-      return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Command$46$YYObj_Command(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Command$Derive(_x, _x$2));
+      return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Derive(_x, _x$2));
     } else {
       return $panic();
     }
@@ -15966,7 +15966,7 @@ function moonbitlang$yacc$lib$driver$$compile(parser_spec_str, mode, input_mode,
   const nonterminal_meta_map = moonbitlang$core$builtin$$Map$from_array$101$([]);
   const _env = { _0: terminal_by_name, _1: terminals };
   const _env$2 = { _0: nonterminal_by_name, _1: nonterminals };
-  const _arr = spec.commands;
+  const _arr = spec.decls;
   const _len = _arr.length;
   let _tmp = 0;
   while (true) {
@@ -16037,7 +16037,7 @@ function moonbitlang$yacc$lib$driver$$compile(parser_spec_str, mode, input_mode,
   let position_data_type = "Unit";
   let derive_map = moonbitlang$core$immut$hashmap$$new$49$();
   const prec_map = moonbitlang$core$sorted_map$$new$58$();
-  const _arr$3 = spec.commands;
+  const _arr$3 = spec.decls;
   const _len$3 = _arr$3.length;
   let _tmp$3 = 0;
   while (true) {
@@ -16526,7 +16526,7 @@ function moonbitlang$yacc$lib$driver$$compile(parser_spec_str, mode, input_mode,
       break;
     }
     case 0: {
-      _tmp$9 = moonbitlang$core$option$$Option$or_default$10$(spec.footer);
+      _tmp$9 = moonbitlang$core$option$$Option$or_default$10$(spec.trailer);
       break;
     }
     default: {
