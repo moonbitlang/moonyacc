@@ -15665,7 +15665,7 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
     moonbitlang$core$builtin$$Logger$write_string$148$(output, "fn error(stack : @immut/list.T[YYState], token : Token, loc : (Position, Position)) -> Unit!ParseError {\n");
   }
   moonbitlang$core$builtin$$Logger$write_string$148$(output, "  let expected = []\n  fn try_add(symbol : YYSymbol, kind : TokenKind) {\n    fn go(stack : @immut/list.T[YYState]) {\n      match stack {\n        Nil => ()\n        Cons(state, _) => {\n          match state(symbol) {\n            Accept | Shift(_) => expected.push(kind)\n            Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {\n              fn inner_go(stack : @immut/list.T[YYState], count, symbol) {\n                let stack = stack.drop(count)\n                guard let Cons(state, _) = stack\n                match state(symbol) {\n                  Shift(state) => go(Cons(state, stack))\n                  Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)\n                  _ => panic()\n                }\n              }\n              inner_go(stack, count, symbol)\n            }\n            Error => ()\n          }\n        }\n      }\n    }\n    go(stack)\n  }\n");
-  moonbitlang$core$builtin$$Logger$write_string$148$(output, "  for term in [");
+  moonbitlang$core$builtin$$Logger$write_string$148$(output, "  for term in ([");
   const _arr$6 = grammar.terminals;
   const _len$6 = _arr$6.length;
   let _tmp$7 = 0;
@@ -15683,7 +15683,7 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
       break;
     }
   }
-  moonbitlang$core$builtin$$Logger$write_string$148$(output, "] {\n");
+  moonbitlang$core$builtin$$Logger$write_string$148$(output, "] : Array[(YYSymbol, TokenKind)]) {\n");
   moonbitlang$core$builtin$$Logger$write_string$148$(output, "    try_add(term.0, term.1)\n  }\n");
   if (input_mode === 0) {
     moonbitlang$core$builtin$$Logger$write_string$148$(output, "  match token {\n    None => raise UnexpectedEndOfInput(loc.1, expected)\n    Some(token) => raise UnexpectedToken(token, loc, expected)\n  }\n");

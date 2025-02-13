@@ -530,14 +530,15 @@ fn error(
   }
 
   for
-    term in [
-      (T_NUMBER, TK_NUMBER),
-      (T_PLUS, TK_PLUS),
-      (T_MINUS, TK_MINUS),
-      (T_STAR, TK_STAR),
-      (T_LPAREN, TK_LPAREN),
-      (T_RPAREN, TK_RPAREN),
-    ] {
+    term in (
+      [
+        (T_NUMBER, TK_NUMBER),
+        (T_PLUS, TK_PLUS),
+        (T_MINUS, TK_MINUS),
+        (T_STAR, TK_STAR),
+        (T_LPAREN, TK_LPAREN),
+        (T_RPAREN, TK_RPAREN),
+      ] : Array[(YYSymbol, TokenKind)]) {
     try_add(term.0, term.1)
   }
   match token {

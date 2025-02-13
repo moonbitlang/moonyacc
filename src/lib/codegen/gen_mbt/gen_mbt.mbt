@@ -857,14 +857,14 @@ pub fn codegen(
   //   )
   // }
   // ```
-  output.write_string("  for term in [")
+  output.write_string("  for term in ([")
   for i, term in grammar.terminals {
     if i > 0 {
       output.write_string(", ")
     }
     output.write_string("(T_\{term.name}, TK_\{term.name})")
   }
-  output.write_string("] {\n")
+  output.write_string("] : Array[(YYSymbol, TokenKind)]) {\n")
   output.write_string(
     $|    try_add(term.0, term.1)
     $|  }
