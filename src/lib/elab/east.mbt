@@ -49,6 +49,7 @@ pub(all) typealias Symbol = String
 pub(all) struct Rule {
   num : Int
   name : Symbol
+  inline : Bool
   mut type_ : Code?
   clauses : Array[Clause]
 } derive(ToJson)

@@ -21,6 +21,7 @@ pub(all) enum Token {
   PERCENT_NONASSOC
   PERCENT_PREC
   PERCENT_DERIVE
+  PERCENT_INLINE
   COLON
   BAR
   EQ
@@ -49,6 +50,7 @@ pub fn Token::kind(self : Token) -> TokenKind {
     PERCENT_NONASSOC => TK_PERCENT_NONASSOC
     PERCENT_PREC => TK_PERCENT_PREC
     PERCENT_DERIVE => TK_PERCENT_DERIVE
+    PERCENT_INLINE => TK_PERCENT_INLINE
     COLON => TK_COLON
     BAR => TK_BAR
     EQ => TK_EQ
@@ -76,6 +78,7 @@ pub(all) enum TokenKind {
   TK_PERCENT_NONASSOC
   TK_PERCENT_PREC
   TK_PERCENT_DERIVE
+  TK_PERCENT_INLINE
   TK_COLON
   TK_BAR
   TK_EQ
@@ -105,6 +108,7 @@ pub impl Show for TokenKind with output(self, logger) {
       TK_PERCENT_NONASSOC => "\"%nonassoc\""
       TK_PERCENT_PREC => "\"%prec\""
       TK_PERCENT_DERIVE => "\"%derive\""
+      TK_PERCENT_INLINE => "\"%inline\""
       TK_COLON => "\":\""
       TK_BAR => "\"|\""
       TK_EQ => "\"=\""
@@ -210,6 +214,7 @@ priv enum YYSymbol {
   T_PERCENT_NONASSOC
   T_PERCENT_PREC
   T_PERCENT_DERIVE
+  T_PERCENT_INLINE
   T_COLON
   T_BAR
   T_EQ
@@ -222,6 +227,7 @@ priv enum YYSymbol {
   NT_opt_type
   NT_rule_list
   NT_rule
+  NT_rule_no_modifiers
   NT_rule_type
   NT_clause_list
   NT_clause
@@ -554,19 +560,47 @@ fn yy_action_21(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Symbol(nonterminal) = _args[0].0
-  guard let YYObj_Code_(type_) = _args[1].0
-  guard let YYObj__immut_list_T_Clause_(clause_list) = _args[3].0
+  guard let YYObj_Rule(_dollar1) = _args[0].0
   YYObj_Rule(
     {
       ()
-      { nonterminal, type_, clauses: clause_list.to_array() }
+      _dollar1
     },
   )
 }
 
 ///|
 fn yy_action_22(
+  _last_pos : Position,
+  _args : ArrayView[(YYObj, Position, Position)]
+) -> YYObj {
+  guard let YYObj_Rule(_dollar2) = _args[1].0
+  YYObj_Rule(
+    {
+      ()
+      { .._dollar2, inline: true }
+    },
+  )
+}
+
+///|
+fn yy_action_23(
+  _last_pos : Position,
+  _args : ArrayView[(YYObj, Position, Position)]
+) -> YYObj {
+  guard let YYObj_Symbol(nonterminal) = _args[0].0
+  guard let YYObj_Code_(type_) = _args[1].0
+  guard let YYObj__immut_list_T_Clause_(clause_list) = _args[3].0
+  YYObj_Rule(
+    {
+      ()
+      { inline: false, nonterminal, type_, clauses: clause_list.to_array() }
+    },
+  )
+}
+
+///|
+fn yy_action_24(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -580,7 +614,7 @@ fn yy_action_22(
 }
 
 ///|
-fn yy_action_23(
+fn yy_action_25(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -593,7 +627,7 @@ fn yy_action_23(
 }
 
 ///|
-fn yy_action_24(
+fn yy_action_26(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -607,7 +641,7 @@ fn yy_action_24(
 }
 
 ///|
-fn yy_action_25(
+fn yy_action_27(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -622,7 +656,7 @@ fn yy_action_25(
 }
 
 ///|
-fn yy_action_26(
+fn yy_action_28(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -638,7 +672,7 @@ fn yy_action_26(
 }
 
 ///|
-fn yy_action_27(
+fn yy_action_29(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -659,7 +693,7 @@ fn yy_action_27(
 }
 
 ///|
-fn yy_action_28(
+fn yy_action_30(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -674,7 +708,7 @@ fn yy_action_28(
 }
 
 ///|
-fn yy_action_29(
+fn yy_action_31(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -688,7 +722,7 @@ fn yy_action_29(
 }
 
 ///|
-fn yy_action_30(
+fn yy_action_32(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -701,7 +735,7 @@ fn yy_action_30(
 }
 
 ///|
-fn yy_action_31(
+fn yy_action_33(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -716,7 +750,7 @@ fn yy_action_31(
 }
 
 ///|
-fn yy_action_32(
+fn yy_action_34(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -729,7 +763,7 @@ fn yy_action_32(
 }
 
 ///|
-fn yy_action_33(
+fn yy_action_35(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -743,7 +777,7 @@ fn yy_action_33(
 }
 
 ///|
-fn yy_action_34(
+fn yy_action_36(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -758,7 +792,7 @@ fn yy_action_34(
 }
 
 ///|
-fn yy_action_35(
+fn yy_action_37(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -772,7 +806,7 @@ fn yy_action_35(
 }
 
 ///|
-fn yy_action_36(
+fn yy_action_38(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -786,7 +820,7 @@ fn yy_action_36(
 }
 
 ///|
-fn yy_action_37(
+fn yy_action_39(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -800,7 +834,7 @@ fn yy_action_37(
 }
 
 ///|
-fn yy_action_38(
+fn yy_action_40(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -815,7 +849,7 @@ fn yy_action_38(
 }
 
 ///|
-fn yy_action_39(
+fn yy_action_41(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -856,6 +890,7 @@ fn yy_input(
     PERCENT_NONASSOC => (T_PERCENT_NONASSOC, YYObj_Void)
     PERCENT_PREC => (T_PERCENT_PREC, YYObj_Void)
     PERCENT_DERIVE => (T_PERCENT_DERIVE, YYObj_Void)
+    PERCENT_INLINE => (T_PERCENT_INLINE, YYObj_Void)
     COLON => (T_COLON, YYObj_Void)
     BAR => (T_BAR, YYObj_Void)
     EQ => (T_EQ, YYObj_Void)
@@ -866,7 +901,7 @@ fn yy_input(
 // [0, spec → • header decl_list PERCENT_PERCENT rule_list trailer EOF, $]
 // [1, header → • PERCENT_LBRACE_CODE_PERCENT_RBRACE, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 // [2, header → •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [40, spec_prime → • spec, $]
+// [42, spec_prime → • spec, $]
 ///|
 fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -886,7 +921,7 @@ fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [40, spec_prime → spec •, $]
+// [42, spec_prime → spec •, $]
 ///|
 fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
   Accept
@@ -953,9 +988,9 @@ fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [15, decl → PERCENT_NONASSOC • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [39, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [41, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -966,17 +1001,17 @@ fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [39, symbol → IDENT •, IDENT / STRING / LBRACE_CODE_RBRACE / ARROW_CODE / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_PREC / PERCENT_DERIVE / COLON / BAR / SEMI]
+// [41, symbol → IDENT •, IDENT / STRING / LBRACE_CODE_RBRACE / ARROW_CODE / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_PREC / PERCENT_DERIVE / COLON / BAR / SEMI]
 ///|
 fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_symbol, yy_action_39)
+  ReduceNoLookahead(1, NT_symbol, yy_action_41)
 }
 
-// [37, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → symbol •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → symbol • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [39, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → symbol •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → symbol • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [41, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -991,15 +1026,15 @@ fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
     | T_PERCENT_LEFT
     | T_PERCENT_RIGHT
     | T_PERCENT_NONASSOC
-    | T_PERCENT_DERIVE => Reduce(1, NT_nonempty_symbol_list, yy_action_37)
+    | T_PERCENT_DERIVE => Reduce(1, NT_nonempty_symbol_list, yy_action_39)
     _ => Error
   }
 }
 
-// [38, nonempty_symbol_list → symbol nonempty_symbol_list •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → symbol nonempty_symbol_list •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_nonempty_symbol_list, yy_action_38)
+  ReduceNoLookahead(2, NT_nonempty_symbol_list, yy_action_40)
 }
 
 // [15, decl → PERCENT_NONASSOC nonempty_symbol_list •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
@@ -1009,9 +1044,9 @@ fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [14, decl → PERCENT_RIGHT • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [39, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [41, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1029,9 +1064,9 @@ fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [13, decl → PERCENT_LEFT • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [39, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [41, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1073,9 +1108,9 @@ fn yy_state_18(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [11, decl → PERCENT_TYPE LANGLE_CODE_RANGLE • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [39, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [41, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_19(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1114,9 +1149,9 @@ fn yy_state_22(_lookahead : YYSymbol) -> YYDecision {
 
 // [9, decl → PERCENT_TOKEN opt_type • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 // [10, decl → PERCENT_TOKEN opt_type • symbol STRING, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [39, symbol → • IDENT, IDENT / STRING / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [41, symbol → • IDENT, IDENT / STRING / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_23(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1128,11 +1163,11 @@ fn yy_state_23(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [10, decl → PERCENT_TOKEN opt_type symbol • STRING, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → symbol •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → symbol • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [39, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → symbol •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → symbol • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [41, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_24(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1148,7 +1183,7 @@ fn yy_state_24(_lookahead : YYSymbol) -> YYDecision {
     | T_PERCENT_LEFT
     | T_PERCENT_RIGHT
     | T_PERCENT_NONASSOC
-    | T_PERCENT_DERIVE => Reduce(1, NT_nonempty_symbol_list, yy_action_37)
+    | T_PERCENT_DERIVE => Reduce(1, NT_nonempty_symbol_list, yy_action_39)
     _ => Error
   }
 }
@@ -1166,9 +1201,9 @@ fn yy_state_26(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [8, decl → PERCENT_START • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [37, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [38, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
-// [39, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [39, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [40, nonempty_symbol_list → • symbol nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
+// [41, symbol → • IDENT, IDENT / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 ///|
 fn yy_state_27(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1233,39 +1268,43 @@ fn yy_state_31(_lookahead : YYSymbol) -> YYDecision {
 // [0, spec → header decl_list PERCENT_PERCENT • rule_list trailer EOF, $]
 // [19, rule_list → • rule, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
 // [20, rule_list → • rule rule_list, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
-// [21, rule → • symbol rule_type COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
-// [39, symbol → • IDENT, ARROW_CODE / COLON]
+// [21, rule → • rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule → • PERCENT_INLINE rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → • symbol rule_type COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [41, symbol → • IDENT, ARROW_CODE / COLON]
 ///|
 fn yy_state_32(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_IDENT => Shift(yy_state_8)
     NT_symbol => Shift(yy_state_33)
-    NT_rule => Shift(yy_state_56)
-    NT_rule_list => Shift(yy_state_58)
+    T_PERCENT_INLINE => Shift(yy_state_56)
+    NT_rule_no_modifiers => Shift(yy_state_58)
+    NT_rule => Shift(yy_state_59)
+    NT_rule_list => Shift(yy_state_61)
     _ => Error
   }
 }
 
-// [21, rule → symbol • rule_type COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
-// [22, rule_type → • ARROW_CODE, COLON]
-// [23, rule_type → •, COLON]
+// [23, rule_no_modifiers → symbol • rule_type COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [24, rule_type → • ARROW_CODE, COLON]
+// [25, rule_type → •, COLON]
 ///|
 fn yy_state_33(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_ARROW_CODE => Shift(yy_state_34)
     NT_rule_type => Shift(yy_state_35)
-    T_COLON => Reduce(0, NT_rule_type, yy_action_23)
+    T_COLON => Reduce(0, NT_rule_type, yy_action_25)
     _ => Error
   }
 }
 
-// [22, rule_type → ARROW_CODE •, COLON]
+// [24, rule_type → ARROW_CODE •, COLON]
 ///|
 fn yy_state_34(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_rule_type, yy_action_22)
+  ReduceNoLookahead(1, NT_rule_type, yy_action_24)
 }
 
-// [21, rule → symbol rule_type • COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
+// [23, rule_no_modifiers → symbol rule_type • COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 ///|
 fn yy_state_35(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1274,17 +1313,17 @@ fn yy_state_35(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [21, rule → symbol rule_type COLON • clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
-// [24, clause_list → • clause, SEMI]
-// [25, clause_list → • clause BAR clause_list, SEMI]
-// [26, clause → • item_list rule_prec clause_action, BAR / SEMI]
-// [31, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [32, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [33, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [34, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [35, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [36, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [39, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [23, rule_no_modifiers → symbol rule_type COLON • clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [26, clause_list → • clause, SEMI]
+// [27, clause_list → • clause BAR clause_list, SEMI]
+// [28, clause → • item_list rule_prec clause_action, BAR / SEMI]
+// [33, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [34, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [35, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [41, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_36(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1297,25 +1336,25 @@ fn yy_state_36(_lookahead : YYSymbol) -> YYDecision {
     NT_clause => Shift(yy_state_51)
     NT_clause_list => Shift(yy_state_54)
     T_LBRACE_CODE_RBRACE | T_PERCENT_PREC | T_BAR | T_SEMI =>
-      Reduce(0, NT_item_list, yy_action_32)
+      Reduce(0, NT_item_list, yy_action_34)
     _ => Error
   }
 }
 
-// [36, item_symbol → STRING •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, item_symbol → STRING •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_37(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_item_symbol, yy_action_36)
+  ReduceNoLookahead(1, NT_item_symbol, yy_action_38)
 }
 
-// [35, item_symbol → symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, item_symbol → symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_38(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_item_symbol, yy_action_35)
+  ReduceNoLookahead(1, NT_item_symbol, yy_action_37)
 }
 
-// [34, item → IDENT • EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [39, symbol → IDENT •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → IDENT • EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [41, symbol → IDENT •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_39(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1325,15 +1364,15 @@ fn yy_state_39(_lookahead : YYSymbol) -> YYDecision {
     | T_LBRACE_CODE_RBRACE
     | T_PERCENT_PREC
     | T_BAR
-    | T_SEMI => Reduce(1, NT_symbol, yy_action_39)
+    | T_SEMI => Reduce(1, NT_symbol, yy_action_41)
     _ => Error
   }
 }
 
-// [34, item → IDENT EQ • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [35, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [36, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [39, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → IDENT EQ • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [41, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_40(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1345,26 +1384,26 @@ fn yy_state_40(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [34, item → IDENT EQ item_symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → IDENT EQ item_symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_41(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_item, yy_action_34)
+  ReduceNoLookahead(3, NT_item, yy_action_36)
 }
 
-// [33, item → item_symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [35, item → item_symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_42(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_item, yy_action_33)
+  ReduceNoLookahead(1, NT_item, yy_action_35)
 }
 
-// [31, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [31, item_list → item • item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [32, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [33, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [34, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [35, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [36, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [39, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [33, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [33, item_list → item • item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [34, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [35, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [41, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_43(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1375,33 +1414,33 @@ fn yy_state_43(_lookahead : YYSymbol) -> YYDecision {
     NT_item => Shift(yy_state_43)
     NT_item_list => Shift(yy_state_44)
     T_LBRACE_CODE_RBRACE | T_PERCENT_PREC | T_BAR | T_SEMI =>
-      Reduce(0, NT_item_list, yy_action_32)
+      Reduce(0, NT_item_list, yy_action_34)
     _ => Error
   }
 }
 
-// [31, item_list → item item_list •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [33, item_list → item item_list •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_44(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_item_list, yy_action_31)
+  ReduceNoLookahead(2, NT_item_list, yy_action_33)
 }
 
-// [26, clause → item_list • rule_prec clause_action, BAR / SEMI]
-// [29, rule_prec → • PERCENT_PREC symbol, LBRACE_CODE_RBRACE / BAR / SEMI]
-// [30, rule_prec → •, LBRACE_CODE_RBRACE / BAR / SEMI]
+// [28, clause → item_list • rule_prec clause_action, BAR / SEMI]
+// [31, rule_prec → • PERCENT_PREC symbol, LBRACE_CODE_RBRACE / BAR / SEMI]
+// [32, rule_prec → •, LBRACE_CODE_RBRACE / BAR / SEMI]
 ///|
 fn yy_state_45(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_PERCENT_PREC => Shift(yy_state_46)
     NT_rule_prec => Shift(yy_state_48)
     T_LBRACE_CODE_RBRACE | T_BAR | T_SEMI =>
-      Reduce(0, NT_rule_prec, yy_action_30)
+      Reduce(0, NT_rule_prec, yy_action_32)
     _ => Error
   }
 }
 
-// [29, rule_prec → PERCENT_PREC • symbol, LBRACE_CODE_RBRACE / BAR / SEMI]
-// [39, symbol → • IDENT, LBRACE_CODE_RBRACE / BAR / SEMI]
+// [31, rule_prec → PERCENT_PREC • symbol, LBRACE_CODE_RBRACE / BAR / SEMI]
+// [41, symbol → • IDENT, LBRACE_CODE_RBRACE / BAR / SEMI]
 ///|
 fn yy_state_46(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1411,59 +1450,59 @@ fn yy_state_46(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [29, rule_prec → PERCENT_PREC symbol •, LBRACE_CODE_RBRACE / BAR / SEMI]
+// [31, rule_prec → PERCENT_PREC symbol •, LBRACE_CODE_RBRACE / BAR / SEMI]
 ///|
 fn yy_state_47(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_rule_prec, yy_action_29)
+  ReduceNoLookahead(2, NT_rule_prec, yy_action_31)
 }
 
-// [26, clause → item_list rule_prec • clause_action, BAR / SEMI]
-// [27, clause_action → • LBRACE_CODE_RBRACE, BAR / SEMI]
-// [28, clause_action → •, BAR / SEMI]
+// [28, clause → item_list rule_prec • clause_action, BAR / SEMI]
+// [29, clause_action → • LBRACE_CODE_RBRACE, BAR / SEMI]
+// [30, clause_action → •, BAR / SEMI]
 ///|
 fn yy_state_48(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LBRACE_CODE_RBRACE => Shift(yy_state_49)
     NT_clause_action => Shift(yy_state_50)
-    T_BAR | T_SEMI => Reduce(0, NT_clause_action, yy_action_28)
+    T_BAR | T_SEMI => Reduce(0, NT_clause_action, yy_action_30)
     _ => Error
   }
 }
 
-// [27, clause_action → LBRACE_CODE_RBRACE •, BAR / SEMI]
+// [29, clause_action → LBRACE_CODE_RBRACE •, BAR / SEMI]
 ///|
 fn yy_state_49(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_clause_action, yy_action_27)
+  ReduceNoLookahead(1, NT_clause_action, yy_action_29)
 }
 
-// [26, clause → item_list rule_prec clause_action •, BAR / SEMI]
+// [28, clause → item_list rule_prec clause_action •, BAR / SEMI]
 ///|
 fn yy_state_50(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_clause, yy_action_26)
+  ReduceNoLookahead(3, NT_clause, yy_action_28)
 }
 
-// [24, clause_list → clause •, SEMI]
-// [25, clause_list → clause • BAR clause_list, SEMI]
+// [26, clause_list → clause •, SEMI]
+// [27, clause_list → clause • BAR clause_list, SEMI]
 ///|
 fn yy_state_51(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_BAR => Shift(yy_state_52)
-    T_SEMI => Reduce(1, NT_clause_list, yy_action_24)
+    T_SEMI => Reduce(1, NT_clause_list, yy_action_26)
     _ => Error
   }
 }
 
-// [24, clause_list → • clause, SEMI]
-// [25, clause_list → • clause BAR clause_list, SEMI]
-// [25, clause_list → clause BAR • clause_list, SEMI]
-// [26, clause → • item_list rule_prec clause_action, BAR / SEMI]
-// [31, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [32, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [33, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [34, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [35, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [36, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [39, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [26, clause_list → • clause, SEMI]
+// [27, clause_list → • clause BAR clause_list, SEMI]
+// [27, clause_list → clause BAR • clause_list, SEMI]
+// [28, clause → • item_list rule_prec clause_action, BAR / SEMI]
+// [33, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [34, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [35, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [41, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_52(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1476,18 +1515,18 @@ fn yy_state_52(_lookahead : YYSymbol) -> YYDecision {
     NT_clause => Shift(yy_state_51)
     NT_clause_list => Shift(yy_state_53)
     T_LBRACE_CODE_RBRACE | T_PERCENT_PREC | T_BAR | T_SEMI =>
-      Reduce(0, NT_item_list, yy_action_32)
+      Reduce(0, NT_item_list, yy_action_34)
     _ => Error
   }
 }
 
-// [25, clause_list → clause BAR clause_list •, SEMI]
+// [27, clause_list → clause BAR clause_list •, SEMI]
 ///|
 fn yy_state_53(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_clause_list, yy_action_25)
+  ReduceNoLookahead(3, NT_clause_list, yy_action_27)
 }
 
-// [21, rule → symbol rule_type COLON clause_list • SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
+// [23, rule_no_modifiers → symbol rule_type COLON clause_list • SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 ///|
 fn yy_state_54(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1496,25 +1535,54 @@ fn yy_state_54(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [21, rule → symbol rule_type COLON clause_list SEMI •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
+// [23, rule_no_modifiers → symbol rule_type COLON clause_list SEMI •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 ///|
 fn yy_state_55(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(5, NT_rule, yy_action_21)
+  ReduceNoLookahead(5, NT_rule_no_modifiers, yy_action_23)
+}
+
+// [22, rule → PERCENT_INLINE • rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → • symbol rule_type COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [41, symbol → • IDENT, ARROW_CODE / COLON]
+///|
+fn yy_state_56(_lookahead : YYSymbol) -> YYDecision {
+  match _lookahead {
+    T_IDENT => Shift(yy_state_8)
+    NT_symbol => Shift(yy_state_33)
+    NT_rule_no_modifiers => Shift(yy_state_57)
+    _ => Error
+  }
+}
+
+// [22, rule → PERCENT_INLINE rule_no_modifiers •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+///|
+fn yy_state_57(_lookahead : YYSymbol) -> YYDecision {
+  ReduceNoLookahead(2, NT_rule, yy_action_22)
+}
+
+// [21, rule → rule_no_modifiers •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+///|
+fn yy_state_58(_lookahead : YYSymbol) -> YYDecision {
+  ReduceNoLookahead(1, NT_rule, yy_action_21)
 }
 
 // [19, rule_list → • rule, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
 // [19, rule_list → rule •, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
 // [20, rule_list → • rule rule_list, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
 // [20, rule_list → rule • rule_list, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
-// [21, rule → • symbol rule_type COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
-// [39, symbol → • IDENT, ARROW_CODE / COLON]
+// [21, rule → • rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule → • PERCENT_INLINE rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → • symbol rule_type COLON clause_list SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [41, symbol → • IDENT, ARROW_CODE / COLON]
 ///|
-fn yy_state_56(_lookahead : YYSymbol) -> YYDecision {
+fn yy_state_59(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_IDENT => Shift(yy_state_8)
     NT_symbol => Shift(yy_state_33)
-    NT_rule => Shift(yy_state_56)
-    NT_rule_list => Shift(yy_state_57)
+    T_PERCENT_INLINE => Shift(yy_state_56)
+    NT_rule_no_modifiers => Shift(yy_state_58)
+    NT_rule => Shift(yy_state_59)
+    NT_rule_list => Shift(yy_state_60)
     T_EOF | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF =>
       Reduce(1, NT_rule_list, yy_action_19)
     _ => Error
@@ -1523,7 +1591,7 @@ fn yy_state_56(_lookahead : YYSymbol) -> YYDecision {
 
 // [20, rule_list → rule rule_list •, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
 ///|
-fn yy_state_57(_lookahead : YYSymbol) -> YYDecision {
+fn yy_state_60(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(2, NT_rule_list, yy_action_20)
 }
 
@@ -1532,11 +1600,11 @@ fn yy_state_57(_lookahead : YYSymbol) -> YYDecision {
 // [4, trailer → • PERCENT_PERCENT_CODE_EOF, EOF]
 // [5, trailer → •, EOF]
 ///|
-fn yy_state_58(_lookahead : YYSymbol) -> YYDecision {
+fn yy_state_61(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
-    T_PERCENT_PERCENT_CODE_EOF => Shift(yy_state_59)
-    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE => Shift(yy_state_60)
-    NT_trailer => Shift(yy_state_61)
+    T_PERCENT_PERCENT_CODE_EOF => Shift(yy_state_62)
+    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE => Shift(yy_state_63)
+    NT_trailer => Shift(yy_state_64)
     T_EOF => Reduce(0, NT_trailer, yy_action_5)
     _ => Error
   }
@@ -1544,28 +1612,28 @@ fn yy_state_58(_lookahead : YYSymbol) -> YYDecision {
 
 // [4, trailer → PERCENT_PERCENT_CODE_EOF •, EOF]
 ///|
-fn yy_state_59(_lookahead : YYSymbol) -> YYDecision {
+fn yy_state_62(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_trailer, yy_action_4)
 }
 
 // [3, trailer → PERCENT_LBRACE_CODE_PERCENT_RBRACE •, EOF]
 ///|
-fn yy_state_60(_lookahead : YYSymbol) -> YYDecision {
+fn yy_state_63(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_trailer, yy_action_3)
 }
 
 // [0, spec → header decl_list PERCENT_PERCENT rule_list trailer • EOF, $]
 ///|
-fn yy_state_61(_lookahead : YYSymbol) -> YYDecision {
+fn yy_state_64(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
-    T_EOF => Shift(yy_state_62)
+    T_EOF => Shift(yy_state_65)
     _ => Error
   }
 }
 
 // [0, spec → header decl_list PERCENT_PERCENT rule_list trailer EOF •, $]
 ///|
-fn yy_state_62(_lookahead : YYSymbol) -> YYDecision {
+fn yy_state_65(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(6, NT_spec, yy_action_0)
 }
 
@@ -1707,6 +1775,7 @@ fn error(
         (T_PERCENT_NONASSOC, TK_PERCENT_NONASSOC),
         (T_PERCENT_PREC, TK_PERCENT_PREC),
         (T_PERCENT_DERIVE, TK_PERCENT_DERIVE),
+        (T_PERCENT_INLINE, TK_PERCENT_INLINE),
         (T_COLON, TK_COLON),
         (T_BAR, TK_BAR),
         (T_EQ, TK_EQ),
