@@ -67,6 +67,7 @@ pub(all) enum Declaration {
 
 ///|
 pub(all) struct Rule {
+  inline : Bool
   nonterminal : Symbol
   type_ : Code?
   clauses : Array[Clause]

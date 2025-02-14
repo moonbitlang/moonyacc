@@ -86,6 +86,7 @@ pub(all) enum Declaration {
 pub(all) struct Rule {
   num : Int
   name : Symbol
+  inline : Bool
   type_ : Code?
   clauses : Array[Clause]
 } derive(ToJson)

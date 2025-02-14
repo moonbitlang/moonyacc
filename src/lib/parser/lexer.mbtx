@@ -32,6 +32,7 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
     "%nonassoc" as t => { (PERCENT_NONASSOC, $startpos(t), $endpos(t)) }
     "%prec" as t => { (PERCENT_PREC, $startpos(t), $endpos(t)) }
     "%derive" as t => { (PERCENT_DERIVE, $startpos(t), $endpos(t)) }
+    "%inline" as t => { (PERCENT_INLINE, $startpos(t), $endpos(t)) }
     "%%" as t => {
       if phase.val <= 0 {
         phase.val += 1
