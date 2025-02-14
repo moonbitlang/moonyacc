@@ -39,7 +39,8 @@ pub fn compile(
   filename~ : String,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
-  source_map_builder? : &@codegen.SourceMapBuilder
+  source_map_builder? : &@codegen.SourceMapBuilder,
+  generator~ : &@codegen.CodeGenerator
 ) -> String {
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
@@ -100,7 +101,7 @@ pub fn compile(
   match mode {
     OnlyTokens => {
       let output = StringBuilder::new()
-      @gen_mbt.codegen_tokens(
+      generator.codegen_tokens(
         terminals,
         fn(name) {
           terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {
@@ -109,6 +110,7 @@ pub fn compile(
         },
         output,
         no_comments~,
+        derive_map=@immut/hashmap.new(),
       )
       return output.to_string()
     }
@@ -420,12 +422,12 @@ pub fn compile(
   }
   let output_buffer = StringBuilder::new()
   let output = @logger_with_cursor.new(output_buffer)
-  @gen_mbt.codegen(
+  generator.codegen(
     grammar,
     automaton,
     meta,
     output,
-    source_map_builder?,
+    source_map_builder~,
     grammar_filename=@_driver_util.path_basename(filename),
     mode=match mode {
       OnlyTokens => panic()

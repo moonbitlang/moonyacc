@@ -1,1 +1,7 @@
-{}
+{
+  "import": [
+    "moonbitlang/yacc/lib/grm",
+    "moonbitlang/yacc/lib/lr1",
+    "moonbitlang/yacc/lib/util/logger_with_cursor"
+  ]
+}

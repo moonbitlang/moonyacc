@@ -12,7 +12,8 @@
         "exit"
       ]
     },
-    "moonbitlang/yacc/lib/codegen"
+    "moonbitlang/yacc/lib/codegen",
+    "moonbitlang/yacc/lib/codegen/gen_mbt"
   ],
   "link": {
     "native": {

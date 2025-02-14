@@ -4,5 +4,6 @@
     "moonbitlang/yacc/lib/grm",
     "moonbitlang/yacc/lib/codegen",
     "moonbitlang/yacc/lib/util/logger_with_cursor"
-  ]
+  ],
+  "warn-list": "-6"
 }

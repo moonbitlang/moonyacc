@@ -124,6 +124,7 @@ fn main {
     filename=input_file.val,
     external_tokens=external_tokens.val,
     no_comments=no_comments.val,
+    generator=@gen_mbt.generator,
   )
   fn write_map_file!(file : String) {
     @fs.write_string_to_file!(

@@ -1,6 +1,7 @@
 {
   "import": [
-    "moonbitlang/yacc/lib/driver"
+    "moonbitlang/yacc/lib/driver",
+    "moonbitlang/yacc/lib/codegen/gen_mbt"
   ],
   "link": {
     "js": {

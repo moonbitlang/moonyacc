@@ -28,6 +28,7 @@ pub fn compile(
     mode~,
     filename="parser.mbty",
     no_comments=true,
+    generator=@gen_mbt.generator,
   )
   { ok: true, code }
 }

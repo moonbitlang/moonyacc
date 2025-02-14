@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-enum CodegenSymbol {
+priv enum CodegenSymbol {
   T(Int, String)
   NT(Int, String)
   EOI
@@ -29,7 +29,7 @@ fn to_string(self : CodegenSymbol) -> String {
 }
 
 ///|
-enum CodegenDecision {
+priv enum CodegenDecision {
   Accept
   Shift(Int)
   Reduce(Int, String, Int)
@@ -66,7 +66,7 @@ fn esc(code : String) -> String {
 }
 
 ///|
-pub fn codegen_tokens(
+fn codegen_tokens(
   terminals : Array[@grm.Terminal],
   terminal_meta : (String) -> @codegen.TerminalMeta,
   output : &Logger,
@@ -184,7 +184,7 @@ pub fn codegen_tokens(
 }
 
 ///|
-pub fn codegen(
+fn codegen(
   grammar : @grm.Grammar,
   automaton : @lr1.Automaton,
   meta : @codegen.MetaProvider,
@@ -983,3 +983,51 @@ pub fn codegen(
   // Footer
   output.write_string(meta.footer)
 }
+
+///|
+priv type CodeGenerator Unit
+
+///|
+impl @codegen.CodeGenerator for CodeGenerator with codegen_tokens(
+  self,
+  terminals,
+  terminal_meta,
+  output,
+  no_comments~,
+  derive_map~
+) {
+  ignore(self)
+  codegen_tokens(terminals, terminal_meta, output, no_comments~, derive_map~)
+}
+
+///|
+impl @codegen.CodeGenerator for CodeGenerator with codegen(
+  self,
+  grammar,
+  automaton,
+  meta,
+  output,
+  source_map_builder~,
+  grammar_filename~,
+  external_tokens~,
+  no_comments~,
+  mode~,
+  input_mode~
+) {
+  ignore(self)
+  codegen(
+    grammar,
+    automaton,
+    meta,
+    output,
+    source_map_builder?,
+    grammar_filename~,
+    external_tokens~,
+    no_comments~,
+    mode~,
+    input_mode~,
+  )
+}
+
+///|
+pub let generator : &@codegen.CodeGenerator = CodeGenerator(())
