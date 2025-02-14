@@ -1,5 +1,7 @@
 ///|
 pub(open) trait CodeGenerator {
+  void_type(Self) -> CodeFragment
+  void_action_code(Self) -> CodeFragment
   codegen_tokens(
     Self,
     Array[@grm.Terminal],

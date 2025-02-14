@@ -988,6 +988,18 @@ fn codegen(
 priv type CodeGenerator Unit
 
 ///|
+impl @codegen.CodeGenerator for CodeGenerator with void_type(self) {
+  ignore(self)
+  "Unit"
+}
+
+///|
+impl @codegen.CodeGenerator for CodeGenerator with void_action_code(self) {
+  ignore(self)
+  "()"
+}
+
+///|
 impl @codegen.CodeGenerator for CodeGenerator with codegen_tokens(
   self,
   terminals,

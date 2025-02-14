@@ -125,7 +125,7 @@ pub fn compile(
 
   let productions = []
   let starts : Array[String] = []
-  let mut position_data_type = "Unit"
+  let mut position_data_type = generator.void_type()
   let mut derive_map = @immut/hashmap.new()
   for decl in spec.decls {
     match decl {
@@ -185,7 +185,8 @@ pub fn compile(
       None =>
         match nonterminal_meta_map[lhs.num] {
           Some(_) => ()
-          None => nonterminal_meta_map[lhs.num] = { data_type: "Unit" }
+          None =>
+            nonterminal_meta_map[lhs.num] = { data_type: generator.void_type() }
         }
     }
     for clause in rule.clauses {
@@ -261,7 +262,7 @@ pub fn compile(
         OnlyTokens => panic()
         Default =>
           match clause.action.code {
-            None => body.push(("()", None))
+            None => body.push((generator.void_action_code(), None))
             Some({ code, subst, utf8_pos }) => {
               let mut last_index = 0
               for item in subst {
