@@ -76,7 +76,6 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
           num: nonterminal_by_name.size(),
           name,
           productions: [],
-          nullability: NonNullable, // Transient
         }
         nonterminal_by_name[name] = nt
         nonterminals.push(nt)
@@ -130,34 +129,6 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
   f(ctx)
   for f in defer {
     f()
-  }
-
-  // Populate nullability
-  for nt in nonterminals {
-    if nt.productions.iter().all(fn(p) { p.rhs.is_empty() }) {
-      nt.nullability = Null
-    }
-  }
-  fn is_nullable(symbol : Symbol) -> Bool {
-    match symbol {
-      T(_) => false
-      NT({ nullability: Null | Nullable, .. }) => true
-      NT({ nullability: NonNullable, .. }) => false
-    }
-  }
-
-  for {
-    let mut changed = false
-    for
-      nt in nonterminals.iter().filter(fn(nt) { nt.nullability == NonNullable }) {
-      if nt.productions.iter().any(fn(p) { p.rhs.iter().all(is_nullable) }) {
-        nt.nullability = Nullable
-        changed = true
-      }
-    }
-    if not(changed) {
-      break
-    }
   }
   let starts = starts.map(fn(name) {
     let start_nt = get_nonterminal(name)

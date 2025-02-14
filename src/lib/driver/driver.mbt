@@ -84,12 +84,7 @@ pub fn compile(
       Some(nt) => nt
       None => {
         let num = nonterminals.length()
-        let nonterm : @grm.Nonterminal = {
-          name,
-          num,
-          productions: [],
-          nullability: NonNullable, // transient
-        }
+        let nonterm : @grm.Nonterminal = { name, num, productions: [] }
         nonterminals.push(nonterm)
         nonterminal_by_name[name] = nonterm
         nonterm
@@ -382,36 +377,6 @@ pub fn compile(
           }
       }
       production_meta_map[num] = { bindings, body }
-    }
-  }
-
-  // Populate nullability
-  let transient_non_nullables = @sorted_set.from_iter(nonterminals.iter())
-  for nt in nonterminals {
-    if nt.productions.iter().all(fn(p) { p.rhs.is_empty() }) {
-      nt.nullability = Null
-      transient_non_nullables.remove(nt)
-    }
-  }
-  fn is_nullable(symbol : @grm.Symbol) -> Bool {
-    match symbol {
-      T(_) => false
-      NT({ nullability: Null | Nullable, .. }) => true
-      NT({ nullability: NonNullable, .. }) => false
-    }
-  }
-
-  while true {
-    let mut changed = false
-    for nt in transient_non_nullables {
-      if nt.productions.iter().any(fn(p) { p.rhs.iter().all(is_nullable) }) {
-        nt.nullability = Nullable
-        transient_non_nullables.remove(nt)
-        changed = true
-      }
-    }
-    if not(changed) {
-      break
     }
   }
   let starts = starts.map(fn(name) {

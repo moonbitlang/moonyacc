@@ -78,7 +78,6 @@ pub(all) struct Nonterminal {
   mut num : Int
   name : String
   productions : Array[Production]
-  mut nullability : Nullability
 }
 
 ///|
