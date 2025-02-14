@@ -43,7 +43,6 @@ pub(all) enum Associativity {
 pub(all) struct Terminal {
   mut num : Int
   name : String
-  references : Array[(Production, Int)]
   mut prec : (Int, Associativity)?
 }
 
@@ -77,7 +76,6 @@ pub(all) struct Nonterminal {
   mut num : Int
   name : String
   productions : Array[Production]
-  references : Array[(Production, Int)]
   mut nullability : Nullability
 }
 

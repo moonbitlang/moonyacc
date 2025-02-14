@@ -63,7 +63,6 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
         let t = Terminal::{
           num: terminal_by_name.size(),
           name,
-          references: [],
           prec: None,
         }
         terminal_by_name[name] = t
@@ -81,7 +80,6 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
           num: nonterminal_by_name.size(),
           name,
           productions: [],
-          references: [],
           nullability: NonNullable, // Transient
         }
         nonterminal_by_name[name] = nt
@@ -114,13 +112,12 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
           prec: None,
         }
         productions.push(production)
-        for index, symbol in production.rhs {
+        for symbol in production.rhs {
           match symbol {
             T(t) => {
-              t.references.push((production, index))
               last_prec = t.prec.map(fn { (level, _) => level })
             }
-            NT(nt) => nt.references.push((production, index))
+            NT(_) => ()
           }
         }
         production.prec = last_prec

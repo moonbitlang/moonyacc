@@ -71,7 +71,7 @@ pub fn compile(
       Some(t) => t
       None => {
         let num = terminals.length()
-        let term : @grm.Terminal = { name, num, prec: None, references: [] }
+        let term : @grm.Terminal = { name, num, prec: None }
         terminals.push(term)
         terminal_by_name[name] = term
         term
@@ -89,7 +89,6 @@ pub fn compile(
           num,
           productions: [],
           nullability: NonNullable, // transient
-          references: [],
         }
         nonterminals.push(nonterm)
         nonterminal_by_name[name] = nonterm
@@ -236,13 +235,10 @@ pub fn compile(
         None => {
           // TODO: Reconsider this
           let mut last_prec = None
-          for index, symbol in production.rhs {
+          for symbol in production.rhs {
             match symbol {
-              T(t) => {
-                t.references.push((production, index))
-                last_prec = t.prec.map(fn { (level, _) => level })
-              }
-              NT(nt) => nt.references.push((production, index))
+              T(t) => last_prec = t.prec.map(fn { (level, _) => level })
+              NT(_) => ()
             }
           }
           last_prec
@@ -428,7 +424,6 @@ pub fn compile(
       rhs: [NT(start_nt)],
       prec: None,
     }
-    start_nt.references.push((production, 0))
     productions.push(production)
     production
   })
