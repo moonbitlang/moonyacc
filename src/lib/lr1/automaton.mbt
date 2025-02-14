@@ -63,7 +63,9 @@ struct LR0Node {
 }
 
 ///|
-impl Eq for LR0Node with op_equal(self, other) { self.num == other.num }
+impl Eq for LR0Node with op_equal(self, other) {
+  self.num == other.num
+}
 
 ///|
 impl Compare for LR0Node with compare(self, other) {
@@ -93,7 +95,9 @@ pub(all) struct LR1State {
 }
 
 ///|
-pub impl Eq for LR1State with op_equal(self, other) { self.num == other.num }
+pub impl Eq for LR1State with op_equal(self, other) {
+  self.num == other.num
+}
 
 ///|
 pub impl Compare for LR1State with compare(self, other) {

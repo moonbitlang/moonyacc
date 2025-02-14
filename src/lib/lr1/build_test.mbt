@@ -120,6 +120,7 @@ fn test_grammar(
   it.snapshot!(filename~)
 }
 
+///|
 test "1" (it : @test.T) {
   // test data from https://en.wikipedia.org/wiki/LR_parser
   let grammar = @grm.build(fn(ctx) {
@@ -134,6 +135,7 @@ test "1" (it : @test.T) {
   test_grammar!(grammar~, filename="1.md", it)
 }
 
+///|
 test "2" (it : @test.T) {
   // test data from https://www.javatpoint.com/clr-1-parsing
   let grammar = @grm.build(fn(ctx) {
@@ -146,6 +148,7 @@ test "2" (it : @test.T) {
   test_grammar!(grammar~, filename="2.md", it)
 }
 
+///|
 test "3" (it : @test.T) {
   // test data from https://www.javatpoint.com/clr-1-parsing
   let grammar = @grm.build(fn(ctx) {

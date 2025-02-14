@@ -12,6 +12,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
+///|
 test {
   footer()
   let tokens = [
@@ -37,6 +38,7 @@ test {
   assert_eq!(result, 3)
 }
 
+///|
 test {
   let tokens = [NUMBER(3), PLUS, LPAREN, NUMBER(2), MINUS, NUMBER(5)]
   let mut cursor = 0

@@ -109,6 +109,7 @@ fn make_input_provider(
   }
 }
 
+///|
 test "parse" {
   let actions : Map[Int, (ArrayView[Obj]) -> Obj] = {}
   let grammar = @grm.build(fn(ctx) {

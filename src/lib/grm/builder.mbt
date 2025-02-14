@@ -60,11 +60,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
     match terminal_by_name[name] {
       Some(t) => t
       None => {
-        let t = Terminal::{
-          num: terminal_by_name.size(),
-          name,
-          prec: None,
-        }
+        let t = Terminal::{ num: terminal_by_name.size(), name, prec: None }
         terminal_by_name[name] = t
         terminals.push(t)
         t
@@ -114,9 +110,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
         productions.push(production)
         for symbol in production.rhs {
           match symbol {
-            T(t) => {
-              last_prec = t.prec.map(fn { (level, _) => level })
-            }
+            T(t) => last_prec = t.prec.map(fn { (level, _) => level })
             NT(_) => ()
           }
         }

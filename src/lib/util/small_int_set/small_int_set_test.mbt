@@ -12,6 +12,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
+///|
 test "@small_int_set.add/basic" {
   let empty = @small_int_set.empty()
   let s1 = @small_int_set.add(empty, 0)
@@ -21,6 +22,7 @@ test "@small_int_set.add/basic" {
   inspect!(@small_int_set.contains(s2, 1), content="true")
 }
 
+///|
 test "@small_int_set.is_empty" {
   // Test empty set
   let empty = @small_int_set.empty()
@@ -35,6 +37,7 @@ test "@small_int_set.is_empty" {
   inspect!(removed.is_empty(), content="true")
 }
 
+///|
 test "@small_int_set.iter/empty" {
   // Test iterating over an empty set
   let empty_set = @small_int_set.empty()
@@ -42,6 +45,7 @@ test "@small_int_set.iter/empty" {
   inspect!(elements, content="[]")
 }
 
+///|
 test "@small_int_set.singleton/boundary" {
   // Test minimum reasonable input
   let set0 = @small_int_set.singleton(0)
@@ -59,6 +63,7 @@ test "@small_int_set.singleton/boundary" {
   inspect!(@small_int_set.contains(set32, 31), content="false")
 }
 
+///|
 test "@small_int_set.iter/single_word" {
   // Test iterating over elements in a single word (0-31)
   let mut set = @small_int_set.empty()
@@ -69,12 +74,14 @@ test "@small_int_set.iter/single_word" {
   inspect!(elements, content="[0, 1, 31]")
 }
 
+///|
 test "@small_int_set.iter/singleton" {
   let set = @small_int_set.singleton(64)
   let elements = set.iter().to_array()
   inspect!(elements, content="[64]")
 }
 
+///|
 test "@small_int_set.iter/multi_word" {
   // Test iterating over elements spanning multiple words (crossing 32-bit boundary)
   let mut set = @small_int_set.empty()
@@ -85,6 +92,7 @@ test "@small_int_set.iter/multi_word" {
   inspect!(elements, content="[31, 32, 63]")
 }
 
+///|
 test "@small_int_set.from_iter/basic" {
   let set = @small_int_set.from_iter([1, 2, 3].iter())
   inspect!(set.contains(1), content="true")
@@ -93,11 +101,13 @@ test "@small_int_set.from_iter/basic" {
   inspect!(set.contains(4), content="false")
 }
 
+///|
 test "@small_int_set.from_iter/empty" {
   let set = @small_int_set.from_iter(Iter::empty())
   inspect!(set.is_empty(), content="true")
 }
 
+///|
 test "@small_int_set.from_iter/multi_word" {
   // Test with numbers that span multiple words (32-bit boundaries)
   let set = @small_int_set.from_iter([31, 32, 33, 64].iter())
@@ -108,6 +118,7 @@ test "@small_int_set.from_iter/multi_word" {
   inspect!(set.contains(34), content="false")
 }
 
+///|
 test "@small_int_set.add/word_boundary" {
   let empty = @small_int_set.empty()
   let s1 = @small_int_set.add(empty, 31)
@@ -117,6 +128,7 @@ test "@small_int_set.add/word_boundary" {
   inspect!(@small_int_set.contains(s2, 33), content="false")
 }
 
+///|
 test "@small_int_set.add/idempotent" {
   let empty = @small_int_set.empty()
   let s1 = @small_int_set.add(empty, 5)
@@ -125,6 +137,7 @@ test "@small_int_set.add/idempotent" {
   inspect!(@small_int_set.contains(s2, 5), content="true")
 }
 
+///|
 test "@small_int_set.remove" {
   // Test basic remove functionality
   let set = @small_int_set.empty()
@@ -135,6 +148,7 @@ test "@small_int_set.remove" {
   inspect!(@small_int_set.contains(result, 10), content="true")
 }
 
+///|
 test "@small_int_set.remove" {
   // Test removing the last element in a word
   let set = @small_int_set.singleton(1)
@@ -149,6 +163,7 @@ test "@small_int_set.remove" {
   inspect!(@small_int_set.remove(set3, 33), content="{1}")
 }
 
+///|
 test "@small_int_set.remove/non_existent" {
   // Test removing non-existent element should return same set
   let set = @small_int_set.empty()
@@ -159,6 +174,7 @@ test "@small_int_set.remove/non_existent" {
   inspect!(@small_int_set.contains(set1, 1), content="true")
 }
 
+///|
 test "@small_int_set.remove/boundary" {
   // Test removing elements at word boundaries
   let set = @small_int_set.empty()
@@ -171,6 +187,7 @@ test "@small_int_set.remove/boundary" {
   inspect!(@small_int_set.contains(result, 33), content="true")
 }
 
+///|
 test "@small_int_set.union/empty_sets" {
   let empty = @small_int_set.empty()
   let result = @small_int_set.union(empty, empty)
@@ -181,6 +198,7 @@ test "@small_int_set.union/empty_sets" {
   }
 }
 
+///|
 test "@small_int_set.union/disjoint_sets" {
   let set1 = @small_int_set.empty()
     |> @small_int_set.add(1)
@@ -196,6 +214,7 @@ test "@small_int_set.union/disjoint_sets" {
   inspect!(@small_int_set.contains(union, 5), content="false")
 }
 
+///|
 test "@small_int_set.union/overlapping_sets" {
   let set1 = @small_int_set.empty()
     |> @small_int_set.add(1)
@@ -210,6 +229,7 @@ test "@small_int_set.union/overlapping_sets" {
   inspect!(@small_int_set.contains(union, 4), content="false")
 }
 
+///|
 test "@small_int_set.union" {
   // Case 1: Tests when ib < jb
   // Create a set with elements that will have a lower word index
@@ -235,6 +255,7 @@ test "@small_int_set.union" {
   inspect!(@small_int_set.contains(union3, 2), content="true")
 }
 
+///|
 test "@small_int_set.intersection/empty_sets" {
   let empty = @small_int_set.empty()
   let result = @small_int_set.intersection(empty, empty)
@@ -245,6 +266,7 @@ test "@small_int_set.intersection/empty_sets" {
   }
 }
 
+///|
 test "@small_int_set.intersection/disjoint_sets" {
   // Create two sets with no common elements
   let set1 = @small_int_set.add(@small_int_set.empty(), 1)
@@ -261,6 +283,7 @@ test "@small_int_set.intersection/disjoint_sets" {
   }
 }
 
+///|
 test "@small_int_set.intersection/overlapping_sets" {
   // Create two sets with some common elements
   let set1 = @small_int_set.add(@small_int_set.empty(), 1)
@@ -278,6 +301,7 @@ test "@small_int_set.intersection/overlapping_sets" {
   inspect!(@small_int_set.contains(result, 4), content="false")
 }
 
+///|
 test "@small_int_set.intersection" {
   // Test case 1: Test when ib < jb
   // Create two sets where the first set has a smaller word index
@@ -298,6 +322,7 @@ test "@small_int_set.intersection" {
   assert_eq!(set5.intersection(set6), @small_int_set.singleton(2))
 }
 
+///|
 test "@small_int_set.difference/empty_sets" {
   let empty = @small_int_set.empty()
   let result = @small_int_set.difference(empty, empty)
@@ -307,6 +332,7 @@ test "@small_int_set.difference/empty_sets" {
   }
 }
 
+///|
 test "@small_int_set.difference/disjoint_sets" {
   // Create two disjoint sets {0,1,2} and {3,4,5}
   let mut set1 = @small_int_set.empty()
@@ -328,6 +354,7 @@ test "@small_int_set.difference/disjoint_sets" {
   }
 }
 
+///|
 test "@small_int_set.difference/overlapping_sets" {
   // Create two overlapping sets {0,1,2} and {1,2,3}
   let mut set1 = @small_int_set.empty()
@@ -346,6 +373,7 @@ test "@small_int_set.difference/overlapping_sets" {
   }
 }
 
+///|
 test "@small_int_set.difference" {
   // Test case 1: when ib < jb
   // Create a set with element in lower word index and another with element in higher word index
@@ -365,12 +393,14 @@ test "@small_int_set.difference" {
   inspect!(@small_int_set.difference(set5, set6), content="{}")
 }
 
+///|
 test "@small_int_set.disjoint/empty_sets" {
   let empty1 = @small_int_set.empty()
   let empty2 = @small_int_set.empty()
   inspect!(@small_int_set.disjoint(empty1, empty2), content="true")
 }
 
+///|
 test "@small_int_set.disjoint/non_overlapping" {
   // Create two sets with elements in different words (chunks of 32 bits)
   let mut set1 = @small_int_set.empty()
@@ -382,6 +412,7 @@ test "@small_int_set.disjoint/non_overlapping" {
   inspect!(@small_int_set.disjoint(set1, set2), content="true")
 }
 
+///|
 test "@small_int_set.disjoint/overlapping" {
   let mut set1 = @small_int_set.empty()
   set1 = @small_int_set.add(set1, 5)
@@ -392,6 +423,7 @@ test "@small_int_set.disjoint/overlapping" {
   inspect!(@small_int_set.disjoint(set1, set2), content="false")
 }
 
+///|
 test "@small_int_set.disjoint" {
   // Test case 1: Sets with overlapping elements in the same word
   let set1 = @small_int_set.singleton(1).add(2)
@@ -409,6 +441,7 @@ test "@small_int_set.disjoint" {
   inspect!(@small_int_set.disjoint(empty1, empty2), content="true")
 }
 
+///|
 test "@small_int_set.subset" {
   // Empty set is subset of any set
   let empty = @small_int_set.empty()

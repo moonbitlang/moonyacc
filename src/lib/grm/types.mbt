@@ -47,7 +47,9 @@ pub(all) struct Terminal {
 }
 
 ///|
-pub impl Eq for Terminal with op_equal(self, other) { self.num == other.num }
+pub impl Eq for Terminal with op_equal(self, other) {
+  self.num == other.num
+}
 
 ///|
 pub impl Compare for Terminal with compare(self, other) {
@@ -122,7 +124,9 @@ pub(all) struct Production {
 }
 
 ///|
-pub impl Eq for Production with op_equal(self, other) { self.num == other.num }
+pub impl Eq for Production with op_equal(self, other) {
+  self.num == other.num
+}
 
 ///|
 pub impl Compare for Production with compare(self, other) {
