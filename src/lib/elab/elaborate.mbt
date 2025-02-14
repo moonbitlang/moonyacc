@@ -2,74 +2,190 @@
 pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
   let header = ast_spec.header
   let trailer = ast_spec.trailer
-  let decls = ast_spec.decls.map(fn(ast_decl) {
-    match ast_decl {
-      Start(symbols) => Start(symbols)
-      Token(symbols, type_~) => Token(symbols, type_~)
-      Token1(symbols, type_~, image~) => Token1(symbols, type_~, image~)
-      Type(symbols, type_~) => Type(symbols, type_~)
-      Derive(traits~, type_~) => Derive(traits~, type_~)
-      Position(type_~) => Position(type_~)
-      Left(symbols) => Left(symbols)
-      Right(symbols) => Right(symbols)
-      Nonassoc(symbols) => Nonassoc(symbols)
-    }
-  })
-  fn map_item_ident(
-    ast_item_ident : @parser.ClauseItemIdent
-  ) -> ClauseItemIdent {
-    match ast_item_ident {
-      Dollar(x) => Dollar(x)
-      Name(name) => Name(name)
+  let token_by_name : Map[String, Token] = {}
+  let rule_by_name : Map[String, Rule] = {}
+  let token_by_image : Map[String, Token] = {}
+  let tokens : Array[Token] = []
+  let rules : Array[Rule] = []
+  fn get_token_by_name(name : String) -> Token {
+    match token_by_name.get(name) {
+      Some(t) => t
+      None => {
+        let token : Token = {
+          num: token_by_name.size(),
+          name,
+          type_: None,
+          image: None,
+          prec: None,
+        }
+        token_by_name[name] = token
+        tokens.push(token)
+        token
+      }
     }
   }
 
-  let rules = ast_spec.rules.map(fn(ast_rule) {
-    let clauses = ast_rule.clauses.map(fn(ast_clause) {
+  // Prepare tokens
+  for ast_decl in ast_spec.decls {
+    match ast_decl {
+      Token(names, type_~, ..) =>
+        for name in names {
+          let token = get_token_by_name(name)
+          token.type_ = type_
+        }
+      Token1(name, type_~, image~) => {
+        let token = get_token_by_name(name)
+        token.type_ = type_
+        token.image = Some(image)
+        token_by_image[image] = token
+      }
+      _ => ()
+    }
+  }
+
+  // Prepare rules
+  for ast_rule in ast_spec.rules {
+    let rule : Rule = {
+      num: rule_by_name.size(),
+      name: ast_rule.nonterminal,
+      type_: ast_rule.type_,
+      clauses: [],
+    }
+    rules.push(rule)
+    rule_by_name[rule.name] = rule
+  }
+  let mut curr_prec = 0
+  let prec_map = @sorted_map.new()
+  for ast_decl in ast_spec.decls {
+    match ast_decl {
+      Left(idents) | Right(idents) | Nonassoc(idents) => {
+        let assoc : Associativity = match ast_decl {
+          Left(_) => LeftAssoc
+          Right(_) => RightAssoc
+          Nonassoc(_) => NonAssoc
+          _ => panic()
+        }
+        let prec = curr_prec
+        curr_prec += 1
+        for ident in idents {
+          prec_map[ident] = (prec, assoc)
+          match token_by_name[ident] {
+            None => ()
+            Some(token) => token.prec = Some((prec, assoc))
+          }
+        }
+      }
+      _ => ()
+    }
+  }
+  let decls = ast_spec.decls.map(map_decl)
+  for ast_rule in ast_spec.rules {
+    let rule = rule_by_name[ast_rule.nonterminal].unwrap()
+    for ast_clause in ast_rule.clauses {
       let items = ast_clause.items.map(fn(ast_item) {
         ClauseItem::{
           binder: ast_item.binder,
-          symbol: match ast_item.symbol {
-            Symbol(symbol) => Symbol(symbol)
-            Image(symbol) => Image(symbol)
+          desc: match ast_item.symbol {
+            Symbol(symbol) =>
+              match token_by_name[symbol] {
+                None => RuleCall(rule_by_name[symbol].unwrap())
+                Some(token) => Token(token)
+              }
+            Image(image) => Token(token_by_image[image].unwrap())
           },
         }
       })
-      Clause::{
-        items,
-        prec: ast_clause.prec,
-        action: ClauseAction::{
-          code: match ast_clause.action.code {
-            None => None
-            Some(code) =>
-              Some(CodeWithSubst::{
-                code: code.code,
-                utf8_pos: code.utf8_pos,
-                subst: code.subst.map(fn(ast_subst) {
-                  SubstItem::{
-                    start: ast_subst.start,
-                    end: ast_subst.end,
-                    desc: match ast_subst.desc {
-                      Dollar(x) => Dollar(x)
-                      StartPos => StartPos
-                      EndPos => EndPos
-                      Loc => Loc
-                      StartPosOf(x) => StartPosOf(map_item_ident(x))
-                      EndPosOf(x) => EndPosOf(map_item_ident(x))
-                      LocOf(x) => LocOf(map_item_ident(x))
-                      SymbolStartPos => SymbolStartPos
-                      Sloc => Sloc
-                    },
-                  }
-                }),
-              })
-          },
-          start: ast_clause.action.start,
-          end: ast_clause.action.end,
-        },
+      let prec = match ast_clause.prec {
+        Some(prec) => {
+          // TODO: error reporting
+          let (prec, _assoc) = prec_map[prec].unwrap()
+          Some(prec)
+        }
+        None => {
+          /// FROM ocamlyacc's manual
+          // > Tokens and rules have precedences.
+          // > By default, the precedence of a rule is the precedence of its rightmost terminal.
+          // I don't what "rightmost terminal" means, but I guess it means the last terminal in the rule.
+          // So, I'll use the precedence of the last terminal in the rule.
+          let mut last_prec = None
+          for item in items.rev_iter() {
+            match item.desc {
+              Token(token) => {
+                last_prec = match token.prec {
+                  None => None
+                  Some((prec, _assoc)) => Some(prec)
+                }
+                break
+              }
+              RuleCall(_) => ()
+            }
+          }
+          last_prec
+        }
       }
-    })
-    Rule::{ nonterminal: ast_rule.nonterminal, type_: ast_rule.type_, clauses }
-  })
-  ParserSpec::{ header, decls, trailer, rules }
+      let clause = Clause::{
+        items,
+        prec,
+        action: map_action(ast_clause.action),
+      }
+      rule.clauses.push(clause)
+    }
+  }
+  ParserSpec::{ header, decls, trailer, tokens, rules }
+}
+
+///|
+fn map_decl(ast_decl : @parser.Declaration) -> Declaration {
+  match ast_decl {
+    Start(symbols) => Start(symbols)
+    Token(symbols, type_~) => Token(symbols, type_~)
+    Token1(symbols, type_~, image~) => Token1(symbols, type_~, image~)
+    Type(symbols, type_~) => Type(symbols, type_~)
+    Derive(traits~, type_~) => Derive(traits~, type_~)
+    Position(type_~) => Position(type_~)
+    Left(symbols) => Left(symbols)
+    Right(symbols) => Right(symbols)
+    Nonassoc(symbols) => Nonassoc(symbols)
+  }
+}
+
+///|
+fn map_action(ast_action : @parser.ClauseAction) -> ClauseAction {
+  ClauseAction::{
+    code: match ast_action.code {
+      None => None
+      Some(code) =>
+        Some(CodeWithSubst::{
+          code: code.code,
+          utf8_pos: code.utf8_pos,
+          subst: code.subst.map(fn(ast_subst) {
+            SubstItem::{
+              start: ast_subst.start,
+              end: ast_subst.end,
+              desc: match ast_subst.desc {
+                Dollar(x) => Dollar(x)
+                StartPos => StartPos
+                EndPos => EndPos
+                Loc => Loc
+                StartPosOf(x) => StartPosOf(map_item_ident(x))
+                EndPosOf(x) => EndPosOf(map_item_ident(x))
+                LocOf(x) => LocOf(map_item_ident(x))
+                SymbolStartPos => SymbolStartPos
+                Sloc => Sloc
+              },
+            }
+          }),
+        })
+    },
+    start: ast_action.start,
+    end: ast_action.end,
+  }
+}
+
+///|
+fn map_item_ident(ast_item_ident : @parser.ClauseItemIdent) -> ClauseItemIdent {
+  match ast_item_ident {
+    Dollar(x) => Dollar(x)
+    Name(name) => Name(name)
+  }
 }

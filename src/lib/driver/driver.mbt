@@ -62,52 +62,41 @@ pub fn compile(
   let terminals = []
   let nonterminals = []
   let terminal_by_name : Map[String, @grm.Terminal] = {}
-  let terminal_by_image : Map[String, @grm.Terminal] = {}
   let nonterminal_by_name : Map[String, @grm.Nonterminal] = {}
-  let production_meta_map : Map[Int, @codegen.ProductionMeta] = {}
-  let terminal_meta_map : Map[Int, @codegen.TerminalMeta] = {}
-  let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = {}
-  fn get_terminal_by_name(name : String) -> @grm.Terminal {
-    match terminal_by_name.get(name) {
-      Some(t) => t
-      None => {
-        let num = terminals.length()
-        let term : @grm.Terminal = { name, num, prec: None }
-        terminals.push(term)
-        terminal_by_name[name] = term
-        term
-      }
+  for token in spec.tokens {
+    let terminal : @grm.Terminal = {
+      name: token.name,
+      num: token.num,
+      prec: match token.prec {
+        None => None
+        Some((prec, NonAssoc)) => Some((prec, @grm.NonAssoc))
+        Some((prec, LeftAssoc)) => Some((prec, @grm.LeftAssoc))
+        Some((prec, RightAssoc)) => Some((prec, @grm.RightAssoc))
+      },
     }
+    terminal_by_name[token.name] = terminal
+    terminals.push(terminal)
+  }
+  for rule in spec.rules {
+    let nonterminal : @grm.Nonterminal = {
+      name: rule.name,
+      num: rule.num,
+      productions: [],
+    }
+    nonterminal_by_name[rule.name] = nonterminal
+    nonterminals.push(nonterminal)
+  }
+  fn get_terminal_by_name(name : String) -> @grm.Terminal {
+    terminal_by_name.get(name).unwrap()
   }
 
   fn get_nonterminal_by_name(name : String) -> @grm.Nonterminal {
-    match nonterminal_by_name.get(name) {
-      Some(nt) => nt
-      None => {
-        let num = nonterminals.length()
-        let nonterm : @grm.Nonterminal = { name, num, productions: [] }
-        nonterminals.push(nonterm)
-        nonterminal_by_name[name] = nonterm
-        nonterm
-      }
-    }
+    nonterminal_by_name.get(name).unwrap()
   }
 
-  for cmd in spec.decls {
-    match cmd {
-      Token(names, type_~, ..) =>
-        for name in names {
-          let t = get_terminal_by_name(name)
-          terminal_meta_map[t.num] = { data_type: type_, image: None }
-        }
-      Token1(name, type_~, image~) => {
-        let t = get_terminal_by_name(name)
-        terminal_meta_map[t.num] = { data_type: type_, image: Some(image) }
-        terminal_by_image[image] = t
-      }
-      _ => ()
-    }
-  }
+  let production_meta_map : Map[Int, @codegen.ProductionMeta] = {}
+  let terminal_meta_map : Map[Int, @codegen.TerminalMeta] = {}
+  let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = {}
   match mode {
     OnlyTokens => {
       let output = StringBuilder::new()
@@ -125,9 +114,6 @@ pub fn compile(
     }
     _ => ()
   }
-  for rule in spec.rules {
-    get_nonterminal_by_name(rule.nonterminal) |> ignore
-  }
   fn get_symbol_by_name(name : String) -> @grm.Symbol {
     match terminal_by_name.get(name) {
       Some(t) => T(t)
@@ -137,12 +123,10 @@ pub fn compile(
 
   let productions = []
   let starts : Array[String] = []
-  let mut curr_prec = 0
   let mut position_data_type = "Unit"
   let mut derive_map = @immut/hashmap.new()
-  let prec_map = @sorted_map.new()
-  for cmd in spec.decls {
-    match cmd {
+  for decl in spec.decls {
+    match decl {
       Token(_) | Token1(_) => ()
       Start(names) => starts.push_iter(names.iter())
       Type(names, type_~) =>
@@ -154,19 +138,7 @@ pub fn compile(
           }
         }
       Position(type_~) => position_data_type = type_
-      Left(names) | Right(names) | Nonassoc(names) => {
-        let assoc : @grm.Associativity = match cmd {
-          Left(_) => LeftAssoc
-          Right(_) => RightAssoc
-          Nonassoc(_) => NonAssoc
-          _ => panic()
-        }
-        let prec = curr_prec
-        curr_prec += 1
-        for name in names {
-          prec_map[name] = (prec, assoc)
-        }
-      }
+      Left(_) | Right(_) | Nonassoc(_) => ()
       Derive(traits~, type_~) => {
         let type_ : @codegen.PubType = match type_ {
           "Token" => Token
@@ -197,14 +169,15 @@ pub fn compile(
       }
     }
   }
-  for name, prec in prec_map {
-    match terminal_by_name.get(name) {
-      Some(t) => t.prec = Some(prec)
-      None => ()
+  for token in spec.tokens {
+    let terminal = get_terminal_by_name(token.name)
+    terminal_meta_map[terminal.num] = {
+      data_type: token.type_,
+      image: token.image,
     }
   }
   for rule in spec.rules {
-    let lhs = get_nonterminal_by_name(rule.nonterminal)
+    let lhs = get_nonterminal_by_name(rule.name)
     match rule.type_ {
       Some(type_) => nonterminal_meta_map[lhs.num] = { data_type: type_ }
       None =>
@@ -214,31 +187,17 @@ pub fn compile(
         }
     }
     for clause in rule.clauses {
-      let rhs = clause.items.map(fn(item) {
-        match item.symbol {
-          Symbol(symbol) => get_symbol_by_name(symbol)
-          Image(image) => T(terminal_by_image[image].unwrap())
-        }
-      })
-      let num = productions.length()
-      let production : @grm.Production = { num, lhs, rhs, prec: None }
-      production.prec = match clause.prec {
-        Some(prec) => {
-          // TODO: error reporting
-          let (level, _assoc) = prec_map[prec].unwrap()
-          Some(level)
-        }
-        None => {
-          // TODO: Reconsider this
-          let mut last_prec = None
-          for symbol in production.rhs {
-            match symbol {
-              T(t) => last_prec = t.prec.map(fn { (level, _) => level })
-              NT(_) => ()
-            }
+      let production_num = productions.length()
+      let production : @grm.Production = {
+        num: production_num,
+        lhs,
+        rhs: clause.items.map(fn(item) {
+          match item.desc {
+            Token(token) => T(get_terminal_by_name(token.name))
+            RuleCall(rule) => NT(get_nonterminal_by_name(rule.name))
           }
-          last_prec
-        }
+        }),
+        prec: clause.prec,
       }
       productions.push(production)
       lhs.productions.push(production)
@@ -371,18 +330,23 @@ pub fn compile(
         Default =>
           for index, item in clause.items {
             match item {
-              { symbol: _, binder: Some(name) } =>
-                bindings.push((Data(index), name))
+              { binder: Some(name), .. } => bindings.push((Data(index), name))
               _ => ()
             }
           }
       }
-      production_meta_map[num] = { bindings, body }
+      production_meta_map[production_num] = { bindings, body }
     }
   }
   let starts = starts.map(fn(name) {
     let start_nt = get_nonterminal_by_name(name)
-    let augmented_start_nt = get_nonterminal_by_name("\{name}_prime")
+    let augmented_start_nt : @grm.Nonterminal = {
+      num: nonterminals.length(),
+      name: "\{name}_prime",
+      productions: [],
+    }
+    nonterminal_by_name[augmented_start_nt.name] = augmented_start_nt
+    nonterminals.push(augmented_start_nt)
     nonterminal_meta_map[augmented_start_nt.num] = nonterminal_meta_map[start_nt.num].unwrap()
     let production : @grm.Production = {
       num: productions.length(),
@@ -391,6 +355,7 @@ pub fn compile(
       prec: None,
     }
     productions.push(production)
+    augmented_start_nt.productions.push(production)
     production
   })
   let grammar : @grm.Grammar = { terminals, nonterminals, productions, starts }

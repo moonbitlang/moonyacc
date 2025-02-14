@@ -13,11 +13,28 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+pub(all) enum Associativity {
+  LeftAssoc
+  RightAssoc
+  NonAssoc
+} derive(ToJson)
+
+///|
 pub(all) struct ParserSpec {
   header : Code?
   trailer : Code?
   decls : Array[Declaration]
+  tokens : Array[Token]
   rules : Array[Rule]
+} derive(ToJson)
+
+///|
+pub(all) struct Token {
+  num : Int
+  name : String
+  mut prec : (Int, Associativity)?
+  mut type_ : Code?
+  mut image : String?
 } derive(ToJson)
 
 ///|
@@ -67,7 +84,8 @@ pub(all) enum Declaration {
 
 ///|
 pub(all) struct Rule {
-  nonterminal : Symbol
+  num : Int
+  name : Symbol
   type_ : Code?
   clauses : Array[Clause]
 } derive(ToJson)
@@ -75,7 +93,7 @@ pub(all) struct Rule {
 ///|
 pub(all) struct Clause {
   items : Array[ClauseItem]
-  prec : Symbol?
+  prec : Int?
   action : ClauseAction
 } derive(ToJson)
 
@@ -96,11 +114,11 @@ pub(all) struct CodeWithSubst {
 ///|
 pub(all) struct ClauseItem {
   binder : Code?
-  symbol : ClauseItemSymbol
+  desc : ClauseItemDesc
 } derive(ToJson)
 
 ///|
-pub(all) enum ClauseItemSymbol {
-  Symbol(Symbol)
-  Image(String)
+pub(all) enum ClauseItemDesc {
+  Token(Token)
+  RuleCall(Rule)
 } derive(ToJson)
