@@ -116,55 +116,34 @@ pub fn compile(
     }
     _ => ()
   }
-  fn get_symbol_by_name(name : String) -> @grm.Symbol {
-    match terminal_by_name.get(name) {
-      Some(t) => T(t)
-      None => NT(nonterminal_by_name[name].unwrap())
+  let productions = []
+  let starts : Array[String] = spec.start_rules.map(fn(rule) { rule.name })
+  let mut position_data_type = spec.position_type.or(generator.void_type())
+  let mut derive_map = @immut/hashmap.new()
+  fn add_derive(t : @codegen.PubType, y : String) {
+    let x = derive_map[t].or("")
+    if not(x.split(",").map(fn(s) { s.trim(" ") }).contains(y)) {
+      let z = if x == "" { y } else { x + ", " + y }
+      derive_map = derive_map.add(t, z)
     }
   }
 
-  let productions = []
-  let starts : Array[String] = []
-  let mut position_data_type = generator.void_type()
-  let mut derive_map = @immut/hashmap.new()
-  for decl in spec.decls {
-    match decl {
-      Token(_) | Token1(_) => ()
-      Start(names) => starts.push_iter(names.iter())
-      Type(names, type_~) =>
-        for name in names {
-          let symbol = get_symbol_by_name(name)
-          match symbol {
-            T(_) => panic()
-            NT(nt) => nonterminal_meta_map[nt.num] = { data_type: type_ }
-          }
-        }
-      Position(type_~) => position_data_type = type_
-      Left(_) | Right(_) | Nonassoc(_) => ()
-      Derive(traits~, type_~) => {
-        let type_ : @codegen.PubType = match type_ {
-          "Token" => Token
-          "TokenKind" => TokenKind
-          "ParseError" => ParseError
-          _ => panic()
-        }
-        derive_map = derive_map.add(type_, traits)
-      }
-    }
+  for type_, traits in spec.derive_map {
+    add_derive(
+      match type_ {
+        "Token" => Token
+        "TokenKind" => TokenKind
+        "ParseError" => ParseError
+        _ => panic()
+      },
+      traits,
+    )
   }
   match mode {
     OnlyTokens => panic()
     Default => ()
     JsonCst(token_payload_rewrite~) => {
       position_data_type = "Int"
-      fn add_derive(t : @codegen.PubType, y : String) {
-        let x = derive_map[t].or("")
-        if not(x.split(",").map(fn(s) { s.trim(" ") }).contains(y)) {
-          let z = if x == "" { y } else { x + ", " + y }
-          derive_map = derive_map.add(t, z)
-        }
-      }
-
       match token_payload_rewrite {
         None => ()
         Some(_) => add_derive(Token, "Show")

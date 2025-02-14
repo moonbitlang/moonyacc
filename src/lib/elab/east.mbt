@@ -23,9 +23,11 @@ pub(all) enum Associativity {
 pub(all) struct ParserSpec {
   header : Code?
   trailer : Code?
-  decls : Array[Declaration]
   tokens : Array[Token]
   rules : Array[Rule]
+  start_rules : Array[Rule]
+  position_type : Code?
+  derive_map : Map[String, String]
 } derive(ToJson)
 
 ///|
@@ -70,23 +72,10 @@ pub(all) struct SubstItem {
 pub(all) typealias Symbol = String
 
 ///|
-pub(all) enum Declaration {
-  Start(Array[Symbol])
-  Token(Array[Symbol], type_~ : Code?)
-  Token1(Symbol, type_~ : Code?, image~ : String)
-  Type(Array[Symbol], type_~ : Code)
-  Derive(traits~ : Code, type_~ : Code)
-  Position(type_~ : Code)
-  Left(Array[Symbol])
-  Right(Array[Symbol])
-  Nonassoc(Array[Symbol])
-} derive(ToJson)
-
-///|
 pub(all) struct Rule {
   num : Int
   name : Symbol
-  type_ : Code?
+  mut type_ : Code?
   clauses : Array[Clause]
 } derive(ToJson)
 

@@ -89,10 +89,20 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
           }
         }
       }
+      Type(idents, type_~) =>
+        for ident in idents {
+          match token_by_name[ident] {
+            None =>
+              match rule_by_name[ident] {
+                None => panic()
+                Some(rule) => rule.type_ = Some(type_)
+              }
+            Some(token) => token.type_ = Some(type_)
+          }
+        }
       _ => ()
     }
   }
-  let decls = ast_spec.decls.map(map_decl)
   for ast_rule in ast_spec.rules {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     for ast_clause in ast_rule.clauses {
@@ -145,21 +155,28 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
       rule.clauses.push(clause)
     }
   }
-  ParserSpec::{ header, decls, trailer, tokens, rules }
-}
-
-///|
-fn map_decl(ast_decl : @parser.Declaration) -> Declaration {
-  match ast_decl {
-    Start(symbols) => Start(symbols)
-    Token(symbols, type_~) => Token(symbols, type_~)
-    Token1(symbols, type_~, image~) => Token1(symbols, type_~, image~)
-    Type(symbols, type_~) => Type(symbols, type_~)
-    Derive(traits~, type_~) => Derive(traits~, type_~)
-    Position(type_~) => Position(type_~)
-    Left(symbols) => Left(symbols)
-    Right(symbols) => Right(symbols)
-    Nonassoc(symbols) => Nonassoc(symbols)
+  let start_rules : Array[Rule] = []
+  let mut position_type : Code? = None
+  let derive_map : Map[String, Code] = {}
+  for ast_decl in ast_spec.decls {
+    match ast_decl {
+      Start(symbols) =>
+        for symbol in symbols {
+          start_rules.push(rule_by_name[symbol].unwrap())
+        }
+      Position(type_~) => position_type = Some(type_)
+      Derive(traits~, type_~) => derive_map[type_] = traits
+      _ => ()
+    }
+  }
+  ParserSpec::{
+    header,
+    trailer,
+    tokens,
+    rules,
+    start_rules,
+    position_type,
+    derive_map,
   }
 }
 
