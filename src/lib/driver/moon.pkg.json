@@ -13,6 +13,7 @@
       ]
     },
     "moonbitlang/yacc/lib/codegen/gen_mbt",
-    "moonbitlang/yacc/lib/util/logger_with_cursor"
+    "moonbitlang/yacc/lib/util/logger_with_cursor",
+    "moonbitlang/yacc/lib/elab"
   ]
 }

@@ -58,6 +58,7 @@ pub fn compile(
       exit(1)
     }
   }
+  let spec = @elab.elaborate(spec)
   let terminals = []
   let nonterminals = []
   let terminal_by_name : Map[String, @grm.Terminal] = {}
@@ -241,7 +242,7 @@ pub fn compile(
       }
       productions.push(production)
       lhs.productions.push(production)
-      fn item_ident_to_index(ident : @parser.ClauseItemIdent) -> Int {
+      fn item_ident_to_index(ident : @elab.ClauseItemIdent) -> Int {
         match ident {
           Dollar(index) => index
           Name(_) => panic()
@@ -250,7 +251,7 @@ pub fn compile(
 
       let bindings : Array[(@codegen.BindingSubject, @codegen.CodeFragment)] = []
       let visited = @sorted_set.new()
-      fn add_binding(desc : @parser.SubstItemDesc) {
+      fn add_binding(desc : @elab.SubstItemDesc) {
         guard not(visited.contains(desc)) else { return }
         visited.add(desc)
         match desc {
