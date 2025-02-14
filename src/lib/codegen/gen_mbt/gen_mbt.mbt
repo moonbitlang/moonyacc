@@ -37,15 +37,17 @@ enum CodegenDecision {
 } derive(Eq, Compare)
 
 ///|
-fn CodegenDecision::to_string(self : CodegenDecision) -> String {
-  match self {
-    Accept => "Accept"
-    Shift(state_num) => "Shift(yy_state_\{state_num})"
-    Reduce(num_symbols, nonterm, prod_num) =>
-      "Reduce(\{num_symbols}, NT_\{nonterm}, yy_action_\{prod_num})"
-    ReduceNoLookahead(num_symbols, nonterm, prod_num) =>
-      "ReduceNoLookahead(\{num_symbols}, NT_\{nonterm}, yy_action_\{prod_num})"
-  }
+impl Show for CodegenDecision with output(self, logger) {
+  logger.write_string(
+    match self {
+      Accept => "Accept"
+      Shift(state_num) => "Shift(yy_state_\{state_num})"
+      Reduce(num_symbols, nonterm, prod_num) =>
+        "Reduce(\{num_symbols}, NT_\{nonterm}, yy_action_\{prod_num})"
+      ReduceNoLookahead(num_symbols, nonterm, prod_num) =>
+        "ReduceNoLookahead(\{num_symbols}, NT_\{nonterm}, yy_action_\{prod_num})"
+    },
+  )
 }
 
 ///|

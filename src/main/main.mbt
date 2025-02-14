@@ -107,7 +107,7 @@ fn main {
     exit(1)
   }
   let parser_spec_src = try {
-    @fs.read_file_to_string!(path=input_file.val)
+    @fs.read_file_to_string!(input_file.val)
   } catch {
     err => abort(Show::to_string(err))
   }
@@ -125,21 +125,21 @@ fn main {
     external_tokens=external_tokens.val,
     no_comments=no_comments.val,
   )
-  fn write_map_file(file : String) {
-    @fs.write_string_to_file(
-      path=file,
-      content=@json.stringify(source_map.to_json(), indent=2),
+  fn write_map_file!(file : String) {
+    @fs.write_string_to_file!(
+      file,
+      @json.stringify(source_map.to_json(), indent=2),
     )
   }
 
   if output_file.val == "" {
     println(output)
     match output_map_file.val {
-      Some(file) => write_map_file(file)
+      Some(file) => write_map_file?(file).unwrap()
       None => ()
     }
   } else {
-    @fs.write_string_to_file(path=output_file.val, content=output)
-    write_map_file(output_map_file.val.or("\{output_file.val}.map.json"))
+    @fs.write_string_to_file?(output_file.val, output).unwrap()
+    write_map_file?(output_map_file.val.or("\{output_file.val}.map.json")).unwrap()
   }
 }
