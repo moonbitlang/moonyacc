@@ -104,6 +104,7 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
       _ => ()
     }
   }
+  let mut next_action_num = 0
   for ast_rule in ast_spec.rules {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     for ast_clause in ast_rule.clauses {
@@ -151,8 +152,9 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
       let clause = Clause::{
         items,
         prec,
-        action: map_action(ast_clause.action),
+        action: map_action(next_action_num, ast_clause.action),
       }
+      next_action_num += 1
       rule.clauses.push(clause)
     }
   }
@@ -182,7 +184,7 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
 }
 
 ///|
-fn map_action(ast_action : @parser.ClauseAction) -> Action {
+fn map_action(num : Int, ast_action : @parser.ClauseAction) -> Action {
   match ast_action.code {
     None => NoAction
     Some(code) => {
@@ -214,7 +216,7 @@ fn map_action(ast_action : @parser.ClauseAction) -> Action {
           orig_utf8_len: len,
         })
       }
-      Action(chunks)
+      SimpleAction({ num, chunks })
     }
   }
 }

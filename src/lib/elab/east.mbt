@@ -76,8 +76,14 @@ pub(all) enum ItemDesc {
 ///|
 pub(all) enum Action {
   NoAction
-  Action(Array[CodeChunk])
-  CompoundAction(Array[SubAction], Action)
+  SimpleAction(SimpleAction)
+  CompoundAction(Array[SubAction], SimpleAction)
+} derive(ToJson)
+
+///|
+pub(all) struct SimpleAction {
+  num : Int
+  chunks : Array[CodeChunk]
 } derive(ToJson)
 
 ///|

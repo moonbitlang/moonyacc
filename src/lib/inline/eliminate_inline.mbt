@@ -62,7 +62,11 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
       cb({
         ..clause,
         items: new_items,
-        action: CompoundAction(sub_actions, clause.action),
+        action: match clause.action {
+          NoAction => NoAction
+          SimpleAction(action) => CompoundAction(sub_actions, action)
+          CompoundAction(_) => panic()
+        },
       })
       if expand_cursor < 0 {
         break

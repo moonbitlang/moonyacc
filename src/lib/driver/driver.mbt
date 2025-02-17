@@ -242,8 +242,8 @@ pub fn compile(
         Default =>
           match clause.action {
             NoAction => body.push((generator.void_action_code(), None))
-            Action(chunks) =>
-              for chunk in chunks {
+            SimpleAction(act) =>
+              for chunk in act.chunks {
                 body.push(
                   (
                     match chunk.desc {
