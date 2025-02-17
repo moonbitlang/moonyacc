@@ -6,6 +6,8 @@ MoonYacc is a LR(1) parser generator for MoonBit programming language.
 
 See [calc.mbty](https://github.com/moonbitlang/moonyacc/blob/master/src/tests/calc_test/calc.mbty) for an example of grammar.
 
+See [MANUAL.md](https://github.com/moonbitlang/moonyacc/blob/master/doc/MANUAL.md) for more details.
+
 ## Features
 
 - Compatible with ocamlyacc's syntax
