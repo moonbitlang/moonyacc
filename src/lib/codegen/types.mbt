@@ -49,7 +49,7 @@ typealias Utf8Pos = Int
 ///|
 pub(all) struct ProductionMeta {
   bindings : Array[(BindingSubject, CodeFragment)]
-  body : Array[(CodeFragment, Utf8Pos?)]
+  body : Array[(CodeFragment, (Utf8Pos, Int)?)]
 }
 
 ///|

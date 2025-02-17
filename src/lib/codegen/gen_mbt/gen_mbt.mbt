@@ -419,10 +419,10 @@ fn codegen(
       "  YYObj_\{esc(nonterminal_meta(production.lhs.name).data_type)}({(); ",
     )
     for part in meta.body {
-      let (code, utf8_pos) = part
-      match utf8_pos {
+      let (code, original_range) = part
+      match original_range {
         None => ()
-        Some(original_utf8_pos) => {
+        Some((original_utf8_pos, _original_utf8_len)) => {
           let generated_utf8_pos = output.cursor()
           match source_map_builder {
             None => ()

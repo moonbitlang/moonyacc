@@ -236,7 +236,7 @@ pub fn compile(
         }
       }
 
-      let body : Array[(String, Int?)] = []
+      let body : Array[(String, (Int, Int)?)] = []
       match mode {
         OnlyTokens => panic()
         Default =>
@@ -246,10 +246,11 @@ pub fn compile(
               let mut last_index = 0
               for item in subst {
                 if item.start > last_index {
+                  let len = item.start - last_index
                   body.push(
                     (
                       code.substring(start=last_index, end=item.start),
-                      Some(utf8_pos + last_index),
+                      Some((utf8_pos + last_index, len)),
                     ),
                   )
                 }
@@ -278,10 +279,11 @@ pub fn compile(
                 last_index = item.end
               }
               if last_index < code.length() {
+                let len = code.length() - last_index
                 body.push(
                   (
                     code.substring(start=last_index, end=code.length()),
-                    Some(utf8_pos + last_index),
+                    Some((utf8_pos + last_index, len)),
                   ),
                 )
               }
