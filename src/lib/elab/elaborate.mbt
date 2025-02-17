@@ -182,9 +182,9 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
 }
 
 ///|
-fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
+fn map_action(ast_action : @parser.ClauseAction) -> Action {
   match ast_action.code {
-    None => None
+    None => NoAction
     Some(code) => {
       let chunks = []
       let mut last_index = 0
@@ -214,7 +214,7 @@ fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
           orig_utf8_len: len,
         })
       }
-      Some(chunks)
+      Action(chunks)
     }
   }
 }

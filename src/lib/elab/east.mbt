@@ -58,7 +58,7 @@ pub(all) struct Rule {
 pub(all) struct Clause {
   items : Array[Item]
   prec : Int?
-  action : Array[CodeChunk]?
+  action : Action
 } derive(ToJson)
 
 ///|
@@ -71,6 +71,20 @@ pub(all) struct Item {
 pub(all) enum ItemDesc {
   Token(Token)
   RuleCall(Rule)
+} derive(ToJson)
+
+///|
+pub(all) enum Action {
+  NoAction
+  Action(Array[CodeChunk])
+  CompoundAction(Array[SubAction], Action)
+} derive(ToJson)
+
+///|
+pub(all) struct SubAction {
+  start : Int
+  end : Int
+  action : Action
 } derive(ToJson)
 
 ///|
