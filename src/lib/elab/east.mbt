@@ -20,6 +20,9 @@ pub(all) enum Associativity {
 } derive(ToJson)
 
 ///|
+pub(all) typealias Code = String
+
+///|
 pub(all) struct ParserSpec {
   header : Code?
   trailer : Code?
@@ -40,7 +43,48 @@ pub(all) struct Token {
 } derive(ToJson)
 
 ///|
-pub(all) typealias Code = String
+pub(all) typealias Symbol = String
+
+///|
+pub(all) struct Rule {
+  num : Int
+  name : Symbol
+  mut type_ : Code?
+  clauses : Array[Clause]
+} derive(ToJson)
+
+///|
+pub(all) struct Clause {
+  items : Array[Item]
+  prec : Int?
+  action : Action
+} derive(ToJson)
+
+///|
+pub(all) struct Action {
+  code : CodeWithSubst?
+  start : Int
+  end : Int
+} derive(ToJson)
+
+///|
+pub(all) struct CodeWithSubst {
+  code : Code
+  utf8_pos : Int
+  subst : Array[SubstItem]
+} derive(ToJson)
+
+///|
+pub(all) struct Item {
+  binder : Code?
+  desc : ItemDesc
+} derive(ToJson)
+
+///|
+pub(all) enum ItemDesc {
+  Token(Token)
+  RuleCall(Rule)
+} derive(ToJson)
 
 ///|
 pub(all) enum SubstItemDesc {
@@ -67,47 +111,3 @@ pub(all) struct SubstItem {
   end : Int
   desc : SubstItemDesc
 } derive(Show, ToJson)
-
-///|
-pub(all) typealias Symbol = String
-
-///|
-pub(all) struct Rule {
-  num : Int
-  name : Symbol
-  mut type_ : Code?
-  clauses : Array[Clause]
-} derive(ToJson)
-
-///|
-pub(all) struct Clause {
-  items : Array[ClauseItem]
-  prec : Int?
-  action : ClauseAction
-} derive(ToJson)
-
-///|
-pub(all) struct ClauseAction {
-  code : CodeWithSubst?
-  start : Int
-  end : Int
-} derive(ToJson)
-
-///|
-pub(all) struct CodeWithSubst {
-  code : Code
-  utf8_pos : Int
-  subst : Array[SubstItem]
-} derive(ToJson)
-
-///|
-pub(all) struct ClauseItem {
-  binder : Code?
-  desc : ClauseItemDesc
-} derive(ToJson)
-
-///|
-pub(all) enum ClauseItemDesc {
-  Token(Token)
-  RuleCall(Rule)
-} derive(ToJson)

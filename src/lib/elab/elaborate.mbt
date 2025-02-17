@@ -107,7 +107,7 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     for ast_clause in ast_rule.clauses {
       let items = ast_clause.items.map(fn(ast_item) {
-        ClauseItem::{
+        Item::{
           binder: ast_item.binder,
           desc: match ast_item.symbol {
             Symbol(symbol) =>
@@ -181,8 +181,8 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
 }
 
 ///|
-fn map_action(ast_action : @parser.ClauseAction) -> ClauseAction {
-  ClauseAction::{
+fn map_action(ast_action : @parser.ClauseAction) -> Action {
+  Action::{
     code: match ast_action.code {
       None => None
       Some(code) =>
