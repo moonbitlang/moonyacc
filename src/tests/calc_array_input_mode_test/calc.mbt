@@ -412,12 +412,13 @@ fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
 fn yy_parse[T](
   tokens : Array[(Token, Position, Position)],
   start : YYState,
-  return_ : (YYObj) -> T
+  return_ : (YYObj) -> T,
+  initial_pos? : Position
 ) -> T!ParseError {
   let mut cursor = 0
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
   let data_stack : Array[(YYObj, Position, Position)] = []
-  let mut last_pos = tokens[0].1
+  let mut last_pos = initial_pos.or(tokens[0].1)
   let mut state = start
   let mut lookahead : (YYSymbol, (YYObj, Position, Position), Token?)? = None
   let mut last_shifted_state_stack = state_stack
@@ -548,11 +549,19 @@ fn error(
 }
 
 ///|
-pub fn start(tokens : Array[(Token, Position, Position)]) -> Int!ParseError {
-  yy_parse!(tokens, yy_state_0, fn {
-    YYObj_Int(result) => result
-    _ => panic()
-  })
+pub fn start(
+  tokens : Array[(Token, Position, Position)],
+  initial_pos? : Position
+) -> Int!ParseError {
+  yy_parse!(
+    tokens,
+    yy_state_0,
+    fn {
+      YYObj_Int(result) => result
+      _ => panic()
+    },
+    initial_pos?,
+  )
 }
 
 ///|

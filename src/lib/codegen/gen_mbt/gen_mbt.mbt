@@ -642,12 +642,13 @@ fn codegen(
         #|fn yy_parse[T](
         #|  tokens : Array[(Token, Position, Position)],
         #|  start : YYState,
-        #|  return_ : (YYObj) -> T
+        #|  return_ : (YYObj) -> T,
+        #|  initial_pos? : Position,
         #|) -> T!ParseError {
         #|  let mut cursor = 0
         #|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
         #|  let data_stack : Array[(YYObj, Position, Position)] = []
-        #|  let mut last_pos = tokens[0].1
+        #|  let mut last_pos = initial_pos.or(tokens[0].1)
         #|  let mut state = start
         #|  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token?)] = None
         #|  let mut last_shifted_state_stack = state_stack
@@ -910,7 +911,7 @@ fn codegen(
     match input_mode {
       Array =>
         output.write_string(
-          $|pub fn \{original_name}(tokens: Array[(Token, Position, Position)]) -> \{nonterminal_meta(name).data_type}!ParseError {
+          $|pub fn \{original_name}(tokens : Array[(Token, Position, Position)], initial_pos? : Position) -> \{nonterminal_meta(name).data_type}!ParseError {
           $|  yy_parse!(
           $|    tokens,
           $|    yy_state_\{start_state.num},
@@ -918,6 +919,7 @@ fn codegen(
           $|      YYObj_\{esc(nonterminal_meta(name).data_type)}(result) => result
           $|      _ => panic()
           $|    },
+          $|    initial_pos?,
           $|  )
           $|}
           $|
