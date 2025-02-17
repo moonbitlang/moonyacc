@@ -422,17 +422,21 @@ fn codegen(
       let (code, original_range) = part
       match original_range {
         None => ()
-        Some((original_utf8_pos, _original_utf8_len)) => {
+        Some((original_utf8_pos, original_utf8_len)) => {
           let generated_utf8_pos = output.cursor()
           match source_map_builder {
             None => ()
             Some(source_map_builder) =>
-              source_map_builder.add_mapping(
-                grammar_filename,
-                original_utf8_pos,
-                generated_utf8_pos,
-                code.length(),
-              )
+              if code.length() == original_utf8_len {
+                source_map_builder.add_mapping(
+                  grammar_filename,
+                  original_utf8_pos,
+                  generated_utf8_pos,
+                  code.length(),
+                )
+              } else {
+                // TODO: make source-map support this case
+              }
           }
         }
       }

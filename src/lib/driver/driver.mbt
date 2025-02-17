@@ -192,7 +192,7 @@ pub fn compile(
 
       let bindings : Array[(@codegen.BindingSubject, @codegen.CodeFragment)] = []
       let visited = @sorted_set.new()
-      fn add_binding(desc : @elab.SubstItemDesc) {
+      fn add_binding(desc : @elab.Subst) {
         guard not(visited.contains(desc)) else { return }
         visited.add(desc)
         match desc {
@@ -240,54 +240,38 @@ pub fn compile(
       match mode {
         OnlyTokens => panic()
         Default =>
-          match clause.action.code {
+          match clause.action {
             None => body.push((generator.void_action_code(), None))
-            Some({ code, subst, utf8_pos }) => {
-              let mut last_index = 0
-              for item in subst {
-                if item.start > last_index {
-                  let len = item.start - last_index
-                  body.push(
-                    (
-                      code.substring(start=last_index, end=item.start),
-                      Some((utf8_pos + last_index, len)),
-                    ),
-                  )
-                }
-                add_binding(item.desc)
+            Some(chunks) =>
+              for chunk in chunks {
                 body.push(
                   (
-                    match item.desc {
-                      Dollar(index) => "_dollar\{index}"
-                      StartPos => "_start_pos"
-                      EndPos => "_end_pos"
-                      Loc => "(_start_pos, _end_pos)"
-                      StartPosOf(arg) =>
-                        "_start_pos_of_item\{item_ident_to_index(arg)}"
-                      EndPosOf(arg) =>
-                        "_end_pos_of_item\{item_ident_to_index(arg)}"
-                      LocOf(arg) => {
-                        let index = item_ident_to_index(arg)
-                        "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
+                    match chunk.desc {
+                      Code(code) => code
+                      Subst(subst) => {
+                        add_binding(subst)
+                        match subst {
+                          Dollar(index) => "_dollar\{index}"
+                          StartPos => "_start_pos"
+                          EndPos => "_end_pos"
+                          Loc => "(_start_pos, _end_pos)"
+                          StartPosOf(arg) =>
+                            "_start_pos_of_item\{item_ident_to_index(arg)}"
+                          EndPosOf(arg) =>
+                            "_end_pos_of_item\{item_ident_to_index(arg)}"
+                          LocOf(arg) => {
+                            let index = item_ident_to_index(arg)
+                            "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
+                          }
+                          SymbolStartPos => "_symbol_start_pos"
+                          Sloc => "(_symbol_start_pos, _end_pos)"
+                        }
                       }
-                      SymbolStartPos => "_symbol_start_pos"
-                      Sloc => "(_symbol_start_pos, _end_pos)"
                     },
-                    None,
-                  ),
-                )
-                last_index = item.end
-              }
-              if last_index < code.length() {
-                let len = code.length() - last_index
-                body.push(
-                  (
-                    code.substring(start=last_index, end=code.length()),
-                    Some((utf8_pos + last_index, len)),
+                    Some((chunk.orig_utf8_pos, chunk.orig_utf8_len)),
                   ),
                 )
               }
-            }
           }
         JsonCst(_) => {
           add_binding(StartPos)

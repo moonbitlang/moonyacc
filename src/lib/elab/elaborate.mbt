@@ -181,42 +181,61 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
 }
 
 ///|
-fn map_action(ast_action : @parser.ClauseAction) -> Action {
-  Action::{
-    code: match ast_action.code {
-      None => None
-      Some(code) =>
-        Some(CodeWithSubst::{
-          code: code.code,
-          utf8_pos: code.utf8_pos,
-          subst: code.subst.map(fn(ast_subst) {
-            SubstItem::{
-              start: ast_subst.start,
-              end: ast_subst.end,
-              desc: match ast_subst.desc {
-                Dollar(x) => Dollar(x)
-                StartPos => StartPos
-                EndPos => EndPos
-                Loc => Loc
-                StartPosOf(x) => StartPosOf(map_item_ident(x))
-                EndPosOf(x) => EndPosOf(map_item_ident(x))
-                LocOf(x) => LocOf(map_item_ident(x))
-                SymbolStartPos => SymbolStartPos
-                Sloc => Sloc
-              },
-            }
-          }),
+fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
+  match ast_action.code {
+    None => None
+    Some(code) => {
+      let chunks = []
+      let mut last_index = 0
+      for item in code.subst {
+        if item.start > last_index {
+          let len = item.start - last_index
+          chunks.push(CodeChunk::{
+            desc: Code(code.code.substring(start=last_index, end=item.start)),
+            orig_utf8_pos: code.utf8_pos + last_index,
+            orig_utf8_len: len,
+          })
+        }
+        chunks.push(CodeChunk::{
+          desc: Subst(map_subst(item.desc)),
+          orig_utf8_pos: code.utf8_pos + item.start,
+          orig_utf8_len: item.end - item.start,
         })
-    },
-    start: ast_action.start,
-    end: ast_action.end,
+        last_index = item.end
+      }
+      if last_index < code.code.length() {
+        let len = code.code.length() - last_index
+        chunks.push(CodeChunk::{
+          desc: Code(
+            code.code.substring(start=last_index, end=code.code.length()),
+          ),
+          orig_utf8_pos: code.utf8_pos + last_index,
+          orig_utf8_len: len,
+        })
+      }
+      Some(chunks)
+    }
   }
 }
 
 ///|
-fn map_item_ident(ast_item_ident : @parser.ClauseItemIdent) -> ClauseItemIdent {
-  match ast_item_ident {
-    Dollar(x) => Dollar(x)
-    Name(name) => Name(name)
+fn map_subst(ast_subst : @parser.SubstItemDesc) -> Subst {
+  fn map_ident(ast_item_ident : @parser.ClauseItemIdent) -> ClauseItemIdent {
+    match ast_item_ident {
+      Dollar(x) => Dollar(x)
+      Name(name) => Name(name)
+    }
+  }
+
+  match ast_subst {
+    SymbolStartPos => SymbolStartPos
+    LocOf(x) => LocOf(map_ident(x))
+    EndPosOf(x) => EndPosOf(map_ident(x))
+    StartPosOf(x) => StartPosOf(map_ident(x))
+    Loc => Loc
+    EndPos => EndPos
+    StartPos => StartPos
+    Dollar(i) => Dollar(i)
+    Sloc => Sloc
   }
 }

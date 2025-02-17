@@ -57,21 +57,7 @@ pub(all) struct Rule {
 pub(all) struct Clause {
   items : Array[Item]
   prec : Int?
-  action : Action
-} derive(ToJson)
-
-///|
-pub(all) struct Action {
-  code : CodeWithSubst?
-  start : Int
-  end : Int
-} derive(ToJson)
-
-///|
-pub(all) struct CodeWithSubst {
-  code : Code
-  utf8_pos : Int
-  subst : Array[SubstItem]
+  action : Array[CodeChunk]?
 } derive(ToJson)
 
 ///|
@@ -87,7 +73,20 @@ pub(all) enum ItemDesc {
 } derive(ToJson)
 
 ///|
-pub(all) enum SubstItemDesc {
+pub(all) struct CodeChunk {
+  orig_utf8_pos : Int
+  orig_utf8_len : Int
+  desc : CodeChunkDesc
+} derive(ToJson)
+
+///|
+pub(all) enum CodeChunkDesc {
+  Code(Code)
+  Subst(Subst)
+} derive(ToJson)
+
+///|
+pub(all) enum Subst {
   Dollar(Int)
   StartPos
   EndPos
@@ -104,10 +103,3 @@ pub(all) enum ClauseItemIdent {
   Dollar(Int)
   Name(Code)
 } derive(Eq, Compare, Show, ToJson)
-
-///|
-pub(all) struct SubstItem {
-  start : Int
-  end : Int
-  desc : SubstItemDesc
-} derive(Show, ToJson)
