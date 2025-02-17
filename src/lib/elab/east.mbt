@@ -49,6 +49,7 @@ pub(all) typealias Symbol = String
 pub(all) struct Rule {
   num : Int
   name : Symbol
+  inline : Bool
   mut type_ : Code?
   clauses : Array[Clause]
 } derive(ToJson)
@@ -57,7 +58,7 @@ pub(all) struct Rule {
 pub(all) struct Clause {
   items : Array[Item]
   prec : Int?
-  action : Array[CodeChunk]?
+  action : Action
 } derive(ToJson)
 
 ///|
@@ -70,6 +71,26 @@ pub(all) struct Item {
 pub(all) enum ItemDesc {
   Token(Token)
   RuleCall(Rule)
+} derive(ToJson)
+
+///|
+pub(all) enum Action {
+  NoAction
+  SimpleAction(SimpleAction)
+  CompoundAction(Array[SubAction], SimpleAction)
+} derive(ToJson)
+
+///|
+pub(all) struct SimpleAction {
+  num : Int
+  chunks : Array[CodeChunk]
+} derive(ToJson)
+
+///|
+pub(all) struct SubAction {
+  start : Int
+  end : Int
+  action : Action
 } derive(ToJson)
 
 ///|

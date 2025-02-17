@@ -241,9 +241,9 @@ pub fn compile(
         OnlyTokens => panic()
         Default =>
           match clause.action {
-            None => body.push((generator.void_action_code(), None))
-            Some(chunks) =>
-              for chunk in chunks {
+            NoAction => body.push((generator.void_action_code(), None))
+            SimpleAction(act) =>
+              for chunk in act.chunks {
                 body.push(
                   (
                     match chunk.desc {
@@ -272,6 +272,8 @@ pub fn compile(
                   ),
                 )
               }
+            CompoundAction(_) => // TODO
+              panic()
           }
         JsonCst(_) => {
           add_binding(StartPos)
