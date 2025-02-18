@@ -19,23 +19,23 @@
 %%
 
 start
-  : add EOF         { $1 }
+  : add EOF                 { $1 }
   ;
 
 add
-  : add "+" factor  { $1 + $3 }
-  | add "-" factor  { $1 - $3 }
-  | factor          { $1 }
+  : lhs=add "+" rhs=factor  { lhs + rhs }
+  | lhs=add "-" rhs=factor  { lhs - rhs }
+  | factor                  { $1 }
   ;
 
 factor
-  : factor "*" term { $1 * $3 }
-  | term            { $1 }
+  : lhs=factor "*" rhs=term { lhs * rhs }
+  | term                    { $1 }
   ;
 
 term
-  : NUMBER          { $1 }
-  | "(" add ")"     { $2 }
+  : NUMBER                  { $1 }
+  | "(" add ")"             { $2 }
   ;
 
 (* OCaml style comment (* can be nested *) *)
