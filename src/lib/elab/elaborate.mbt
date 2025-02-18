@@ -13,9 +13,24 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
-  let header = ast_spec.header
-  let trailer = ast_spec.trailer
+pub(all) enum JsonCst {
+  No
+  Yes(TokenPayloadRewrite?)
+}
+
+///|
+pub(all) enum TokenPayloadRewrite {
+  NoPayload
+  JsonPayload
+}
+
+///|
+pub fn elaborate(
+  ast_spec : @parser.ParserSpec,
+  json_cst~ : JsonCst
+) -> ParserSpec {
+  let mut header = ast_spec.header
+  let mut trailer = ast_spec.trailer
   let token_by_name : Map[String, Token] = {}
   let rule_by_name : Map[String, Rule] = {}
   let token_by_image : Map[String, Token] = {}
@@ -171,6 +186,34 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
         }
       _ => ()
     }
+  }
+
+  // JsonCst
+  match json_cst {
+    No => ()
+    Yes(rewrite) => {
+      header = None
+      trailer = None
+      position_type = Some("Int")
+      for rule in rules {
+        rule.type_ = Some("Json")
+      }
+      match rewrite {
+        None => ()
+        Some(_) => derive_map.add("Token", "Show")
+      }
+    }
+  }
+  match json_cst {
+    No | Yes(None) => ()
+    Yes(Some(NoPayload)) =>
+      for token in tokens {
+        token.type_ = None
+      }
+    Yes(Some(JsonPayload)) =>
+      for token in tokens {
+        token.type_ = Some("Json")
+      }
   }
   ParserSpec::{
     header,

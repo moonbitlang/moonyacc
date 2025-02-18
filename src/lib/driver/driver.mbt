@@ -59,7 +59,15 @@ pub fn compile(
       exit(1)
     }
   }
-  let spec = @elab.elaborate(spec)
+  let spec = @elab.elaborate(
+    spec,
+    json_cst=match mode {
+      JsonCst(token_payload_rewrite=None) => Yes(None)
+      JsonCst(token_payload_rewrite=Some(NoPayload)) => Yes(Some(NoPayload))
+      JsonCst(token_payload_rewrite=Some(JsonPayload)) => Yes(Some(JsonPayload))
+      Default | OnlyTokens => No
+    },
+  )
   let terminals = []
   let nonterminals = []
   let terminal_by_name : Map[String, @grm.Terminal] = {}
@@ -118,19 +126,8 @@ pub fn compile(
   }
   let productions = []
   let starts : Array[String] = spec.start_rules.map(fn(rule) { rule.name })
-  let mut position_data_type = spec.position_type.or(generator.void_type())
-  let derive_map = spec.derive_map.copy()
-  match mode {
-    OnlyTokens => panic()
-    Default => ()
-    JsonCst(token_payload_rewrite~) => {
-      position_data_type = "Int"
-      match token_payload_rewrite {
-        None => ()
-        Some(_) => derive_map.add("Token", "Show")
-      }
-    }
-  }
+  let position_data_type = spec.position_type.or(generator.void_type())
+  let derive_map = spec.derive_map
   for token in spec.tokens {
     let terminal = get_terminal_by_name(token.name)
     terminal_meta_map[terminal.num] = {
@@ -324,45 +321,16 @@ pub fn compile(
     }
   }
   let meta : @codegen.MetaProvider = {
-    header: match mode {
-      OnlyTokens => panic()
-      Default => spec.header.or_default()
-      JsonCst(_) => ""
-    },
-    footer: match mode {
-      OnlyTokens => panic()
-      Default => spec.trailer.or_default()
-      JsonCst(_) => ""
-    },
+    header: spec.header.or_default(),
+    footer: spec.trailer.or_default(),
     position_data_type,
     terminal_meta: fn(name) {
-      let meta = terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn(
-
-      ) {
+      terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {
         { data_type: None, image: None }
       })
-      match mode {
-        OnlyTokens => panic()
-        Default | JsonCst(token_payload_rewrite=None) => meta
-        JsonCst(token_payload_rewrite=Some(NoPayload)) =>
-          { ..meta, data_type: None }
-        JsonCst(token_payload_rewrite=Some(JsonPayload)) =>
-          {
-            ..meta,
-            data_type: match meta.data_type {
-              Some(_) => Some("Json")
-              None => None
-            },
-          }
-      }
     },
     nonterminal_meta: fn(name) {
-      match mode {
-        OnlyTokens => panic()
-        Default =>
-          nonterminal_meta_map[get_nonterminal_by_name(name).num].unwrap()
-        JsonCst(_) => { data_type: "Json" }
-      }
+      nonterminal_meta_map[get_nonterminal_by_name(name).num].unwrap()
     },
     production_meta: fn(num) { production_meta_map[num].unwrap() },
     derive_map,
