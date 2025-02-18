@@ -37,20 +37,6 @@ priv enum CodegenDecision {
 } derive(Eq, Compare)
 
 ///|
-impl Show for CodegenDecision with output(self, logger) {
-  logger.write_string(
-    match self {
-      Accept => "Accept"
-      Shift(state_num) => "Shift(yy_state_\{state_num})"
-      Reduce(num_symbols, nonterm, prod_num) =>
-        "Reduce(\{num_symbols}, NT_\{nonterm}, yy_action_\{prod_num})"
-      ReduceNoLookahead(num_symbols, nonterm, prod_num) =>
-        "ReduceNoLookahead(\{num_symbols}, NT_\{nonterm}, yy_action_\{prod_num})"
-    },
-  )
-}
-
-///|
 fn esc(code : String) -> String {
   code
   .replace_all(old="@", new="_")
@@ -373,22 +359,16 @@ fn codegen(
   )
 
   // yy_action_xxx
-  for production in grammar.productions {
-    guard not(grammar.starts.contains(production)) else { continue }
-    let meta = production_meta(production.num)
+  for action in meta.actions {
     output.write_string(
-      $|fn yy_action_\{production.num}(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+      $|fn yy_action_\{action.num}(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
       $|
       ,
     )
-    for binding in meta.bindings {
+    for binding in action.bindings {
       match binding.0 {
-        Data(index) => {
-          let symbol = production.rhs[index]
-          let data_type = match symbol {
-            T(term) => terminal_meta(term.name).data_type.or("Unit")
-            NT(nonterm) => nonterminal_meta(nonterm.name).data_type
-          }
+        Data(index, type_~) => {
+          let data_type = type_.or("Unit")
           output.write_string(
             $|  guard let YYObj_\{esc(data_type)}(\{binding.1}) = _args[\{index}].0
             $|
@@ -402,7 +382,7 @@ fn codegen(
             ,
           )
         StartPos(index) | EndPos(index) =>
-          if production.rhs.length() == 0 {
+          if action.arity == 0 {
             output.write_string(
               $|  let \{binding.1} = _last_pos
               $|
@@ -430,10 +410,9 @@ fn codegen(
         }
       }
     }
-    output.write_string(
-      "  YYObj_\{esc(nonterminal_meta(production.lhs.name).data_type)}({(); ",
-    )
-    for part in meta.body {
+    let result_data_type = action.type_.or("Unit")
+    output.write_string("  YYObj_\{esc(result_data_type)}({(); ")
+    for part in action.body {
       let (code, original_range) = part
       match original_range {
         None => ()
@@ -595,6 +574,21 @@ fn codegen(
     total += grammar.terminals.length() + grammar.nonterminals.length()
 
     //
+    fn gen_decision(decision : CodegenDecision) -> String {
+      fn get_action_num(prod_num : Int) {
+        meta.actions[production_meta(prod_num).action].num
+      }
+
+      match decision {
+        Accept => "Accept"
+        Shift(state_num) => "Shift(yy_state_\{state_num})"
+        Reduce(num_symbols, nonterm, prod_num) =>
+          "Reduce(\{num_symbols}, NT_\{nonterm}, yy_action_\{get_action_num(prod_num)})"
+        ReduceNoLookahead(num_symbols, nonterm, prod_num) =>
+          "ReduceNoLookahead(\{num_symbols}, NT_\{nonterm}, yy_action_\{get_action_num(prod_num)})"
+      }
+    }
+
     if decision_groups.size() == 1 && no_lookahead_needed() {
       let decision = decision_groups.keys()[0]
       let decision = match decision {
@@ -603,7 +597,7 @@ fn codegen(
         key => key
       }
       output.write_string(
-        $|  \{decision}
+        $|  \{gen_decision(decision)}
         $|
         ,
       )
@@ -619,7 +613,7 @@ fn codegen(
           separator=" | ",
         )
         output.write_string(
-          $|    \{pattern} => \{decision}
+          $|    \{pattern} => \{gen_decision(decision)}
           $|
           ,
         )

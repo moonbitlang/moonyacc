@@ -103,3 +103,11 @@ pub(all) enum ClauseItemIdent {
   Dollar(Int)
   Name(Code)
 } derive(Eq, Compare, Show, ToJson)
+
+///|
+pub fn Item::type_(self : Item) -> Code? {
+  match self.desc {
+    Token(token) => token.type_
+    RuleCall(rule) => rule.type_
+  }
+}

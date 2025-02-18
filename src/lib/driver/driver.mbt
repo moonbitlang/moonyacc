@@ -135,6 +135,7 @@ pub fn compile(
     }
     _ => ()
   }
+  let actions : Array[@codegen.Action] = []
   for rule in spec.rules {
     let lhs = get_nonterminal_by_name(rule.name)
     match rule.type_ {
@@ -176,7 +177,9 @@ pub fn compile(
         match desc {
           Dollar(index) => {
             let name = "_dollar\{index}"
-            bindings.push((Data(index - 1), name))
+            bindings.push(
+              (Data(index - 1, type_=clause.items[index - 1].type_()), name),
+            )
           }
           StartPos =>
             if production.rhs.length() == 0 {
@@ -254,12 +257,21 @@ pub fn compile(
         Default =>
           for index, item in clause.items {
             match item {
-              { binder: Some(name), .. } => bindings.push((Data(index), name))
+              { binder: Some(name), .. } =>
+                bindings.push((Data(index, type_=item.type_()), name))
               _ => ()
             }
           }
       }
-      production_meta_map[production_num] = { bindings, body }
+      let action : @codegen.Action = {
+        num: actions.length(),
+        arity: clause.items.length(),
+        type_: rule.type_,
+        bindings,
+        body,
+      }
+      actions.push(action)
+      production_meta_map[production_num] = { action: action.num }
     }
   }
   let starts = starts.map(fn(name) {
@@ -302,6 +314,7 @@ pub fn compile(
     header: spec.header.or_default(),
     footer: spec.trailer.or_default(),
     position_data_type,
+    actions,
     terminal_meta: fn(name) {
       terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {
         { data_type: None, image: None }
