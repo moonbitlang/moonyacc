@@ -1,5 +1,6 @@
 {
   "import": [
-    "moonbitlang/yacc/lib/parser"
+    "moonbitlang/yacc/lib/parser",
+    "moonbitlang/yacc/lib/util/array_multimap"
   ]
 }

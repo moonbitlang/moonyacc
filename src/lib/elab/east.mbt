@@ -30,7 +30,7 @@ pub(all) struct ParserSpec {
   rules : Array[Rule]
   start_rules : Array[Rule]
   position_type : Code?
-  derive_map : Map[String, String]
+  derive_map : @array_multimap.T[String, String]
 } derive(ToJson)
 
 ///|

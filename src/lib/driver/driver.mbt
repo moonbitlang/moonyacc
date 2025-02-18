@@ -110,7 +110,7 @@ pub fn compile(
         },
         output,
         no_comments~,
-        derive_map=@immut/hashmap.new(),
+        derive_map=@array_multimap.new(),
       )
       return output.to_string()
     }
@@ -119,26 +119,7 @@ pub fn compile(
   let productions = []
   let starts : Array[String] = spec.start_rules.map(fn(rule) { rule.name })
   let mut position_data_type = spec.position_type.or(generator.void_type())
-  let mut derive_map = @immut/hashmap.new()
-  fn add_derive(t : @codegen.PubType, y : String) {
-    let x = derive_map[t].or("")
-    if not(x.split(",").map(fn(s) { s.trim(" ") }).contains(y)) {
-      let z = if x == "" { y } else { x + ", " + y }
-      derive_map = derive_map.add(t, z)
-    }
-  }
-
-  for type_, traits in spec.derive_map {
-    add_derive(
-      match type_ {
-        "Token" => Token
-        "TokenKind" => TokenKind
-        "ParseError" => ParseError
-        _ => panic()
-      },
-      traits,
-    )
-  }
+  let derive_map = spec.derive_map.copy()
   match mode {
     OnlyTokens => panic()
     Default => ()
@@ -146,7 +127,7 @@ pub fn compile(
       position_data_type = "Int"
       match token_payload_rewrite {
         None => ()
-        Some(_) => add_derive(Token, "Show")
+        Some(_) => derive_map.add("Token", "Show")
       }
     }
   }

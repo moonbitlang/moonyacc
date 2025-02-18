@@ -66,18 +66,30 @@ fn esc(code : String) -> String {
 }
 
 ///|
+const PUB_TYPE_TOKEN_KIND = "TokenKind"
+
+///|
+const PUB_TYPE_TOKEN = "Token"
+
+///|
+const PUB_TYPE_PARSE_ERROR = "ParseError"
+
+///|
 fn codegen_tokens(
   terminals : Array[@grm.Terminal],
   terminal_meta : (String) -> @codegen.TerminalMeta,
   output : &Logger,
   no_comments~ : Bool = false,
-  derive_map~ : @immut/hashmap.T[@codegen.PubType, String] = @immut/hashmap.new()
+  derive_map~ : @array_multimap.T[String, String] = @array_multimap.new()
 ) -> Unit {
   ignore(no_comments)
-  fn inject_derive(type_ : @codegen.PubType) -> @codegen.CodeFragment {
-    match derive_map[type_] {
-      None => ""
-      Some(traits) => " derive(\{traits})"
+  fn inject_derive(type_ : String) -> @codegen.CodeFragment {
+    match derive_map.get(type_) {
+      [] => ""
+      traits => {
+        let joined = traits.join(", ")
+        " derive(\{joined})"
+      }
     }
   }
 
@@ -103,7 +115,7 @@ fn codegen_tokens(
     }
   }
   output.write_string(
-    $|}\{inject_derive(Token)}
+    $|}\{inject_derive(PUB_TYPE_TOKEN)}
     $|
     $|pub fn Token::kind(self : Token) -> TokenKind {
     $|  match self {
@@ -148,7 +160,7 @@ fn codegen_tokens(
     )
   }
   output.write_string(
-    $|}\{inject_derive(TokenKind)}
+    $|}\{inject_derive(PUB_TYPE_TOKEN_KIND)}
     $|
     $|
     ,
@@ -198,10 +210,13 @@ fn codegen(
 ) -> Unit {
   let used_runtime_funcs = @sorted_set.new()
   let { terminal_meta, nonterminal_meta, production_meta, .. } = meta
-  fn inject_derive(type_ : @codegen.PubType) -> @codegen.CodeFragment {
-    match meta.derive_map[type_] {
-      None => ""
-      Some(traits) => " derive(\{traits})"
+  fn inject_derive(type_ : String) -> @codegen.CodeFragment {
+    match meta.derive_map.get(type_) {
+      [] => ""
+      traits => {
+        let joined = traits.join(", ")
+        " derive(\{joined})"
+      }
     }
   }
 
@@ -246,7 +261,7 @@ fn codegen(
     Pull => ()
   }
   output.write_string(
-    $|}\{inject_derive(ParseError)}
+    $|}\{inject_derive(PUB_TYPE_PARSE_ERROR)}
     $|
     $|
     ,

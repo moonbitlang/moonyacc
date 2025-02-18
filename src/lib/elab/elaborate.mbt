@@ -157,7 +157,7 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
   }
   let start_rules : Array[Rule] = []
   let mut position_type : Code? = None
-  let derive_map : Map[String, Code] = {}
+  let derive_map = @array_multimap.new()
   for ast_decl in ast_spec.decls {
     match ast_decl {
       Start(symbols) =>
@@ -165,7 +165,10 @@ pub fn elaborate(ast_spec : @parser.ParserSpec) -> ParserSpec {
           start_rules.push(rule_by_name[symbol].unwrap())
         }
       Position(type_~) => position_type = Some(type_)
-      Derive(traits~, type_~) => derive_map[type_] = traits
+      Derive(traits~, type_~) =>
+        for trait_ in traits.split(",").iter().map(String::trim_space) {
+          derive_map.add(type_, trait_)
+        }
       _ => ()
     }
   }

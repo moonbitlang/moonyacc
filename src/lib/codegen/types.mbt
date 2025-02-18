@@ -64,13 +64,6 @@ pub(all) struct NonTerminalMeta {
 }
 
 ///|
-pub(all) enum PubType {
-  Token
-  TokenKind
-  ParseError
-} derive(Eq, Compare, Hash, ToJson)
-
-///|
 pub(all) struct MetaProvider {
   header : CodeFragment
   footer : CodeFragment
@@ -78,5 +71,5 @@ pub(all) struct MetaProvider {
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
   production_meta : (Int) -> ProductionMeta
-  derive_map : @immut/hashmap.T[PubType, String]
+  derive_map : @array_multimap.T[String, String]
 }
