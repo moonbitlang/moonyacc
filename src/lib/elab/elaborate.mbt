@@ -118,6 +118,7 @@ pub fn elaborate(
       _ => ()
     }
   }
+  let mut next_clause_num = 0
   for ast_rule in ast_spec.rules {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     for ast_clause in ast_rule.clauses {
@@ -163,10 +164,12 @@ pub fn elaborate(
         }
       }
       let clause = Clause::{
+        num: next_clause_num,
         items,
         prec,
         action: map_action(ast_clause.action),
       }
+      next_clause_num += 1
       rule.clauses.push(clause)
     }
   }

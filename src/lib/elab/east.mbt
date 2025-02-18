@@ -55,6 +55,7 @@ pub(all) struct Rule {
 
 ///|
 pub(all) struct Clause {
+  num : Int
   items : Array[Item]
   prec : Int?
   action : Array[CodeChunk]?
