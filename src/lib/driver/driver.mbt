@@ -106,6 +106,17 @@ pub fn compile(
   let production_meta_map : Map[Int, @codegen.ProductionMeta] = {}
   let terminal_meta_map : Map[Int, @codegen.TerminalMeta] = {}
   let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = {}
+  let productions = []
+  let starts : Array[String] = spec.start_rules.map(fn(rule) { rule.name })
+  let position_data_type = spec.position_type.or(generator.void_type())
+  let derive_map = spec.derive_map
+  for token in spec.tokens {
+    let terminal = get_terminal_by_name(token.name)
+    terminal_meta_map[terminal.num] = {
+      data_type: token.type_,
+      image: token.image,
+    }
+  }
   match mode {
     OnlyTokens => {
       let output = StringBuilder::new()
@@ -118,22 +129,11 @@ pub fn compile(
         },
         output,
         no_comments~,
-        derive_map=@array_multimap.new(),
+        derive_map=spec.derive_map,
       )
       return output.to_string()
     }
     _ => ()
-  }
-  let productions = []
-  let starts : Array[String] = spec.start_rules.map(fn(rule) { rule.name })
-  let position_data_type = spec.position_type.or(generator.void_type())
-  let derive_map = spec.derive_map
-  for token in spec.tokens {
-    let terminal = get_terminal_by_name(token.name)
-    terminal_meta_map[terminal.num] = {
-      data_type: token.type_,
-      image: token.image,
-    }
   }
   for rule in spec.rules {
     let lhs = get_nonterminal_by_name(rule.name)
