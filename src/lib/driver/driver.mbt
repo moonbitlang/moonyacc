@@ -218,7 +218,7 @@ pub fn compile(
       }
 
       let body : Array[(String, (Int, Int)?)] = []
-      match clause.action {
+      match clause.action.desc {
         None => body.push((generator.void_action_code(), None))
         Some(chunks) =>
           for chunk in chunks {
@@ -264,7 +264,7 @@ pub fn compile(
           }
       }
       let action : @codegen.Action = {
-        num: actions.length(),
+        num: clause.action.num,
         arity: clause.items.length(),
         type_: rule.type_,
         bindings,

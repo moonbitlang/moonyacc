@@ -169,9 +169,12 @@ pub fn elaborate(
         num: clause_num,
         items,
         prec,
-        action: match json_cst {
-          No => map_action(ast_clause.action)
-          Yes(_) => make_jsoncst_action(rule.name, clause_num)
+        action: {
+          num: clause_num,
+          desc: match json_cst {
+            No => map_action(ast_clause.action)
+            Yes(_) => make_jsoncst_action(rule.name, clause_num)
+          },
         },
       }
       rule.clauses.push(clause)

@@ -58,7 +58,13 @@ pub(all) struct Clause {
   num : Int
   items : Array[Item]
   prec : Int?
-  action : Array[CodeChunk]?
+  action : Action
+} derive(ToJson)
+
+///|
+pub(all) struct Action {
+  num : Int
+  desc : Array[CodeChunk]?
 } derive(ToJson)
 
 ///|
