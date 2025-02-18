@@ -40,6 +40,7 @@ pub(all) enum BindingSubject {
   StartPos(Int)
   EndPos(Int)
   SymbolStartPos
+  SubAction(start~ : Int, action~ : Int)
 }
 
 ///|

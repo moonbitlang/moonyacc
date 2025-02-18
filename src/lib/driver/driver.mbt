@@ -136,6 +136,142 @@ pub fn compile(
     _ => ()
   }
   let actions : Array[@codegen.Action] = []
+  let action_by_clause_num : Map[Int, @codegen.Action] = {}
+  fn get_action_of_clause(
+    rule : @elab.Rule,
+    clause : @elab.Clause
+  ) -> @codegen.Action {
+    action_by_clause_num.get_or_init(clause.num, fn() {
+      let action = build_clause_action(rule, clause)
+      actions.push(action)
+      action
+    })
+  }
+
+  fn build_clause_action(rule : @elab.Rule, clause : @elab.Clause) {
+    fn item_ident_to_index(ident : @elab.ClauseItemIdent) -> Int {
+      match ident {
+        Dollar(index) => index
+        Name(_) => panic()
+      }
+    }
+
+    let bindings : Array[(@codegen.BindingSubject, @codegen.CodeFragment)] = []
+    let visited = @sorted_set.new()
+    fn add_binding(desc : @elab.Subst) {
+      guard not(visited.contains(desc)) else { return }
+      visited.add(desc)
+      match desc {
+        Dollar(index) => {
+          let name = "_dollar\{index}"
+          bindings.push(
+            (Data(index - 1, type_=clause.items[index - 1].type_()), name),
+          )
+        }
+        StartPos =>
+          if clause.items.length() == 0 {
+            bindings.push((LastPos, "_start_pos"))
+          } else {
+            bindings.push((StartPos(0), "_start_pos"))
+          }
+        Loc => {
+          add_binding(StartPos)
+          add_binding(EndPos)
+        }
+        EndPos =>
+          if clause.items.length() == 0 {
+            bindings.push((LastPos, "_end_pos"))
+          } else {
+            bindings.push((EndPos(clause.items.length() - 1), "_end_pos"))
+          }
+        StartPosOf(arg) => {
+          let index = item_ident_to_index(arg)
+          bindings.push((StartPos(index), "_start_pos_of_item\{index}"))
+        }
+        EndPosOf(arg) => {
+          let index = item_ident_to_index(arg)
+          bindings.push((EndPos(index), "_end_pos_of_item\{index}"))
+        }
+        LocOf(arg) => {
+          add_binding(StartPosOf(arg))
+          add_binding(EndPosOf(arg))
+        }
+        SymbolStartPos => bindings.push((SymbolStartPos, "_symbol_start_pos"))
+        Sloc => {
+          add_binding(SymbolStartPos)
+          add_binding(EndPos)
+        }
+      }
+    }
+
+    let body : Array[(String, (Int, Int)?)] = []
+    fn process_chunks(chunks : Array[@elab.CodeChunk]) {
+      for chunk in chunks {
+        body.push(
+          (
+            match chunk.desc {
+              Code(code) => code
+              Subst(subst) => {
+                add_binding(subst)
+                match subst {
+                  Dollar(index) => "_dollar\{index}"
+                  StartPos => "_start_pos"
+                  EndPos => "_end_pos"
+                  Loc => "(_start_pos, _end_pos)"
+                  StartPosOf(arg) =>
+                    "_start_pos_of_item\{item_ident_to_index(arg)}"
+                  EndPosOf(arg) => "_end_pos_of_item\{item_ident_to_index(arg)}"
+                  LocOf(arg) => {
+                    let index = item_ident_to_index(arg)
+                    "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
+                  }
+                  SymbolStartPos => "_symbol_start_pos"
+                  Sloc => "(_symbol_start_pos, _end_pos)"
+                }
+              }
+            },
+            chunk.loc,
+          ),
+        )
+      }
+    }
+
+    match clause.action.desc {
+      NoAction => body.push((generator.void_action_code(), None))
+      SimpleAction(chunks) => process_chunks(chunks)
+      CompoundAction(sub_actions, chunks) => {
+        for sub_action in sub_actions {
+          bindings.push(
+            (
+              SubAction(start=sub_action.start, action=sub_action.action.num),
+              "_sub_action_result_\{sub_action.start}",
+            ),
+          )
+        }
+        process_chunks(chunks)
+      }
+    }
+    match mode {
+      OnlyTokens => panic()
+      JsonCst(_) => ()
+      Default =>
+        for index, item in clause.items {
+          match item {
+            { binder: Some(name), .. } =>
+              bindings.push((Data(index, type_=item.type_()), name))
+            _ => ()
+          }
+        }
+    }
+    @codegen.Action::{
+      num: clause.action.num,
+      arity: clause.items.length(),
+      type_: rule.type_,
+      bindings,
+      body,
+    }
+  }
+
   for rule in spec.rules {
     let lhs = get_nonterminal_by_name(rule.name)
     match rule.type_ {
@@ -162,115 +298,7 @@ pub fn compile(
       }
       productions.push(production)
       lhs.productions.push(production)
-      fn item_ident_to_index(ident : @elab.ClauseItemIdent) -> Int {
-        match ident {
-          Dollar(index) => index
-          Name(_) => panic()
-        }
-      }
-
-      let bindings : Array[(@codegen.BindingSubject, @codegen.CodeFragment)] = []
-      let visited = @sorted_set.new()
-      fn add_binding(desc : @elab.Subst) {
-        guard not(visited.contains(desc)) else { return }
-        visited.add(desc)
-        match desc {
-          Dollar(index) => {
-            let name = "_dollar\{index}"
-            bindings.push(
-              (Data(index - 1, type_=clause.items[index - 1].type_()), name),
-            )
-          }
-          StartPos =>
-            if production.rhs.length() == 0 {
-              bindings.push((LastPos, "_start_pos"))
-            } else {
-              bindings.push((StartPos(0), "_start_pos"))
-            }
-          Loc => {
-            add_binding(StartPos)
-            add_binding(EndPos)
-          }
-          EndPos =>
-            if production.rhs.length() == 0 {
-              bindings.push((LastPos, "_end_pos"))
-            } else {
-              bindings.push((EndPos(production.rhs.length() - 1), "_end_pos"))
-            }
-          StartPosOf(arg) => {
-            let index = item_ident_to_index(arg)
-            bindings.push((StartPos(index), "_start_pos_of_item\{index}"))
-          }
-          EndPosOf(arg) => {
-            let index = item_ident_to_index(arg)
-            bindings.push((EndPos(index), "_end_pos_of_item\{index}"))
-          }
-          LocOf(arg) => {
-            add_binding(StartPosOf(arg))
-            add_binding(EndPosOf(arg))
-          }
-          SymbolStartPos => bindings.push((SymbolStartPos, "_symbol_start_pos"))
-          Sloc => {
-            add_binding(SymbolStartPos)
-            add_binding(EndPos)
-          }
-        }
-      }
-
-      let body : Array[(String, (Int, Int)?)] = []
-      match clause.action.desc {
-        None => body.push((generator.void_action_code(), None))
-        Some(chunks) =>
-          for chunk in chunks {
-            body.push(
-              (
-                match chunk.desc {
-                  Code(code) => code
-                  Subst(subst) => {
-                    add_binding(subst)
-                    match subst {
-                      Dollar(index) => "_dollar\{index}"
-                      StartPos => "_start_pos"
-                      EndPos => "_end_pos"
-                      Loc => "(_start_pos, _end_pos)"
-                      StartPosOf(arg) =>
-                        "_start_pos_of_item\{item_ident_to_index(arg)}"
-                      EndPosOf(arg) =>
-                        "_end_pos_of_item\{item_ident_to_index(arg)}"
-                      LocOf(arg) => {
-                        let index = item_ident_to_index(arg)
-                        "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
-                      }
-                      SymbolStartPos => "_symbol_start_pos"
-                      Sloc => "(_symbol_start_pos, _end_pos)"
-                    }
-                  }
-                },
-                chunk.loc,
-              ),
-            )
-          }
-      }
-      match mode {
-        OnlyTokens => panic()
-        JsonCst(_) => ()
-        Default =>
-          for index, item in clause.items {
-            match item {
-              { binder: Some(name), .. } =>
-                bindings.push((Data(index, type_=item.type_()), name))
-              _ => ()
-            }
-          }
-      }
-      let action : @codegen.Action = {
-        num: clause.action.num,
-        arity: clause.items.length(),
-        type_: rule.type_,
-        bindings,
-        body,
-      }
-      actions.push(action)
+      let action = get_action_of_clause(rule, clause)
       production_meta_map[production_num] = { action: action.num }
     }
   }

@@ -408,6 +408,15 @@ fn codegen(
             ,
           )
         }
+        SubAction(start~, action=action_num) => {
+          let action = meta.actions[action_num]
+          let data_type = action.type_.or("Unit")
+          output.write_string(
+            $|  guard let YYObj_\{esc(data_type)}(\{binding.1}) = yy_action_\{action_num}(_args[\{start}:\{start+action.arity}])
+            $|
+            ,
+          )
+        }
       }
     }
     let result_data_type = action.type_.or("Unit")
