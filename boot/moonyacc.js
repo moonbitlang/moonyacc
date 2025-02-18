@@ -383,10 +383,11 @@ const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_RIGHT = { $tag: 
 const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_NONASSOC = { $tag: 15 };
 const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_PREC = { $tag: 16 };
 const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_DERIVE = { $tag: 17 };
-const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$COLON = { $tag: 18 };
-const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$BAR = { $tag: 19 };
-const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$EQ = { $tag: 20 };
-const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$SEMI = { $tag: 21 };
+const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_INLINE = { $tag: 18 };
+const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$COLON = { $tag: 19 };
+const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$BAR = { $tag: 20 };
+const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$EQ = { $tag: 21 };
+const $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$SEMI = { $tag: 22 };
 const $64$moonbitlang$47$core$47$immut$47$list$46$T$Nil$17$ = { $tag: 0 };
 function $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$17$(param0, param1) {
   this._0 = param0;
@@ -823,43 +824,45 @@ const moonbitlang$yacc$main$$_init$42$46$usage$5$ = "Usage: moonyacc [options] <
 const moonbitlang$yacc$lib$parser$$code_percent_rbrace_tag_action_0 = [moonbitlang$yacc$lib$parser$$code_percent_rbrace_tag_action_row_0, moonbitlang$yacc$lib$parser$$code_percent_rbrace_tag_action_row_0];
 const moonbitlang$yacc$lib$parser$$code_percent_rbrace_tag_action_1 = [moonbitlang$yacc$lib$parser$$code_percent_rbrace_tag_action_row_1, moonbitlang$yacc$lib$parser$$code_percent_rbrace_tag_action_row_2];
 const moonbitlang$yacc$lib$parser$$__mbtlex_engine_code_percent_rbrace = { graph: [moonbitlang$yacc$lib$parser$$code_percent_rbrace_state_0, moonbitlang$yacc$lib$parser$$code_percent_rbrace_state_1, moonbitlang$yacc$lib$parser$$code_percent_rbrace_state_2, moonbitlang$yacc$lib$parser$$code_percent_rbrace_state_3, moonbitlang$yacc$lib$parser$$code_percent_rbrace_state_4, moonbitlang$yacc$lib$parser$$code_percent_rbrace_state_5], end_nodes: [undefined, undefined, { _0: 1, _1: [{ _0: { _0: 0, _1: 0 }, _1: { _0: 1, _1: 0 } }] }, { _0: 1, _1: [{ _0: { _0: 0, _1: 0 }, _1: { _0: 1, _1: 0 } }] }, { _0: 2, _1: [] }, { _0: 0, _1: [] }], start_tags: [0], code_blocks_n: 3 };
-const moonbitlang$yacc$lib$parser$$token_tag_action_22 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_29 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_30 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_17 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_21 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_23 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_26 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_18 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_33 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_24 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_31 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_15 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_34 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_27 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_0 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2];
-const moonbitlang$yacc$lib$parser$$token_tag_action_20 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_13 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_1 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_19 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_12 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_14 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_16 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_28 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_9 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_3 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_2 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_3, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_3, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_7 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_4 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_5 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_11 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_10 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_8 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_6 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_35 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_25 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$token_tag_action_32 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
-const moonbitlang$yacc$lib$parser$$__mbtlex_engine_token = { graph: [moonbitlang$yacc$lib$parser$$token_state_0, moonbitlang$yacc$lib$parser$$token_state_1, moonbitlang$yacc$lib$parser$$token_state_2, moonbitlang$yacc$lib$parser$$token_state_3, moonbitlang$yacc$lib$parser$$token_state_4, moonbitlang$yacc$lib$parser$$token_state_5, moonbitlang$yacc$lib$parser$$token_state_6, moonbitlang$yacc$lib$parser$$token_state_7, moonbitlang$yacc$lib$parser$$token_state_8, moonbitlang$yacc$lib$parser$$token_state_9, moonbitlang$yacc$lib$parser$$token_state_10, moonbitlang$yacc$lib$parser$$token_state_11, moonbitlang$yacc$lib$parser$$token_state_12, moonbitlang$yacc$lib$parser$$token_state_13, moonbitlang$yacc$lib$parser$$token_state_14, moonbitlang$yacc$lib$parser$$token_state_15, moonbitlang$yacc$lib$parser$$token_state_16, moonbitlang$yacc$lib$parser$$token_state_17, moonbitlang$yacc$lib$parser$$token_state_18, moonbitlang$yacc$lib$parser$$token_state_19, moonbitlang$yacc$lib$parser$$token_state_20, moonbitlang$yacc$lib$parser$$token_state_21, moonbitlang$yacc$lib$parser$$token_state_22, moonbitlang$yacc$lib$parser$$token_state_23, moonbitlang$yacc$lib$parser$$token_state_24, moonbitlang$yacc$lib$parser$$token_state_25, moonbitlang$yacc$lib$parser$$token_state_26, moonbitlang$yacc$lib$parser$$token_state_27, moonbitlang$yacc$lib$parser$$token_state_28, moonbitlang$yacc$lib$parser$$token_state_29, moonbitlang$yacc$lib$parser$$token_state_30, moonbitlang$yacc$lib$parser$$token_state_31, moonbitlang$yacc$lib$parser$$token_state_32, moonbitlang$yacc$lib$parser$$token_state_33, moonbitlang$yacc$lib$parser$$token_state_34, moonbitlang$yacc$lib$parser$$token_state_35, moonbitlang$yacc$lib$parser$$token_state_36, moonbitlang$yacc$lib$parser$$token_state_37, moonbitlang$yacc$lib$parser$$token_state_38, moonbitlang$yacc$lib$parser$$token_state_39, moonbitlang$yacc$lib$parser$$token_state_40, moonbitlang$yacc$lib$parser$$token_state_41, moonbitlang$yacc$lib$parser$$token_state_42, moonbitlang$yacc$lib$parser$$token_state_43, moonbitlang$yacc$lib$parser$$token_state_44, moonbitlang$yacc$lib$parser$$token_state_45, moonbitlang$yacc$lib$parser$$token_state_46, moonbitlang$yacc$lib$parser$$token_state_47, moonbitlang$yacc$lib$parser$$token_state_48, moonbitlang$yacc$lib$parser$$token_state_49, moonbitlang$yacc$lib$parser$$token_state_50, moonbitlang$yacc$lib$parser$$token_state_51, moonbitlang$yacc$lib$parser$$token_state_52, moonbitlang$yacc$lib$parser$$token_state_53, moonbitlang$yacc$lib$parser$$token_state_54, moonbitlang$yacc$lib$parser$$token_state_55, moonbitlang$yacc$lib$parser$$token_state_56, moonbitlang$yacc$lib$parser$$token_state_57, moonbitlang$yacc$lib$parser$$token_state_58, moonbitlang$yacc$lib$parser$$token_state_59, moonbitlang$yacc$lib$parser$$token_state_60, moonbitlang$yacc$lib$parser$$token_state_61, moonbitlang$yacc$lib$parser$$token_state_62, moonbitlang$yacc$lib$parser$$token_state_63, moonbitlang$yacc$lib$parser$$token_state_64, moonbitlang$yacc$lib$parser$$token_state_65, moonbitlang$yacc$lib$parser$$token_state_66, moonbitlang$yacc$lib$parser$$token_state_67, moonbitlang$yacc$lib$parser$$token_state_68, moonbitlang$yacc$lib$parser$$token_state_69, moonbitlang$yacc$lib$parser$$token_state_70, moonbitlang$yacc$lib$parser$$token_state_71, moonbitlang$yacc$lib$parser$$token_state_72, moonbitlang$yacc$lib$parser$$token_state_73, moonbitlang$yacc$lib$parser$$token_state_74, moonbitlang$yacc$lib$parser$$token_state_75, moonbitlang$yacc$lib$parser$$token_state_76, moonbitlang$yacc$lib$parser$$token_state_77, moonbitlang$yacc$lib$parser$$token_state_78, moonbitlang$yacc$lib$parser$$token_state_79, moonbitlang$yacc$lib$parser$$token_state_80, moonbitlang$yacc$lib$parser$$token_state_81], end_nodes: [undefined, undefined, { _0: 24, _1: [{ _0: { _0: 42, _1: 0 }, _1: { _0: 43, _1: 0 } }] }, { _0: 16, _1: [{ _0: { _0: 26, _1: 0 }, _1: { _0: 27, _1: 0 } }] }, { _0: 0, _1: [] }, { _0: 22, _1: [{ _0: { _0: 38, _1: 0 }, _1: { _0: 39, _1: 0 } }] }, { _0: 19, _1: [{ _0: { _0: 32, _1: 0 }, _1: { _0: 33, _1: 0 } }] }, { _0: 24, _1: [{ _0: { _0: 42, _1: 0 }, _1: { _0: 43, _1: 0 } }] }, { _0: 24, _1: [{ _0: { _0: 42, _1: 0 }, _1: { _0: 43, _1: 0 } }] }, { _0: 24, _1: [{ _0: { _0: 42, _1: 0 }, _1: { _0: 43, _1: 0 } }] }, { _0: 24, _1: [{ _0: { _0: 42, _1: 0 }, _1: { _0: 43, _1: 0 } }] }, { _0: 24, _1: [{ _0: { _0: 42, _1: 0 }, _1: { _0: 43, _1: 0 } }] }, { _0: 21, _1: [{ _0: { _0: 36, _1: 0 }, _1: { _0: 37, _1: 0 } }] }, { _0: 18, _1: [{ _0: { _0: 30, _1: 0 }, _1: { _0: 31, _1: 0 } }] }, { _0: 4, _1: [{ _0: { _0: 0, _1: 0 }, _1: { _0: 1, _1: 0 } }] }, { _0: 17, _1: [{ _0: { _0: 28, _1: 0 }, _1: { _0: 29, _1: 0 } }] }, { _0: 25, _1: [{ _0: { _0: 44, _1: 0 }, _1: { _0: 45, _1: 0 } }] }, undefined, undefined, undefined, undefined, { _0: 14, _1: [{ _0: { _0: 20, _1: 0 }, _1: { _0: 21, _1: 0 } }] }, { _0: 20, _1: [{ _0: { _0: 34, _1: 0 }, _1: { _0: 35, _1: 0 } }] }, undefined, undefined, undefined, undefined, { _0: 2, _1: [] }, undefined, undefined, { _0: 4, _1: [{ _0: { _0: 0, _1: 0 }, _1: { _0: 1, _1: 0 } }] }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { _0: 23, _1: [{ _0: { _0: 40, _1: 0 }, _1: { _0: 41, _1: 0 } }] }, { _0: 1, _1: [] }, undefined, undefined, undefined, undefined, { _0: 15, _1: [{ _0: { _0: 22, _1: 0 }, _1: { _0: 23, _1: 0 } }, { _0: { _0: 24, _1: 0 }, _1: { _0: 25, _1: 0 } }] }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { _0: 3, _1: [] }, undefined, undefined, undefined, { _0: 12, _1: [{ _0: { _0: 16, _1: 0 }, _1: { _0: 17, _1: 0 } }] }, undefined, { _0: 9, _1: [{ _0: { _0: 10, _1: 0 }, _1: { _0: 11, _1: 0 } }] }, undefined, undefined, { _0: 7, _1: [{ _0: { _0: 6, _1: 0 }, _1: { _0: 7, _1: 0 } }] }, undefined, undefined, { _0: 15, _1: [{ _0: { _0: 22, _1: 0 }, _1: { _0: 23, _1: 0 } }, { _0: { _0: 24, _1: 0 }, _1: { _0: 25, _1: 0 } }] }, { _0: 10, _1: [{ _0: { _0: 12, _1: 0 }, _1: { _0: 13, _1: 0 } }] }, undefined, { _0: 5, _1: [{ _0: { _0: 2, _1: 0 }, _1: { _0: 3, _1: 0 } }] }, undefined, { _0: 6, _1: [{ _0: { _0: 4, _1: 0 }, _1: { _0: 5, _1: 0 } }] }, undefined, undefined, { _0: 13, _1: [{ _0: { _0: 18, _1: 0 }, _1: { _0: 19, _1: 0 } }] }, undefined, undefined, undefined, { _0: 8, _1: [{ _0: { _0: 8, _1: 0 }, _1: { _0: 9, _1: 0 } }] }, { _0: 11, _1: [{ _0: { _0: 14, _1: 0 }, _1: { _0: 15, _1: 0 } }] }], start_tags: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44], code_blocks_n: 26 };
+const moonbitlang$yacc$lib$parser$$token_tag_action_29 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_15 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_37 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_13 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_24 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_27 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_16 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_23 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_30 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_9 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_1 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_3 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_2 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_3, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_3, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_7 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_4 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_5 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_0 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2];
+const moonbitlang$yacc$lib$parser$$token_tag_action_11 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_10 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_8 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_6 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_14 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_18 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_22 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_35 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_34 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_25 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_31 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_26 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_21 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_36 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_19 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_32 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_17 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_12 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_20 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_28 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$token_tag_action_33 = [moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_1, moonbitlang$yacc$lib$parser$$token_tag_action_row_2, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0, moonbitlang$yacc$lib$parser$$token_tag_action_row_0];
+const moonbitlang$yacc$lib$parser$$__mbtlex_engine_token = { graph: [moonbitlang$yacc$lib$parser$$token_state_0, moonbitlang$yacc$lib$parser$$token_state_1, moonbitlang$yacc$lib$parser$$token_state_2, moonbitlang$yacc$lib$parser$$token_state_3, moonbitlang$yacc$lib$parser$$token_state_4, moonbitlang$yacc$lib$parser$$token_state_5, moonbitlang$yacc$lib$parser$$token_state_6, moonbitlang$yacc$lib$parser$$token_state_7, moonbitlang$yacc$lib$parser$$token_state_8, moonbitlang$yacc$lib$parser$$token_state_9, moonbitlang$yacc$lib$parser$$token_state_10, moonbitlang$yacc$lib$parser$$token_state_11, moonbitlang$yacc$lib$parser$$token_state_12, moonbitlang$yacc$lib$parser$$token_state_13, moonbitlang$yacc$lib$parser$$token_state_14, moonbitlang$yacc$lib$parser$$token_state_15, moonbitlang$yacc$lib$parser$$token_state_16, moonbitlang$yacc$lib$parser$$token_state_17, moonbitlang$yacc$lib$parser$$token_state_18, moonbitlang$yacc$lib$parser$$token_state_19, moonbitlang$yacc$lib$parser$$token_state_20, moonbitlang$yacc$lib$parser$$token_state_21, moonbitlang$yacc$lib$parser$$token_state_22, moonbitlang$yacc$lib$parser$$token_state_23, moonbitlang$yacc$lib$parser$$token_state_24, moonbitlang$yacc$lib$parser$$token_state_25, moonbitlang$yacc$lib$parser$$token_state_26, moonbitlang$yacc$lib$parser$$token_state_27, moonbitlang$yacc$lib$parser$$token_state_28, moonbitlang$yacc$lib$parser$$token_state_29, moonbitlang$yacc$lib$parser$$token_state_30, moonbitlang$yacc$lib$parser$$token_state_31, moonbitlang$yacc$lib$parser$$token_state_32, moonbitlang$yacc$lib$parser$$token_state_33, moonbitlang$yacc$lib$parser$$token_state_34, moonbitlang$yacc$lib$parser$$token_state_35, moonbitlang$yacc$lib$parser$$token_state_36, moonbitlang$yacc$lib$parser$$token_state_37, moonbitlang$yacc$lib$parser$$token_state_38, moonbitlang$yacc$lib$parser$$token_state_39, moonbitlang$yacc$lib$parser$$token_state_40, moonbitlang$yacc$lib$parser$$token_state_41, moonbitlang$yacc$lib$parser$$token_state_42, moonbitlang$yacc$lib$parser$$token_state_43, moonbitlang$yacc$lib$parser$$token_state_44, moonbitlang$yacc$lib$parser$$token_state_45, moonbitlang$yacc$lib$parser$$token_state_46, moonbitlang$yacc$lib$parser$$token_state_47, moonbitlang$yacc$lib$parser$$token_state_48, moonbitlang$yacc$lib$parser$$token_state_49, moonbitlang$yacc$lib$parser$$token_state_50, moonbitlang$yacc$lib$parser$$token_state_51, moonbitlang$yacc$lib$parser$$token_state_52, moonbitlang$yacc$lib$parser$$token_state_53, moonbitlang$yacc$lib$parser$$token_state_54, moonbitlang$yacc$lib$parser$$token_state_55, moonbitlang$yacc$lib$parser$$token_state_56, moonbitlang$yacc$lib$parser$$token_state_57, moonbitlang$yacc$lib$parser$$token_state_58, moonbitlang$yacc$lib$parser$$token_state_59, moonbitlang$yacc$lib$parser$$token_state_60, moonbitlang$yacc$lib$parser$$token_state_61, moonbitlang$yacc$lib$parser$$token_state_62, moonbitlang$yacc$lib$parser$$token_state_63, moonbitlang$yacc$lib$parser$$token_state_64, moonbitlang$yacc$lib$parser$$token_state_65, moonbitlang$yacc$lib$parser$$token_state_66, moonbitlang$yacc$lib$parser$$token_state_67, moonbitlang$yacc$lib$parser$$token_state_68, moonbitlang$yacc$lib$parser$$token_state_69, moonbitlang$yacc$lib$parser$$token_state_70, moonbitlang$yacc$lib$parser$$token_state_71, moonbitlang$yacc$lib$parser$$token_state_72, moonbitlang$yacc$lib$parser$$token_state_73, moonbitlang$yacc$lib$parser$$token_state_74, moonbitlang$yacc$lib$parser$$token_state_75, moonbitlang$yacc$lib$parser$$token_state_76, moonbitlang$yacc$lib$parser$$token_state_77, moonbitlang$yacc$lib$parser$$token_state_78, moonbitlang$yacc$lib$parser$$token_state_79, moonbitlang$yacc$lib$parser$$token_state_80, moonbitlang$yacc$lib$parser$$token_state_81, moonbitlang$yacc$lib$parser$$token_state_82, moonbitlang$yacc$lib$parser$$token_state_83, moonbitlang$yacc$lib$parser$$token_state_84, moonbitlang$yacc$lib$parser$$token_state_85, moonbitlang$yacc$lib$parser$$token_state_86, moonbitlang$yacc$lib$parser$$token_state_87], end_nodes: [undefined, undefined, { _0: 25, _1: [{ _0: { _0: 44, _1: 0 }, _1: { _0: 45, _1: 0 } }] }, { _0: 18, _1: [{ _0: { _0: 30, _1: 0 }, _1: { _0: 31, _1: 0 } }] }, { _0: 23, _1: [{ _0: { _0: 40, _1: 0 }, _1: { _0: 41, _1: 0 } }] }, { _0: 0, _1: [] }, { _0: 25, _1: [{ _0: { _0: 44, _1: 0 }, _1: { _0: 45, _1: 0 } }] }, { _0: 25, _1: [{ _0: { _0: 44, _1: 0 }, _1: { _0: 45, _1: 0 } }] }, { _0: 25, _1: [{ _0: { _0: 44, _1: 0 }, _1: { _0: 45, _1: 0 } }] }, { _0: 25, _1: [{ _0: { _0: 44, _1: 0 }, _1: { _0: 45, _1: 0 } }] }, { _0: 25, _1: [{ _0: { _0: 44, _1: 0 }, _1: { _0: 45, _1: 0 } }] }, { _0: 17, _1: [{ _0: { _0: 28, _1: 0 }, _1: { _0: 29, _1: 0 } }] }, { _0: 20, _1: [{ _0: { _0: 34, _1: 0 }, _1: { _0: 35, _1: 0 } }] }, { _0: 22, _1: [{ _0: { _0: 38, _1: 0 }, _1: { _0: 39, _1: 0 } }] }, { _0: 19, _1: [{ _0: { _0: 32, _1: 0 }, _1: { _0: 33, _1: 0 } }] }, { _0: 4, _1: [{ _0: { _0: 0, _1: 0 }, _1: { _0: 1, _1: 0 } }] }, { _0: 26, _1: [{ _0: { _0: 46, _1: 0 }, _1: { _0: 47, _1: 0 } }] }, undefined, undefined, undefined, undefined, undefined, undefined, { _0: 15, _1: [{ _0: { _0: 22, _1: 0 }, _1: { _0: 23, _1: 0 } }] }, undefined, undefined, { _0: 21, _1: [{ _0: { _0: 36, _1: 0 }, _1: { _0: 37, _1: 0 } }] }, undefined, { _0: 2, _1: [] }, undefined, undefined, { _0: 4, _1: [{ _0: { _0: 0, _1: 0 }, _1: { _0: 1, _1: 0 } }] }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { _0: 24, _1: [{ _0: { _0: 42, _1: 0 }, _1: { _0: 43, _1: 0 } }] }, { _0: 1, _1: [] }, { _0: 16, _1: [{ _0: { _0: 24, _1: 0 }, _1: { _0: 25, _1: 0 } }, { _0: { _0: 26, _1: 0 }, _1: { _0: 27, _1: 0 } }] }, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, undefined, { _0: 3, _1: [] }, undefined, undefined, { _0: 12, _1: [{ _0: { _0: 16, _1: 0 }, _1: { _0: 17, _1: 0 } }] }, undefined, { _0: 9, _1: [{ _0: { _0: 10, _1: 0 }, _1: { _0: 11, _1: 0 } }] }, undefined, undefined, undefined, { _0: 7, _1: [{ _0: { _0: 6, _1: 0 }, _1: { _0: 7, _1: 0 } }] }, undefined, undefined, { _0: 16, _1: [{ _0: { _0: 24, _1: 0 }, _1: { _0: 25, _1: 0 } }, { _0: { _0: 26, _1: 0 }, _1: { _0: 27, _1: 0 } }] }, { _0: 10, _1: [{ _0: { _0: 12, _1: 0 }, _1: { _0: 13, _1: 0 } }] }, undefined, { _0: 5, _1: [{ _0: { _0: 2, _1: 0 }, _1: { _0: 3, _1: 0 } }] }, undefined, undefined, { _0: 6, _1: [{ _0: { _0: 4, _1: 0 }, _1: { _0: 5, _1: 0 } }] }, undefined, undefined, { _0: 14, _1: [{ _0: { _0: 20, _1: 0 }, _1: { _0: 21, _1: 0 } }] }, { _0: 13, _1: [{ _0: { _0: 18, _1: 0 }, _1: { _0: 19, _1: 0 } }] }, undefined, undefined, undefined, { _0: 8, _1: [{ _0: { _0: 8, _1: 0 }, _1: { _0: 9, _1: 0 } }] }, { _0: 11, _1: [{ _0: { _0: 14, _1: 0 }, _1: { _0: 15, _1: 0 } }] }], start_tags: [0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46], code_blocks_n: 27 };
 const moonbitlang$yacc$lib$parser$$code_eof_tag_action_0 = [moonbitlang$yacc$lib$parser$$code_eof_tag_action_row_0, moonbitlang$yacc$lib$parser$$code_eof_tag_action_row_0];
 const moonbitlang$yacc$lib$parser$$code_eof_tag_action_1 = [moonbitlang$yacc$lib$parser$$code_eof_tag_action_row_1, moonbitlang$yacc$lib$parser$$code_eof_tag_action_row_2];
 const moonbitlang$yacc$lib$parser$$__mbtlex_engine_code_eof = { graph: [moonbitlang$yacc$lib$parser$$code_eof_state_0, moonbitlang$yacc$lib$parser$$code_eof_state_1, moonbitlang$yacc$lib$parser$$code_eof_state_2, moonbitlang$yacc$lib$parser$$code_eof_state_3], end_nodes: [undefined, undefined, { _0: 0, _1: [{ _0: { _0: 0, _1: 0 }, _1: { _0: 1, _1: 0 } }] }, { _0: 1, _1: [] }], start_tags: [0], code_blocks_n: 2 };
@@ -8332,97 +8335,97 @@ function moonbitlang$yacc$lib$parser$$token_state_1(input) {
     return { _0: 16, _1: moonbitlang$yacc$lib$parser$$token_tag_action_0 };
   } else {
     if (1 <= input && input <= 8) {
-      return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+      return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
     } else {
       if (9 <= input && input <= 10) {
-        return { _0: 4, _1: moonbitlang$yacc$lib$parser$$token_tag_action_2 };
+        return { _0: 5, _1: moonbitlang$yacc$lib$parser$$token_tag_action_2 };
       } else {
         if (11 <= input && input <= 31) {
-          return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+          return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
         } else {
           switch (input) {
             case 32: {
-              return { _0: 4, _1: moonbitlang$yacc$lib$parser$$token_tag_action_2 };
+              return { _0: 5, _1: moonbitlang$yacc$lib$parser$$token_tag_action_2 };
             }
             case 33: {
-              return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+              return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
             }
             case 34: {
               return { _0: 7, _1: moonbitlang$yacc$lib$parser$$token_tag_action_3 };
             }
             default: {
               if (35 <= input && input <= 36) {
-                return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
               } else {
                 if (input === 37) {
                   return { _0: 2, _1: moonbitlang$yacc$lib$parser$$token_tag_action_4 };
                 } else {
                   if (38 <= input && input <= 39) {
-                    return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                    return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                   } else {
                     if (input === 40) {
                       return { _0: 8, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                     } else {
                       if (41 <= input && input <= 44) {
-                        return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                        return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                       } else {
                         switch (input) {
                           case 45: {
-                            return { _0: 10, _1: moonbitlang$yacc$lib$parser$$token_tag_action_5 };
+                            return { _0: 9, _1: moonbitlang$yacc$lib$parser$$token_tag_action_5 };
                           }
                           case 46: {
-                            return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                            return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                           }
                           case 47: {
-                            return { _0: 9, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                            return { _0: 10, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                           }
                           default: {
                             if (48 <= input && input <= 57) {
-                              return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                              return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                             } else {
                               switch (input) {
                                 case 58: {
-                                  return { _0: 3, _1: moonbitlang$yacc$lib$parser$$token_tag_action_6 };
+                                  return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_6 };
                                 }
                                 case 59: {
-                                  return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
+                                  return { _0: 12, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
                                 }
                                 case 60: {
-                                  return { _0: 12, _1: moonbitlang$yacc$lib$parser$$token_tag_action_8 };
+                                  return { _0: 13, _1: moonbitlang$yacc$lib$parser$$token_tag_action_8 };
                                 }
                                 case 61: {
-                                  return { _0: 13, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
+                                  return { _0: 14, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
                                 }
                                 default: {
                                   if (62 <= input && input <= 64) {
-                                    return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                                    return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                                   } else {
                                     if (65 <= input && input <= 90) {
-                                      return { _0: 14, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
+                                      return { _0: 15, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
                                     } else {
                                       if (91 <= input && input <= 94) {
-                                        return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                                        return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                                       } else {
                                         switch (input) {
                                           case 95: {
-                                            return { _0: 14, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
+                                            return { _0: 15, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
                                           }
                                           case 96: {
-                                            return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                                            return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                                           }
                                           default: {
                                             if (97 <= input && input <= 122) {
-                                              return { _0: 14, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
+                                              return { _0: 15, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
                                             } else {
                                               switch (input) {
                                                 case 123: {
-                                                  return { _0: 5, _1: moonbitlang$yacc$lib$parser$$token_tag_action_10 };
+                                                  return { _0: 4, _1: moonbitlang$yacc$lib$parser$$token_tag_action_10 };
                                                 }
                                                 case 124: {
-                                                  return { _0: 15, _1: moonbitlang$yacc$lib$parser$$token_tag_action_11 };
+                                                  return { _0: 3, _1: moonbitlang$yacc$lib$parser$$token_tag_action_11 };
                                                 }
                                                 default: {
-                                                  return 125 <= input && input <= 127 ? { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 } : $panic();
+                                                  return 125 <= input && input <= 127 ? { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 } : $panic();
                                                 }
                                               }
                                             }
@@ -8451,31 +8454,34 @@ function moonbitlang$yacc$lib$parser$$token_state_1(input) {
 function moonbitlang$yacc$lib$parser$$token_state_2(input) {
   switch (input) {
     case 37: {
-      return { _0: 21, _1: moonbitlang$yacc$lib$parser$$token_tag_action_12 };
+      return { _0: 23, _1: moonbitlang$yacc$lib$parser$$token_tag_action_12 };
     }
     case 100: {
-      return { _0: 23, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
+      return { _0: 22, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
+    }
+    case 105: {
+      return { _0: 21, _1: moonbitlang$yacc$lib$parser$$token_tag_action_14 };
     }
     case 108: {
-      return { _0: 19, _1: moonbitlang$yacc$lib$parser$$token_tag_action_14 };
+      return { _0: 19, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
     }
     case 110: {
-      return { _0: 25, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
+      return { _0: 25, _1: moonbitlang$yacc$lib$parser$$token_tag_action_16 };
     }
     case 112: {
-      return { _0: 18, _1: moonbitlang$yacc$lib$parser$$token_tag_action_16 };
+      return { _0: 18, _1: moonbitlang$yacc$lib$parser$$token_tag_action_17 };
     }
     case 114: {
-      return { _0: 17, _1: moonbitlang$yacc$lib$parser$$token_tag_action_17 };
+      return { _0: 17, _1: moonbitlang$yacc$lib$parser$$token_tag_action_18 };
     }
     case 115: {
-      return { _0: 20, _1: moonbitlang$yacc$lib$parser$$token_tag_action_18 };
+      return { _0: 20, _1: moonbitlang$yacc$lib$parser$$token_tag_action_19 };
     }
     case 116: {
-      return { _0: 24, _1: moonbitlang$yacc$lib$parser$$token_tag_action_19 };
+      return { _0: 24, _1: moonbitlang$yacc$lib$parser$$token_tag_action_20 };
     }
     case 123: {
-      return { _0: 22, _1: moonbitlang$yacc$lib$parser$$token_tag_action_20 };
+      return { _0: 26, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
     }
     default: {
       return { _0: 0, _1: [] };
@@ -8486,101 +8492,104 @@ function moonbitlang$yacc$lib$parser$$token_state_3(input) {
   return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_4(input) {
+  return { _0: 0, _1: [] };
+}
+function moonbitlang$yacc$lib$parser$$token_state_5(input) {
   if (input === 0) {
     return { _0: 16, _1: moonbitlang$yacc$lib$parser$$token_tag_action_0 };
   } else {
     if (1 <= input && input <= 8) {
-      return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+      return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
     } else {
       if (9 <= input && input <= 10) {
-        return { _0: 4, _1: moonbitlang$yacc$lib$parser$$token_tag_action_2 };
+        return { _0: 5, _1: moonbitlang$yacc$lib$parser$$token_tag_action_2 };
       } else {
         if (11 <= input && input <= 31) {
-          return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+          return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
         } else {
           switch (input) {
             case 32: {
-              return { _0: 4, _1: moonbitlang$yacc$lib$parser$$token_tag_action_2 };
+              return { _0: 5, _1: moonbitlang$yacc$lib$parser$$token_tag_action_2 };
             }
             case 33: {
-              return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+              return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
             }
             case 34: {
               return { _0: 7, _1: moonbitlang$yacc$lib$parser$$token_tag_action_3 };
             }
             default: {
               if (35 <= input && input <= 36) {
-                return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
               } else {
                 if (input === 37) {
                   return { _0: 2, _1: moonbitlang$yacc$lib$parser$$token_tag_action_4 };
                 } else {
                   if (38 <= input && input <= 39) {
-                    return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                    return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                   } else {
                     if (input === 40) {
                       return { _0: 8, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                     } else {
                       if (41 <= input && input <= 44) {
-                        return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                        return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                       } else {
                         switch (input) {
                           case 45: {
-                            return { _0: 10, _1: moonbitlang$yacc$lib$parser$$token_tag_action_5 };
+                            return { _0: 9, _1: moonbitlang$yacc$lib$parser$$token_tag_action_5 };
                           }
                           case 46: {
-                            return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                            return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                           }
                           case 47: {
-                            return { _0: 9, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                            return { _0: 10, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                           }
                           default: {
                             if (48 <= input && input <= 57) {
-                              return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                              return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                             } else {
                               switch (input) {
                                 case 58: {
-                                  return { _0: 3, _1: moonbitlang$yacc$lib$parser$$token_tag_action_6 };
+                                  return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_6 };
                                 }
                                 case 59: {
-                                  return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
+                                  return { _0: 12, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
                                 }
                                 case 60: {
-                                  return { _0: 12, _1: moonbitlang$yacc$lib$parser$$token_tag_action_8 };
+                                  return { _0: 13, _1: moonbitlang$yacc$lib$parser$$token_tag_action_8 };
                                 }
                                 case 61: {
-                                  return { _0: 13, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
+                                  return { _0: 14, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
                                 }
                                 default: {
                                   if (62 <= input && input <= 64) {
-                                    return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                                    return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                                   } else {
                                     if (65 <= input && input <= 90) {
-                                      return { _0: 14, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
+                                      return { _0: 15, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
                                     } else {
                                       if (91 <= input && input <= 94) {
-                                        return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                                        return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                                       } else {
                                         switch (input) {
                                           case 95: {
-                                            return { _0: 14, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
+                                            return { _0: 15, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
                                           }
                                           case 96: {
-                                            return { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+                                            return { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
                                           }
                                           default: {
                                             if (97 <= input && input <= 122) {
-                                              return { _0: 14, _1: moonbitlang$yacc$lib$parser$$token_tag_action_7 };
+                                              return { _0: 15, _1: moonbitlang$yacc$lib$parser$$token_tag_action_9 };
                                             } else {
                                               switch (input) {
                                                 case 123: {
-                                                  return { _0: 5, _1: moonbitlang$yacc$lib$parser$$token_tag_action_10 };
+                                                  return { _0: 4, _1: moonbitlang$yacc$lib$parser$$token_tag_action_10 };
                                                 }
                                                 case 124: {
-                                                  return { _0: 15, _1: moonbitlang$yacc$lib$parser$$token_tag_action_11 };
+                                                  return { _0: 3, _1: moonbitlang$yacc$lib$parser$$token_tag_action_11 };
                                                 }
                                                 default: {
-                                                  return 125 <= input && input <= 127 ? { _0: 11, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 } : $panic();
+                                                  return 125 <= input && input <= 127 ? { _0: 6, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 } : $panic();
                                                 }
                                               }
                                             }
@@ -8606,32 +8615,29 @@ function moonbitlang$yacc$lib$parser$$token_state_4(input) {
     }
   }
 }
-function moonbitlang$yacc$lib$parser$$token_state_5(input) {
-  return { _0: 0, _1: [] };
-}
 function moonbitlang$yacc$lib$parser$$token_state_6(input) {
   return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_7(input) {
-  return 1 <= input && input <= 33 ? { _0: 26, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 } : 35 <= input && input <= 127 ? { _0: 26, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 } : { _0: 0, _1: [] };
+  return 1 <= input && input <= 33 ? { _0: 27, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 } : 35 <= input && input <= 127 ? { _0: 27, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 } : { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_8(input) {
-  if (input === 42) {
-    return { _0: 27, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-  } else {
-    return { _0: 0, _1: [] };
-  }
-}
-function moonbitlang$yacc$lib$parser$$token_state_9(input) {
   if (input === 42) {
     return { _0: 28, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
-function moonbitlang$yacc$lib$parser$$token_state_10(input) {
+function moonbitlang$yacc$lib$parser$$token_state_9(input) {
   if (input === 62) {
     return { _0: 29, _1: moonbitlang$yacc$lib$parser$$token_tag_action_23 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_10(input) {
+  if (input === 42) {
+    return { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
   } else {
     return { _0: 0, _1: [] };
   }
@@ -8646,29 +8652,29 @@ function moonbitlang$yacc$lib$parser$$token_state_13(input) {
   return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_14(input) {
+  return { _0: 0, _1: [] };
+}
+function moonbitlang$yacc$lib$parser$$token_state_15(input) {
   if (48 <= input && input <= 57) {
-    return { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
+    return { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
   } else {
     if (65 <= input && input <= 90) {
-      return { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
+      return { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
     } else {
       if (input === 95) {
-        return { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
+        return { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
       } else {
-        return 97 <= input && input <= 122 ? { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 } : { _0: 0, _1: [] };
+        return 97 <= input && input <= 122 ? { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 } : { _0: 0, _1: [] };
       }
     }
   }
-}
-function moonbitlang$yacc$lib$parser$$token_state_15(input) {
-  return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_16(input) {
   return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_17(input) {
   if (input === 105) {
-    return { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_17 };
+    return { _0: 32, _1: moonbitlang$yacc$lib$parser$$token_tag_action_18 };
   } else {
     return { _0: 0, _1: [] };
   }
@@ -8676,10 +8682,10 @@ function moonbitlang$yacc$lib$parser$$token_state_17(input) {
 function moonbitlang$yacc$lib$parser$$token_state_18(input) {
   switch (input) {
     case 111: {
-      return { _0: 33, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
+      return { _0: 34, _1: moonbitlang$yacc$lib$parser$$token_tag_action_25 };
     }
     case 114: {
-      return { _0: 32, _1: moonbitlang$yacc$lib$parser$$token_tag_action_25 };
+      return { _0: 33, _1: moonbitlang$yacc$lib$parser$$token_tag_action_26 };
     }
     default: {
       return { _0: 0, _1: [] };
@@ -8688,38 +8694,42 @@ function moonbitlang$yacc$lib$parser$$token_state_18(input) {
 }
 function moonbitlang$yacc$lib$parser$$token_state_19(input) {
   if (input === 101) {
-    return { _0: 34, _1: moonbitlang$yacc$lib$parser$$token_tag_action_14 };
+    return { _0: 35, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_20(input) {
   if (input === 116) {
-    return { _0: 35, _1: moonbitlang$yacc$lib$parser$$token_tag_action_18 };
+    return { _0: 36, _1: moonbitlang$yacc$lib$parser$$token_tag_action_19 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_21(input) {
-  return { _0: 0, _1: [] };
-}
-function moonbitlang$yacc$lib$parser$$token_state_22(input) {
-  return { _0: 0, _1: [] };
-}
-function moonbitlang$yacc$lib$parser$$token_state_23(input) {
-  if (input === 101) {
-    return { _0: 36, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
+  if (input === 110) {
+    return { _0: 37, _1: moonbitlang$yacc$lib$parser$$token_tag_action_14 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
+function moonbitlang$yacc$lib$parser$$token_state_22(input) {
+  if (input === 101) {
+    return { _0: 38, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_23(input) {
+  return { _0: 0, _1: [] };
+}
 function moonbitlang$yacc$lib$parser$$token_state_24(input) {
   switch (input) {
     case 111: {
-      return { _0: 38, _1: moonbitlang$yacc$lib$parser$$token_tag_action_26 };
+      return { _0: 40, _1: moonbitlang$yacc$lib$parser$$token_tag_action_27 };
     }
     case 121: {
-      return { _0: 37, _1: moonbitlang$yacc$lib$parser$$token_tag_action_27 };
+      return { _0: 39, _1: moonbitlang$yacc$lib$parser$$token_tag_action_28 };
     }
     default: {
       return { _0: 0, _1: [] };
@@ -8728,348 +8738,348 @@ function moonbitlang$yacc$lib$parser$$token_state_24(input) {
 }
 function moonbitlang$yacc$lib$parser$$token_state_25(input) {
   if (input === 111) {
-    return { _0: 39, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
+    return { _0: 41, _1: moonbitlang$yacc$lib$parser$$token_tag_action_16 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_26(input) {
+  return { _0: 0, _1: [] };
+}
+function moonbitlang$yacc$lib$parser$$token_state_27(input) {
   if (1 <= input && input <= 33) {
-    return { _0: 26, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
+    return { _0: 27, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
   } else {
     if (input === 34) {
-      return { _0: 40, _1: moonbitlang$yacc$lib$parser$$token_tag_action_28 };
+      return { _0: 42, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
     } else {
-      return 35 <= input && input <= 127 ? { _0: 26, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 } : { _0: 0, _1: [] };
+      return 35 <= input && input <= 127 ? { _0: 27, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 } : { _0: 0, _1: [] };
     }
   }
 }
-function moonbitlang$yacc$lib$parser$$token_state_27(input) {
+function moonbitlang$yacc$lib$parser$$token_state_28(input) {
   if (input === 41) {
-    return { _0: 41, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+    return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
-function moonbitlang$yacc$lib$parser$$token_state_28(input) {
-  if (1 <= input && input <= 41) {
-    return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-  } else {
-    if (input === 42) {
-      return { _0: 42, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-    } else {
-      if (43 <= input && input <= 46) {
-        return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-      } else {
-        if (input === 47) {
-          return { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-        } else {
-          return 48 <= input && input <= 127 ? { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
-        }
-      }
-    }
-  }
-}
 function moonbitlang$yacc$lib$parser$$token_state_29(input) {
   if (1 <= input && input <= 8) {
-    return { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
+    return { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
   } else {
     if (9 <= input && input <= 10) {
       return { _0: 45, _1: moonbitlang$yacc$lib$parser$$token_tag_action_23 };
     } else {
       if (11 <= input && input <= 31) {
-        return { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
+        return { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
       } else {
         if (input === 32) {
           return { _0: 45, _1: moonbitlang$yacc$lib$parser$$token_tag_action_23 };
         } else {
-          return 33 <= input && input <= 57 ? { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 } : 59 <= input && input <= 127 ? { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 } : { _0: 0, _1: [] };
+          return 33 <= input && input <= 57 ? { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : 59 <= input && input <= 127 ? { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : { _0: 0, _1: [] };
         }
       }
     }
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_30(input) {
-  if (48 <= input && input <= 57) {
-    return { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
+  if (1 <= input && input <= 41) {
+    return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
   } else {
-    if (65 <= input && input <= 90) {
-      return { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
+    if (input === 42) {
+      return { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
     } else {
-      if (input === 95) {
-        return { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
+      if (43 <= input && input <= 46) {
+        return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
       } else {
-        return 97 <= input && input <= 122 ? { _0: 30, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 } : { _0: 0, _1: [] };
+        if (input === 47) {
+          return { _0: 48, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+        } else {
+          return 48 <= input && input <= 127 ? { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
+        }
       }
     }
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_31(input) {
-  if (input === 103) {
-    return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_17 };
+  if (48 <= input && input <= 57) {
+    return { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
   } else {
-    return { _0: 0, _1: [] };
+    if (65 <= input && input <= 90) {
+      return { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
+    } else {
+      if (input === 95) {
+        return { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 };
+      } else {
+        return 97 <= input && input <= 122 ? { _0: 31, _1: moonbitlang$yacc$lib$parser$$token_tag_action_24 } : { _0: 0, _1: [] };
+      }
+    }
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_32(input) {
-  if (input === 101) {
-    return { _0: 48, _1: moonbitlang$yacc$lib$parser$$token_tag_action_25 };
+  if (input === 103) {
+    return { _0: 49, _1: moonbitlang$yacc$lib$parser$$token_tag_action_18 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_33(input) {
-  if (input === 115) {
-    return { _0: 49, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
+  if (input === 101) {
+    return { _0: 50, _1: moonbitlang$yacc$lib$parser$$token_tag_action_26 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_34(input) {
-  if (input === 102) {
-    return { _0: 50, _1: moonbitlang$yacc$lib$parser$$token_tag_action_14 };
+  if (input === 115) {
+    return { _0: 51, _1: moonbitlang$yacc$lib$parser$$token_tag_action_25 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_35(input) {
-  if (input === 97) {
-    return { _0: 51, _1: moonbitlang$yacc$lib$parser$$token_tag_action_18 };
+  if (input === 102) {
+    return { _0: 52, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_36(input) {
-  if (input === 114) {
-    return { _0: 52, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
+  if (input === 97) {
+    return { _0: 53, _1: moonbitlang$yacc$lib$parser$$token_tag_action_19 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_37(input) {
-  if (input === 112) {
-    return { _0: 53, _1: moonbitlang$yacc$lib$parser$$token_tag_action_27 };
+  if (input === 108) {
+    return { _0: 54, _1: moonbitlang$yacc$lib$parser$$token_tag_action_14 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_38(input) {
-  if (input === 107) {
-    return { _0: 54, _1: moonbitlang$yacc$lib$parser$$token_tag_action_26 };
+  if (input === 114) {
+    return { _0: 55, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_39(input) {
-  if (input === 110) {
-    return { _0: 55, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
+  if (input === 112) {
+    return { _0: 56, _1: moonbitlang$yacc$lib$parser$$token_tag_action_28 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_40(input) {
-  return { _0: 0, _1: [] };
+  if (input === 107) {
+    return { _0: 57, _1: moonbitlang$yacc$lib$parser$$token_tag_action_27 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
 }
 function moonbitlang$yacc$lib$parser$$token_state_41(input) {
-  return { _0: 0, _1: [] };
+  if (input === 110) {
+    return { _0: 58, _1: moonbitlang$yacc$lib$parser$$token_tag_action_16 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
 }
 function moonbitlang$yacc$lib$parser$$token_state_42(input) {
-  if (1 <= input && input <= 41) {
-    return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-  } else {
-    if (input === 42) {
-      return { _0: 42, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-    } else {
-      if (43 <= input && input <= 46) {
-        return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-      } else {
-        if (input === 47) {
-          return { _0: 56, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-        } else {
-          return 48 <= input && input <= 127 ? { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
-        }
-      }
-    }
-  }
+  return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_43(input) {
-  if (1 <= input && input <= 41) {
-    return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-  } else {
-    if (input === 42) {
-      return { _0: 42, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-    } else {
-      if (43 <= input && input <= 46) {
-        return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-      } else {
-        if (input === 47) {
-          return { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-        } else {
-          return 48 <= input && input <= 127 ? { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
-        }
-      }
-    }
-  }
+  return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_44(input) {
-  return 1 <= input && input <= 41 ? { _0: 57, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : 43 <= input && input <= 127 ? { _0: 57, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
+  return 1 <= input && input <= 57 ? { _0: 59, _1: moonbitlang$yacc$lib$parser$$token_tag_action_31 } : 59 <= input && input <= 127 ? { _0: 59, _1: moonbitlang$yacc$lib$parser$$token_tag_action_31 } : { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_45(input) {
   if (1 <= input && input <= 8) {
-    return { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
+    return { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
   } else {
     if (9 <= input && input <= 10) {
       return { _0: 45, _1: moonbitlang$yacc$lib$parser$$token_tag_action_23 };
     } else {
       if (11 <= input && input <= 31) {
-        return { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
+        return { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
       } else {
         if (input === 32) {
           return { _0: 45, _1: moonbitlang$yacc$lib$parser$$token_tag_action_23 };
         } else {
-          return 33 <= input && input <= 57 ? { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 } : 59 <= input && input <= 127 ? { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 } : { _0: 0, _1: [] };
+          return 33 <= input && input <= 57 ? { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : 59 <= input && input <= 127 ? { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : { _0: 0, _1: [] };
         }
       }
     }
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_46(input) {
-  return 1 <= input && input <= 57 ? { _0: 58, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : 59 <= input && input <= 127 ? { _0: 58, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : { _0: 0, _1: [] };
+  if (1 <= input && input <= 41) {
+    return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+  } else {
+    if (input === 42) {
+      return { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+    } else {
+      if (43 <= input && input <= 46) {
+        return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+      } else {
+        if (input === 47) {
+          return { _0: 60, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+        } else {
+          return 48 <= input && input <= 127 ? { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
+        }
+      }
+    }
+  }
 }
 function moonbitlang$yacc$lib$parser$$token_state_47(input) {
-  if (input === 104) {
-    return { _0: 59, _1: moonbitlang$yacc$lib$parser$$token_tag_action_17 };
+  if (1 <= input && input <= 41) {
+    return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
   } else {
-    return { _0: 0, _1: [] };
+    if (input === 42) {
+      return { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+    } else {
+      if (43 <= input && input <= 46) {
+        return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+      } else {
+        if (input === 47) {
+          return { _0: 48, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+        } else {
+          return 48 <= input && input <= 127 ? { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
+        }
+      }
+    }
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_48(input) {
-  if (input === 99) {
-    return { _0: 60, _1: moonbitlang$yacc$lib$parser$$token_tag_action_31 };
-  } else {
-    return { _0: 0, _1: [] };
-  }
+  return 1 <= input && input <= 41 ? { _0: 61, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : 43 <= input && input <= 127 ? { _0: 61, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_49(input) {
-  if (input === 105) {
-    return { _0: 61, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
+  if (input === 104) {
+    return { _0: 62, _1: moonbitlang$yacc$lib$parser$$token_tag_action_18 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_50(input) {
-  if (input === 116) {
-    return { _0: 62, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
+  if (input === 99) {
+    return { _0: 63, _1: moonbitlang$yacc$lib$parser$$token_tag_action_32 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_51(input) {
-  if (input === 114) {
-    return { _0: 63, _1: moonbitlang$yacc$lib$parser$$token_tag_action_18 };
+  if (input === 105) {
+    return { _0: 64, _1: moonbitlang$yacc$lib$parser$$token_tag_action_25 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_52(input) {
-  if (input === 105) {
-    return { _0: 64, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
+  if (input === 116) {
+    return { _0: 65, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_53(input) {
-  if (input === 101) {
-    return { _0: 65, _1: moonbitlang$yacc$lib$parser$$token_tag_action_32 };
+  if (input === 114) {
+    return { _0: 66, _1: moonbitlang$yacc$lib$parser$$token_tag_action_19 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_54(input) {
-  if (input === 101) {
-    return { _0: 66, _1: moonbitlang$yacc$lib$parser$$token_tag_action_26 };
+  if (input === 105) {
+    return { _0: 67, _1: moonbitlang$yacc$lib$parser$$token_tag_action_14 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_55(input) {
-  if (input === 97) {
-    return { _0: 67, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
+  if (input === 105) {
+    return { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_56(input) {
-  return 1 <= input && input <= 41 ? { _0: 57, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : 43 <= input && input <= 127 ? { _0: 57, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
+  if (input === 101) {
+    return { _0: 69, _1: moonbitlang$yacc$lib$parser$$token_tag_action_33 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
 }
 function moonbitlang$yacc$lib$parser$$token_state_57(input) {
-  if (1 <= input && input <= 41) {
-    return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+  if (input === 101) {
+    return { _0: 70, _1: moonbitlang$yacc$lib$parser$$token_tag_action_27 };
   } else {
-    if (input === 42) {
-      return { _0: 42, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-    } else {
-      if (43 <= input && input <= 46) {
-        return { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-      } else {
-        if (input === 47) {
-          return { _0: 44, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
-        } else {
-          return 48 <= input && input <= 127 ? { _0: 43, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
-        }
-      }
-    }
+    return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_58(input) {
+  if (input === 97) {
+    return { _0: 71, _1: moonbitlang$yacc$lib$parser$$token_tag_action_16 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_59(input) {
   if (1 <= input && input <= 8) {
-    return { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
+    return { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
   } else {
     if (9 <= input && input <= 10) {
-      return { _0: 58, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
+      return { _0: 59, _1: moonbitlang$yacc$lib$parser$$token_tag_action_31 };
     } else {
       if (11 <= input && input <= 31) {
-        return { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
+        return { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
       } else {
         if (input === 32) {
-          return { _0: 58, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
+          return { _0: 59, _1: moonbitlang$yacc$lib$parser$$token_tag_action_31 };
         } else {
-          return 33 <= input && input <= 57 ? { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 } : 59 <= input && input <= 127 ? { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 } : { _0: 0, _1: [] };
+          return 33 <= input && input <= 57 ? { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : 59 <= input && input <= 127 ? { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : { _0: 0, _1: [] };
         }
       }
     }
   }
 }
-function moonbitlang$yacc$lib$parser$$token_state_59(input) {
-  if (input === 116) {
-    return { _0: 69, _1: moonbitlang$yacc$lib$parser$$token_tag_action_0 };
-  } else {
-    return { _0: 0, _1: [] };
-  }
-}
 function moonbitlang$yacc$lib$parser$$token_state_60(input) {
-  return { _0: 0, _1: [] };
+  return 1 <= input && input <= 41 ? { _0: 61, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : 43 <= input && input <= 127 ? { _0: 61, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_61(input) {
-  if (input === 116) {
-    return { _0: 70, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
+  if (1 <= input && input <= 41) {
+    return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
   } else {
-    return { _0: 0, _1: [] };
+    if (input === 42) {
+      return { _0: 46, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+    } else {
+      if (43 <= input && input <= 46) {
+        return { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+      } else {
+        if (input === 47) {
+          return { _0: 48, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 };
+        } else {
+          return 48 <= input && input <= 127 ? { _0: 47, _1: moonbitlang$yacc$lib$parser$$token_tag_action_22 } : { _0: 0, _1: [] };
+        }
+      }
+    }
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_62(input) {
-  return { _0: 0, _1: [] };
-}
-function moonbitlang$yacc$lib$parser$$token_state_63(input) {
   if (input === 116) {
-    return { _0: 71, _1: moonbitlang$yacc$lib$parser$$token_tag_action_20 };
+    return { _0: 73, _1: moonbitlang$yacc$lib$parser$$token_tag_action_1 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
+function moonbitlang$yacc$lib$parser$$token_state_63(input) {
+  return { _0: 0, _1: [] };
+}
 function moonbitlang$yacc$lib$parser$$token_state_64(input) {
-  if (input === 118) {
-    return { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
+  if (input === 116) {
+    return { _0: 74, _1: moonbitlang$yacc$lib$parser$$token_tag_action_25 };
   } else {
     return { _0: 0, _1: [] };
   }
@@ -9078,103 +9088,137 @@ function moonbitlang$yacc$lib$parser$$token_state_65(input) {
   return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_66(input) {
-  if (input === 110) {
-    return { _0: 73, _1: moonbitlang$yacc$lib$parser$$token_tag_action_33 };
+  if (input === 116) {
+    return { _0: 75, _1: moonbitlang$yacc$lib$parser$$token_tag_action_34 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_67(input) {
-  if (input === 115) {
-    return { _0: 74, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
+  if (input === 110) {
+    return { _0: 76, _1: moonbitlang$yacc$lib$parser$$token_tag_action_14 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_68(input) {
-  if (1 <= input && input <= 8) {
-    return { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
+  if (input === 118) {
+    return { _0: 77, _1: moonbitlang$yacc$lib$parser$$token_tag_action_13 };
   } else {
-    if (9 <= input && input <= 10) {
-      return { _0: 58, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
-    } else {
-      if (11 <= input && input <= 31) {
-        return { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 };
-      } else {
-        if (input === 32) {
-          return { _0: 58, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
-        } else {
-          return 33 <= input && input <= 57 ? { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 } : 59 <= input && input <= 127 ? { _0: 68, _1: moonbitlang$yacc$lib$parser$$token_tag_action_29 } : { _0: 0, _1: [] };
-        }
-      }
-    }
+    return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_69(input) {
   return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_70(input) {
-  if (input === 105) {
-    return { _0: 75, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
+  if (input === 110) {
+    return { _0: 78, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_71(input) {
-  return { _0: 0, _1: [] };
-}
-function moonbitlang$yacc$lib$parser$$token_state_72(input) {
-  if (input === 101) {
-    return { _0: 76, _1: moonbitlang$yacc$lib$parser$$token_tag_action_34 };
+  if (input === 115) {
+    return { _0: 79, _1: moonbitlang$yacc$lib$parser$$token_tag_action_16 };
   } else {
     return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_72(input) {
+  if (1 <= input && input <= 8) {
+    return { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
+  } else {
+    if (9 <= input && input <= 10) {
+      return { _0: 59, _1: moonbitlang$yacc$lib$parser$$token_tag_action_31 };
+    } else {
+      if (11 <= input && input <= 31) {
+        return { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 };
+      } else {
+        if (input === 32) {
+          return { _0: 59, _1: moonbitlang$yacc$lib$parser$$token_tag_action_31 };
+        } else {
+          return 33 <= input && input <= 57 ? { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : 59 <= input && input <= 127 ? { _0: 72, _1: moonbitlang$yacc$lib$parser$$token_tag_action_30 } : { _0: 0, _1: [] };
+        }
+      }
+    }
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_73(input) {
   return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$token_state_74(input) {
-  if (input === 115) {
-    return { _0: 77, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
+  if (input === 105) {
+    return { _0: 80, _1: moonbitlang$yacc$lib$parser$$token_tag_action_25 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
 function moonbitlang$yacc$lib$parser$$token_state_75(input) {
-  if (input === 111) {
-    return { _0: 78, _1: moonbitlang$yacc$lib$parser$$token_tag_action_21 };
-  } else {
-    return { _0: 0, _1: [] };
-  }
-}
-function moonbitlang$yacc$lib$parser$$token_state_76(input) {
   return { _0: 0, _1: [] };
 }
-function moonbitlang$yacc$lib$parser$$token_state_77(input) {
-  if (input === 111) {
-    return { _0: 79, _1: moonbitlang$yacc$lib$parser$$token_tag_action_15 };
-  } else {
-    return { _0: 0, _1: [] };
-  }
-}
-function moonbitlang$yacc$lib$parser$$token_state_78(input) {
-  if (input === 110) {
-    return { _0: 80, _1: moonbitlang$yacc$lib$parser$$token_tag_action_28 };
-  } else {
-    return { _0: 0, _1: [] };
-  }
-}
-function moonbitlang$yacc$lib$parser$$token_state_79(input) {
-  if (input === 99) {
+function moonbitlang$yacc$lib$parser$$token_state_76(input) {
+  if (input === 101) {
     return { _0: 81, _1: moonbitlang$yacc$lib$parser$$token_tag_action_35 };
   } else {
     return { _0: 0, _1: [] };
   }
 }
-function moonbitlang$yacc$lib$parser$$token_state_80(input) {
+function moonbitlang$yacc$lib$parser$$token_state_77(input) {
+  if (input === 101) {
+    return { _0: 82, _1: moonbitlang$yacc$lib$parser$$token_tag_action_36 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_78(input) {
   return { _0: 0, _1: [] };
 }
+function moonbitlang$yacc$lib$parser$$token_state_79(input) {
+  if (input === 115) {
+    return { _0: 83, _1: moonbitlang$yacc$lib$parser$$token_tag_action_16 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_80(input) {
+  if (input === 111) {
+    return { _0: 84, _1: moonbitlang$yacc$lib$parser$$token_tag_action_25 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
 function moonbitlang$yacc$lib$parser$$token_state_81(input) {
+  return { _0: 0, _1: [] };
+}
+function moonbitlang$yacc$lib$parser$$token_state_82(input) {
+  return { _0: 0, _1: [] };
+}
+function moonbitlang$yacc$lib$parser$$token_state_83(input) {
+  if (input === 111) {
+    return { _0: 85, _1: moonbitlang$yacc$lib$parser$$token_tag_action_16 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_84(input) {
+  if (input === 110) {
+    return { _0: 86, _1: moonbitlang$yacc$lib$parser$$token_tag_action_37 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_85(input) {
+  if (input === 99) {
+    return { _0: 87, _1: moonbitlang$yacc$lib$parser$$token_tag_action_0 };
+  } else {
+    return { _0: 0, _1: [] };
+  }
+}
+function moonbitlang$yacc$lib$parser$$token_state_86(input) {
+  return { _0: 0, _1: [] };
+}
+function moonbitlang$yacc$lib$parser$$token_state_87(input) {
   return { _0: 0, _1: [] };
 }
 function moonbitlang$yacc$lib$parser$$code_eof_state_0(input) {
@@ -10751,15 +10795,7 @@ function moonbitlang$yacc$lib$parser$$token(phase, lexbuf) {
         const _x$33 = _bind$13._0;
         const _x$34 = _bind$13._1;
         moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$33, _x$34);
-        if (phase$2.val <= 0) {
-          phase$2.val = phase$2.val + 1 | 0;
-          return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_PERCENT, _1: _x$33, _2: _x$34 });
-        } else {
-          phase$2.val = phase$2.val + 1 | 0;
-          const sb = moonbitlang$core$builtin$$StringBuilder$new(moonbitlang$core$builtin$$StringBuilder$new$46$size_hint$46$default());
-          moonbitlang$yacc$lib$parser$$code_eof(sb, lexbuf$2);
-          return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_PERCENT_CODE_EOF(moonbitlang$core$builtin$$StringBuilder$to_string(sb)), _1: _x$33, _2: _x$34 });
-        }
+        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_INLINE, _1: _x$33, _2: _x$34 });
       }
       case 15: {
         const _x$35 = _bind._1;
@@ -10767,19 +10803,27 @@ function moonbitlang$yacc$lib$parser$$token(phase, lexbuf) {
         const _x$36 = _bind$14._0;
         const _x$37 = _bind$14._1;
         moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$36, _x$37);
-        const _bind$15 = moonbitlang$core$array$$Array$op_get$89$(_x$35, 1);
-        const _x$38 = _bind$15._0;
-        const _x$39 = _bind$15._1;
-        const t2 = moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$38, _x$39);
-        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$ARROW_CODE(t2), _1: _x$36, _2: _x$37 });
+        if (phase$2.val <= 0) {
+          phase$2.val = phase$2.val + 1 | 0;
+          return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_PERCENT, _1: _x$36, _2: _x$37 });
+        } else {
+          phase$2.val = phase$2.val + 1 | 0;
+          const sb = moonbitlang$core$builtin$$StringBuilder$new(moonbitlang$core$builtin$$StringBuilder$new$46$size_hint$46$default());
+          moonbitlang$yacc$lib$parser$$code_eof(sb, lexbuf$2);
+          return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_PERCENT_CODE_EOF(moonbitlang$core$builtin$$StringBuilder$to_string(sb)), _1: _x$36, _2: _x$37 });
+        }
       }
       case 16: {
-        const _x$40 = _bind._1;
-        const _bind$16 = moonbitlang$core$array$$Array$op_get$89$(_x$40, 0);
+        const _x$38 = _bind._1;
+        const _bind$15 = moonbitlang$core$array$$Array$op_get$89$(_x$38, 0);
+        const _x$39 = _bind$15._0;
+        const _x$40 = _bind$15._1;
+        moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$39, _x$40);
+        const _bind$16 = moonbitlang$core$array$$Array$op_get$89$(_x$38, 1);
         const _x$41 = _bind$16._0;
         const _x$42 = _bind$16._1;
-        moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$41, _x$42);
-        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$COLON, _1: _x$41, _2: _x$42 });
+        const t2 = moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$41, _x$42);
+        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$ARROW_CODE(t2), _1: _x$39, _2: _x$40 });
       }
       case 17: {
         const _x$43 = _bind._1;
@@ -10787,7 +10831,7 @@ function moonbitlang$yacc$lib$parser$$token(phase, lexbuf) {
         const _x$44 = _bind$17._0;
         const _x$45 = _bind$17._1;
         moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$44, _x$45);
-        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$BAR, _1: _x$44, _2: _x$45 });
+        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$COLON, _1: _x$44, _2: _x$45 });
       }
       case 18: {
         const _x$46 = _bind._1;
@@ -10795,7 +10839,7 @@ function moonbitlang$yacc$lib$parser$$token(phase, lexbuf) {
         const _x$47 = _bind$18._0;
         const _x$48 = _bind$18._1;
         moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$47, _x$48);
-        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$EQ, _1: _x$47, _2: _x$48 });
+        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$BAR, _1: _x$47, _2: _x$48 });
       }
       case 19: {
         const _x$49 = _bind._1;
@@ -10803,7 +10847,7 @@ function moonbitlang$yacc$lib$parser$$token(phase, lexbuf) {
         const _x$50 = _bind$19._0;
         const _x$51 = _bind$19._1;
         moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$50, _x$51);
-        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$SEMI, _1: _x$50, _2: _x$51 });
+        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$EQ, _1: _x$50, _2: _x$51 });
       }
       case 20: {
         const _x$52 = _bind._1;
@@ -10811,73 +10855,81 @@ function moonbitlang$yacc$lib$parser$$token(phase, lexbuf) {
         const _x$53 = _bind$20._0;
         const _x$54 = _bind$20._1;
         moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$53, _x$54);
-        const sb = moonbitlang$core$builtin$$StringBuilder$new(moonbitlang$core$builtin$$StringBuilder$new$46$size_hint$46$default());
-        const _bind$21 = moonbitlang$yacc$lib$parser$$code_percent_rbrace(sb, lexbuf$2);
-        if (_bind$21.$tag === 1) {
-          const _ok = _bind$21;
-          _ok._0;
-        } else {
-          return _bind$21;
-        }
-        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_LBRACE_CODE_PERCENT_RBRACE(moonbitlang$core$builtin$$StringBuilder$to_string(sb)), _1: _x$53, _2: _x$54 });
+        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$SEMI, _1: _x$53, _2: _x$54 });
       }
       case 21: {
         const _x$55 = _bind._1;
-        const _bind$22 = moonbitlang$core$array$$Array$op_get$89$(_x$55, 0);
-        const _x$56 = _bind$22._0;
-        const _x$57 = _bind$22._1;
+        const _bind$21 = moonbitlang$core$array$$Array$op_get$89$(_x$55, 0);
+        const _x$56 = _bind$21._0;
+        const _x$57 = _bind$21._1;
         moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$56, _x$57);
-        const sb$2 = moonbitlang$core$builtin$$StringBuilder$new(moonbitlang$core$builtin$$StringBuilder$new$46$size_hint$46$default());
-        const _bind$23 = moonbitlang$yacc$lib$parser$$code_rangle(sb$2, lexbuf$2);
-        if (_bind$23.$tag === 1) {
-          const _ok = _bind$23;
+        const sb = moonbitlang$core$builtin$$StringBuilder$new(moonbitlang$core$builtin$$StringBuilder$new$46$size_hint$46$default());
+        const _bind$22 = moonbitlang$yacc$lib$parser$$code_percent_rbrace(sb, lexbuf$2);
+        if (_bind$22.$tag === 1) {
+          const _ok = _bind$22;
           _ok._0;
         } else {
-          return _bind$23;
+          return _bind$22;
         }
-        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$LANGLE_CODE_RANGLE(moonbitlang$core$builtin$$StringBuilder$to_string(sb$2)), _1: _x$56, _2: _x$57 });
+        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$PERCENT_LBRACE_CODE_PERCENT_RBRACE(moonbitlang$core$builtin$$StringBuilder$to_string(sb)), _1: _x$56, _2: _x$57 });
       }
       case 22: {
         const _x$58 = _bind._1;
-        const _bind$24 = moonbitlang$core$array$$Array$op_get$89$(_x$58, 0);
-        const _x$59 = _bind$24._0;
-        const _x$60 = _bind$24._1;
+        const _bind$23 = moonbitlang$core$array$$Array$op_get$89$(_x$58, 0);
+        const _x$59 = _bind$23._0;
+        const _x$60 = _bind$23._1;
         moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$59, _x$60);
-        const sb$3 = moonbitlang$core$builtin$$StringBuilder$new(moonbitlang$core$builtin$$StringBuilder$new$46$size_hint$46$default());
-        const subst = [];
-        const base = lexbuf$2.pos;
-        const _bind$25 = moonbitlang$yacc$lib$parser$$code_rbrace(sb$3, subst, base, lexbuf$2);
-        if (_bind$25.$tag === 1) {
-          const _ok = _bind$25;
+        const sb$2 = moonbitlang$core$builtin$$StringBuilder$new(moonbitlang$core$builtin$$StringBuilder$new$46$size_hint$46$default());
+        const _bind$24 = moonbitlang$yacc$lib$parser$$code_rangle(sb$2, lexbuf$2);
+        if (_bind$24.$tag === 1) {
+          const _ok = _bind$24;
           _ok._0;
         } else {
-          return _bind$25;
+          return _bind$24;
         }
-        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$LBRACE_CODE_RBRACE({ _0: moonbitlang$core$builtin$$StringBuilder$to_string(sb$3), _1: base, _2: subst }), _1: _x$59, _2: lexbuf$2.pos });
+        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$LANGLE_CODE_RANGLE(moonbitlang$core$builtin$$StringBuilder$to_string(sb$2)), _1: _x$59, _2: _x$60 });
       }
       case 23: {
         const _x$61 = _bind._1;
-        const _bind$26 = moonbitlang$core$array$$Array$op_get$89$(_x$61, 0);
-        const _x$62 = _bind$26._0;
-        const _x$63 = _bind$26._1;
-        const t$2 = moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$62, _x$63);
-        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$STRING(t$2), _1: _x$62, _2: _x$63 });
+        const _bind$25 = moonbitlang$core$array$$Array$op_get$89$(_x$61, 0);
+        const _x$62 = _bind$25._0;
+        const _x$63 = _bind$25._1;
+        moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$62, _x$63);
+        const sb$3 = moonbitlang$core$builtin$$StringBuilder$new(moonbitlang$core$builtin$$StringBuilder$new$46$size_hint$46$default());
+        const subst = [];
+        const base = lexbuf$2.pos;
+        const _bind$26 = moonbitlang$yacc$lib$parser$$code_rbrace(sb$3, subst, base, lexbuf$2);
+        if (_bind$26.$tag === 1) {
+          const _ok = _bind$26;
+          _ok._0;
+        } else {
+          return _bind$26;
+        }
+        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$LBRACE_CODE_RBRACE({ _0: moonbitlang$core$builtin$$StringBuilder$to_string(sb$3), _1: base, _2: subst }), _1: _x$62, _2: lexbuf$2.pos });
       }
       case 24: {
         const _x$64 = _bind._1;
         const _bind$27 = moonbitlang$core$array$$Array$op_get$89$(_x$64, 0);
         const _x$65 = _bind$27._0;
         const _x$66 = _bind$27._1;
-        const t$3 = moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$65, _x$66);
-        return new Result$Err$16$(new Error$moonbitlang$47$yacc$47$lib$47$parser$46$LexError$46$Unrecognized(t$3));
+        const t$2 = moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$65, _x$66);
+        return new Result$Ok$16$({ _0: new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$STRING(t$2), _1: _x$65, _2: _x$66 });
       }
       case 25: {
         const _x$67 = _bind._1;
         const _bind$28 = moonbitlang$core$array$$Array$op_get$89$(_x$67, 0);
         const _x$68 = _bind$28._0;
         const _x$69 = _bind$28._1;
-        moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$68, _x$69);
-        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$EOF, _1: _x$68, _2: _x$69 });
+        const t$3 = moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$68, _x$69);
+        return new Result$Err$16$(new Error$moonbitlang$47$yacc$47$lib$47$parser$46$LexError$46$Unrecognized(t$3));
+      }
+      case 26: {
+        const _x$70 = _bind._1;
+        const _bind$29 = moonbitlang$core$array$$Array$op_get$89$(_x$70, 0);
+        const _x$71 = _bind$29._0;
+        const _x$72 = _bind$29._1;
+        moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, _x$71, _x$72);
+        return new Result$Ok$16$({ _0: $64$moonbitlang$47$yacc$47$lib$47$parser$46$Token$EOF, _1: _x$71, _2: _x$72 });
       }
       default: {
         return new Result$Ok$16$(moonbitlang$core$builtin$$abort$20$("lex: fail to match"));
@@ -10956,8 +11008,11 @@ function moonbitlang$yacc$lib$parser$$Token$kind(self) {
     case 20: {
       return 20;
     }
-    default: {
+    case 21: {
       return 21;
+    }
+    default: {
+      return 22;
     }
   }
 }
@@ -11037,14 +11092,18 @@ function moonbitlang$core$builtin$$Show$output$126$(self, logger) {
       break;
     }
     case 18: {
-      _tmp = "\":\"";
+      _tmp = "\"%inline\"";
       break;
     }
     case 19: {
-      _tmp = "\"|\"";
+      _tmp = "\":\"";
       break;
     }
     case 20: {
+      _tmp = "\"|\"";
+      break;
+    }
+    case 21: {
       _tmp = "\"=\"";
       break;
     }
@@ -11310,6 +11369,26 @@ function moonbitlang$yacc$lib$parser$$yy_action_20(_last_pos, _args) {
 }
 function moonbitlang$yacc$lib$parser$$yy_action_21(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
+  if (_bind.$tag === 12) {
+    const _YYObj_Rule = _bind;
+    const _x = _YYObj_Rule._0;
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Rule$46$YYObj_Rule(_x);
+  } else {
+    return $panic();
+  }
+}
+function moonbitlang$yacc$lib$parser$$yy_action_22(_last_pos, _args) {
+  const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 1)._0;
+  if (_bind.$tag === 12) {
+    const _YYObj_Rule = _bind;
+    const _x = _YYObj_Rule._0;
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Rule$46$YYObj_Rule({ inline: true, nonterminal: _x.nonterminal, type_: _x.type_, clauses: _x.clauses });
+  } else {
+    return $panic();
+  }
+}
+function moonbitlang$yacc$lib$parser$$yy_action_23(_last_pos, _args) {
+  const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 11) {
     const _YYObj_Symbol = _bind;
     const _x = _YYObj_Symbol._0;
@@ -11321,7 +11400,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_21(_last_pos, _args) {
       if (_bind$3.$tag === 13) {
         const _YYObj__immut_list_T_Clause_ = _bind$3;
         const _x$3 = _YYObj__immut_list_T_Clause_._0;
-        return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Rule$46$YYObj_Rule({ nonterminal: _x, type_: _x$2, clauses: moonbitlang$core$immut$list$$T$to_array$45$(_x$3) });
+        return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Rule$46$YYObj_Rule({ inline: false, nonterminal: _x, type_: _x$2, clauses: moonbitlang$core$immut$list$$T$to_array$45$(_x$3) });
       } else {
         return $panic();
       }
@@ -11332,7 +11411,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_21(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_22(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_24(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 8) {
     const _YYObj_String = _bind;
@@ -11342,10 +11421,10 @@ function moonbitlang$yacc$lib$parser$$yy_action_22(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_23(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_25(_last_pos, _args) {
   return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Code_$46$YYObj_Code_(undefined);
 }
-function moonbitlang$yacc$lib$parser$$yy_action_24(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_26(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 14) {
     const _YYObj_Clause = _bind;
@@ -11355,7 +11434,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_24(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_25(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_27(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 14) {
     const _YYObj_Clause = _bind;
@@ -11372,7 +11451,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_25(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_26(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_28(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 15) {
     const _YYObj__immut_list_T_ClauseItem_ = _bind;
@@ -11396,7 +11475,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_26(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_27(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_29(_last_pos, _args) {
   const _start_pos = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._1;
   const _end_pos = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._2;
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
@@ -11411,10 +11490,10 @@ function moonbitlang$yacc$lib$parser$$yy_action_27(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_28(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_30(_last_pos, _args) {
   return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_ClauseAction$46$YYObj_ClauseAction({ code: undefined, start: _last_pos, end: _last_pos });
 }
-function moonbitlang$yacc$lib$parser$$yy_action_29(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_31(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 1)._0;
   if (_bind.$tag === 11) {
     const _YYObj_Symbol = _bind;
@@ -11424,10 +11503,10 @@ function moonbitlang$yacc$lib$parser$$yy_action_29(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_30(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_32(_last_pos, _args) {
   return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Symbol_$46$YYObj_Symbol_(undefined);
 }
-function moonbitlang$yacc$lib$parser$$yy_action_31(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_33(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 19) {
     const _YYObj_ClauseItem = _bind;
@@ -11444,10 +11523,10 @@ function moonbitlang$yacc$lib$parser$$yy_action_31(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_32(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_34(_last_pos, _args) {
   return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_ClauseItem_$46$YYObj__immut_list_T_ClauseItem_($64$moonbitlang$47$core$47$immut$47$list$46$T$Nil$20$);
 }
-function moonbitlang$yacc$lib$parser$$yy_action_33(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_35(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 20) {
     const _YYObj_ClauseItemSymbol = _bind;
@@ -11457,7 +11536,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_33(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_34(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_36(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 8) {
     const _YYObj_String = _bind;
@@ -11474,7 +11553,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_34(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_35(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_37(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 11) {
     const _YYObj_Symbol = _bind;
@@ -11484,7 +11563,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_35(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_36(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_38(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 8) {
     const _YYObj_String = _bind;
@@ -11494,7 +11573,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_36(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_37(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_39(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 11) {
     const _YYObj_Symbol = _bind;
@@ -11504,7 +11583,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_37(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_38(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_40(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 11) {
     const _YYObj_Symbol = _bind;
@@ -11521,7 +11600,7 @@ function moonbitlang$yacc$lib$parser$$yy_action_38(_last_pos, _args) {
     return $panic();
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_action_39(_last_pos, _args) {
+function moonbitlang$yacc$lib$parser$$yy_action_41(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$75$(_args, 0)._0;
   if (_bind.$tag === 8) {
     const _YYObj_String = _bind;
@@ -11610,8 +11689,11 @@ function moonbitlang$yacc$lib$parser$$yy_input(token, _start_pos, _end_pos) {
     case 20: {
       return { _0: 20, _1: Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Void$46$YYObj_Void };
     }
-    default: {
+    case 21: {
       return { _0: 21, _1: Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Void$46$YYObj_Void };
+    }
+    default: {
+      return { _0: 22, _1: Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Void$46$YYObj_Void };
     }
   }
 }
@@ -11619,16 +11701,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_1(_lookahead) {
   return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Accept;
 }
 function moonbitlang$yacc$lib$parser$$yy_state_2(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 23, moonbitlang$yacc$lib$parser$$yy_action_1);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 24, moonbitlang$yacc$lib$parser$$yy_action_1);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_13(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 26, moonbitlang$yacc$lib$parser$$yy_action_14);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 27, moonbitlang$yacc$lib$parser$$yy_action_14);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_8(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 39, moonbitlang$yacc$lib$parser$$yy_action_39);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 41, moonbitlang$yacc$lib$parser$$yy_action_41);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_10(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 38, moonbitlang$yacc$lib$parser$$yy_action_38);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 40, moonbitlang$yacc$lib$parser$$yy_action_40);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_9(_lookahead) {
   _L: {
@@ -11636,10 +11718,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_9(_lookahead) {
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
       }
-      case 39: {
+      case 41: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_9);
       }
-      case 38: {
+      case 40: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_10);
       }
       case 8: {
@@ -11674,17 +11756,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_9(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 38, moonbitlang$yacc$lib$parser$$yy_action_37);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 40, moonbitlang$yacc$lib$parser$$yy_action_39);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_12(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_9);
     }
-    case 38: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
     default: {
@@ -11693,17 +11775,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_12(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_15(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 26, moonbitlang$yacc$lib$parser$$yy_action_13);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 27, moonbitlang$yacc$lib$parser$$yy_action_13);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_14(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_9);
     }
-    case 38: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_15);
     }
     default: {
@@ -11712,7 +11794,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_14(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_17(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 26, moonbitlang$yacc$lib$parser$$yy_action_12);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 27, moonbitlang$yacc$lib$parser$$yy_action_12);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_16(_lookahead) {
   if (_lookahead === 3) {
@@ -11722,17 +11804,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_16(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_20(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 26, moonbitlang$yacc$lib$parser$$yy_action_11);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 27, moonbitlang$yacc$lib$parser$$yy_action_11);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_19(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_9);
     }
-    case 38: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_20);
     }
     default: {
@@ -11748,10 +11830,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_18(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_22(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 27, moonbitlang$yacc$lib$parser$$yy_action_17);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 28, moonbitlang$yacc$lib$parser$$yy_action_17);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_25(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 26, moonbitlang$yacc$lib$parser$$yy_action_10);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 27, moonbitlang$yacc$lib$parser$$yy_action_10);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_24(_lookahead) {
   _L: {
@@ -11759,10 +11841,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_24(_lookahead) {
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
       }
-      case 39: {
+      case 41: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_9);
       }
-      case 38: {
+      case 40: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_10);
       }
       case 2: {
@@ -11800,20 +11882,20 @@ function moonbitlang$yacc$lib$parser$$yy_state_24(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 38, moonbitlang$yacc$lib$parser$$yy_action_37);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 40, moonbitlang$yacc$lib$parser$$yy_action_39);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_26(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 26, moonbitlang$yacc$lib$parser$$yy_action_9);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 27, moonbitlang$yacc$lib$parser$$yy_action_9);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_23(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_24);
     }
-    case 38: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_26);
     }
     default: {
@@ -11826,11 +11908,11 @@ function moonbitlang$yacc$lib$parser$$yy_state_21(_lookahead) {
     case 3: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_22);
     }
-    case 27: {
+    case 28: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_23);
     }
     case 1: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 27, moonbitlang$yacc$lib$parser$$yy_action_18);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 28, moonbitlang$yacc$lib$parser$$yy_action_18);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -11838,17 +11920,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_21(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_28(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 26, moonbitlang$yacc$lib$parser$$yy_action_8);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 27, moonbitlang$yacc$lib$parser$$yy_action_8);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_27(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_9);
     }
-    case 38: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_28);
     }
     default: {
@@ -11857,10 +11939,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_27(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_30(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 25, moonbitlang$yacc$lib$parser$$yy_action_6);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 26, moonbitlang$yacc$lib$parser$$yy_action_6);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_6(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 26, moonbitlang$yacc$lib$parser$$yy_action_16);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 27, moonbitlang$yacc$lib$parser$$yy_action_16);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_5(_lookahead) {
   if (_lookahead === 1) {
@@ -11877,17 +11959,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_4(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_11(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 26, moonbitlang$yacc$lib$parser$$yy_action_15);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 27, moonbitlang$yacc$lib$parser$$yy_action_15);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_7(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_9);
     }
-    case 38: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_11);
     }
     default: {
@@ -11921,14 +12003,14 @@ function moonbitlang$yacc$lib$parser$$yy_state_29(_lookahead) {
     case 9: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_27);
     }
-    case 26: {
+    case 27: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_29);
     }
-    case 25: {
+    case 26: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
     case 8: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 25, moonbitlang$yacc$lib$parser$$yy_action_7);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 26, moonbitlang$yacc$lib$parser$$yy_action_7);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -11936,16 +12018,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_29(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_34(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 30, moonbitlang$yacc$lib$parser$$yy_action_22);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 32, moonbitlang$yacc$lib$parser$$yy_action_24);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_37(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 37, moonbitlang$yacc$lib$parser$$yy_action_36);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 39, moonbitlang$yacc$lib$parser$$yy_action_38);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_38(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 37, moonbitlang$yacc$lib$parser$$yy_action_35);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 39, moonbitlang$yacc$lib$parser$$yy_action_37);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_41(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 36, moonbitlang$yacc$lib$parser$$yy_action_34);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 38, moonbitlang$yacc$lib$parser$$yy_action_36);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_40(_lookahead) {
   switch (_lookahead) {
@@ -11955,10 +12037,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_40(_lookahead) {
     case 2: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_37);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_38);
     }
-    case 37: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_41);
     }
     default: {
@@ -11969,7 +12051,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_40(_lookahead) {
 function moonbitlang$yacc$lib$parser$$yy_state_39(_lookahead) {
   _L: {
     switch (_lookahead) {
-      case 20: {
+      case 21: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_40);
       }
       case 1: {
@@ -11984,10 +12066,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_39(_lookahead) {
       case 16: {
         break _L;
       }
-      case 19: {
+      case 20: {
         break _L;
       }
-      case 21: {
+      case 22: {
         break _L;
       }
       default: {
@@ -11995,13 +12077,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_39(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 39, moonbitlang$yacc$lib$parser$$yy_action_39);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 41, moonbitlang$yacc$lib$parser$$yy_action_41);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_42(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 36, moonbitlang$yacc$lib$parser$$yy_action_33);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 38, moonbitlang$yacc$lib$parser$$yy_action_35);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_44(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 35, moonbitlang$yacc$lib$parser$$yy_action_31);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 37, moonbitlang$yacc$lib$parser$$yy_action_33);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_43(_lookahead) {
   _L: {
@@ -12009,19 +12091,19 @@ function moonbitlang$yacc$lib$parser$$yy_state_43(_lookahead) {
       case 2: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_37);
       }
-      case 39: {
+      case 41: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_38);
       }
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_39);
       }
-      case 37: {
+      case 39: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_42);
       }
-      case 36: {
+      case 38: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_43);
       }
-      case 35: {
+      case 37: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_44);
       }
       case 4: {
@@ -12030,10 +12112,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_43(_lookahead) {
       case 16: {
         break _L;
       }
-      case 19: {
+      case 20: {
         break _L;
       }
-      case 21: {
+      case 22: {
         break _L;
       }
       default: {
@@ -12041,17 +12123,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_43(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 35, moonbitlang$yacc$lib$parser$$yy_action_32);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 37, moonbitlang$yacc$lib$parser$$yy_action_34);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_47(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 34, moonbitlang$yacc$lib$parser$$yy_action_29);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 36, moonbitlang$yacc$lib$parser$$yy_action_31);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_46(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
     }
     default: {
@@ -12060,10 +12142,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_46(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_49(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 33, moonbitlang$yacc$lib$parser$$yy_action_27);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 35, moonbitlang$yacc$lib$parser$$yy_action_29);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_50(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 32, moonbitlang$yacc$lib$parser$$yy_action_26);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 34, moonbitlang$yacc$lib$parser$$yy_action_28);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_48(_lookahead) {
   _L: {
@@ -12071,13 +12153,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_48(_lookahead) {
       case 4: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_49);
       }
-      case 33: {
+      case 35: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_50);
       }
-      case 19: {
+      case 20: {
         break _L;
       }
-      case 21: {
+      case 22: {
         break _L;
       }
       default: {
@@ -12085,7 +12167,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_48(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 33, moonbitlang$yacc$lib$parser$$yy_action_28);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 35, moonbitlang$yacc$lib$parser$$yy_action_30);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_45(_lookahead) {
   _L: {
@@ -12093,16 +12175,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_45(_lookahead) {
       case 16: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
       }
-      case 34: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_48);
       }
       case 4: {
         break _L;
       }
-      case 19: {
+      case 20: {
         break _L;
       }
-      case 21: {
+      case 22: {
         break _L;
       }
       default: {
@@ -12110,18 +12192,18 @@ function moonbitlang$yacc$lib$parser$$yy_state_45(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 34, moonbitlang$yacc$lib$parser$$yy_action_30);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 36, moonbitlang$yacc$lib$parser$$yy_action_32);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_53(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 31, moonbitlang$yacc$lib$parser$$yy_action_25);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 33, moonbitlang$yacc$lib$parser$$yy_action_27);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_51(_lookahead) {
   switch (_lookahead) {
-    case 19: {
+    case 20: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_52);
     }
-    case 21: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 31, moonbitlang$yacc$lib$parser$$yy_action_24);
+    case 22: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 33, moonbitlang$yacc$lib$parser$$yy_action_26);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -12134,25 +12216,25 @@ function moonbitlang$yacc$lib$parser$$yy_state_52(_lookahead) {
       case 2: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_37);
       }
-      case 39: {
+      case 41: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_38);
       }
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_39);
       }
-      case 37: {
+      case 39: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_42);
       }
-      case 36: {
+      case 38: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_43);
       }
-      case 35: {
+      case 37: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_45);
       }
-      case 32: {
+      case 34: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_51);
       }
-      case 31: {
+      case 33: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_53);
       }
       case 4: {
@@ -12161,10 +12243,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_52(_lookahead) {
       case 16: {
         break _L;
       }
-      case 19: {
+      case 20: {
         break _L;
       }
-      case 21: {
+      case 22: {
         break _L;
       }
       default: {
@@ -12172,13 +12254,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_52(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 35, moonbitlang$yacc$lib$parser$$yy_action_32);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 37, moonbitlang$yacc$lib$parser$$yy_action_34);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_55(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 29, moonbitlang$yacc$lib$parser$$yy_action_21);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 31, moonbitlang$yacc$lib$parser$$yy_action_23);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_54(_lookahead) {
-  if (_lookahead === 21) {
+  if (_lookahead === 22) {
     return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_55);
   } else {
     return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -12190,25 +12272,25 @@ function moonbitlang$yacc$lib$parser$$yy_state_36(_lookahead) {
       case 2: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_37);
       }
-      case 39: {
+      case 41: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_38);
       }
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_39);
       }
-      case 37: {
+      case 39: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_42);
       }
-      case 36: {
+      case 38: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_43);
       }
-      case 35: {
+      case 37: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_45);
       }
-      case 32: {
+      case 34: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_51);
       }
-      case 31: {
+      case 33: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_54);
       }
       case 4: {
@@ -12217,10 +12299,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_36(_lookahead) {
       case 16: {
         break _L;
       }
-      case 19: {
+      case 20: {
         break _L;
       }
-      case 21: {
+      case 22: {
         break _L;
       }
       default: {
@@ -12228,10 +12310,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_36(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 35, moonbitlang$yacc$lib$parser$$yy_action_32);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 37, moonbitlang$yacc$lib$parser$$yy_action_34);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_35(_lookahead) {
-  if (_lookahead === 18) {
+  if (_lookahead === 19) {
     return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_36);
   } else {
     return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -12242,11 +12324,11 @@ function moonbitlang$yacc$lib$parser$$yy_state_33(_lookahead) {
     case 6: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_34);
     }
-    case 30: {
+    case 32: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_35);
     }
-    case 18: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 30, moonbitlang$yacc$lib$parser$$yy_action_23);
+    case 19: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 32, moonbitlang$yacc$lib$parser$$yy_action_25);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -12254,22 +12336,50 @@ function moonbitlang$yacc$lib$parser$$yy_state_33(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_57(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 28, moonbitlang$yacc$lib$parser$$yy_action_20);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 30, moonbitlang$yacc$lib$parser$$yy_action_22);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_56(_lookahead) {
+  switch (_lookahead) {
+    case 1: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
+    }
+    case 41: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_33);
+    }
+    case 31: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_57);
+    }
+    default: {
+      return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
+    }
+  }
+}
+function moonbitlang$yacc$lib$parser$$yy_state_58(_lookahead) {
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 30, moonbitlang$yacc$lib$parser$$yy_action_21);
+}
+function moonbitlang$yacc$lib$parser$$yy_state_60(_lookahead) {
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 29, moonbitlang$yacc$lib$parser$$yy_action_20);
+}
+function moonbitlang$yacc$lib$parser$$yy_state_59(_lookahead) {
   _L: {
     switch (_lookahead) {
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
       }
-      case 39: {
+      case 41: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_33);
       }
-      case 29: {
+      case 18: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_56);
       }
-      case 28: {
-        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_57);
+      case 31: {
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_58);
+      }
+      case 30: {
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_59);
+      }
+      case 29: {
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_60);
       }
       case 0: {
         break _L;
@@ -12285,37 +12395,37 @@ function moonbitlang$yacc$lib$parser$$yy_state_56(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 28, moonbitlang$yacc$lib$parser$$yy_action_19);
-}
-function moonbitlang$yacc$lib$parser$$yy_state_59(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 24, moonbitlang$yacc$lib$parser$$yy_action_4);
-}
-function moonbitlang$yacc$lib$parser$$yy_state_60(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 24, moonbitlang$yacc$lib$parser$$yy_action_3);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 29, moonbitlang$yacc$lib$parser$$yy_action_19);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_62(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(6, 22, moonbitlang$yacc$lib$parser$$yy_action_0);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 25, moonbitlang$yacc$lib$parser$$yy_action_4);
 }
-function moonbitlang$yacc$lib$parser$$yy_state_61(_lookahead) {
+function moonbitlang$yacc$lib$parser$$yy_state_63(_lookahead) {
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 25, moonbitlang$yacc$lib$parser$$yy_action_3);
+}
+function moonbitlang$yacc$lib$parser$$yy_state_65(_lookahead) {
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(6, 23, moonbitlang$yacc$lib$parser$$yy_action_0);
+}
+function moonbitlang$yacc$lib$parser$$yy_state_64(_lookahead) {
   if (_lookahead === 0) {
-    return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_62);
+    return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_65);
   } else {
     return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_state_58(_lookahead) {
+function moonbitlang$yacc$lib$parser$$yy_state_61(_lookahead) {
   switch (_lookahead) {
     case 7: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_59);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_62);
     }
     case 5: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_60);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_63);
     }
-    case 24: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_61);
+    case 25: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_64);
     }
     case 0: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 24, moonbitlang$yacc$lib$parser$$yy_action_5);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 25, moonbitlang$yacc$lib$parser$$yy_action_5);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -12327,14 +12437,20 @@ function moonbitlang$yacc$lib$parser$$yy_state_32(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
-    case 39: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_33);
     }
-    case 29: {
+    case 18: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_56);
     }
-    case 28: {
+    case 31: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_58);
+    }
+    case 30: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_59);
+    }
+    case 29: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_61);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -12374,14 +12490,14 @@ function moonbitlang$yacc$lib$parser$$yy_state_3(_lookahead) {
     case 9: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_27);
     }
-    case 26: {
+    case 27: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_29);
     }
-    case 25: {
+    case 26: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_31);
     }
     case 8: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 25, moonbitlang$yacc$lib$parser$$yy_action_7);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 26, moonbitlang$yacc$lib$parser$$yy_action_7);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -12391,13 +12507,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_3(_lookahead) {
 function moonbitlang$yacc$lib$parser$$yy_state_0(_lookahead) {
   _L: {
     switch (_lookahead) {
-      case 22: {
+      case 23: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_1);
       }
       case 5: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_2);
       }
-      case 23: {
+      case 24: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_3);
       }
       case 8: {
@@ -12432,11 +12548,11 @@ function moonbitlang$yacc$lib$parser$$yy_state_0(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 23, moonbitlang$yacc$lib$parser$$yy_action_2);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 24, moonbitlang$yacc$lib$parser$$yy_action_2);
 }
 function moonbitlang$yacc$lib$parser$$error(stack, token, loc) {
   const expected = [];
-  const _arr = [{ _0: 0, _1: 0 }, { _0: 1, _1: 1 }, { _0: 2, _1: 2 }, { _0: 3, _1: 3 }, { _0: 4, _1: 4 }, { _0: 5, _1: 5 }, { _0: 6, _1: 6 }, { _0: 7, _1: 7 }, { _0: 8, _1: 8 }, { _0: 9, _1: 9 }, { _0: 10, _1: 10 }, { _0: 11, _1: 11 }, { _0: 12, _1: 12 }, { _0: 13, _1: 13 }, { _0: 14, _1: 14 }, { _0: 15, _1: 15 }, { _0: 16, _1: 16 }, { _0: 17, _1: 17 }, { _0: 18, _1: 18 }, { _0: 19, _1: 19 }, { _0: 20, _1: 20 }, { _0: 21, _1: 21 }];
+  const _arr = [{ _0: 0, _1: 0 }, { _0: 1, _1: 1 }, { _0: 2, _1: 2 }, { _0: 3, _1: 3 }, { _0: 4, _1: 4 }, { _0: 5, _1: 5 }, { _0: 6, _1: 6 }, { _0: 7, _1: 7 }, { _0: 8, _1: 8 }, { _0: 9, _1: 9 }, { _0: 10, _1: 10 }, { _0: 11, _1: 11 }, { _0: 12, _1: 12 }, { _0: 13, _1: 13 }, { _0: 14, _1: 14 }, { _0: 15, _1: 15 }, { _0: 16, _1: 16 }, { _0: 17, _1: 17 }, { _0: 18, _1: 18 }, { _0: 19, _1: 19 }, { _0: 20, _1: 20 }, { _0: 21, _1: 21 }, { _0: 22, _1: 22 }];
   const _len = _arr.length;
   let _tmp = 0;
   while (true) {
@@ -12576,7 +12692,7 @@ function moonbitlang$yacc$lib$parser$$yy_parse$171$(read_token, start_pos, start
   while (true) {
     let decision;
     const _func = state.val;
-    const _bind = _func(40);
+    const _bind = _func(42);
     switch (_bind.$tag) {
       case 3: {
         decision = _bind;
@@ -13965,7 +14081,7 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$129$(grammar) {
       const _x$2 = item._1;
       const node = moonbitlang$core$option$$Option$unwrap$43$(moonbitlang$core$hashmap$$T$op_get$66$(node_by_item, _x));
       node.lookahead_set = _x$2;
-      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$4516(_env, node);
+      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$4540(_env, node);
       return 1;
     });
     const stamp$2 = moonbitlang$yacc$lib$util$stamp$$new();
@@ -13975,7 +14091,7 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$129$(grammar) {
       const _i = _tmp$2;
       if (_i < _len$2) {
         const node = nodes[_i];
-        moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$4517(stamp$2, node);
+        moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$4541(stamp$2, node);
         _tmp$2 = _i + 1 | 0;
         continue;
       } else {
@@ -14001,7 +14117,7 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$129$(grammar) {
     return closure;
   };
 }
-function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$4515(_env, node, lookahead_set, parent) {
+function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$4539(_env, node, lookahead_set, parent) {
   const stamp = _env._0;
   if (lookahead_set.nullable) {
     node.predecessors = new $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$25$(parent, node.predecessors);
@@ -14011,11 +14127,11 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$4515(_env, node,
     return;
   } else {
     node.lookahead_set = lookahead_set.set;
-    moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$4516(_env, node);
+    moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$4540(_env, node);
     return;
   }
 }
-function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$4516(_env, node) {
+function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$4540(_env, node) {
   const nodes = _env._1;
   const stamp = _env._0;
   node.stamp = stamp;
@@ -14027,7 +14143,7 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$4516(_env, node
     const _i = _tmp;
     if (_i < _len) {
       const epsilon_transition = _arr[_i];
-      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$4515(_env, epsilon_transition, node.partial_lookahead_set, node);
+      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$4539(_env, epsilon_transition, node.partial_lookahead_set, node);
       _tmp = _i + 1 | 0;
       continue;
     } else {
@@ -14035,12 +14151,12 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$4516(_env, node
     }
   }
 }
-function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$4517(stamp, node) {
+function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$4541(stamp, node) {
   if (moonbitlang$core$builtin$$op_notequal$80$(node.stamp, stamp)) {
     node.stamp = stamp;
     const _bind = moonbitlang$core$immut$list$$T$iter$43$(node.predecessors);
     _bind((predecessor) => {
-      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$4517(stamp, predecessor);
+      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$4541(stamp, predecessor);
       node.lookahead_set = moonbitlang$yacc$lib$lr1$$EncodedSymbolicLookaheadSet$union(node.lookahead_set, predecessor.lookahead_set);
       return 1;
     });
@@ -14910,7 +15026,7 @@ function moonbitlang$yacc$lib$elab$$elaborate(ast_spec, json_cst) {
     const _i = _tmp$2;
     if (_i < _len$2) {
       const ast_rule = _arr$2[_i];
-      const rule = { num: moonbitlang$core$builtin$$Map$size$98$(rule_by_name), name: ast_rule.nonterminal, type_: ast_rule.type_, clauses: [] };
+      const rule = { num: moonbitlang$core$builtin$$Map$size$98$(rule_by_name), name: ast_rule.nonterminal, inline: ast_rule.inline, type_: ast_rule.type_, clauses: [] };
       moonbitlang$core$array$$Array$push$117$(rules, rule);
       moonbitlang$core$builtin$$Map$op_set$98$(rule_by_name, rule.name, rule);
       _tmp$2 = _i + 1 | 0;
@@ -16066,7 +16182,7 @@ function moonbitlang$yacc$lib$driver$$compile(parser_spec_str, mode, input_mode,
               }
             }
           }
-          const _bind$3 = clause.num;
+          const _bind$3 = clause.action.num;
           const _bind$4 = clause.items.length;
           const _bind$5 = rule.type_;
           const action = { num: _bind$3, arity: _bind$4, type_: _bind$5, bindings: bindings, body: body };

@@ -24,6 +24,7 @@ let parser_spec_src : String =
   #|%token PERCENT_NONASSOC "%nonassoc"
   #|%token PERCENT_PREC "%prec"
   #|%token PERCENT_DERIVE "%derive"
+  #|%token PERCENT_INLINE "%inline"
   #|%token COLON ":"
   #|%token BAR "|"
   #|%token EQ "="
@@ -74,7 +75,12 @@ let parser_spec_src : String =
   #|    ;
   #|
   #|rule -> Rule
-  #|    : nonterminal=symbol type_=rule_type ":" clause_list=clause_list ";" { { nonterminal, type_, clauses: clause_list.to_array() } }
+  #|    : rule_no_modifiers { $1 }
+  #|    | "%inline" rule_no_modifiers { { ..$2, inline: true } }
+  #|    ;
+  #|
+  #|rule_no_modifiers -> Rule
+  #|    : nonterminal=symbol type_=rule_type ":" clause_list=clause_list ";" { { inline: false, nonterminal, type_, clauses: clause_list.to_array() } }
   #|    ;
   #|
   #|rule_type -> Code?
