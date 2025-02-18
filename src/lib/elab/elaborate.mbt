@@ -163,13 +163,17 @@ pub fn elaborate(
           last_prec
         }
       }
+      let clause_num = next_clause_num
+      next_clause_num += 1
       let clause = Clause::{
-        num: next_clause_num,
+        num: clause_num,
         items,
         prec,
-        action: map_action(ast_clause.action),
+        action: match json_cst {
+          No => map_action(ast_clause.action)
+          Yes(_) => make_jsoncst_action(rule.name, clause_num)
+        },
       }
-      next_clause_num += 1
       rule.clauses.push(clause)
     }
   }
@@ -191,6 +195,7 @@ pub fn elaborate(
     }
   }
 
+  // TODO: Make this non target specific
   // JsonCst
   match json_cst {
     No => ()
@@ -262,6 +267,31 @@ fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
       Some(chunks)
     }
   }
+}
+
+///|
+fn make_jsoncst_action(
+  nonterminal_name : String,
+  clause_num : Int
+) -> Array[CodeChunk]? {
+  Some([
+    {
+      loc: None,
+      desc: Code(
+        #|{
+        #|  "type": "NONTERMINAL",
+        $|  "name": "\{nonterminal_name}",
+        $|  "prod_num": \{clause_num},
+        $|  "children": args_to_json(_args),
+        ,
+      ),
+    },
+    { loc: None, desc: Code("\n  \"start\": ") },
+    { loc: None, desc: Subst(StartPos) },
+    { loc: None, desc: Code(".to_json(),\n  \"end\": ") },
+    { loc: None, desc: Subst(EndPos) },
+    { loc: None, desc: Code(".to_json(),\n}\n") },
+  ])
 }
 
 ///|

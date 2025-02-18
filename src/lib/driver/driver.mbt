@@ -215,60 +215,38 @@ pub fn compile(
       }
 
       let body : Array[(String, (Int, Int)?)] = []
-      match mode {
-        OnlyTokens => panic()
-        Default =>
-          match clause.action {
-            None => body.push((generator.void_action_code(), None))
-            Some(chunks) =>
-              for chunk in chunks {
-                body.push(
-                  (
-                    match chunk.desc {
-                      Code(code) => code
-                      Subst(subst) => {
-                        add_binding(subst)
-                        match subst {
-                          Dollar(index) => "_dollar\{index}"
-                          StartPos => "_start_pos"
-                          EndPos => "_end_pos"
-                          Loc => "(_start_pos, _end_pos)"
-                          StartPosOf(arg) =>
-                            "_start_pos_of_item\{item_ident_to_index(arg)}"
-                          EndPosOf(arg) =>
-                            "_end_pos_of_item\{item_ident_to_index(arg)}"
-                          LocOf(arg) => {
-                            let index = item_ident_to_index(arg)
-                            "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
-                          }
-                          SymbolStartPos => "_symbol_start_pos"
-                          Sloc => "(_symbol_start_pos, _end_pos)"
-                        }
+      match clause.action {
+        None => body.push((generator.void_action_code(), None))
+        Some(chunks) =>
+          for chunk in chunks {
+            body.push(
+              (
+                match chunk.desc {
+                  Code(code) => code
+                  Subst(subst) => {
+                    add_binding(subst)
+                    match subst {
+                      Dollar(index) => "_dollar\{index}"
+                      StartPos => "_start_pos"
+                      EndPos => "_end_pos"
+                      Loc => "(_start_pos, _end_pos)"
+                      StartPosOf(arg) =>
+                        "_start_pos_of_item\{item_ident_to_index(arg)}"
+                      EndPosOf(arg) =>
+                        "_end_pos_of_item\{item_ident_to_index(arg)}"
+                      LocOf(arg) => {
+                        let index = item_ident_to_index(arg)
+                        "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
                       }
-                    },
-                    chunk.loc,
-                  ),
-                )
-              }
+                      SymbolStartPos => "_symbol_start_pos"
+                      Sloc => "(_symbol_start_pos, _end_pos)"
+                    }
+                  }
+                },
+                chunk.loc,
+              ),
+            )
           }
-        JsonCst(_) => {
-          add_binding(StartPos)
-          add_binding(EndPos)
-          body.push(
-            (
-              #|{
-              #|  "type": "NONTERMINAL",
-              $|  "name": "\{lhs.name}",
-              $|  "prod_num": \{production.num},
-              $|  "children": args_to_json(_args),
-              $|  "start": _start_pos.to_json(),
-              $|  "end": _end_pos.to_json(),
-              #|}
-              ,
-              None,
-            ),
-          )
-        }
       }
       match mode {
         OnlyTokens => panic()
