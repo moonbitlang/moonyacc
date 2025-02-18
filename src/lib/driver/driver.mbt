@@ -246,7 +246,7 @@ pub fn compile(
                         }
                       }
                     },
-                    Some((chunk.orig_utf8_pos, chunk.orig_utf8_len)),
+                    chunk.loc,
                   ),
                 )
               }

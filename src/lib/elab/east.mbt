@@ -74,8 +74,7 @@ pub(all) enum ItemDesc {
 
 ///|
 pub(all) struct CodeChunk {
-  orig_utf8_pos : Int
-  orig_utf8_len : Int
+  loc : (Int, Int)? // (utf8_pos, utf8_len)
   desc : CodeChunkDesc
 } derive(ToJson)
 

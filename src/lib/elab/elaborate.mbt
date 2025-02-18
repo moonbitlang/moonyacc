@@ -238,14 +238,12 @@ fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
           let len = item.start - last_index
           chunks.push(CodeChunk::{
             desc: Code(code.code.substring(start=last_index, end=item.start)),
-            orig_utf8_pos: code.utf8_pos + last_index,
-            orig_utf8_len: len,
+            loc: Some((code.utf8_pos + last_index, len)),
           })
         }
         chunks.push(CodeChunk::{
           desc: Subst(map_subst(item.desc)),
-          orig_utf8_pos: code.utf8_pos + item.start,
-          orig_utf8_len: item.end - item.start,
+          loc: Some((code.utf8_pos + item.start, item.end - item.start)),
         })
         last_index = item.end
       }
@@ -255,8 +253,7 @@ fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
           desc: Code(
             code.code.substring(start=last_index, end=code.code.length()),
           ),
-          orig_utf8_pos: code.utf8_pos + last_index,
-          orig_utf8_len: len,
+          loc: Some((code.utf8_pos + last_index, len)),
         })
       }
       Some(chunks)
