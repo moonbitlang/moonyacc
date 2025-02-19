@@ -77,7 +77,7 @@ pub(all) struct MetaProvider {
   header : CodeFragment
   footer : CodeFragment
   position_data_type : CodeFragment
-  actions : Array[Action]
+  actions : Map[Int, Action]
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
   production_meta : (Int) -> ProductionMeta

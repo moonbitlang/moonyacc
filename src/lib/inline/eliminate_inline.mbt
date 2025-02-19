@@ -87,7 +87,9 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
   // TODO: handle nested inline rules
 
   for rule in spec.rules {
-    guard rule.inline else { continue }
+    if rule.inline {
+      continue
+    }
     let new_clauses : Array[@elab.Clause] = []
     for clause in rule.clauses {
       if contains_inline_rule(clause.items) {

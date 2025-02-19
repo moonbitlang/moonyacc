@@ -68,6 +68,7 @@ pub fn compile(
       Default | OnlyTokens => No
     },
   )
+  let spec = @inline.eliminate_inline(spec)
   let terminals = []
   let nonterminals = []
   let terminal_by_name : Map[String, @grm.Terminal] = {}
@@ -135,7 +136,7 @@ pub fn compile(
     }
     _ => ()
   }
-  let actions : Array[@codegen.Action] = []
+  let actions : Map[Int, @codegen.Action] = {}
   let action_by_clause_num : Map[Int, @codegen.Action] = {}
   fn get_action_of_clause(
     rule : @elab.Rule,
@@ -143,12 +144,15 @@ pub fn compile(
   ) -> @codegen.Action {
     action_by_clause_num.get_or_init(clause.num, fn() {
       let action = build_clause_action(rule, clause)
-      actions.push(action)
+      actions[action.num] = action
       action
     })
   }
 
-  fn build_clause_action(rule : @elab.Rule, clause : @elab.Clause) {
+  fn build_clause_action(
+    rule : @elab.Rule,
+    clause : @elab.Clause
+  ) -> @codegen.Action {
     fn item_ident_to_index(ident : @elab.ClauseItemIdent) -> Int {
       match ident {
         Dollar(index) => index
