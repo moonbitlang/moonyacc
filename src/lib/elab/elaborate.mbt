@@ -239,9 +239,9 @@ pub fn elaborate(
 }
 
 ///|
-fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
+fn map_action(ast_action : @parser.ClauseAction) -> ActionDesc {
   match ast_action.code {
-    None => None
+    None => NoAction
     Some(code) => {
       let chunks = []
       let mut last_index = 0
@@ -268,7 +268,7 @@ fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
           loc: Some((code.utf8_pos + last_index, len)),
         })
       }
-      Some(chunks)
+      SimpleAction(chunks)
     }
   }
 }
@@ -277,8 +277,8 @@ fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
 fn make_jsoncst_action(
   nonterminal_name : String,
   clause_num : Int
-) -> Array[CodeChunk]? {
-  Some([
+) -> ActionDesc {
+  SimpleAction([
     {
       loc: None,
       desc: Code(

@@ -1,0 +1,22 @@
+{
+  "mappings": [
+    {
+      "source": "inline.mbty",
+      "original_offset": 125,
+      "generated_offset": 1225,
+      "length": 7
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 155,
+      "generated_offset": 1354,
+      "length": 5
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 175,
+      "generated_offset": 1481,
+      "length": 5
+    }
+  ]
+}

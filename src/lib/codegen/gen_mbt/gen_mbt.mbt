@@ -359,7 +359,7 @@ fn codegen(
   )
 
   // yy_action_xxx
-  for action in meta.actions {
+  for _, action in meta.actions {
     output.write_string(
       $|fn yy_action_\{action.num}(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
       $|
@@ -404,6 +404,15 @@ fn codegen(
           used_runtime_funcs.add("_get_symbol_start_pos")
           output.write_string(
             $|  let \{binding.1} = _get_symbol_start_pos(_args, _last_pos)
+            $|
+            ,
+          )
+        }
+        SubAction(start~, action=action_num) => {
+          let action = meta.actions[action_num].unwrap()
+          let data_type = action.type_.or("Unit")
+          output.write_string(
+            $|  guard let YYObj_\{esc(data_type)}(\{binding.1}) = yy_action_\{action_num}(_args[\{start}:\{start+action.arity}])
             $|
             ,
           )
@@ -576,7 +585,7 @@ fn codegen(
     //
     fn gen_decision(decision : CodegenDecision) -> String {
       fn get_action_num(prod_num : Int) {
-        meta.actions[production_meta(prod_num).action].num
+        meta.actions[production_meta(prod_num).action].unwrap().num
       }
 
       match decision {

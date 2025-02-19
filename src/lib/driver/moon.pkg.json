@@ -14,6 +14,7 @@
     },
     "moonbitlang/yacc/lib/util/logger_with_cursor",
     "moonbitlang/yacc/lib/elab",
-    "moonbitlang/yacc/lib/util/array_multimap"
+    "moonbitlang/yacc/lib/util/array_multimap",
+    "moonbitlang/yacc/lib/inline"
   ]
 }

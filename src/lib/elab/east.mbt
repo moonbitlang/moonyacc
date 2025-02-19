@@ -65,7 +65,21 @@ pub(all) struct Clause {
 ///|
 pub(all) struct Action {
   num : Int
-  desc : Array[CodeChunk]?
+  desc : ActionDesc
+} derive(ToJson)
+
+///|
+pub(all) enum ActionDesc {
+  NoAction
+  SimpleAction(Array[CodeChunk])
+  CompoundAction(Array[SubAction], Array[CodeChunk])
+} derive(ToJson)
+
+///|
+pub(all) struct SubAction {
+  start : Int
+  end : Int
+  action : Action
 } derive(ToJson)
 
 ///|

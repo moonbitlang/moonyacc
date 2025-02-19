@@ -1,0 +1,9 @@
+{
+  "pre-build": [
+    {
+      "command": "node $mod_dir/boot/moonyacc.js $input -o $output",
+      "input": "inline.mbty",
+      "output": "inline.mbt"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+%start start
+
+%token<String> A
+%token<String> B
+
+%type<String> start
+%type<String> a
+%type<String> b
+
+%%
+
+start
+  : a=a b=b { a + b }
+  ;
+
+%inline a:
+  A { "a" }
+  ;
+
+b:
+  B { "b" }
+  ;
