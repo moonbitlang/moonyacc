@@ -65,7 +65,19 @@ pub(all) struct Clause {
 ///|
 pub(all) struct Action {
   num : Int
-  desc : Array[CodeChunk]?
+  arity : Int
+  type_ : Code?
+  bindings : Array[(BindingSubject, Code)]
+  body : Array[(String, (Int, Int)?)] // array of (code, (utf8_pos, utf8_len)?)
+} derive(ToJson)
+
+///|
+pub(all) enum BindingSubject {
+  Data(Int, type_~ : Code?)
+  LastPos
+  StartPos(Int)
+  EndPos(Int)
+  SymbolStartPos
 } derive(ToJson)
 
 ///|
@@ -79,37 +91,6 @@ pub(all) enum ItemDesc {
   Token(Token)
   RuleCall(Rule)
 } derive(ToJson)
-
-///|
-pub(all) struct CodeChunk {
-  loc : (Int, Int)? // (utf8_pos, utf8_len)
-  desc : CodeChunkDesc
-} derive(ToJson)
-
-///|
-pub(all) enum CodeChunkDesc {
-  Code(Code)
-  Subst(Subst)
-} derive(ToJson)
-
-///|
-pub(all) enum Subst {
-  Dollar(Int)
-  StartPos
-  EndPos
-  Loc
-  StartPosOf(ClauseItemIdent)
-  EndPosOf(ClauseItemIdent)
-  LocOf(ClauseItemIdent)
-  SymbolStartPos
-  Sloc
-} derive(Eq, Compare, Show, ToJson)
-
-///|
-pub(all) enum ClauseItemIdent {
-  Dollar(Int)
-  Name(Code)
-} derive(Eq, Compare, Show, ToJson)
 
 ///|
 pub fn Item::type_(self : Item) -> Code? {

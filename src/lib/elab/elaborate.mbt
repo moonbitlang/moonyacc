@@ -122,6 +122,10 @@ pub fn elaborate(
   let mut next_clause_num = 0
   for ast_rule in ast_spec.rules {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
+    rule.type_ = match json_cst {
+      No => rule.type_
+      Yes(_) => Some("Json")
+    }
     for ast_clause in ast_rule.clauses {
       let items = ast_clause.items.map(fn(ast_item) {
         Item::{
@@ -170,13 +174,14 @@ pub fn elaborate(
         num: clause_num,
         items,
         prec,
-        action: {
-          num: clause_num,
-          desc: match json_cst {
-            No => map_action(ast_clause.action)
-            Yes(_) => make_jsoncst_action(rule.name, clause_num)
-          },
-        },
+        action: elaborate_action(
+          items,
+          ast_clause.action,
+          clause_num,
+          nonterminal_name=rule.name,
+          type_=rule.type_,
+          json_cst~,
+        ),
       }
       rule.clauses.push(clause)
     }
@@ -207,9 +212,6 @@ pub fn elaborate(
       header = None
       trailer = None
       position_type = Some("Int")
-      for rule in rules {
-        rule.type_ = Some("Json")
-      }
       match rewrite {
         None => ()
         Some(_) => derive_map.add("Token", "Show")
@@ -239,83 +241,153 @@ pub fn elaborate(
 }
 
 ///|
-fn map_action(ast_action : @parser.ClauseAction) -> Array[CodeChunk]? {
-  match ast_action.code {
-    None => None
-    Some(code) => {
-      let chunks = []
-      let mut last_index = 0
-      for item in code.subst {
-        if item.start > last_index {
-          let len = item.start - last_index
-          chunks.push(CodeChunk::{
-            desc: Code(code.code.substring(start=last_index, end=item.start)),
-            loc: Some((code.utf8_pos + last_index, len)),
-          })
+fn elaborate_action(
+  items : Array[Item],
+  ast_action : @parser.ClauseAction,
+  clause_num : Int,
+  nonterminal_name~ : String,
+  type_~ : Code?,
+  json_cst~ : JsonCst
+) -> Action {
+  let arity = items.length()
+  let name_to_index : Map[String, Int] = {}
+  for index, item in items {
+    match item.binder {
+      None => ()
+      Some(name) => name_to_index[name] = index
+    }
+  }
+  fn item_ident_to_index(ident : @parser.ClauseItemIdent) -> Int {
+    match ident {
+      Dollar(index) => index
+      Name(name) => name_to_index[name].unwrap()
+    }
+  }
+
+  let bindings : Array[(BindingSubject, Code)] = []
+  let visited = @sorted_set.new()
+  fn add_binding(desc : @parser.SubstItemDesc) {
+    guard not(visited.contains(desc)) else { return }
+    visited.add(desc)
+    match desc {
+      Dollar(index) => {
+        let name = "_dollar\{index}"
+        bindings.push((Data(index - 1, type_=items[index - 1].type_()), name))
+      }
+      StartPos =>
+        if arity == 0 {
+          bindings.push((LastPos, "_start_pos"))
+        } else {
+          bindings.push((StartPos(0), "_start_pos"))
         }
-        chunks.push(CodeChunk::{
-          desc: Subst(map_subst(item.desc)),
-          loc: Some((code.utf8_pos + item.start, item.end - item.start)),
-        })
-        last_index = item.end
+      Loc => {
+        add_binding(StartPos)
+        add_binding(EndPos)
       }
-      if last_index < code.code.length() {
-        let len = code.code.length() - last_index
-        chunks.push(CodeChunk::{
-          desc: Code(
-            code.code.substring(start=last_index, end=code.code.length()),
-          ),
-          loc: Some((code.utf8_pos + last_index, len)),
-        })
+      EndPos =>
+        if arity == 0 {
+          bindings.push((LastPos, "_end_pos"))
+        } else {
+          bindings.push((EndPos(arity - 1), "_end_pos"))
+        }
+      StartPosOf(arg) => {
+        let index = item_ident_to_index(arg)
+        bindings.push((StartPos(index), "_start_pos_of_item\{index}"))
       }
-      Some(chunks)
-    }
-  }
-}
-
-///|
-fn make_jsoncst_action(
-  nonterminal_name : String,
-  clause_num : Int
-) -> Array[CodeChunk]? {
-  Some([
-    {
-      loc: None,
-      desc: Code(
-        #|{
-        #|  "type": "NONTERMINAL",
-        $|  "name": "\{nonterminal_name}",
-        $|  "prod_num": \{clause_num},
-        $|  "children": args_to_json(_args),
-        ,
-      ),
-    },
-    { loc: None, desc: Code("\n  \"start\": ") },
-    { loc: None, desc: Subst(StartPos) },
-    { loc: None, desc: Code(".to_json(),\n  \"end\": ") },
-    { loc: None, desc: Subst(EndPos) },
-    { loc: None, desc: Code(".to_json(),\n}\n") },
-  ])
-}
-
-///|
-fn map_subst(ast_subst : @parser.SubstItemDesc) -> Subst {
-  fn map_ident(ast_item_ident : @parser.ClauseItemIdent) -> ClauseItemIdent {
-    match ast_item_ident {
-      Dollar(x) => Dollar(x)
-      Name(name) => Name(name)
+      EndPosOf(arg) => {
+        let index = item_ident_to_index(arg)
+        bindings.push((EndPos(index), "_end_pos_of_item\{index}"))
+      }
+      LocOf(arg) => {
+        add_binding(StartPosOf(arg))
+        add_binding(EndPosOf(arg))
+      }
+      SymbolStartPos => bindings.push((SymbolStartPos, "_symbol_start_pos"))
+      Sloc => {
+        add_binding(SymbolStartPos)
+        add_binding(EndPos)
+      }
     }
   }
 
-  match ast_subst {
-    SymbolStartPos => SymbolStartPos
-    LocOf(x) => LocOf(map_ident(x))
-    EndPosOf(x) => EndPosOf(map_ident(x))
-    StartPosOf(x) => StartPosOf(map_ident(x))
-    Loc => Loc
-    EndPos => EndPos
-    StartPos => StartPos
-    Dollar(i) => Dollar(i)
-    Sloc => Sloc
+  let body : Array[(Code, (Int, Int)?)] = []
+  match json_cst {
+    No => {
+      for index, item in items {
+        match item {
+          { binder: Some(name), .. } =>
+            bindings.push((Data(index, type_=item.type_()), name))
+          _ => ()
+        }
+      }
+      match ast_action.code {
+        None => body.push(("()", None))
+        Some(code) => {
+          let mut last_index = 0
+          for item in code.subst {
+            if item.start > last_index {
+              let len = item.start - last_index
+              body.push(
+                (
+                  code.code.substring(start=last_index, end=item.start),
+                  Some((code.utf8_pos + last_index, len)),
+                ),
+              )
+            }
+            add_binding(item.desc)
+            body.push(
+              (
+                match item.desc {
+                  Dollar(index) => "_dollar\{index}"
+                  StartPos => "_start_pos"
+                  EndPos => "_end_pos"
+                  Loc => "(_start_pos, _end_pos)"
+                  StartPosOf(arg) =>
+                    "_start_pos_of_item\{item_ident_to_index(arg)}"
+                  EndPosOf(arg) => "_end_pos_of_item\{item_ident_to_index(arg)}"
+                  LocOf(arg) => {
+                    let index = item_ident_to_index(arg)
+                    "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
+                  }
+                  SymbolStartPos => "_symbol_start_pos"
+                  Sloc => "(_symbol_start_pos, _end_pos)"
+                },
+                Some((code.utf8_pos + item.start, item.end - item.start)),
+              ),
+            )
+            last_index = item.end
+          }
+          if last_index < code.code.length() {
+            let len = code.code.length() - last_index
+            body.push(
+              (
+                code.code.substring(start=last_index, end=code.code.length()),
+                Some((code.utf8_pos + last_index, len)),
+              ),
+            )
+          }
+        }
+      }
+    }
+    Yes(_) => {
+      add_binding(StartPos)
+      add_binding(EndPos)
+      body.push(
+        (
+          #|{
+          #|  "type": "NONTERMINAL",
+          $|  "name": "\{nonterminal_name}",
+          $|  "prod_num": \{clause_num},
+          $|  "children": args_to_json(_args),
+          $|  "start": _start_pos.to_json(),
+          $|  "end": _end_pos.to_json(),
+          $|}
+          $|
+          ,
+          None,
+        ),
+      )
+    }
   }
+  Action::{ num: clause_num, arity, type_, bindings, body }
 }

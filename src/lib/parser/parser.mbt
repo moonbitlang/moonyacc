@@ -676,9 +676,9 @@ fn yy_action_29(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
+  guard let YYObj__String__Int__Array_SubstItem__(code) = _args[0].0
   let _start_pos = _args[0].1
   let _end_pos = _args[0].2
-  guard let YYObj__String__Int__Array_SubstItem__(code) = _args[0].0
   YYObj_ClauseAction(
     {
       ()

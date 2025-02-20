@@ -34,28 +34,6 @@ pub(all) enum InputMode {
 pub(all) typealias CodeFragment = String
 
 ///|
-pub(all) enum BindingSubject {
-  Data(Int, type_~ : CodeFragment?)
-  LastPos
-  StartPos(Int)
-  EndPos(Int)
-  SymbolStartPos
-}
-
-///|
-pub(all) struct Action {
-  num : Int
-  arity : Int
-  type_ : CodeFragment?
-  bindings : Array[(BindingSubject, CodeFragment)]
-  body : Array[(CodeFragment, (Utf8Pos, Int)?)]
-}
-
-// This type is for comment purposes only
-///|
-typealias Utf8Pos = Int
-
-///|
 pub(all) struct ProductionMeta {
   action : Int
 }
@@ -76,7 +54,7 @@ pub(all) struct MetaProvider {
   header : CodeFragment
   footer : CodeFragment
   position_data_type : CodeFragment
-  actions : Array[Action]
+  actions : Array[@elab.Action]
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
   production_meta : (Int) -> ProductionMeta
