@@ -54,7 +54,7 @@ pub(all) struct MetaProvider {
   header : CodeFragment
   footer : CodeFragment
   position_data_type : CodeFragment
-  actions : Array[@elab.Action]
+  actions : Map[Int, @elab.Action]
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
   production_meta : (Int) -> ProductionMeta

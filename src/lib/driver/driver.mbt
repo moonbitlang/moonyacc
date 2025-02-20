@@ -135,7 +135,7 @@ pub fn compile(
     }
     _ => ()
   }
-  let actions : Array[@elab.Action] = []
+  let actions : Map[Int, @elab.Action] = {}
   for rule in spec.rules {
     let lhs = get_nonterminal_by_name(rule.name)
     match rule.type_ {
@@ -162,7 +162,7 @@ pub fn compile(
       }
       productions.push(production)
       lhs.productions.push(production)
-      actions.push(clause.action)
+      actions[clause.action.num] = clause.action
       production_meta_map[production_num] = { action: clause.action.num }
     }
   }

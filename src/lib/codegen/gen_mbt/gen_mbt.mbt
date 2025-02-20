@@ -359,7 +359,7 @@ fn codegen(
   )
 
   // yy_action_xxx
-  for action in meta.actions {
+  for _, action in meta.actions {
     output.write_string(
       $|fn yy_action_\{action.num}(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
       $|
@@ -576,7 +576,7 @@ fn codegen(
     //
     fn gen_decision(decision : CodegenDecision) -> String {
       fn get_action_num(prod_num : Int) {
-        meta.actions[production_meta(prod_num).action].num
+        meta.actions[production_meta(prod_num).action].unwrap().num
       }
 
       match decision {
