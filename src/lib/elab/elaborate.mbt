@@ -389,5 +389,5 @@ fn elaborate_action(
       )
     }
   }
-  Action::{ num: clause_num, arity, type_, bindings, body }
+  Action::{ num: clause_num, arity, type_, sub_actions: [], bindings, body }
 }

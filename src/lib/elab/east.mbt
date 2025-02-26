@@ -67,8 +67,16 @@ pub(all) struct Action {
   num : Int
   arity : Int
   type_ : Code?
+  sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, Code)]
   body : Array[(String, (Int, Int)?)] // array of (code, (utf8_pos, utf8_len)?)
+} derive(ToJson)
+
+///|
+pub(all) struct SubAction {
+  start : Int
+  end : Int
+  action : Action
 } derive(ToJson)
 
 ///|
@@ -78,6 +86,7 @@ pub(all) enum BindingSubject {
   StartPos(Int)
   EndPos(Int)
   SymbolStartPos
+  SubAction(start~ : Int, type_~ : Code?)
 } derive(ToJson)
 
 ///|

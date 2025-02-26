@@ -365,6 +365,15 @@ fn codegen(
       $|
       ,
     )
+    for sub_action in action.sub_actions {
+      let { start, end, action: action2, .. } = sub_action
+      let last_pos_code = if start == 0 { "_last_pos" } else { "_args[\{start - 1}].2" }
+      output.write_string(
+        $|  let sub_action_\{start}_result = yy_action_\{action2.num}(\{last_pos_code}, _args[\{start}:\{end}])
+        $|
+        ,
+      )
+    }
     for binding in action.bindings {
       match binding.0 {
         Data(index, type_~) => {
@@ -404,6 +413,14 @@ fn codegen(
           used_runtime_funcs.add("_get_symbol_start_pos")
           output.write_string(
             $|  let \{binding.1} = _get_symbol_start_pos(_args, _last_pos)
+            $|
+            ,
+          )
+        }
+        SubAction(start~, type_~) => {
+          let data_type = type_.or("Unit")
+          output.write_string(
+            $|  guard let YYObj_\{esc(data_type)}(\{binding.1}) = sub_action_\{start}_result
             $|
             ,
           )

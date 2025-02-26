@@ -68,6 +68,7 @@ pub fn compile(
       Default | OnlyTokens => No
     },
   )
+  let spec = @inline.eliminate_inline(spec)
   let terminals = []
   let nonterminals = []
   let terminal_by_name : Map[String, @grm.Terminal] = {}
@@ -89,7 +90,7 @@ pub fn compile(
   for rule in spec.rules {
     let nonterminal : @grm.Nonterminal = {
       name: rule.name,
-      num: rule.num,
+      num: nonterminals.length(),
       productions: [],
     }
     nonterminal_by_name[rule.name] = nonterminal
@@ -162,6 +163,9 @@ pub fn compile(
       }
       productions.push(production)
       lhs.productions.push(production)
+      for sub_action in clause.action.sub_actions {
+        actions[sub_action.action.num] = sub_action.action
+      }
       actions[clause.action.num] = clause.action
       production_meta_map[production_num] = { action: clause.action.num }
     }
