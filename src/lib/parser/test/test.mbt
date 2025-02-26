@@ -1125,7 +1125,7 @@ test "parser" {
             ],
             "action": {
               "code": {
-                "code": "\\n        let (code, utf8_pos, subst) = code\\n        { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\\n    ",
+                "code": "\n        let (code, utf8_pos, subst) = code\n        { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\n    ",
                 "utf8_pos": 3092,
                 "subst": [
                   { "start": 100, "end": 109, "desc": { "$tag": "StartPos" } },
