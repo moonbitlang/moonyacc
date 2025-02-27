@@ -35,7 +35,7 @@ pub(all) typealias CodeFragment = String
 
 ///|
 pub(all) struct ProductionMeta {
-  action : Int
+  action : @elab.Action
 }
 
 ///|
@@ -54,7 +54,6 @@ pub(all) struct MetaProvider {
   header : CodeFragment
   footer : CodeFragment
   position_data_type : CodeFragment
-  actions : Map[Int, @elab.Action]
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
   production_meta : (Int) -> ProductionMeta

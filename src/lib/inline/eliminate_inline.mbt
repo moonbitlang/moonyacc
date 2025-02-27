@@ -2,13 +2,9 @@
 pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
   let rules : Array[@elab.Rule] = []
   let inline_rules : Map[String, @elab.Rule] = {}
-  let mut max_action_num = -1
   for rule in spec.rules {
     if rule.inline {
       inline_rules[rule.name] = rule
-    }
-    for clause in rule.clauses {
-      max_action_num = @math.maximum(max_action_num, clause.action.num)
     }
   }
   fn contains_inline_rule(items : Array[@elab.Item]) {
@@ -22,7 +18,6 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
     })
   }
 
-  let mut next_action_num = max_action_num + 1
   fn expand(clause : @elab.Clause, yield_ : (@elab.Clause) -> Unit) {
     // assert(clause.action.sub_actions.length() == 0)
     let expand_points : Map[Int, (Ref[Int], Int)] = {}
@@ -100,12 +95,10 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
             }
         }
       }
-      let action_num = next_action_num
-      next_action_num += 1
       yield_({
         ..clause,
         items: new_items,
-        action: { ..clause.action, num: action_num, bindings, sub_actions },
+        action: { ..clause.action, stamp: @stamp.new(), bindings, sub_actions },
       })
       if expand_cursor < 0 {
         break

@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-type Stamp Int derive(Eq)
+type Stamp Int derive(Eq, Hash)
 
 ///|
 pub typealias T = Stamp
