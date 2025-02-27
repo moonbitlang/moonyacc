@@ -108,14 +108,15 @@ fn yy_action_0(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   let _start_pos = _args[0].1
-  let _end_pos = _args[1].2
+  let _end_pos = _args[0].2
   YYObj_Json(
     {
       ()
       {
         "type": "NONTERMINAL",
-        "name": "start",
-        "prod_num": 0,
+        "name": "factor",
+        "rule_index": 2,
+        "clause_index": 1,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -130,14 +131,15 @@ fn yy_action_1(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   let _start_pos = _args[0].1
-  let _end_pos = _args[2].2
+  let _end_pos = _args[0].2
   YYObj_Json(
     {
       ()
       {
         "type": "NONTERMINAL",
         "name": "add",
-        "prod_num": 1,
+        "rule_index": 1,
+        "clause_index": 2,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -152,14 +154,15 @@ fn yy_action_2(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   let _start_pos = _args[0].1
-  let _end_pos = _args[2].2
+  let _end_pos = _args[1].2
   YYObj_Json(
     {
       ()
       {
         "type": "NONTERMINAL",
-        "name": "add",
-        "prod_num": 2,
+        "name": "start",
+        "rule_index": 0,
+        "clause_index": 0,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -174,14 +177,15 @@ fn yy_action_3(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _end_pos = _args[2].2
   YYObj_Json(
     {
       ()
       {
         "type": "NONTERMINAL",
-        "name": "add",
-        "prod_num": 3,
+        "name": "term",
+        "rule_index": 3,
+        "clause_index": 1,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -203,7 +207,8 @@ fn yy_action_4(
       {
         "type": "NONTERMINAL",
         "name": "factor",
-        "prod_num": 4,
+        "rule_index": 2,
+        "clause_index": 0,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -218,14 +223,15 @@ fn yy_action_5(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _end_pos = _args[2].2
   YYObj_Json(
     {
       ()
       {
         "type": "NONTERMINAL",
-        "name": "factor",
-        "prod_num": 5,
+        "name": "add",
+        "rule_index": 1,
+        "clause_index": 0,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -240,14 +246,15 @@ fn yy_action_6(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _end_pos = _args[2].2
   YYObj_Json(
     {
       ()
       {
         "type": "NONTERMINAL",
-        "name": "term",
-        "prod_num": 6,
+        "name": "add",
+        "rule_index": 1,
+        "clause_index": 1,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -262,14 +269,15 @@ fn yy_action_7(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   let _start_pos = _args[0].1
-  let _end_pos = _args[2].2
+  let _end_pos = _args[0].2
   YYObj_Json(
     {
       ()
       {
         "type": "NONTERMINAL",
         "name": "term",
-        "prod_num": 7,
+        "rule_index": 3,
+        "clause_index": 0,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -416,13 +424,13 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
 // [6, term → NUMBER •, EOF / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_term, yy_action_6)
+  ReduceNoLookahead(1, NT_term, yy_action_7)
 }
 
 // [5, factor → term •, EOF / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_factor, yy_action_5)
+  ReduceNoLookahead(1, NT_factor, yy_action_0)
 }
 
 // [3, add → factor •, EOF / PLUS / MINUS / RPAREN]
@@ -431,7 +439,7 @@ fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(1, NT_add, yy_action_3)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(1, NT_add, yy_action_1)
     _ => Error
   }
 }
@@ -471,7 +479,7 @@ fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
 // [7, term → LPAREN add RPAREN •, EOF / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_term, yy_action_7)
+  ReduceNoLookahead(3, NT_term, yy_action_3)
 }
 
 // [2, add → add MINUS • factor, EOF / PLUS / MINUS / RPAREN]
@@ -496,7 +504,7 @@ fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_2)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_6)
     _ => Error
   }
 }
@@ -523,7 +531,7 @@ fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_1)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_5)
     _ => Error
   }
 }
@@ -544,7 +552,7 @@ fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
 // [0, start → add EOF •, $]
 ///|
 fn yy_state_15(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_start, yy_action_0)
+  ReduceNoLookahead(2, NT_start, yy_action_2)
 }
 
 ///|

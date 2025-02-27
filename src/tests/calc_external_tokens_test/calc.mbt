@@ -52,19 +52,17 @@ fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard let YYObj_Int(_dollar1) = _args[0].0
-  guard let YYObj_Int(_dollar3) = _args[2].0
-  YYObj_Int({();  _dollar1 + _dollar3 })
+  YYObj_Int({();  _dollar1 })
 }
 
 fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard let YYObj_Int(_dollar1) = _args[0].0
-  guard let YYObj_Int(_dollar3) = _args[2].0
-  YYObj_Int({();  _dollar1 - _dollar3 })
+  YYObj_Int({();  _dollar1 })
 }
 
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard let YYObj_Int(_dollar1) = _args[0].0
-  YYObj_Int({();  _dollar1 })
+  guard let YYObj_Int(_dollar2) = _args[1].0
+  YYObj_Int({();  _dollar2 })
 }
 
 fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -75,17 +73,19 @@ fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard let YYObj_Int(_dollar1) = _args[0].0
-  YYObj_Int({();  _dollar1 })
+  guard let YYObj_Int(_dollar3) = _args[2].0
+  YYObj_Int({();  _dollar1 + _dollar3 })
 }
 
 fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard let YYObj_Int(_dollar1) = _args[0].0
-  YYObj_Int({();  _dollar1 })
+  guard let YYObj_Int(_dollar3) = _args[2].0
+  YYObj_Int({();  _dollar1 - _dollar3 })
 }
 
 fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard let YYObj_Int(_dollar2) = _args[1].0
-  YYObj_Int({();  _dollar2 })
+  guard let YYObj_Int(_dollar1) = _args[0].0
+  YYObj_Int({();  _dollar1 })
 }
 
 fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSymbol, YYObj) {
@@ -146,12 +146,12 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
 
 // [6, term → NUMBER •, $ / PLUS / MINUS / STAR / RPAREN]
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_term, yy_action_6)
+  ReduceNoLookahead(1, NT_term, yy_action_7)
 }
 
 // [5, factor → term •, $ / PLUS / MINUS / STAR / RPAREN]
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_factor, yy_action_5)
+  ReduceNoLookahead(1, NT_factor, yy_action_0)
 }
 
 // [3, add → factor •, $ / PLUS / MINUS / RPAREN]
@@ -159,7 +159,7 @@ fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(1, NT_add, yy_action_3)
+    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(1, NT_add, yy_action_1)
     _ => Error
   }
 }
@@ -195,7 +195,7 @@ fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
 
 // [7, term → LPAREN add RPAREN •, $ / PLUS / MINUS / STAR / RPAREN]
 fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_term, yy_action_7)
+  ReduceNoLookahead(3, NT_term, yy_action_3)
 }
 
 // [2, add → add MINUS • factor, $ / PLUS / MINUS / RPAREN]
@@ -218,7 +218,7 @@ fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(3, NT_add, yy_action_2)
+    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(3, NT_add, yy_action_6)
     _ => Error
   }
 }
@@ -243,7 +243,7 @@ fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(3, NT_add, yy_action_1)
+    T_PLUS | T_MINUS | T_RPAREN | EOI => Reduce(3, NT_add, yy_action_5)
     _ => Error
   }
 }
@@ -255,7 +255,7 @@ fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_MINUS => Shift(yy_state_10)
     T_PLUS => Shift(yy_state_12)
-    EOI => Reduce(1, NT_start, yy_action_0)
+    EOI => Reduce(1, NT_start, yy_action_2)
     _ => Error
   }
 }
