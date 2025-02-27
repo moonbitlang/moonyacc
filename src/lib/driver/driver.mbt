@@ -76,7 +76,7 @@ pub fn compile(
   for token in spec.tokens {
     let terminal : @grm.Terminal = {
       name: token.name,
-      num: token.num,
+      num: terminals.length(),
       prec: match token.prec {
         None => None
         Some((prec, NonAssoc)) => Some((prec, @grm.NonAssoc))

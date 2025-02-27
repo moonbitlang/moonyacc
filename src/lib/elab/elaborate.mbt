@@ -41,7 +41,6 @@ pub fn elaborate(
       Some(t) => t
       None => {
         let token : Token = {
-          num: token_by_name.size(),
           name,
           type_: None,
           image: None,
@@ -75,7 +74,6 @@ pub fn elaborate(
   // Prepare rules
   for ast_rule in ast_spec.rules {
     let rule : Rule = {
-      num: rule_by_name.size(),
       inline: ast_rule.inline,
       name: ast_rule.nonterminal,
       type_: ast_rule.type_,
@@ -171,7 +169,6 @@ pub fn elaborate(
       let clause_num = next_clause_num
       next_clause_num += 1
       let clause = Clause::{
-        num: clause_num,
         items,
         prec,
         action: elaborate_action(

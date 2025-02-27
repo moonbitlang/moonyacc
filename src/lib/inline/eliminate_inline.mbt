@@ -3,13 +3,11 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
   let rules : Array[@elab.Rule] = []
   let inline_rules : Map[String, @elab.Rule] = {}
   let mut max_action_num = -1
-  let mut max_clause_num = -1
   for rule in spec.rules {
     if rule.inline {
       inline_rules[rule.name] = rule
     }
     for clause in rule.clauses {
-      max_clause_num = @math.maximum(max_clause_num, clause.num)
       max_action_num = @math.maximum(max_action_num, clause.action.num)
     }
   }
@@ -24,7 +22,6 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
     })
   }
 
-  let mut next_clause_num = max_clause_num + 1
   let mut next_action_num = max_action_num + 1
   fn expand(clause : @elab.Clause, yield_ : (@elab.Clause) -> Unit) {
     // assert(clause.action.sub_actions.length() == 0)
@@ -103,13 +100,10 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
             }
         }
       }
-      let clause_num = next_clause_num
-      next_clause_num += 1
       let action_num = next_action_num
       next_action_num += 1
       yield_({
         ..clause,
-        num: clause_num,
         items: new_items,
         action: { ..clause.action, num: action_num, bindings, sub_actions },
       })

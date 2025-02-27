@@ -17,7 +17,7 @@ pub(all) enum Associativity {
   LeftAssoc
   RightAssoc
   NonAssoc
-} derive(ToJson)
+}
 
 ///|
 pub(all) typealias Code = String
@@ -31,36 +31,33 @@ pub(all) struct ParserSpec {
   start_rules : Array[Rule]
   position_type : Code?
   derive_map : @array_multimap.T[String, String]
-} derive(ToJson)
+}
 
 ///|
 pub(all) struct Token {
-  num : Int
   name : String
   mut prec : (Int, Associativity)?
   mut type_ : Code?
   mut image : String?
-} derive(ToJson)
+}
 
 ///|
 pub(all) typealias Symbol = String
 
 ///|
 pub(all) struct Rule {
-  num : Int
   name : Symbol
   inline : Bool
   mut type_ : Code?
   clauses : Array[Clause]
-} derive(ToJson)
+}
 
 ///|
 pub(all) struct Clause {
-  num : Int
   items : Array[Item]
   prec : Int?
   action : Action
-} derive(ToJson)
+}
 
 ///|
 pub(all) struct Action {
@@ -70,14 +67,14 @@ pub(all) struct Action {
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, Code)]
   body : Array[(String, (Int, Int)?)] // array of (code, (utf8_pos, utf8_len)?)
-} derive(ToJson)
+}
 
 ///|
 pub(all) struct SubAction {
   start : Int
   end : Int
   action : Action
-} derive(ToJson)
+}
 
 ///|
 pub(all) enum BindingSubject {
@@ -87,19 +84,19 @@ pub(all) enum BindingSubject {
   EndPos(Int)
   SymbolStartPos
   SubAction(start~ : Int, type_~ : Code?)
-} derive(ToJson)
+}
 
 ///|
 pub(all) struct Item {
   binder : Code?
   desc : ItemDesc
-} derive(ToJson)
+}
 
 ///|
 pub(all) enum ItemDesc {
   Token(Token)
   RuleCall(Rule)
-} derive(ToJson)
+}
 
 ///|
 pub fn Item::type_(self : Item) -> Code? {
