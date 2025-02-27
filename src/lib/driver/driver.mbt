@@ -136,7 +136,6 @@ pub fn compile(
     }
     _ => ()
   }
-  let actions : Map[Int, @elab.Action] = {}
   for rule in spec.rules {
     let lhs = get_nonterminal_by_name(rule.name)
     match rule.type_ {
@@ -163,11 +162,7 @@ pub fn compile(
       }
       productions.push(production)
       lhs.productions.push(production)
-      for sub_action in clause.action.sub_actions {
-        actions[sub_action.action.num] = sub_action.action
-      }
-      actions[clause.action.num] = clause.action
-      production_meta_map[production_num] = { action: clause.action.num }
+      production_meta_map[production_num] = { action: clause.action }
     }
   }
   let starts = starts.map(fn(name) {
@@ -210,7 +205,6 @@ pub fn compile(
     header: spec.header.or_default(),
     footer: spec.trailer.or_default(),
     position_data_type,
-    actions,
     terminal_meta: fn(name) {
       terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {
         { data_type: None, image: None }

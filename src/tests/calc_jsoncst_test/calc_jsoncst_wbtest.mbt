@@ -37,27 +37,32 @@ test {
   @json.inspect!(result, content={
     "type": "NONTERMINAL",
     "name": "start",
-    "prod_num": 0,
+    "rule_index": 0,
+    "clause_index": 0,
     "children": [
       {
         "type": "NONTERMINAL",
         "name": "add",
-        "prod_num": 1,
+        "rule_index": 1,
+        "clause_index": 0,
         "children": [
           {
             "type": "NONTERMINAL",
             "name": "add",
-            "prod_num": 3,
+            "rule_index": 1,
+            "clause_index": 2,
             "children": [
               {
                 "type": "NONTERMINAL",
                 "name": "factor",
-                "prod_num": 5,
+                "rule_index": 2,
+                "clause_index": 1,
                 "children": [
                   {
                     "type": "NONTERMINAL",
                     "name": "term",
-                    "prod_num": 6,
+                    "rule_index": 3,
+                    "clause_index": 0,
                     "children": [
                       {
                         "type": "TERMINAL",
@@ -88,17 +93,20 @@ test {
           {
             "type": "NONTERMINAL",
             "name": "factor",
-            "prod_num": 4,
+            "rule_index": 2,
+            "clause_index": 0,
             "children": [
               {
                 "type": "NONTERMINAL",
                 "name": "factor",
-                "prod_num": 5,
+                "rule_index": 2,
+                "clause_index": 1,
                 "children": [
                   {
                     "type": "NONTERMINAL",
                     "name": "term",
-                    "prod_num": 7,
+                    "rule_index": 3,
+                    "clause_index": 1,
                     "children": [
                       {
                         "type": "TERMINAL",
@@ -110,22 +118,26 @@ test {
                       {
                         "type": "NONTERMINAL",
                         "name": "add",
-                        "prod_num": 2,
+                        "rule_index": 1,
+                        "clause_index": 1,
                         "children": [
                           {
                             "type": "NONTERMINAL",
                             "name": "add",
-                            "prod_num": 3,
+                            "rule_index": 1,
+                            "clause_index": 2,
                             "children": [
                               {
                                 "type": "NONTERMINAL",
                                 "name": "factor",
-                                "prod_num": 5,
+                                "rule_index": 2,
+                                "clause_index": 1,
                                 "children": [
                                   {
                                     "type": "NONTERMINAL",
                                     "name": "term",
-                                    "prod_num": 6,
+                                    "rule_index": 3,
+                                    "clause_index": 0,
                                     "children": [
                                       {
                                         "type": "TERMINAL",
@@ -156,12 +168,14 @@ test {
                           {
                             "type": "NONTERMINAL",
                             "name": "factor",
-                            "prod_num": 5,
+                            "rule_index": 2,
+                            "clause_index": 1,
                             "children": [
                               {
                                 "type": "NONTERMINAL",
                                 "name": "term",
-                                "prod_num": 6,
+                                "rule_index": 3,
+                                "clause_index": 0,
                                 "children": [
                                   {
                                     "type": "TERMINAL",
@@ -207,7 +221,8 @@ test {
               {
                 "type": "NONTERMINAL",
                 "name": "term",
-                "prod_num": 6,
+                "rule_index": 3,
+                "clause_index": 0,
                 "children": [
                   {
                     "type": "TERMINAL",

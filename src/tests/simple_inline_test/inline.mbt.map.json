@@ -2,63 +2,63 @@
   "mappings": [
     {
       "source": "inline.mbty",
-      "original_offset": 170,
-      "generated_offset": 1114,
-      "length": 5
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 220,
-      "generated_offset": 1241,
-      "length": 5
-    },
-    {
-      "source": "inline.mbty",
       "original_offset": 129,
-      "generated_offset": 1691,
+      "generated_offset": 1437,
       "length": 9
     },
     {
       "source": "inline.mbty",
       "original_offset": 140,
-      "generated_offset": 1708,
+      "generated_offset": 1454,
       "length": 3
     },
     {
       "source": "inline.mbty",
       "original_offset": 145,
-      "generated_offset": 1719,
+      "generated_offset": 1465,
       "length": 1
     },
     {
       "source": "inline.mbty",
+      "original_offset": 220,
+      "generated_offset": 1588,
+      "length": 5
+    },
+    {
+      "source": "inline.mbty",
       "original_offset": 234,
+      "generated_offset": 1715,
+      "length": 5
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 170,
       "generated_offset": 1842,
       "length": 5
     },
     {
       "source": "inline.mbty",
+      "original_offset": 191,
+      "generated_offset": 1969,
+      "length": 5
+    },
+    {
+      "source": "inline.mbty",
       "original_offset": 129,
-      "generated_offset": 2292,
+      "generated_offset": 2419,
       "length": 9
     },
     {
       "source": "inline.mbty",
       "original_offset": 140,
-      "generated_offset": 2309,
+      "generated_offset": 2436,
       "length": 3
     },
     {
       "source": "inline.mbty",
       "original_offset": 145,
-      "generated_offset": 2320,
+      "generated_offset": 2447,
       "length": 1
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 191,
-      "generated_offset": 2443,
-      "length": 5
     }
   ]
 }

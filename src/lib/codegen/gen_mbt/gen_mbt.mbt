@@ -359,17 +359,44 @@ fn codegen(
   )
 
   // yy_action_xxx
-  for _, action in meta.actions {
+  let actions : @hashmap.T[@stamp.T, @elab.Action] = @hashmap.new()
+  fn add_action(action : @elab.Action) {
+    for sub_action in action.sub_actions {
+      add_action(sub_action.action)
+    }
+    actions[action.stamp] = action
+  }
+
+  for production in grammar.productions {
+    guard not(grammar.starts.contains(production)) else { continue }
+    let meta = production_meta(production.num)
+    add_action(meta.action)
+  }
+  let mut next_action_id = 0
+  let stamp_to_action_id = @default_hashmap.new(fn(_key) {
+    let action_id = next_action_id
+    next_action_id += 1
+    action_id
+  })
+  fn get_action_id(action : @elab.Action) -> Int {
+    stamp_to_action_id.get(action.stamp)
+  }
+
+  for _, action in actions {
     output.write_string(
-      $|fn yy_action_\{action.num}(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+      $|fn yy_action_\{get_action_id(action)}(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
       $|
       ,
     )
     for sub_action in action.sub_actions {
       let { start, end, action: action2, .. } = sub_action
-      let last_pos_code = if start == 0 { "_last_pos" } else { "_args[\{start - 1}].2" }
+      let last_pos_code = if start == 0 {
+        "_last_pos"
+      } else {
+        "_args[\{start - 1}].2"
+      }
       output.write_string(
-        $|  let sub_action_\{start}_result = yy_action_\{action2.num}(\{last_pos_code}, _args[\{start}:\{end}])
+        $|  let sub_action_\{start}_result = yy_action_\{get_action_id(action2)}(\{last_pos_code}, _args[\{start}:\{end}])
         $|
         ,
       )
@@ -592,17 +619,17 @@ fn codegen(
 
     //
     fn gen_decision(decision : CodegenDecision) -> String {
-      fn get_action_num(prod_num : Int) {
-        meta.actions[production_meta(prod_num).action].unwrap().num
+      fn get_action_id_by_prod_num(prod_num : Int) {
+        get_action_id(production_meta(prod_num).action)
       }
 
       match decision {
         Accept => "Accept"
         Shift(state_num) => "Shift(yy_state_\{state_num})"
         Reduce(num_symbols, nonterm, prod_num) =>
-          "Reduce(\{num_symbols}, NT_\{nonterm}, yy_action_\{get_action_num(prod_num)})"
+          "Reduce(\{num_symbols}, NT_\{nonterm}, yy_action_\{get_action_id_by_prod_num(prod_num)})"
         ReduceNoLookahead(num_symbols, nonterm, prod_num) =>
-          "ReduceNoLookahead(\{num_symbols}, NT_\{nonterm}, yy_action_\{get_action_num(prod_num)})"
+          "ReduceNoLookahead(\{num_symbols}, NT_\{nonterm}, yy_action_\{get_action_id_by_prod_num(prod_num)})"
       }
     }
 

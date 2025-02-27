@@ -61,7 +61,7 @@ pub(all) struct Clause {
 
 ///|
 pub(all) struct Action {
-  num : Int
+  stamp : @stamp.Stamp
   arity : Int
   type_ : Code?
   sub_actions : Array[SubAction]

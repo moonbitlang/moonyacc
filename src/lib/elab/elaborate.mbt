@@ -40,12 +40,7 @@ pub fn elaborate(
     match token_by_name.get(name) {
       Some(t) => t
       None => {
-        let token : Token = {
-          name,
-          type_: None,
-          image: None,
-          prec: None,
-        }
+        let token : Token = { name, type_: None, image: None, prec: None }
         token_by_name[name] = token
         tokens.push(token)
         token
@@ -117,14 +112,13 @@ pub fn elaborate(
       _ => ()
     }
   }
-  let mut next_clause_num = 0
-  for ast_rule in ast_spec.rules {
+  for rule_index, ast_rule in ast_spec.rules {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     rule.type_ = match json_cst {
       No => rule.type_
       Yes(_) => Some("Json")
     }
-    for ast_clause in ast_rule.clauses {
+    for clause_index, ast_clause in ast_rule.clauses {
       let items = ast_clause.items.map(fn(ast_item) {
         Item::{
           binder: ast_item.binder,
@@ -166,15 +160,14 @@ pub fn elaborate(
           last_prec
         }
       }
-      let clause_num = next_clause_num
-      next_clause_num += 1
       let clause = Clause::{
         items,
         prec,
         action: elaborate_action(
           items,
           ast_clause.action,
-          clause_num,
+          rule_index~,
+          clause_index~,
           nonterminal_name=rule.name,
           type_=rule.type_,
           json_cst~,
@@ -241,7 +234,8 @@ pub fn elaborate(
 fn elaborate_action(
   items : Array[Item],
   ast_action : @parser.ClauseAction,
-  clause_num : Int,
+  rule_index~ : Int,
+  clause_index~ : Int,
   nonterminal_name~ : String,
   type_~ : Code?,
   json_cst~ : JsonCst
@@ -374,7 +368,8 @@ fn elaborate_action(
           #|{
           #|  "type": "NONTERMINAL",
           $|  "name": "\{nonterminal_name}",
-          $|  "prod_num": \{clause_num},
+          $|  "rule_index": \{rule_index},
+          $|  "clause_index": \{clause_index},
           $|  "children": args_to_json(_args),
           $|  "start": _start_pos.to_json(),
           $|  "end": _end_pos.to_json(),
@@ -386,5 +381,5 @@ fn elaborate_action(
       )
     }
   }
-  Action::{ num: clause_num, arity, type_, sub_actions: [], bindings, body }
+  Action::{ stamp: @stamp.new(), arity, type_, sub_actions: [], bindings, body }
 }
