@@ -21,5 +21,5 @@ test {
     (B, (), ()),
   ]
   let result = start!(tokens)
-  assert_eq!(result, "xb")
+  assert_eq!(result, "aybb")
 }

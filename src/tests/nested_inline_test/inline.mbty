@@ -14,8 +14,8 @@ start
   ;
 
 %inline x
-  : A { "xa" }
-  | A y B { "xb" }
+  : A { "a" }
+  | A y B { "a" + $2 + "b" }
   ;
 
 %inline y
