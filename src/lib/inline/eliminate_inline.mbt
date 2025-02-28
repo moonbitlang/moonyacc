@@ -1,12 +1,39 @@
 ///|
-pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
-  let rules : Array[@elab.Rule] = []
-  let inline_rules : Map[String, @elab.Rule] = {}
-  for rule in spec.rules {
+fn find_leaf_inline_rules(rules : Array[@elab.Rule]) -> Map[String, @elab.Rule] {
+  let all_inline_rules : Map[String, @elab.Rule] = {}
+  for rule in rules {
     if rule.inline {
-      inline_rules[rule.name] = rule
+      all_inline_rules[rule.name] = rule
     }
   }
+  Map::from_iter(
+    all_inline_rules
+    .iter()
+    .filter(fn {
+      (_, rule) =>
+        rule.clauses
+        .iter()
+        .all(fn(clause) {
+          clause.items
+          .iter()
+          .all(fn(item) {
+            match item.desc {
+              Token(_) => true
+              RuleCall(rule) => not(all_inline_rules.contains(rule.name))
+            }
+          })
+        })
+    }),
+  )
+}
+
+///|
+fn eliminate_inline_rules(
+  spec : @elab.ParserSpec,
+  inline_rules : Map[String, @elab.Rule]
+) -> @elab.ParserSpec {
+  // assert not(inline_rules.is_empty())
+  let rules : Array[@elab.Rule] = []
   fn contains_inline_rule(items : Array[@elab.Item]) {
     items
     .iter()
@@ -106,12 +133,8 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
     }
   }
 
-  // TODO: handle nested inline rules
-
   for rule in spec.rules {
-    if rule.inline {
-      continue
-    }
+    guard not(inline_rules.contains(rule.name)) else { continue }
     let new_clauses : Array[@elab.Clause] = []
     for clause in rule.clauses {
       if contains_inline_rule(clause.items) {
@@ -120,8 +143,41 @@ pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
         new_clauses.push(clause)
       }
     }
-    let new_rule = { ..rule, clauses: new_clauses, inline: false }
+    let new_rule = { ..rule, clauses: new_clauses }
     rules.push(new_rule)
   }
+  let rule_by_name = Map::from_iter(
+    rules.iter().map(fn(rule) { (rule.name, rule) }),
+  )
+
+  // update rule calls in clauses
+  for rule in rules {
+    for clause in rule.clauses {
+      for index, item in clause.items {
+        match item.desc {
+          Token(_) => ()
+          RuleCall(rule) =>
+            clause.items[index] = {
+              ..item,
+              desc: RuleCall(rule_by_name[rule.name].unwrap()),
+            }
+        }
+      }
+    }
+  }
   { ..spec, rules, }
+}
+
+///|
+pub fn eliminate_inline(spec : @elab.ParserSpec) -> @elab.ParserSpec {
+  let mut spec = spec
+  while true {
+    let inline_rules = find_leaf_inline_rules(spec.rules)
+    if inline_rules.is_empty() {
+      break
+    } else {
+      spec = eliminate_inline_rules(spec, inline_rules)
+    }
+  }
+  spec
 }

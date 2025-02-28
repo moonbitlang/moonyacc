@@ -1,0 +1,316 @@
+pub(all) typealias Position = Unit
+
+pub(all) enum Token {
+  A
+  B
+}
+
+pub fn Token::kind(self : Token) -> TokenKind {
+  match self {
+    A => TK_A
+    B => TK_B
+  }
+}
+
+pub(all) enum TokenKind {
+  TK_A
+  TK_B
+}
+
+pub impl Show for TokenKind with output(self, logger) {
+  logger.write_string(
+    match self {
+      TK_A => "A"
+      TK_B => "B"
+    }
+  )
+}
+
+pub type! ParseError {
+  UnexpectedToken(Token, (Position, Position), Array[TokenKind])
+  UnexpectedEndOfInput(Position, Array[TokenKind])
+}
+
+typealias YYObj = Error
+
+priv type! YYObj_Void
+
+priv type! YYObj_String String
+
+typealias YYState = (YYSymbol) -> YYDecision
+
+typealias YYAction = (Position, ArrayView[(YYObj, Position, Position)]) -> YYObj
+
+priv enum YYDecision {
+  Accept
+  Shift(YYState)
+  Reduce(Int, YYSymbol, YYAction)
+  ReduceNoLookahead(Int, YYSymbol, YYAction)
+  Error
+}
+
+priv enum YYSymbol {
+  T_A
+  T_B
+  NT_start
+  EOI
+}
+
+// Workaround for EOI unused warning
+fn init {
+  match EOI {
+    EOI => ()
+    _ => ()
+  }
+}
+
+fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_1_result = yy_action_1(_args[0].2, _args[1:3])
+  YYObj_String({();  "xb" })
+}
+
+fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  YYObj_String({();  "ya" })
+}
+
+fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_0_result = yy_action_3(_last_pos, _args[0:4])
+  guard let YYObj_String(_dollar1) = _sub_action_0_result
+  YYObj_String({();  _dollar1 })
+}
+
+fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_0_result = yy_action_5(_last_pos, _args[0:1])
+  guard let YYObj_String(_dollar1) = _sub_action_0_result
+  YYObj_String({();  _dollar1 })
+}
+
+fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  YYObj_String({();  "yb" })
+}
+
+fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  YYObj_String({();  "xa" })
+}
+
+fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_0_result = yy_action_0(_last_pos, _args[0:4])
+  guard let YYObj_String(_dollar1) = _sub_action_0_result
+  YYObj_String({();  _dollar1 })
+}
+
+fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_1_result = yy_action_6(_args[0].2, _args[1:3])
+  YYObj_String({();  "xb" })
+}
+
+fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSymbol, YYObj) {
+  match token {
+    A => (T_A, YYObj_Void)
+    B => (T_B, YYObj_Void)
+  }
+}
+
+// [0, start → • A, $]
+// [1, start → • A A A B, $]
+// [2, start → • A B B B, $]
+// [3, start_prime → • start, $]
+fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
+  match _lookahead {
+    NT_start => Shift(yy_state_1)
+    T_A => Shift(yy_state_2)
+    _ => Error
+  }
+}
+
+// [3, start_prime → start •, $]
+fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
+  Accept
+}
+
+// [0, start → A •, $]
+// [1, start → A • A A B, $]
+// [2, start → A • B B B, $]
+fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
+  match _lookahead {
+    T_B => Shift(yy_state_3)
+    T_A => Shift(yy_state_6)
+    EOI => Reduce(1, NT_start, yy_action_4)
+    _ => Error
+  }
+}
+
+// [2, start → A B • B B, $]
+fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
+  match _lookahead {
+    T_B => Shift(yy_state_4)
+    _ => Error
+  }
+}
+
+// [2, start → A B B • B, $]
+fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
+  match _lookahead {
+    T_B => Shift(yy_state_5)
+    _ => Error
+  }
+}
+
+// [2, start → A B B B •, $]
+fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
+  ReduceNoLookahead(4, NT_start, yy_action_2)
+}
+
+// [1, start → A A • A B, $]
+fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
+  match _lookahead {
+    T_A => Shift(yy_state_7)
+    _ => Error
+  }
+}
+
+// [1, start → A A A • B, $]
+fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
+  match _lookahead {
+    T_B => Shift(yy_state_8)
+    _ => Error
+  }
+}
+
+// [1, start → A A A B •, $]
+fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
+  ReduceNoLookahead(4, NT_start, yy_action_7)
+}
+
+fn yy_parse[T](
+  tokens : Array[(Token, Position, Position)],
+  start : YYState,
+  return_ : (YYObj) -> T,
+  initial_pos? : Position,
+) -> T!ParseError {
+  let mut cursor = 0
+  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
+  let data_stack : Array[(YYObj, Position, Position)] = []
+  let mut last_pos = initial_pos.or(tokens[0].1)
+  let mut state = start
+  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token?)] = None
+  let mut last_shifted_state_stack = state_stack
+  while true {
+    let decision = match state(EOI) {
+      ReduceNoLookahead(_) | Accept as t => t
+      _ => {
+        match lookahead {
+          Some(la) => state(la.0)
+          None => {
+            if cursor < tokens.length() {
+              let (token, start_pos, end_pos) = tokens[cursor]
+              cursor += 1
+              let (symbol, data) = yy_input(token, start_pos, end_pos)
+              lookahead = Some((symbol, (data, start_pos, end_pos), Some(token)))
+              state(symbol)
+            } else {
+              lookahead = Some((EOI, (YYObj_Void, last_pos, last_pos), None))
+              state(EOI)
+            }
+          }
+        }
+      }
+    }
+    match decision {
+      Accept => return return_(data_stack.unsafe_pop().0)
+      Shift(next_state) => {
+        guard let Some(la) = lookahead
+        data_stack.push(la.1)
+        state_stack = Cons(next_state, state_stack)
+        last_shifted_state_stack = state_stack
+        state = next_state
+        last_pos = la.1.2
+        lookahead = None
+      }
+      Reduce(count, symbol, action)
+      | ReduceNoLookahead(count, symbol, action) => {
+        loop (count, symbol, action) {
+          _ => {
+            let args = data_stack[data_stack.length() - count:]
+            let data = action(last_pos, args)
+            let (start_pos, end_pos) = if args.length() == 0 {
+              (last_pos, last_pos)
+            } else {
+              (args[0].1, args[args.length() - 1].2)
+            }
+            for i in 0..<count {
+              ignore(data_stack.unsafe_pop())
+              state_stack = state_stack.tail()
+            }
+            state = state_stack.unsafe_head()
+            data_stack.push((data, start_pos, end_pos))
+            match state(symbol) {
+              Accept => return return_(data_stack.unsafe_pop().0)
+              Shift(next_state) => {
+                state_stack = Cons(next_state, state_stack)
+                state = next_state
+              }
+              Reduce(count, symbol, action)
+              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
+              _ => panic()
+            }
+          }
+        }
+      }
+      Error => {
+        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
+        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+      }
+    }
+  }
+  panic()
+}
+
+fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Position, Position)) -> Unit!ParseError {
+  let expected = []
+  fn try_add(symbol : YYSymbol, kind : TokenKind) {
+    fn go(stack : @immut/list.T[YYState]) {
+      match stack {
+        Nil => ()
+        Cons(state, _) => {
+          match state(symbol) {
+            Accept | Shift(_) => expected.push(kind)
+            Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
+              fn inner_go(stack : @immut/list.T[YYState], count, symbol) {
+                let stack = stack.drop(count)
+                guard let Cons(state, _) = stack
+                match state(symbol) {
+                  Shift(state) => go(Cons(state, stack))
+                  Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
+                  _ => panic()
+                }
+              }
+              inner_go(stack, count, symbol)
+            }
+            Error => ()
+          }
+        }
+      }
+    }
+    go(stack)
+  }
+  for term in ([(T_A, TK_A), (T_B, TK_B)] : Array[(YYSymbol, TokenKind)]) {
+    try_add(term.0, term.1)
+  }
+  match token {
+    None => raise UnexpectedEndOfInput(loc.1, expected)
+    Some(token) => raise UnexpectedToken(token, loc, expected)
+  }
+}
+
+pub fn start(tokens : Array[(Token, Position, Position)], initial_pos? : Position) -> String!ParseError {
+  yy_parse!(
+    tokens,
+    yy_state_0,
+    fn {
+      YYObj_String(result) => result
+      _ => panic()
+    },
+    initial_pos?,
+  )
+}
