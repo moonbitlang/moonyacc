@@ -396,7 +396,7 @@ fn codegen(
         "_args[\{start - 1}].2"
       }
       output.write_string(
-        $|  let sub_action_\{start}_result = yy_action_\{get_action_id(action2)}(\{last_pos_code}, _args[\{start}:\{end}])
+        $|  let _sub_action_\{start}_result = yy_action_\{get_action_id(action2)}(\{last_pos_code}, _args[\{start}:\{end}])
         $|
         ,
       )
@@ -447,7 +447,7 @@ fn codegen(
         SubAction(start~, type_~) => {
           let data_type = type_.or("Unit")
           output.write_string(
-            $|  guard let YYObj_\{esc(data_type)}(\{binding.1}) = sub_action_\{start}_result
+            $|  guard let YYObj_\{esc(data_type)}(\{binding.1}) = _sub_action_\{start}_result
             $|
             ,
           )
