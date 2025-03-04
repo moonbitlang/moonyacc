@@ -11,7 +11,6 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
-
 // Adapted from Menhir
 // - https://gitlab.inria.fr/fpottier/menhir/-/blob/809af6503305acaf6d9877e67c40ef651452e115/src/item.ml
 //
@@ -20,6 +19,16 @@
 // Copyright Inria. All rights reserved. This file is distributed under
 // the terms of the GNU General Public License version 2, as described in
 // the file LICENSE.
+///|
+priv struct Node[LookaheadSet] {
+  item : EncodedLR0Item
+  partial_lookahead_set : EpsilonLookaheadSet[LookaheadSet]
+  epsilon_transitions : Array[Node[LookaheadSet]]
+  // Below are transient states
+  mut stamp : @stamp.T
+  mut predecessors : @immut/list.T[Node[LookaheadSet]]
+  mut lookahead_set : LookaheadSet
+}
 
 ///|
 pub fn build_closure_fn[LookaheadSet : AbstractLookaheadSet](
@@ -28,17 +37,8 @@ pub fn build_closure_fn[LookaheadSet : AbstractLookaheadSet](
      (Iter[(EncodedLR0Item, LookaheadSet)]) -> Array[
        (EncodedLR0Item, LookaheadSet),
      ] {
-  struct Node {
-    item : EncodedLR0Item
-    partial_lookahead_set : EpsilonLookaheadSet[LookaheadSet]
-    epsilon_transitions : Array[Node]
-    // Below are transient states
-    mut stamp : @stamp.T
-    mut predecessors : @immut/list.T[Node]
-    mut lookahead_set : LookaheadSet
-  }
   let first = compute_first_fn(grammar)
-  let node_by_item : @hashmap.T[EncodedLR0Item, Node] = @hashmap.new()
+  let node_by_item : @hashmap.T[EncodedLR0Item, Node[LookaheadSet]] = @hashmap.new()
   for production in grammar.productions {
     for dot in 0..=production.rhs.length() {
       let item = EncodedLR0Item::new(production, dot)
@@ -73,9 +73,9 @@ pub fn build_closure_fn[LookaheadSet : AbstractLookaheadSet](
     let stamp = @stamp.new()
     let nodes = []
     fn visit(
-      node : Node,
+      node : Node[LookaheadSet],
       lookahead_set : EpsilonLookaheadSet[LookaheadSet],
-      parent : Node
+      parent : Node[LookaheadSet]
     ) {
       if lookahead_set.nullable {
         node.predecessors = Cons(parent, node.predecessors)
@@ -88,7 +88,7 @@ pub fn build_closure_fn[LookaheadSet : AbstractLookaheadSet](
       }
     }
 
-    fn follow(node : Node) -> Unit {
+    fn follow(node : Node[LookaheadSet]) -> Unit {
       node.stamp = stamp
       nodes.push(node)
       for epsilon_transition in node.epsilon_transitions {
@@ -105,7 +105,7 @@ pub fn build_closure_fn[LookaheadSet : AbstractLookaheadSet](
 
     // Populate the lookahead sets
     let stamp = @stamp.new()
-    fn walk(node : Node) {
+    fn walk(node : Node[LookaheadSet]) {
       if node.stamp != stamp {
         node.stamp = stamp
         for predecessor in node.predecessors {

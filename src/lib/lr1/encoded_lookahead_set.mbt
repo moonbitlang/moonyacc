@@ -15,7 +15,7 @@
 ///|
 /// 0: EndOfInput
 /// 1..<1024: Terminal number + 1
-type EncodedLookaheadSet @small_int_set.T derive(Eq, Compare, Hash)
+priv type EncodedLookaheadSet @small_int_set.T derive(Eq, Compare, Hash)
 
 ///|
 fn EncodedLookaheadSet::is_empty(self : EncodedLookaheadSet) -> Bool {

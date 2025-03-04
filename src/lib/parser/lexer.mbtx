@@ -1,5 +1,5 @@
 {
-type! LexError {
+pub type! LexError {
   UnexpectedEndOfFile
   Unrecognized(String)
 }

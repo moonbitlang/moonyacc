@@ -81,12 +81,12 @@ pub(all) struct Nonterminal {
 }
 
 ///|
-pub fn Nonterminal::op_equal(self : Nonterminal, other : Nonterminal) -> Bool {
+pub impl Eq for Nonterminal with op_equal(self, other) {
   self.num == other.num
 }
 
 ///|
-pub fn Nonterminal::compare(self : Nonterminal, other : Nonterminal) -> Int {
+pub impl Compare for Nonterminal with compare(self, other) {
   Int::compare(self.num, other.num)
 }
 

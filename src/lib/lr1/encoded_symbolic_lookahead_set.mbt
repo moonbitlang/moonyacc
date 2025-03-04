@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct EncodedSymbolicLookaheadSet {
+priv struct EncodedSymbolicLookaheadSet {
   concrete_set : EncodedLookaheadSet
   vars : @small_int_set.T
 }
@@ -25,14 +25,14 @@ let _empty : EncodedSymbolicLookaheadSet = {
 }
 
 ///|
-fn EncodedSymbolicLookaheadSet::empty() -> EncodedSymbolicLookaheadSet {
+impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with empty() {
   _empty
 }
 
 ///|
-fn EncodedSymbolicLookaheadSet::singleton(
-  lookahead : Lookahead
-) -> EncodedSymbolicLookaheadSet {
+impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with singleton(
+  lookahead
+) {
   {
     concrete_set: EncodedLookaheadSet::singleton(lookahead),
     vars: @small_int_set.empty(),
@@ -50,10 +50,10 @@ fn EncodedSymbolicLookaheadSet::variable(
 }
 
 ///|
-fn EncodedSymbolicLookaheadSet::union(
-  self : EncodedSymbolicLookaheadSet,
-  other : EncodedSymbolicLookaheadSet
-) -> EncodedSymbolicLookaheadSet {
+impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with union(
+  self,
+  other
+) {
   {
     concrete_set: self.concrete_set.union(other.concrete_set),
     vars: self.vars.union(other.vars),

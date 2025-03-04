@@ -3,79 +3,79 @@
     {
       "source": "inline.mbty",
       "original_offset": 149,
-      "generated_offset": 1230,
+      "generated_offset": 1227,
       "length": 7
     },
     {
       "source": "inline.mbty",
       "original_offset": 158,
-      "generated_offset": 1245,
+      "generated_offset": 1242,
       "length": 7
     },
     {
       "source": "inline.mbty",
       "original_offset": 191,
-      "generated_offset": 1374,
+      "generated_offset": 1371,
       "length": 6
     },
     {
       "source": "inline.mbty",
       "original_offset": 103,
-      "generated_offset": 1624,
+      "generated_offset": 1618,
       "length": 1
     },
     {
       "source": "inline.mbty",
       "original_offset": 106,
-      "generated_offset": 1633,
+      "generated_offset": 1627,
       "length": 1
     },
     {
       "source": "inline.mbty",
       "original_offset": 103,
+      "generated_offset": 1869,
+      "length": 1
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 106,
       "generated_offset": 1878,
       "length": 1
     },
     {
       "source": "inline.mbty",
-      "original_offset": 106,
-      "generated_offset": 1887,
-      "length": 1
-    },
-    {
-      "source": "inline.mbty",
       "original_offset": 208,
-      "generated_offset": 2010,
+      "generated_offset": 2001,
       "length": 6
     },
     {
       "source": "inline.mbty",
       "original_offset": 131,
-      "generated_offset": 2138,
+      "generated_offset": 2129,
       "length": 5
     },
     {
       "source": "inline.mbty",
       "original_offset": 103,
-      "generated_offset": 2387,
+      "generated_offset": 2375,
       "length": 1
     },
     {
       "source": "inline.mbty",
       "original_offset": 106,
-      "generated_offset": 2396,
+      "generated_offset": 2384,
       "length": 1
     },
     {
       "source": "inline.mbty",
       "original_offset": 149,
-      "generated_offset": 2642,
+      "generated_offset": 2627,
       "length": 7
     },
     {
       "source": "inline.mbty",
       "original_offset": 158,
-      "generated_offset": 2657,
+      "generated_offset": 2642,
       "length": 7
     }
   ]

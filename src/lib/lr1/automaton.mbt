@@ -56,7 +56,7 @@ pub(all) enum Decision {
 } derive(Eq)
 
 ///|
-struct LR0Node {
+priv struct LR0Node {
   num : Int
   closure_items : EncodedLR0ItemSet
   closure_symbolic_lookahead_set : Array[EncodedSymbolicLookaheadSet]
@@ -78,7 +78,7 @@ impl Hash for LR0Node with hash_combine(self, hasher) {
 }
 
 ///|
-struct LR1PreState {
+priv struct LR1PreState {
   items : EncodedLR1ItemSet
   mut state : LR1State?
 }

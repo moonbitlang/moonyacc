@@ -255,7 +255,7 @@ fn yy_action_0(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj__immut_list_T_Symbol_(symbol_list) = _args[1].0
+  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
   YYObj_Declaration(
     {
       ()
@@ -269,8 +269,8 @@ fn yy_action_1(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Clause(clause) = _args[0].0
-  guard let YYObj__immut_list_T_Clause_(clause_list) = _args[2].0
+  guard _args[0].0 is YYObj_Clause(clause)
+  guard _args[2].0 is YYObj__immut_list_T_Clause_(clause_list)
   YYObj__immut_list_T_Clause_(
     {
       ()
@@ -284,7 +284,7 @@ fn yy_action_2(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(type_) = _args[1].0
+  guard _args[1].0 is YYObj_String(type_)
   YYObj_Declaration(
     {
       ()
@@ -311,7 +311,7 @@ fn yy_action_4(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Symbol(symbol) = _args[1].0
+  guard _args[1].0 is YYObj_Symbol(symbol)
   YYObj_Symbol_(
     {
       ()
@@ -325,7 +325,7 @@ fn yy_action_5(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(image) = _args[0].0
+  guard _args[0].0 is YYObj_String(image)
   YYObj_ClauseItemSymbol(
     {
       ()
@@ -339,7 +339,7 @@ fn yy_action_6(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Symbol(symbol) = _args[0].0
+  guard _args[0].0 is YYObj_Symbol(symbol)
   YYObj__immut_list_T_Symbol_(
     {
       ()
@@ -353,7 +353,7 @@ fn yy_action_7(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Symbol(symbol) = _args[0].0
+  guard _args[0].0 is YYObj_Symbol(symbol)
   YYObj_ClauseItemSymbol(
     {
       ()
@@ -367,7 +367,7 @@ fn yy_action_8(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj__immut_list_T_Symbol_(symbol_list) = _args[1].0
+  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
   YYObj_Declaration(
     {
       ()
@@ -381,10 +381,10 @@ fn yy_action_9(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Code_(header) = _args[0].0
-  guard let YYObj__immut_list_T_Declaration_(decl_list) = _args[1].0
-  guard let YYObj__immut_list_T_Rule_(rule_list) = _args[3].0
-  guard let YYObj_Code_(trailer) = _args[4].0
+  guard _args[0].0 is YYObj_Code_(header)
+  guard _args[1].0 is YYObj__immut_list_T_Declaration_(decl_list)
+  guard _args[3].0 is YYObj__immut_list_T_Rule_(rule_list)
+  guard _args[4].0 is YYObj_Code_(trailer)
   YYObj_ParserSpec(
     {
       ()
@@ -403,7 +403,7 @@ fn yy_action_10(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(code) = _args[0].0
+  guard _args[0].0 is YYObj_String(code)
   YYObj_Code_(
     {
       ()
@@ -417,7 +417,7 @@ fn yy_action_11(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Rule(_dollar1) = _args[0].0
+  guard _args[0].0 is YYObj_Rule(_dollar1)
   YYObj_Rule(
     {
       ()
@@ -444,8 +444,8 @@ fn yy_action_13(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(type_) = _args[1].0
-  guard let YYObj__immut_list_T_Symbol_(symbol_list) = _args[2].0
+  guard _args[1].0 is YYObj_String(type_)
+  guard _args[2].0 is YYObj__immut_list_T_Symbol_(symbol_list)
   YYObj_Declaration(
     {
       ()
@@ -459,8 +459,8 @@ fn yy_action_14(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Symbol(symbol) = _args[0].0
-  guard let YYObj__immut_list_T_Symbol_(symbol_list) = _args[1].0
+  guard _args[0].0 is YYObj_Symbol(symbol)
+  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
   YYObj__immut_list_T_Symbol_(
     {
       ()
@@ -502,8 +502,8 @@ fn yy_action_17(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Code_(type_) = _args[1].0
-  guard let YYObj__immut_list_T_Symbol_(symbol_list) = _args[2].0
+  guard _args[1].0 is YYObj_Code_(type_)
+  guard _args[2].0 is YYObj__immut_list_T_Symbol_(symbol_list)
   YYObj_Declaration(
     {
       ()
@@ -517,7 +517,7 @@ fn yy_action_18(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(type_) = _args[0].0
+  guard _args[0].0 is YYObj_String(type_)
   YYObj_Code_(
     {
       ()
@@ -531,7 +531,7 @@ fn yy_action_19(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(code) = _args[0].0
+  guard _args[0].0 is YYObj_String(code)
   YYObj_Code_(
     {
       ()
@@ -545,9 +545,9 @@ fn yy_action_20(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj__immut_list_T_ClauseItem_(item_list) = _args[0].0
-  guard let YYObj_Symbol_(prec) = _args[1].0
-  guard let YYObj_ClauseAction(action) = _args[2].0
+  guard _args[0].0 is YYObj__immut_list_T_ClauseItem_(item_list)
+  guard _args[1].0 is YYObj_Symbol_(prec)
+  guard _args[2].0 is YYObj_ClauseAction(action)
   YYObj_Clause(
     {
       ()
@@ -561,7 +561,7 @@ fn yy_action_21(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_ClauseItemSymbol(symbol) = _args[0].0
+  guard _args[0].0 is YYObj_ClauseItemSymbol(symbol)
   YYObj_ClauseItem(
     {
       ()
@@ -575,7 +575,7 @@ fn yy_action_22(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj__immut_list_T_Symbol_(symbol_list) = _args[1].0
+  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
   YYObj_Declaration(
     {
       ()
@@ -589,7 +589,7 @@ fn yy_action_23(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj__String__Int__Array_SubstItem__(code) = _args[0].0
+  guard _args[0].0 is YYObj__String__Int__Array_SubstItem__(code)
   let _start_pos = _args[0].1
   let _end_pos = _args[0].2
   YYObj_ClauseAction(
@@ -610,7 +610,7 @@ fn yy_action_24(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Clause(clause) = _args[0].0
+  guard _args[0].0 is YYObj_Clause(clause)
   YYObj__immut_list_T_Clause_(
     {
       ()
@@ -624,7 +624,7 @@ fn yy_action_25(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Rule(_dollar2) = _args[1].0
+  guard _args[1].0 is YYObj_Rule(_dollar2)
   YYObj_Rule(
     {
       ()
@@ -651,7 +651,7 @@ fn yy_action_27(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj__immut_list_T_Symbol_(symbol_list) = _args[1].0
+  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
   YYObj_Declaration(
     {
       ()
@@ -678,8 +678,8 @@ fn yy_action_29(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(binder) = _args[0].0
-  guard let YYObj_ClauseItemSymbol(symbol) = _args[2].0
+  guard _args[0].0 is YYObj_String(binder)
+  guard _args[2].0 is YYObj_ClauseItemSymbol(symbol)
   YYObj_ClauseItem(
     {
       ()
@@ -693,7 +693,7 @@ fn yy_action_30(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(ident) = _args[0].0
+  guard _args[0].0 is YYObj_String(ident)
   YYObj_Symbol(
     {
       ()
@@ -707,9 +707,9 @@ fn yy_action_31(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Code_(type_) = _args[1].0
-  guard let YYObj_Symbol(symbol) = _args[2].0
-  guard let YYObj_String(image) = _args[3].0
+  guard _args[1].0 is YYObj_Code_(type_)
+  guard _args[2].0 is YYObj_Symbol(symbol)
+  guard _args[3].0 is YYObj_String(image)
   YYObj_Declaration(
     {
       ()
@@ -723,7 +723,7 @@ fn yy_action_32(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(type_) = _args[0].0
+  guard _args[0].0 is YYObj_String(type_)
   YYObj_Code_(
     {
       ()
@@ -737,9 +737,9 @@ fn yy_action_33(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Symbol(nonterminal) = _args[0].0
-  guard let YYObj_Code_(type_) = _args[1].0
-  guard let YYObj__immut_list_T_Clause_(clause_list) = _args[3].0
+  guard _args[0].0 is YYObj_Symbol(nonterminal)
+  guard _args[1].0 is YYObj_Code_(type_)
+  guard _args[3].0 is YYObj__immut_list_T_Clause_(clause_list)
   YYObj_Rule(
     {
       ()
@@ -753,8 +753,8 @@ fn yy_action_34(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Rule(rule) = _args[0].0
-  guard let YYObj__immut_list_T_Rule_(rule_list) = _args[1].0
+  guard _args[0].0 is YYObj_Rule(rule)
+  guard _args[1].0 is YYObj__immut_list_T_Rule_(rule_list)
   YYObj__immut_list_T_Rule_(
     {
       ()
@@ -768,7 +768,7 @@ fn yy_action_35(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Rule(rule) = _args[0].0
+  guard _args[0].0 is YYObj_Rule(rule)
   YYObj__immut_list_T_Rule_(
     {
       ()
@@ -782,7 +782,7 @@ fn yy_action_36(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(code) = _args[0].0
+  guard _args[0].0 is YYObj_String(code)
   YYObj_Code_(
     {
       ()
@@ -796,8 +796,8 @@ fn yy_action_37(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_ClauseItem(item) = _args[0].0
-  guard let YYObj__immut_list_T_ClauseItem_(item_list) = _args[1].0
+  guard _args[0].0 is YYObj_ClauseItem(item)
+  guard _args[1].0 is YYObj__immut_list_T_ClauseItem_(item_list)
   YYObj__immut_list_T_ClauseItem_(
     {
       ()
@@ -811,8 +811,8 @@ fn yy_action_38(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_String(traits) = _args[1].0
-  guard let YYObj_String(type_) = _args[2].0
+  guard _args[1].0 is YYObj_String(traits)
+  guard _args[2].0 is YYObj_String(type_)
   YYObj_Declaration(
     {
       ()
@@ -852,8 +852,8 @@ fn yy_action_41(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard let YYObj_Declaration(decl) = _args[0].0
-  guard let YYObj__immut_list_T_Declaration_(decl_list) = _args[1].0
+  guard _args[0].0 is YYObj_Declaration(decl)
+  guard _args[1].0 is YYObj__immut_list_T_Declaration_(decl_list)
   YYObj__immut_list_T_Declaration_(
     {
       ()
@@ -1667,7 +1667,7 @@ fn yy_parse[T](
     match decision {
       Accept => return return_(data_stack.unsafe_pop().0)
       Shift(next_state) => {
-        guard let Some(la) = lookahead
+        guard lookahead is Some(la)
         data_stack.push(la.1)
         state_stack = Cons(next_state, state_stack)
         last_shifted_state_stack = state_stack
@@ -1731,7 +1731,7 @@ fn error(
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
               fn inner_go(stack : @immut/list.T[YYState], count, symbol) {
                 let stack = stack.drop(count)
-                guard let Cons(state, _) = stack
+                guard stack is Cons(state, _)
                 match state(symbol) {
                   Shift(state) => go(Cons(state, stack))
                   Reduce(count, symbol, _)

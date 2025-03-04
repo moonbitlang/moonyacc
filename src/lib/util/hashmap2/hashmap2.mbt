@@ -21,7 +21,7 @@ struct T[K, V] {
 }
 
 ///|
-struct Entry[K, V] {
+priv struct Entry[K, V] {
   mut value : V
   mut psl : Int
   key : K

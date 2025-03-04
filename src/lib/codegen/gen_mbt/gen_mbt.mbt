@@ -294,7 +294,7 @@ fn codegen(
     }
     JsonCst(_) =>
       output.write_string(
-        $|type! YYObj_Json Json
+        $|priv type! YYObj_Json Json
         $|
         $|
         ,
@@ -406,7 +406,7 @@ fn codegen(
         Data(index, type_~) => {
           let data_type = type_.or("Unit")
           output.write_string(
-            $|  guard let YYObj_\{esc(data_type)}(\{binding.1}) = _args[\{index}].0
+            $|  guard _args[\{index}].0 is YYObj_\{esc(data_type)}(\{binding.1})
             $|
             ,
           )
@@ -447,7 +447,7 @@ fn codegen(
         SubAction(start~, type_~) => {
           let data_type = type_.or("Unit")
           output.write_string(
-            $|  guard let YYObj_\{esc(data_type)}(\{binding.1}) = _sub_action_\{start}_result
+            $|  guard _sub_action_\{start}_result is YYObj_\{esc(data_type)}(\{binding.1})
             $|
             ,
           )
@@ -729,7 +729,7 @@ fn codegen(
         #|    match decision {
         #|      Accept => return return_(data_stack.unsafe_pop().0)
         #|      Shift(next_state) => {
-        #|        guard let Some(la) = lookahead
+        #|        guard lookahead is Some(la)
         #|        data_stack.push(la.1)
         #|        state_stack = Cons(next_state, state_stack)
         #|        last_shifted_state_stack = state_stack
@@ -811,7 +811,7 @@ fn codegen(
         #|    match decision {
         #|      Accept => return return_(data_stack.unsafe_pop().0)
         #|      Shift(next_state) => {
-        #|        guard let Some(la) = lookahead
+        #|        guard lookahead is Some(la)
         #|        data_stack.push(la.1)
         #|        state_stack = Cons(next_state, state_stack)
         #|        last_shifted_state_stack = state_stack
@@ -888,7 +888,7 @@ fn codegen(
     $|            Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
     $|              fn inner_go(stack : @immut/list.T[YYState], count, symbol) {
     $|                let stack = stack.drop(count)
-    $|                guard let Cons(state, _) = stack
+    $|                guard stack is Cons(state, _)
     $|                match state(symbol) {
     $|                  Shift(state) => go(Cons(state, stack))
     $|                  Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)

@@ -67,7 +67,7 @@ pub fn parse(
         }
         data_stack.push(result)
         let next_state = state_stack.last().unwrap().goto[NT(production.lhs)]
-        guard let Some(next_state) = next_state
+        guard next_state is Some(next_state)
         state_stack.push(next_state)
       }
       Some(Conflict(_)) => panic()
@@ -115,42 +115,42 @@ test "parse" {
   let grammar = @grm.build(fn(ctx) {
     let prod1 = ctx.add_production("Start", ["Add"])
     actions[prod1] = fn(args) {
-      guard let [arg1] = args
+      guard args is [arg1]
       return arg1
     }
     let prod2 = ctx.add_production("Add", ["Add", "+", "Factor"])
     actions[prod2] = fn(args) {
-      guard let [ObjNumber(arg1), _, ObjNumber(arg2)] = args
+      guard args is [ObjNumber(arg1), _, ObjNumber(arg2)]
       return ObjNumber(arg1 + arg2)
     }
     let prod2_5 = ctx.add_production("Add", ["Add", "-", "Factor"])
     actions[prod2_5] = fn(args) {
-      guard let [ObjNumber(arg1), _, ObjNumber(arg2)] = args
+      guard args is [ObjNumber(arg1), _, ObjNumber(arg2)]
       return ObjNumber(arg1 - arg2)
     }
     let prod3 = ctx.add_production("Add", ["Factor"])
     actions[prod3] = fn(args) {
-      guard let [arg1] = args
+      guard args is [arg1]
       return arg1
     }
     let prod4 = ctx.add_production("Factor", ["Factor", "*", "Term"])
     actions[prod4] = fn(args) {
-      guard let [ObjNumber(arg1), _, ObjNumber(arg2)] = args
+      guard args is [ObjNumber(arg1), _, ObjNumber(arg2)]
       return ObjNumber(arg1 * arg2)
     }
     let prod5 = ctx.add_production("Factor", ["Term"])
     actions[prod5] = fn(args) {
-      guard let [arg1] = args
+      guard args is [arg1]
       return arg1
     }
     let prod6 = ctx.add_production("Term", ["(", "Add", ")"])
     actions[prod6] = fn(args) {
-      guard let [_, arg, _] = args
+      guard args is [_, arg, _]
       return arg
     }
     let prod7 = ctx.add_production("Term", ["Number"])
     actions[prod7] = fn(args) {
-      guard let [arg1] = args
+      guard args is [arg1]
       return arg1
     }
     ctx.set_start("Start")
@@ -172,6 +172,6 @@ test "parse" {
   let input_provider = make_input_provider(tokens, terminal_by_name)
   let action_provider = make_action_provider(actions)
   let result = parse(grammar, input_provider, action_provider)
-  guard let ObjNumber(n) = result
+  guard result is ObjNumber(n)
   assert_eq!(n, 3)
 }

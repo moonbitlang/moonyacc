@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct EpsilonLookaheadSet[T] {
+priv struct EpsilonLookaheadSet[T] {
   set : T
   nullable : Bool
 }

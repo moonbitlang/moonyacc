@@ -96,7 +96,7 @@ pub fn run(self : LexEngine, lexbuf : Lexbuf) -> (Int, Array[(Int, Int)]) {
 }
 
 ///|
-type! LexError {
+pub type! LexError {
   UnexpectedEndOfFile
   Unrecognized(String)
 }

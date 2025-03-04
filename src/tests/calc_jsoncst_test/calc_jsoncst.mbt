@@ -60,7 +60,7 @@ pub type! ParseError {
 typealias YYObj = Error
 
 ///|
-type! YYObj_Json Json
+priv type! YYObj_Json Json
 
 ///|
 typealias YYState = (YYSymbol) -> YYDecision
@@ -585,7 +585,7 @@ fn yy_parse[T](
     match decision {
       Accept => return return_(data_stack.unsafe_pop().0)
       Shift(next_state) => {
-        guard let Some(la) = lookahead
+        guard lookahead is Some(la)
         data_stack.push(la.1)
         state_stack = Cons(next_state, state_stack)
         last_shifted_state_stack = state_stack
@@ -649,7 +649,7 @@ fn error(
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
               fn inner_go(stack : @immut/list.T[YYState], count, symbol) {
                 let stack = stack.drop(count)
-                guard let Cons(state, _) = stack
+                guard stack is Cons(state, _)
                 match state(symbol) {
                   Shift(state) => go(Cons(state, stack))
                   Reduce(count, symbol, _)
