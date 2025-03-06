@@ -348,7 +348,7 @@ fn codegen(
     $|
     $|// Workaround for EOI unused warning
     $|fn init {
-    $|  match EOI {
+    $|  match (EOI : YYSymbol) {
     $|    EOI => ()
     $|    _ => ()
     $|  }
