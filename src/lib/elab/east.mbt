@@ -138,13 +138,13 @@ pub(all) struct Item {
 ///|
 pub(all) enum Term {
   Token(Token)
-  RuleCall(Rule)
+  RuleCall(Rule, Array[Term])
 }
 
 ///|
 pub fn Item::type_(self : Item) -> TypeExpr? {
   match self.term {
     Token(token) => token.type_
-    RuleCall(rule) => rule.type_
+    RuleCall(rule, _) => rule.type_
   }
 }

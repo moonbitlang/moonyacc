@@ -112,6 +112,19 @@ pub fn elaborate(
       _ => ()
     }
   }
+  fn map_term(ast_term : @parser.Term) -> Term {
+    match ast_term {
+      Symbol(symbol) =>
+        match token_by_name[symbol] {
+          None => RuleCall(rule_by_name[symbol].unwrap(), [])
+          Some(token) => Token(token)
+        }
+      Image(image) => Token(token_by_image[image].unwrap())
+      RuleCall(symbol, args) =>
+        RuleCall(rule_by_name[symbol].unwrap(), args.map(map_term))
+    }
+  }
+
   for rule_index, ast_rule in ast_spec.rules {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     rule.type_ = match json_cst {
@@ -120,17 +133,7 @@ pub fn elaborate(
     }
     for clause_index, ast_clause in ast_rule.clauses {
       let items = ast_clause.items.map(fn(ast_item) {
-        Item::{
-          binder: ast_item.binder,
-          term: match ast_item.term {
-            Symbol(symbol) =>
-              match token_by_name[symbol] {
-                None => RuleCall(rule_by_name[symbol].unwrap())
-                Some(token) => Token(token)
-              }
-            Image(image) => Token(token_by_image[image].unwrap())
-          },
-        }
+        Item::{ binder: ast_item.binder, term: map_term(ast_item.term) }
       })
       let prec = match ast_clause.prec {
         Some(prec) => {
