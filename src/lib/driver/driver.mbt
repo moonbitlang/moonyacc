@@ -153,7 +153,7 @@ pub fn compile(
         num: production_num,
         lhs,
         rhs: clause.items.map(fn(item) {
-          match item.desc {
+          match item.term {
             Token(token) => T(get_terminal_by_name(token.name))
             RuleCall(rule) => NT(get_nonterminal_by_name(rule.name))
           }

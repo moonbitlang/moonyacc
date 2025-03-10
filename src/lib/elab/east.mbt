@@ -89,18 +89,18 @@ pub(all) enum BindingSubject {
 ///|
 pub(all) struct Item {
   binder : Code?
-  desc : ItemDesc
+  term : Term
 }
 
 ///|
-pub(all) enum ItemDesc {
+pub(all) enum Term {
   Token(Token)
   RuleCall(Rule)
 }
 
 ///|
 pub fn Item::type_(self : Item) -> Code? {
-  match self.desc {
+  match self.term {
     Token(token) => token.type_
     RuleCall(rule) => rule.type_
   }

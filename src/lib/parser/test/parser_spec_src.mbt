@@ -116,11 +116,11 @@ let parser_spec_src : String =
   #|    ;
   #|
   #|item -> ClauseItem
-  #|    : symbol=item_symbol { { binder: None, symbol: symbol } }
-  #|    | binder=IDENT "=" symbol=item_symbol { { binder: Some(binder), symbol: symbol } }
+  #|    : term=term { { binder: None, term: term } }
+  #|    | binder=IDENT "=" term=term { { binder: Some(binder), term: term } }
   #|    ;
   #|
-  #|item_symbol -> ClauseItemSymbol
+  #|term -> Term
   #|    : symbol=symbol { Symbol(symbol) }
   #|    | image=STRING { Image(image) }
   #|    ;

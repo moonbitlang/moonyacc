@@ -132,6 +132,9 @@ priv type! YYObj_Void
 priv type! YYObj_Rule Rule
 
 ///|
+priv type! YYObj_Term Term
+
+///|
 priv type! YYObj_Code_ Code?
 
 ///|
@@ -157,9 +160,6 @@ priv type! YYObj_Declaration Declaration
 
 ///|
 priv type! YYObj_ClauseAction ClauseAction
-
-///|
-priv type! YYObj_ClauseItemSymbol ClauseItemSymbol
 
 ///|
 priv type! YYObj__immut_list_T_Rule_ @immut/list.T[Rule]
@@ -235,7 +235,7 @@ priv enum YYSymbol {
   NT_rule_prec
   NT_item_list
   NT_item
-  NT_item_symbol
+  NT_term
   NT_nonempty_symbol_list
   NT_symbol
   EOI
@@ -326,7 +326,7 @@ fn yy_action_5(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   guard _args[0].0 is YYObj_String(image)
-  YYObj_ClauseItemSymbol(
+  YYObj_Term(
     {
       ()
       Image(image)
@@ -354,7 +354,7 @@ fn yy_action_7(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   guard _args[0].0 is YYObj_Symbol(symbol)
-  YYObj_ClauseItemSymbol(
+  YYObj_Term(
     {
       ()
       Symbol(symbol)
@@ -561,11 +561,11 @@ fn yy_action_21(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  guard _args[0].0 is YYObj_ClauseItemSymbol(symbol)
+  guard _args[0].0 is YYObj_Term(term)
   YYObj_ClauseItem(
     {
       ()
-      { binder: None, symbol }
+      { binder: None, term }
     },
   )
 }
@@ -679,11 +679,11 @@ fn yy_action_29(
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
   guard _args[0].0 is YYObj_String(binder)
-  guard _args[2].0 is YYObj_ClauseItemSymbol(symbol)
+  guard _args[2].0 is YYObj_Term(term)
   YYObj_ClauseItem(
     {
       ()
-      { binder: Some(binder), symbol }
+      { binder: Some(binder), term }
     },
   )
 }
@@ -1319,10 +1319,10 @@ fn yy_state_35(_lookahead : YYSymbol) -> YYDecision {
 // [28, clause → • item_list rule_prec clause_action, BAR / SEMI]
 // [33, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [34, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [35, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [36, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [37, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [38, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [35, item → • term, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → • IDENT EQ term, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, term → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, term → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [41, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_36(_lookahead : YYSymbol) -> YYDecision {
@@ -1330,7 +1330,7 @@ fn yy_state_36(_lookahead : YYSymbol) -> YYDecision {
     T_STRING => Shift(yy_state_37)
     NT_symbol => Shift(yy_state_38)
     T_IDENT => Shift(yy_state_39)
-    NT_item_symbol => Shift(yy_state_42)
+    NT_term => Shift(yy_state_42)
     NT_item => Shift(yy_state_43)
     NT_item_list => Shift(yy_state_45)
     NT_clause => Shift(yy_state_51)
@@ -1341,19 +1341,19 @@ fn yy_state_36(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [38, item_symbol → STRING •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, term → STRING •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_37(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_item_symbol, yy_action_5)
+  ReduceNoLookahead(1, NT_term, yy_action_5)
 }
 
-// [37, item_symbol → symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, term → symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_38(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_item_symbol, yy_action_7)
+  ReduceNoLookahead(1, NT_term, yy_action_7)
 }
 
-// [36, item → IDENT • EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → IDENT • EQ term, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [41, symbol → IDENT •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_39(_lookahead : YYSymbol) -> YYDecision {
@@ -1369,9 +1369,9 @@ fn yy_state_39(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [36, item → IDENT EQ • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [37, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [38, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → IDENT EQ • term, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, term → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, term → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [41, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_40(_lookahead : YYSymbol) -> YYDecision {
@@ -1379,18 +1379,18 @@ fn yy_state_40(_lookahead : YYSymbol) -> YYDecision {
     T_IDENT => Shift(yy_state_8)
     T_STRING => Shift(yy_state_37)
     NT_symbol => Shift(yy_state_38)
-    NT_item_symbol => Shift(yy_state_41)
+    NT_term => Shift(yy_state_41)
     _ => Error
   }
 }
 
-// [36, item → IDENT EQ item_symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → IDENT EQ term •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_41(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(3, NT_item, yy_action_29)
 }
 
-// [35, item → item_symbol •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [35, item → term •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_42(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_item, yy_action_21)
@@ -1399,10 +1399,10 @@ fn yy_state_42(_lookahead : YYSymbol) -> YYDecision {
 // [33, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [33, item_list → item • item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [34, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [35, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [36, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [37, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [38, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [35, item → • term, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → • IDENT EQ term, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, term → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, term → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [41, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_43(_lookahead : YYSymbol) -> YYDecision {
@@ -1410,7 +1410,7 @@ fn yy_state_43(_lookahead : YYSymbol) -> YYDecision {
     T_STRING => Shift(yy_state_37)
     NT_symbol => Shift(yy_state_38)
     T_IDENT => Shift(yy_state_39)
-    NT_item_symbol => Shift(yy_state_42)
+    NT_term => Shift(yy_state_42)
     NT_item => Shift(yy_state_43)
     NT_item_list => Shift(yy_state_44)
     T_LBRACE_CODE_RBRACE | T_PERCENT_PREC | T_BAR | T_SEMI =>
@@ -1498,10 +1498,10 @@ fn yy_state_51(_lookahead : YYSymbol) -> YYDecision {
 // [28, clause → • item_list rule_prec clause_action, BAR / SEMI]
 // [33, item_list → • item item_list, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [34, item_list → •, LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [35, item → • item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [36, item → • IDENT EQ item_symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [37, item_symbol → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
-// [38, item_symbol → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [35, item → • term, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [36, item → • IDENT EQ term, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [37, term → • symbol, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
+// [38, term → • STRING, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 // [41, symbol → • IDENT, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 ///|
 fn yy_state_52(_lookahead : YYSymbol) -> YYDecision {
@@ -1509,7 +1509,7 @@ fn yy_state_52(_lookahead : YYSymbol) -> YYDecision {
     T_STRING => Shift(yy_state_37)
     NT_symbol => Shift(yy_state_38)
     T_IDENT => Shift(yy_state_39)
-    NT_item_symbol => Shift(yy_state_42)
+    NT_term => Shift(yy_state_42)
     NT_item => Shift(yy_state_43)
     NT_item_list => Shift(yy_state_45)
     NT_clause => Shift(yy_state_51)

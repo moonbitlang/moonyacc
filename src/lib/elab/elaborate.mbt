@@ -122,7 +122,7 @@ pub fn elaborate(
       let items = ast_clause.items.map(fn(ast_item) {
         Item::{
           binder: ast_item.binder,
-          desc: match ast_item.symbol {
+          term: match ast_item.term {
             Symbol(symbol) =>
               match token_by_name[symbol] {
                 None => RuleCall(rule_by_name[symbol].unwrap())
@@ -146,7 +146,7 @@ pub fn elaborate(
           // So, I'll use the precedence of the last terminal in the rule.
           let mut last_prec = None
           for item in items.rev_iter() {
-            match item.desc {
+            match item.term {
               Token(token) => {
                 last_prec = match token.prec {
                   None => None

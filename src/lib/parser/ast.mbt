@@ -97,11 +97,11 @@ pub(all) struct CodeWithSubst {
 ///|
 pub(all) struct ClauseItem {
   binder : Code?
-  symbol : ClauseItemSymbol
+  term : Term
 } derive(ToJson)
 
 ///|
-pub(all) enum ClauseItemSymbol {
+pub(all) enum Term {
   Symbol(Symbol)
   Image(String)
 } derive(ToJson)

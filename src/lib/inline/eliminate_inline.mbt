@@ -17,7 +17,7 @@ fn find_leaf_inline_rules(rules : Array[@elab.Rule]) -> Map[String, @elab.Rule] 
           clause.items
           .iter()
           .all(fn(item) {
-            match item.desc {
+            match item.term {
               Token(_) => true
               RuleCall(rule) => not(all_inline_rules.contains(rule.name))
             }
@@ -38,7 +38,7 @@ fn eliminate_inline_rules(
     items
     .iter()
     .any(fn(item) {
-      match item.desc {
+      match item.term {
         Token(_) => false
         RuleCall(rule) => inline_rules.contains(rule.name)
       }
@@ -49,7 +49,7 @@ fn eliminate_inline_rules(
     // assert(clause.action.sub_actions.length() == 0)
     let expand_points : Map[Int, (Ref[Int], Int)] = {}
     for index, item in clause.items {
-      match item.desc {
+      match item.term {
         Token(_) => ()
         RuleCall(rule) =>
           if inline_rules.contains(rule.name) {
@@ -65,7 +65,7 @@ fn eliminate_inline_rules(
       let sub_actions : Array[@elab.SubAction] = []
       let bindings : Array[(@elab.BindingSubject, @elab.Code)] = clause.action.bindings.copy()
       for index, item in clause.items {
-        match item.desc {
+        match item.term {
           Token(_) => new_items.push(item)
           RuleCall(rule) =>
             if inline_rules.contains(rule.name) {
@@ -154,12 +154,12 @@ fn eliminate_inline_rules(
   for rule in rules {
     for clause in rule.clauses {
       for index, item in clause.items {
-        match item.desc {
+        match item.term {
           Token(_) => ()
           RuleCall(rule) =>
             clause.items[index] = {
               ..item,
-              desc: RuleCall(rule_by_name[rule.name].unwrap()),
+              term: RuleCall(rule_by_name[rule.name].unwrap()),
             }
         }
       }
