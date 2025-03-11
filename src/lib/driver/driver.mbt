@@ -160,7 +160,7 @@ pub fn compile(
           match item.term {
             Token(token) => T(get_terminal_by_name(token.name))
             RuleCall(rule, []) => NT(get_nonterminal_by_name(rule.name))
-            RuleCall(_, _) => panic()
+            Param(_) | RuleCall(_, _) => panic()
           }
         }),
         prec: clause.prec,

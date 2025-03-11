@@ -71,6 +71,10 @@ pub fn elaborate(
     let rule : Rule = {
       inline: ast_rule.inline,
       name: ast_rule.nonterminal,
+      generic_params: ast_rule.generic_params,
+      params: ast_rule.params.map(fn(param) {
+        (param.0, param.1.map(elaborate_type_expr))
+      }),
       type_: ast_rule.type_.map(elaborate_type_expr),
       clauses: [],
     }
@@ -112,16 +116,26 @@ pub fn elaborate(
       _ => ()
     }
   }
-  fn map_term(ast_term : @parser.Term) -> Term {
+  fn map_term(
+    ast_term : @parser.Term,
+    rule_param_map : Map[String, TypeExpr?]
+  ) -> Term {
     match ast_term {
       Symbol(symbol) =>
         match token_by_name[symbol] {
-          None => RuleCall(rule_by_name[symbol].unwrap(), [])
+          None =>
+            match rule_param_map[symbol] {
+              Some(type_) => Param(symbol, type_)
+              None => RuleCall(rule_by_name[symbol].unwrap(), [])
+            }
           Some(token) => Token(token)
         }
       Image(image) => Token(token_by_image[image].unwrap())
       RuleCall(symbol, args) =>
-        RuleCall(rule_by_name[symbol].unwrap(), args.map(map_term))
+        RuleCall(
+          rule_by_name[symbol].unwrap(),
+          args.map(fn(arg) { map_term(arg, rule_param_map) }),
+        )
     }
   }
 
@@ -131,9 +145,13 @@ pub fn elaborate(
       No => rule.type_
       Yes(_) => Some(Constr(pkg=None, "Json", []))
     }
+    let rule_param_map : Map[String, TypeExpr?] = Map::from_array(rule.params)
     for clause_index, ast_clause in ast_rule.clauses {
       let items = ast_clause.items.map(fn(ast_item) {
-        Item::{ binder: ast_item.binder, term: map_term(ast_item.term) }
+        Item::{
+          binder: ast_item.binder,
+          term: map_term(ast_item.term, rule_param_map),
+        }
       })
       let prec = match ast_clause.prec {
         Some(prec) => {
@@ -157,7 +175,7 @@ pub fn elaborate(
                 }
                 break
               }
-              RuleCall(_) => ()
+              Param(_) | RuleCall(_) => ()
             }
           }
           last_prec

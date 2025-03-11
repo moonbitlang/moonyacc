@@ -42,10 +42,7 @@ pub impl Show for TypeExpr with output(self, logger) {
         if args.length() == 0 {
           primary
         } else {
-          primary +
-          "[" +
-          args.iter().map(TypeExpr::to_string).join(", ") +
-          "]"
+          primary + "[" + args.iter().map(TypeExpr::to_string).join(", ") + "]"
         }
       }
       Option(type_) =>
@@ -91,6 +88,8 @@ pub(all) typealias Symbol = String
 pub(all) struct Rule {
   name : Symbol
   inline : Bool
+  generic_params : Array[String]
+  params : Array[(String, TypeExpr?)]
   mut type_ : TypeExpr?
   clauses : Array[Clause]
 }
@@ -138,6 +137,7 @@ pub(all) struct Item {
 ///|
 pub(all) enum Term {
   Token(Token)
+  Param(String, TypeExpr?)
   RuleCall(Rule, Array[Term])
 }
 
@@ -145,6 +145,7 @@ pub(all) enum Term {
 pub fn Item::type_(self : Item) -> TypeExpr? {
   match self.term {
     Token(token) => token.type_
+    Param(_, type_) => type_
     RuleCall(rule, _) => rule.type_
   }
 }
