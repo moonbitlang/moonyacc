@@ -6,7 +6,7 @@
       "output": "lexer.mbt"
     },
     {
-      "command": "node $mod_dir/boot/moonyacc.js --input-mode pull $input | moonfmt > $output",
+      "command": "node $mod_dir/boot/moonyacc.js --input-mode pull $input -o $output",
       "input": "parser.mbty",
       "output": "parser.mbt"
     }
