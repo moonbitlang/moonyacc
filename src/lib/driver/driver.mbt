@@ -68,7 +68,7 @@ pub fn compile(
       Default | OnlyTokens => No
     },
   )
-  let spec = @inline.eliminate_inline(spec)
+  let spec = @desugar.eliminate_inline(spec)
   let terminals = []
   let nonterminals = []
   let terminal_by_name : Map[String, @grm.Terminal] = {}
