@@ -53,13 +53,21 @@ pub(all) struct SubstItem {
 pub(all) typealias Symbol = String
 
 ///|
+pub(all) enum TypeExpr {
+  Constr(pkg~ : String?, String, Array[TypeExpr])
+  Option(TypeExpr)
+  Tuple(Array[TypeExpr])
+  Arrow(Array[TypeExpr], TypeExpr)
+} derive(ToJson)
+
+///|
 pub(all) enum Declaration {
   Start(Array[Symbol])
-  Token(Array[Symbol], type_~ : Code?)
-  Token1(Symbol, type_~ : Code?, image~ : String)
-  Type(Array[Symbol], type_~ : Code)
-  Derive(traits~ : Code, type_~ : Code)
-  Position(type_~ : Code)
+  Token(Array[Symbol], type_~ : TypeExpr?)
+  Token1(Symbol, type_~ : TypeExpr?, image~ : String)
+  Type(Array[Symbol], type_~ : TypeExpr)
+  Derive(traits~ : Array[TypeExpr], type_~ : Code)
+  Position(type_~ : TypeExpr)
   Left(Array[Symbol])
   Right(Array[Symbol])
   Nonassoc(Array[Symbol])
@@ -69,7 +77,7 @@ pub(all) enum Declaration {
 pub(all) struct Rule {
   inline : Bool
   nonterminal : Symbol
-  type_ : Code?
+  type_ : TypeExpr?
   clauses : Array[Clause]
 } derive(ToJson)
 
