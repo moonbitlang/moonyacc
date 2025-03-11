@@ -345,9 +345,9 @@ fn yy_action_23(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
   let _start_pos = _args[0].1
   let _end_pos = _args[0].2
   YYObj_ClauseAction({(); 
-        let (code, utf8_pos, subst) = code
-        { code: Some({ code, utf8_pos, subst }), start: _start_pos, end: _end_pos }
-    })
+      let (code, utf8_pos, subst) = code
+      { code: Some({ code, utf8_pos, subst }), start: _start_pos, end: _end_pos }
+  })
 }
 
 fn yy_action_24(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {

@@ -29,103 +29,103 @@
 %%
 
 spec -> ParserSpec
-    : header=header decl_list=decl_list "%%" rule_list=rule_list trailer=trailer EOF { { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } }
-    ;
+  : header=header decl_list=decl_list "%%" rule_list=rule_list trailer=trailer EOF { { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } }
+  ;
 
 header -> Code?
-    : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
-    | { None }
-    ;
+  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
+  | { None }
+  ;
 
 trailer -> Code?
-    : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
-    | code=PERCENT_PERCENT_CODE_EOF { Some(code) }
-    | { None }
-    ;
+  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
+  | code=PERCENT_PERCENT_CODE_EOF { Some(code) }
+  | { None }
+  ;
 
 decl_list -> @immut/list.T[Declaration]
-    : decl=decl decl_list=decl_list { Cons(decl, decl_list) }
-    | { Nil }
-    ;
+  : decl=decl decl_list=decl_list { Cons(decl, decl_list) }
+  | { Nil }
+  ;
 
 decl -> Declaration
-    : "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
-    | "%token" type_=opt_type symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=type_) }
-    | "%token" type_=opt_type symbol=symbol image=STRING { Token1(symbol, type_=type_, image=image) }
-    | "%type" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
-    | "%position" type_=LANGLE_CODE_RANGLE { Position(type_=type_) }
-    | "%left" symbol_list=nonempty_symbol_list { Left(symbol_list.to_array()) }
-    | "%right" symbol_list=nonempty_symbol_list { Right(symbol_list.to_array()) }
-    | "%nonassoc" symbol_list=nonempty_symbol_list { Nonassoc(symbol_list.to_array()) }
-    | "%derive" traits=LANGLE_CODE_RANGLE type_=IDENT { Derive(traits=traits, type_=type_) }
-    ;
+  : "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
+  | "%token" type_=opt_type symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=type_) }
+  | "%token" type_=opt_type symbol=symbol image=STRING { Token1(symbol, type_=type_, image=image) }
+  | "%type" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
+  | "%position" type_=LANGLE_CODE_RANGLE { Position(type_=type_) }
+  | "%left" symbol_list=nonempty_symbol_list { Left(symbol_list.to_array()) }
+  | "%right" symbol_list=nonempty_symbol_list { Right(symbol_list.to_array()) }
+  | "%nonassoc" symbol_list=nonempty_symbol_list { Nonassoc(symbol_list.to_array()) }
+  | "%derive" traits=LANGLE_CODE_RANGLE type_=IDENT { Derive(traits=traits, type_=type_) }
+  ;
 
 opt_type -> Code?
-    : type_=LANGLE_CODE_RANGLE { Some(type_) }
-    | { None }
-    ;
+  : type_=LANGLE_CODE_RANGLE { Some(type_) }
+  | { None }
+  ;
 
 rule_list -> @immut/list.T[Rule]
-    : rule=rule { Cons(rule, Nil) }
-    | rule=rule rule_list=rule_list { Cons(rule, rule_list) }
-    ;
+  : rule=rule { Cons(rule, Nil) }
+  | rule=rule rule_list=rule_list { Cons(rule, rule_list) }
+  ;
 
 rule -> Rule
-    : rule_no_modifiers { $1 }
-    | "%inline" rule_no_modifiers { { ..$2, inline: true } }
-    ;
+  : rule_no_modifiers { $1 }
+  | "%inline" rule_no_modifiers { { ..$2, inline: true } }
+  ;
 
 rule_no_modifiers -> Rule
-    : nonterminal=symbol type_=rule_type ":" clause_list=clause_list ";" { { inline: false, nonterminal, type_, clauses: clause_list.to_array() } }
-    ;
+  : nonterminal=symbol type_=rule_type ":" clause_list=clause_list ";" { { inline: false, nonterminal, type_, clauses: clause_list.to_array() } }
+  ;
 
 rule_type -> Code?
-    : type_=ARROW_CODE { Some(type_) }
-    | { None }
-    ;
+  : type_=ARROW_CODE { Some(type_) }
+  | { None }
+  ;
 
 clause_list -> @immut/list.T[Clause]
-    : clause=clause { Cons(clause, Nil) }
-    | clause=clause "|" clause_list=clause_list { Cons(clause, clause_list) }
-    ;
+  : clause=clause { Cons(clause, Nil) }
+  | clause=clause "|" clause_list=clause_list { Cons(clause, clause_list) }
+  ;
 
 clause -> Clause
-    : item_list=item_list prec=rule_prec action=clause_action { { items: item_list.to_array(), prec, action } }
-    ;
+  : item_list=item_list prec=rule_prec action=clause_action { { items: item_list.to_array(), prec, action } }
+  ;
 
 clause_action -> ClauseAction
-    : code=LBRACE_CODE_RBRACE {
-        let (code, utf8_pos, subst) = code
-        { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
-    }
-    | { { code: None, start: $startpos, end: $endpos } }
-    ;
+  : code=LBRACE_CODE_RBRACE {
+      let (code, utf8_pos, subst) = code
+      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
+  }
+  | { { code: None, start: $startpos, end: $endpos } }
+  ;
 
 rule_prec -> Symbol?
-    : "%prec" symbol=symbol { Some(symbol) }
-    | { None }
-    ;
+  : "%prec" symbol=symbol { Some(symbol) }
+  | { None }
+  ;
 
 item_list -> @immut/list.T[ClauseItem]
-    : item=item item_list=item_list { Cons(item, item_list) }
-    | { Nil }
-    ;
+  : item=item item_list=item_list { Cons(item, item_list) }
+  | { Nil }
+  ;
 
 item -> ClauseItem
-    : term=term { { binder: None, term: term } }
-    | binder=IDENT "=" term=term { { binder: Some(binder), term: term } }
-    ;
+  : term=term { { binder: None, term: term } }
+  | binder=IDENT "=" term=term { { binder: Some(binder), term: term } }
+  ;
 
 term -> Term
-    : symbol=symbol { Symbol(symbol) }
-    | image=STRING { Image(image) }
-    ;
+  : symbol=symbol { Symbol(symbol) }
+  | image=STRING { Image(image) }
+  ;
 
 nonempty_symbol_list -> @immut/list.T[Symbol]
-    : symbol=symbol { Cons(symbol, Nil) }
-    | symbol=symbol symbol_list=nonempty_symbol_list { Cons(symbol, symbol_list) }
-    ;
+  : symbol=symbol { Cons(symbol, Nil) }
+  | symbol=symbol symbol_list=nonempty_symbol_list { Cons(symbol, symbol_list) }
+  ;
 
 symbol -> Symbol
-    : ident=IDENT { ident }
-    ;
+  : ident=IDENT { ident }
+  ;
