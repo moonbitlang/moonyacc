@@ -77,6 +77,8 @@ pub(all) enum Declaration {
 pub(all) struct Rule {
   inline : Bool
   nonterminal : Symbol
+  generic_params : Array[String]
+  params : Array[(String, TypeExpr?)]
   type_ : TypeExpr?
   clauses : Array[Clause]
 } derive(ToJson)
