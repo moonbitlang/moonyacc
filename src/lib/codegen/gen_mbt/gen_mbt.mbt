@@ -630,6 +630,9 @@ fn codegen(
       total += term.num
     }
     for nonterm in grammar.nonterminals {
+      guard not(grammar.starts.iter().map(fn(p) { p.lhs }).contains(nonterm)) else {
+        continue
+      }
       total += grammar.terminals.length() + nonterm.num
     }
     total += grammar.terminals.length() + grammar.nonterminals.length()
