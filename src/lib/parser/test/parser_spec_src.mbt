@@ -90,17 +90,25 @@ let parser_spec_src : String =
   #|  ;
   #|
   #|type_expr -> TypeExpr
-  #|  : basic_type_expr { $1 }
-  #|  | basic_type_expr "?" { Option($1) }
-  #|  | "(" nonempty_type_expr_list ")" "->" type_expr { Arrow($2.to_array(), $5) }
+  #|  : postfix_type_expr { $1 }
+  #|  | "(" ")" "->" postfix_type_expr { Arrow([], $4) }
+  #|  | "(" type_expr ")" "->" postfix_type_expr { Arrow([$2], $5) }
+  #|  | "(" type_expr "," ")" "->" postfix_type_expr { Arrow([$2], $6) }
+  #|  | "(" type_expr "," nonempty_type_expr_list ")" "->" postfix_type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
   #|  ;
   #|
-  #|%inline basic_type_expr -> TypeExpr
+  #|postfix_type_expr -> TypeExpr
+  #|  : basic_type_expr { $1 }
+  #|  | postfix_type_expr "?" { Option($1) }
+  #|  ;
+  #|
+  #|basic_type_expr -> TypeExpr
   #|  : IDENT { Constr(pkg=None, $1, []) }
   #|  | PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
   #|  | IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
   #|  | PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
   #|  | "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@immut/list.Cons($2, $4).to_array()) }
+  #|  | "(" type_expr ")" { $2 }
   #|  ;
   #|
   #|nonempty_type_expr_list -> @immut/list.T[TypeExpr]

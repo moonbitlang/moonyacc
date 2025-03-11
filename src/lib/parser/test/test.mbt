@@ -392,49 +392,83 @@ test "lexer" {
       #|ARROW
       #|IDENT("TypeExpr")
       #|COLON
-      #|IDENT("basic_type_expr")
-      #|LBRACE_CODE_RBRACE((" $1 ", 3083, [{start: 1, end: 3, desc: Dollar(1)}]))
-      #|BAR
-      #|IDENT("basic_type_expr")
-      #|STRING("\"?\"")
-      #|LBRACE_CODE_RBRACE((" Option($1) ", 3114, [{start: 8, end: 10, desc: Dollar(1)}]))
+      #|IDENT("postfix_type_expr")
+      #|LBRACE_CODE_RBRACE((" $1 ", 3085, [{start: 1, end: 3, desc: Dollar(1)}]))
       #|BAR
       #|STRING("\"(\"")
-      #|IDENT("nonempty_type_expr_list")
       #|STRING("\")\"")
       #|STRING("\"->\"")
+      #|IDENT("postfix_type_expr")
+      #|LBRACE_CODE_RBRACE((" Arrow([], $4) ", 3127, [{start: 11, end: 13, desc: Dollar(4)}]))
+      #|BAR
+      #|STRING("\"(\"")
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Arrow($2.to_array(), $5) ", 3180, [{start: 7, end: 9, desc: Dollar(2)}, {start: 22, end: 24, desc: Dollar(5)}]))
-      #|SEMI
-      #|PERCENT_INLINE
-      #|IDENT("basic_type_expr")
-      #|ARROW
-      #|IDENT("TypeExpr")
-      #|COLON
-      #|IDENT("IDENT")
-      #|LBRACE_CODE_RBRACE((" Constr(pkg=None, $1, []) ", 3260, [{start: 18, end: 20, desc: Dollar(1)}]))
+      #|STRING("\")\"")
+      #|STRING("\"->\"")
+      #|IDENT("postfix_type_expr")
+      #|LBRACE_CODE_RBRACE((" Arrow([$2], $5) ", 3190, [{start: 8, end: 10, desc: Dollar(2)}, {start: 13, end: 15, desc: Dollar(5)}]))
       #|BAR
-      #|IDENT("PKG_AND_IDENT")
-      #|LBRACE_CODE_RBRACE((" Constr(pkg=Some($1.0), $1.1, []) ", 3307, [{start: 17, end: 19, desc: Dollar(1)}, {start: 24, end: 26, desc: Dollar(1)}]))
-      #|BAR
-      #|IDENT("IDENT")
-      #|STRING("\"[\"")
-      #|IDENT("nonempty_type_expr_list")
-      #|STRING("\"]\"")
-      #|LBRACE_CODE_RBRACE((" Constr(pkg=None, $1, $3.to_array()) ", 3386, [{start: 18, end: 20, desc: Dollar(1)}, {start: 22, end: 24, desc: Dollar(3)}]))
-      #|BAR
-      #|IDENT("PKG_AND_IDENT")
-      #|STRING("\"[\"")
-      #|IDENT("nonempty_type_expr_list")
-      #|STRING("\"]\"")
-      #|LBRACE_CODE_RBRACE((" Constr(pkg=Some($1.0), $1.1, $3.to_array()) ", 3476, [{start: 17, end: 19, desc: Dollar(1)}, {start: 24, end: 26, desc: Dollar(1)}, {start: 30, end: 32, desc: Dollar(3)}]))
+      #|STRING("\"(\"")
+      #|IDENT("type_expr")
+      #|STRING("\",\"")
+      #|STRING("\")\"")
+      #|STRING("\"->\"")
+      #|IDENT("postfix_type_expr")
+      #|LBRACE_CODE_RBRACE((" Arrow([$2], $6) ", 3259, [{start: 8, end: 10, desc: Dollar(2)}, {start: 13, end: 15, desc: Dollar(6)}]))
       #|BAR
       #|STRING("\"(\"")
       #|IDENT("type_expr")
       #|STRING("\",\"")
       #|IDENT("nonempty_type_expr_list")
       #|STRING("\")\"")
-      #|LBRACE_CODE_RBRACE((" Tuple(@immut/list.Cons($2, $4).to_array()) ", 3574, [{start: 24, end: 26, desc: Dollar(2)}, {start: 28, end: 30, desc: Dollar(4)}]))
+      #|STRING("\"->\"")
+      #|IDENT("postfix_type_expr")
+      #|LBRACE_CODE_RBRACE((" Arrow(@immut/list.Cons($2, $4).to_array(), $7) ", 3352, [{start: 24, end: 26, desc: Dollar(2)}, {start: 28, end: 30, desc: Dollar(4)}, {start: 44, end: 46, desc: Dollar(7)}]))
+      #|SEMI
+      #|IDENT("postfix_type_expr")
+      #|ARROW
+      #|IDENT("TypeExpr")
+      #|COLON
+      #|IDENT("basic_type_expr")
+      #|LBRACE_CODE_RBRACE((" $1 ", 3458, [{start: 1, end: 3, desc: Dollar(1)}]))
+      #|BAR
+      #|IDENT("postfix_type_expr")
+      #|STRING("\"?\"")
+      #|LBRACE_CODE_RBRACE((" Option($1) ", 3491, [{start: 8, end: 10, desc: Dollar(1)}]))
+      #|SEMI
+      #|IDENT("basic_type_expr")
+      #|ARROW
+      #|IDENT("TypeExpr")
+      #|COLON
+      #|IDENT("IDENT")
+      #|LBRACE_CODE_RBRACE((" Constr(pkg=None, $1, []) ", 3549, [{start: 18, end: 20, desc: Dollar(1)}]))
+      #|BAR
+      #|IDENT("PKG_AND_IDENT")
+      #|LBRACE_CODE_RBRACE((" Constr(pkg=Some($1.0), $1.1, []) ", 3596, [{start: 17, end: 19, desc: Dollar(1)}, {start: 24, end: 26, desc: Dollar(1)}]))
+      #|BAR
+      #|IDENT("IDENT")
+      #|STRING("\"[\"")
+      #|IDENT("nonempty_type_expr_list")
+      #|STRING("\"]\"")
+      #|LBRACE_CODE_RBRACE((" Constr(pkg=None, $1, $3.to_array()) ", 3675, [{start: 18, end: 20, desc: Dollar(1)}, {start: 22, end: 24, desc: Dollar(3)}]))
+      #|BAR
+      #|IDENT("PKG_AND_IDENT")
+      #|STRING("\"[\"")
+      #|IDENT("nonempty_type_expr_list")
+      #|STRING("\"]\"")
+      #|LBRACE_CODE_RBRACE((" Constr(pkg=Some($1.0), $1.1, $3.to_array()) ", 3765, [{start: 17, end: 19, desc: Dollar(1)}, {start: 24, end: 26, desc: Dollar(1)}, {start: 30, end: 32, desc: Dollar(3)}]))
+      #|BAR
+      #|STRING("\"(\"")
+      #|IDENT("type_expr")
+      #|STRING("\",\"")
+      #|IDENT("nonempty_type_expr_list")
+      #|STRING("\")\"")
+      #|LBRACE_CODE_RBRACE((" Tuple(@immut/list.Cons($2, $4).to_array()) ", 3863, [{start: 24, end: 26, desc: Dollar(2)}, {start: 28, end: 30, desc: Dollar(4)}]))
+      #|BAR
+      #|STRING("\"(\"")
+      #|IDENT("type_expr")
+      #|STRING("\")\"")
+      #|LBRACE_CODE_RBRACE((" $2 ", 3932, [{start: 1, end: 3, desc: Dollar(2)}]))
       #|SEMI
       #|IDENT("nonempty_type_expr_list")
       #|ARROW
@@ -446,7 +480,7 @@ test "lexer" {
       #|IDENT("type_expr")
       #|EQ
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Cons(type_expr, Nil) ", 3701, []))
+      #|LBRACE_CODE_RBRACE((" Cons(type_expr, Nil) ", 4019, []))
       #|BAR
       #|IDENT("type_expr")
       #|EQ
@@ -455,7 +489,7 @@ test "lexer" {
       #|IDENT("type_expr_list")
       #|EQ
       #|IDENT("nonempty_type_expr_list")
-      #|LBRACE_CODE_RBRACE((" Cons(type_expr, type_expr_list) ", 3793, []))
+      #|LBRACE_CODE_RBRACE((" Cons(type_expr, type_expr_list) ", 4111, []))
       #|SEMI
       #|IDENT("clause_list")
       #|ARROW
@@ -467,7 +501,7 @@ test "lexer" {
       #|IDENT("clause")
       #|EQ
       #|IDENT("clause")
-      #|LBRACE_CODE_RBRACE((" Cons(clause, Nil) ", 3889, []))
+      #|LBRACE_CODE_RBRACE((" Cons(clause, Nil) ", 4207, []))
       #|BAR
       #|IDENT("clause")
       #|EQ
@@ -476,7 +510,7 @@ test "lexer" {
       #|IDENT("clause_list")
       #|EQ
       #|IDENT("clause_list")
-      #|LBRACE_CODE_RBRACE((" Cons(clause, clause_list) ", 3957, []))
+      #|LBRACE_CODE_RBRACE((" Cons(clause, clause_list) ", 4275, []))
       #|SEMI
       #|IDENT("clause")
       #|ARROW
@@ -491,7 +525,7 @@ test "lexer" {
       #|IDENT("action")
       #|EQ
       #|IDENT("clause_action")
-      #|LBRACE_CODE_RBRACE((" { items: item_list.to_array(), prec, action } ", 4069, []))
+      #|LBRACE_CODE_RBRACE((" { items: item_list.to_array(), prec, action } ", 4387, []))
       #|SEMI
       #|IDENT("clause_action")
       #|ARROW
@@ -500,9 +534,9 @@ test "lexer" {
       #|IDENT("code")
       #|EQ
       #|IDENT("LBRACE_CODE_RBRACE")
-      #|LBRACE_CODE_RBRACE(("\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\n  ", 4182, [{start: 96, end: 105, desc: StartPos}, {start: 112, end: 119, desc: EndPos}]))
+      #|LBRACE_CODE_RBRACE(("\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\n  ", 4500, [{start: 96, end: 105, desc: StartPos}, {start: 112, end: 119, desc: EndPos}]))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" { code: None, start: $startpos, end: $endpos } ", 4313, [{start: 22, end: 31, desc: StartPos}, {start: 38, end: 45, desc: EndPos}]))
+      #|LBRACE_CODE_RBRACE((" { code: None, start: $startpos, end: $endpos } ", 4631, [{start: 22, end: 31, desc: StartPos}, {start: 38, end: 45, desc: EndPos}]))
       #|SEMI
       #|IDENT("rule_prec")
       #|ARROW
@@ -513,9 +547,9 @@ test "lexer" {
       #|IDENT("symbol")
       #|EQ
       #|IDENT("symbol")
-      #|LBRACE_CODE_RBRACE((" Some(symbol) ", 4416, []))
+      #|LBRACE_CODE_RBRACE((" Some(symbol) ", 4734, []))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" None ", 4437, []))
+      #|LBRACE_CODE_RBRACE((" None ", 4755, []))
       #|SEMI
       #|IDENT("item_list")
       #|ARROW
@@ -530,9 +564,9 @@ test "lexer" {
       #|IDENT("item_list")
       #|EQ
       #|IDENT("item_list")
-      #|LBRACE_CODE_RBRACE((" Cons(item, item_list) ", 4524, []))
+      #|LBRACE_CODE_RBRACE((" Cons(item, item_list) ", 4842, []))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" Nil ", 4554, []))
+      #|LBRACE_CODE_RBRACE((" Nil ", 4872, []))
       #|SEMI
       #|IDENT("item")
       #|ARROW
@@ -541,7 +575,7 @@ test "lexer" {
       #|IDENT("term")
       #|EQ
       #|IDENT("term")
-      #|LBRACE_CODE_RBRACE((" { binder: None, term: term } ", 4600, []))
+      #|LBRACE_CODE_RBRACE((" { binder: None, term: term } ", 4918, []))
       #|BAR
       #|IDENT("binder")
       #|EQ
@@ -550,7 +584,7 @@ test "lexer" {
       #|IDENT("term")
       #|EQ
       #|IDENT("term")
-      #|LBRACE_CODE_RBRACE((" { binder: Some(binder), term: term } ", 4664, []))
+      #|LBRACE_CODE_RBRACE((" { binder: Some(binder), term: term } ", 4982, []))
       #|SEMI
       #|IDENT("term")
       #|ARROW
@@ -559,12 +593,12 @@ test "lexer" {
       #|IDENT("symbol")
       #|EQ
       #|IDENT("symbol")
-      #|LBRACE_CODE_RBRACE((" Symbol(symbol) ", 4741, []))
+      #|LBRACE_CODE_RBRACE((" Symbol(symbol) ", 5059, []))
       #|BAR
       #|IDENT("image")
       #|EQ
       #|IDENT("STRING")
-      #|LBRACE_CODE_RBRACE((" Image(image) ", 4777, []))
+      #|LBRACE_CODE_RBRACE((" Image(image) ", 5095, []))
       #|SEMI
       #|IDENT("nonempty_symbol_list")
       #|ARROW
@@ -576,7 +610,7 @@ test "lexer" {
       #|IDENT("symbol")
       #|EQ
       #|IDENT("symbol")
-      #|LBRACE_CODE_RBRACE((" Cons(symbol, Nil) ", 4863, []))
+      #|LBRACE_CODE_RBRACE((" Cons(symbol, Nil) ", 5181, []))
       #|BAR
       #|IDENT("symbol")
       #|EQ
@@ -584,7 +618,7 @@ test "lexer" {
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Cons(symbol, symbol_list) ", 4936, []))
+      #|LBRACE_CODE_RBRACE((" Cons(symbol, symbol_list) ", 5254, []))
       #|SEMI
       #|IDENT("symbol")
       #|ARROW
@@ -593,7 +627,7 @@ test "lexer" {
       #|IDENT("ident")
       #|EQ
       #|IDENT("IDENT")
-      #|LBRACE_CODE_RBRACE((" ident ", 5004, []))
+      #|LBRACE_CODE_RBRACE((" ident ", 5322, []))
       #|SEMI
       #|EOF
       #|
@@ -1288,28 +1322,169 @@ test "parser" {
         "type_": { "$tag": "Constr", "pkg": Null, "0": "TypeExpr", "1": [] },
         "clauses": [
           {
-            "items": [{ "term": { "$tag": "Symbol", "0": "basic_type_expr" } }],
+            "items": [
+              { "term": { "$tag": "Symbol", "0": "postfix_type_expr" } },
+            ],
             "action": {
               "code": {
                 "code": " $1 ",
-                "utf8_pos": 3083,
+                "utf8_pos": 3085,
                 "subst": [
                   { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 1 } },
                 ],
               },
-              "start": 3082,
-              "end": 3088,
+              "start": 3084,
+              "end": 3090,
             },
           },
           {
             "items": [
-              { "term": { "$tag": "Symbol", "0": "basic_type_expr" } },
+              { "term": { "$tag": "Image", "0": "\"(\"" } },
+              { "term": { "$tag": "Image", "0": "\")\"" } },
+              { "term": { "$tag": "Image", "0": "\"->\"" } },
+              { "term": { "$tag": "Symbol", "0": "postfix_type_expr" } },
+            ],
+            "action": {
+              "code": {
+                "code": " Arrow([], $4) ",
+                "utf8_pos": 3127,
+                "subst": [
+                  {
+                    "start": 11,
+                    "end": 13,
+                    "desc": { "$tag": "Dollar", "0": 4 },
+                  },
+                ],
+              },
+              "start": 3126,
+              "end": 3143,
+            },
+          },
+          {
+            "items": [
+              { "term": { "$tag": "Image", "0": "\"(\"" } },
+              { "term": { "$tag": "Symbol", "0": "type_expr" } },
+              { "term": { "$tag": "Image", "0": "\")\"" } },
+              { "term": { "$tag": "Image", "0": "\"->\"" } },
+              { "term": { "$tag": "Symbol", "0": "postfix_type_expr" } },
+            ],
+            "action": {
+              "code": {
+                "code": " Arrow([$2], $5) ",
+                "utf8_pos": 3190,
+                "subst": [
+                  {
+                    "start": 8,
+                    "end": 10,
+                    "desc": { "$tag": "Dollar", "0": 2 },
+                  },
+                  {
+                    "start": 13,
+                    "end": 15,
+                    "desc": { "$tag": "Dollar", "0": 5 },
+                  },
+                ],
+              },
+              "start": 3189,
+              "end": 3208,
+            },
+          },
+          {
+            "items": [
+              { "term": { "$tag": "Image", "0": "\"(\"" } },
+              { "term": { "$tag": "Symbol", "0": "type_expr" } },
+              { "term": { "$tag": "Image", "0": "\",\"" } },
+              { "term": { "$tag": "Image", "0": "\")\"" } },
+              { "term": { "$tag": "Image", "0": "\"->\"" } },
+              { "term": { "$tag": "Symbol", "0": "postfix_type_expr" } },
+            ],
+            "action": {
+              "code": {
+                "code": " Arrow([$2], $6) ",
+                "utf8_pos": 3259,
+                "subst": [
+                  {
+                    "start": 8,
+                    "end": 10,
+                    "desc": { "$tag": "Dollar", "0": 2 },
+                  },
+                  {
+                    "start": 13,
+                    "end": 15,
+                    "desc": { "$tag": "Dollar", "0": 6 },
+                  },
+                ],
+              },
+              "start": 3258,
+              "end": 3277,
+            },
+          },
+          {
+            "items": [
+              { "term": { "$tag": "Image", "0": "\"(\"" } },
+              { "term": { "$tag": "Symbol", "0": "type_expr" } },
+              { "term": { "$tag": "Image", "0": "\",\"" } },
+              { "term": { "$tag": "Symbol", "0": "nonempty_type_expr_list" } },
+              { "term": { "$tag": "Image", "0": "\")\"" } },
+              { "term": { "$tag": "Image", "0": "\"->\"" } },
+              { "term": { "$tag": "Symbol", "0": "postfix_type_expr" } },
+            ],
+            "action": {
+              "code": {
+                "code": " Arrow(@immut/list.Cons($2, $4).to_array(), $7) ",
+                "utf8_pos": 3352,
+                "subst": [
+                  {
+                    "start": 24,
+                    "end": 26,
+                    "desc": { "$tag": "Dollar", "0": 2 },
+                  },
+                  {
+                    "start": 28,
+                    "end": 30,
+                    "desc": { "$tag": "Dollar", "0": 4 },
+                  },
+                  {
+                    "start": 44,
+                    "end": 46,
+                    "desc": { "$tag": "Dollar", "0": 7 },
+                  },
+                ],
+              },
+              "start": 3351,
+              "end": 3401,
+            },
+          },
+        ],
+      },
+      {
+        "inline": false,
+        "nonterminal": "postfix_type_expr",
+        "type_": { "$tag": "Constr", "pkg": Null, "0": "TypeExpr", "1": [] },
+        "clauses": [
+          {
+            "items": [{ "term": { "$tag": "Symbol", "0": "basic_type_expr" } }],
+            "action": {
+              "code": {
+                "code": " $1 ",
+                "utf8_pos": 3458,
+                "subst": [
+                  { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 1 } },
+                ],
+              },
+              "start": 3457,
+              "end": 3463,
+            },
+          },
+          {
+            "items": [
+              { "term": { "$tag": "Symbol", "0": "postfix_type_expr" } },
               { "term": { "$tag": "Image", "0": "\"?\"" } },
             ],
             "action": {
               "code": {
                 "code": " Option($1) ",
-                "utf8_pos": 3114,
+                "utf8_pos": 3491,
                 "subst": [
                   {
                     "start": 8,
@@ -1318,39 +1493,14 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3113,
-              "end": 3127,
-            },
-          },
-          {
-            "items": [
-              { "term": { "$tag": "Image", "0": "\"(\"" } },
-              { "term": { "$tag": "Symbol", "0": "nonempty_type_expr_list" } },
-              { "term": { "$tag": "Image", "0": "\")\"" } },
-              { "term": { "$tag": "Image", "0": "\"->\"" } },
-              { "term": { "$tag": "Symbol", "0": "type_expr" } },
-            ],
-            "action": {
-              "code": {
-                "code": " Arrow($2.to_array(), $5) ",
-                "utf8_pos": 3180,
-                "subst": [
-                  { "start": 7, "end": 9, "desc": { "$tag": "Dollar", "0": 2 } },
-                  {
-                    "start": 22,
-                    "end": 24,
-                    "desc": { "$tag": "Dollar", "0": 5 },
-                  },
-                ],
-              },
-              "start": 3179,
-              "end": 3207,
+              "start": 3490,
+              "end": 3504,
             },
           },
         ],
       },
       {
-        "inline": true,
+        "inline": false,
         "nonterminal": "basic_type_expr",
         "type_": { "$tag": "Constr", "pkg": Null, "0": "TypeExpr", "1": [] },
         "clauses": [
@@ -1359,7 +1509,7 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Constr(pkg=None, $1, []) ",
-                "utf8_pos": 3260,
+                "utf8_pos": 3549,
                 "subst": [
                   {
                     "start": 18,
@@ -1368,8 +1518,8 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3259,
-              "end": 3287,
+              "start": 3548,
+              "end": 3576,
             },
           },
           {
@@ -1377,7 +1527,7 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Constr(pkg=Some($1.0), $1.1, []) ",
-                "utf8_pos": 3307,
+                "utf8_pos": 3596,
                 "subst": [
                   {
                     "start": 17,
@@ -1391,8 +1541,8 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3306,
-              "end": 3342,
+              "start": 3595,
+              "end": 3631,
             },
           },
           {
@@ -1405,7 +1555,7 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Constr(pkg=None, $1, $3.to_array()) ",
-                "utf8_pos": 3386,
+                "utf8_pos": 3675,
                 "subst": [
                   {
                     "start": 18,
@@ -1419,8 +1569,8 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3385,
-              "end": 3424,
+              "start": 3674,
+              "end": 3713,
             },
           },
           {
@@ -1433,7 +1583,7 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Constr(pkg=Some($1.0), $1.1, $3.to_array()) ",
-                "utf8_pos": 3476,
+                "utf8_pos": 3765,
                 "subst": [
                   {
                     "start": 17,
@@ -1452,8 +1602,8 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3475,
-              "end": 3522,
+              "start": 3764,
+              "end": 3811,
             },
           },
           {
@@ -1467,7 +1617,7 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Tuple(@immut/list.Cons($2, $4).to_array()) ",
-                "utf8_pos": 3574,
+                "utf8_pos": 3863,
                 "subst": [
                   {
                     "start": 24,
@@ -1481,8 +1631,26 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3573,
-              "end": 3619,
+              "start": 3862,
+              "end": 3908,
+            },
+          },
+          {
+            "items": [
+              { "term": { "$tag": "Image", "0": "\"(\"" } },
+              { "term": { "$tag": "Symbol", "0": "type_expr" } },
+              { "term": { "$tag": "Image", "0": "\")\"" } },
+            ],
+            "action": {
+              "code": {
+                "code": " $2 ",
+                "utf8_pos": 3932,
+                "subst": [
+                  { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 2 } },
+                ],
+              },
+              "start": 3931,
+              "end": 3937,
             },
           },
         ],
@@ -1507,11 +1675,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Cons(type_expr, Nil) ",
-                "utf8_pos": 3701,
+                "utf8_pos": 4019,
                 "subst": [],
               },
-              "start": 3700,
-              "end": 3724,
+              "start": 4018,
+              "end": 4042,
             },
           },
           {
@@ -1529,11 +1697,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Cons(type_expr, type_expr_list) ",
-                "utf8_pos": 3793,
+                "utf8_pos": 4111,
                 "subst": [],
               },
-              "start": 3792,
-              "end": 3827,
+              "start": 4110,
+              "end": 4145,
             },
           },
         ],
@@ -1558,11 +1726,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Cons(clause, Nil) ",
-                "utf8_pos": 3889,
+                "utf8_pos": 4207,
                 "subst": [],
               },
-              "start": 3888,
-              "end": 3909,
+              "start": 4206,
+              "end": 4227,
             },
           },
           {
@@ -1580,11 +1748,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Cons(clause, clause_list) ",
-                "utf8_pos": 3957,
+                "utf8_pos": 4275,
                 "subst": [],
               },
-              "start": 3956,
-              "end": 3985,
+              "start": 4274,
+              "end": 4303,
             },
           },
         ],
@@ -1612,11 +1780,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " { items: item_list.to_array(), prec, action } ",
-                "utf8_pos": 4069,
+                "utf8_pos": 4387,
                 "subst": [],
               },
-              "start": 4068,
-              "end": 4117,
+              "start": 4386,
+              "end": 4435,
             },
           },
         ],
@@ -1636,14 +1804,14 @@ test "parser" {
             "action": {
               "code": {
                 "code": "\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\n  ",
-                "utf8_pos": 4182,
+                "utf8_pos": 4500,
                 "subst": [
                   { "start": 96, "end": 105, "desc": { "$tag": "StartPos" } },
                   { "start": 112, "end": 119, "desc": { "$tag": "EndPos" } },
                 ],
               },
-              "start": 4181,
-              "end": 4307,
+              "start": 4499,
+              "end": 4625,
             },
           },
           {
@@ -1651,14 +1819,14 @@ test "parser" {
             "action": {
               "code": {
                 "code": " { code: None, start: $startpos, end: $endpos } ",
-                "utf8_pos": 4313,
+                "utf8_pos": 4631,
                 "subst": [
                   { "start": 22, "end": 31, "desc": { "$tag": "StartPos" } },
                   { "start": 38, "end": 45, "desc": { "$tag": "EndPos" } },
                 ],
               },
-              "start": 4312,
-              "end": 4362,
+              "start": 4630,
+              "end": 4680,
             },
           },
         ],
@@ -1682,19 +1850,19 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Some(symbol) ",
-                "utf8_pos": 4416,
+                "utf8_pos": 4734,
                 "subst": [],
               },
-              "start": 4415,
-              "end": 4431,
+              "start": 4733,
+              "end": 4749,
             },
           },
           {
             "items": [],
             "action": {
-              "code": { "code": " None ", "utf8_pos": 4437, "subst": [] },
-              "start": 4436,
-              "end": 4444,
+              "code": { "code": " None ", "utf8_pos": 4755, "subst": [] },
+              "start": 4754,
+              "end": 4762,
             },
           },
         ],
@@ -1720,19 +1888,19 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Cons(item, item_list) ",
-                "utf8_pos": 4524,
+                "utf8_pos": 4842,
                 "subst": [],
               },
-              "start": 4523,
-              "end": 4548,
+              "start": 4841,
+              "end": 4866,
             },
           },
           {
             "items": [],
             "action": {
-              "code": { "code": " Nil ", "utf8_pos": 4554, "subst": [] },
-              "start": 4553,
-              "end": 4560,
+              "code": { "code": " Nil ", "utf8_pos": 4872, "subst": [] },
+              "start": 4871,
+              "end": 4878,
             },
           },
         ],
@@ -1749,11 +1917,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " { binder: None, term: term } ",
-                "utf8_pos": 4600,
+                "utf8_pos": 4918,
                 "subst": [],
               },
-              "start": 4599,
-              "end": 4631,
+              "start": 4917,
+              "end": 4949,
             },
           },
           {
@@ -1765,11 +1933,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " { binder: Some(binder), term: term } ",
-                "utf8_pos": 4664,
+                "utf8_pos": 4982,
                 "subst": [],
               },
-              "start": 4663,
-              "end": 4703,
+              "start": 4981,
+              "end": 5021,
             },
           },
         ],
@@ -1789,11 +1957,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Symbol(symbol) ",
-                "utf8_pos": 4741,
+                "utf8_pos": 5059,
                 "subst": [],
               },
-              "start": 4740,
-              "end": 4758,
+              "start": 5058,
+              "end": 5076,
             },
           },
           {
@@ -1803,11 +1971,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Image(image) ",
-                "utf8_pos": 4777,
+                "utf8_pos": 5095,
                 "subst": [],
               },
-              "start": 4776,
-              "end": 4792,
+              "start": 5094,
+              "end": 5110,
             },
           },
         ],
@@ -1832,11 +2000,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Cons(symbol, Nil) ",
-                "utf8_pos": 4863,
+                "utf8_pos": 5181,
                 "subst": [],
               },
-              "start": 4862,
-              "end": 4883,
+              "start": 5180,
+              "end": 5201,
             },
           },
           {
@@ -1853,11 +2021,11 @@ test "parser" {
             "action": {
               "code": {
                 "code": " Cons(symbol, symbol_list) ",
-                "utf8_pos": 4936,
+                "utf8_pos": 5254,
                 "subst": [],
               },
-              "start": 4935,
-              "end": 4964,
+              "start": 5253,
+              "end": 5282,
             },
           },
         ],
@@ -1872,9 +2040,9 @@ test "parser" {
               { "binder": "ident", "term": { "$tag": "Symbol", "0": "IDENT" } },
             ],
             "action": {
-              "code": { "code": " ident ", "utf8_pos": 5004, "subst": [] },
-              "start": 5003,
-              "end": 5012,
+              "code": { "code": " ident ", "utf8_pos": 5322, "subst": [] },
+              "start": 5321,
+              "end": 5330,
             },
           },
         ],
