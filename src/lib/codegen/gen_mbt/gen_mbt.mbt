@@ -37,18 +37,35 @@ priv enum CodegenDecision {
 } derive(Eq, Compare)
 
 ///|
-fn esc(code : String) -> String {
-  code
-  .replace_all(old="@", new="_")
-  .replace_all(old="/", new="_")
-  .replace_all(old=".", new="_")
-  .replace_all(old="[", new="_")
-  .replace_all(old="]", new="_")
-  .replace_all(old="(", new="_")
-  .replace_all(old=")", new="_")
-  .replace_all(old=",", new="_")
-  .replace_all(old=" ", new="_")
-  .replace_all(old="?", new="_")
+fn derive_type_ident(type_ : @elab.TypeExpr) -> String {
+  match type_ {
+    Constr(pkg~, name, args) => {
+      let primary = match pkg {
+        None => name
+        Some(pkg) => {
+          let pkg2 = pkg.replace_all(old="/", new="_")
+          "_\{pkg2}_\{name}"
+        }
+      }
+      if args.length() == 0 {
+        primary
+      } else {
+        primary + "_" + args.iter().map(derive_type_ident).join("__") + "_"
+      }
+    }
+    Option(type_) =>
+      if type_ is Arrow(_, _) {
+        "_" + derive_type_ident(type_) + "__"
+      } else {
+        derive_type_ident(type_) + "_"
+      }
+    Tuple(types) => "_" + types.iter().map(derive_type_ident).join("__") + "_"
+    Arrow(args, ret) =>
+      "_" +
+      args.iter().map(derive_type_ident).join("__") +
+      "_ -> " +
+      derive_type_ident(ret)
+  }
 }
 
 ///|
@@ -66,14 +83,14 @@ fn codegen_tokens(
   terminal_meta : (String) -> @codegen.TerminalMeta,
   output : &Logger,
   no_comments~ : Bool = false,
-  derive_map~ : @array_multimap.T[String, String] = @array_multimap.new()
+  derive_map~ : @array_multimap.T[String, @elab.TypeExpr] = @array_multimap.new()
 ) -> Unit {
   ignore(no_comments)
   fn inject_derive(type_ : String) -> @codegen.CodeFragment {
     match derive_map.get(type_) {
       [] => ""
       traits => {
-        let joined = traits.join(", ")
+        let joined = traits.iter().map(@elab.TypeExpr::to_string).join(", ")
         " derive(\{joined})"
       }
     }
@@ -200,7 +217,7 @@ fn codegen(
     match meta.derive_map.get(type_) {
       [] => ""
       traits => {
-        let joined = traits.join(", ")
+        let joined = traits.iter().map(@elab.TypeExpr::to_string).join(", ")
         " derive(\{joined})"
       }
     }
@@ -285,7 +302,7 @@ fn codegen(
       )
       for data_type in data_types {
         output.write_string(
-          $|priv type! YYObj_\{esc(data_type)} \{data_type}
+          $|priv type! YYObj_\{derive_type_ident(data_type)} \{data_type}
           $|
           $|
           ,
@@ -404,9 +421,9 @@ fn codegen(
     for binding in action.bindings {
       match binding.0 {
         Data(index, type_~) => {
-          let data_type = type_.or("Unit")
+          let data_type = type_.or(Constr(pkg=None, "Unit", []))
           output.write_string(
-            $|  guard _args[\{index}].0 is YYObj_\{esc(data_type)}(\{binding.1})
+            $|  guard _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
             $|
             ,
           )
@@ -445,17 +462,17 @@ fn codegen(
           )
         }
         SubAction(start~, type_~) => {
-          let data_type = type_.or("Unit")
+          let data_type = type_.or(Constr(pkg=None, "Unit", []))
           output.write_string(
-            $|  guard _sub_action_\{start}_result is YYObj_\{esc(data_type)}(\{binding.1})
+            $|  guard _sub_action_\{start}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
             $|
             ,
           )
         }
       }
     }
-    let result_data_type = action.type_.or("Unit")
-    output.write_string("  YYObj_\{esc(result_data_type)}({(); ")
+    let result_data_type = action.type_.or(Constr(pkg=None, "Unit", []))
+    output.write_string("  YYObj_\{derive_type_ident(result_data_type)}({(); ")
     for part in action.body {
       let (code, original_range) = part
       match original_range {
@@ -503,7 +520,7 @@ fn codegen(
         match meta.data_type {
           Some(data_type) =>
             output.write_string(
-              $|    \{term.name}(data) => (T_\{term.name}, YYObj_\{esc(data_type)}(data))
+              $|    \{term.name}(data) => (T_\{term.name}, YYObj_\{derive_type_ident(data_type)}(data))
               $|
               ,
             )
@@ -969,7 +986,7 @@ fn codegen(
           $|    tokens,
           $|    yy_state_\{start_state.num},
           $|    fn {
-          $|      YYObj_\{esc(nonterminal_meta(name).data_type)}(result) => result
+          $|      YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result) => result
           $|      _ => panic()
           $|    },
           $|    initial_pos?,
@@ -986,7 +1003,7 @@ fn codegen(
           $|    start_pos,
           $|    yy_state_\{start_state.num},
           $|    fn {
-          $|      YYObj_\{esc(nonterminal_meta(name).data_type)}(result) => result
+          $|      YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result) => result
           $|      _ => panic()
           $|    },
           $|  )

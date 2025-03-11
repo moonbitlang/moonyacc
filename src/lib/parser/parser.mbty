@@ -5,11 +5,10 @@
 %token EOF
 %token<String> IDENT
 %token<String> STRING
-%token<String> LANGLE_CODE_RANGLE
 %token<(String, Int, Array[SubstItem])> LBRACE_CODE_RBRACE
 %token<String> PERCENT_LBRACE_CODE_PERCENT_RBRACE
-%token<String> ARROW_CODE
 %token<String> PERCENT_PERCENT_CODE_EOF
+%token<(String, String)> PKG_AND_IDENT
 %token PERCENT_PERCENT "%%"
 %token PERCENT_START "%start"
 %token PERCENT_TOKEN "%token"
@@ -21,6 +20,15 @@
 %token PERCENT_PREC "%prec"
 %token PERCENT_DERIVE "%derive"
 %token PERCENT_INLINE "%inline"
+%token LANGLE "<"
+%token RANGLE ">"
+%token LBRACKET "["
+%token RBRACKET "]"
+%token LPAREN "("
+%token RPAREN ")"
+%token COMMA ","
+%token ARROW "->"
+%token QUESTION "?"
 %token COLON ":"
 %token BAR "|"
 %token EQ "="
@@ -50,19 +58,16 @@ decl_list -> @immut/list.T[Declaration]
 
 decl -> Declaration
   : "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
-  | "%token" type_=opt_type symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=type_) }
-  | "%token" type_=opt_type symbol=symbol image=STRING { Token1(symbol, type_=type_, image=image) }
-  | "%type" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
-  | "%position" type_=LANGLE_CODE_RANGLE { Position(type_=type_) }
+  | "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
+  | "%token" "<" type_=type_expr ">" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=Some(type_)) }
+  | "%token" symbol=symbol image=STRING { Token1(symbol, type_=None, image=image) }
+  | "%token" "<" type_=type_expr ">" symbol=symbol image=STRING { Token1(symbol, type_=Some(type_), image=image) }
+  | "%type" "<" type_=type_expr ">" symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
+  | "%position" "<" type_=type_expr ">" { Position(type_=type_) }
   | "%left" symbol_list=nonempty_symbol_list { Left(symbol_list.to_array()) }
   | "%right" symbol_list=nonempty_symbol_list { Right(symbol_list.to_array()) }
   | "%nonassoc" symbol_list=nonempty_symbol_list { Nonassoc(symbol_list.to_array()) }
-  | "%derive" traits=LANGLE_CODE_RANGLE type_=IDENT { Derive(traits=traits, type_=type_) }
-  ;
-
-opt_type -> Code?
-  : type_=LANGLE_CODE_RANGLE { Some(type_) }
-  | { None }
+  | "%derive" "<" trait_list=nonempty_type_expr_list ">" type_=IDENT { Derive(traits=trait_list.to_array(), type_=type_) }
   ;
 
 rule_list -> @immut/list.T[Rule]
@@ -76,12 +81,27 @@ rule -> Rule
   ;
 
 rule_no_modifiers -> Rule
-  : nonterminal=symbol type_=rule_type ":" clause_list=clause_list ";" { { inline: false, nonterminal, type_, clauses: clause_list.to_array() } }
+  : nonterminal=symbol ":" clause_list=clause_list ";" { { inline: false, nonterminal, type_: None, clauses: clause_list.to_array() } }
+  | nonterminal=symbol "->" type_=type_expr ":" clause_list=clause_list ";" { { inline: false, nonterminal, type_: Some(type_), clauses: clause_list.to_array() } }
   ;
 
-rule_type -> Code?
-  : type_=ARROW_CODE { Some(type_) }
-  | { None }
+type_expr -> TypeExpr
+  : basic_type_expr { $1 }
+  | basic_type_expr "?" { Option($1) }
+  | "(" nonempty_type_expr_list ")" "->" type_expr { Arrow($2.to_array(), $5) }
+  ;
+
+%inline basic_type_expr -> TypeExpr
+  : IDENT { Constr(pkg=None, $1, []) }
+  | PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
+  | IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
+  | PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
+  | "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@immut/list.Cons($2, $4).to_array()) }
+  ;
+
+nonempty_type_expr_list -> @immut/list.T[TypeExpr]
+  : type_expr=type_expr { Cons(type_expr, Nil) }
+  | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { Cons(type_expr, type_expr_list) }
   ;
 
 clause_list -> @immut/list.T[Clause]

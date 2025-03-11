@@ -26,6 +26,7 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
       token!(phase, lexbuf)
     }
     "/*" ([^ '/'] | "/" [^ '*'])* "*/" => { token!(phase, lexbuf) }
+    "@" (ident ("/" ident)* as pkg) "." (ident as id) as t => { (PKG_AND_IDENT((pkg, id)), $startpos(t), $endpos(t)) }
     ident as t => { (IDENT(t), $startpos(t), $endpos(t)) }
     "%start" as t => { (PERCENT_START, $startpos(t), $endpos(t)) }
     "%token" as t => { (PERCENT_TOKEN, $startpos(t), $endpos(t)) }
@@ -48,7 +49,7 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
         (PERCENT_PERCENT_CODE_EOF(sb.to_string()), $startpos(t), $endpos(t))
       }
     }
-    ("->" [' ' '\t' '\n']* (([^ ' ' '\t' '\n' ':'] ([^ ':']+ [^ ' ' '\t' '\n' ':'])?) as t2)) as t => { (ARROW_CODE(t2), $startpos(t), $endpos(t)) }
+    "->" as t => { (ARROW, $startpos(t), $endpos(t)) }
     ":" as t => { (COLON, $startpos(t), $endpos(t)) }
     "|" as t => { (BAR, $startpos(t), $endpos(t)) }
     "=" as t => { (EQ, $startpos(t), $endpos(t)) }
@@ -58,11 +59,14 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
       code_percent_rbrace!(sb, lexbuf)
       (PERCENT_LBRACE_CODE_PERCENT_RBRACE(sb.to_string()), $startpos(t), $endpos(t))
     }
-    "<" as t => {
-      let sb = StringBuilder::new()
-      code_rangle!(sb, lexbuf)
-      (LANGLE_CODE_RANGLE(sb.to_string()), $startpos(t), $endpos(t))
-    }
+    "<" as t => { (LANGLE, $startpos(t), $endpos(t)) }
+    ">" as t => { (RANGLE, $startpos(t), $endpos(t)) }
+    "[" as t => { (LBRACKET, $startpos(t), $endpos(t)) }
+    "]" as t => { (RBRACKET, $startpos(t), $endpos(t)) }
+    "(" as t => { (LPAREN, $startpos(t), $endpos(t)) }
+    ")" as t => { (RPAREN, $startpos(t), $endpos(t)) }
+    "," as t => { (COMMA, $startpos(t), $endpos(t)) }
+    "?" as t => { (QUESTION, $startpos(t), $endpos(t)) }
     "{" as t => {
       let sb = StringBuilder::new()
       let subst = []
@@ -101,17 +105,6 @@ rule code_percent_rbrace(sb : StringBuilder) -> Unit!LexError {
     _ as t => {
       sb.write_string(t)
       code_percent_rbrace!(sb, lexbuf)
-    }
-    eof => { raise(UnexpectedEndOfFile) }
-  }
-}
-
-rule code_rangle(sb : StringBuilder) -> Unit!LexError {
-  parse {
-    ">" => { () }
-    _ as t => {
-      sb.write_string(t)
-      code_rangle!(sb, lexbuf)
     }
     eof => { raise(UnexpectedEndOfFile) }
   }

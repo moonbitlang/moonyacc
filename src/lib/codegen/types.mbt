@@ -40,22 +40,22 @@ pub(all) struct ProductionMeta {
 
 ///|
 pub(all) struct TerminalMeta {
-  data_type : CodeFragment?
+  data_type : @elab.TypeExpr?
   image : String?
 }
 
 ///|
 pub(all) struct NonTerminalMeta {
-  data_type : CodeFragment
+  data_type : @elab.TypeExpr
 }
 
 ///|
 pub(all) struct MetaProvider {
   header : CodeFragment
   footer : CodeFragment
-  position_data_type : CodeFragment
+  position_data_type : @elab.TypeExpr
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
   production_meta : (Int) -> ProductionMeta
-  derive_map : @array_multimap.T[String, String]
+  derive_map : @array_multimap.T[String, @elab.TypeExpr]
 }

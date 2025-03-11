@@ -109,7 +109,9 @@ pub fn compile(
   let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = {}
   let productions = []
   let starts : Array[String] = spec.start_rules.map(fn(rule) { rule.name })
-  let position_data_type = spec.position_type.or(generator.void_type())
+  let position_data_type = spec.position_type.or(
+    Constr(pkg=None, generator.void_type(), []),
+  )
   let derive_map = spec.derive_map
   for token in spec.tokens {
     let terminal = get_terminal_by_name(token.name)
@@ -144,7 +146,9 @@ pub fn compile(
         match nonterminal_meta_map[lhs.num] {
           Some(_) => ()
           None =>
-            nonterminal_meta_map[lhs.num] = { data_type: generator.void_type() }
+            nonterminal_meta_map[lhs.num] = {
+              data_type: Constr(pkg=None, generator.void_type(), []),
+            }
         }
     }
     for clause in rule.clauses {

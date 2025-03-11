@@ -54,11 +54,11 @@ pub fn elaborate(
       Token(names, type_~, ..) =>
         for name in names {
           let token = get_token_by_name(name)
-          token.type_ = type_
+          token.type_ = type_.map(elaborate_type_expr)
         }
       Token1(name, type_~, image~) => {
         let token = get_token_by_name(name)
-        token.type_ = type_
+        token.type_ = type_.map(elaborate_type_expr)
         token.image = Some(image)
         token_by_image[image] = token
       }
@@ -71,7 +71,7 @@ pub fn elaborate(
     let rule : Rule = {
       inline: ast_rule.inline,
       name: ast_rule.nonterminal,
-      type_: ast_rule.type_,
+      type_: ast_rule.type_.map(elaborate_type_expr),
       clauses: [],
     }
     rules.push(rule)
@@ -104,9 +104,9 @@ pub fn elaborate(
             None =>
               match rule_by_name[ident] {
                 None => panic()
-                Some(rule) => rule.type_ = Some(type_)
+                Some(rule) => rule.type_ = Some(elaborate_type_expr(type_))
               }
-            Some(token) => token.type_ = Some(type_)
+            Some(token) => token.type_ = Some(elaborate_type_expr(type_))
           }
         }
       _ => ()
@@ -116,7 +116,7 @@ pub fn elaborate(
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     rule.type_ = match json_cst {
       No => rule.type_
-      Yes(_) => Some("Json")
+      Yes(_) => Some(Constr(pkg=None, "Json", []))
     }
     for clause_index, ast_clause in ast_rule.clauses {
       let items = ast_clause.items.map(fn(ast_item) {
@@ -177,7 +177,7 @@ pub fn elaborate(
     }
   }
   let start_rules : Array[Rule] = []
-  let mut position_type : Code? = None
+  let mut position_type : TypeExpr? = None
   let derive_map = @array_multimap.new()
   for ast_decl in ast_spec.decls {
     match ast_decl {
@@ -185,10 +185,10 @@ pub fn elaborate(
         for symbol in symbols {
           start_rules.push(rule_by_name[symbol].unwrap())
         }
-      Position(type_~) => position_type = Some(type_)
+      Position(type_~) => position_type = Some(elaborate_type_expr(type_))
       Derive(traits~, type_~) =>
-        for trait_ in traits.split(",").iter().map(String::trim_space) {
-          derive_map.add(type_, trait_)
+        for trait_ in traits {
+          derive_map.add(type_, elaborate_type_expr(trait_))
         }
       _ => ()
     }
@@ -201,10 +201,10 @@ pub fn elaborate(
     Yes(rewrite) => {
       header = None
       trailer = None
-      position_type = Some("Int")
+      position_type = Some(Constr(pkg=None, "Int", []))
       match rewrite {
         None => ()
-        Some(_) => derive_map.add("Token", "Show")
+        Some(_) => derive_map.add("Token", Constr(pkg=None, "Show", []))
       }
     }
   }
@@ -216,7 +216,7 @@ pub fn elaborate(
       }
     Yes(Some(JsonPayload)) =>
       for token in tokens {
-        token.type_ = Some("Json")
+        token.type_ = Some(Constr(pkg=None, "Json", []))
       }
   }
   ParserSpec::{
@@ -237,7 +237,7 @@ fn elaborate_action(
   rule_index~ : Int,
   clause_index~ : Int,
   nonterminal_name~ : String,
-  type_~ : Code?,
+  type_~ : TypeExpr?,
   json_cst~ : JsonCst
 ) -> Action {
   let arity = items.length()
@@ -382,4 +382,16 @@ fn elaborate_action(
     }
   }
   Action::{ stamp: @stamp.new(), arity, type_, sub_actions: [], bindings, body }
+}
+
+///|
+fn elaborate_type_expr(ast_type_expr : @parser.TypeExpr) -> TypeExpr {
+  match ast_type_expr {
+    Constr(pkg~, name, args) =>
+      Constr(pkg~, name, args.map(elaborate_type_expr))
+    Option(inner) => Option(elaborate_type_expr(inner))
+    Tuple(args) => Tuple(args.map(elaborate_type_expr))
+    Arrow(args, ret) =>
+      Arrow(args.map(elaborate_type_expr), elaborate_type_expr(ret))
+  }
 }

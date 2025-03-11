@@ -8,7 +8,7 @@ pub(open) trait CodeGenerator {
     (String) -> TerminalMeta,
     &Logger,
     no_comments~ : Bool,
-    derive_map~ : @array_multimap.T[String, String],
+    derive_map~ : @array_multimap.T[String, @elab.TypeExpr],
   ) -> Unit
   codegen(
     Self,
