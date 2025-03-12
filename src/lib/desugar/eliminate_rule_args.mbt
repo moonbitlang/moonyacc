@@ -33,20 +33,14 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
     }
     let generic_param_map : Map[String, @elab.TypeExpr] = {}
     fn unify(t1 : @elab.TypeExpr?, t2 : @elab.TypeExpr?) -> Unit {
-      match (t1, t2) {
+      match
         (
-          None
-          | Some(Constr(pkg=None, "Unit", [])),
-          None
-          | Some(Constr(pkg=None, "Unit", [])),
-        ) => ()
-        (Some(Constr(pkg=None, name, [])), Some(t2)) if rule.generic_params.contains(
-            name,
-          ) => generic_param_map[name] = t2
-        (
-          Some(Constr(pkg=pkg1, name1, args1)),
-          Some(Constr(pkg=pkg2, name2, args2)),
-        ) => {
+          t1.or(Constr(pkg=None, "Unit", [])),
+          t2.or(Constr(pkg=None, "Unit", [])),
+        ) {
+        (Constr(pkg=None, name, []), t2) if rule.generic_params.contains(name) =>
+          generic_param_map[name] = t2
+        (Constr(pkg=pkg1, name1, args1), Constr(pkg=pkg2, name2, args2)) => {
           guard pkg1 == pkg2 &&
             name1 == name2 &&
             args1.length() == args2.length() else {
@@ -56,14 +50,14 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
             unify(Some(arg1), Some(args2[index]))
           }
         }
-        (Some(Option(t1)), Some(Option(t2))) => unify(Some(t1), Some(t2))
-        (Some(Tuple(types1)), Some(Tuple(types2))) => {
+        (Option(t1), Option(t2)) => unify(Some(t1), Some(t2))
+        (Tuple(types1), Tuple(types2)) => {
           guard types1.length() == types2.length() else { panic() }
           for index, type1 in types1 {
             unify(Some(type1), Some(types2[index]))
           }
         }
-        (Some(Arrow(params1, ret1)), Some(Arrow(params2, ret2))) => {
+        (Arrow(params1, ret1), Arrow(params2, ret2)) => {
           guard params1.length() == params2.length() else { panic() }
           for index, param1 in params1 {
             unify(Some(param1), Some(params2[index]))
@@ -74,8 +68,8 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
       }
     }
 
-    for index, param in rule.params {
-      let arg = args[index]
+    for param in rule.params {
+      let arg = param_map[param.0].unwrap()
       unify(
         param.1,
         match arg {
@@ -154,7 +148,9 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
 fn derive_term_ident(term : @elab.Term) -> String {
   match term {
     Token(token) => token.name
-    Param(_) => panic()
+    Param(_) =>
+      // FIXME
+      panic()
     RuleCall(rule, []) => rule.name
     RuleCall(rule, args) =>
       rule.name + "__" + args.iter().map(derive_term_ident).join("_")
