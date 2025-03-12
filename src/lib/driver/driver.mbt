@@ -68,7 +68,8 @@ pub fn compile(
       Default | OnlyTokens => No
     },
   )
-  let spec = @inline.eliminate_inline(spec)
+  let spec = @desugar.eliminate_rule_args(spec)
+  let spec = @desugar.eliminate_inline(spec)
   let terminals = []
   let nonterminals = []
   let terminal_by_name : Map[String, @grm.Terminal] = {}
@@ -159,7 +160,8 @@ pub fn compile(
         rhs: clause.items.map(fn(item) {
           match item.term {
             Token(token) => T(get_terminal_by_name(token.name))
-            RuleCall(rule) => NT(get_nonterminal_by_name(rule.name))
+            RuleCall(rule, []) => NT(get_nonterminal_by_name(rule.name))
+            Param(_) | RuleCall(_, _) => panic()
           }
         }),
         prec: clause.prec,

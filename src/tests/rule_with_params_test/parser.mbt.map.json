@@ -1,0 +1,52 @@
+{
+  "mappings": [
+    {
+      "source": "parser.mbty",
+      "original_offset": 331,
+      "generated_offset": 1499,
+      "length": 1
+    },
+    {
+      "source": "parser.mbty",
+      "original_offset": 334,
+      "generated_offset": 1508,
+      "length": 1
+    },
+    {
+      "source": "parser.mbty",
+      "original_offset": 129,
+      "generated_offset": 1689,
+      "length": 1
+    },
+    {
+      "source": "parser.mbty",
+      "original_offset": 132,
+      "generated_offset": 1698,
+      "length": 54
+    },
+    {
+      "source": "parser.mbty",
+      "original_offset": 233,
+      "generated_offset": 1887,
+      "length": 5
+    },
+    {
+      "source": "parser.mbty",
+      "original_offset": 255,
+      "generated_offset": 2128,
+      "length": 6
+    },
+    {
+      "source": "parser.mbty",
+      "original_offset": 263,
+      "generated_offset": 2142,
+      "length": 2
+    },
+    {
+      "source": "parser.mbty",
+      "original_offset": 267,
+      "generated_offset": 2152,
+      "length": 2
+    }
+  ]
+}

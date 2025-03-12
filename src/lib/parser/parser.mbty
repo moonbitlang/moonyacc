@@ -81,8 +81,34 @@ rule -> Rule
   ;
 
 rule_no_modifiers -> Rule
-  : nonterminal=symbol ":" clause_list=clause_list ";" { { inline: false, nonterminal, type_: None, clauses: clause_list.to_array() } }
-  | nonterminal=symbol "->" type_=type_expr ":" clause_list=clause_list ";" { { inline: false, nonterminal, type_: Some(type_), clauses: clause_list.to_array() } }
+  : nonterminal=symbol type_=opt_rule_return_type ":" clause_list=clause_list ";" {
+    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }
+  }
+  | nonterminal=symbol generic_params=opt_rule_generic_params "(" param_list=nonempty_rule_param_list ")" type_=opt_rule_return_type ":" clause_list=clause_list ";" {
+    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }
+  }
+  ;
+
+opt_rule_return_type -> TypeExpr?
+  : "->" type_=type_expr { Some(type_) }
+  | { None }
+  ;
+
+nonempty_rule_param_list -> @immut/list.T[(String, TypeExpr?)]
+  : IDENT { Cons(($1, None), Nil) }
+  | IDENT ":" type_expr { Cons(($1, Some($3)), Nil) }
+  | IDENT "," nonempty_rule_param_list { Cons(($1, None), $3) }
+  | IDENT ":" type_expr "," nonempty_rule_param_list { Cons(($1, Some($3)), $5) }
+  ;
+
+opt_rule_generic_params -> Array[String]
+  : { [] }
+  | "[" nonempty_comma_ident_list "]" { $2.to_array() }
+  ;
+
+nonempty_comma_ident_list -> @immut/list.T[String]
+  : IDENT { Cons($1, Nil) }
+  | IDENT "," nonempty_comma_ident_list { Cons($1, $3) }
   ;
 
 type_expr -> TypeExpr
@@ -146,7 +172,13 @@ item -> ClauseItem
 
 term -> Term
   : symbol=symbol { Symbol(symbol) }
+  | symbol=symbol "(" nonempty_comma_term_list ")" { RuleCall(symbol, $3.to_array()) }
   | image=STRING { Image(image) }
+  ;
+
+nonempty_comma_term_list -> @immut/list.T[Term]
+  : term=term { Cons(term, Nil) }
+  | term=term "," term_list=nonempty_comma_term_list { Cons(term, term_list) }
   ;
 
 nonempty_symbol_list -> @immut/list.T[Symbol]
