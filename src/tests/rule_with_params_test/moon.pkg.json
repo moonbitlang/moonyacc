@@ -1,10 +1,10 @@
 {
-  // "pre-build": [
-  //   {
-  //     "command": "node $mod_dir/boot/moonyacc.js $input -o $output",
-  //     "input": "parser.mbty",
-  //     "output": "parser.mbt"
-  //   }
-  // ],
+  "pre-build": [
+    {
+      "command": "node $mod_dir/boot/moonyacc.js $input -o $output",
+      "input": "parser.mbty",
+      "output": "parser.mbt"
+    }
+  ],
   "warn-list": "-6"
 }

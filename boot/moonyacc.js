@@ -14109,6 +14109,16 @@ function moonbitlang$yacc$lib$parser$$yy_action_11(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
   if (_bind.$tag === 6) {
     const _YYObj_String = _bind;
+    const _image = _YYObj_String._0;
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Term$46$YYObj_Term(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Term$Image(_image));
+  } else {
+    return $panic();
+  }
+}
+function moonbitlang$yacc$lib$parser$$yy_action_12(_last_pos, _args) {
+  const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
+  if (_bind.$tag === 6) {
+    const _YYObj_String = _bind;
     const __dollar1 = _YYObj_String._0;
     const _bind$2 = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 2)._0;
     if (_bind$2.$tag === 8) {
@@ -14125,16 +14135,6 @@ function moonbitlang$yacc$lib$parser$$yy_action_11(_last_pos, _args) {
     } else {
       return $panic();
     }
-  } else {
-    return $panic();
-  }
-}
-function moonbitlang$yacc$lib$parser$$yy_action_12(_last_pos, _args) {
-  const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
-  if (_bind.$tag === 6) {
-    const _YYObj_String = _bind;
-    const _image = _YYObj_String._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Term$46$YYObj_Term(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Term$Image(_image));
   } else {
     return $panic();
   }
@@ -14163,16 +14163,6 @@ function moonbitlang$yacc$lib$parser$$yy_action_15(_last_pos, _args) {
   return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_TypeExpr_$46$YYObj_TypeExpr_(undefined);
 }
 function moonbitlang$yacc$lib$parser$$yy_action_16(_last_pos, _args) {
-  const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 1)._0;
-  if (_bind.$tag === 19) {
-    const _YYObj_Rule = _bind;
-    const __dollar2 = _YYObj_Rule._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Rule$46$YYObj_Rule({ inline: true, nonterminal: __dollar2.nonterminal, generic_params: __dollar2.generic_params, params: __dollar2.params, type_: __dollar2.type_, clauses: __dollar2.clauses });
-  } else {
-    return $panic();
-  }
-}
-function moonbitlang$yacc$lib$parser$$yy_action_17(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
   if (_bind.$tag === 6) {
     const _YYObj_String = _bind;
@@ -14185,6 +14175,16 @@ function moonbitlang$yacc$lib$parser$$yy_action_17(_last_pos, _args) {
     } else {
       return $panic();
     }
+  } else {
+    return $panic();
+  }
+}
+function moonbitlang$yacc$lib$parser$$yy_action_17(_last_pos, _args) {
+  const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 1)._0;
+  if (_bind.$tag === 19) {
+    const _YYObj_Rule = _bind;
+    const __dollar2 = _YYObj_Rule._0;
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Rule$46$YYObj_Rule({ inline: true, nonterminal: __dollar2.nonterminal, generic_params: __dollar2.generic_params, params: __dollar2.params, type_: __dollar2.type_, clauses: __dollar2.clauses });
   } else {
     return $panic();
   }
@@ -14429,6 +14429,16 @@ function moonbitlang$yacc$lib$parser$$yy_action_36(_last_pos, _args) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_action_37(_last_pos, _args) {
+  const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 2)._0;
+  if (_bind.$tag === 8) {
+    const _YYObj_TypeExpr = _bind;
+    const _type_ = _YYObj_TypeExpr._0;
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Position(_type_));
+  } else {
+    return $panic();
+  }
+}
+function moonbitlang$yacc$lib$parser$$yy_action_38(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 1)._0;
   if (_bind.$tag === 8) {
     const _YYObj_TypeExpr = _bind;
@@ -14441,16 +14451,6 @@ function moonbitlang$yacc$lib$parser$$yy_action_37(_last_pos, _args) {
     } else {
       return $panic();
     }
-  } else {
-    return $panic();
-  }
-}
-function moonbitlang$yacc$lib$parser$$yy_action_38(_last_pos, _args) {
-  const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 2)._0;
-  if (_bind.$tag === 8) {
-    const _YYObj_TypeExpr = _bind;
-    const _type_ = _YYObj_TypeExpr._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration(new $64$moonbitlang$47$yacc$47$lib$47$parser$46$Declaration$Position(_type_));
   } else {
     return $panic();
   }
@@ -14589,6 +14589,16 @@ function moonbitlang$yacc$lib$parser$$yy_action_47(_last_pos, _args) {
 }
 function moonbitlang$yacc$lib$parser$$yy_action_48(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
+  if (_bind.$tag === 8) {
+    const _YYObj_TypeExpr = _bind;
+    const __dollar1 = _YYObj_TypeExpr._0;
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_TypeExpr$46$YYObj_TypeExpr(__dollar1);
+  } else {
+    return $panic();
+  }
+}
+function moonbitlang$yacc$lib$parser$$yy_action_49(_last_pos, _args) {
+  const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
   if (_bind.$tag === 6) {
     const _YYObj_String = _bind;
     const __dollar1 = _YYObj_String._0;
@@ -14600,16 +14610,6 @@ function moonbitlang$yacc$lib$parser$$yy_action_48(_last_pos, _args) {
     } else {
       return $panic();
     }
-  } else {
-    return $panic();
-  }
-}
-function moonbitlang$yacc$lib$parser$$yy_action_49(_last_pos, _args) {
-  const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
-  if (_bind.$tag === 8) {
-    const _YYObj_TypeExpr = _bind;
-    const __dollar1 = _YYObj_TypeExpr._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_TypeExpr$46$YYObj_TypeExpr(__dollar1);
   } else {
     return $panic();
   }
@@ -14726,8 +14726,8 @@ function moonbitlang$yacc$lib$parser$$yy_action_58(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
   if (_bind.$tag === 6) {
     const _YYObj_String = _bind;
-    const _code = _YYObj_String._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Code_$46$YYObj_Code_(_code);
+    const __dollar1 = _YYObj_String._0;
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_String_$46$YYObj__immut_list_T_String_(new $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$23$(__dollar1, $64$moonbitlang$47$core$47$immut$47$list$46$T$Nil$23$));
   } else {
     return $panic();
   }
@@ -14736,8 +14736,8 @@ function moonbitlang$yacc$lib$parser$$yy_action_59(_last_pos, _args) {
   const _bind = moonbitlang$core$array$$ArrayView$op_get$99$(_args, 0)._0;
   if (_bind.$tag === 6) {
     const _YYObj_String = _bind;
-    const __dollar1 = _YYObj_String._0;
-    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj__immut_list_T_String_$46$YYObj__immut_list_T_String_(new $64$moonbitlang$47$core$47$immut$47$list$46$T$Cons$23$(__dollar1, $64$moonbitlang$47$core$47$immut$47$list$46$T$Nil$23$));
+    const _code = _YYObj_String._0;
+    return new Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Code_$46$YYObj_Code_(_code);
   } else {
     return $panic();
   }
@@ -14967,7 +14967,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_2(_lookahead) {
   return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 32, moonbitlang$yacc$lib$parser$$yy_action_41);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_16(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 45, moonbitlang$yacc$lib$parser$$yy_action_17);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 39, moonbitlang$yacc$lib$parser$$yy_action_16);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_15(_lookahead) {
   if (_lookahead === 21) {
@@ -14977,13 +14977,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_15(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_17(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 44, moonbitlang$yacc$lib$parser$$yy_action_7);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 38, moonbitlang$yacc$lib$parser$$yy_action_7);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_26(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 45, moonbitlang$yacc$lib$parser$$yy_action_64);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 39, moonbitlang$yacc$lib$parser$$yy_action_64);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_29(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 45, moonbitlang$yacc$lib$parser$$yy_action_31);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 39, moonbitlang$yacc$lib$parser$$yy_action_31);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_28(_lookahead) {
   if (_lookahead === 23) {
@@ -14993,7 +14993,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_28(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_31(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 44, moonbitlang$yacc$lib$parser$$yy_action_55);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 38, moonbitlang$yacc$lib$parser$$yy_action_55);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_30(_lookahead) {
   _L: {
@@ -15021,13 +15021,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_30(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 43, moonbitlang$yacc$lib$parser$$yy_action_49);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 37, moonbitlang$yacc$lib$parser$$yy_action_48);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_8(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 46, moonbitlang$yacc$lib$parser$$yy_action_63);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 40, moonbitlang$yacc$lib$parser$$yy_action_63);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_12(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 45, moonbitlang$yacc$lib$parser$$yy_action_9);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 39, moonbitlang$yacc$lib$parser$$yy_action_9);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_11(_lookahead) {
   if (_lookahead === 21) {
@@ -15062,7 +15062,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_32(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(7, 43, moonbitlang$yacc$lib$parser$$yy_action_4);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(7, 37, moonbitlang$yacc$lib$parser$$yy_action_4);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_35(_lookahead) {
   _L: {
@@ -15090,7 +15090,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_35(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(6, 43, moonbitlang$yacc$lib$parser$$yy_action_36);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(6, 37, moonbitlang$yacc$lib$parser$$yy_action_36);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_38(_lookahead) {
   _L: {
@@ -15118,7 +15118,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_38(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(5, 43, moonbitlang$yacc$lib$parser$$yy_action_37);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(5, 37, moonbitlang$yacc$lib$parser$$yy_action_38);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_41(_lookahead) {
   _L: {
@@ -15146,7 +15146,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_41(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(4, 43, moonbitlang$yacc$lib$parser$$yy_action_21);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(4, 37, moonbitlang$yacc$lib$parser$$yy_action_21);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_13(_lookahead) {
   _L: {
@@ -15177,11 +15177,11 @@ function moonbitlang$yacc$lib$parser$$yy_state_13(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 45, moonbitlang$yacc$lib$parser$$yy_action_18);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 39, moonbitlang$yacc$lib$parser$$yy_action_18);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_14(_lookahead) {
   switch (_lookahead) {
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_6);
     }
     case 6: {
@@ -15190,16 +15190,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_14(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 46: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_15);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
     default: {
@@ -15215,16 +15215,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_18(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_19);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
     case 23: {
@@ -15250,7 +15250,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_19(_lookahead) {
 }
 function moonbitlang$yacc$lib$parser$$yy_state_20(_lookahead) {
   switch (_lookahead) {
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_6);
     }
     case 6: {
@@ -15259,16 +15259,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_20(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 46: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_21);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
     case 23: {
@@ -15315,7 +15315,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_22(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(5, 45, moonbitlang$yacc$lib$parser$$yy_action_31);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(5, 39, moonbitlang$yacc$lib$parser$$yy_action_31);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_23(_lookahead) {
   switch (_lookahead) {
@@ -15325,13 +15325,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_23(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_24);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_32);
     }
     default: {
@@ -15347,16 +15347,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_24(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_25);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
     default: {
@@ -15379,7 +15379,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_25(_lookahead) {
 }
 function moonbitlang$yacc$lib$parser$$yy_state_27(_lookahead) {
   switch (_lookahead) {
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_6);
     }
     case 6: {
@@ -15388,16 +15388,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_27(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 46: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_28);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
     default: {
@@ -15425,14 +15425,14 @@ function moonbitlang$yacc$lib$parser$$yy_state_6(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 46, moonbitlang$yacc$lib$parser$$yy_action_33);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 40, moonbitlang$yacc$lib$parser$$yy_action_33);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_7(_lookahead) {
   switch (_lookahead) {
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_6);
     }
-    case 46: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_8);
     }
     case 6: {
@@ -15441,13 +15441,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_7(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
     default: {
@@ -15484,29 +15484,29 @@ function moonbitlang$yacc$lib$parser$$yy_state_9(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 45, moonbitlang$yacc$lib$parser$$yy_action_26);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 39, moonbitlang$yacc$lib$parser$$yy_action_26);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_10(_lookahead) {
   switch (_lookahead) {
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_6);
     }
     case 6: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_9);
     }
-    case 46: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_11);
     }
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
     default: {
@@ -15529,13 +15529,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_34(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_24);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_35);
     }
     default: {
@@ -15572,7 +15572,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_36(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(3, 45, moonbitlang$yacc$lib$parser$$yy_action_64);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(3, 39, moonbitlang$yacc$lib$parser$$yy_action_64);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_37(_lookahead) {
   switch (_lookahead) {
@@ -15582,13 +15582,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_37(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_24);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_38);
     }
     default: {
@@ -15611,13 +15611,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_40(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_24);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_41);
     }
     default: {
@@ -15626,7 +15626,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_40(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_44(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 35, moonbitlang$yacc$lib$parser$$yy_action_53);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 34, moonbitlang$yacc$lib$parser$$yy_action_53);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_43(_lookahead) {
   if (_lookahead === 1) {
@@ -15644,7 +15644,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_42(_lookahead) {
 }
 function moonbitlang$yacc$lib$parser$$yy_state_5(_lookahead) {
   switch (_lookahead) {
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_6);
     }
     case 6: {
@@ -15653,16 +15653,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_5(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
-    case 46: {
+    case 40: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_42);
     }
     default: {
@@ -15678,10 +15678,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_4(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_46(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 56, moonbitlang$yacc$lib$parser$$yy_action_20);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 36, moonbitlang$yacc$lib$parser$$yy_action_20);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_48(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 55, moonbitlang$yacc$lib$parser$$yy_action_27);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 35, moonbitlang$yacc$lib$parser$$yy_action_27);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_47(_lookahead) {
   _L: {
@@ -15689,10 +15689,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_47(_lookahead) {
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
       }
-      case 56: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
       }
-      case 55: {
+      case 35: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_48);
       }
       case 7: {
@@ -15727,20 +15727,20 @@ function moonbitlang$yacc$lib$parser$$yy_state_47(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 55, moonbitlang$yacc$lib$parser$$yy_action_46);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 35, moonbitlang$yacc$lib$parser$$yy_action_46);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_49(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 35, moonbitlang$yacc$lib$parser$$yy_action_23);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 34, moonbitlang$yacc$lib$parser$$yy_action_23);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_45(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
     }
-    case 55: {
+    case 35: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_49);
     }
     default: {
@@ -15749,17 +15749,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_45(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_51(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 35, moonbitlang$yacc$lib$parser$$yy_action_61);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 34, moonbitlang$yacc$lib$parser$$yy_action_61);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_50(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
     }
-    case 55: {
+    case 35: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_51);
     }
     default: {
@@ -15768,17 +15768,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_50(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_53(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 35, moonbitlang$yacc$lib$parser$$yy_action_19);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 34, moonbitlang$yacc$lib$parser$$yy_action_19);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_52(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
     }
-    case 55: {
+    case 35: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_53);
     }
     default: {
@@ -15787,7 +15787,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_52(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_57(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 35, moonbitlang$yacc$lib$parser$$yy_action_38);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 34, moonbitlang$yacc$lib$parser$$yy_action_37);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_56(_lookahead) {
   if (_lookahead === 19) {
@@ -15804,16 +15804,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_55(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_56);
     }
     default: {
@@ -15829,17 +15829,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_54(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_62(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 35, moonbitlang$yacc$lib$parser$$yy_action_50);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 34, moonbitlang$yacc$lib$parser$$yy_action_50);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_61(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
     }
-    case 55: {
+    case 35: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_62);
     }
     default: {
@@ -15862,16 +15862,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_59(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_60);
     }
     default: {
@@ -15887,7 +15887,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_58(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_65(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 35, moonbitlang$yacc$lib$parser$$yy_action_6);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 34, moonbitlang$yacc$lib$parser$$yy_action_6);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_64(_lookahead) {
   _L: {
@@ -15895,10 +15895,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_64(_lookahead) {
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
       }
-      case 56: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
       }
-      case 55: {
+      case 35: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_48);
       }
       case 2: {
@@ -15936,10 +15936,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_64(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 55, moonbitlang$yacc$lib$parser$$yy_action_46);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 35, moonbitlang$yacc$lib$parser$$yy_action_46);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_70(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(6, 35, moonbitlang$yacc$lib$parser$$yy_action_2);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(6, 34, moonbitlang$yacc$lib$parser$$yy_action_2);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_69(_lookahead) {
   _L: {
@@ -15947,10 +15947,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_69(_lookahead) {
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
       }
-      case 56: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
       }
-      case 55: {
+      case 35: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_48);
       }
       case 2: {
@@ -15988,20 +15988,20 @@ function moonbitlang$yacc$lib$parser$$yy_state_69(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 55, moonbitlang$yacc$lib$parser$$yy_action_46);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 35, moonbitlang$yacc$lib$parser$$yy_action_46);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_71(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 35, moonbitlang$yacc$lib$parser$$yy_action_22);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 34, moonbitlang$yacc$lib$parser$$yy_action_22);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_68(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_69);
     }
-    case 55: {
+    case 35: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_71);
     }
     default: {
@@ -16024,16 +16024,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_66(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_67);
     }
     default: {
@@ -16042,20 +16042,20 @@ function moonbitlang$yacc$lib$parser$$yy_state_66(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_72(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 35, moonbitlang$yacc$lib$parser$$yy_action_13);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 34, moonbitlang$yacc$lib$parser$$yy_action_13);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_63(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_64);
     }
     case 18: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_66);
     }
-    case 55: {
+    case 35: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_72);
     }
     default: {
@@ -16064,17 +16064,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_63(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_74(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 35, moonbitlang$yacc$lib$parser$$yy_action_0);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 34, moonbitlang$yacc$lib$parser$$yy_action_0);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_73(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_47);
     }
-    case 55: {
+    case 35: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_74);
     }
     default: {
@@ -16083,7 +16083,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_73(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_76(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 34, moonbitlang$yacc$lib$parser$$yy_action_67);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 33, moonbitlang$yacc$lib$parser$$yy_action_67);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_75(_lookahead) {
   switch (_lookahead) {
@@ -16111,14 +16111,14 @@ function moonbitlang$yacc$lib$parser$$yy_state_75(_lookahead) {
     case 8: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_73);
     }
-    case 35: {
+    case 34: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_75);
     }
-    case 34: {
+    case 33: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_76);
     }
     case 7: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 34, moonbitlang$yacc$lib$parser$$yy_action_52);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 33, moonbitlang$yacc$lib$parser$$yy_action_52);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16126,16 +16126,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_75(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_131(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 37, moonbitlang$yacc$lib$parser$$yy_action_16);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 42, moonbitlang$yacc$lib$parser$$yy_action_17);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_101(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 53, moonbitlang$yacc$lib$parser$$yy_action_12);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 49, moonbitlang$yacc$lib$parser$$yy_action_11);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_106(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 54, moonbitlang$yacc$lib$parser$$yy_action_29);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 50, moonbitlang$yacc$lib$parser$$yy_action_29);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_108(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 53, moonbitlang$yacc$lib$parser$$yy_action_68);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(4, 49, moonbitlang$yacc$lib$parser$$yy_action_68);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_107(_lookahead) {
   if (_lookahead === 23) {
@@ -16179,7 +16179,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_102(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 53, moonbitlang$yacc$lib$parser$$yy_action_39);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 49, moonbitlang$yacc$lib$parser$$yy_action_39);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_103(_lookahead) {
   switch (_lookahead) {
@@ -16189,13 +16189,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_103(_lookahead) {
     case 2: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_101);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_102);
     }
-    case 53: {
+    case 49: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_104);
     }
-    case 54: {
+    case 50: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_107);
     }
     default: {
@@ -16209,7 +16209,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_104(_lookahead) {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_105);
     }
     case 23: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 54, moonbitlang$yacc$lib$parser$$yy_action_5);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 50, moonbitlang$yacc$lib$parser$$yy_action_5);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16224,13 +16224,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_105(_lookahead) {
     case 2: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_101);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_102);
     }
-    case 53: {
+    case 49: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_104);
     }
-    case 54: {
+    case 50: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_106);
     }
     default: {
@@ -16238,10 +16238,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_105(_lookahead) {
     }
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_state_111(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 52, moonbitlang$yacc$lib$parser$$yy_action_10);
+function moonbitlang$yacc$lib$parser$$yy_state_109(_lookahead) {
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 48, moonbitlang$yacc$lib$parser$$yy_action_34);
 }
-function moonbitlang$yacc$lib$parser$$yy_state_110(_lookahead) {
+function moonbitlang$yacc$lib$parser$$yy_state_111(_lookahead) {
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 47, moonbitlang$yacc$lib$parser$$yy_action_8);
+}
+function moonbitlang$yacc$lib$parser$$yy_state_114(_lookahead) {
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 48, moonbitlang$yacc$lib$parser$$yy_action_10);
+}
+function moonbitlang$yacc$lib$parser$$yy_state_113(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
@@ -16249,22 +16255,22 @@ function moonbitlang$yacc$lib$parser$$yy_state_110(_lookahead) {
     case 2: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_101);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_102);
     }
-    case 53: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_111);
+    case 49: {
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_114);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
     }
   }
 }
-function moonbitlang$yacc$lib$parser$$yy_state_109(_lookahead) {
+function moonbitlang$yacc$lib$parser$$yy_state_112(_lookahead) {
   _L: {
     switch (_lookahead) {
       case 29: {
-        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_110);
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_113);
       }
       case 1: {
         break _L;
@@ -16292,34 +16298,28 @@ function moonbitlang$yacc$lib$parser$$yy_state_109(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 56, moonbitlang$yacc$lib$parser$$yy_action_20);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 36, moonbitlang$yacc$lib$parser$$yy_action_20);
 }
-function moonbitlang$yacc$lib$parser$$yy_state_112(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 52, moonbitlang$yacc$lib$parser$$yy_action_34);
-}
-function moonbitlang$yacc$lib$parser$$yy_state_114(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 51, moonbitlang$yacc$lib$parser$$yy_action_8);
-}
-function moonbitlang$yacc$lib$parser$$yy_state_113(_lookahead) {
+function moonbitlang$yacc$lib$parser$$yy_state_110(_lookahead) {
   _L: {
     switch (_lookahead) {
       case 2: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_101);
       }
-      case 56: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_102);
       }
-      case 1: {
+      case 49: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_109);
       }
-      case 53: {
+      case 48: {
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_110);
+      }
+      case 47: {
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_111);
+      }
+      case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_112);
-      }
-      case 52: {
-        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_113);
-      }
-      case 51: {
-        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_114);
       }
       case 3: {
         break _L;
@@ -16338,17 +16338,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_113(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 51, moonbitlang$yacc$lib$parser$$yy_action_45);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 47, moonbitlang$yacc$lib$parser$$yy_action_45);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_117(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 50, moonbitlang$yacc$lib$parser$$yy_action_30);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 51, moonbitlang$yacc$lib$parser$$yy_action_30);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_116(_lookahead) {
   switch (_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_117);
     }
     default: {
@@ -16357,10 +16357,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_116(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_119(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 49, moonbitlang$yacc$lib$parser$$yy_action_65);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 52, moonbitlang$yacc$lib$parser$$yy_action_65);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_120(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 48, moonbitlang$yacc$lib$parser$$yy_action_54);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 46, moonbitlang$yacc$lib$parser$$yy_action_54);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_118(_lookahead) {
   _L: {
@@ -16368,7 +16368,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_118(_lookahead) {
       case 3: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_119);
       }
-      case 49: {
+      case 52: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_120);
       }
       case 28: {
@@ -16382,7 +16382,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_118(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 49, moonbitlang$yacc$lib$parser$$yy_action_60);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 52, moonbitlang$yacc$lib$parser$$yy_action_60);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_115(_lookahead) {
   _L: {
@@ -16390,7 +16390,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_115(_lookahead) {
       case 15: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_116);
       }
-      case 50: {
+      case 51: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_118);
       }
       case 3: {
@@ -16407,10 +16407,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_115(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 50, moonbitlang$yacc$lib$parser$$yy_action_56);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 51, moonbitlang$yacc$lib$parser$$yy_action_56);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_123(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 47, moonbitlang$yacc$lib$parser$$yy_action_28);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 45, moonbitlang$yacc$lib$parser$$yy_action_28);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_121(_lookahead) {
   switch (_lookahead) {
@@ -16418,7 +16418,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_121(_lookahead) {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_122);
     }
     case 30: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 47, moonbitlang$yacc$lib$parser$$yy_action_62);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 45, moonbitlang$yacc$lib$parser$$yy_action_62);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16431,25 +16431,25 @@ function moonbitlang$yacc$lib$parser$$yy_state_122(_lookahead) {
       case 2: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_101);
       }
-      case 56: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_102);
       }
-      case 1: {
+      case 49: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_109);
       }
-      case 53: {
+      case 48: {
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_110);
+      }
+      case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_112);
       }
-      case 52: {
-        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_113);
-      }
-      case 51: {
+      case 47: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_115);
       }
-      case 48: {
+      case 46: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_121);
       }
-      case 47: {
+      case 45: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_123);
       }
       case 3: {
@@ -16469,10 +16469,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_122(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 51, moonbitlang$yacc$lib$parser$$yy_action_45);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 47, moonbitlang$yacc$lib$parser$$yy_action_45);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_129(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 38, moonbitlang$yacc$lib$parser$$yy_action_24);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 43, moonbitlang$yacc$lib$parser$$yy_action_24);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_128(_lookahead) {
   if (_lookahead === 30) {
@@ -16487,25 +16487,25 @@ function moonbitlang$yacc$lib$parser$$yy_state_127(_lookahead) {
       case 2: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_101);
       }
-      case 56: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_102);
       }
-      case 1: {
+      case 49: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_109);
       }
-      case 53: {
+      case 48: {
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_110);
+      }
+      case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_112);
       }
-      case 52: {
-        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_113);
-      }
-      case 51: {
+      case 47: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_115);
       }
-      case 48: {
+      case 46: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_121);
       }
-      case 47: {
+      case 45: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_128);
       }
       case 3: {
@@ -16525,7 +16525,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_127(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 51, moonbitlang$yacc$lib$parser$$yy_action_45);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 47, moonbitlang$yacc$lib$parser$$yy_action_45);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_126(_lookahead) {
   if (_lookahead === 27) {
@@ -16535,7 +16535,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_126(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_83(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 42, moonbitlang$yacc$lib$parser$$yy_action_44);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 54, moonbitlang$yacc$lib$parser$$yy_action_44);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_81(_lookahead) {
   switch (_lookahead) {
@@ -16543,7 +16543,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_81(_lookahead) {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_82);
     }
     case 21: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 42, moonbitlang$yacc$lib$parser$$yy_action_59);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 54, moonbitlang$yacc$lib$parser$$yy_action_58);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16555,7 +16555,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_82(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_81);
     }
-    case 42: {
+    case 54: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_83);
     }
     default: {
@@ -16564,7 +16564,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_82(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_85(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 41, moonbitlang$yacc$lib$parser$$yy_action_66);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 53, moonbitlang$yacc$lib$parser$$yy_action_66);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_84(_lookahead) {
   if (_lookahead === 21) {
@@ -16578,7 +16578,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_80(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_81);
     }
-    case 42: {
+    case 54: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_84);
     }
     default: {
@@ -16587,7 +16587,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_80(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_87(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 39, moonbitlang$yacc$lib$parser$$yy_action_35);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 44, moonbitlang$yacc$lib$parser$$yy_action_35);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_86(_lookahead) {
   switch (_lookahead) {
@@ -16597,16 +16597,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_86(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_87);
     }
     default: {
@@ -16615,10 +16615,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_86(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_92(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 40, moonbitlang$yacc$lib$parser$$yy_action_51);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(3, 55, moonbitlang$yacc$lib$parser$$yy_action_51);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_96(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 40, moonbitlang$yacc$lib$parser$$yy_action_11);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(5, 55, moonbitlang$yacc$lib$parser$$yy_action_12);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_90(_lookahead) {
   switch (_lookahead) {
@@ -16629,7 +16629,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_90(_lookahead) {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_93);
     }
     case 23: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 40, moonbitlang$yacc$lib$parser$$yy_action_1);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 55, moonbitlang$yacc$lib$parser$$yy_action_1);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16641,7 +16641,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_91(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_90);
     }
-    case 40: {
+    case 55: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_92);
     }
     default: {
@@ -16657,16 +16657,16 @@ function moonbitlang$yacc$lib$parser$$yy_state_93(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_13);
     }
-    case 45: {
+    case 39: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_17);
     }
     case 22: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_18);
     }
-    case 44: {
+    case 38: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_30);
     }
-    case 43: {
+    case 37: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_94);
     }
     default: {
@@ -16680,7 +16680,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_94(_lookahead) {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_95);
     }
     case 23: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(3, 40, moonbitlang$yacc$lib$parser$$yy_action_48);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(3, 55, moonbitlang$yacc$lib$parser$$yy_action_49);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16692,7 +16692,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_95(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_90);
     }
-    case 40: {
+    case 55: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_96);
     }
     default: {
@@ -16701,7 +16701,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_95(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_125(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(9, 38, moonbitlang$yacc$lib$parser$$yy_action_47);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(9, 43, moonbitlang$yacc$lib$parser$$yy_action_47);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_124(_lookahead) {
   if (_lookahead === 30) {
@@ -16716,25 +16716,25 @@ function moonbitlang$yacc$lib$parser$$yy_state_100(_lookahead) {
       case 2: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_101);
       }
-      case 56: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_102);
       }
-      case 1: {
+      case 49: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_109);
       }
-      case 53: {
+      case 48: {
+        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_110);
+      }
+      case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_112);
       }
-      case 52: {
-        return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_113);
-      }
-      case 51: {
+      case 47: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_115);
       }
-      case 48: {
+      case 46: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_121);
       }
-      case 47: {
+      case 45: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_124);
       }
       case 3: {
@@ -16754,7 +16754,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_100(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 51, moonbitlang$yacc$lib$parser$$yy_action_45);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 47, moonbitlang$yacc$lib$parser$$yy_action_45);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_99(_lookahead) {
   if (_lookahead === 27) {
@@ -16768,11 +16768,11 @@ function moonbitlang$yacc$lib$parser$$yy_state_98(_lookahead) {
     case 25: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_86);
     }
-    case 39: {
+    case 44: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_99);
     }
     case 27: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 39, moonbitlang$yacc$lib$parser$$yy_action_15);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 44, moonbitlang$yacc$lib$parser$$yy_action_15);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16791,7 +16791,7 @@ function moonbitlang$yacc$lib$parser$$yy_state_89(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_90);
     }
-    case 40: {
+    case 55: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_97);
     }
     default: {
@@ -16814,17 +16814,17 @@ function moonbitlang$yacc$lib$parser$$yy_state_79(_lookahead) {
     case 25: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_86);
     }
-    case 41: {
+    case 53: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_88);
     }
-    case 39: {
+    case 44: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_126);
     }
     case 27: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 39, moonbitlang$yacc$lib$parser$$yy_action_15);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 44, moonbitlang$yacc$lib$parser$$yy_action_15);
     }
     case 22: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 41, moonbitlang$yacc$lib$parser$$yy_action_3);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 53, moonbitlang$yacc$lib$parser$$yy_action_3);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16836,10 +16836,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_130(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_79);
     }
-    case 38: {
+    case 43: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_131);
     }
     default: {
@@ -16848,10 +16848,10 @@ function moonbitlang$yacc$lib$parser$$yy_state_130(_lookahead) {
   }
 }
 function moonbitlang$yacc$lib$parser$$yy_state_132(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 37, moonbitlang$yacc$lib$parser$$yy_action_42);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 42, moonbitlang$yacc$lib$parser$$yy_action_42);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_134(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 36, moonbitlang$yacc$lib$parser$$yy_action_57);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(2, 41, moonbitlang$yacc$lib$parser$$yy_action_57);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_133(_lookahead) {
   _L: {
@@ -16859,19 +16859,19 @@ function moonbitlang$yacc$lib$parser$$yy_state_133(_lookahead) {
       case 1: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
       }
-      case 56: {
+      case 36: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_79);
       }
       case 17: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_130);
       }
-      case 38: {
+      case 43: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_132);
       }
-      case 37: {
+      case 42: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_133);
       }
-      case 36: {
+      case 41: {
         return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_134);
       }
       case 0: {
@@ -16888,13 +16888,13 @@ function moonbitlang$yacc$lib$parser$$yy_state_133(_lookahead) {
       }
     }
   }
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 36, moonbitlang$yacc$lib$parser$$yy_action_25);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(1, 41, moonbitlang$yacc$lib$parser$$yy_action_25);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_136(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 33, moonbitlang$yacc$lib$parser$$yy_action_14);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 56, moonbitlang$yacc$lib$parser$$yy_action_14);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_137(_lookahead) {
-  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 33, moonbitlang$yacc$lib$parser$$yy_action_58);
+  return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(1, 56, moonbitlang$yacc$lib$parser$$yy_action_59);
 }
 function moonbitlang$yacc$lib$parser$$yy_state_139(_lookahead) {
   return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$ReduceNoLookahead(6, 31, moonbitlang$yacc$lib$parser$$yy_action_40);
@@ -16914,11 +16914,11 @@ function moonbitlang$yacc$lib$parser$$yy_state_135(_lookahead) {
     case 4: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_137);
     }
-    case 33: {
+    case 56: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_138);
     }
     case 0: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 33, moonbitlang$yacc$lib$parser$$yy_action_43);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 56, moonbitlang$yacc$lib$parser$$yy_action_43);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -16930,19 +16930,19 @@ function moonbitlang$yacc$lib$parser$$yy_state_78(_lookahead) {
     case 1: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_46);
     }
-    case 56: {
+    case 36: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_79);
     }
     case 17: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_130);
     }
-    case 38: {
+    case 43: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_132);
     }
-    case 37: {
+    case 42: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_133);
     }
-    case 36: {
+    case 41: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_135);
     }
     default: {
@@ -16983,14 +16983,14 @@ function moonbitlang$yacc$lib$parser$$yy_state_3(_lookahead) {
     case 8: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_73);
     }
-    case 35: {
+    case 34: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_75);
     }
-    case 34: {
+    case 33: {
       return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Shift(moonbitlang$yacc$lib$parser$$yy_state_77);
     }
     case 7: {
-      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 34, moonbitlang$yacc$lib$parser$$yy_action_52);
+      return new $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Reduce(0, 33, moonbitlang$yacc$lib$parser$$yy_action_52);
     }
     default: {
       return $64$moonbitlang$47$yacc$47$lib$47$parser$46$YYDecision$Error;
@@ -20745,146 +20745,321 @@ function moonbitlang$yacc$lib$desugar$$eliminate_rule_args$46$unify$237$(_env, t
       let pkg2;
       let args2;
       _L$3: {
-        switch (t1$2.$tag) {
-          case 0: {
-            const _Constr = t1$2;
-            const _x = _Constr._0;
-            if (_x === undefined) {
-              const _name = _Constr._1;
-              const _x$2 = _Constr._2;
-              if (_x$2.length === 0) {
-                if (moonbitlang$core$array$$Array$contains$11$(rule.generic_params, _name)) {
-                  moonbitlang$core$builtin$$Map$op_set$128$(generic_param_map, _name, t2$2);
-                  return;
-                } else {
-                  if (t2$2.$tag === 0) {
-                    const _Constr$2 = t2$2;
-                    const _pkg2 = _Constr$2._0;
-                    const _name2 = _Constr$2._1;
-                    const _args2 = _Constr$2._2;
-                    args1 = _x$2;
-                    pkg1 = _x;
-                    name1 = _name;
-                    name2 = _name2;
-                    pkg2 = _pkg2;
-                    args2 = _args2;
-                    break _L$3;
+        let name;
+        let t2$3;
+        _L$4: {
+          if (t1$2 === undefined) {
+            if (t2$2 === undefined) {
+              return;
+            } else {
+              const _Some = t2$2;
+              const _x = _Some;
+              if (_x.$tag === 0) {
+                const _Constr = _x;
+                const _x$2 = _Constr._0;
+                if (_x$2 === undefined) {
+                  const _x$3 = _Constr._1;
+                  if (_x$3 === "Unit") {
+                    const _x$4 = _Constr._2;
+                    if (_x$4.length === 0) {
+                      return;
+                    } else {
+                      break _L$2;
+                    }
                   } else {
                     break _L$2;
                   }
-                }
-              } else {
-                if (t2$2.$tag === 0) {
-                  const _Constr$2 = t2$2;
-                  const _pkg2 = _Constr$2._0;
-                  const _name2 = _Constr$2._1;
-                  const _args2 = _Constr$2._2;
-                  args1 = _x$2;
-                  pkg1 = _x;
-                  name1 = _name;
-                  name2 = _name2;
-                  pkg2 = _pkg2;
-                  args2 = _args2;
-                  break _L$3;
                 } else {
                   break _L$2;
                 }
-              }
-            } else {
-              const _name1 = _Constr._1;
-              const _args1 = _Constr._2;
-              if (t2$2.$tag === 0) {
-                const _Constr$2 = t2$2;
-                const _pkg2 = _Constr$2._0;
-                const _name2 = _Constr$2._1;
-                const _args2 = _Constr$2._2;
-                args1 = _args1;
-                pkg1 = _x;
-                name1 = _name1;
-                name2 = _name2;
-                pkg2 = _pkg2;
-                args2 = _args2;
-                break _L$3;
               } else {
                 break _L$2;
               }
             }
-          }
-          case 1: {
-            const _Option = t1$2;
-            const _t1 = _Option._0;
-            if (t2$2.$tag === 1) {
-              const _Option$2 = t2$2;
-              const _t2 = _Option$2._0;
-              _tmp = _t1;
-              _tmp$2 = _t2;
-              continue _L;
-            } else {
-              break _L$2;
-            }
-          }
-          case 2: {
-            const _Tuple = t1$2;
-            const _types1 = _Tuple._0;
-            if (t2$2.$tag === 2) {
-              const _Tuple$2 = t2$2;
-              const _types2 = _Tuple$2._0;
-              if (_types1.length === _types2.length) {
-                const _len = _types1.length;
-                let _tmp$3 = 0;
-                while (true) {
-                  const _i = _tmp$3;
-                  if (_i < _len) {
-                    const type1 = _types1[_i];
-                    moonbitlang$yacc$lib$desugar$$eliminate_rule_args$46$unify$237$(_env, type1, moonbitlang$core$array$$Array$op_get$23$(_types2, _i));
-                    _tmp$3 = _i + 1 | 0;
-                    continue;
+          } else {
+            const _Some = t1$2;
+            const _x = _Some;
+            switch (_x.$tag) {
+              case 0: {
+                const _Constr = _x;
+                const _x$2 = _Constr._0;
+                if (_x$2 === undefined) {
+                  const _x$3 = _Constr._1;
+                  if (_x$3 === "Unit") {
+                    const _x$4 = _Constr._2;
+                    if (_x$4.length === 0) {
+                      if (t2$2 === undefined) {
+                        return;
+                      } else {
+                        const _Some$2 = t2$2;
+                        const _x$5 = _Some$2;
+                        if (_x$5.$tag === 0) {
+                          const _Constr$2 = _x$5;
+                          const _x$6 = _Constr$2._0;
+                          if (_x$6 === undefined) {
+                            const _x$7 = _Constr$2._1;
+                            if (_x$7 === "Unit") {
+                              const _x$8 = _Constr$2._2;
+                              if (_x$8.length === 0) {
+                                return;
+                              } else {
+                                if (moonbitlang$core$array$$Array$contains$11$(rule.generic_params, _x$3)) {
+                                  name = _x$3;
+                                  t2$3 = _x$5;
+                                  break _L$4;
+                                } else {
+                                  args1 = _x$4;
+                                  pkg1 = _x$2;
+                                  name1 = _x$3;
+                                  name2 = _x$7;
+                                  pkg2 = _x$6;
+                                  args2 = _x$8;
+                                  break _L$3;
+                                }
+                              }
+                            } else {
+                              if (moonbitlang$core$array$$Array$contains$11$(rule.generic_params, _x$3)) {
+                                name = _x$3;
+                                t2$3 = _x$5;
+                                break _L$4;
+                              } else {
+                                const _args2 = _Constr$2._2;
+                                args1 = _x$4;
+                                pkg1 = _x$2;
+                                name1 = _x$3;
+                                name2 = _x$7;
+                                pkg2 = _x$6;
+                                args2 = _args2;
+                                break _L$3;
+                              }
+                            }
+                          } else {
+                            if (moonbitlang$core$array$$Array$contains$11$(rule.generic_params, _x$3)) {
+                              name = _x$3;
+                              t2$3 = _x$5;
+                              break _L$4;
+                            } else {
+                              const _name2 = _Constr$2._1;
+                              const _args2 = _Constr$2._2;
+                              args1 = _x$4;
+                              pkg1 = _x$2;
+                              name1 = _x$3;
+                              name2 = _name2;
+                              pkg2 = _x$6;
+                              args2 = _args2;
+                              break _L$3;
+                            }
+                          }
+                        } else {
+                          if (moonbitlang$core$array$$Array$contains$11$(rule.generic_params, _x$3)) {
+                            name = _x$3;
+                            t2$3 = _x$5;
+                            break _L$4;
+                          } else {
+                            break _L$2;
+                          }
+                        }
+                      }
+                    } else {
+                      if (t2$2 === undefined) {
+                        break _L$2;
+                      } else {
+                        const _Some$2 = t2$2;
+                        const _x$5 = _Some$2;
+                        if (_x$5.$tag === 0) {
+                          const _Constr$2 = _x$5;
+                          const _pkg2 = _Constr$2._0;
+                          const _name2 = _Constr$2._1;
+                          const _args2 = _Constr$2._2;
+                          args1 = _x$4;
+                          pkg1 = _x$2;
+                          name1 = _x$3;
+                          name2 = _name2;
+                          pkg2 = _pkg2;
+                          args2 = _args2;
+                          break _L$3;
+                        } else {
+                          break _L$2;
+                        }
+                      }
+                    }
                   } else {
-                    return;
+                    const _x$4 = _Constr._2;
+                    if (_x$4.length === 0) {
+                      if (t2$2 === undefined) {
+                        break _L$2;
+                      } else {
+                        const _Some$2 = t2$2;
+                        const _t2 = _Some$2;
+                        if (moonbitlang$core$array$$Array$contains$11$(rule.generic_params, _x$3)) {
+                          name = _x$3;
+                          t2$3 = _t2;
+                          break _L$4;
+                        } else {
+                          if (_t2.$tag === 0) {
+                            const _Constr$2 = _t2;
+                            const _pkg2 = _Constr$2._0;
+                            const _name2 = _Constr$2._1;
+                            const _args2 = _Constr$2._2;
+                            args1 = _x$4;
+                            pkg1 = _x$2;
+                            name1 = _x$3;
+                            name2 = _name2;
+                            pkg2 = _pkg2;
+                            args2 = _args2;
+                            break _L$3;
+                          } else {
+                            break _L$2;
+                          }
+                        }
+                      }
+                    } else {
+                      if (t2$2 === undefined) {
+                        break _L$2;
+                      } else {
+                        const _Some$2 = t2$2;
+                        const _x$5 = _Some$2;
+                        if (_x$5.$tag === 0) {
+                          const _Constr$2 = _x$5;
+                          const _pkg2 = _Constr$2._0;
+                          const _name2 = _Constr$2._1;
+                          const _args2 = _Constr$2._2;
+                          args1 = _x$4;
+                          pkg1 = _x$2;
+                          name1 = _x$3;
+                          name2 = _name2;
+                          pkg2 = _pkg2;
+                          args2 = _args2;
+                          break _L$3;
+                        } else {
+                          break _L$2;
+                        }
+                      }
+                    }
+                  }
+                } else {
+                  const _name1 = _Constr._1;
+                  const _args1 = _Constr._2;
+                  if (t2$2 === undefined) {
+                    break _L$2;
+                  } else {
+                    const _Some$2 = t2$2;
+                    const _x$3 = _Some$2;
+                    if (_x$3.$tag === 0) {
+                      const _Constr$2 = _x$3;
+                      const _pkg2 = _Constr$2._0;
+                      const _name2 = _Constr$2._1;
+                      const _args2 = _Constr$2._2;
+                      args1 = _args1;
+                      pkg1 = _x$2;
+                      name1 = _name1;
+                      name2 = _name2;
+                      pkg2 = _pkg2;
+                      args2 = _args2;
+                      break _L$3;
+                    } else {
+                      break _L$2;
+                    }
                   }
                 }
-              } else {
-                $panic();
-                return;
               }
-            } else {
-              break _L$2;
-            }
-          }
-          default: {
-            const _Arrow = t1$2;
-            const _params1 = _Arrow._0;
-            const _ret1 = _Arrow._1;
-            if (t2$2.$tag === 3) {
-              const _Arrow$2 = t2$2;
-              const _params2 = _Arrow$2._0;
-              const _ret2 = _Arrow$2._1;
-              if (_params1.length === _params2.length) {
-                const _len = _params1.length;
-                let _tmp$3 = 0;
-                while (true) {
-                  const _i = _tmp$3;
-                  if (_i < _len) {
-                    const param1 = _params1[_i];
-                    moonbitlang$yacc$lib$desugar$$eliminate_rule_args$46$unify$237$(_env, param1, moonbitlang$core$array$$Array$op_get$23$(_params2, _i));
-                    _tmp$3 = _i + 1 | 0;
-                    continue;
+              case 1: {
+                const _Option = _x;
+                const _t1 = _Option._0;
+                if (t2$2 === undefined) {
+                  break _L$2;
+                } else {
+                  const _Some$2 = t2$2;
+                  const _x$3 = _Some$2;
+                  if (_x$3.$tag === 1) {
+                    const _Option$2 = _x$3;
+                    const _t2 = _Option$2._0;
+                    _tmp = _t1;
+                    _tmp$2 = _t2;
+                    continue _L;
                   } else {
-                    break;
+                    break _L$2;
                   }
                 }
-                _tmp = _ret1;
-                _tmp$2 = _ret2;
-                continue _L;
-              } else {
-                $panic();
-                return;
               }
-            } else {
-              break _L$2;
+              case 2: {
+                const _Tuple = _x;
+                const _types1 = _Tuple._0;
+                if (t2$2 === undefined) {
+                  break _L$2;
+                } else {
+                  const _Some$2 = t2$2;
+                  const _x$3 = _Some$2;
+                  if (_x$3.$tag === 2) {
+                    const _Tuple$2 = _x$3;
+                    const _types2 = _Tuple$2._0;
+                    if (_types1.length === _types2.length) {
+                      const _len = _types1.length;
+                      let _tmp$3 = 0;
+                      while (true) {
+                        const _i = _tmp$3;
+                        if (_i < _len) {
+                          const type1 = _types1[_i];
+                          moonbitlang$yacc$lib$desugar$$eliminate_rule_args$46$unify$237$(_env, type1, moonbitlang$core$array$$Array$op_get$23$(_types2, _i));
+                          _tmp$3 = _i + 1 | 0;
+                          continue;
+                        } else {
+                          return;
+                        }
+                      }
+                    } else {
+                      $panic();
+                      return;
+                    }
+                  } else {
+                    break _L$2;
+                  }
+                }
+              }
+              default: {
+                const _Arrow = _x;
+                const _params1 = _Arrow._0;
+                const _ret1 = _Arrow._1;
+                if (t2$2 === undefined) {
+                  break _L$2;
+                } else {
+                  const _Some$2 = t2$2;
+                  const _x$3 = _Some$2;
+                  if (_x$3.$tag === 3) {
+                    const _Arrow$2 = _x$3;
+                    const _params2 = _Arrow$2._0;
+                    const _ret2 = _Arrow$2._1;
+                    if (_params1.length === _params2.length) {
+                      const _len = _params1.length;
+                      let _tmp$3 = 0;
+                      while (true) {
+                        const _i = _tmp$3;
+                        if (_i < _len) {
+                          const param1 = _params1[_i];
+                          moonbitlang$yacc$lib$desugar$$eliminate_rule_args$46$unify$237$(_env, param1, moonbitlang$core$array$$Array$op_get$23$(_params2, _i));
+                          _tmp$3 = _i + 1 | 0;
+                          continue;
+                        } else {
+                          break;
+                        }
+                      }
+                      _tmp = _ret1;
+                      _tmp$2 = _ret2;
+                      continue _L;
+                    } else {
+                      $panic();
+                      return;
+                    }
+                  } else {
+                    break _L$2;
+                  }
+                }
+              }
             }
           }
         }
+        moonbitlang$core$builtin$$Map$op_set$128$(generic_param_map, name, t2$3);
+        return;
       }
       if (moonbitlang$core$builtin$$Eq$op_equal$65$(pkg1, pkg2) && (name1 === name2 && args1.length === args2.length)) {
         const _len = args1.length;
@@ -20953,25 +21128,25 @@ function moonbitlang$yacc$lib$desugar$$eliminate_rule_args$46$specialize_rule$23
     if (_i < _len$2) {
       const param = _arr$2[_i];
       const arg = moonbitlang$core$array$$Array$op_get$112$(args, _i);
-      const _tmp$3 = moonbitlang$core$option$$Option$unwrap$23$(param._1);
+      const _tmp$3 = param._1;
       let _tmp$4;
       switch (arg.$tag) {
         case 0: {
           const _Token = arg;
           const _token = _Token._0;
-          _tmp$4 = moonbitlang$core$option$$Option$or$23$(_token.type_, new $64$moonbitlang$47$yacc$47$lib$47$elab$46$TypeExpr$Constr(undefined, "Unit", []));
+          _tmp$4 = _token.type_;
           break;
         }
         case 1: {
           const _Param = arg;
           const _type_ = _Param._1;
-          _tmp$4 = moonbitlang$core$option$$Option$or$23$(_type_, new $64$moonbitlang$47$yacc$47$lib$47$elab$46$TypeExpr$Constr(undefined, "Unit", []));
+          _tmp$4 = _type_;
           break;
         }
         default: {
           const _RuleCall = arg;
           const _rule = _RuleCall._0;
-          _tmp$4 = moonbitlang$core$option$$Option$or$23$(_rule.type_, new $64$moonbitlang$47$yacc$47$lib$47$elab$46$TypeExpr$Constr(undefined, "Unit", []));
+          _tmp$4 = _rule.type_;
         }
       }
       moonbitlang$yacc$lib$desugar$$eliminate_rule_args$46$unify$237$(_env, _tmp$3, _tmp$4);
