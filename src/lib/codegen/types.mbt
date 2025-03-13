@@ -40,7 +40,7 @@ pub(all) struct ProductionMeta {
 
 ///|
 pub(all) struct TerminalMeta {
-  data_type : @elab.TypeExpr?
+  data_type : @elab.TypeExpr
   image : String?
 }
 

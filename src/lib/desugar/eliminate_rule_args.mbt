@@ -32,12 +32,8 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
       param_map[param.0] = process_term(args[index])
     }
     let generic_param_map : Map[String, @elab.TypeExpr] = {}
-    fn unify(t1 : @elab.TypeExpr?, t2 : @elab.TypeExpr?) -> Unit {
-      match
-        (
-          t1.or(Constr(pkg=None, "Unit", [])),
-          t2.or(Constr(pkg=None, "Unit", [])),
-        ) {
+    fn unify(t1 : @elab.TypeExpr, t2 : @elab.TypeExpr) -> Unit {
+      match (t1, t2) {
         (Constr(pkg=None, name, []), t2) if rule.generic_params.contains(name) =>
           generic_param_map[name] = t2
         (Constr(pkg=pkg1, name1, args1), Constr(pkg=pkg2, name2, args2)) => {
@@ -47,22 +43,22 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
             panic()
           }
           for index, arg1 in args1 {
-            unify(Some(arg1), Some(args2[index]))
+            unify(arg1, args2[index])
           }
         }
-        (Option(t1), Option(t2)) => unify(Some(t1), Some(t2))
+        (Option(t1), Option(t2)) => unify(t1, t2)
         (Tuple(types1), Tuple(types2)) => {
           guard types1.length() == types2.length() else { panic() }
           for index, type1 in types1 {
-            unify(Some(type1), Some(types2[index]))
+            unify(type1, types2[index])
           }
         }
         (Arrow(params1, ret1), Arrow(params2, ret2)) => {
           guard params1.length() == params2.length() else { panic() }
           for index, param1 in params1 {
-            unify(Some(param1), Some(params2[index]))
+            unify(param1, params2[index])
           }
-          unify(Some(ret1), Some(ret2))
+          unify(ret1, ret2)
         }
         _ => panic()
       }
@@ -90,10 +86,7 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
       }
     }
 
-    let type_ = match rule.type_ {
-      None => None
-      Some(type_) => Some(process_type(type_))
-    }
+    let type_ = process_type(rule.type_)
     let clauses = rule.clauses.copy()
     defer.push(fn() {
       for index, clause in clauses {

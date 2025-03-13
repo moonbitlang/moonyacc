@@ -110,9 +110,7 @@ pub fn compile(
   let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = {}
   let productions = []
   let starts : Array[String] = spec.start_rules.map(fn(rule) { rule.name })
-  let position_data_type = spec.position_type.or(
-    Constr(pkg=None, generator.void_type(), []),
-  )
+  let position_data_type = spec.position_type
   let derive_map = spec.derive_map
   for token in spec.tokens {
     let terminal = get_terminal_by_name(token.name)
@@ -128,7 +126,7 @@ pub fn compile(
         terminals,
         fn(name) {
           terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {
-            { data_type: None, image: None }
+            { data_type: Constr(pkg=None, "Unit", []), image: None }
           })
         },
         output,
@@ -141,17 +139,7 @@ pub fn compile(
   }
   for rule in spec.rules {
     let lhs = get_nonterminal_by_name(rule.name)
-    match rule.type_ {
-      Some(type_) => nonterminal_meta_map[lhs.num] = { data_type: type_ }
-      None =>
-        match nonterminal_meta_map[lhs.num] {
-          Some(_) => ()
-          None =>
-            nonterminal_meta_map[lhs.num] = {
-              data_type: Constr(pkg=None, generator.void_type(), []),
-            }
-        }
-    }
+    nonterminal_meta_map[lhs.num] = { data_type: rule.type_ }
     for clause in rule.clauses {
       let production_num = productions.length()
       let production : @grm.Production = {
@@ -213,7 +201,7 @@ pub fn compile(
     position_data_type,
     terminal_meta: fn(name) {
       terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {
-        { data_type: None, image: None }
+        { data_type: Constr(pkg=None, "Unit", []), image: None }
       })
     },
     nonterminal_meta: fn(name) {

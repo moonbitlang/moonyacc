@@ -69,7 +69,7 @@ pub(all) struct ParserSpec {
   tokens : Array[Token]
   rules : Array[Rule]
   start_rules : Array[Rule]
-  position_type : TypeExpr?
+  position_type : TypeExpr
   derive_map : @array_multimap.T[String, TypeExpr]
 }
 
@@ -77,7 +77,7 @@ pub(all) struct ParserSpec {
 pub(all) struct Token {
   name : String
   mut prec : (Int, Associativity)?
-  mut type_ : TypeExpr?
+  mut type_ : TypeExpr
   mut image : String?
 }
 
@@ -89,8 +89,8 @@ pub(all) struct Rule {
   name : Symbol
   inline : Bool
   generic_params : Array[String]
-  params : Array[(String, TypeExpr?)]
-  mut type_ : TypeExpr?
+  params : Array[(String, TypeExpr)]
+  mut type_ : TypeExpr
   clauses : Array[Clause]
 }
 
@@ -105,7 +105,7 @@ pub(all) struct Clause {
 pub(all) struct Action {
   stamp : @stamp.Stamp
   arity : Int
-  type_ : TypeExpr?
+  type_ : TypeExpr
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, Code)]
   body : Array[(String, (Int, Int)?)] // array of (code, (utf8_pos, utf8_len)?)
@@ -120,12 +120,12 @@ pub(all) struct SubAction {
 
 ///|
 pub(all) enum BindingSubject {
-  Data(Int, type_~ : TypeExpr?)
+  Data(Int, type_~ : TypeExpr)
   LastPos
   StartPos(Int)
   EndPos(Int)
   SymbolStartPos
-  SubAction(start~ : Int, type_~ : TypeExpr?)
+  SubAction(start~ : Int, type_~ : TypeExpr)
 }
 
 ///|
@@ -137,12 +137,12 @@ pub(all) struct Item {
 ///|
 pub(all) enum Term {
   Token(Token)
-  Param(String, TypeExpr?)
+  Param(String, TypeExpr)
   RuleCall(Rule, Array[Term])
 }
 
 ///|
-pub fn Item::type_(self : Item) -> TypeExpr? {
+pub fn Item::type_(self : Item) -> TypeExpr {
   match self.term {
     Token(token) => token.type_
     Param(_, type_) => type_

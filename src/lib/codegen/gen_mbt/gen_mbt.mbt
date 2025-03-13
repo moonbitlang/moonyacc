@@ -102,19 +102,19 @@ fn codegen_tokens(
     ,
   )
   for term in terminals {
-    match terminal_meta(term.name).data_type {
-      Some(data_type) =>
-        output.write_string(
-          $|  \{term.name}(\{data_type})
-          $|
-          ,
-        )
-      None =>
-        output.write_string(
-          $|  \{term.name}
-          $|
-          ,
-        )
+    let meta = terminal_meta(term.name)
+    if meta.data_type is Constr(pkg=None, "Unit", []) {
+      output.write_string(
+        $|  \{term.name}
+        $|
+        ,
+      )
+    } else {
+      output.write_string(
+        $|  \{term.name}(\{meta.data_type})
+        $|
+        ,
+      )
     }
   }
   output.write_string(
@@ -126,19 +126,19 @@ fn codegen_tokens(
     ,
   )
   for term in terminals {
-    match terminal_meta(term.name).data_type {
-      Some(_) =>
-        output.write_string(
-          $|    \{term.name}(_) => TK_\{term.name}
-          $|
-          ,
-        )
-      None =>
-        output.write_string(
-          $|    \{term.name} => TK_\{term.name}
-          $|
-          ,
-        )
+    let meta = terminal_meta(term.name)
+    if meta.data_type is Constr(pkg=None, "Unit", []) {
+      output.write_string(
+        $|    \{term.name} => TK_\{term.name}
+        $|
+        ,
+      )
+    } else {
+      output.write_string(
+        $|    \{term.name}(_) => TK_\{term.name}
+        $|
+        ,
+      )
     }
   }
   output.write_string(
@@ -282,9 +282,10 @@ fn codegen(
       let data_types = @sorted_set.new()
       for term in grammar.terminals {
         let meta = terminal_meta(term.name)
-        match meta.data_type {
-          Some(data_type) => data_types.add(data_type)
-          None => ()
+        if meta.data_type is Constr(pkg=None, "Unit", []) {
+          ()
+        } else {
+          data_types.add(meta.data_type)
         }
       }
       for nonterm in grammar.nonterminals {
@@ -421,7 +422,7 @@ fn codegen(
     for binding in action.bindings {
       match binding.0 {
         Data(index, type_~) => {
-          let data_type = type_.or(Constr(pkg=None, "Unit", []))
+          let data_type = type_
           output.write_string(
             $|  guard _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
             $|
@@ -462,7 +463,7 @@ fn codegen(
           )
         }
         SubAction(start~, type_~) => {
-          let data_type = type_.or(Constr(pkg=None, "Unit", []))
+          let data_type = type_
           output.write_string(
             $|  guard _sub_action_\{start}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
             $|
@@ -471,7 +472,7 @@ fn codegen(
         }
       }
     }
-    let result_data_type = action.type_.or(Constr(pkg=None, "Unit", []))
+    let result_data_type = action.type_
     output.write_string("  YYObj_\{derive_type_ident(result_data_type)}({(); ")
     for part in action.body {
       let (code, original_range) = part
@@ -517,28 +518,29 @@ fn codegen(
     let meta = terminal_meta(term.name)
     match mode {
       Default =>
-        match meta.data_type {
-          Some(data_type) =>
-            output.write_string(
-              $|    \{term.name}(data) => (T_\{term.name}, YYObj_\{derive_type_ident(data_type)}(data))
-              $|
-              ,
-            )
-          None =>
-            output.write_string(
-              $|    \{term.name} => (T_\{term.name}, YYObj_Void)
-              $|
-              ,
-            )
+        if meta.data_type is Constr(pkg=None, "Unit", []) {
+          output.write_string(
+            $|    \{term.name} => (T_\{term.name}, YYObj_Void)
+            $|
+            ,
+          )
+        } else {
+          output.write_string(
+            $|    \{term.name}(data) => (T_\{term.name}, YYObj_\{derive_type_ident(meta.data_type)}(data))
+            $|
+            ,
+          )
         }
       JsonCst(_) => {
-        let payload_code = match meta.data_type {
-          Some(_) => "(data)"
-          None => ""
+        let payload_code = if meta.data_type is Constr(pkg=None, "Unit", []) {
+          ""
+        } else {
+          "(data)"
         }
-        let data_code = match meta.data_type {
-          Some(_) => "data.to_json()"
-          None => "Null"
+        let data_code = if meta.data_type is Constr(pkg=None, "Unit", []) {
+          "Null"
+        } else {
+          "data.to_json()"
         }
         output.write_string(
           $|    \{term.name}\{payload_code} => (T_\{term.name}, YYObj_Json({

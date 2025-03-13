@@ -40,7 +40,12 @@ pub fn elaborate(
     match token_by_name.get(name) {
       Some(t) => t
       None => {
-        let token : Token = { name, type_: None, image: None, prec: None }
+        let token : Token = {
+          name,
+          type_: Constr(pkg=None, "Unit", []),
+          image: None,
+          prec: None,
+        }
         token_by_name[name] = token
         tokens.push(token)
         token
@@ -54,11 +59,15 @@ pub fn elaborate(
       Token(names, type_~, ..) =>
         for name in names {
           let token = get_token_by_name(name)
-          token.type_ = type_.map(elaborate_type_expr)
+          token.type_ = type_
+            .map(elaborate_type_expr)
+            .or(Constr(pkg=None, "Unit", []))
         }
       Token1(name, type_~, image~) => {
         let token = get_token_by_name(name)
-        token.type_ = type_.map(elaborate_type_expr)
+        token.type_ = type_
+          .map(elaborate_type_expr)
+          .or(Constr(pkg=None, "Unit", []))
         token.image = Some(image)
         token_by_image[image] = token
       }
@@ -73,9 +82,14 @@ pub fn elaborate(
       name: ast_rule.nonterminal,
       generic_params: ast_rule.generic_params,
       params: ast_rule.params.map(fn(param) {
-        (param.0, param.1.map(elaborate_type_expr))
+        (
+          param.0,
+          param.1.map(elaborate_type_expr).or(Constr(pkg=None, "Unit", [])),
+        )
       }),
-      type_: ast_rule.type_.map(elaborate_type_expr),
+      type_: ast_rule.type_
+      .map(elaborate_type_expr)
+      .or(Constr(pkg=None, "Unit", [])),
       clauses: [],
     }
     rules.push(rule)
@@ -108,9 +122,9 @@ pub fn elaborate(
             None =>
               match rule_by_name[ident] {
                 None => panic()
-                Some(rule) => rule.type_ = Some(elaborate_type_expr(type_))
+                Some(rule) => rule.type_ = elaborate_type_expr(type_)
               }
-            Some(token) => token.type_ = Some(elaborate_type_expr(type_))
+            Some(token) => token.type_ = elaborate_type_expr(type_)
           }
         }
       _ => ()
@@ -118,7 +132,7 @@ pub fn elaborate(
   }
   fn map_term(
     ast_term : @parser.Term,
-    rule_param_map : Map[String, TypeExpr?]
+    rule_param_map : Map[String, TypeExpr]
   ) -> Term {
     match ast_term {
       Symbol(symbol) =>
@@ -143,9 +157,9 @@ pub fn elaborate(
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     rule.type_ = match json_cst {
       No => rule.type_
-      Yes(_) => Some(Constr(pkg=None, "Json", []))
+      Yes(_) => Constr(pkg=None, "Json", [])
     }
-    let rule_param_map : Map[String, TypeExpr?] = Map::from_array(rule.params)
+    let rule_param_map : Map[String, TypeExpr] = Map::from_array(rule.params)
     for clause_index, ast_clause in ast_rule.clauses {
       let items = ast_clause.items.map(fn(ast_item) {
         Item::{
@@ -198,7 +212,7 @@ pub fn elaborate(
     }
   }
   let start_rules : Array[Rule] = []
-  let mut position_type : TypeExpr? = None
+  let mut position_type : TypeExpr = Constr(pkg=None, "Unit", [])
   let derive_map = @array_multimap.new()
   for ast_decl in ast_spec.decls {
     match ast_decl {
@@ -206,7 +220,7 @@ pub fn elaborate(
         for symbol in symbols {
           start_rules.push(rule_by_name[symbol].unwrap())
         }
-      Position(type_~) => position_type = Some(elaborate_type_expr(type_))
+      Position(type_~) => position_type = elaborate_type_expr(type_)
       Derive(traits~, type_~) =>
         for trait_ in traits {
           derive_map.add(type_, elaborate_type_expr(trait_))
@@ -222,7 +236,7 @@ pub fn elaborate(
     Yes(rewrite) => {
       header = None
       trailer = None
-      position_type = Some(Constr(pkg=None, "Int", []))
+      position_type = Constr(pkg=None, "Int", [])
       match rewrite {
         None => ()
         Some(_) => derive_map.add("Token", Constr(pkg=None, "Show", []))
@@ -233,11 +247,11 @@ pub fn elaborate(
     No | Yes(None) => ()
     Yes(Some(NoPayload)) =>
       for token in tokens {
-        token.type_ = None
+        token.type_ = Constr(pkg=None, "Unit", [])
       }
     Yes(Some(JsonPayload)) =>
       for token in tokens {
-        token.type_ = Some(Constr(pkg=None, "Json", []))
+        token.type_ = Constr(pkg=None, "Json", [])
       }
   }
   ParserSpec::{
@@ -258,7 +272,7 @@ fn elaborate_action(
   rule_index~ : Int,
   clause_index~ : Int,
   nonterminal_name~ : String,
-  type_~ : TypeExpr?,
+  type_~ : TypeExpr,
   json_cst~ : JsonCst
 ) -> Action {
   let arity = items.length()
