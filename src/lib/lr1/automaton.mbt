@@ -149,7 +149,7 @@ pub(all) struct Automaton {
 }
 
 ///|
-pub fn Automaton::build(grammar : @grm.Grammar) -> Automaton {
+pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
   let closure : (Iter[(EncodedLR0Item, EncodedSymbolicLookaheadSet)]) -> Array[
     (EncodedLR0Item, EncodedSymbolicLookaheadSet),
   ] = build_closure_fn(grammar)
@@ -290,7 +290,8 @@ pub fn Automaton::build(grammar : @grm.Grammar) -> Automaton {
 
   fn fuse(family : Array[LR1PreState], candidate : LR1PreState) -> Unit {
     for state in family {
-      if state.items.weak_compat(candidate.items) {
+      if state.items.weak_compat(candidate.items) &&
+        (if user_eoi { state.items.eoi_compact(candidate.items) } else { true }) {
         let new_state = LR1PreState::{
           items: candidate.items.merge(state.items),
           state: None,

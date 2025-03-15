@@ -31,7 +31,7 @@ pub fn parse(
   input_provider : InputProvider,
   action_provider : ProductionActionProvider
 ) -> Obj {
-  let automaton = @lr1.Automaton::build(grammar)
+  let automaton = @lr1.Automaton::build(grammar, user_eoi=false)
   let state_stack = []
   let data_stack = []
   fn read_as_input() -> (@lr1.Lookahead, Obj) {

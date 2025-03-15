@@ -135,3 +135,26 @@ fn EncodedLR1ItemSet::weak_compat(
   }
   true
 }
+
+///|
+fn EncodedLR1ItemSet::eoi_compact(
+  self : EncodedLR1ItemSet,
+  other : EncodedLR1ItemSet
+) -> Bool {
+  guard self.core == other.core
+  let len = self.kernel_lookahead_set_table.length()
+  for i in 0..<len {
+    let la_set1 = self.kernel_lookahead_set_table[i]
+    let la_set2 = other.kernel_lookahead_set_table[i]
+    if la_set1.is_singleton(EndOfInput) {
+      if not(la_set2.is_singleton(EndOfInput)) {
+        return false
+      }
+    } else if la_set2.is_singleton(EndOfInput) {
+      if not(la_set1.is_singleton(EndOfInput)) {
+        return false
+      }
+    }
+  }
+  true
+}

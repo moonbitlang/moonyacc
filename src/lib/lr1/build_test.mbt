@@ -39,7 +39,7 @@ fn test_grammar(
       it.write("`\n")
     }
   }
-  let automaton = @lr1.Automaton::build(grammar)
+  let automaton = @lr1.Automaton::build(grammar, user_eoi=false)
   it.write("## states\n")
   for state in automaton.states {
     it.write("### state ")

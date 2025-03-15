@@ -23,6 +23,19 @@ fn EncodedLookaheadSet::is_empty(self : EncodedLookaheadSet) -> Bool {
 }
 
 ///|
+fn EncodedLookaheadSet::is_singleton(
+  self : EncodedLookaheadSet,
+  key : Lookahead
+) -> Bool {
+  self._.is_singleton(
+    match key {
+      EndOfInput => 0
+      Input(key) => key.num + 1
+    },
+  )
+}
+
+///|
 fn EncodedLookaheadSet::contains(
   self : EncodedLookaheadSet,
   lookahead : Lookahead

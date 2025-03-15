@@ -41,6 +41,13 @@ pub fn is_empty(self : SmallIntSet) -> Bool {
 }
 
 ///|
+pub fn is_singleton(self : SmallIntSet, key : Int) -> Bool {
+  self._.length() == 2 &&
+  self._[0] == (1 << (key >> 5)) &&
+  self._[1] == (1 << (key & 31))
+}
+
+///|
 pub impl Hash for SmallIntSet with hash_combine(self, hasher) {
   for x in self._ {
     hasher.combine_int(x)

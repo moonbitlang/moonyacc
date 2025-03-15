@@ -180,7 +180,7 @@ pub fn compile(
     production
   })
   let grammar : @grm.Grammar = { terminals, nonterminals, productions, starts }
-  let automaton = @lr1.Automaton::build(grammar)
+  let automaton = @lr1.Automaton::build(grammar, user_eoi=input_mode is Pull)
   let errors = @lr1.resolve_conflicts(automaton.conflicts)
   for error in errors {
     // TODO: detailed error message

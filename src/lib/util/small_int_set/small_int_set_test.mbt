@@ -465,3 +465,29 @@ test "@small_int_set.subset" {
   inspect!(@small_int_set.subset(large_set1, large_set2), content="true")
   inspect!(@small_int_set.subset(large_set2, large_set1), content="false")
 }
+
+///|
+test "@small_int_set.is_singleton" {
+  // Test with empty set
+  let empty = @small_int_set.empty()
+  inspect!(empty.is_singleton(0), content="false")
+
+  // Test with singleton set
+  let single = @small_int_set.singleton(42)
+  inspect!(single.is_singleton(42), content="true")
+  inspect!(single.is_singleton(0), content="false")
+
+  // Test with multiple elements
+  let multi = @small_int_set.singleton(1).add(2)
+  inspect!(multi.is_singleton(1), content="false")
+  inspect!(multi.is_singleton(2), content="false")
+}
+
+///|
+test "@small_int_set.is_singleton/boundary" {
+  // Test with boundary values for word index and bit position
+  let max_word = @small_int_set.singleton(31) // last bit in first word
+  inspect!(max_word.is_singleton(31), content="true")
+  let min_next_word = @small_int_set.singleton(32) // first bit in second word
+  inspect!(min_next_word.is_singleton(32), content="true")
+}
