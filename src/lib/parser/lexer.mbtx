@@ -26,6 +26,7 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
       token!(phase, lexbuf)
     }
     "/*" ([^ '/'] | "/" [^ '*'])* "*/" => { token!(phase, lexbuf) }
+    "//" [^ '\n']* '\n'? => { token!(phase, lexbuf) }
     "@" (ident ("/" ident)* as pkg) "." (ident as id) as t => { (PKG_AND_IDENT((pkg, id)), $startpos(t), $endpos(t)) }
     ident as t => { (IDENT(t), $startpos(t), $endpos(t)) }
     "%start" as t => { (PERCENT_START, $startpos(t), $endpos(t)) }
