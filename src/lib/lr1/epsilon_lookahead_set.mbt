@@ -19,6 +19,11 @@ priv struct EpsilonLookaheadSet[T] {
 }
 
 ///|
+impl[T : Eq] Eq for EpsilonLookaheadSet[T] with op_equal(self, other) {
+  self.set == other.set && self.nullable == other.nullable
+}
+
+///|
 fn EpsilonLookaheadSet::union[T : AbstractLookaheadSet](
   set1 : EpsilonLookaheadSet[T],
   set2 : EpsilonLookaheadSet[T]

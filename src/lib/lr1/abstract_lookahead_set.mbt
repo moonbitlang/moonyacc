@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-trait AbstractLookaheadSet {
+trait AbstractLookaheadSet : Eq {
   empty() -> Self
   singleton(Lookahead) -> Self
   union(Self, Self) -> Self

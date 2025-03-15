@@ -12,13 +12,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
+// TODO: test this
+
 ///|
 fn compute_first_fn[T : AbstractLookaheadSet](
   grammar : @grm.Grammar
 ) -> (ArrayView[@grm.Symbol]) -> EpsilonLookaheadSet[T] {
-  let nt_first_map : Array[EpsilonLookaheadSet[T]?] = Array::make(
+  let nt_first_map : Array[EpsilonLookaheadSet[T]] = Array::make(
     grammar.nonterminals.length(),
-    None,
+    { set: T::empty(), nullable: false },
   )
   fn first(symbols : ArrayView[@grm.Symbol]) {
     match symbols {
@@ -26,23 +28,26 @@ fn compute_first_fn[T : AbstractLookaheadSet](
       [symbol, .. rest] =>
         (match symbol {
           T(t) => { set: T::singleton(Input(t)), nullable: false }
-          NT(nt) =>
-            match nt_first_map[nt.num] {
-              Some(set) => set
-              None => {
-                nt_first_map[nt.num] = Some({ set: T::empty(), nullable: false })
-                let set = nt.productions.fold(
-                  init={ set: T::empty(), nullable: false },
-                  fn(acc, p) { acc.union(first(p.rhs[:])) },
-                )
-                nt_first_map[nt.num] = Some(set)
-                set
-              }
-            }
+          NT(nt) => nt_first_map[nt.num]
         }) +
         first(rest)
     }
   }
 
+  let mut fixedpoint_reached = false
+  while not(fixedpoint_reached) {
+    fixedpoint_reached = true
+    for nt in grammar.nonterminals {
+      let old_set = nt_first_map[nt.num]
+      let new_set = nt.productions.fold(
+        init={ set: T::empty(), nullable: false },
+        fn(acc, p) { acc.union(first(p.rhs[:])) },
+      )
+      if not(old_set == new_set) {
+        fixedpoint_reached = false
+        nt_first_map[nt.num] = new_set
+      }
+    }
+  }
   first
 }

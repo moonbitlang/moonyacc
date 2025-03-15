@@ -25,6 +25,11 @@ let _empty : EncodedSymbolicLookaheadSet = {
 }
 
 ///|
+impl Eq for EncodedSymbolicLookaheadSet with op_equal(self, other) {
+  self.concrete_set == other.concrete_set && self.vars == other.vars
+}
+
+///|
 impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with empty() {
   _empty
 }
