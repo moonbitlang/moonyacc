@@ -275,7 +275,6 @@ pub fn Automaton::build(grammar : @grm.Grammar) -> Automaton {
       state: None,
     }
     families[start_state.items.core.num].push(start_state)
-    next_state_num += 1
     starts.push((start_production, start_state))
     queue.push(start_state)
   }
@@ -296,7 +295,6 @@ pub fn Automaton::build(grammar : @grm.Grammar) -> Automaton {
           items: candidate.items.merge(state.items),
           state: None,
         }
-        next_state_num += 1
         match family.search_by(fn(it) { physical_equal(it, state) }) {
           Some(index) => family.remove(index) |> ignore
           None => ()
@@ -323,7 +321,6 @@ pub fn Automaton::build(grammar : @grm.Grammar) -> Automaton {
         items: { core: target_node, kernel_lookahead_set_table },
         state: None,
       }
-      next_state_num += 1
       examine(target_state)
     }
   }
