@@ -117,10 +117,10 @@ let parser_spec_src : String =
   #|
   #|type_expr -> TypeExpr
   #|  : postfix_type_expr { $1 }
-  #|  | "(" ")" "->" postfix_type_expr { Arrow([], $4) }
-  #|  | "(" type_expr ")" "->" postfix_type_expr { Arrow([$2], $5) }
-  #|  | "(" type_expr "," ")" "->" postfix_type_expr { Arrow([$2], $6) }
-  #|  | "(" type_expr "," nonempty_type_expr_list ")" "->" postfix_type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
+  #|  | "(" ")" "->" type_expr { Arrow([], $4) }
+  #|  | "(" type_expr ")" "->" type_expr { Arrow([$2], $5) }
+  #|  | "(" type_expr "," ")" "->" type_expr { Arrow([$2], $6) }
+  #|  | "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
   #|  ;
   #|
   #|postfix_type_expr -> TypeExpr
