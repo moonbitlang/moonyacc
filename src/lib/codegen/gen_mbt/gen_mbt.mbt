@@ -407,7 +407,7 @@ fn codegen(
       ,
     )
     for sub_action in action.sub_actions {
-      let { start, end, action: action2, .. } = sub_action
+      let { start, end, action: action2 } = sub_action
       let last_pos_code = if start == 0 {
         "_last_pos"
       } else {

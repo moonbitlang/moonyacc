@@ -56,7 +56,7 @@ pub fn elaborate(
   // Prepare tokens
   for ast_decl in ast_spec.decls {
     match ast_decl {
-      Token(names, type_~, ..) =>
+      Token(names, type_~) =>
         for name in names {
           let token = get_token_by_name(name)
           token.type_ = type_
