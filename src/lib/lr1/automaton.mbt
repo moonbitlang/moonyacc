@@ -86,9 +86,9 @@ priv struct LR1PreState {
 ///|
 pub(all) struct LR1State {
   // Used for decoding the LR1ItemSet
-  priv grammar : @grm.Grammar
+  grammar : @grm.Grammar
   mut num : Int
-  priv items : EncodedLR1ItemSet
+  items : EncodedLR1ItemSet
   goto : @sorted_map.T[@grm.Symbol, LR1State]
   action : @sorted_map.T[Lookahead, Decision]
   mut stamp : @stamp.T
