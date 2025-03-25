@@ -33,7 +33,7 @@ fn array_to_or_list(arr : ArrayView[String]) -> String {
     [] => panic()
     [x] => x
     [.. xs, x] => {
-      let left = String::concat([..xs], separator=", ")
+      let left = @string.concat([..xs], separator=", ")
       "\{left} or \{x}"
     }
   }
