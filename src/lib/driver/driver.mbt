@@ -68,7 +68,6 @@ pub fn compile(
       Default | OnlyTokens => No
     },
   )
-  let spec = @desugar.eliminate_rule_args(spec)
   let spec = @desugar.eliminate_inline(spec)
   let terminals = []
   let nonterminals = []
@@ -88,9 +87,9 @@ pub fn compile(
     terminal_by_name[token.name] = terminal
     terminals.push(terminal)
   }
-  for rule in spec.rules {
+  for rule_name, rule in spec.rules {
     let nonterminal : @grm.Nonterminal = {
-      name: rule.name,
+      name: rule_name,
       num: nonterminals.length(),
       productions: [],
     }
@@ -109,7 +108,7 @@ pub fn compile(
   let terminal_meta_map : Map[Int, @codegen.TerminalMeta] = {}
   let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = {}
   let productions = []
-  let starts : Array[String] = spec.start_rules.map(fn(rule) { rule.name })
+  let starts : Array[String] = spec.start_rules
   let position_data_type = spec.position_type
   let derive_map = spec.derive_map
   for token in spec.tokens {
@@ -137,8 +136,8 @@ pub fn compile(
     }
     _ => ()
   }
-  for rule in spec.rules {
-    let lhs = get_nonterminal_by_name(rule.name)
+  for rule_name, rule in spec.rules {
+    let lhs = get_nonterminal_by_name(rule_name)
     nonterminal_meta_map[lhs.num] = { data_type: rule.type_ }
     for clause in rule.clauses {
       let production_num = productions.length()
@@ -148,8 +147,9 @@ pub fn compile(
         rhs: clause.items.map(fn(item) {
           match item.term {
             Token(token) => T(get_terminal_by_name(token.name))
-            RuleCall(rule, []) => NT(get_nonterminal_by_name(rule.name))
-            Param(_) | RuleCall(_, _) => panic()
+            RuleCall(rule_name, [], _type) =>
+              NT(get_nonterminal_by_name(rule_name))
+            Param(_) | RuleCall(_, _, _) => panic()
           }
         }),
         prec: clause.prec,

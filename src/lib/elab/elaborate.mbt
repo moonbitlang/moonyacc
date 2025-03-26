@@ -35,7 +35,6 @@ pub fn elaborate(
   let rule_by_name : Map[String, Rule] = {}
   let token_by_image : Map[String, Token] = {}
   let tokens : Array[Token] = []
-  let rules : Array[Rule] = []
   fn get_token_by_name(name : String) -> Token {
     match token_by_name.get(name) {
       Some(t) => t
@@ -92,7 +91,6 @@ pub fn elaborate(
       .or(Constr(pkg=None, "Unit", [])),
       clauses: [],
     }
-    rules.push(rule)
     rule_by_name[rule.name] = rule
   }
   let mut curr_prec = 0
@@ -140,16 +138,22 @@ pub fn elaborate(
           None =>
             match rule_param_map[symbol] {
               Some(type_) => Param(symbol, type_)
-              None => RuleCall(rule_by_name[symbol].unwrap(), [])
+              None => {
+                let rule = rule_by_name[symbol].unwrap()
+                RuleCall(symbol, [], rule.type_)
+              }
             }
           Some(token) => Token(token)
         }
       Image(image) => Token(token_by_image[image].unwrap())
-      RuleCall(symbol, args) =>
+      RuleCall(symbol, args) => {
+        let rule = rule_by_name[symbol].unwrap()
         RuleCall(
-          rule_by_name[symbol].unwrap(),
+          symbol,
           args.map(fn(arg) { map_term(arg, rule_param_map) }),
+          rule.type_,
         )
+      }
     }
   }
 
@@ -211,14 +215,14 @@ pub fn elaborate(
       rule.clauses.push(clause)
     }
   }
-  let start_rules : Array[Rule] = []
+  let start_rules : Array[Symbol] = []
   let mut position_type : TypeExpr = Constr(pkg=None, "Unit", [])
   let derive_map = @array_multimap.new()
   for ast_decl in ast_spec.decls {
     match ast_decl {
       Start(symbols) =>
         for symbol in symbols {
-          start_rules.push(rule_by_name[symbol].unwrap())
+          start_rules.push(symbol)
         }
       Position(type_~) => position_type = elaborate_type_expr(type_)
       Derive(traits~, type_~) =>
@@ -258,7 +262,7 @@ pub fn elaborate(
     header,
     trailer,
     tokens,
-    rules,
+    rules: rule_by_name,
     start_rules,
     position_type,
     derive_map,

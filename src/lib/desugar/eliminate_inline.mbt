@@ -1,9 +1,11 @@
 ///|
-fn find_leaf_inline_rules(rules : Array[@elab.Rule]) -> Map[String, @elab.Rule] {
+fn find_leaf_inline_rules(
+  rules : Map[String, @elab.Rule]
+) -> Map[String, @elab.Rule] {
   let all_inline_rules : Map[String, @elab.Rule] = {}
-  for rule in rules {
+  for rule_name, rule in rules {
     if rule.inline {
-      all_inline_rules[rule.name] = rule
+      all_inline_rules[rule_name] = rule
     }
   }
   Map::from_iter(
@@ -19,8 +21,9 @@ fn find_leaf_inline_rules(rules : Array[@elab.Rule]) -> Map[String, @elab.Rule] 
           .all(fn(item) {
             match item.term {
               Token(_) => true
-              RuleCall(rule, []) => not(all_inline_rules.contains(rule.name))
-              Param(_) | RuleCall(_, _) => panic()
+              RuleCall(rule_name, [], _type) =>
+                not(all_inline_rules.contains(rule_name))
+              Param(_) | RuleCall(_, _, _) => panic()
             }
           })
         })
@@ -34,15 +37,15 @@ fn eliminate_inline_rules(
   inline_rules : Map[String, @elab.Rule]
 ) -> @elab.ParserSpec {
   // assert not(inline_rules.is_empty())
-  let rules : Array[@elab.Rule] = []
+  let new_rules : Map[String, @elab.Rule] = {}
   fn contains_inline_rule(items : Array[@elab.Item]) {
     items
     .iter()
     .any(fn(item) {
       match item.term {
         Token(_) => false
-        RuleCall(rule, []) => inline_rules.contains(rule.name)
-        Param(_) | RuleCall(_, _) => panic()
+        RuleCall(rule_name, [], _type) => inline_rules.contains(rule_name)
+        Param(_) | RuleCall(_, _, _) => panic()
       }
     })
   }
@@ -53,11 +56,12 @@ fn eliminate_inline_rules(
     for index, item in clause.items {
       match item.term {
         Token(_) => ()
-        RuleCall(rule, []) =>
-          if inline_rules.contains(rule.name) {
+        RuleCall(rule_name, [], _type) =>
+          if inline_rules.contains(rule_name) {
+            let rule = spec.rules[rule_name].unwrap()
             expand_points[index] = ({ val: 0 }, rule.clauses.length() - 1)
           }
-        Param(_) | RuleCall(_, _) => panic()
+        Param(_) | RuleCall(_, _, _) => panic()
       }
     }
     let expand_point_indexes = expand_points.keys().to_array()
@@ -70,8 +74,9 @@ fn eliminate_inline_rules(
       for index, item in clause.items {
         match item.term {
           Token(_) => new_items.push(item)
-          RuleCall(rule, []) =>
-            if inline_rules.contains(rule.name) {
+          RuleCall(rule_name, [], _type) =>
+            if inline_rules.contains(rule_name) {
+              let rule = spec.rules[rule_name].unwrap()
               let (curr, max) = expand_points[index].unwrap()
               let inline_items = rule.clauses[curr.val].items
               let start_index = new_items.length()
@@ -123,7 +128,7 @@ fn eliminate_inline_rules(
             } else {
               new_items.push(item)
             }
-          Param(_) | RuleCall(_, _) => panic()
+          Param(_) | RuleCall(_, _, _) => panic()
         }
       }
       yield_({
@@ -137,8 +142,8 @@ fn eliminate_inline_rules(
     }
   }
 
-  for rule in spec.rules {
-    guard not(inline_rules.contains(rule.name)) else { continue }
+  for rule_name, rule in spec.rules {
+    guard not(inline_rules.contains(rule_name)) else { continue }
     let new_clauses : Array[@elab.Clause] = []
     for clause in rule.clauses {
       if contains_inline_rule(clause.items) {
@@ -148,29 +153,9 @@ fn eliminate_inline_rules(
       }
     }
     let new_rule = { ..rule, clauses: new_clauses }
-    rules.push(new_rule)
+    new_rules[rule_name] = new_rule
   }
-  let rule_by_name = Map::from_iter(
-    rules.iter().map(fn(rule) { (rule.name, rule) }),
-  )
-
-  // update rule calls in clauses
-  for rule in rules {
-    for clause in rule.clauses {
-      for index, item in clause.items {
-        match item.term {
-          Token(_) => ()
-          RuleCall(rule, []) =>
-            clause.items[index] = {
-              ..item,
-              term: RuleCall(rule_by_name[rule.name].unwrap(), []),
-            }
-          Param(_) | RuleCall(_, _) => panic()
-        }
-      }
-    }
-  }
-  { ..spec, rules, }
+  { ..spec, rules: new_rules, }
 }
 
 ///|

@@ -67,8 +67,8 @@ pub(all) struct ParserSpec {
   header : Code?
   trailer : Code?
   tokens : Array[Token]
-  rules : Array[Rule]
-  start_rules : Array[Rule]
+  rules : Map[Symbol, Rule]
+  start_rules : Array[Symbol]
   position_type : TypeExpr
   derive_map : @array_multimap.T[String, TypeExpr]
 }
@@ -138,7 +138,7 @@ pub(all) struct Item {
 pub(all) enum Term {
   Token(Token)
   Param(String, TypeExpr)
-  RuleCall(Rule, Array[Term])
+  RuleCall(Symbol, Array[Term], TypeExpr)
 }
 
 ///|
@@ -146,6 +146,6 @@ pub fn Item::type_(self : Item) -> TypeExpr {
   match self.term {
     Token(token) => token.type_
     Param(_, type_) => type_
-    RuleCall(rule, _) => rule.type_
+    RuleCall(_, _, type_) => type_
   }
 }
