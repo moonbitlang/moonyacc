@@ -1,14 +1,12 @@
 ///|
-fn find_leaf_inline_rules(
-  rules : Map[String, @elab.Rule]
-) -> Map[String, @elab.Rule] {
+fn find_leaf_inline_rules(rules : Map[String, @elab.Rule]) -> Set[String] {
   let all_inline_rules : Map[String, @elab.Rule] = {}
   for rule_name, rule in rules {
     if rule.inline {
       all_inline_rules[rule_name] = rule
     }
   }
-  Map::from_iter(
+  Set::from_iter(
     all_inline_rules
     .iter()
     .filter(fn {
@@ -27,14 +25,15 @@ fn find_leaf_inline_rules(
             }
           })
         })
-    }),
+    })
+    .map(fn { (rule_name, _) => rule_name }),
   )
 }
 
 ///|
 fn eliminate_inline_rules(
   spec : @elab.ParserSpec,
-  inline_rules : Map[String, @elab.Rule]
+  inline_rules : Set[String]
 ) -> @elab.ParserSpec {
   // assert not(inline_rules.is_empty())
   let new_rules : Map[String, @elab.Rule] = {}
@@ -155,7 +154,7 @@ fn eliminate_inline_rules(
     let new_rule = { ..rule, clauses: new_clauses }
     new_rules[rule_name] = new_rule
   }
-  { ..spec, rules: new_rules, }
+  { ..spec, rules: new_rules }
 }
 
 ///|
