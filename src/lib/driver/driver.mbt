@@ -68,6 +68,7 @@ pub fn compile(
       Default | OnlyTokens => No
     },
   )
+  let spec = @desugar.eliminate_rule_args(spec)
   let spec = @desugar.eliminate_inline(spec)
   let terminals = []
   let nonterminals = []
