@@ -2,57 +2,57 @@
   "mappings": [
     {
       "source": "inline.mbty",
+      "original_offset": 131,
+      "generated_offset": 1120,
+      "length": 5
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 191,
+      "generated_offset": 1247,
+      "length": 6
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 103,
+      "generated_offset": 1494,
+      "length": 1
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 106,
+      "generated_offset": 1503,
+      "length": 1
+    },
+    {
+      "source": "inline.mbty",
       "original_offset": 149,
-      "generated_offset": 1240,
+      "generated_offset": 1746,
       "length": 7
     },
     {
       "source": "inline.mbty",
       "original_offset": 158,
-      "generated_offset": 1255,
+      "generated_offset": 1761,
       "length": 7
     },
     {
       "source": "inline.mbty",
-      "original_offset": 191,
-      "generated_offset": 1384,
-      "length": 6
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 103,
-      "generated_offset": 1631,
-      "length": 1
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 106,
-      "generated_offset": 1640,
-      "length": 1
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 103,
-      "generated_offset": 1882,
-      "length": 1
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 106,
-      "generated_offset": 1891,
-      "length": 1
-    },
-    {
-      "source": "inline.mbty",
       "original_offset": 208,
-      "generated_offset": 2014,
+      "generated_offset": 1890,
       "length": 6
     },
     {
       "source": "inline.mbty",
-      "original_offset": 131,
-      "generated_offset": 2142,
-      "length": 5
+      "original_offset": 103,
+      "generated_offset": 2137,
+      "length": 1
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 106,
+      "generated_offset": 2146,
+      "length": 1
     },
     {
       "source": "inline.mbty",

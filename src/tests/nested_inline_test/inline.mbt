@@ -65,9 +65,7 @@ fn init {
 }
 
 fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  let _sub_action_1_result = yy_action_1(_args[0].2, _args[1:3])
-  guard _sub_action_1_result is YYObj_String(_dollar2)
-  YYObj_String({();  "a" + _dollar2 + "b" })
+  YYObj_String({();  "a" })
 }
 
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -75,33 +73,35 @@ fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 }
 
 fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  let _sub_action_0_result = yy_action_3(_last_pos, _args[0:4])
-  guard _sub_action_0_result is YYObj_String(_dollar1)
-  YYObj_String({();  _dollar1 })
-}
-
-fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  let _sub_action_0_result = yy_action_5(_last_pos, _args[0:1])
-  guard _sub_action_0_result is YYObj_String(_dollar1)
-  YYObj_String({();  _dollar1 })
-}
-
-fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj_String({();  "yb" })
-}
-
-fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj_String({();  "a" })
-}
-
-fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  let _sub_action_0_result = yy_action_0(_last_pos, _args[0:4])
+  let _sub_action_0_result = yy_action_0(_last_pos, _args[0:1])
   guard _sub_action_0_result is YYObj_String(_dollar1)
   YYObj_String({();  _dollar1 })
 }
 
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  let _sub_action_1_result = yy_action_6(_args[0].2, _args[1:3])
+  let _sub_action_1_result = yy_action_4(_args[0].2, _args[1:3])
+  guard _sub_action_1_result is YYObj_String(_dollar2)
+  YYObj_String({();  "a" + _dollar2 + "b" })
+}
+
+fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  YYObj_String({();  "yb" })
+}
+
+fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_0_result = yy_action_6(_last_pos, _args[0:4])
+  guard _sub_action_0_result is YYObj_String(_dollar1)
+  YYObj_String({();  _dollar1 })
+}
+
+fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_0_result = yy_action_3(_last_pos, _args[0:4])
+  guard _sub_action_0_result is YYObj_String(_dollar1)
+  YYObj_String({();  _dollar1 })
+}
+
+fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_1_result = yy_action_1(_args[0].2, _args[1:3])
   guard _sub_action_1_result is YYObj_String(_dollar2)
   YYObj_String({();  "a" + _dollar2 + "b" })
 }
@@ -137,7 +137,7 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_B => Shift(yy_state_3)
     T_A => Shift(yy_state_6)
-    EOI => Reduce(1, NT_start, yy_action_4)
+    EOI => Reduce(1, NT_start, yy_action_2)
     _ => Error
   }
 }
@@ -160,7 +160,7 @@ fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
 
 // [2, start → A B B B •, $]
 fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(4, NT_start, yy_action_2)
+  ReduceNoLookahead(4, NT_start, yy_action_7)
 }
 
 // [1, start → A A • A B, $]
@@ -181,7 +181,7 @@ fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
 
 // [1, start → A A A B •, $]
 fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(4, NT_start, yy_action_7)
+  ReduceNoLookahead(4, NT_start, yy_action_5)
 }
 
 fn yy_parse[T](

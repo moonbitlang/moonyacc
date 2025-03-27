@@ -63,7 +63,7 @@ priv enum YYSymbol {
   T_RBRACE
   NT_start
   NT_list__LETTER
-  NT_delimited__LBRACE_list__LETTER_RBRACE
+  NT_loption__delimited__LBRACE_list__LETTER_RBRACE
   EOI
 }
 
@@ -76,23 +76,33 @@ fn init {
 }
 
 fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__immut_list_T_Char_(_dollar2)
-  YYObj__immut_list_T_Char_({();  _dollar2 })
+  YYObj__immut_list_T_Char_({();  Nil })
 }
 
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__immut_list_T_Char_(_dollar1)
-  YYObj_String({();  _dollar1.iter().map(fn (it) { String::make(1, it) }).join("") })
+  YYObj__immut_list_T_Char_({();  Nil })
 }
 
 fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj__immut_list_T_Char_({();  Nil })
+  guard _args[1].0 is YYObj__immut_list_T_Char_(_dollar2)
+  YYObj__immut_list_T_Char_({();  _dollar2 })
 }
 
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Char(_dollar1)
   guard _args[1].0 is YYObj__immut_list_T_Char_(_dollar2)
   YYObj__immut_list_T_Char_({();  Cons(_dollar1, _dollar2) })
+}
+
+fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  let _sub_action_0_result = yy_action_2(_last_pos, _args[0:3])
+  guard _sub_action_0_result is YYObj__immut_list_T_Char_(_dollar1)
+  YYObj__immut_list_T_Char_({();  _dollar1 })
+}
+
+fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj__immut_list_T_Char_(_dollar1)
+  YYObj_String({();  _dollar1.iter().map(fn (it) { String::make(1, it) }).join("") })
 }
 
 fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSymbol, YYObj) {
@@ -103,36 +113,38 @@ fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSym
   }
 }
 
-// [0, start → • delimited__LBRACE_list__LETTER_RBRACE, $]
-// [3, delimited__LBRACE_list__LETTER_RBRACE → • LBRACE list__LETTER RBRACE, $]
-// [4, start_prime → • start, $]
+// [0, start → • loption__delimited__LBRACE_list__LETTER_RBRACE, $]
+// [3, loption__delimited__LBRACE_list__LETTER_RBRACE → •, $]
+// [4, loption__delimited__LBRACE_list__LETTER_RBRACE → • LBRACE list__LETTER RBRACE, $]
+// [5, start_prime → • start, $]
 fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     NT_start => Shift(yy_state_1)
     T_LBRACE => Shift(yy_state_2)
-    NT_delimited__LBRACE_list__LETTER_RBRACE => Shift(yy_state_7)
+    NT_loption__delimited__LBRACE_list__LETTER_RBRACE => Shift(yy_state_7)
+    EOI => Reduce(0, NT_loption__delimited__LBRACE_list__LETTER_RBRACE, yy_action_1)
     _ => Error
   }
 }
 
-// [4, start_prime → start •, $]
+// [5, start_prime → start •, $]
 fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
   Accept
 }
 
 // [1, list__LETTER → •, RBRACE]
 // [2, list__LETTER → • LETTER list__LETTER, RBRACE]
-// [3, delimited__LBRACE_list__LETTER_RBRACE → LBRACE • list__LETTER RBRACE, $]
+// [4, loption__delimited__LBRACE_list__LETTER_RBRACE → LBRACE • list__LETTER RBRACE, $]
 fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     NT_list__LETTER => Shift(yy_state_3)
     T_LETTER => Shift(yy_state_5)
-    T_RBRACE => Reduce(0, NT_list__LETTER, yy_action_2)
+    T_RBRACE => Reduce(0, NT_list__LETTER, yy_action_0)
     _ => Error
   }
 }
 
-// [3, delimited__LBRACE_list__LETTER_RBRACE → LBRACE list__LETTER • RBRACE, $]
+// [4, loption__delimited__LBRACE_list__LETTER_RBRACE → LBRACE list__LETTER • RBRACE, $]
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_RBRACE => Shift(yy_state_4)
@@ -140,9 +152,9 @@ fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [3, delimited__LBRACE_list__LETTER_RBRACE → LBRACE list__LETTER RBRACE •, $]
+// [4, loption__delimited__LBRACE_list__LETTER_RBRACE → LBRACE list__LETTER RBRACE •, $]
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_delimited__LBRACE_list__LETTER_RBRACE, yy_action_0)
+  ReduceNoLookahead(3, NT_loption__delimited__LBRACE_list__LETTER_RBRACE, yy_action_4)
 }
 
 // [1, list__LETTER → •, RBRACE]
@@ -152,7 +164,7 @@ fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LETTER => Shift(yy_state_5)
     NT_list__LETTER => Shift(yy_state_6)
-    T_RBRACE => Reduce(0, NT_list__LETTER, yy_action_2)
+    T_RBRACE => Reduce(0, NT_list__LETTER, yy_action_0)
     _ => Error
   }
 }
@@ -162,9 +174,9 @@ fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(2, NT_list__LETTER, yy_action_3)
 }
 
-// [0, start → delimited__LBRACE_list__LETTER_RBRACE •, $]
+// [0, start → loption__delimited__LBRACE_list__LETTER_RBRACE •, $]
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_start, yy_action_1)
+  ReduceNoLookahead(1, NT_start, yy_action_5)
 }
 
 fn yy_parse[T](

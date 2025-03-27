@@ -92,8 +92,9 @@ fn init {
 }
 
 fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(_dollar1)
-  YYObj_Int({();  _dollar1 })
+  guard _args[0].0 is YYObj_Int(lhs)
+  guard _args[2].0 is YYObj_Int(rhs)
+  YYObj_Int({();  lhs + rhs })
 }
 
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -102,31 +103,30 @@ fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 }
 
 fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(_dollar1)
-  YYObj_Int({();  _dollar1 })
-}
-
-fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[1].0 is YYObj_Int(_dollar2)
   YYObj_Int({();  _dollar2 })
 }
 
-fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(lhs)
   guard _args[2].0 is YYObj_Int(rhs)
-  YYObj_Int({();  lhs * rhs })
+  YYObj_Int({();  lhs - rhs })
+}
+
+fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj_Int(_dollar1)
+  YYObj_Int({();  _dollar1 })
 }
 
 fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(lhs)
   guard _args[2].0 is YYObj_Int(rhs)
-  YYObj_Int({();  lhs + rhs })
+  YYObj_Int({();  lhs * rhs })
 }
 
 fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(lhs)
-  guard _args[2].0 is YYObj_Int(rhs)
-  YYObj_Int({();  lhs - rhs })
+  guard _args[0].0 is YYObj_Int(_dollar1)
+  YYObj_Int({();  _dollar1 })
 }
 
 fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -193,12 +193,12 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
 
 // [6, term → NUMBER •, EOF / PLUS / MINUS / STAR / RPAREN]
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_term, yy_action_7)
+  ReduceNoLookahead(1, NT_term, yy_action_4)
 }
 
 // [5, factor → term •, EOF / PLUS / MINUS / STAR / RPAREN]
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_factor, yy_action_0)
+  ReduceNoLookahead(1, NT_factor, yy_action_7)
 }
 
 // [3, add → factor •, EOF / PLUS / MINUS / RPAREN]
@@ -225,7 +225,7 @@ fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
 
 // [4, factor → factor STAR term •, EOF / PLUS / MINUS / STAR / RPAREN]
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_factor, yy_action_4)
+  ReduceNoLookahead(3, NT_factor, yy_action_5)
 }
 
 // [1, add → add • PLUS factor, PLUS / MINUS / RPAREN]
@@ -242,7 +242,7 @@ fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
 
 // [7, term → LPAREN add RPAREN •, EOF / PLUS / MINUS / STAR / RPAREN]
 fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_term, yy_action_3)
+  ReduceNoLookahead(3, NT_term, yy_action_2)
 }
 
 // [2, add → add MINUS • factor, EOF / PLUS / MINUS / RPAREN]
@@ -265,7 +265,7 @@ fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_6)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_3)
     _ => Error
   }
 }
@@ -290,7 +290,7 @@ fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_5)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_0)
     _ => Error
   }
 }
@@ -309,7 +309,7 @@ fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
 
 // [0, start → add EOF •, $]
 fn yy_state_15(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_start, yy_action_2)
+  ReduceNoLookahead(2, NT_start, yy_action_6)
 }
 
 fn yy_parse[T](
