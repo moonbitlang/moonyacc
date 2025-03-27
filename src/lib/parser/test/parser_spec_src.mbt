@@ -148,15 +148,19 @@ let parser_spec_src : String =
   #|  ;
   #|
   #|clause -> Clause
-  #|  : item_list=item_list prec=rule_prec action=clause_action { { items: item_list.to_array(), prec, action } }
+  #|  : item_list=item_list prec=rule_prec action=clause_action_opt { { items: item_list.to_array(), prec, action } }
+  #|  ;
+  #|
+  #|clause_action_opt -> ClauseAction
+  #|  : clause_action { $1 }
+  #|  | { { code: None, start: $startpos, end: $endpos } }
   #|  ;
   #|
   #|clause_action -> ClauseAction
   #|  : code=LBRACE_CODE_RBRACE {
-  #|      let (code, utf8_pos, subst) = code
-  #|      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
+  #|    let (code, utf8_pos, subst) = code
+  #|    { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
   #|  }
-  #|  | { { code: None, start: $startpos, end: $endpos } }
   #|  ;
   #|
   #|rule_prec -> Symbol?
@@ -176,13 +180,18 @@ let parser_spec_src : String =
   #|
   #|term -> Term
   #|  : symbol=symbol { Symbol(symbol) }
-  #|  | symbol=symbol "(" nonempty_comma_term_list ")" { RuleCall(symbol, $3.to_array()) }
+  #|  | symbol=symbol "(" nonempty_comma_rule_arg_list ")" { RuleCall(symbol, $3.to_array()) }
   #|  | image=STRING { Image(image) }
   #|  ;
   #|
-  #|nonempty_comma_term_list -> @immut/list.T[Term]
-  #|  : term=term { Cons(term, Nil) }
-  #|  | term=term "," term_list=nonempty_comma_term_list { Cons(term, term_list) }
+  #|rule_arg -> Term
+  #|  : term { $1 }
+  #|  | item_list=item_list action=clause_action { AnonmousInlineRule(item_list.to_array(), action) }
+  #|  ;
+  #|
+  #|nonempty_comma_rule_arg_list -> @immut/list.T[Term]
+  #|  : term=rule_arg { Cons(term, Nil) }
+  #|  | term=rule_arg "," term_list=nonempty_comma_rule_arg_list { Cons(term, term_list) }
   #|  ;
   #|
   #|nonempty_symbol_list -> @immut/list.T[Symbol]

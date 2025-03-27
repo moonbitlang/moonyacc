@@ -21,7 +21,7 @@ fn find_leaf_inline_rules(rules : Map[String, @elab.Rule]) -> Set[String] {
               Token(_) => true
               RuleCall(rule_name, [], _type) =>
                 not(all_inline_rules.contains(rule_name))
-              Param(_) | RuleCall(_, _, _) => panic()
+              Param(_) | RuleCall(_) | AnonmousInlineRule(_) => panic()
             }
           })
         })
@@ -44,7 +44,7 @@ fn eliminate_inline_rules(
       match item.term {
         Token(_) => false
         RuleCall(rule_name, [], _type) => inline_rules.contains(rule_name)
-        Param(_) | RuleCall(_, _, _) => panic()
+        Param(_) | RuleCall(_, _, _) | AnonmousInlineRule(_) => panic()
       }
     })
   }
@@ -60,7 +60,7 @@ fn eliminate_inline_rules(
             let rule = spec.rules[rule_name].unwrap()
             expand_points[index] = ({ val: 0 }, rule.clauses.length() - 1)
           }
-        Param(_) | RuleCall(_, _, _) => panic()
+        Param(_) | RuleCall(_, _, _) | AnonmousInlineRule(_) => panic()
       }
     }
     let expand_point_indexes = expand_points.keys().to_array()
@@ -127,7 +127,7 @@ fn eliminate_inline_rules(
             } else {
               new_items.push(item)
             }
-          Param(_) | RuleCall(_, _, _) => panic()
+          Param(_) | RuleCall(_, _, _) | AnonmousInlineRule(_) => panic()
         }
       }
       yield_({

@@ -152,7 +152,7 @@ pub fn compile(
             Token(token) => T(get_terminal_by_name(token.name))
             RuleCall(rule_name, [], _type) =>
               NT(get_nonterminal_by_name(rule_name))
-            Param(_) | RuleCall(_, _, _) => panic()
+            Param(_) | RuleCall(_) | AnonmousInlineRule(_) => panic()
           }
         }),
         prec: clause.prec,

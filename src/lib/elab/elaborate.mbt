@@ -175,6 +175,7 @@ pub fn elaborate(
           rule.type_,
         )
       }
+      AnonmousInlineRule(_, _) => ...
     }
   }
 
@@ -214,7 +215,7 @@ pub fn elaborate(
                 }
                 break
               }
-              Param(_) | RuleCall(_) => ()
+              Param(_) | RuleCall(_) | AnonmousInlineRule(_) => ()
             }
           }
           last_prec

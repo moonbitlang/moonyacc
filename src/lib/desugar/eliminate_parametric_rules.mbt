@@ -44,6 +44,7 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
           Some(term) => term
           None => term
         }
+      AnonmousInlineRule(_) => panic()
     }
   }
 
@@ -139,6 +140,7 @@ fn derive_term_ident(term : @elab.Term) -> String {
     RuleCall(rule_name, [], _type) => rule_name
     RuleCall(rule_name, args, _type) =>
       rule_name + "__" + args.iter().map(derive_term_ident).join("_")
+    AnonmousInlineRule(_) => panic()
   }
 }
 
@@ -187,6 +189,7 @@ fn infer_return_type(
         Token(token) => token.type_
         Param(_, type_) => type_
         RuleCall(_, _, type_) => type_
+        AnonmousInlineRule(_) => panic()
       },
     )
   }

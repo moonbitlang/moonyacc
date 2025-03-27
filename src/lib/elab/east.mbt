@@ -139,6 +139,7 @@ pub(all) enum Term {
   Token(Token)
   Param(String, TypeExpr)
   RuleCall(Symbol, Array[Term], TypeExpr)
+  AnonmousInlineRule(Array[Item], Action)
 }
 
 ///|
@@ -147,5 +148,6 @@ pub fn Item::type_(self : Item) -> TypeExpr {
     Token(token) => token.type_
     Param(_, type_) => type_
     RuleCall(_, _, type_) => type_
+    AnonmousInlineRule(_, action) => action.type_
   }
 }
