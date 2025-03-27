@@ -1,0 +1,61 @@
+%%
+
+option[T](X : T) -> Option[T]
+  : { None }
+  | X { Some($1) }
+  ;
+
+%inline ioption[T](X : T) -> Option[T]
+  : { None }
+  | X { Some($1) }
+  ;
+
+loption[T](X : @immut/list.T[T]) -> @immut/list.T[T]
+  : { Nil }
+  | X { $1 }
+  ;
+
+boption[T](X : T) -> Bool
+  : { false }
+  | X { true }
+  ;
+
+%inline pair[X, Y](X : X, Y : Y) -> (X, Y)
+  : X Y { ($1, $2) }
+  ;
+
+%inline separated_pair[X, Y](X : X, SEP, Y : Y) -> (X, Y)
+  : X SEP Y { ($1, $3) }
+  ;
+
+%inline preceded[T](L, X : T) -> T
+  : L X { $2 }
+  ;
+
+%inline terminated[T](X : T, R) -> T
+  : X R { $1 }
+  ;
+
+%inline delimited[T](L, X : T, R) -> T
+  : L X R { $2 }
+  ;
+
+list[T](X : T) -> @immut/list.T[T]
+  : { Nil }
+  | X list(X) { Cons($1, Nil) }
+  ;
+
+nonempty_list[T](X : T) -> @immut/list.T[T]
+  : X { Cons($1, Nil) }
+  | X nonempty_list(X) { Cons($1, $2) }
+  ;
+
+separated_list[T](SEP, X : T) -> @immut/list.T[T]
+  : { Nil }
+  | separated_nonempty_list(X) { $1 }
+  ;
+
+separated_nonempty_list[T](SEP, X : T) -> @immut/list.T[T]
+  : X { Cons($1, Nil) }
+  | X SEP separated_nonempty_list(X) { Cons($1, $3) }
+  ;

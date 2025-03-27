@@ -59,7 +59,7 @@ pub fn compile(
       exit(1)
     }
   }
-  let spec = @elab.elaborate(
+  let spec = @elab.elaborate_with_stdlib_rules(
     spec,
     json_cst=match mode {
       JsonCst(token_payload_rewrite=None) => Yes(None)
