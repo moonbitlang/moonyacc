@@ -56,11 +56,11 @@ let stdlib_src : String =
   #|
   #|separated_list[T](SEP, X : T) -> @immut/list.T[T]
   #|  : { Nil }
-  #|  | separated_nonempty_list(X) { $1 }
+  #|  | separated_nonempty_list(SEP, X) { $1 }
   #|  ;
   #|
   #|separated_nonempty_list[T](SEP, X : T) -> @immut/list.T[T]
   #|  : X { Cons($1, Nil) }
-  #|  | X SEP separated_nonempty_list(X) { Cons($1, $3) }
+  #|  | X SEP separated_nonempty_list(SEP, X) { Cons($1, $3) }
   #|  ;
   #|

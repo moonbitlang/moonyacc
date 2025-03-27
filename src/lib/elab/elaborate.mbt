@@ -97,19 +97,31 @@ pub fn elaborate(
 
   // Prepare rules
   for ast_rule in ast_spec.rules {
+    let generic_params = Set::from_array(ast_rule.generic_params)
+    let params = ast_rule.params.map(fn(param) {
+      let (name, type_) = param
+      let type_ = match type_ {
+        Some(type_) =>
+          elaborate_type_expr_with_generic_params(type_, generic_params)
+        None => {
+          let generic_param = "_\{generic_params.size()}"
+          generic_params.add(generic_param)
+          Param(generic_param)
+        }
+      }
+      (name, type_)
+    })
+    let type_ = match ast_rule.type_ {
+      Some(type_) =>
+        elaborate_type_expr_with_generic_params(type_, generic_params)
+      None => Constr(pkg=None, "Unit", [])
+    }
     let rule : Rule = {
       inline: ast_rule.inline,
       name: ast_rule.nonterminal,
-      generic_params: ast_rule.generic_params,
-      params: ast_rule.params.map(fn(param) {
-        (
-          param.0,
-          param.1.map(elaborate_type_expr).or(Constr(pkg=None, "Unit", [])),
-        )
-      }),
-      type_: ast_rule.type_
-      .map(elaborate_type_expr)
-      .or(Constr(pkg=None, "Unit", [])),
+      generic_params,
+      params,
+      type_,
       clauses: [],
     }
     rule_by_name[rule.name] = rule
@@ -446,7 +458,20 @@ fn elaborate_action(
 
 ///|
 fn elaborate_type_expr(ast_type_expr : @parser.TypeExpr) -> TypeExpr {
+  elaborate_type_expr_with_generic_params(ast_type_expr, Set::new())
+}
+
+///|
+fn elaborate_type_expr_with_generic_params(
+  ast_type_expr : @parser.TypeExpr,
+  generic_params : Set[String]
+) -> TypeExpr {
+  fn elaborate_type_expr(ast_type_expr : @parser.TypeExpr) -> TypeExpr {
+    elaborate_type_expr_with_generic_params(ast_type_expr, generic_params)
+  }
+
   match ast_type_expr {
+    Constr(pkg=None, name, []) if generic_params.contains(name) => Param(name)
     Constr(pkg~, name, args) =>
       Constr(pkg~, name, args.map(elaborate_type_expr))
     Option(inner) => Option(elaborate_type_expr(inner))

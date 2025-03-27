@@ -25,6 +25,7 @@ pub(all) typealias Code = String
 ///|
 pub(all) enum TypeExpr {
   Constr(pkg~ : String?, String, Array[TypeExpr])
+  Param(String)
   Option(TypeExpr)
   Tuple(Array[TypeExpr])
   Arrow(Array[TypeExpr], TypeExpr)
@@ -45,6 +46,7 @@ pub impl Show for TypeExpr with output(self, logger) {
           primary + "[" + args.iter().map(TypeExpr::to_string).join(", ") + "]"
         }
       }
+      Param(_) => panic()
       Option(type_) =>
         if type_ is Arrow(_, _) {
           "(" + TypeExpr::to_string(type_) + ")?"
@@ -88,7 +90,7 @@ pub(all) typealias Symbol = String
 pub(all) struct Rule {
   name : Symbol
   inline : Bool
-  generic_params : Array[String]
+  generic_params : Set[String]
   params : Array[(String, TypeExpr)]
   mut type_ : TypeExpr
   clauses : Array[Clause]

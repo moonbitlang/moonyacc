@@ -53,6 +53,7 @@ fn derive_type_ident(type_ : @elab.TypeExpr) -> String {
         primary + "_" + args.iter().map(derive_type_ident).join("__") + "_"
       }
     }
+    Param(_) => panic()
     Option(type_) =>
       if type_ is Arrow(_, _) {
         "_" + derive_type_ident(type_) + "__"

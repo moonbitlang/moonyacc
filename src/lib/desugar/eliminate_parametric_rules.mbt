@@ -10,7 +10,9 @@ priv struct DeferredSpecializedRule {
 
 ///|
 pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
-  let deferred_specialized_rules : Array[DeferredSpecializedRule] = []
+  let mut deferred_specialized_rules : Map[String, DeferredSpecializedRule] = {}
+  let parametric_rules : Map[String, @elab.Rule] = {}
+  let new_rules : Map[String, @elab.Rule] = {}
   fn map_term(
     term : @elab.Term,
     env : @immut/sorted_map.T[String, @elab.Term]
@@ -31,12 +33,12 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
         let specialized_rule_name = derive_term_ident(
           RuleCall(rule_name, args, type_),
         )
-        deferred_specialized_rules.push({
+        deferred_specialized_rules[specialized_rule_name] = {
           parametric_rule_name: rule_name,
           specialized_rule_name,
           args,
           env,
-        })
+        }
         RuleCall(specialized_rule_name, [], type_)
       }
       Param(name, _type) =>
@@ -75,8 +77,6 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
     }
   }
 
-  let parametric_rules : Map[String, @elab.Rule] = {}
-  let new_rules : Map[String, @elab.Rule] = {}
   for rule_name, rule in spec.rules {
     if rule.params.is_empty() {
       new_rules[rule_name] = map_rule(rule)
@@ -95,7 +95,7 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
     {
       ..parametric_rule,
       name: specialized_rule_name,
-      generic_params: [],
+      generic_params: Set::new(),
       params: [],
       clauses: parametric_rule.clauses.map(fn(clause) {
         let new_items = clause.items.map(fn(item) {
@@ -125,8 +125,18 @@ pub fn eliminate_rule_args(spec : @elab.ParserSpec) -> @elab.ParserSpec {
     }
   }
 
-  for it in deferred_specialized_rules {
-    new_rules[it.specialized_rule_name] = specialize_rule(it)
+  while true {
+    let queue = deferred_specialized_rules
+      .values()
+      .filter(fn(it) { not(new_rules.contains(it.specialized_rule_name)) })
+      .to_array()
+    deferred_specialized_rules = {}
+    if queue.is_empty() {
+      break
+    }
+    for it in queue {
+      new_rules[it.specialized_rule_name] = specialize_rule(it)
+    }
   }
   { ..spec, rules: new_rules }
 }
@@ -150,9 +160,7 @@ fn infer_return_type(
   let generic_param_map : Map[String, @elab.TypeExpr] = {}
   fn unify(t1 : @elab.TypeExpr, t2 : @elab.TypeExpr) -> Unit {
     match (t1, t2) {
-      (Constr(pkg=None, name, []), t2) if parametric_rule.generic_params.contains(
-          name,
-        ) => generic_param_map[name] = t2
+      (Param(name), t2) => generic_param_map[name] = t2
       (Constr(pkg=pkg1, name1, args1), Constr(pkg=pkg2, name2, args2)) => {
         guard pkg1 == pkg2 && name1 == name2 && args1.length() == args2.length() else {
           panic()
@@ -192,8 +200,7 @@ fn infer_return_type(
   }
   fn process_type(type_ : @elab.TypeExpr) -> @elab.TypeExpr {
     match type_ {
-      Constr(pkg=None, name, []) if generic_param_map.contains(name) =>
-        generic_param_map[name].unwrap()
+      Param(name) => generic_param_map[name].unwrap()
       Constr(pkg~, name, args) => Constr(pkg~, name, args.map(process_type))
       Option(type_) => Option(process_type(type_))
       Tuple(types) => Tuple(types.map(process_type))
