@@ -25,9 +25,23 @@ pub(all) enum TokenPayloadRewrite {
 }
 
 ///|
+pub fn elaborate_with_stdlib_rules(
+  ast_spec : @parser.ParserSpec,
+  json_cst~ : JsonCst,
+  no_std~ : Bool
+) -> ParserSpec {
+  elaborate(
+    ast_spec,
+    json_cst~,
+    stdlib_rules=if no_std { {} } else { stdlib_rules },
+  )
+}
+
+///|
 pub fn elaborate(
   ast_spec : @parser.ParserSpec,
-  json_cst~ : JsonCst
+  json_cst~ : JsonCst,
+  stdlib_rules? : Map[String, Rule]
 ) -> ParserSpec {
   let mut header = ast_spec.header
   let mut trailer = ast_spec.trailer
@@ -35,6 +49,13 @@ pub fn elaborate(
   let rule_by_name : Map[String, Rule] = {}
   let token_by_image : Map[String, Token] = {}
   let tokens : Array[Token] = []
+  match stdlib_rules {
+    None => ()
+    Some(stdlib_rules) =>
+      for rule_name, rule in stdlib_rules {
+        rule_by_name[rule_name] = rule
+      }
+  }
   fn get_token_by_name(name : String) -> Token {
     match token_by_name.get(name) {
       Some(t) => t

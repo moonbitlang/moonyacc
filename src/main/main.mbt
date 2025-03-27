@@ -23,6 +23,7 @@ fn main {
   let input_mode : Ref[@driver.InputMode] = @ref.new(Array)
   let external_tokens : Ref[Bool] = @ref.new(false)
   let no_comments : Ref[Bool] = @ref.new(false)
+  let no_std : Ref[Bool] = @ref.new(false)
   let token_payload_rewrite : Ref[@driver.TokenPayloadRewrite?] = @ref.new(None)
   @ArgParser.parse(
     [
@@ -89,6 +90,12 @@ fn main {
         "Do not include comments in the output",
       ),
       (
+        "--no-std",
+        "--no-std",
+        Unit(fn() { no_std.val = true }),
+        "Do not include standard library",
+      ),
+      (
         "--version",
         "-v",
         Unit(fn() {
@@ -124,6 +131,7 @@ fn main {
     filename=input_file.val,
     external_tokens=external_tokens.val,
     no_comments=no_comments.val,
+    no_std=no_std.val,
     generator=@gen_mbt.generator,
   )
   fn write_map_file!(file : String) {
