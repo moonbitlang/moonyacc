@@ -39,6 +39,7 @@ pub fn compile(
   filename~ : String,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
+  no_std~ : Bool = false,
   source_map_builder? : &@codegen.SourceMapBuilder,
   generator~ : &@codegen.CodeGenerator
 ) -> String {
@@ -67,6 +68,7 @@ pub fn compile(
       JsonCst(token_payload_rewrite=Some(JsonPayload)) => Yes(Some(JsonPayload))
       Default | OnlyTokens => No
     },
+    no_std~,
   )
   let spec = @desugar.eliminate_rule_args(spec)
   let spec = @desugar.eliminate_inline(spec)
