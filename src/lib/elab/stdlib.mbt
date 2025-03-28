@@ -6,7 +6,7 @@ fn build_rules_from_src(src : String) -> Map[String, Rule] {
   }
 
   let ast_spec = @parser.spec?(token, 0).unwrap()
-  let spec = elaborate(ast_spec, json_cst=No)
+  let spec = elaborate?(ast_spec, json_cst=No).unwrap()
   spec.rules
 }
 

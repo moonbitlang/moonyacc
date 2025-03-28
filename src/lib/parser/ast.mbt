@@ -112,7 +112,7 @@ pub(all) struct ClauseItem {
 
 ///|
 pub(all) enum Term {
-  Symbol(Symbol)
-  Image(String)
-  RuleCall(Symbol, Array[Term])
+  Symbol(Symbol, loc~ : (Int, Int))
+  Image(String, loc~ : (Int, Int))
+  RuleCall(Symbol, symbol_loc~ : (Int, Int), Array[Term])
 } derive(ToJson)

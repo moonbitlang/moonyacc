@@ -74,16 +74,25 @@ pub fn compile(
       exit(1)
     }
   }
-  let spec = @elab.elaborate_with_stdlib_rules(
-    spec,
-    json_cst=match mode {
-      JsonCst(token_payload_rewrite=None) => Yes(None)
-      JsonCst(token_payload_rewrite=Some(NoPayload)) => Yes(Some(NoPayload))
-      JsonCst(token_payload_rewrite=Some(JsonPayload)) => Yes(Some(JsonPayload))
-      Default | OnlyTokens => No
-    },
-    no_std~,
-  )
+  let spec = try {
+    @elab.elaborate_with_stdlib_rules!(
+      spec,
+      json_cst=match mode {
+        JsonCst(token_payload_rewrite=None) => Yes(None)
+        JsonCst(token_payload_rewrite=Some(NoPayload)) => Yes(Some(NoPayload))
+        JsonCst(token_payload_rewrite=Some(JsonPayload)) =>
+          Yes(Some(JsonPayload))
+        Default | OnlyTokens => No
+      },
+      no_std~,
+    )
+  } catch {
+    @elab.UnresolvedSymbol(symbol, loc~) => {
+      let loc_str = loc_to_string(filename, parser_spec_str, loc)
+      println_to_stderr("Unresolved symbol \{symbol}, at \{loc_str}")
+      exit(1)
+    }
+  }
   let spec = @desugar.eliminate_rule_args(spec)
   let spec = @desugar.eliminate_inline(spec)
   let terminals = []

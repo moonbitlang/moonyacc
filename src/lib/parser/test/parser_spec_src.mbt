@@ -175,9 +175,9 @@ let parser_spec_src : String =
   #|  ;
   #|
   #|term -> Term
-  #|  : symbol=symbol { Symbol(symbol) }
-  #|  | symbol=symbol "(" nonempty_comma_term_list ")" { RuleCall(symbol, $3.to_array()) }
-  #|  | image=STRING { Image(image) }
+  #|  : symbol=symbol { Symbol(symbol, loc=($startpos, $endpos)) }
+  #|  | symbol=symbol "(" nonempty_comma_term_list ")" { RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) }
+  #|  | image=STRING { Image(image, loc=($startpos, $endpos)) }
   #|  ;
   #|
   #|nonempty_comma_term_list -> @immut/list.T[Term]
