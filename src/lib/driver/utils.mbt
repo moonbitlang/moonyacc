@@ -53,3 +53,9 @@ fn loc_to_string(
     "\{filename}:\{start_line}:\{start_column}-\{end_line}:\{end_column}"
   }
 }
+
+///|
+fn pos_to_string(filename : String, content : String, pos : Int) -> String {
+  let (line, column) = offset_to_line_column(content, pos)
+  "\{filename}:\{line}:\{column}0"
+}

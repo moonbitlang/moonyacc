@@ -1,7 +1,7 @@
 {
 pub type! LexError {
   UnexpectedEndOfFile
-  Unrecognized(String)
+  Unrecognized(String, Int)
 }
 
 struct Lexer {
@@ -76,7 +76,7 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
       (LBRACE_CODE_RBRACE((sb.to_string(), base, subst)), $startpos(t), lexbuf.pos)
     }
     ('"' [^ '"']+ '"') as t => { (STRING(t), $startpos(t), $endpos(t)) }
-    _ as t => { raise(Unrecognized(t)) }
+    _ as t => { raise(Unrecognized(t, $startpos(t))) }
     eof as t => { (EOF, $startpos(t), $endpos(t)) }
   }
 }

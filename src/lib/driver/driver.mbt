@@ -45,7 +45,22 @@ pub fn compile(
 ) -> String {
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
-    lexer.next_token?().unwrap()
+    try {
+      lexer.next_token!()
+    } catch {
+      @parser.Unrecognized(x, pos) => {
+        let pos_str = pos_to_string(filename, parser_spec_str, pos)
+        println_to_stderr(
+          "SyntaxError: Unrecognized character \{x.escape()}, at \{pos_str}",
+        )
+        exit(1)
+      }
+      @parser.UnexpectedEndOfFile => {
+        println_to_stderr("SyntaxError: Unexpected end of file")
+        exit(1)
+      }
+      _ => panic()
+    }
   }
 
   let spec = try {

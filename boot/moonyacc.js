@@ -110,8 +110,9 @@ function Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYOb
 }
 Error$moonbitlang$47$yacc$47$lib$47$parser$46$YYObj_Declaration$46$YYObj_Declaration.prototype.$tag = 5;
 const Error$moonbitlang$47$yacc$47$lib$47$parser$46$LexError$46$UnexpectedEndOfFile = { $tag: 4 };
-function Error$moonbitlang$47$yacc$47$lib$47$parser$46$LexError$46$Unrecognized(param0) {
+function Error$moonbitlang$47$yacc$47$lib$47$parser$46$LexError$46$Unrecognized(param0, param1) {
   this._0 = param0;
+  this._1 = param1;
 }
 Error$moonbitlang$47$yacc$47$lib$47$parser$46$LexError$46$Unrecognized.prototype.$tag = 3;
 function Error$moonbitlang$47$x$47$fs$46$IOError$46$IOError(param0) {
@@ -7801,6 +7802,35 @@ function moonbitlang$core$builtin$$Map$get$134$(self, key) {
     }
   }
 }
+function moonbitlang$core$builtin$$Map$get$137$(self, key) {
+  const hash = moonbitlang$core$builtin$$Hash$hash$152$(key);
+  let _tmp = 0;
+  let _tmp$2 = hash & self.capacity_mask;
+  while (true) {
+    const i = _tmp;
+    const idx = _tmp$2;
+    const _tmp$3 = self.entries;
+    $bound_check(_tmp$3, idx);
+    const _bind = _tmp$3[idx];
+    if (_bind === undefined) {
+      return undefined;
+    } else {
+      const _Some = _bind;
+      const _entry = _Some;
+      if (_entry.hash === hash && _entry.key === key) {
+        return _entry.value;
+      }
+      if (i > _entry.psl) {
+        return undefined;
+      }
+      const _tmp$4 = i + 1 | 0;
+      const _tmp$5 = idx + 1 & self.capacity_mask;
+      _tmp = _tmp$4;
+      _tmp$2 = _tmp$5;
+      continue;
+    }
+  }
+}
 function moonbitlang$core$builtin$$Map$get$140$(self, key) {
   const hash = moonbitlang$core$builtin$$Hash$hash$10$(key);
   let _tmp = 0;
@@ -7889,35 +7919,6 @@ function moonbitlang$core$builtin$$Map$get$139$(self, key) {
   }
 }
 function moonbitlang$core$builtin$$Map$get$136$(self, key) {
-  const hash = moonbitlang$core$builtin$$Hash$hash$152$(key);
-  let _tmp = 0;
-  let _tmp$2 = hash & self.capacity_mask;
-  while (true) {
-    const i = _tmp;
-    const idx = _tmp$2;
-    const _tmp$3 = self.entries;
-    $bound_check(_tmp$3, idx);
-    const _bind = _tmp$3[idx];
-    if (_bind === undefined) {
-      return undefined;
-    } else {
-      const _Some = _bind;
-      const _entry = _Some;
-      if (_entry.hash === hash && _entry.key === key) {
-        return _entry.value;
-      }
-      if (i > _entry.psl) {
-        return undefined;
-      }
-      const _tmp$4 = i + 1 | 0;
-      const _tmp$5 = idx + 1 & self.capacity_mask;
-      _tmp = _tmp$4;
-      _tmp$2 = _tmp$5;
-      continue;
-    }
-  }
-}
-function moonbitlang$core$builtin$$Map$get$137$(self, key) {
   const hash = moonbitlang$core$builtin$$Hash$hash$152$(key);
   let _tmp = 0;
   let _tmp$2 = hash & self.capacity_mask;
@@ -8127,7 +8128,7 @@ function moonbitlang$core$option$$Option$unwrap$53$(self) {
     return _x;
   }
 }
-function moonbitlang$core$option$$Option$unwrap$96$(self) {
+function moonbitlang$core$option$$Option$unwrap$97$(self) {
   if (self === undefined) {
     return $panic();
   } else {
@@ -8145,7 +8146,7 @@ function moonbitlang$core$option$$Option$unwrap$158$(self) {
     return _x;
   }
 }
-function moonbitlang$core$option$$Option$unwrap$97$(self) {
+function moonbitlang$core$option$$Option$unwrap$96$(self) {
   if (self === undefined) {
     return $panic();
   } else {
@@ -13961,7 +13962,7 @@ function moonbitlang$yacc$lib$parser$$token(phase, lexbuf) {
         const __start_pos_of_t$30 = _bind$36._0;
         const __end_pos_of_t$30 = _bind$36._1;
         const t$3 = moonbitlang$yacc$lib$parser$$Lexbuf$substring(lexbuf$2, __start_pos_of_t$30, __end_pos_of_t$30);
-        return new Result$Err$17$(new Error$moonbitlang$47$yacc$47$lib$47$parser$46$LexError$46$Unrecognized(t$3));
+        return new Result$Err$17$(new Error$moonbitlang$47$yacc$47$lib$47$parser$46$LexError$46$Unrecognized(t$3, __start_pos_of_t$30));
       }
       case 35: {
         const ___mbtlex_captures$31 = _bind._1;
@@ -20608,6 +20609,10 @@ function moonbitlang$yacc$lib$driver$util$$exit$19$(code) {
   moonbitlang$yacc$lib$driver$util$$ffi_exit(code);
   return $panic();
 }
+function moonbitlang$yacc$lib$driver$util$$exit$21$(code) {
+  moonbitlang$yacc$lib$driver$util$$ffi_exit(code);
+  return $panic();
+}
 function moonbitlang$yacc$lib$driver$util$$exit$9$(code) {
   moonbitlang$yacc$lib$driver$util$$ffi_exit(code);
   $panic();
@@ -21340,6 +21345,12 @@ function moonbitlang$yacc$lib$driver$$loc_to_string(filename, content, loc) {
   const _end_column = _bind$2._1;
   return _start_line === _end_line ? `${moonbitlang$core$builtin$$Show$to_string$11$(filename)}:${moonbitlang$core$builtin$$Show$to_string$10$(_start_line)}:${moonbitlang$core$builtin$$Show$to_string$10$(_start_column)}-${moonbitlang$core$builtin$$Show$to_string$10$(_end_column)}` : `${moonbitlang$core$builtin$$Show$to_string$11$(filename)}:${moonbitlang$core$builtin$$Show$to_string$10$(_start_line)}:${moonbitlang$core$builtin$$Show$to_string$10$(_start_column)}-${moonbitlang$core$builtin$$Show$to_string$10$(_end_line)}:${moonbitlang$core$builtin$$Show$to_string$10$(_end_column)}`;
 }
+function moonbitlang$yacc$lib$driver$$pos_to_string(filename, content, pos) {
+  const _bind = moonbitlang$yacc$lib$driver$$offset_to_line_column(content, pos);
+  const _line = _bind._0;
+  const _column = _bind._1;
+  return `${moonbitlang$core$builtin$$Show$to_string$11$(filename)}:${moonbitlang$core$builtin$$Show$to_string$10$(_line)}:${moonbitlang$core$builtin$$Show$to_string$10$(_column)}0`;
+}
 function moonbitlang$yacc$lib$driver$$compile$46$get_terminal_by_name$240$(terminal_by_name, name) {
   return moonbitlang$core$option$$Option$unwrap$96$(moonbitlang$core$builtin$$Map$get$136$(terminal_by_name, name));
 }
@@ -21348,7 +21359,38 @@ function moonbitlang$yacc$lib$driver$$compile$46$get_nonterminal_by_name$241$(no
 }
 function moonbitlang$yacc$lib$driver$$compile(parser_spec_str, mode, input_mode, filename, external_tokens, no_comments, no_std, source_map_builder, generator) {
   const lexer = moonbitlang$yacc$lib$parser$$new_lexer(parser_spec_str);
-  const token = () => moonbitlang$core$result$$Result$unwrap$20$(moonbitlang$yacc$lib$parser$$Lexer$next_token(lexer));
+  const token = () => {
+    let _try_err;
+    _L: {
+      const _bind = moonbitlang$yacc$lib$parser$$Lexer$next_token(lexer);
+      if (_bind.$tag === 1) {
+        const _ok = _bind;
+        return _ok._0;
+      } else {
+        const _err = _bind;
+        const _tmp = _err._0;
+        _try_err = _tmp;
+        break _L;
+      }
+    }
+    switch (_try_err.$tag) {
+      case 3: {
+        const _Unrecognized = _try_err;
+        const _x = _Unrecognized._0;
+        const _pos = _Unrecognized._1;
+        const pos_str = moonbitlang$yacc$lib$driver$$pos_to_string(filename, parser_spec_str, _pos);
+        moonbitlang$yacc$lib$driver$util$$println_to_stderr(`SyntaxError: Unrecognized character ${moonbitlang$core$builtin$$Show$to_string$11$(moonbitlang$core$string$$String$escape(_x))}, at ${moonbitlang$core$builtin$$Show$to_string$11$(pos_str)}`);
+        return moonbitlang$yacc$lib$driver$util$$exit$21$(1);
+      }
+      case 4: {
+        moonbitlang$yacc$lib$driver$util$$println_to_stderr("SyntaxError: Unexpected end of file");
+        return moonbitlang$yacc$lib$driver$util$$exit$21$(1);
+      }
+      default: {
+        return $panic();
+      }
+    }
+  };
   let spec;
   let _try_err;
   _L: {

@@ -98,7 +98,7 @@ pub fn run(self : LexEngine, lexbuf : Lexbuf) -> (Int, Array[(Int, Int)]) {
 ///|
 pub type! LexError {
   UnexpectedEndOfFile
-  Unrecognized(String)
+  Unrecognized(String, Int)
 }
 
 ///|
@@ -2531,7 +2531,8 @@ fn token(phase : Ref[Int], lexbuf : Lexbuf) -> (Token, Int, Int)!LexError {
     (34, __mbtlex_captures) => {
       let (_start_pos_of_t, _end_pos_of_t) = __mbtlex_captures[0]
       let t : String = lexbuf.substring(_start_pos_of_t, _end_pos_of_t)
-      raise Unrecognized(t)
+      ignore(t)
+      raise Unrecognized(t, _start_pos_of_t)
     }
     (35, __mbtlex_captures) => {
       let (_start_pos_of_t, _end_pos_of_t) = __mbtlex_captures[0]
