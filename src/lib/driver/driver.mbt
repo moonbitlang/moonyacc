@@ -59,7 +59,6 @@ pub fn compile(
         println_to_stderr("SyntaxError: Unexpected end of file")
         exit(1)
       }
-      _ => panic()
     }
   }
 

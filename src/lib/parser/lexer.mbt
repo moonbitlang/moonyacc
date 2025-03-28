@@ -3728,6 +3728,6 @@ pub fn new_lexer(input : String) -> Lexer {
 }
 
 ///|
-pub fn next_token(self : Lexer) -> (Token, Int, Int)! {
+pub fn next_token(self : Lexer) -> (Token, Int, Int)!LexError {
   token!(self.phase, self.buf)
 }

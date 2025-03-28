@@ -183,7 +183,7 @@ pub fn new_lexer(input : String) -> Lexer {
   { buf : Lexbuf::from_string(input), phase: { val: 0 } }
 }
 
-pub fn next_token(self : Lexer) -> (Token, Int, Int)! {
+pub fn next_token(self : Lexer) -> (Token, Int, Int)!LexError {
   token!(self.phase, self.buf)
 }
 }
