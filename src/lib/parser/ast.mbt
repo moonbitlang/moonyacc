@@ -115,4 +115,5 @@ pub(all) enum Term {
   Symbol(Symbol)
   Image(String)
   RuleCall(Symbol, Array[Term])
+  AnonmousInlineRule(Array[ClauseItem], ClauseAction)
 } derive(ToJson)
