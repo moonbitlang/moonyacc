@@ -13,6 +13,11 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+pub type! ElabError {
+  UnresolvedSymbol(String, loc~ : (Int, Int))
+}
+
+///|
 pub(all) enum JsonCst {
   No
   Yes(TokenPayloadRewrite?)
@@ -29,8 +34,8 @@ pub fn elaborate_with_stdlib_rules(
   ast_spec : @parser.ParserSpec,
   json_cst~ : JsonCst,
   no_std~ : Bool
-) -> ParserSpec {
-  elaborate(
+) -> ParserSpec!ElabError {
+  elaborate!(
     ast_spec,
     json_cst~,
     stdlib_rules=if no_std { {} } else { stdlib_rules },
@@ -42,7 +47,7 @@ pub fn elaborate(
   ast_spec : @parser.ParserSpec,
   json_cst~ : JsonCst,
   stdlib_rules? : Map[String, Rule]
-) -> ParserSpec {
+) -> ParserSpec!ElabError {
   let mut header = ast_spec.header
   let mut trailer = ast_spec.trailer
   let token_by_name : Map[String, Token] = {}
@@ -164,29 +169,36 @@ pub fn elaborate(
   fn map_term(
     ast_term : @parser.Term,
     rule_param_map : Map[String, TypeExpr]
-  ) -> Term {
+  ) -> Term!ElabError {
     match ast_term {
-      Symbol(symbol) =>
+      Symbol(symbol, loc~) =>
         match token_by_name[symbol] {
           None =>
             match rule_param_map[symbol] {
               Some(type_) => Param(symbol, type_)
-              None => {
-                let rule = rule_by_name[symbol].unwrap()
-                RuleCall(symbol, [], rule.type_)
-              }
+              None =>
+                match rule_by_name[symbol] {
+                  None => raise UnresolvedSymbol(symbol, loc~)
+                  Some(rule) => RuleCall(symbol, [], rule.type_)
+                }
             }
           Some(token) => Token(token)
         }
-      Image(image) => Token(token_by_image[image].unwrap())
-      RuleCall(symbol, args) => {
-        let rule = rule_by_name[symbol].unwrap()
-        RuleCall(
-          symbol,
-          args.map(fn(arg) { map_term(arg, rule_param_map) }),
-          rule.type_,
-        )
-      }
+      Image(image, loc~) =>
+        match token_by_image[image] {
+          None => raise UnresolvedSymbol(image.escape(), loc~)
+          Some(token) => Token(token)
+        }
+      RuleCall(symbol, symbol_loc~, args) =>
+        match rule_by_name[symbol] {
+          None => raise UnresolvedSymbol(symbol, loc=symbol_loc)
+          Some(rule) =>
+            RuleCall(
+              symbol,
+              map_error!(args, fn(arg) { map_term!(arg, rule_param_map) }),
+              rule.type_,
+            )
+        }
     }
   }
 
@@ -198,10 +210,10 @@ pub fn elaborate(
     }
     let rule_param_map : Map[String, TypeExpr] = Map::from_array(rule.params)
     for clause_index, ast_clause in ast_rule.clauses {
-      let items = ast_clause.items.map(fn(ast_item) {
+      let items = map_error!(ast_clause.items, fn(ast_item) {
         Item::{
           binder: ast_item.binder,
-          term: map_term(ast_item.term, rule_param_map),
+          term: map_term!(ast_item.term, rule_param_map),
         }
       })
       let prec = match ast_clause.prec {
@@ -479,4 +491,16 @@ fn elaborate_type_expr_with_generic_params(
     Arrow(args, ret) =>
       Arrow(args.map(elaborate_type_expr), elaborate_type_expr(ret))
   }
+}
+
+///|
+fn map_error[T, R](
+  arr : Array[T],
+  f : (T) -> R!ElabError
+) -> Array[R]!ElabError {
+  let result : Array[R] = []
+  for item in arr {
+    result.push(f!(item))
+  }
+  result
 }

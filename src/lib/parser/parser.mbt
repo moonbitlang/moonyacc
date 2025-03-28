@@ -306,8 +306,10 @@ fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Symbol(symbol)
+  let _start_pos_of_item0 = _args[0].1
+  let _end_pos_of_item0 = _args[0].2
   guard _args[2].0 is YYObj__immut_list_T_Term_(_dollar3)
-  YYObj_Term({();  RuleCall(symbol, _dollar3.to_array()) })
+  YYObj_Term({();  RuleCall(symbol, symbol_loc=(_start_pos_of_item0, _end_pos_of_item0), _dollar3.to_array()) })
 }
 
 fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -490,7 +492,9 @@ fn yy_action_36(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 
 fn yy_action_37(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(image)
-  YYObj_Term({();  Image(image) })
+  let _start_pos = _args[0].1
+  let _end_pos = _args[0].2
+  YYObj_Term({();  Image(image, loc=(_start_pos, _end_pos)) })
 }
 
 fn yy_action_38(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -535,7 +539,9 @@ fn yy_action_44(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 
 fn yy_action_45(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Symbol(symbol)
-  YYObj_Term({();  Symbol(symbol) })
+  let _start_pos = _args[0].1
+  let _end_pos = _args[0].2
+  YYObj_Term({();  Symbol(symbol, loc=(_start_pos, _end_pos)) })
 }
 
 fn yy_action_46(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
