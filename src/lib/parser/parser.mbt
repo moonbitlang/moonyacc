@@ -325,18 +325,18 @@ fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 }
 
 // file:///./parser.mbty
-// 170|    binder=IDENT "=" term=term { { binder: Some(binder), term: term } }
+// 190|    ident=IDENT { ident }
 fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_String(binder)
-  guard _args[2].0 is YYObj_Term(term)
-  YYObj_ClauseItem({();  { binder: Some(binder), term: term } })
+  guard _args[0].0 is YYObj_String(ident)
+  YYObj_Symbol({();  ident })
 }
 
 // file:///./parser.mbty
-// 190|    ident=IDENT { ident }
+// 170|    binder=IDENT "=" term=term { { binder: Some(binder), term: term } }
 fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_String(ident)
-  YYObj_Symbol({();  ident })
+  guard _args[0].0 is YYObj_String(binder)
+  guard _args[2].0 is YYObj_Term(term)
+  YYObj_ClauseItem({();  { binder: Some(binder), term: term } })
 }
 
 // file:///./parser.mbty
@@ -386,17 +386,17 @@ fn yy_action_11(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 // file:///./parser.mbty
-// 61|    "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
+// 128|    IDENT { Constr(pkg=None, $1, []) }
 fn yy_action_12(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj_Declaration({();  Token(symbol_list.to_array(), type_=None) })
+  guard _args[0].0 is YYObj_String(_dollar1)
+  YYObj_TypeExpr({();  Constr(pkg=None, _dollar1, []) })
 }
 
 // file:///./parser.mbty
-// 128|    IDENT { Constr(pkg=None, $1, []) }
+// 61|    "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
 fn yy_action_13(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_String(_dollar1)
-  YYObj_TypeExpr({();  Constr(pkg=None, _dollar1, []) })
+  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
+  YYObj_Declaration({();  Token(symbol_list.to_array(), type_=None) })
 }
 
 // file:///./parser.mbty
@@ -533,19 +533,19 @@ fn yy_action_31(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 // file:///./parser.mbty
-// 143|    clause=clause "|" clause_list=clause_list { Cons(clause, clause_list) }
-fn yy_action_32(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Clause(clause)
-  guard _args[2].0 is YYObj__immut_list_T_Clause_(clause_list)
-  YYObj__immut_list_T_Clause_({();  Cons(clause, clause_list) })
-}
-
-// file:///./parser.mbty
 // 155|    { { code: None, start: $startpos, end: $endpos } }
-fn yy_action_33(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_32(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   let _start_pos = _last_pos
   let _end_pos = _last_pos
   YYObj_ClauseAction({();  { code: None, start: _start_pos, end: _end_pos } })
+}
+
+// file:///./parser.mbty
+// 143|    clause=clause "|" clause_list=clause_list { Cons(clause, clause_list) }
+fn yy_action_33(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj_Clause(clause)
+  guard _args[2].0 is YYObj__immut_list_T_Clause_(clause_list)
+  YYObj__immut_list_T_Clause_({();  Cons(clause, clause_list) })
 }
 
 // file:///./parser.mbty
@@ -674,16 +674,16 @@ fn yy_action_49(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 // file:///./parser.mbty
-// 66|    "%position" "<" type_=type_expr ">" { Position(type_=type_) }
+// 56|    { Nil }
 fn yy_action_50(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[2].0 is YYObj_TypeExpr(type_)
-  YYObj_Declaration({();  Position(type_=type_) })
+  YYObj__immut_list_T_Declaration_({();  Nil })
 }
 
 // file:///./parser.mbty
-// 56|    { Nil }
+// 66|    "%position" "<" type_=type_expr ">" { Position(type_=type_) }
 fn yy_action_51(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj__immut_list_T_Declaration_({();  Nil })
+  guard _args[2].0 is YYObj_TypeExpr(type_)
+  YYObj_Declaration({();  Position(type_=type_) })
 }
 
 // file:///./parser.mbty
@@ -707,18 +707,18 @@ fn yy_action_54(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 // file:///./parser.mbty
-// 75|    rule=rule rule_list=rule_list { Cons(rule, rule_list) }
+// 115|    postfix_type_expr { $1 }
 fn yy_action_55(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Rule(rule)
-  guard _args[1].0 is YYObj__immut_list_T_Rule_(rule_list)
-  YYObj__immut_list_T_Rule_({();  Cons(rule, rule_list) })
+  guard _args[0].0 is YYObj_TypeExpr(_dollar1)
+  YYObj_TypeExpr({();  _dollar1 })
 }
 
 // file:///./parser.mbty
-// 115|    postfix_type_expr { $1 }
+// 75|    rule=rule rule_list=rule_list { Cons(rule, rule_list) }
 fn yy_action_56(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_TypeExpr(_dollar1)
-  YYObj_TypeExpr({();  _dollar1 })
+  guard _args[0].0 is YYObj_Rule(rule)
+  guard _args[1].0 is YYObj__immut_list_T_Rule_(rule_list)
+  YYObj__immut_list_T_Rule_({();  Cons(rule, rule_list) })
 }
 
 // file:///./parser.mbty
@@ -908,7 +908,7 @@ fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
     T_PERCENT_START => Shift(yy_state_67)
     NT_decl => Shift(yy_state_69)
     NT_decl_list => Shift(yy_state_71)
-    T_PERCENT_PERCENT => Reduce(0, NT_decl_list, yy_action_51)
+    T_PERCENT_PERCENT => Reduce(0, NT_decl_list, yy_action_50)
     _ => Error
   }
 }
@@ -1051,7 +1051,7 @@ fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LBRACKET => Shift(yy_state_14)
-    T_RANGLE | T_RBRACKET | T_RPAREN | T_COMMA | T_QUESTION | T_COLON => Reduce(1, NT_basic_type_expr, yy_action_13)
+    T_RANGLE | T_RBRACKET | T_RPAREN | T_COMMA | T_QUESTION | T_COLON => Reduce(1, NT_basic_type_expr, yy_action_12)
     _ => Error
   }
 }
@@ -1235,7 +1235,7 @@ fn yy_state_24(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_25(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_QUESTION => Shift(yy_state_26)
-    T_RANGLE | T_RBRACKET | T_RPAREN | T_COMMA | T_COLON => Reduce(1, NT_type_expr, yy_action_56)
+    T_RANGLE | T_RBRACKET | T_RPAREN | T_COMMA | T_COLON => Reduce(1, NT_type_expr, yy_action_55)
     _ => Error
   }
 }
@@ -1400,7 +1400,7 @@ fn yy_state_39(_lookahead : YYSymbol) -> YYDecision {
 
 // [68, symbol → IDENT •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_PREC / PERCENT_DERIVE / LBRACKET / LPAREN / RPAREN / COMMA / ARROW / COLON / BAR / SEMI]
 fn yy_state_40(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_symbol, yy_action_6)
+  ReduceNoLookahead(1, NT_symbol, yy_action_5)
 }
 
 // [66, nonempty_symbol_list → • symbol, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
@@ -1508,7 +1508,7 @@ fn yy_state_50(_lookahead : YYSymbol) -> YYDecision {
 
 // [14, decl → PERCENT_POSITION LANGLE type_expr RANGLE •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 fn yy_state_51(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(4, NT_decl, yy_action_50)
+  ReduceNoLookahead(4, NT_decl, yy_action_51)
 }
 
 // [13, decl → PERCENT_TYPE • LANGLE type_expr RANGLE nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
@@ -1689,7 +1689,7 @@ fn yy_state_65(_lookahead : YYSymbol) -> YYDecision {
 
 // [9, decl → PERCENT_TOKEN nonempty_symbol_list •, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
 fn yy_state_66(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_decl, yy_action_12)
+  ReduceNoLookahead(2, NT_decl, yy_action_13)
 }
 
 // [8, decl → PERCENT_START • nonempty_symbol_list, PERCENT_PERCENT / PERCENT_START / PERCENT_TOKEN / PERCENT_TYPE / PERCENT_POSITION / PERCENT_LEFT / PERCENT_RIGHT / PERCENT_NONASSOC / PERCENT_DERIVE]
@@ -1736,7 +1736,7 @@ fn yy_state_69(_lookahead : YYSymbol) -> YYDecision {
     T_PERCENT_START => Shift(yy_state_67)
     NT_decl => Shift(yy_state_69)
     NT_decl_list => Shift(yy_state_70)
-    T_PERCENT_PERCENT => Reduce(0, NT_decl_list, yy_action_51)
+    T_PERCENT_PERCENT => Reduce(0, NT_decl_list, yy_action_50)
     _ => Error
   }
 }
@@ -2119,7 +2119,7 @@ fn yy_state_102(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_103(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_EQ => Shift(yy_state_104)
-    T_IDENT | T_STRING | T_LBRACE_CODE_RBRACE | T_PERCENT_PREC | T_LPAREN | T_BAR | T_SEMI => Reduce(1, NT_symbol, yy_action_6)
+    T_IDENT | T_STRING | T_LBRACE_CODE_RBRACE | T_PERCENT_PREC | T_LPAREN | T_BAR | T_SEMI => Reduce(1, NT_symbol, yy_action_5)
     _ => Error
   }
 }
@@ -2141,7 +2141,7 @@ fn yy_state_104(_lookahead : YYSymbol) -> YYDecision {
 
 // [60, item → IDENT EQ term •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
 fn yy_state_105(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_item, yy_action_5)
+  ReduceNoLookahead(3, NT_item, yy_action_6)
 }
 
 // [59, item → term •, IDENT / STRING / LBRACE_CODE_RBRACE / PERCENT_PREC / BAR / SEMI]
@@ -2210,7 +2210,7 @@ fn yy_state_112(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LBRACE_CODE_RBRACE => Shift(yy_state_113)
     NT_clause_action => Shift(yy_state_114)
-    T_BAR | T_SEMI => Reduce(0, NT_clause_action, yy_action_33)
+    T_BAR | T_SEMI => Reduce(0, NT_clause_action, yy_action_32)
     _ => Error
   }
 }
@@ -2264,7 +2264,7 @@ fn yy_state_116(_lookahead : YYSymbol) -> YYDecision {
 
 // [51, clause_list → clause BAR clause_list •, SEMI]
 fn yy_state_117(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_clause_list, yy_action_32)
+  ReduceNoLookahead(3, NT_clause_list, yy_action_33)
 }
 
 // [24, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list • SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
@@ -2375,7 +2375,7 @@ fn yy_state_127(_lookahead : YYSymbol) -> YYDecision {
 
 // [20, rule_list → rule rule_list •, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
 fn yy_state_128(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_rule_list, yy_action_55)
+  ReduceNoLookahead(2, NT_rule_list, yy_action_56)
 }
 
 // [0, spec → header decl_list PERCENT_PERCENT rule_list • trailer EOF, $]

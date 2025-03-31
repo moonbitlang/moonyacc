@@ -178,34 +178,9 @@ fn yy_action_2(
 }
 
 // file:///./calc_jsoncst.mbty
-// 27|    add "-" factor  { $1 - $3 }
-///|
-fn yy_action_3(
-  _last_pos : Position,
-  _args : ArrayView[(YYObj, Position, Position)]
-) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[2].2
-  YYObj_Json(
-    {
-      ()
-      {
-        "type": "NONTERMINAL",
-        "name": "add",
-        "rule_index": 1,
-        "clause_index": 1,
-        "children": args_to_json(_args),
-        "start": _start_pos.to_json(),
-        "end": _end_pos.to_json(),
-      }
-    },
-  )
-}
-
-// file:///./calc_jsoncst.mbty
 // 37|    NUMBER          { $1 }
 ///|
-fn yy_action_4(
+fn yy_action_3(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -219,6 +194,31 @@ fn yy_action_4(
         "name": "term",
         "rule_index": 3,
         "clause_index": 0,
+        "children": args_to_json(_args),
+        "start": _start_pos.to_json(),
+        "end": _end_pos.to_json(),
+      }
+    },
+  )
+}
+
+// file:///./calc_jsoncst.mbty
+// 27|    add "-" factor  { $1 - $3 }
+///|
+fn yy_action_4(
+  _last_pos : Position,
+  _args : ArrayView[(YYObj, Position, Position)]
+) -> YYObj {
+  let _start_pos = _args[0].1
+  let _end_pos = _args[2].2
+  YYObj_Json(
+    {
+      ()
+      {
+        "type": "NONTERMINAL",
+        "name": "add",
+        "rule_index": 1,
+        "clause_index": 1,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -440,7 +440,7 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
 // [6, term → NUMBER •, EOF / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_term, yy_action_4)
+  ReduceNoLookahead(1, NT_term, yy_action_3)
 }
 
 // [5, factor → term •, EOF / PLUS / MINUS / STAR / RPAREN]
@@ -520,7 +520,7 @@ fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_3)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_4)
     _ => Error
   }
 }

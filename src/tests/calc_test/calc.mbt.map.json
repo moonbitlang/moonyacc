@@ -32,21 +32,21 @@
     },
     {
       "source": "calc.mbty",
-      "original_offset": 437,
-      "generated_offset": 2448,
-      "length": 11
-    },
-    {
-      "source": "calc.mbty",
       "original_offset": 613,
-      "generated_offset": 2684,
+      "generated_offset": 2409,
       "length": 1
     },
     {
       "source": "calc.mbty",
       "original_offset": 616,
-      "generated_offset": 2693,
+      "generated_offset": 2418,
       "length": 1
+    },
+    {
+      "source": "calc.mbty",
+      "original_offset": 437,
+      "generated_offset": 2683,
+      "length": 11
     },
     {
       "source": "calc.mbty",

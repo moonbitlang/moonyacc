@@ -323,13 +323,22 @@ fn codegen(
         )
       }
     }
-    JsonCst(_) =>
+    JsonCst(_) => {
+      if input_mode is Array {
+        output.write_string(
+          $|priv type! YYObj_Void
+          $|
+          $|
+          ,
+        )
+      }
       output.write_string(
         $|priv type! YYObj_Json Json
         $|
         $|
         ,
       )
+    }
   }
 
   // YYState, YYAction, YYDecision
@@ -398,10 +407,14 @@ fn codegen(
     actions[action.stamp] = action
   }
 
-  for production in grammar.productions {
-    guard not(grammar.starts.contains(production)) else { continue }
-    let meta = production_meta(production.num)
-    add_action(meta.action)
+  for state in automaton.states {
+    for _, decision in state.action {
+      if decision is Reduce(production) {
+        guard not(grammar.starts.contains(production)) else { continue }
+        let meta = production_meta(production.num)
+        add_action(meta.action)
+      }
+    }
   }
   let mut next_action_id = 0
   let stamp_to_action_id = @default_hashmap.new(fn(_key) {

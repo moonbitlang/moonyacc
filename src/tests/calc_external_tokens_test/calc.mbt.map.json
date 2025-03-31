@@ -44,31 +44,31 @@
     },
     {
       "source": "calc.mbty",
-      "original_offset": 380,
-      "generated_offset": 1768,
-      "length": 1
-    },
-    {
-      "source": "calc.mbty",
-      "original_offset": 383,
-      "generated_offset": 1777,
-      "length": 3
-    },
-    {
-      "source": "calc.mbty",
-      "original_offset": 388,
-      "generated_offset": 1788,
-      "length": 1
-    },
-    {
-      "source": "calc.mbty",
       "original_offset": 520,
-      "generated_offset": 2006,
+      "generated_offset": 1721,
       "length": 1
     },
     {
       "source": "calc.mbty",
       "original_offset": 523,
+      "generated_offset": 1730,
+      "length": 1
+    },
+    {
+      "source": "calc.mbty",
+      "original_offset": 380,
+      "generated_offset": 1995,
+      "length": 1
+    },
+    {
+      "source": "calc.mbty",
+      "original_offset": 383,
+      "generated_offset": 2004,
+      "length": 3
+    },
+    {
+      "source": "calc.mbty",
+      "original_offset": 388,
       "generated_offset": 2015,
       "length": 1
     },

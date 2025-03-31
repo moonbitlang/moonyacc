@@ -114,18 +114,18 @@ fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 }
 
 // file:///./calc.mbty
-// 29|    lhs=add "-" rhs=factor  { lhs - rhs }
+// 39|    NUMBER                  { $1 }
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(lhs)
-  guard _args[2].0 is YYObj_Int(rhs)
-  YYObj_Int({();  lhs - rhs })
+  guard _args[0].0 is YYObj_Int(_dollar1)
+  YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
-// 39|    NUMBER                  { $1 }
+// 29|    lhs=add "-" rhs=factor  { lhs - rhs }
 fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(_dollar1)
-  YYObj_Int({();  _dollar1 })
+  guard _args[0].0 is YYObj_Int(lhs)
+  guard _args[2].0 is YYObj_Int(rhs)
+  YYObj_Int({();  lhs - rhs })
 }
 
 // file:///./calc.mbty
@@ -209,7 +209,7 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
 
 // [6, term → NUMBER •, EOF / PLUS / MINUS / STAR / RPAREN]
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_term, yy_action_4)
+  ReduceNoLookahead(1, NT_term, yy_action_3)
 }
 
 // [5, factor → term •, EOF / PLUS / MINUS / STAR / RPAREN]
@@ -281,7 +281,7 @@ fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_3)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_4)
     _ => Error
   }
 }
