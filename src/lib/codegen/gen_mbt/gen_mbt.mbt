@@ -225,7 +225,19 @@ fn codegen(
   }
 
   // Header
-  output.write_string(meta.header)
+  for chunk in meta.header {
+    let (code, original_range) = chunk
+    match (source_map_builder, original_range) {
+      (None, _) | (_, None) => ()
+      (Some(source_map_builder), Some((original_utf8_pos, utf8_len))) => {
+        let generated_utf8_pos = output.cursor()
+        source_map_builder.add_mapping(
+          grammar_filename, original_utf8_pos, generated_utf8_pos, utf8_len,
+        )
+      }
+    }
+    output.write_string(code)
+  }
 
   // Position
   output.write_string(
@@ -1063,7 +1075,19 @@ fn codegen(
   }
 
   // Footer
-  output.write_string(meta.footer)
+  for chunk in meta.footer {
+    let (code, original_range) = chunk
+    match (source_map_builder, original_range) {
+      (None, _) | (_, None) => ()
+      (Some(source_map_builder), Some((original_utf8_pos, utf8_len))) => {
+        let generated_utf8_pos = output.cursor()
+        source_map_builder.add_mapping(
+          grammar_filename, original_utf8_pos, generated_utf8_pos, utf8_len,
+        )
+      }
+    }
+    output.write_string(code)
+  }
 }
 
 ///|

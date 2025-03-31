@@ -66,8 +66,8 @@ pub impl Show for TypeExpr with output(self, logger) {
 
 ///|
 pub(all) struct ParserSpec {
-  header : Code?
-  trailer : Code?
+  header : @immut/array.T[CodeChunk]
+  trailer : @immut/array.T[CodeChunk]
   tokens : Array[Token]
   rules : Map[Symbol, Rule]
   start_rules : Array[Symbol]
@@ -103,6 +103,10 @@ pub(all) struct Clause {
   action : Action
 }
 
+// (code, (utf8_pos, utf8_len)?)
+///|
+pub(all) typealias CodeChunk = (String, (Int, Int)?)
+
 ///|
 pub(all) struct Action {
   stamp : @stamp.Stamp
@@ -110,7 +114,7 @@ pub(all) struct Action {
   type_ : TypeExpr
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, Code)]
-  body : Array[(String, (Int, Int)?)] // array of (code, (utf8_pos, utf8_len)?)
+  body : Array[CodeChunk]
 }
 
 ///|

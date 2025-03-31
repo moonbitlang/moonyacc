@@ -51,8 +51,8 @@ pub(all) struct NonTerminalMeta {
 
 ///|
 pub(all) struct MetaProvider {
-  header : CodeFragment
-  footer : CodeFragment
+  header : @immut/array.T[(CodeFragment, (Int, Int)?)]
+  footer : @immut/array.T[(CodeFragment, (Int, Int)?)]
   position_data_type : @elab.TypeExpr
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta

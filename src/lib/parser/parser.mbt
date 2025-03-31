@@ -190,11 +190,11 @@ priv type! YYObj__immut_list_T_Declaration_ @immut/list.T[Declaration]
 
 priv type! YYObj__immut_list_T__String__TypeExpr___ @immut/list.T[(String, TypeExpr?)]
 
-priv type! YYObj_Code_ Code?
-
 priv type! YYObj_Symbol_ Symbol?
 
 priv type! YYObj_TypeExpr_ TypeExpr?
+
+priv type! YYObj__Code__Int__Int__ (Code, Int, Int)?
 
 priv type! YYObj__String__String_ (String, String)
 
@@ -384,12 +384,12 @@ fn yy_action_16(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 fn yy_action_17(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj_Code_({();  None })
+  YYObj__Code__Int__Int__({();  None })
 }
 
 fn yy_action_18(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__Int__Int_(code)
-  YYObj_Code_({();  Some(code.0) })
+  YYObj__Code__Int__Int__({();  Some(code) })
 }
 
 fn yy_action_19(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -417,7 +417,7 @@ fn yy_action_22(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 fn yy_action_23(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj_Code_({();  None })
+  YYObj__Code__Int__Int__({();  None })
 }
 
 fn yy_action_24(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -507,7 +507,7 @@ fn yy_action_38(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 
 fn yy_action_39(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__Int__Int_(code)
-  YYObj_Code_({();  Some(code.0) })
+  YYObj__Code__Int__Int__({();  Some(code) })
 }
 
 fn yy_action_40(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -532,10 +532,10 @@ fn yy_action_43(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 fn yy_action_44(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Code_(header)
+  guard _args[0].0 is YYObj__Code__Int__Int__(header)
   guard _args[1].0 is YYObj__immut_list_T_Declaration_(decl_list)
   guard _args[3].0 is YYObj__immut_list_T_Rule_(rule_list)
-  guard _args[4].0 is YYObj_Code_(trailer)
+  guard _args[4].0 is YYObj__Code__Int__Int__(trailer)
   YYObj_ParserSpec({();  { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } })
 }
 
@@ -566,7 +566,7 @@ fn yy_action_48(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 
 fn yy_action_49(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__Int__Int_(code)
-  YYObj_Code_({();  Some(code.0) })
+  YYObj__Code__Int__Int__({();  Some(code) })
 }
 
 fn yy_action_50(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {

@@ -40,14 +40,14 @@ spec -> ParserSpec
   : header=header decl_list=decl_list "%%" rule_list=rule_list trailer=trailer EOF { { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } }
   ;
 
-header -> Code?
-  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code.0) }
+header -> (Code, Int, Int)?
+  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
   | { None }
   ;
 
-trailer -> Code?
-  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code.0) }
-  | code=PERCENT_PERCENT_CODE_EOF { Some(code.0) }
+trailer -> (Code, Int, Int)?
+  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
+  | code=PERCENT_PERCENT_CODE_EOF { Some(code) }
   | { None }
   ;
 

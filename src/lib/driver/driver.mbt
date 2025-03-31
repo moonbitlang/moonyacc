@@ -222,8 +222,8 @@ pub fn compile(
     }
   }
   let meta : @codegen.MetaProvider = {
-    header: spec.header.or_default(),
-    footer: spec.trailer.or_default(),
+    header: spec.header,
+    footer: spec.trailer,
     position_data_type,
     terminal_meta: fn(name) {
       terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {

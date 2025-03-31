@@ -14,8 +14,8 @@
 
 ///|
 pub(all) struct ParserSpec {
-  header : Code?
-  trailer : Code?
+  header : (Code, Int, Int)? // (code, utf8_pos, utf8_len)
+  trailer : (Code, Int, Int)? // (code, utf8_pos, utf8_len)
   decls : Array[Declaration]
   rules : Array[Rule]
 } derive(ToJson)

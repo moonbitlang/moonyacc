@@ -48,8 +48,16 @@ pub fn elaborate(
   json_cst~ : JsonCst,
   stdlib_rules? : Map[String, Rule]
 ) -> ParserSpec!ElabError {
-  let mut header = ast_spec.header
-  let mut trailer = ast_spec.trailer
+  let mut header = match ast_spec.header {
+    None => @immut/array.new()
+    Some((code, utf8_pos, utf8_len)) =>
+      @immut/array.of([(code, Some((utf8_pos, utf8_len)))])
+  }
+  let mut trailer = match ast_spec.trailer {
+    None => @immut/array.new()
+    Some((code, utf8_pos, utf8_len)) =>
+      @immut/array.of([(code, Some((utf8_pos, utf8_len)))])
+  }
   let token_by_name : Map[String, Token] = {}
   let rule_by_name : Map[String, Rule] = {}
   let token_by_image : Map[String, Token] = {}
@@ -283,8 +291,8 @@ pub fn elaborate(
   match json_cst {
     No => ()
     Yes(rewrite) => {
-      header = None
-      trailer = None
+      header = @immut/array.new()
+      trailer = @immut/array.new()
       position_type = Constr(pkg=None, "Int", [])
       match rewrite {
         None => ()

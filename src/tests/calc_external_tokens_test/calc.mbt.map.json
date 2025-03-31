@@ -113,6 +113,12 @@
       "original_offset": 486,
       "generated_offset": 2291,
       "length": 1
+    },
+    {
+      "source": "calc.mbty",
+      "original_offset": 629,
+      "generated_offset": 12522,
+      "length": 61
     }
   ]
 }
