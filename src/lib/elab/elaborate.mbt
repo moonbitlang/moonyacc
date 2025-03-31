@@ -30,30 +30,38 @@ pub(all) enum TokenPayloadRewrite {
 }
 
 ///|
-fn build_rules_from_src(src : String, json_cst~ : JsonCst) -> Map[String, Rule] {
+fn build_rules_from_src(
+  src : String,
+  filename~ : String,
+  json_cst~ : JsonCst
+) -> Map[String, Rule] {
   let lexer = @parser.new_lexer(src)
   fn token() {
     lexer.next_token?().unwrap()
   }
 
   let ast_spec = @parser.spec?(token, 0).unwrap()
-  let spec = elaborate?(ast_spec, json_cst~).unwrap()
+  let spec = elaborate?(ast_spec, src, filename, json_cst~).unwrap()
   spec.rules
 }
 
 ///|
 pub fn elaborate_with_stdlib_rules(
   ast_spec : @parser.ParserSpec,
+  parser_spec_str : String,
+  filename : String,
   json_cst~ : JsonCst,
   no_std~ : Bool
 ) -> ParserSpec!ElabError {
   elaborate!(
     ast_spec,
+    parser_spec_str,
+    filename,
     json_cst~,
     stdlib_rules=if no_std {
       {}
     } else {
-      build_rules_from_src(stdlib_src, json_cst~)
+      build_rules_from_src(stdlib_src, filename="stdlib.mbty", json_cst~)
     },
   )
 }
@@ -61,6 +69,8 @@ pub fn elaborate_with_stdlib_rules(
 ///|
 pub fn elaborate(
   ast_spec : @parser.ParserSpec,
+  parser_spec_str : String,
+  filename : String,
   json_cst~ : JsonCst,
   stdlib_rules? : Map[String, Rule]
 ) -> ParserSpec!ElabError {
@@ -274,6 +284,9 @@ pub fn elaborate(
         action: elaborate_action(
           items,
           ast_clause.action,
+          parser_spec=ast_spec,
+          parser_spec_str~,
+          filename~,
           rule_index~,
           clause_index~,
           nonterminal_name=rule.name,
@@ -342,6 +355,9 @@ pub fn elaborate(
 fn elaborate_action(
   items : Array[Item],
   ast_action : @parser.ClauseAction,
+  parser_spec~ : @parser.ParserSpec,
+  parser_spec_str~ : String,
+  filename~ : String,
   rule_index~ : Int,
   clause_index~ : Int,
   nonterminal_name~ : String,
@@ -489,7 +505,26 @@ fn elaborate_action(
       )
     }
   }
-  Action::{ stamp: @stamp.new(), arity, type_, sub_actions: [], bindings, body }
+  let ast_clause = parser_spec.rules[rule_index].clauses[clause_index]
+  let (line, column) = offset_to_line_column(parser_spec_str, ast_clause.loc.0)
+  let original_clause_info = {
+    file: filename,
+    line: line - 1, // to 0-based
+    column: column - 1, // to 0-based
+    code: parser_spec_str.substring(
+      start=ast_clause.loc.0,
+      end=ast_clause.loc.0 + ast_clause.loc.1,
+    ),
+  }
+  Action::{
+    stamp: @stamp.new(),
+    arity,
+    type_,
+    sub_actions: [],
+    bindings,
+    body,
+    original_clause_info,
+  }
 }
 
 ///|

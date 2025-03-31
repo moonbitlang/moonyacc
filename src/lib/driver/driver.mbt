@@ -77,6 +77,8 @@ pub fn compile(
   let spec = try {
     @elab.elaborate_with_stdlib_rules!(
       spec,
+      parser_spec_str,
+      @_driver_util.path_basename(filename),
       json_cst=match mode {
         JsonCst(token_payload_rewrite=None) => Yes(None)
         JsonCst(token_payload_rewrite=Some(NoPayload)) => Yes(Some(NoPayload))

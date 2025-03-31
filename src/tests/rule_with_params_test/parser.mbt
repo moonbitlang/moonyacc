@@ -75,31 +75,43 @@ fn init {
   }
 }
 
+// file:///./parser.mbty
+// 13|    { Nil }
 fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   YYObj__immut_list_T_Char_({();  Nil })
 }
 
+// file:///./parser.mbty
+// 18|    OPEN X CLOSE { $2 }
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj__immut_list_T_Char_({();  Nil })
-}
-
-fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[1].0 is YYObj__immut_list_T_Char_(_dollar2)
   YYObj__immut_list_T_Char_({();  _dollar2 })
 }
 
+// file:///./stdlib.mbty
+// 14|    { Nil }
+fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  YYObj__immut_list_T_Char_({();  Nil })
+}
+
+// file:///./parser.mbty
+// 14|    X list(X) { Cons($1, $2) }
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Char(_dollar1)
   guard _args[1].0 is YYObj__immut_list_T_Char_(_dollar2)
   YYObj__immut_list_T_Char_({();  Cons(_dollar1, _dollar2) })
 }
 
+// file:///./stdlib.mbty
+// 15|    X { $1 }
 fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  let _sub_action_0_result = yy_action_2(_last_pos, _args[0:3])
+  let _sub_action_0_result = yy_action_1(_last_pos, _args[0:3])
   guard _sub_action_0_result is YYObj__immut_list_T_Char_(_dollar1)
   YYObj__immut_list_T_Char_({();  _dollar1 })
 }
 
+// file:///./parser.mbty
+// 9|    loption(delimited("{", list(LETTER), "}")) { $1.iter().map(fn (it) { String::make(1, it) }).join("") }
 fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__immut_list_T_Char_(_dollar1)
   YYObj_String({();  _dollar1.iter().map(fn (it) { String::make(1, it) }).join("") })
@@ -122,7 +134,7 @@ fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
     NT_start => Shift(yy_state_1)
     T_LBRACE => Shift(yy_state_2)
     NT_loption__delimited__LBRACE_list__LETTER_RBRACE => Shift(yy_state_7)
-    EOI => Reduce(0, NT_loption__delimited__LBRACE_list__LETTER_RBRACE, yy_action_1)
+    EOI => Reduce(0, NT_loption__delimited__LBRACE_list__LETTER_RBRACE, yy_action_2)
     _ => Error
   }
 }

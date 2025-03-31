@@ -414,6 +414,25 @@ fn codegen(
   }
 
   for _, action in actions {
+    let clause_info = action.original_clause_info
+    output.write_string("// file:///./\{clause_info.file}\n")
+    let clause_lines = clause_info.code.split("\n").to_array()
+    let max_line_number = clause_info.line + 1 + (clause_lines.length() - 1)
+    let num_digits = max_line_number.to_string().length()
+    for index, line in clause_lines {
+      output.write_string("// ")
+      let line_number = clause_info.line + 1 + index
+      let line_number_str = line_number.to_string().pad_start(num_digits, ' ')
+      output.write_string("\{line_number_str}")
+      output.write_char('|')
+      if index == 0 {
+        if clause_info.column > 0 {
+          output.write_string(" ".repeat(clause_info.column))
+        }
+      }
+      output.write_string(line)
+      output.write_char('\n')
+    }
     output.write_string(
       $|fn yy_action_\{get_action_id(action)}(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
       $|

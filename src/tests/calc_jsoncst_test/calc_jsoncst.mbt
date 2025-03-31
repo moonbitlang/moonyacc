@@ -102,6 +102,8 @@ fn init {
   }
 }
 
+// file:///./calc_jsoncst.mbty
+// 26|    add "+" factor  { $1 + $3 }
 ///|
 fn yy_action_0(
   _last_pos : Position,
@@ -125,6 +127,8 @@ fn yy_action_0(
   )
 }
 
+// file:///./calc_jsoncst.mbty
+// 28|    factor          { $1 }
 ///|
 fn yy_action_1(
   _last_pos : Position,
@@ -148,6 +152,8 @@ fn yy_action_1(
   )
 }
 
+// file:///./calc_jsoncst.mbty
+// 38|    "(" add ")"     { $2 }
 ///|
 fn yy_action_2(
   _last_pos : Position,
@@ -171,6 +177,8 @@ fn yy_action_2(
   )
 }
 
+// file:///./calc_jsoncst.mbty
+// 27|    add "-" factor  { $1 - $3 }
 ///|
 fn yy_action_3(
   _last_pos : Position,
@@ -194,6 +202,8 @@ fn yy_action_3(
   )
 }
 
+// file:///./calc_jsoncst.mbty
+// 37|    NUMBER          { $1 }
 ///|
 fn yy_action_4(
   _last_pos : Position,
@@ -217,6 +227,8 @@ fn yy_action_4(
   )
 }
 
+// file:///./calc_jsoncst.mbty
+// 32|    factor "*" term { $1 * $3 }
 ///|
 fn yy_action_5(
   _last_pos : Position,
@@ -240,6 +252,8 @@ fn yy_action_5(
   )
 }
 
+// file:///./calc_jsoncst.mbty
+// 22|    add EOF         { $1 }
 ///|
 fn yy_action_6(
   _last_pos : Position,
@@ -263,6 +277,8 @@ fn yy_action_6(
   )
 }
 
+// file:///./calc_jsoncst.mbty
+// 33|    term            { $1 }
 ///|
 fn yy_action_7(
   _last_pos : Position,

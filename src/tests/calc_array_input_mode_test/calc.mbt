@@ -101,6 +101,8 @@ fn init {
   }
 }
 
+// file:///./calc.mbty
+// 25|    add "+" factor  { $1 + $3 }
 ///|
 fn yy_action_0(
   _last_pos : Position,
@@ -116,6 +118,8 @@ fn yy_action_0(
   )
 }
 
+// file:///./calc.mbty
+// 27|    factor          { $1 }
 ///|
 fn yy_action_1(
   _last_pos : Position,
@@ -130,6 +134,8 @@ fn yy_action_1(
   )
 }
 
+// file:///./calc.mbty
+// 37|    "(" add ")"     { $2 }
 ///|
 fn yy_action_2(
   _last_pos : Position,
@@ -144,6 +150,8 @@ fn yy_action_2(
   )
 }
 
+// file:///./calc.mbty
+// 26|    add "-" factor  { $1 - $3 }
 ///|
 fn yy_action_3(
   _last_pos : Position,
@@ -159,6 +167,8 @@ fn yy_action_3(
   )
 }
 
+// file:///./calc.mbty
+// 36|    NUMBER          { $1 }
 ///|
 fn yy_action_4(
   _last_pos : Position,
@@ -173,6 +183,8 @@ fn yy_action_4(
   )
 }
 
+// file:///./calc.mbty
+// 31|    factor "*" term { $1 * $3 }
 ///|
 fn yy_action_5(
   _last_pos : Position,
@@ -188,6 +200,8 @@ fn yy_action_5(
   )
 }
 
+// file:///./calc.mbty
+// 21|    add             { $1 }
 ///|
 fn yy_action_6(
   _last_pos : Position,
@@ -202,6 +216,8 @@ fn yy_action_6(
   )
 }
 
+// file:///./calc.mbty
+// 32|    term            { $1 }
 ///|
 fn yy_action_7(
   _last_pos : Position,

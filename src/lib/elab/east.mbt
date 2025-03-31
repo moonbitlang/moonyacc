@@ -115,6 +115,15 @@ pub(all) struct Action {
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, Code)]
   body : Array[CodeChunk]
+  original_clause_info : OriginalClauseInfo
+}
+
+///|
+pub(all) struct OriginalClauseInfo {
+  file : String
+  line : Int
+  column : Int
+  code : String
 }
 
 ///|

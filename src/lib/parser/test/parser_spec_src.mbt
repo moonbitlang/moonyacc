@@ -148,7 +148,7 @@ let parser_spec_src : String =
   #|  ;
   #|
   #|clause -> Clause
-  #|  : item_list=item_list prec=rule_prec action=clause_action { { items: item_list.to_array(), prec, action } }
+  #|  : item_list=item_list prec=rule_prec action=clause_action { { items: item_list.to_array(), prec, action, loc: ($startpos, $endpos - $startpos) } }
   #|  ;
   #|
   #|clause_action -> ClauseAction

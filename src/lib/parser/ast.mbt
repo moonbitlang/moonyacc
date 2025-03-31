@@ -88,6 +88,7 @@ pub(all) struct Clause {
   items : Array[ClauseItem]
   prec : Symbol?
   action : ClauseAction
+  loc : (Int, Int) // (utf8_pos, utf8_len)
 } derive(ToJson)
 
 ///|

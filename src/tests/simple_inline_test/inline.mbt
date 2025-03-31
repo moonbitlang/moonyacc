@@ -65,14 +65,20 @@ fn init {
   }
 }
 
+// file:///./inline.mbty
+// 18|    A { "a" }
 fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   YYObj_String({();  "a" })
 }
 
+// file:///./inline.mbty
+// 26|    A { "a" }
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   YYObj_String({();  "a" })
 }
 
+// file:///./inline.mbty
+// 14|    a=a b=b x b { a + b + $3 + $4 }
 fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   let _sub_action_0_result = yy_action_0(_last_pos, _args[0:1])
   let _sub_action_2_result = yy_action_3(_args[1].2, _args[2:3])
@@ -83,14 +89,20 @@ fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
   YYObj_String({();  a + b + _dollar3 + _dollar4 })
 }
 
+// file:///./inline.mbty
+// 22|    B { "b" }
 fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   YYObj_String({();  "b" })
 }
 
+// file:///./inline.mbty
+// 27|    B { "b" }
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   YYObj_String({();  "b" })
 }
 
+// file:///./inline.mbty
+// 14|    a=a b=b x b { a + b + $3 + $4 }
 fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   let _sub_action_0_result = yy_action_0(_last_pos, _args[0:1])
   let _sub_action_2_result = yy_action_1(_args[1].2, _args[2:3])
