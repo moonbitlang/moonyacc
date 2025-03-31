@@ -30,6 +30,18 @@ pub(all) enum TokenPayloadRewrite {
 }
 
 ///|
+fn build_rules_from_src(src : String, json_cst~ : JsonCst) -> Map[String, Rule] {
+  let lexer = @parser.new_lexer(src)
+  fn token() {
+    lexer.next_token?().unwrap()
+  }
+
+  let ast_spec = @parser.spec?(token, 0).unwrap()
+  let spec = elaborate?(ast_spec, json_cst~).unwrap()
+  spec.rules
+}
+
+///|
 pub fn elaborate_with_stdlib_rules(
   ast_spec : @parser.ParserSpec,
   json_cst~ : JsonCst,
@@ -38,7 +50,11 @@ pub fn elaborate_with_stdlib_rules(
   elaborate!(
     ast_spec,
     json_cst~,
-    stdlib_rules=if no_std { {} } else { stdlib_rules },
+    stdlib_rules=if no_std {
+      {}
+    } else {
+      build_rules_from_src(stdlib_src, json_cst~)
+    },
   )
 }
 
