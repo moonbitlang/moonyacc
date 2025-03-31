@@ -2412,9 +2412,11 @@ fn token(phase : Ref[Int], lexbuf : Lexbuf) -> (Token, Int, Int)!LexError {
         let sb = StringBuilder::new()
         code_eof(sb, lexbuf)
         (
-          PERCENT_PERCENT_CODE_EOF(sb.to_string()),
+          PERCENT_PERCENT_CODE_EOF(
+            (sb.to_string(), _end_pos_of_t, lexbuf.pos - _end_pos_of_t),
+          ),
           _start_pos_of_t,
-          _end_pos_of_t,
+          lexbuf.pos,
         )
       }
     }
@@ -2455,9 +2457,11 @@ fn token(phase : Ref[Int], lexbuf : Lexbuf) -> (Token, Int, Int)!LexError {
       let sb = StringBuilder::new()
       code_percent_rbrace!(sb, lexbuf)
       (
-        PERCENT_LBRACE_CODE_PERCENT_RBRACE(sb.to_string()),
+        PERCENT_LBRACE_CODE_PERCENT_RBRACE(
+          (sb.to_string(), _end_pos_of_t, lexbuf.pos - _end_pos_of_t),
+        ),
         _start_pos_of_t,
-        _end_pos_of_t,
+        lexbuf.pos,
       )
     }
     (24, __mbtlex_captures) => {

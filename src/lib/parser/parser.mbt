@@ -5,8 +5,8 @@ pub(all) enum Token {
   IDENT(String)
   STRING(String)
   LBRACE_CODE_RBRACE((String, Int, Array[SubstItem]))
-  PERCENT_LBRACE_CODE_PERCENT_RBRACE(String)
-  PERCENT_PERCENT_CODE_EOF(String)
+  PERCENT_LBRACE_CODE_PERCENT_RBRACE((String, Int, Int))
+  PERCENT_PERCENT_CODE_EOF((String, Int, Int))
   PKG_AND_IDENT((String, String))
   PERCENT_PERCENT
   PERCENT_START
@@ -198,6 +198,8 @@ priv type! YYObj_TypeExpr_ TypeExpr?
 
 priv type! YYObj__String__String_ (String, String)
 
+priv type! YYObj__String__Int__Int_ (String, Int, Int)
+
 priv type! YYObj__String__Int__Array_SubstItem__ (String, Int, Array[SubstItem])
 
 typealias YYState = (YYSymbol) -> YYDecision
@@ -386,8 +388,8 @@ fn yy_action_17(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 fn yy_action_18(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_String(code)
-  YYObj_Code_({();  Some(code) })
+  guard _args[0].0 is YYObj__String__Int__Int_(code)
+  YYObj_Code_({();  Some(code.0) })
 }
 
 fn yy_action_19(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -504,8 +506,8 @@ fn yy_action_38(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 fn yy_action_39(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_String(code)
-  YYObj_Code_({();  Some(code) })
+  guard _args[0].0 is YYObj__String__Int__Int_(code)
+  YYObj_Code_({();  Some(code.0) })
 }
 
 fn yy_action_40(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -563,8 +565,8 @@ fn yy_action_48(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 }
 
 fn yy_action_49(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_String(code)
-  YYObj_Code_({();  Some(code) })
+  guard _args[0].0 is YYObj__String__Int__Int_(code)
+  YYObj_Code_({();  Some(code.0) })
 }
 
 fn yy_action_50(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
@@ -679,8 +681,8 @@ fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSym
     IDENT(data) => (T_IDENT, YYObj_String(data))
     STRING(data) => (T_STRING, YYObj_String(data))
     LBRACE_CODE_RBRACE(data) => (T_LBRACE_CODE_RBRACE, YYObj__String__Int__Array_SubstItem__(data))
-    PERCENT_LBRACE_CODE_PERCENT_RBRACE(data) => (T_PERCENT_LBRACE_CODE_PERCENT_RBRACE, YYObj_String(data))
-    PERCENT_PERCENT_CODE_EOF(data) => (T_PERCENT_PERCENT_CODE_EOF, YYObj_String(data))
+    PERCENT_LBRACE_CODE_PERCENT_RBRACE(data) => (T_PERCENT_LBRACE_CODE_PERCENT_RBRACE, YYObj__String__Int__Int_(data))
+    PERCENT_PERCENT_CODE_EOF(data) => (T_PERCENT_PERCENT_CODE_EOF, YYObj__String__Int__Int_(data))
     PKG_AND_IDENT(data) => (T_PKG_AND_IDENT, YYObj__String__String_(data))
     PERCENT_PERCENT => (T_PERCENT_PERCENT, YYObj_Void)
     PERCENT_START => (T_PERCENT_START, YYObj_Void)

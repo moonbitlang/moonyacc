@@ -10,8 +10,8 @@ let parser_spec_src : String =
   #|%token<String> IDENT
   #|%token<String> STRING
   #|%token<(String, Int, Array[SubstItem])> LBRACE_CODE_RBRACE
-  #|%token<String> PERCENT_LBRACE_CODE_PERCENT_RBRACE
-  #|%token<String> PERCENT_PERCENT_CODE_EOF
+  #|%token<(String, Int, Int)> PERCENT_LBRACE_CODE_PERCENT_RBRACE
+  #|%token<(String, Int, Int)> PERCENT_PERCENT_CODE_EOF
   #|%token<(String, String)> PKG_AND_IDENT
   #|%token PERCENT_PERCENT "%%"
   #|%token PERCENT_START "%start"
@@ -45,13 +45,13 @@ let parser_spec_src : String =
   #|  ;
   #|
   #|header -> Code?
-  #|  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
+  #|  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code.0) }
   #|  | { None }
   #|  ;
   #|
   #|trailer -> Code?
-  #|  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
-  #|  | code=PERCENT_PERCENT_CODE_EOF { Some(code) }
+  #|  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code.0) }
+  #|  | code=PERCENT_PERCENT_CODE_EOF { Some(code.0) }
   #|  | { None }
   #|  ;
   #|

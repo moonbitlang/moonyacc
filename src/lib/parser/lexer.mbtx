@@ -47,7 +47,7 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
         phase.val += 1
         let sb = StringBuilder::new()
         code_eof(sb, lexbuf)
-        (PERCENT_PERCENT_CODE_EOF(sb.to_string()), $startpos(t), $endpos(t))
+        (PERCENT_PERCENT_CODE_EOF((sb.to_string(), $endpos(t), lexbuf.pos - $endpos(t))), $startpos(t), lexbuf.pos)
       }
     }
     "->" as t => { (ARROW, $startpos(t), $endpos(t)) }
@@ -58,7 +58,7 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
     "%{" as t => {
       let sb = StringBuilder::new()
       code_percent_rbrace!(sb, lexbuf)
-      (PERCENT_LBRACE_CODE_PERCENT_RBRACE(sb.to_string()), $startpos(t), $endpos(t))
+      (PERCENT_LBRACE_CODE_PERCENT_RBRACE((sb.to_string(), $endpos(t), lexbuf.pos - $endpos(t))), $startpos(t), lexbuf.pos)
     }
     "<" as t => { (LANGLE, $startpos(t), $endpos(t)) }
     ">" as t => { (RANGLE, $startpos(t), $endpos(t)) }
