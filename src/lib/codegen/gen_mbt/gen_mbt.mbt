@@ -468,11 +468,19 @@ fn codegen(
       match binding.0 {
         Data(index, type_~) => {
           let data_type = type_
-          output.write_string(
-            $|  guard _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
-            $|
-            ,
-          )
+          if data_type is Constr(pkg=None, "Unit", []) {
+            output.write_string(
+              $|  let \{binding.1} = ()
+              $|
+              ,
+            )
+          } else {
+            output.write_string(
+              $|  guard _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
+              $|
+              ,
+            )
+          }
         }
         LastPos =>
           output.write_string(
