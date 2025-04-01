@@ -33,7 +33,8 @@ pub(all) enum TokenPayloadRewrite {
 fn build_rules_from_src(
   src : String,
   filename~ : String,
-  json_cst~ : JsonCst
+  json_cst~ : JsonCst,
+  force_int_position~ : Bool
 ) -> Map[String, Rule] {
   let lexer = @parser.new_lexer(src)
   fn token() {
@@ -41,7 +42,7 @@ fn build_rules_from_src(
   }
 
   let ast_spec = @parser.spec?(token, 0).unwrap()
-  let spec = elaborate?(ast_spec, src, filename, json_cst~).unwrap()
+  let spec = elaborate?(ast_spec, src, filename, json_cst~, force_int_position~).unwrap()
   spec.rules
 }
 
@@ -51,7 +52,8 @@ pub fn elaborate_with_stdlib_rules(
   parser_spec_str : String,
   filename : String,
   json_cst~ : JsonCst,
-  no_std~ : Bool
+  no_std~ : Bool,
+  force_int_position~ : Bool
 ) -> ParserSpec!ElabError {
   elaborate!(
     ast_spec,
@@ -61,8 +63,14 @@ pub fn elaborate_with_stdlib_rules(
     stdlib_rules=if no_std {
       {}
     } else {
-      build_rules_from_src(stdlib_src, filename="stdlib.mbty", json_cst~)
+      build_rules_from_src(
+        stdlib_src,
+        filename="stdlib.mbty",
+        json_cst~,
+        force_int_position~,
+      )
     },
+    force_int_position~,
   )
 }
 
@@ -72,7 +80,8 @@ pub fn elaborate(
   parser_spec_str : String,
   filename : String,
   json_cst~ : JsonCst,
-  stdlib_rules? : Map[String, Rule]
+  stdlib_rules? : Map[String, Rule],
+  force_int_position~ : Bool
 ) -> ParserSpec!ElabError {
   let mut header = match ast_spec.header {
     None => @immut/array.new()
@@ -322,7 +331,6 @@ pub fn elaborate(
     Yes(rewrite) => {
       header = @immut/array.new()
       trailer = @immut/array.new()
-      position_type = Constr(pkg=None, "Int", [])
       match rewrite {
         None => ()
         Some(_) => derive_map.add("Token", Constr(pkg=None, "Show", []))
@@ -339,6 +347,9 @@ pub fn elaborate(
       for token in tokens {
         token.type_ = Constr(pkg=None, "Json", [])
       }
+  }
+  if force_int_position {
+    position_type = Constr(pkg=None, "Int", [])
   }
   ParserSpec::{
     header,

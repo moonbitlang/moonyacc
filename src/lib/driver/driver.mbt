@@ -40,6 +40,7 @@ pub fn compile(
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
   no_std~ : Bool = false,
+  force_int_position~ : Bool = false,
   source_map_builder? : &@codegen.SourceMapBuilder,
   generator~ : &@codegen.CodeGenerator
 ) -> String {
@@ -87,6 +88,7 @@ pub fn compile(
         Default | OnlyTokens => No
       },
       no_std~,
+      force_int_position~,
     )
   } catch {
     @elab.UnresolvedSymbol(symbol, loc~) => {

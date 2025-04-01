@@ -25,6 +25,7 @@ fn main {
   let no_comments : Ref[Bool] = @ref.new(false)
   let no_std : Ref[Bool] = @ref.new(false)
   let token_payload_rewrite : Ref[@driver.TokenPayloadRewrite?] = @ref.new(None)
+  let force_int_position : Ref[Bool] = @ref.new(false)
   @ArgParser.parse(
     [
       ("--output-file", "-o", Set_string(output_file), "Output file"),
@@ -84,6 +85,12 @@ fn main {
         "Force token to not use payload (only for json-cst mode)",
       ),
       (
+        "--force-int-position",
+        "--force-int-position",
+        Unit(fn() { force_int_position.val = true }),
+        "Overwrite the position type to int",
+      ),
+      (
         "--no-comments",
         "--no-comments",
         Unit(fn() { no_comments.val = true }),
@@ -132,6 +139,7 @@ fn main {
     external_tokens=external_tokens.val,
     no_comments=no_comments.val,
     no_std=no_std.val,
+    force_int_position=force_int_position.val,
     generator=@gen_mbt.generator,
   )
   fn write_map_file!(file : String) {
