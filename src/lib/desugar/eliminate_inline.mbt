@@ -88,6 +88,7 @@ fn eliminate_inline_rules(
                 end: end_index,
                 action: rule.clauses[curr.val].action,
               })
+              // Fix the bindings
               for binding_index, binding in bindings {
                 let (subject, code) = binding
                 match subject {
@@ -100,6 +101,20 @@ fn eliminate_inline_rules(
                     } else if data_index > index {
                       bindings[binding_index] = (
                         Data(data_index + end_index - start_index - 1, type_~),
+                        code,
+                      )
+                    }
+                  StartPos(data_index) =>
+                    if data_index > index {
+                      bindings[binding_index] = (
+                        StartPos(data_index + end_index - start_index - 1),
+                        code,
+                      )
+                    }
+                  EndPos(data_index) =>
+                    if data_index > index {
+                      bindings[binding_index] = (
+                        EndPos(data_index + end_index - start_index - 1),
                         code,
                       )
                     }
