@@ -144,17 +144,54 @@ fn eliminate_inline_rules(
   for rule_name, rule in spec.rules {
     guard not(inline_rules.contains(rule_name)) else { continue }
     let new_clauses : Array[@elab.Clause] = []
+    let dedup = Set::new()
+    fn add_clause(clause : @elab.Clause) {
+      let key = clause_key(clause)
+      if dedup.add_and_check(key) {
+        new_clauses.push(clause)
+      }
+    }
+
     for clause in rule.clauses {
       if contains_inline_rule(clause.items) {
-        expand(clause, fn(new_clause) { new_clauses.push(new_clause) })
+        expand(clause, add_clause)
       } else {
-        new_clauses.push(clause)
+        add_clause(clause)
       }
     }
     let new_rule = { ..rule, clauses: new_clauses }
     new_rules[rule_name] = new_rule
   }
   { ..spec, rules: new_rules }
+}
+
+///|
+priv enum Symbol {
+  Terminal(String)
+  Nonterminal(String)
+} derive(Hash, Eq)
+
+///|
+priv type ClauseKey (Int?, @immut/list.T[Symbol]) derive(Hash, Eq)
+
+///|
+fn clause_key(clause : @elab.Clause) -> ClauseKey {
+  ClauseKey(
+    (
+      clause.prec,
+      @immut/list.from_iter(
+        clause.items
+        .iter()
+        .map(fn(item) {
+          match item.term {
+            Token(token) => Terminal(token.name)
+            RuleCall(rule_name, [], _type) => Nonterminal(rule_name)
+            Param(_) | RuleCall(_, _, _) => panic()
+          }
+        }),
+      ),
+    ),
+  )
 }
 
 ///|

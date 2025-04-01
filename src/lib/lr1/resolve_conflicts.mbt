@@ -58,11 +58,6 @@ pub fn resolve_conflicts(
       prod.num
     })
     let best_reduce = reduce[0]
-    errors.push(
-      Reduce_conflict_resolved_by_presentation_order(
-        state, input, reduce, best_reduce,
-      ),
-    )
     let decision = match shift {
       [] => Ok(Reduce(best_reduce))
       [(input, shift_state)] => {
@@ -101,6 +96,15 @@ pub fn resolve_conflicts(
         }
       }
       _ => panic()
+    }
+    if reduce.length() >= 2 &&
+      decision is Ok(Reduce(prod)) &&
+      prod.num == best_reduce.num {
+      errors.push(
+        Reduce_conflict_resolved_by_presentation_order(
+          state, input, reduce, best_reduce,
+        ),
+      )
     }
     match decision {
       Ok(decision) => state.action[input] = decision
