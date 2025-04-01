@@ -81,10 +81,10 @@ rule -> Rule
   ;
 
 rule_no_modifiers -> Rule
-  : nonterminal=symbol type_=opt_rule_return_type ":" clause_list=clause_list ";" {
+  : nonterminal=symbol type_=opt_rule_return_type ":" clause_list=clause_list option(";") {
     { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }
   }
-  | nonterminal=symbol generic_params=opt_rule_generic_params "(" param_list=nonempty_rule_param_list ")" type_=opt_rule_return_type ":" clause_list=clause_list ";" {
+  | nonterminal=symbol generic_params=opt_rule_generic_params "(" param_list=nonempty_rule_param_list ")" type_=opt_rule_return_type ":" clause_list=clause_list option(";") {
     { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }
   }
   ;
@@ -139,8 +139,13 @@ nonempty_type_expr_list -> @immut/list.T[TypeExpr]
   ;
 
 clause_list -> @immut/list.T[Clause]
+  : "|" nonempty_clause_list { $2 }
+  | nonempty_clause_list { $1 }
+  ;
+
+nonempty_clause_list -> @immut/list.T[Clause]
   : clause=clause { Cons(clause, Nil) }
-  | clause=clause "|" clause_list=clause_list { Cons(clause, clause_list) }
+  | clause=clause "|" clause_list=nonempty_clause_list { Cons(clause, clause_list) }
   ;
 
 clause -> Clause
@@ -152,7 +157,6 @@ clause_action -> ClauseAction
       let (code, utf8_pos, subst) = code
       { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
   }
-  | { { code: None, start: $startpos, end: $endpos } }
   ;
 
 rule_prec -> Symbol?

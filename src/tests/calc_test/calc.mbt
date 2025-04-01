@@ -92,7 +92,7 @@ fn init {
 }
 
 // file:///./calc.mbty
-// 28|    lhs=add "+" rhs=factor  { lhs + rhs }
+// 27|    lhs=add "+" rhs=factor  { lhs + rhs }
 fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(lhs)
   guard _args[2].0 is YYObj_Int(rhs)
@@ -100,28 +100,28 @@ fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 }
 
 // file:///./calc.mbty
-// 30|    factor                  { $1 }
+// 29|    factor                  { $1 }
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
-// 40|    "(" add ")"             { $2 }
+// 37|    "(" add ")"             { $2 }
 fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[1].0 is YYObj_Int(_dollar2)
   YYObj_Int({();  _dollar2 })
 }
 
 // file:///./calc.mbty
-// 39|    NUMBER                  { $1 }
+// 36|    NUMBER                  { $1 }
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
-// 29|    lhs=add "-" rhs=factor  { lhs - rhs }
+// 28|    lhs=add "-" rhs=factor  { lhs - rhs }
 fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(lhs)
   guard _args[2].0 is YYObj_Int(rhs)
@@ -129,7 +129,7 @@ fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 }
 
 // file:///./calc.mbty
-// 34|    lhs=factor "*" rhs=term { lhs * rhs }
+// 32|    lhs=factor "*" rhs=term { lhs * rhs }
 fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(lhs)
   guard _args[2].0 is YYObj_Int(rhs)
@@ -144,7 +144,7 @@ fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 }
 
 // file:///./calc.mbty
-// 35|    term                    { $1 }
+// 33|    term                    { $1 }
 fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
