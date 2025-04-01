@@ -147,6 +147,8 @@ fn eliminate_inline_rules(
     let dedup = Set::new()
     fn add_clause(clause : @elab.Clause) {
       let key = clause_key(clause)
+      // NOTE: we need to check duplicates in elaborate phase
+      // So here we won't encounter clauses with the same key but different actions
       if dedup.add_and_check(key) {
         new_clauses.push(clause)
       }
