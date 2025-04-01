@@ -28,6 +28,6 @@ pub impl Logger for LoggerWithCursor with write_string(self, str) {
 
 ///|
 pub impl Logger for LoggerWithCursor with write_substring(self, str, start, len) {
-  self.logger.write_sub_string(str, start, len)
+  self.logger.write_substring(str, start, len)
   self.cursor += len
 }
