@@ -15,6 +15,7 @@
 ///|
 pub type! ElabError {
   UnresolvedSymbol(String, loc~ : (Int, Int))
+  FailedToParseTypeExpr(String)
 }
 
 ///|
@@ -122,20 +123,28 @@ pub fn elaborate(
   }
 
   // Prepare tokens
+  fn elaborate_token_type(type_ : @ast.TypeString?) -> TypeExpr!ElabError {
+    match json_cst {
+      No | Yes(None) =>
+        match type_ {
+          Some(type_) => parse_and_elaborate_type_expr!(type_)
+          None => Constr(pkg=None, "Unit", [])
+        }
+      Yes(Some(JsonPayload)) => Constr(pkg=None, "Json", [])
+      Yes(Some(NoPayload)) => Constr(pkg=None, "Unit", [])
+    }
+  }
+
   for ast_decl in ast_spec.decls {
     match ast_decl {
       Token(names, type_~) =>
         for name in names {
           let token = get_token_by_name(name)
-          token.type_ = type_
-            .map(elaborate_type_expr)
-            .or(Constr(pkg=None, "Unit", []))
+          token.type_ = elaborate_token_type!(type_)
         }
       Token1(name, type_~, image~) => {
         let token = get_token_by_name(name)
-        token.type_ = type_
-          .map(elaborate_type_expr)
-          .or(Constr(pkg=None, "Unit", []))
+        token.type_ = elaborate_token_type!(type_)
         token.image = Some(image)
         token_by_image[image] = token
       }
@@ -162,7 +171,12 @@ pub fn elaborate(
     let type_ = match ast_rule.type_ {
       Some(type_) =>
         elaborate_type_expr_with_generic_params(type_, generic_params)
-      None => Constr(pkg=None, "Unit", [])
+      None =>
+        if json_cst is Yes(_) {
+          Constr(pkg=None, "Json", [])
+        } else {
+          Constr(pkg=None, "Unit", [])
+        }
     }
     let rule : Rule = {
       inline: ast_rule.inline,
@@ -201,9 +215,13 @@ pub fn elaborate(
             None =>
               match rule_by_name[ident] {
                 None => panic()
-                Some(rule) => rule.type_ = elaborate_type_expr(type_)
+                Some(rule) =>
+                  // TODO: report error if rule already has a type
+                  if json_cst is (No | Yes(None)) {
+                    rule.type_ = parse_and_elaborate_type_expr!(type_)
+                  }
               }
-            Some(token) => token.type_ = elaborate_type_expr(type_)
+            Some(token) => token.type_ = elaborate_token_type!(Some(type_))
           }
         }
       _ => ()
@@ -247,10 +265,6 @@ pub fn elaborate(
 
   for rule_index, ast_rule in ast_spec.rules {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
-    rule.type_ = match json_cst {
-      No => rule.type_
-      Yes(_) => Constr(pkg=None, "Json", [])
-    }
     let rule_param_map : Map[String, TypeExpr] = Map::from_array(rule.params)
     for clause_index, ast_clause in ast_rule.clauses {
       let items = map_error!(ast_clause.items, fn(ast_item) {
@@ -307,7 +321,11 @@ pub fn elaborate(
     }
   }
   let start_rules : Array[Symbol] = []
-  let mut position_type : TypeExpr = Constr(pkg=None, "Unit", [])
+  let mut position_type : TypeExpr = if force_int_position {
+    Constr(pkg=None, "Int", [])
+  } else {
+    Constr(pkg=None, "Unit", [])
+  }
   let derive_map = @array_multimap.new()
   for ast_decl in ast_spec.decls {
     match ast_decl {
@@ -315,11 +333,16 @@ pub fn elaborate(
         for symbol in symbols {
           start_rules.push(symbol)
         }
-      Position(type_~) => position_type = elaborate_type_expr(type_)
-      Derive(traits~, type_~) =>
-        for trait_ in traits {
-          derive_map.add(type_, elaborate_type_expr(trait_))
+      Position(type_~) =>
+        if not(force_int_position) {
+          position_type = parse_and_elaborate_type_expr!(type_)
         }
+      Derive(traits~, type_~) => {
+        let traits = traits.split(",").map(fn { t => t.trim(" ") })
+        for trait_ in traits {
+          derive_map.add(type_, parse_and_elaborate_type_expr!(trait_))
+        }
+      }
       _ => ()
     }
   }
@@ -347,9 +370,6 @@ pub fn elaborate(
       for token in tokens {
         token.type_ = Constr(pkg=None, "Json", [])
       }
-  }
-  if force_int_position {
-    position_type = Constr(pkg=None, "Int", [])
   }
   ParserSpec::{
     header,
@@ -536,6 +556,16 @@ fn elaborate_action(
     body,
     original_clause_info,
   }
+}
+
+///|
+fn parse_and_elaborate_type_expr(str : @ast.TypeString) -> TypeExpr!ElabError {
+  let type_expr = try {
+    @type_expr_parser.parse!(str)
+  } catch {
+    _ => raise FailedToParseTypeExpr(str)
+  }
+  elaborate_type_expr(type_expr)
 }
 
 ///|

@@ -5,6 +5,7 @@
 %token EOF
 %token<String> IDENT
 %token<String> STRING
+%token<String> LANGLE_CODE_RANGLE
 %token<(String, Int, Array[@ast.SubstItem])> LBRACE_CODE_RBRACE
 %token<(String, Int, Int)> PERCENT_LBRACE_CODE_PERCENT_RBRACE
 %token<(String, Int, Int)> PERCENT_PERCENT_CODE_EOF
@@ -20,8 +21,6 @@
 %token PERCENT_PREC "%prec"
 %token PERCENT_DERIVE "%derive"
 %token PERCENT_INLINE "%inline"
-%token LANGLE "<"
-%token RANGLE ">"
 %token LBRACKET "["
 %token RBRACKET "]"
 %token LPAREN "("
@@ -59,15 +58,15 @@ decl_list -> @immut/list.T[@ast.Declaration]
 decl -> @ast.Declaration
   : "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
   | "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
-  | "%token" "<" type_=type_expr ">" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=Some(type_)) }
+  | "%token" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=Some(type_)) }
   | "%token" symbol=symbol image=STRING { Token1(symbol, type_=None, image=image) }
-  | "%token" "<" type_=type_expr ">" symbol=symbol image=STRING { Token1(symbol, type_=Some(type_), image=image) }
-  | "%type" "<" type_=type_expr ">" symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
-  | "%position" "<" type_=type_expr ">" { Position(type_=type_) }
+  | "%token" type_=LANGLE_CODE_RANGLE symbol=symbol image=STRING { Token1(symbol, type_=Some(type_), image=image) }
+  | "%type" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
+  | "%position" type_=LANGLE_CODE_RANGLE { Position(type_=type_) }
   | "%left" symbol_list=nonempty_symbol_list { Left(symbol_list.to_array()) }
   | "%right" symbol_list=nonempty_symbol_list { Right(symbol_list.to_array()) }
   | "%nonassoc" symbol_list=nonempty_symbol_list { Nonassoc(symbol_list.to_array()) }
-  | "%derive" "<" trait_list=nonempty_type_expr_list ">" type_=IDENT { Derive(traits=trait_list.to_array(), type_=type_) }
+  | "%derive" traits=LANGLE_CODE_RANGLE type_=IDENT { Derive(traits=traits, type_=type_) }
   ;
 
 rule_list -> @immut/list.T[@ast.Rule]

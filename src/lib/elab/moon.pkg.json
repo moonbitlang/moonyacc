@@ -3,7 +3,8 @@
     "moonbitlang/yacc/lib/parser",
     "moonbitlang/yacc/lib/util/array_multimap",
     "moonbitlang/yacc/lib/util/stamp",
-    "moonbitlang/yacc/lib/ast"
+    "moonbitlang/yacc/lib/ast",
+    "moonbitlang/yacc/lib/parser/type_expr_parser"
   ],
   "pre-build": [
     {

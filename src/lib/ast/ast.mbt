@@ -60,14 +60,16 @@ pub(all) enum TypeExpr {
   Arrow(Array[TypeExpr], TypeExpr)
 } derive(Show, ToJson)
 
+pub(all) typealias TypeString = String
+
 ///|
 pub(all) enum Declaration {
   Start(Array[Symbol])
-  Token(Array[Symbol], type_~ : TypeExpr?)
-  Token1(Symbol, type_~ : TypeExpr?, image~ : String)
-  Type(Array[Symbol], type_~ : TypeExpr)
-  Derive(traits~ : Array[TypeExpr], type_~ : Code)
-  Position(type_~ : TypeExpr)
+  Token(Array[Symbol], type_~ : TypeString?)
+  Token1(Symbol, type_~ : TypeString?, image~ : String)
+  Type(Array[Symbol], type_~ : TypeString)
+  Derive(traits~ : TypeString, type_~ : TypeString)
+  Position(type_~ : TypeString)
   Left(Array[Symbol])
   Right(Array[Symbol])
   Nonassoc(Array[Symbol])

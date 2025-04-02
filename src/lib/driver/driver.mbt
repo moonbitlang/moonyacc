@@ -96,6 +96,12 @@ pub fn compile(
       println_to_stderr("Unresolved symbol \{symbol}, at \{loc_str}")
       exit(1)
     }
+    // TODO: Add location information
+    @elab.FailedToParseTypeExpr(type_expr) => {
+      let type_expr_str = type_expr.to_string()
+      println_to_stderr("Failed to parse type expression \{type_expr_str}")
+      exit(1)
+    }
   }
   let spec = @desugar.eliminate_rule_args(spec)
   let spec = @desugar.eliminate_inline(spec)

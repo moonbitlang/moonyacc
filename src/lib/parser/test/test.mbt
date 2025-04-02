@@ -37,72 +37,34 @@ test "lexer" {
     buf.to_string(),
     content=
       #|PERCENT_POSITION
-      #|LANGLE
-      #|IDENT("Int")
-      #|RANGLE
+      #|LANGLE_CODE_RANGLE("Int")
       #|PERCENT_DERIVE
-      #|LANGLE
-      #|IDENT("Show")
-      #|RANGLE
+      #|LANGLE_CODE_RANGLE("Show")
       #|IDENT("Token")
       #|PERCENT_START
       #|IDENT("spec")
       #|PERCENT_TOKEN
       #|IDENT("EOF")
       #|PERCENT_TOKEN
-      #|LANGLE
-      #|IDENT("String")
-      #|RANGLE
+      #|LANGLE_CODE_RANGLE("String")
       #|IDENT("IDENT")
       #|PERCENT_TOKEN
-      #|LANGLE
-      #|IDENT("String")
-      #|RANGLE
+      #|LANGLE_CODE_RANGLE("String")
       #|IDENT("STRING")
       #|PERCENT_TOKEN
-      #|LANGLE
-      #|LPAREN
-      #|IDENT("String")
-      #|COMMA
-      #|IDENT("Int")
-      #|COMMA
-      #|IDENT("Array")
-      #|LBRACKET
-      #|PKG_AND_IDENT(("ast", "SubstItem"))
-      #|RBRACKET
-      #|RPAREN
-      #|RANGLE
+      #|LANGLE_CODE_RANGLE("String")
+      #|IDENT("LANGLE_CODE_RANGLE")
+      #|PERCENT_TOKEN
+      #|LANGLE_CODE_RANGLE("(String, Int, Array[@ast.SubstItem])")
       #|IDENT("LBRACE_CODE_RBRACE")
       #|PERCENT_TOKEN
-      #|LANGLE
-      #|LPAREN
-      #|IDENT("String")
-      #|COMMA
-      #|IDENT("Int")
-      #|COMMA
-      #|IDENT("Int")
-      #|RPAREN
-      #|RANGLE
+      #|LANGLE_CODE_RANGLE("(String, Int, Int)")
       #|IDENT("PERCENT_LBRACE_CODE_PERCENT_RBRACE")
       #|PERCENT_TOKEN
-      #|LANGLE
-      #|LPAREN
-      #|IDENT("String")
-      #|COMMA
-      #|IDENT("Int")
-      #|COMMA
-      #|IDENT("Int")
-      #|RPAREN
-      #|RANGLE
+      #|LANGLE_CODE_RANGLE("(String, Int, Int)")
       #|IDENT("PERCENT_PERCENT_CODE_EOF")
       #|PERCENT_TOKEN
-      #|LANGLE
-      #|LPAREN
-      #|IDENT("String")
-      #|COMMA
-      #|IDENT("String")
-      #|RPAREN
-      #|RANGLE
+      #|LANGLE_CODE_RANGLE("(String, String)")
       #|IDENT("PKG_AND_IDENT")
       #|PERCENT_TOKEN
       #|IDENT("PERCENT_PERCENT")
@@ -137,12 +99,6 @@ test "lexer" {
       #|PERCENT_TOKEN
       #|IDENT("PERCENT_INLINE")
       #|STRING("\"%inline\"")
-      #|PERCENT_TOKEN
-      #|IDENT("LANGLE")
-      #|STRING("\"<\"")
-      #|PERCENT_TOKEN
-      #|IDENT("RANGLE")
-      #|STRING("\">\"")
       #|PERCENT_TOKEN
       #|IDENT("LBRACKET")
       #|STRING("\"[\"")
@@ -195,7 +151,7 @@ test "lexer" {
       #|EQ
       #|IDENT("trailer")
       #|IDENT("EOF")
-      #|LBRACE_CODE_RBRACE((" { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } ", 999, []))
+      #|LBRACE_CODE_RBRACE((" { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } ", 997, []))
       #|SEMI
       #|IDENT("header")
       #|ARROW
@@ -211,9 +167,9 @@ test "lexer" {
       #|IDENT("code")
       #|EQ
       #|IDENT("PERCENT_LBRACE_CODE_PERCENT_RBRACE")
-      #|LBRACE_CODE_RBRACE((" Some(code) ", 1163, []))
+      #|LBRACE_CODE_RBRACE((" Some(code) ", 1161, []))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" None ", 1182, []))
+      #|LBRACE_CODE_RBRACE((" None ", 1180, []))
       #|SEMI
       #|IDENT("trailer")
       #|ARROW
@@ -229,14 +185,14 @@ test "lexer" {
       #|IDENT("code")
       #|EQ
       #|IDENT("PERCENT_LBRACE_CODE_PERCENT_RBRACE")
-      #|LBRACE_CODE_RBRACE((" Some(code) ", 1274, []))
+      #|LBRACE_CODE_RBRACE((" Some(code) ", 1272, []))
       #|BAR
       #|IDENT("code")
       #|EQ
       #|IDENT("PERCENT_PERCENT_CODE_EOF")
-      #|LBRACE_CODE_RBRACE((" Some(code) ", 1323, []))
+      #|LBRACE_CODE_RBRACE((" Some(code) ", 1321, []))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" None ", 1342, []))
+      #|LBRACE_CODE_RBRACE((" None ", 1340, []))
       #|SEMI
       #|IDENT("decl_list")
       #|ARROW
@@ -251,9 +207,9 @@ test "lexer" {
       #|IDENT("decl_list")
       #|EQ
       #|IDENT("decl_list")
-      #|LBRACE_CODE_RBRACE((" Cons(decl, decl_list) ", 1435, []))
+      #|LBRACE_CODE_RBRACE((" Cons(decl, decl_list) ", 1433, []))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" Nil ", 1465, []))
+      #|LBRACE_CODE_RBRACE((" Nil ", 1463, []))
       #|SEMI
       #|IDENT("decl")
       #|ARROW
@@ -263,24 +219,22 @@ test "lexer" {
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Start(symbol_list.to_array()) ", 1549, []))
+      #|LBRACE_CODE_RBRACE((" Start(symbol_list.to_array()) ", 1547, []))
       #|BAR
       #|STRING("\"%token\"")
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Token(symbol_list.to_array(), type_=None) ", 1629, []))
+      #|LBRACE_CODE_RBRACE((" Token(symbol_list.to_array(), type_=None) ", 1627, []))
       #|BAR
       #|STRING("\"%token\"")
-      #|STRING("\"<\"")
       #|IDENT("type_")
       #|EQ
-      #|IDENT("type_expr")
-      #|STRING("\">\"")
+      #|IDENT("LANGLE_CODE_RANGLE")
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Token(symbol_list.to_array(), type_=Some(type_)) ", 1745, []))
+      #|LBRACE_CODE_RBRACE((" Token(symbol_list.to_array(), type_=Some(type_)) ", 1744, []))
       #|BAR
       #|STRING("\"%token\"")
       #|IDENT("symbol")
@@ -289,14 +243,12 @@ test "lexer" {
       #|IDENT("image")
       #|EQ
       #|IDENT("STRING")
-      #|LBRACE_CODE_RBRACE((" Token1(symbol, type_=None, image=image) ", 1838, []))
+      #|LBRACE_CODE_RBRACE((" Token1(symbol, type_=None, image=image) ", 1837, []))
       #|BAR
       #|STRING("\"%token\"")
-      #|STRING("\"<\"")
       #|IDENT("type_")
       #|EQ
-      #|IDENT("type_expr")
-      #|STRING("\">\"")
+      #|IDENT("LANGLE_CODE_RANGLE")
       #|IDENT("symbol")
       #|EQ
       #|IDENT("symbol")
@@ -306,52 +258,46 @@ test "lexer" {
       #|LBRACE_CODE_RBRACE((" Token1(symbol, type_=Some(type_), image=image) ", 1946, []))
       #|BAR
       #|STRING("\"%type\"")
-      #|STRING("\"<\"")
       #|IDENT("type_")
       #|EQ
-      #|IDENT("type_expr")
-      #|STRING("\">\"")
+      #|IDENT("LANGLE_CODE_RANGLE")
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Type(symbol_list.to_array(), type_=type_) ", 2066, []))
+      #|LBRACE_CODE_RBRACE((" Type(symbol_list.to_array(), type_=type_) ", 2067, []))
       #|BAR
       #|STRING("\"%position\"")
-      #|STRING("\"<\"")
       #|IDENT("type_")
       #|EQ
-      #|IDENT("type_expr")
-      #|STRING("\">\"")
-      #|LBRACE_CODE_RBRACE((" Position(type_=type_) ", 2152, []))
+      #|IDENT("LANGLE_CODE_RANGLE")
+      #|LBRACE_CODE_RBRACE((" Position(type_=type_) ", 2154, []))
       #|BAR
       #|STRING("\"%left\"")
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Left(symbol_list.to_array()) ", 2223, []))
+      #|LBRACE_CODE_RBRACE((" Left(symbol_list.to_array()) ", 2225, []))
       #|BAR
       #|STRING("\"%right\"")
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Right(symbol_list.to_array()) ", 2302, []))
+      #|LBRACE_CODE_RBRACE((" Right(symbol_list.to_array()) ", 2304, []))
       #|BAR
       #|STRING("\"%nonassoc\"")
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Nonassoc(symbol_list.to_array()) ", 2385, []))
+      #|LBRACE_CODE_RBRACE((" Nonassoc(symbol_list.to_array()) ", 2387, []))
       #|BAR
       #|STRING("\"%derive\"")
-      #|STRING("\"<\"")
-      #|IDENT("trait_list")
+      #|IDENT("traits")
       #|EQ
-      #|IDENT("nonempty_type_expr_list")
-      #|STRING("\">\"")
+      #|IDENT("LANGLE_CODE_RANGLE")
       #|IDENT("type_")
       #|EQ
       #|IDENT("IDENT")
-      #|LBRACE_CODE_RBRACE((" Derive(traits=trait_list.to_array(), type_=type_) ", 2491, []))
+      #|LBRACE_CODE_RBRACE((" Derive(traits=traits, type_=type_) ", 2476, []))
       #|SEMI
       #|IDENT("rule_list")
       #|ARROW
@@ -363,7 +309,7 @@ test "lexer" {
       #|IDENT("rule")
       #|EQ
       #|IDENT("rule")
-      #|LBRACE_CODE_RBRACE((" Cons(rule, Nil) ", 2602, []))
+      #|LBRACE_CODE_RBRACE((" Cons(rule, Nil) ", 2572, []))
       #|BAR
       #|IDENT("rule")
       #|EQ
@@ -371,18 +317,18 @@ test "lexer" {
       #|IDENT("rule_list")
       #|EQ
       #|IDENT("rule_list")
-      #|LBRACE_CODE_RBRACE((" Cons(rule, rule_list) ", 2656, []))
+      #|LBRACE_CODE_RBRACE((" Cons(rule, rule_list) ", 2626, []))
       #|SEMI
       #|IDENT("rule")
       #|ARROW
       #|PKG_AND_IDENT(("ast", "Rule"))
       #|COLON
       #|IDENT("rule_no_modifiers")
-      #|LBRACE_CODE_RBRACE((" $1 ", 2727, [{start: 1, end: 3, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" $1 ", 2697, [{start: 1, end: 3, desc: Dollar(1)}]))
       #|BAR
       #|STRING("\"%inline\"")
       #|IDENT("rule_no_modifiers")
-      #|LBRACE_CODE_RBRACE((" { ..$2, inline: true } ", 2766, [{start: 5, end: 7, desc: Dollar(2)}]))
+      #|LBRACE_CODE_RBRACE((" { ..$2, inline: true } ", 2736, [{start: 5, end: 7, desc: Dollar(2)}]))
       #|SEMI
       #|IDENT("rule_no_modifiers")
       #|ARROW
@@ -402,7 +348,7 @@ test "lexer" {
       #|LPAREN
       #|STRING("\";\"")
       #|RPAREN
-      #|LBRACE_CODE_RBRACE(("\n    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }\n  ", 2919, []))
+      #|LBRACE_CODE_RBRACE(("\n    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }\n  ", 2889, []))
       #|BAR
       #|IDENT("nonterminal")
       #|EQ
@@ -426,7 +372,7 @@ test "lexer" {
       #|LPAREN
       #|STRING("\";\"")
       #|RPAREN
-      #|LBRACE_CODE_RBRACE(("\n    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }\n  ", 3205, []))
+      #|LBRACE_CODE_RBRACE(("\n    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }\n  ", 3175, []))
       #|SEMI
       #|IDENT("opt_rule_return_type")
       #|ARROW
@@ -437,9 +383,9 @@ test "lexer" {
       #|IDENT("type_")
       #|EQ
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Some(type_) ", 3403, []))
+      #|LBRACE_CODE_RBRACE((" Some(type_) ", 3373, []))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" None ", 3423, []))
+      #|LBRACE_CODE_RBRACE((" None ", 3393, []))
       #|SEMI
       #|IDENT("nonempty_rule_param_list")
       #|ARROW
@@ -454,24 +400,24 @@ test "lexer" {
       #|RBRACKET
       #|COLON
       #|IDENT("IDENT")
-      #|LBRACE_CODE_RBRACE((" Cons(($1, None), Nil) ", 3515, [{start: 7, end: 9, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" Cons(($1, None), Nil) ", 3485, [{start: 7, end: 9, desc: Dollar(1)}]))
       #|BAR
       #|IDENT("IDENT")
       #|STRING("\":\"")
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Cons(($1, Some($3)), Nil) ", 3565, [{start: 7, end: 9, desc: Dollar(1)}, {start: 16, end: 18, desc: Dollar(3)}]))
+      #|LBRACE_CODE_RBRACE((" Cons(($1, Some($3)), Nil) ", 3535, [{start: 7, end: 9, desc: Dollar(1)}, {start: 16, end: 18, desc: Dollar(3)}]))
       #|BAR
       #|IDENT("IDENT")
       #|STRING("\",\"")
       #|IDENT("nonempty_rule_param_list")
-      #|LBRACE_CODE_RBRACE((" Cons(($1, None), $3) ", 3634, [{start: 7, end: 9, desc: Dollar(1)}, {start: 18, end: 20, desc: Dollar(3)}]))
+      #|LBRACE_CODE_RBRACE((" Cons(($1, None), $3) ", 3604, [{start: 7, end: 9, desc: Dollar(1)}, {start: 18, end: 20, desc: Dollar(3)}]))
       #|BAR
       #|IDENT("IDENT")
       #|STRING("\":\"")
       #|IDENT("type_expr")
       #|STRING("\",\"")
       #|IDENT("nonempty_rule_param_list")
-      #|LBRACE_CODE_RBRACE((" Cons(($1, Some($3)), $5) ", 3712, [{start: 7, end: 9, desc: Dollar(1)}, {start: 16, end: 18, desc: Dollar(3)}, {start: 22, end: 24, desc: Dollar(5)}]))
+      #|LBRACE_CODE_RBRACE((" Cons(($1, Some($3)), $5) ", 3682, [{start: 7, end: 9, desc: Dollar(1)}, {start: 16, end: 18, desc: Dollar(3)}, {start: 22, end: 24, desc: Dollar(5)}]))
       #|SEMI
       #|IDENT("opt_rule_generic_params")
       #|ARROW
@@ -480,12 +426,12 @@ test "lexer" {
       #|IDENT("String")
       #|RBRACKET
       #|COLON
-      #|LBRACE_CODE_RBRACE((" [] ", 3791, []))
+      #|LBRACE_CODE_RBRACE((" [] ", 3761, []))
       #|BAR
       #|STRING("\"[\"")
       #|IDENT("nonempty_comma_ident_list")
       #|STRING("\"]\"")
-      #|LBRACE_CODE_RBRACE((" $2.to_array() ", 3836, [{start: 1, end: 3, desc: Dollar(2)}]))
+      #|LBRACE_CODE_RBRACE((" $2.to_array() ", 3806, [{start: 1, end: 3, desc: Dollar(2)}]))
       #|SEMI
       #|IDENT("nonempty_comma_ident_list")
       #|ARROW
@@ -495,32 +441,32 @@ test "lexer" {
       #|RBRACKET
       #|COLON
       #|IDENT("IDENT")
-      #|LBRACE_CODE_RBRACE((" Cons($1, Nil) ", 3920, [{start: 6, end: 8, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" Cons($1, Nil) ", 3890, [{start: 6, end: 8, desc: Dollar(1)}]))
       #|BAR
       #|IDENT("IDENT")
       #|STRING("\",\"")
       #|IDENT("nonempty_comma_ident_list")
-      #|LBRACE_CODE_RBRACE((" Cons($1, $3) ", 3978, [{start: 6, end: 8, desc: Dollar(1)}, {start: 10, end: 12, desc: Dollar(3)}]))
+      #|LBRACE_CODE_RBRACE((" Cons($1, $3) ", 3948, [{start: 6, end: 8, desc: Dollar(1)}, {start: 10, end: 12, desc: Dollar(3)}]))
       #|SEMI
       #|IDENT("type_expr")
       #|ARROW
       #|PKG_AND_IDENT(("ast", "TypeExpr"))
       #|COLON
       #|IDENT("postfix_type_expr")
-      #|LBRACE_CODE_RBRACE((" $1 ", 4049, [{start: 1, end: 3, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" $1 ", 4019, [{start: 1, end: 3, desc: Dollar(1)}]))
       #|BAR
       #|STRING("\"(\"")
       #|STRING("\")\"")
       #|STRING("\"->\"")
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Arrow([], $4) ", 4083, [{start: 11, end: 13, desc: Dollar(4)}]))
+      #|LBRACE_CODE_RBRACE((" Arrow([], $4) ", 4053, [{start: 11, end: 13, desc: Dollar(4)}]))
       #|BAR
       #|STRING("\"(\"")
       #|IDENT("type_expr")
       #|STRING("\")\"")
       #|STRING("\"->\"")
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Arrow([$2], $5) ", 4138, [{start: 8, end: 10, desc: Dollar(2)}, {start: 13, end: 15, desc: Dollar(5)}]))
+      #|LBRACE_CODE_RBRACE((" Arrow([$2], $5) ", 4108, [{start: 8, end: 10, desc: Dollar(2)}, {start: 13, end: 15, desc: Dollar(5)}]))
       #|BAR
       #|STRING("\"(\"")
       #|IDENT("type_expr")
@@ -528,7 +474,7 @@ test "lexer" {
       #|STRING("\")\"")
       #|STRING("\"->\"")
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Arrow([$2], $6) ", 4199, [{start: 8, end: 10, desc: Dollar(2)}, {start: 13, end: 15, desc: Dollar(6)}]))
+      #|LBRACE_CODE_RBRACE((" Arrow([$2], $6) ", 4169, [{start: 8, end: 10, desc: Dollar(2)}, {start: 13, end: 15, desc: Dollar(6)}]))
       #|BAR
       #|STRING("\"(\"")
       #|IDENT("type_expr")
@@ -537,52 +483,52 @@ test "lexer" {
       #|STRING("\")\"")
       #|STRING("\"->\"")
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Arrow(@immut/list.Cons($2, $4).to_array(), $7) ", 4284, [{start: 24, end: 26, desc: Dollar(2)}, {start: 28, end: 30, desc: Dollar(4)}, {start: 44, end: 46, desc: Dollar(7)}]))
+      #|LBRACE_CODE_RBRACE((" Arrow(@immut/list.Cons($2, $4).to_array(), $7) ", 4254, [{start: 24, end: 26, desc: Dollar(2)}, {start: 28, end: 30, desc: Dollar(4)}, {start: 44, end: 46, desc: Dollar(7)}]))
       #|SEMI
       #|IDENT("postfix_type_expr")
       #|ARROW
       #|PKG_AND_IDENT(("ast", "TypeExpr"))
       #|COLON
       #|IDENT("basic_type_expr")
-      #|LBRACE_CODE_RBRACE((" $1 ", 4395, [{start: 1, end: 3, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" $1 ", 4365, [{start: 1, end: 3, desc: Dollar(1)}]))
       #|BAR
       #|IDENT("postfix_type_expr")
       #|STRING("\"?\"")
-      #|LBRACE_CODE_RBRACE((" Option($1) ", 4428, [{start: 8, end: 10, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" Option($1) ", 4398, [{start: 8, end: 10, desc: Dollar(1)}]))
       #|SEMI
       #|IDENT("basic_type_expr")
       #|ARROW
       #|PKG_AND_IDENT(("ast", "TypeExpr"))
       #|COLON
       #|IDENT("IDENT")
-      #|LBRACE_CODE_RBRACE((" Constr(pkg=None, $1, []) ", 4491, [{start: 18, end: 20, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" Constr(pkg=None, $1, []) ", 4461, [{start: 18, end: 20, desc: Dollar(1)}]))
       #|BAR
       #|IDENT("PKG_AND_IDENT")
-      #|LBRACE_CODE_RBRACE((" Constr(pkg=Some($1.0), $1.1, []) ", 4538, [{start: 17, end: 19, desc: Dollar(1)}, {start: 24, end: 26, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" Constr(pkg=Some($1.0), $1.1, []) ", 4508, [{start: 17, end: 19, desc: Dollar(1)}, {start: 24, end: 26, desc: Dollar(1)}]))
       #|BAR
       #|IDENT("IDENT")
       #|STRING("\"[\"")
       #|IDENT("nonempty_type_expr_list")
       #|STRING("\"]\"")
-      #|LBRACE_CODE_RBRACE((" Constr(pkg=None, $1, $3.to_array()) ", 4617, [{start: 18, end: 20, desc: Dollar(1)}, {start: 22, end: 24, desc: Dollar(3)}]))
+      #|LBRACE_CODE_RBRACE((" Constr(pkg=None, $1, $3.to_array()) ", 4587, [{start: 18, end: 20, desc: Dollar(1)}, {start: 22, end: 24, desc: Dollar(3)}]))
       #|BAR
       #|IDENT("PKG_AND_IDENT")
       #|STRING("\"[\"")
       #|IDENT("nonempty_type_expr_list")
       #|STRING("\"]\"")
-      #|LBRACE_CODE_RBRACE((" Constr(pkg=Some($1.0), $1.1, $3.to_array()) ", 4707, [{start: 17, end: 19, desc: Dollar(1)}, {start: 24, end: 26, desc: Dollar(1)}, {start: 30, end: 32, desc: Dollar(3)}]))
+      #|LBRACE_CODE_RBRACE((" Constr(pkg=Some($1.0), $1.1, $3.to_array()) ", 4677, [{start: 17, end: 19, desc: Dollar(1)}, {start: 24, end: 26, desc: Dollar(1)}, {start: 30, end: 32, desc: Dollar(3)}]))
       #|BAR
       #|STRING("\"(\"")
       #|IDENT("type_expr")
       #|STRING("\",\"")
       #|IDENT("nonempty_type_expr_list")
       #|STRING("\")\"")
-      #|LBRACE_CODE_RBRACE((" Tuple(@immut/list.Cons($2, $4).to_array()) ", 4805, [{start: 24, end: 26, desc: Dollar(2)}, {start: 28, end: 30, desc: Dollar(4)}]))
+      #|LBRACE_CODE_RBRACE((" Tuple(@immut/list.Cons($2, $4).to_array()) ", 4775, [{start: 24, end: 26, desc: Dollar(2)}, {start: 28, end: 30, desc: Dollar(4)}]))
       #|BAR
       #|STRING("\"(\"")
       #|IDENT("type_expr")
       #|STRING("\")\"")
-      #|LBRACE_CODE_RBRACE((" $2 ", 4874, [{start: 1, end: 3, desc: Dollar(2)}]))
+      #|LBRACE_CODE_RBRACE((" $2 ", 4844, [{start: 1, end: 3, desc: Dollar(2)}]))
       #|SEMI
       #|IDENT("nonempty_type_expr_list")
       #|ARROW
@@ -594,7 +540,7 @@ test "lexer" {
       #|IDENT("type_expr")
       #|EQ
       #|IDENT("type_expr")
-      #|LBRACE_CODE_RBRACE((" Cons(type_expr, Nil) ", 4966, []))
+      #|LBRACE_CODE_RBRACE((" Cons(type_expr, Nil) ", 4936, []))
       #|BAR
       #|IDENT("type_expr")
       #|EQ
@@ -603,7 +549,7 @@ test "lexer" {
       #|IDENT("type_expr_list")
       #|EQ
       #|IDENT("nonempty_type_expr_list")
-      #|LBRACE_CODE_RBRACE((" Cons(type_expr, type_expr_list) ", 5058, []))
+      #|LBRACE_CODE_RBRACE((" Cons(type_expr, type_expr_list) ", 5028, []))
       #|SEMI
       #|IDENT("clause_list")
       #|ARROW
@@ -614,10 +560,10 @@ test "lexer" {
       #|COLON
       #|STRING("\"|\"")
       #|IDENT("nonempty_clause_list")
-      #|LBRACE_CODE_RBRACE((" $2 ", 5170, [{start: 1, end: 3, desc: Dollar(2)}]))
+      #|LBRACE_CODE_RBRACE((" $2 ", 5140, [{start: 1, end: 3, desc: Dollar(2)}]))
       #|BAR
       #|IDENT("nonempty_clause_list")
-      #|LBRACE_CODE_RBRACE((" $1 ", 5202, [{start: 1, end: 3, desc: Dollar(1)}]))
+      #|LBRACE_CODE_RBRACE((" $1 ", 5172, [{start: 1, end: 3, desc: Dollar(1)}]))
       #|SEMI
       #|IDENT("nonempty_clause_list")
       #|ARROW
@@ -629,7 +575,7 @@ test "lexer" {
       #|IDENT("clause")
       #|EQ
       #|IDENT("clause")
-      #|LBRACE_CODE_RBRACE((" Cons(clause, Nil) ", 5283, []))
+      #|LBRACE_CODE_RBRACE((" Cons(clause, Nil) ", 5253, []))
       #|BAR
       #|IDENT("clause")
       #|EQ
@@ -638,7 +584,7 @@ test "lexer" {
       #|IDENT("clause_list")
       #|EQ
       #|IDENT("nonempty_clause_list")
-      #|LBRACE_CODE_RBRACE((" Cons(clause, clause_list) ", 5360, []))
+      #|LBRACE_CODE_RBRACE((" Cons(clause, clause_list) ", 5330, []))
       #|SEMI
       #|IDENT("clause")
       #|ARROW
@@ -653,7 +599,7 @@ test "lexer" {
       #|IDENT("action")
       #|EQ
       #|IDENT("clause_action")
-      #|LBRACE_CODE_RBRACE((" { items: item_list.to_array(), prec, action, loc: ($startpos, $endpos - $startpos) } ", 5477, [{start: 52, end: 61, desc: StartPos}, {start: 63, end: 70, desc: EndPos}, {start: 73, end: 82, desc: StartPos}]))
+      #|LBRACE_CODE_RBRACE((" { items: item_list.to_array(), prec, action, loc: ($startpos, $endpos - $startpos) } ", 5447, [{start: 52, end: 61, desc: StartPos}, {start: 63, end: 70, desc: EndPos}, {start: 73, end: 82, desc: StartPos}]))
       #|SEMI
       #|IDENT("clause_action")
       #|ARROW
@@ -662,7 +608,7 @@ test "lexer" {
       #|IDENT("code")
       #|EQ
       #|IDENT("LBRACE_CODE_RBRACE")
-      #|LBRACE_CODE_RBRACE(("\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\n  ", 5634, [{start: 96, end: 105, desc: StartPos}, {start: 112, end: 119, desc: EndPos}]))
+      #|LBRACE_CODE_RBRACE(("\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\n  ", 5604, [{start: 96, end: 105, desc: StartPos}, {start: 112, end: 119, desc: EndPos}]))
       #|SEMI
       #|IDENT("rule_prec")
       #|ARROW
@@ -673,9 +619,9 @@ test "lexer" {
       #|IDENT("symbol")
       #|EQ
       #|IDENT("symbol")
-      #|LBRACE_CODE_RBRACE((" Some(symbol) ", 5818, []))
+      #|LBRACE_CODE_RBRACE((" Some(symbol) ", 5788, []))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" None ", 5839, []))
+      #|LBRACE_CODE_RBRACE((" None ", 5809, []))
       #|SEMI
       #|IDENT("item_list")
       #|ARROW
@@ -690,9 +636,9 @@ test "lexer" {
       #|IDENT("item_list")
       #|EQ
       #|IDENT("item_list")
-      #|LBRACE_CODE_RBRACE((" Cons(item, item_list) ", 5931, []))
+      #|LBRACE_CODE_RBRACE((" Cons(item, item_list) ", 5901, []))
       #|BAR
-      #|LBRACE_CODE_RBRACE((" Nil ", 5961, []))
+      #|LBRACE_CODE_RBRACE((" Nil ", 5931, []))
       #|SEMI
       #|IDENT("item")
       #|ARROW
@@ -701,7 +647,7 @@ test "lexer" {
       #|IDENT("term")
       #|EQ
       #|IDENT("term")
-      #|LBRACE_CODE_RBRACE((" { binder: None, term: term } ", 6012, []))
+      #|LBRACE_CODE_RBRACE((" { binder: None, term: term } ", 5982, []))
       #|BAR
       #|IDENT("binder")
       #|EQ
@@ -710,7 +656,7 @@ test "lexer" {
       #|IDENT("term")
       #|EQ
       #|IDENT("term")
-      #|LBRACE_CODE_RBRACE((" { binder: Some(binder), term: term } ", 6076, []))
+      #|LBRACE_CODE_RBRACE((" { binder: Some(binder), term: term } ", 6046, []))
       #|SEMI
       #|IDENT("term")
       #|ARROW
@@ -719,7 +665,7 @@ test "lexer" {
       #|IDENT("symbol")
       #|EQ
       #|IDENT("symbol")
-      #|LBRACE_CODE_RBRACE((" Symbol(symbol, loc=($startpos, $endpos)) ", 6158, [{start: 21, end: 30, desc: StartPos}, {start: 32, end: 39, desc: EndPos}]))
+      #|LBRACE_CODE_RBRACE((" Symbol(symbol, loc=($startpos, $endpos)) ", 6128, [{start: 21, end: 30, desc: StartPos}, {start: 32, end: 39, desc: EndPos}]))
       #|BAR
       #|IDENT("symbol")
       #|EQ
@@ -727,12 +673,12 @@ test "lexer" {
       #|STRING("\"(\"")
       #|IDENT("nonempty_comma_term_list")
       #|STRING("\")\"")
-      #|LBRACE_CODE_RBRACE((" RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) ", 6254, [{start: 30, end: 47, desc: StartPosOf(Name("symbol"))}, {start: 49, end: 64, desc: EndPosOf(Name("symbol"))}, {start: 67, end: 69, desc: Dollar(3)}]))
+      #|LBRACE_CODE_RBRACE((" RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) ", 6224, [{start: 30, end: 47, desc: StartPosOf(Name("symbol"))}, {start: 49, end: 64, desc: EndPosOf(Name("symbol"))}, {start: 67, end: 69, desc: Dollar(3)}]))
       #|BAR
       #|IDENT("image")
       #|EQ
       #|IDENT("STRING")
-      #|LBRACE_CODE_RBRACE((" Image(image, loc=($startpos, $endpos)) ", 6356, [{start: 19, end: 28, desc: StartPos}, {start: 30, end: 37, desc: EndPos}]))
+      #|LBRACE_CODE_RBRACE((" Image(image, loc=($startpos, $endpos)) ", 6326, [{start: 19, end: 28, desc: StartPos}, {start: 30, end: 37, desc: EndPos}]))
       #|SEMI
       #|IDENT("nonempty_comma_term_list")
       #|ARROW
@@ -744,7 +690,7 @@ test "lexer" {
       #|IDENT("term")
       #|EQ
       #|IDENT("term")
-      #|LBRACE_CODE_RBRACE((" Cons(term, Nil) ", 6471, []))
+      #|LBRACE_CODE_RBRACE((" Cons(term, Nil) ", 6441, []))
       #|BAR
       #|IDENT("term")
       #|EQ
@@ -753,7 +699,7 @@ test "lexer" {
       #|IDENT("term_list")
       #|EQ
       #|IDENT("nonempty_comma_term_list")
-      #|LBRACE_CODE_RBRACE((" Cons(term, term_list) ", 6544, []))
+      #|LBRACE_CODE_RBRACE((" Cons(term, term_list) ", 6514, []))
       #|SEMI
       #|IDENT("nonempty_symbol_list")
       #|ARROW
@@ -765,7 +711,7 @@ test "lexer" {
       #|IDENT("symbol")
       #|EQ
       #|IDENT("symbol")
-      #|LBRACE_CODE_RBRACE((" Cons(symbol, Nil) ", 6644, []))
+      #|LBRACE_CODE_RBRACE((" Cons(symbol, Nil) ", 6614, []))
       #|BAR
       #|IDENT("symbol")
       #|EQ
@@ -773,7 +719,7 @@ test "lexer" {
       #|IDENT("symbol_list")
       #|EQ
       #|IDENT("nonempty_symbol_list")
-      #|LBRACE_CODE_RBRACE((" Cons(symbol, symbol_list) ", 6717, []))
+      #|LBRACE_CODE_RBRACE((" Cons(symbol, symbol_list) ", 6687, []))
       #|SEMI
       #|IDENT("symbol")
       #|ARROW
@@ -782,7 +728,7 @@ test "lexer" {
       #|IDENT("ident")
       #|EQ
       #|IDENT("IDENT")
-      #|LBRACE_CODE_RBRACE((" ident ", 6790, []))
+      #|LBRACE_CODE_RBRACE((" ident ", 6760, []))
       #|SEMI
       #|EOF
       #|
@@ -800,81 +746,29 @@ test "parser" {
   let spec = @parser.spec!(token, 0)
   @json.inspect!(spec, content={
     "decls": [
-      {
-        "$tag": "Position",
-        "type_": { "$tag": "Constr", "pkg": Null, "0": "Int", "1": [] },
-      },
-      {
-        "$tag": "Derive",
-        "traits": [{ "$tag": "Constr", "pkg": Null, "0": "Show", "1": [] }],
-        "type_": "Token",
-      },
+      { "$tag": "Position", "type_": "Int" },
+      { "$tag": "Derive", "traits": "Show", "type_": "Token" },
       { "$tag": "Start", "0": ["spec"] },
       { "$tag": "Token", "0": ["EOF"], "type_": Null },
-      {
-        "$tag": "Token",
-        "0": ["IDENT"],
-        "type_": { "$tag": "Constr", "pkg": Null, "0": "String", "1": [] },
-      },
-      {
-        "$tag": "Token",
-        "0": ["STRING"],
-        "type_": { "$tag": "Constr", "pkg": Null, "0": "String", "1": [] },
-      },
+      { "$tag": "Token", "0": ["IDENT"], "type_": "String" },
+      { "$tag": "Token", "0": ["STRING"], "type_": "String" },
+      { "$tag": "Token", "0": ["LANGLE_CODE_RANGLE"], "type_": "String" },
       {
         "$tag": "Token",
         "0": ["LBRACE_CODE_RBRACE"],
-        "type_": {
-          "$tag": "Tuple",
-          "0": [
-            { "$tag": "Constr", "pkg": Null, "0": "String", "1": [] },
-            { "$tag": "Constr", "pkg": Null, "0": "Int", "1": [] },
-            {
-              "$tag": "Constr",
-              "pkg": Null,
-              "0": "Array",
-              "1": [
-                { "$tag": "Constr", "pkg": "ast", "0": "SubstItem", "1": [] },
-              ],
-            },
-          ],
-        },
+        "type_": "(String, Int, Array[@ast.SubstItem])",
       },
       {
         "$tag": "Token",
         "0": ["PERCENT_LBRACE_CODE_PERCENT_RBRACE"],
-        "type_": {
-          "$tag": "Tuple",
-          "0": [
-            { "$tag": "Constr", "pkg": Null, "0": "String", "1": [] },
-            { "$tag": "Constr", "pkg": Null, "0": "Int", "1": [] },
-            { "$tag": "Constr", "pkg": Null, "0": "Int", "1": [] },
-          ],
-        },
+        "type_": "(String, Int, Int)",
       },
       {
         "$tag": "Token",
         "0": ["PERCENT_PERCENT_CODE_EOF"],
-        "type_": {
-          "$tag": "Tuple",
-          "0": [
-            { "$tag": "Constr", "pkg": Null, "0": "String", "1": [] },
-            { "$tag": "Constr", "pkg": Null, "0": "Int", "1": [] },
-            { "$tag": "Constr", "pkg": Null, "0": "Int", "1": [] },
-          ],
-        },
+        "type_": "(String, Int, Int)",
       },
-      {
-        "$tag": "Token",
-        "0": ["PKG_AND_IDENT"],
-        "type_": {
-          "$tag": "Tuple",
-          "0": [
-            { "$tag": "Constr", "pkg": Null, "0": "String", "1": [] },
-            { "$tag": "Constr", "pkg": Null, "0": "String", "1": [] },
-          ],
-        },
-      },
+      { "$tag": "Token", "0": ["PKG_AND_IDENT"], "type_": "(String, String)" },
       {
         "$tag": "Token1",
         "0": "PERCENT_PERCENT",
@@ -941,8 +835,6 @@ test "parser" {
         "type_": Null,
         "image": "\"%inline\"",
       },
-      { "$tag": "Token1", "0": "LANGLE", "type_": Null, "image": "\"<\"" },
-      { "$tag": "Token1", "0": "RANGLE", "type_": Null, "image": "\">\"" },
       { "$tag": "Token1", "0": "LBRACKET", "type_": Null, "image": "\"[\"" },
       { "$tag": "Token1", "0": "RBRACKET", "type_": Null, "image": "\"]\"" },
       { "$tag": "Token1", "0": "LPAREN", "type_": Null, "image": "\"(\"" },
@@ -967,41 +859,41 @@ test "parser" {
             "items": [
               {
                 "binder": "header",
-                "term": { "$tag": "Symbol", "0": "header", "loc": [926, 932] },
+                "term": { "$tag": "Symbol", "0": "header", "loc": [924, 930] },
               },
               {
                 "binder": "decl_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "decl_list",
-                  "loc": [943, 952],
+                  "loc": [941, 950],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"%%\"", "loc": [953, 957] } },
+              { "term": { "$tag": "Image", "0": "\"%%\"", "loc": [951, 955] } },
               {
                 "binder": "rule_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "rule_list",
-                  "loc": [968, 977],
+                  "loc": [966, 975],
                 },
               },
               {
                 "binder": "trailer",
-                "term": { "$tag": "Symbol", "0": "trailer", "loc": [986, 993] },
+                "term": { "$tag": "Symbol", "0": "trailer", "loc": [984, 991] },
               },
-              { "term": { "$tag": "Symbol", "0": "EOF", "loc": [994, 997] } },
+              { "term": { "$tag": "Symbol", "0": "EOF", "loc": [992, 995] } },
             ],
             "action": {
               "code": {
                 "code": " { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } ",
-                "utf8_pos": 999,
+                "utf8_pos": 997,
                 "subst": [],
               },
-              "start": 998,
-              "end": 1079,
+              "start": 996,
+              "end": 1077,
             },
-            "loc": [919, 160],
+            "loc": [917, 160],
           },
         ],
       },
@@ -1029,25 +921,25 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "PERCENT_LBRACE_CODE_PERCENT_RBRACE",
-                  "loc": [1127, 1161],
+                  "loc": [1125, 1159],
                 },
               },
             ],
             "action": {
-              "code": { "code": " Some(code) ", "utf8_pos": 1163, "subst": [] },
-              "start": 1162,
-              "end": 1176,
+              "code": { "code": " Some(code) ", "utf8_pos": 1161, "subst": [] },
+              "start": 1160,
+              "end": 1174,
             },
-            "loc": [1122, 54],
+            "loc": [1120, 54],
           },
           {
             "items": [],
             "action": {
-              "code": { "code": " None ", "utf8_pos": 1182, "subst": [] },
-              "start": 1181,
-              "end": 1189,
+              "code": { "code": " None ", "utf8_pos": 1180, "subst": [] },
+              "start": 1179,
+              "end": 1187,
             },
-            "loc": [1180, 9],
+            "loc": [1178, 9],
           },
         ],
       },
@@ -1075,16 +967,16 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "PERCENT_LBRACE_CODE_PERCENT_RBRACE",
-                  "loc": [1238, 1272],
+                  "loc": [1236, 1270],
                 },
               },
             ],
             "action": {
-              "code": { "code": " Some(code) ", "utf8_pos": 1274, "subst": [] },
-              "start": 1273,
-              "end": 1287,
+              "code": { "code": " Some(code) ", "utf8_pos": 1272, "subst": [] },
+              "start": 1271,
+              "end": 1285,
             },
-            "loc": [1233, 54],
+            "loc": [1231, 54],
           },
           {
             "items": [
@@ -1093,25 +985,25 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "PERCENT_PERCENT_CODE_EOF",
-                  "loc": [1297, 1321],
+                  "loc": [1295, 1319],
                 },
               },
             ],
             "action": {
-              "code": { "code": " Some(code) ", "utf8_pos": 1323, "subst": [] },
-              "start": 1322,
-              "end": 1336,
+              "code": { "code": " Some(code) ", "utf8_pos": 1321, "subst": [] },
+              "start": 1320,
+              "end": 1334,
             },
-            "loc": [1292, 44],
+            "loc": [1290, 44],
           },
           {
             "items": [],
             "action": {
-              "code": { "code": " None ", "utf8_pos": 1342, "subst": [] },
-              "start": 1341,
-              "end": 1349,
+              "code": { "code": " None ", "utf8_pos": 1340, "subst": [] },
+              "start": 1339,
+              "end": 1347,
             },
-            "loc": [1340, 9],
+            "loc": [1338, 9],
           },
         ],
       },
@@ -1131,36 +1023,36 @@ test "parser" {
             "items": [
               {
                 "binder": "decl",
-                "term": { "$tag": "Symbol", "0": "decl", "loc": [1409, 1413] },
+                "term": { "$tag": "Symbol", "0": "decl", "loc": [1407, 1411] },
               },
               {
                 "binder": "decl_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "decl_list",
-                  "loc": [1424, 1433],
+                  "loc": [1422, 1431],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(decl, decl_list) ",
-                "utf8_pos": 1435,
+                "utf8_pos": 1433,
                 "subst": [],
               },
-              "start": 1434,
-              "end": 1459,
+              "start": 1432,
+              "end": 1457,
             },
-            "loc": [1404, 55],
+            "loc": [1402, 55],
           },
           {
             "items": [],
             "action": {
-              "code": { "code": " Nil ", "utf8_pos": 1465, "subst": [] },
-              "start": 1464,
-              "end": 1471,
+              "code": { "code": " Nil ", "utf8_pos": 1463, "subst": [] },
+              "start": 1462,
+              "end": 1469,
             },
-            "loc": [1463, 8],
+            "loc": [1461, 8],
           },
         ],
       },
@@ -1177,7 +1069,7 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%start\"",
-                  "loc": [1506, 1514],
+                  "loc": [1504, 1512],
                 },
               },
               {
@@ -1185,20 +1077,20 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_symbol_list",
-                  "loc": [1527, 1547],
+                  "loc": [1525, 1545],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Start(symbol_list.to_array()) ",
-                "utf8_pos": 1549,
+                "utf8_pos": 1547,
                 "subst": [],
               },
-              "start": 1548,
-              "end": 1581,
+              "start": 1546,
+              "end": 1579,
             },
-            "loc": [1506, 75],
+            "loc": [1504, 75],
           },
           {
             "items": [
@@ -1206,7 +1098,7 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%token\"",
-                  "loc": [1586, 1594],
+                  "loc": [1584, 1592],
                 },
               },
               {
@@ -1214,20 +1106,20 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_symbol_list",
-                  "loc": [1607, 1627],
+                  "loc": [1605, 1625],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Token(symbol_list.to_array(), type_=None) ",
-                "utf8_pos": 1629,
+                "utf8_pos": 1627,
                 "subst": [],
               },
-              "start": 1628,
-              "end": 1673,
+              "start": 1626,
+              "end": 1671,
             },
-            "loc": [1586, 87],
+            "loc": [1584, 87],
           },
           {
             "items": [
@@ -1235,38 +1127,36 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%token\"",
-                  "loc": [1678, 1686],
+                  "loc": [1676, 1684],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"<\"", "loc": [1687, 1690] } },
               {
                 "binder": "type_",
                 "term": {
                   "$tag": "Symbol",
-                  "0": "type_expr",
-                  "loc": [1697, 1706],
+                  "0": "LANGLE_CODE_RANGLE",
+                  "loc": [1691, 1709],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\">\"", "loc": [1707, 1710] } },
               {
                 "binder": "symbol_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_symbol_list",
-                  "loc": [1723, 1743],
+                  "loc": [1722, 1742],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Token(symbol_list.to_array(), type_=Some(type_)) ",
-                "utf8_pos": 1745,
+                "utf8_pos": 1744,
                 "subst": [],
               },
-              "start": 1744,
-              "end": 1796,
+              "start": 1743,
+              "end": 1795,
             },
-            "loc": [1678, 118],
+            "loc": [1676, 119],
           },
           {
             "items": [
@@ -1274,28 +1164,28 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%token\"",
-                  "loc": [1801, 1809],
+                  "loc": [1800, 1808],
                 },
               },
               {
                 "binder": "symbol",
-                "term": { "$tag": "Symbol", "0": "symbol", "loc": [1817, 1823] },
+                "term": { "$tag": "Symbol", "0": "symbol", "loc": [1816, 1822] },
               },
               {
                 "binder": "image",
-                "term": { "$tag": "Symbol", "0": "STRING", "loc": [1830, 1836] },
+                "term": { "$tag": "Symbol", "0": "STRING", "loc": [1829, 1835] },
               },
             ],
             "action": {
               "code": {
                 "code": " Token1(symbol, type_=None, image=image) ",
-                "utf8_pos": 1838,
+                "utf8_pos": 1837,
                 "subst": [],
               },
-              "start": 1837,
-              "end": 1880,
+              "start": 1836,
+              "end": 1879,
             },
-            "loc": [1801, 79],
+            "loc": [1800, 79],
           },
           {
             "items": [
@@ -1303,19 +1193,17 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%token\"",
-                  "loc": [1885, 1893],
+                  "loc": [1884, 1892],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"<\"", "loc": [1894, 1897] } },
               {
                 "binder": "type_",
                 "term": {
                   "$tag": "Symbol",
-                  "0": "type_expr",
-                  "loc": [1904, 1913],
+                  "0": "LANGLE_CODE_RANGLE",
+                  "loc": [1899, 1917],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\">\"", "loc": [1914, 1917] } },
               {
                 "binder": "symbol",
                 "term": { "$tag": "Symbol", "0": "symbol", "loc": [1925, 1931] },
@@ -1334,7 +1222,7 @@ test "parser" {
               "start": 1945,
               "end": 1995,
             },
-            "loc": [1885, 110],
+            "loc": [1884, 111],
           },
           {
             "items": [
@@ -1345,35 +1233,33 @@ test "parser" {
                   "loc": [2000, 2007],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"<\"", "loc": [2008, 2011] } },
               {
                 "binder": "type_",
                 "term": {
                   "$tag": "Symbol",
-                  "0": "type_expr",
-                  "loc": [2018, 2027],
+                  "0": "LANGLE_CODE_RANGLE",
+                  "loc": [2014, 2032],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\">\"", "loc": [2028, 2031] } },
               {
                 "binder": "symbol_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_symbol_list",
-                  "loc": [2044, 2064],
+                  "loc": [2045, 2065],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Type(symbol_list.to_array(), type_=type_) ",
-                "utf8_pos": 2066,
+                "utf8_pos": 2067,
                 "subst": [],
               },
-              "start": 2065,
-              "end": 2110,
+              "start": 2066,
+              "end": 2111,
             },
-            "loc": [2000, 110],
+            "loc": [2000, 111],
           },
           {
             "items": [
@@ -1381,30 +1267,28 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%position\"",
-                  "loc": [2115, 2126],
+                  "loc": [2116, 2127],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"<\"", "loc": [2127, 2130] } },
               {
                 "binder": "type_",
                 "term": {
                   "$tag": "Symbol",
-                  "0": "type_expr",
-                  "loc": [2137, 2146],
+                  "0": "LANGLE_CODE_RANGLE",
+                  "loc": [2134, 2152],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\">\"", "loc": [2147, 2150] } },
             ],
             "action": {
               "code": {
                 "code": " Position(type_=type_) ",
-                "utf8_pos": 2152,
+                "utf8_pos": 2154,
                 "subst": [],
               },
-              "start": 2151,
-              "end": 2176,
+              "start": 2153,
+              "end": 2178,
             },
-            "loc": [2115, 61],
+            "loc": [2116, 62],
           },
           {
             "items": [
@@ -1412,7 +1296,7 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%left\"",
-                  "loc": [2181, 2188],
+                  "loc": [2183, 2190],
                 },
               },
               {
@@ -1420,20 +1304,20 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_symbol_list",
-                  "loc": [2201, 2221],
+                  "loc": [2203, 2223],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Left(symbol_list.to_array()) ",
-                "utf8_pos": 2223,
+                "utf8_pos": 2225,
                 "subst": [],
               },
-              "start": 2222,
-              "end": 2254,
+              "start": 2224,
+              "end": 2256,
             },
-            "loc": [2181, 73],
+            "loc": [2183, 73],
           },
           {
             "items": [
@@ -1441,7 +1325,7 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%right\"",
-                  "loc": [2259, 2267],
+                  "loc": [2261, 2269],
                 },
               },
               {
@@ -1449,20 +1333,20 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_symbol_list",
-                  "loc": [2280, 2300],
+                  "loc": [2282, 2302],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Right(symbol_list.to_array()) ",
-                "utf8_pos": 2302,
+                "utf8_pos": 2304,
                 "subst": [],
               },
-              "start": 2301,
-              "end": 2334,
+              "start": 2303,
+              "end": 2336,
             },
-            "loc": [2259, 75],
+            "loc": [2261, 75],
           },
           {
             "items": [
@@ -1470,7 +1354,7 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%nonassoc\"",
-                  "loc": [2339, 2350],
+                  "loc": [2341, 2352],
                 },
               },
               {
@@ -1478,20 +1362,20 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_symbol_list",
-                  "loc": [2363, 2383],
+                  "loc": [2365, 2385],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Nonassoc(symbol_list.to_array()) ",
-                "utf8_pos": 2385,
+                "utf8_pos": 2387,
                 "subst": [],
               },
-              "start": 2384,
-              "end": 2420,
+              "start": 2386,
+              "end": 2422,
             },
-            "loc": [2339, 81],
+            "loc": [2341, 81],
           },
           {
             "items": [
@@ -1499,34 +1383,32 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%derive\"",
-                  "loc": [2425, 2434],
+                  "loc": [2427, 2436],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"<\"", "loc": [2435, 2438] } },
               {
-                "binder": "trait_list",
+                "binder": "traits",
                 "term": {
                   "$tag": "Symbol",
-                  "0": "nonempty_type_expr_list",
-                  "loc": [2450, 2473],
+                  "0": "LANGLE_CODE_RANGLE",
+                  "loc": [2444, 2462],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\">\"", "loc": [2474, 2477] } },
               {
                 "binder": "type_",
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [2484, 2489] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [2469, 2474] },
               },
             ],
             "action": {
               "code": {
-                "code": " Derive(traits=trait_list.to_array(), type_=type_) ",
-                "utf8_pos": 2491,
+                "code": " Derive(traits=traits, type_=type_) ",
+                "utf8_pos": 2476,
                 "subst": [],
               },
-              "start": 2490,
-              "end": 2543,
+              "start": 2475,
+              "end": 2513,
             },
-            "loc": [2425, 118],
+            "loc": [2427, 86],
           },
         ],
       },
@@ -1546,45 +1428,45 @@ test "parser" {
             "items": [
               {
                 "binder": "rule",
-                "term": { "$tag": "Symbol", "0": "rule", "loc": [2596, 2600] },
+                "term": { "$tag": "Symbol", "0": "rule", "loc": [2566, 2570] },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(rule, Nil) ",
-                "utf8_pos": 2602,
+                "utf8_pos": 2572,
                 "subst": [],
               },
-              "start": 2601,
-              "end": 2620,
+              "start": 2571,
+              "end": 2590,
             },
-            "loc": [2591, 29],
+            "loc": [2561, 29],
           },
           {
             "items": [
               {
                 "binder": "rule",
-                "term": { "$tag": "Symbol", "0": "rule", "loc": [2630, 2634] },
+                "term": { "$tag": "Symbol", "0": "rule", "loc": [2600, 2604] },
               },
               {
                 "binder": "rule_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "rule_list",
-                  "loc": [2645, 2654],
+                  "loc": [2615, 2624],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(rule, rule_list) ",
-                "utf8_pos": 2656,
+                "utf8_pos": 2626,
                 "subst": [],
               },
-              "start": 2655,
-              "end": 2680,
+              "start": 2625,
+              "end": 2650,
             },
-            "loc": [2625, 55],
+            "loc": [2595, 55],
           },
         ],
       },
@@ -1601,22 +1483,22 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "rule_no_modifiers",
-                  "loc": [2708, 2725],
+                  "loc": [2678, 2695],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " $1 ",
-                "utf8_pos": 2727,
+                "utf8_pos": 2697,
                 "subst": [
                   { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 1 } },
                 ],
               },
-              "start": 2726,
-              "end": 2732,
+              "start": 2696,
+              "end": 2702,
             },
-            "loc": [2708, 24],
+            "loc": [2678, 24],
           },
           {
             "items": [
@@ -1624,29 +1506,29 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%inline\"",
-                  "loc": [2737, 2746],
+                  "loc": [2707, 2716],
                 },
               },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "rule_no_modifiers",
-                  "loc": [2747, 2764],
+                  "loc": [2717, 2734],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " { ..$2, inline: true } ",
-                "utf8_pos": 2766,
+                "utf8_pos": 2736,
                 "subst": [
                   { "start": 5, "end": 7, "desc": { "$tag": "Dollar", "0": 2 } },
                 ],
               },
-              "start": 2765,
-              "end": 2791,
+              "start": 2735,
+              "end": 2761,
             },
-            "loc": [2737, 54],
+            "loc": [2707, 54],
           },
         ],
       },
@@ -1661,105 +1543,105 @@ test "parser" {
             "items": [
               {
                 "binder": "nonterminal",
-                "term": { "$tag": "Symbol", "0": "symbol", "loc": [2844, 2850] },
+                "term": { "$tag": "Symbol", "0": "symbol", "loc": [2814, 2820] },
               },
               {
                 "binder": "type_",
                 "term": {
                   "$tag": "Symbol",
                   "0": "opt_rule_return_type",
-                  "loc": [2857, 2877],
+                  "loc": [2827, 2847],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\":\"", "loc": [2878, 2881] } },
+              { "term": { "$tag": "Image", "0": "\":\"", "loc": [2848, 2851] } },
               {
                 "binder": "clause_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "clause_list",
-                  "loc": [2894, 2905],
+                  "loc": [2864, 2875],
                 },
               },
               {
                 "term": {
                   "$tag": "RuleCall",
                   "0": "option",
-                  "symbol_loc": [2906, 2912],
-                  "1": [{ "$tag": "Image", "0": "\";\"", "loc": [2913, 2916] }],
+                  "symbol_loc": [2876, 2882],
+                  "1": [{ "$tag": "Image", "0": "\";\"", "loc": [2883, 2886] }],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": "\n    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }\n  ",
-                "utf8_pos": 2919,
+                "utf8_pos": 2889,
                 "subst": [],
               },
-              "start": 2918,
-              "end": 3030,
+              "start": 2888,
+              "end": 3000,
             },
-            "loc": [2832, 198],
+            "loc": [2802, 198],
           },
           {
             "items": [
               {
                 "binder": "nonterminal",
-                "term": { "$tag": "Symbol", "0": "symbol", "loc": [3047, 3053] },
+                "term": { "$tag": "Symbol", "0": "symbol", "loc": [3017, 3023] },
               },
               {
                 "binder": "generic_params",
                 "term": {
                   "$tag": "Symbol",
                   "0": "opt_rule_generic_params",
-                  "loc": [3069, 3092],
+                  "loc": [3039, 3062],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [3093, 3096] } },
+              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [3063, 3066] } },
               {
                 "binder": "param_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_rule_param_list",
-                  "loc": [3108, 3132],
+                  "loc": [3078, 3102],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\")\"", "loc": [3133, 3136] } },
+              { "term": { "$tag": "Image", "0": "\")\"", "loc": [3103, 3106] } },
               {
                 "binder": "type_",
                 "term": {
                   "$tag": "Symbol",
                   "0": "opt_rule_return_type",
-                  "loc": [3143, 3163],
+                  "loc": [3113, 3133],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\":\"", "loc": [3164, 3167] } },
+              { "term": { "$tag": "Image", "0": "\":\"", "loc": [3134, 3137] } },
               {
                 "binder": "clause_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "clause_list",
-                  "loc": [3180, 3191],
+                  "loc": [3150, 3161],
                 },
               },
               {
                 "term": {
                   "$tag": "RuleCall",
                   "0": "option",
-                  "symbol_loc": [3192, 3198],
-                  "1": [{ "$tag": "Image", "0": "\";\"", "loc": [3199, 3202] }],
+                  "symbol_loc": [3162, 3168],
+                  "1": [{ "$tag": "Image", "0": "\";\"", "loc": [3169, 3172] }],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": "\n    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }\n  ",
-                "utf8_pos": 3205,
+                "utf8_pos": 3175,
                 "subst": [],
               },
-              "start": 3204,
-              "end": 3332,
+              "start": 3174,
+              "end": 3302,
             },
-            "loc": [3035, 297],
+            "loc": [3005, 297],
           },
         ],
       },
@@ -1776,32 +1658,32 @@ test "parser" {
           {
             "items": [
               {
-                "term": { "$tag": "Image", "0": "\"->\"", "loc": [3381, 3385] },
+                "term": { "$tag": "Image", "0": "\"->\"", "loc": [3351, 3355] },
               },
               {
                 "binder": "type_",
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [3392, 3401],
+                  "loc": [3362, 3371],
                 },
               },
             ],
             "action": {
-              "code": { "code": " Some(type_) ", "utf8_pos": 3403, "subst": [] },
-              "start": 3402,
-              "end": 3417,
+              "code": { "code": " Some(type_) ", "utf8_pos": 3373, "subst": [] },
+              "start": 3372,
+              "end": 3387,
             },
-            "loc": [3381, 36],
+            "loc": [3351, 36],
           },
           {
             "items": [],
             "action": {
-              "code": { "code": " None ", "utf8_pos": 3423, "subst": [] },
-              "start": 3422,
-              "end": 3430,
+              "code": { "code": " None ", "utf8_pos": 3393, "subst": [] },
+              "start": 3392,
+              "end": 3400,
             },
-            "loc": [3421, 9],
+            "loc": [3391, 9],
           },
         ],
       },
@@ -1836,40 +1718,40 @@ test "parser" {
           {
             "items": [
               {
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3508, 3513] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3478, 3483] },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(($1, None), Nil) ",
-                "utf8_pos": 3515,
+                "utf8_pos": 3485,
                 "subst": [
                   { "start": 7, "end": 9, "desc": { "$tag": "Dollar", "0": 1 } },
                 ],
               },
-              "start": 3514,
-              "end": 3539,
+              "start": 3484,
+              "end": 3509,
             },
-            "loc": [3508, 31],
+            "loc": [3478, 31],
           },
           {
             "items": [
               {
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3544, 3549] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3514, 3519] },
               },
-              { "term": { "$tag": "Image", "0": "\":\"", "loc": [3550, 3553] } },
+              { "term": { "$tag": "Image", "0": "\":\"", "loc": [3520, 3523] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [3554, 3563],
+                  "loc": [3524, 3533],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(($1, Some($3)), Nil) ",
-                "utf8_pos": 3565,
+                "utf8_pos": 3535,
                 "subst": [
                   { "start": 7, "end": 9, "desc": { "$tag": "Dollar", "0": 1 } },
                   {
@@ -1879,29 +1761,29 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3564,
-              "end": 3593,
+              "start": 3534,
+              "end": 3563,
             },
-            "loc": [3544, 49],
+            "loc": [3514, 49],
           },
           {
             "items": [
               {
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3598, 3603] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3568, 3573] },
               },
-              { "term": { "$tag": "Image", "0": "\",\"", "loc": [3604, 3607] } },
+              { "term": { "$tag": "Image", "0": "\",\"", "loc": [3574, 3577] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_rule_param_list",
-                  "loc": [3608, 3632],
+                  "loc": [3578, 3602],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(($1, None), $3) ",
-                "utf8_pos": 3634,
+                "utf8_pos": 3604,
                 "subst": [
                   { "start": 7, "end": 9, "desc": { "$tag": "Dollar", "0": 1 } },
                   {
@@ -1911,37 +1793,37 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3633,
-              "end": 3657,
+              "start": 3603,
+              "end": 3627,
             },
-            "loc": [3598, 59],
+            "loc": [3568, 59],
           },
           {
             "items": [
               {
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3662, 3667] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3632, 3637] },
               },
-              { "term": { "$tag": "Image", "0": "\":\"", "loc": [3668, 3671] } },
+              { "term": { "$tag": "Image", "0": "\":\"", "loc": [3638, 3641] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [3672, 3681],
+                  "loc": [3642, 3651],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\",\"", "loc": [3682, 3685] } },
+              { "term": { "$tag": "Image", "0": "\",\"", "loc": [3652, 3655] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_rule_param_list",
-                  "loc": [3686, 3710],
+                  "loc": [3656, 3680],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(($1, Some($3)), $5) ",
-                "utf8_pos": 3712,
+                "utf8_pos": 3682,
                 "subst": [
                   { "start": 7, "end": 9, "desc": { "$tag": "Dollar", "0": 1 } },
                   {
@@ -1956,10 +1838,10 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3711,
-              "end": 3739,
+              "start": 3681,
+              "end": 3709,
             },
-            "loc": [3662, 77],
+            "loc": [3632, 77],
           },
         ],
       },
@@ -1978,36 +1860,36 @@ test "parser" {
           {
             "items": [],
             "action": {
-              "code": { "code": " [] ", "utf8_pos": 3791, "subst": [] },
-              "start": 3790,
-              "end": 3796,
+              "code": { "code": " [] ", "utf8_pos": 3761, "subst": [] },
+              "start": 3760,
+              "end": 3766,
             },
-            "loc": [3789, 7],
+            "loc": [3759, 7],
           },
           {
             "items": [
-              { "term": { "$tag": "Image", "0": "\"[\"", "loc": [3801, 3804] } },
+              { "term": { "$tag": "Image", "0": "\"[\"", "loc": [3771, 3774] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_comma_ident_list",
-                  "loc": [3805, 3830],
+                  "loc": [3775, 3800],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"]\"", "loc": [3831, 3834] } },
+              { "term": { "$tag": "Image", "0": "\"]\"", "loc": [3801, 3804] } },
             ],
             "action": {
               "code": {
                 "code": " $2.to_array() ",
-                "utf8_pos": 3836,
+                "utf8_pos": 3806,
                 "subst": [
                   { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 2 } },
                 ],
               },
-              "start": 3835,
-              "end": 3852,
+              "start": 3805,
+              "end": 3822,
             },
-            "loc": [3801, 51],
+            "loc": [3771, 51],
           },
         ],
       },
@@ -2026,40 +1908,40 @@ test "parser" {
           {
             "items": [
               {
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3913, 3918] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3883, 3888] },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons($1, Nil) ",
-                "utf8_pos": 3920,
+                "utf8_pos": 3890,
                 "subst": [
                   { "start": 6, "end": 8, "desc": { "$tag": "Dollar", "0": 1 } },
                 ],
               },
-              "start": 3919,
-              "end": 3936,
+              "start": 3889,
+              "end": 3906,
             },
-            "loc": [3913, 23],
+            "loc": [3883, 23],
           },
           {
             "items": [
               {
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3941, 3946] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [3911, 3916] },
               },
-              { "term": { "$tag": "Image", "0": "\",\"", "loc": [3947, 3950] } },
+              { "term": { "$tag": "Image", "0": "\",\"", "loc": [3917, 3920] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_comma_ident_list",
-                  "loc": [3951, 3976],
+                  "loc": [3921, 3946],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons($1, $3) ",
-                "utf8_pos": 3978,
+                "utf8_pos": 3948,
                 "subst": [
                   { "start": 6, "end": 8, "desc": { "$tag": "Dollar", "0": 1 } },
                   {
@@ -2069,10 +1951,10 @@ test "parser" {
                   },
                 ],
               },
-              "start": 3977,
-              "end": 3993,
+              "start": 3947,
+              "end": 3963,
             },
-            "loc": [3941, 52],
+            "loc": [3911, 52],
           },
         ],
       },
@@ -2089,42 +1971,42 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "postfix_type_expr",
-                  "loc": [4030, 4047],
+                  "loc": [4000, 4017],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " $1 ",
-                "utf8_pos": 4049,
+                "utf8_pos": 4019,
                 "subst": [
                   { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 1 } },
                 ],
               },
-              "start": 4048,
-              "end": 4054,
+              "start": 4018,
+              "end": 4024,
             },
-            "loc": [4030, 24],
+            "loc": [4000, 24],
           },
           {
             "items": [
-              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4059, 4062] } },
-              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4063, 4066] } },
+              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4029, 4032] } },
+              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4033, 4036] } },
               {
-                "term": { "$tag": "Image", "0": "\"->\"", "loc": [4067, 4071] },
+                "term": { "$tag": "Image", "0": "\"->\"", "loc": [4037, 4041] },
               },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4072, 4081],
+                  "loc": [4042, 4051],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Arrow([], $4) ",
-                "utf8_pos": 4083,
+                "utf8_pos": 4053,
                 "subst": [
                   {
                     "start": 11,
@@ -2133,37 +2015,37 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4082,
-              "end": 4099,
+              "start": 4052,
+              "end": 4069,
             },
-            "loc": [4059, 40],
+            "loc": [4029, 40],
           },
           {
             "items": [
-              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4104, 4107] } },
+              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4074, 4077] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4108, 4117],
+                  "loc": [4078, 4087],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4118, 4121] } },
+              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4088, 4091] } },
               {
-                "term": { "$tag": "Image", "0": "\"->\"", "loc": [4122, 4126] },
+                "term": { "$tag": "Image", "0": "\"->\"", "loc": [4092, 4096] },
               },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4127, 4136],
+                  "loc": [4097, 4106],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Arrow([$2], $5) ",
-                "utf8_pos": 4138,
+                "utf8_pos": 4108,
                 "subst": [
                   {
                     "start": 8,
@@ -2177,38 +2059,38 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4137,
-              "end": 4156,
+              "start": 4107,
+              "end": 4126,
             },
-            "loc": [4104, 52],
+            "loc": [4074, 52],
           },
           {
             "items": [
-              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4161, 4164] } },
+              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4131, 4134] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4165, 4174],
+                  "loc": [4135, 4144],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\",\"", "loc": [4175, 4178] } },
-              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4179, 4182] } },
+              { "term": { "$tag": "Image", "0": "\",\"", "loc": [4145, 4148] } },
+              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4149, 4152] } },
               {
-                "term": { "$tag": "Image", "0": "\"->\"", "loc": [4183, 4187] },
+                "term": { "$tag": "Image", "0": "\"->\"", "loc": [4153, 4157] },
               },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4188, 4197],
+                  "loc": [4158, 4167],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Arrow([$2], $6) ",
-                "utf8_pos": 4199,
+                "utf8_pos": 4169,
                 "subst": [
                   {
                     "start": 8,
@@ -2222,45 +2104,45 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4198,
-              "end": 4217,
+              "start": 4168,
+              "end": 4187,
             },
-            "loc": [4161, 56],
+            "loc": [4131, 56],
           },
           {
             "items": [
-              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4222, 4225] } },
+              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4192, 4195] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4226, 4235],
+                  "loc": [4196, 4205],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\",\"", "loc": [4236, 4239] } },
+              { "term": { "$tag": "Image", "0": "\",\"", "loc": [4206, 4209] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_type_expr_list",
-                  "loc": [4240, 4263],
+                  "loc": [4210, 4233],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4264, 4267] } },
+              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4234, 4237] } },
               {
-                "term": { "$tag": "Image", "0": "\"->\"", "loc": [4268, 4272] },
+                "term": { "$tag": "Image", "0": "\"->\"", "loc": [4238, 4242] },
               },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4273, 4282],
+                  "loc": [4243, 4252],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Arrow(@immut/list.Cons($2, $4).to_array(), $7) ",
-                "utf8_pos": 4284,
+                "utf8_pos": 4254,
                 "subst": [
                   {
                     "start": 24,
@@ -2279,10 +2161,10 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4283,
-              "end": 4333,
+              "start": 4253,
+              "end": 4303,
             },
-            "loc": [4222, 111],
+            "loc": [4192, 111],
           },
         ],
       },
@@ -2299,22 +2181,22 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "basic_type_expr",
-                  "loc": [4378, 4393],
+                  "loc": [4348, 4363],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " $1 ",
-                "utf8_pos": 4395,
+                "utf8_pos": 4365,
                 "subst": [
                   { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 1 } },
                 ],
               },
-              "start": 4394,
-              "end": 4400,
+              "start": 4364,
+              "end": 4370,
             },
-            "loc": [4378, 22],
+            "loc": [4348, 22],
           },
           {
             "items": [
@@ -2322,15 +2204,15 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "postfix_type_expr",
-                  "loc": [4405, 4422],
+                  "loc": [4375, 4392],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"?\"", "loc": [4423, 4426] } },
+              { "term": { "$tag": "Image", "0": "\"?\"", "loc": [4393, 4396] } },
             ],
             "action": {
               "code": {
                 "code": " Option($1) ",
-                "utf8_pos": 4428,
+                "utf8_pos": 4398,
                 "subst": [
                   {
                     "start": 8,
@@ -2339,10 +2221,10 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4427,
-              "end": 4441,
+              "start": 4397,
+              "end": 4411,
             },
-            "loc": [4405, 36],
+            "loc": [4375, 36],
           },
         ],
       },
@@ -2356,13 +2238,13 @@ test "parser" {
           {
             "items": [
               {
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [4484, 4489] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [4454, 4459] },
               },
             ],
             "action": {
               "code": {
                 "code": " Constr(pkg=None, $1, []) ",
-                "utf8_pos": 4491,
+                "utf8_pos": 4461,
                 "subst": [
                   {
                     "start": 18,
@@ -2371,10 +2253,10 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4490,
-              "end": 4518,
+              "start": 4460,
+              "end": 4488,
             },
-            "loc": [4484, 34],
+            "loc": [4454, 34],
           },
           {
             "items": [
@@ -2382,14 +2264,14 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "PKG_AND_IDENT",
-                  "loc": [4523, 4536],
+                  "loc": [4493, 4506],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Constr(pkg=Some($1.0), $1.1, []) ",
-                "utf8_pos": 4538,
+                "utf8_pos": 4508,
                 "subst": [
                   {
                     "start": 17,
@@ -2403,30 +2285,30 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4537,
-              "end": 4573,
+              "start": 4507,
+              "end": 4543,
             },
-            "loc": [4523, 50],
+            "loc": [4493, 50],
           },
           {
             "items": [
               {
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [4578, 4583] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [4548, 4553] },
               },
-              { "term": { "$tag": "Image", "0": "\"[\"", "loc": [4584, 4587] } },
+              { "term": { "$tag": "Image", "0": "\"[\"", "loc": [4554, 4557] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_type_expr_list",
-                  "loc": [4588, 4611],
+                  "loc": [4558, 4581],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"]\"", "loc": [4612, 4615] } },
+              { "term": { "$tag": "Image", "0": "\"]\"", "loc": [4582, 4585] } },
             ],
             "action": {
               "code": {
                 "code": " Constr(pkg=None, $1, $3.to_array()) ",
-                "utf8_pos": 4617,
+                "utf8_pos": 4587,
                 "subst": [
                   {
                     "start": 18,
@@ -2440,10 +2322,10 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4616,
-              "end": 4655,
+              "start": 4586,
+              "end": 4625,
             },
-            "loc": [4578, 77],
+            "loc": [4548, 77],
           },
           {
             "items": [
@@ -2451,23 +2333,23 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "PKG_AND_IDENT",
-                  "loc": [4660, 4673],
+                  "loc": [4630, 4643],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"[\"", "loc": [4674, 4677] } },
+              { "term": { "$tag": "Image", "0": "\"[\"", "loc": [4644, 4647] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_type_expr_list",
-                  "loc": [4678, 4701],
+                  "loc": [4648, 4671],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\"]\"", "loc": [4702, 4705] } },
+              { "term": { "$tag": "Image", "0": "\"]\"", "loc": [4672, 4675] } },
             ],
             "action": {
               "code": {
                 "code": " Constr(pkg=Some($1.0), $1.1, $3.to_array()) ",
-                "utf8_pos": 4707,
+                "utf8_pos": 4677,
                 "subst": [
                   {
                     "start": 17,
@@ -2486,35 +2368,35 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4706,
-              "end": 4753,
+              "start": 4676,
+              "end": 4723,
             },
-            "loc": [4660, 93],
+            "loc": [4630, 93],
           },
           {
             "items": [
-              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4758, 4761] } },
+              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4728, 4731] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4762, 4771],
+                  "loc": [4732, 4741],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\",\"", "loc": [4772, 4775] } },
+              { "term": { "$tag": "Image", "0": "\",\"", "loc": [4742, 4745] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_type_expr_list",
-                  "loc": [4776, 4799],
+                  "loc": [4746, 4769],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4800, 4803] } },
+              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4770, 4773] } },
             ],
             "action": {
               "code": {
                 "code": " Tuple(@immut/list.Cons($2, $4).to_array()) ",
-                "utf8_pos": 4805,
+                "utf8_pos": 4775,
                 "subst": [
                   {
                     "start": 24,
@@ -2528,35 +2410,35 @@ test "parser" {
                   },
                 ],
               },
-              "start": 4804,
-              "end": 4850,
+              "start": 4774,
+              "end": 4820,
             },
-            "loc": [4758, 92],
+            "loc": [4728, 92],
           },
           {
             "items": [
-              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4855, 4858] } },
+              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [4825, 4828] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4859, 4868],
+                  "loc": [4829, 4838],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4869, 4872] } },
+              { "term": { "$tag": "Image", "0": "\")\"", "loc": [4839, 4842] } },
             ],
             "action": {
               "code": {
                 "code": " $2 ",
-                "utf8_pos": 4874,
+                "utf8_pos": 4844,
                 "subst": [
                   { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 2 } },
                 ],
               },
-              "start": 4873,
-              "end": 4879,
+              "start": 4843,
+              "end": 4849,
             },
-            "loc": [4855, 24],
+            "loc": [4825, 24],
           },
         ],
       },
@@ -2579,20 +2461,20 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [4955, 4964],
+                  "loc": [4925, 4934],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(type_expr, Nil) ",
-                "utf8_pos": 4966,
+                "utf8_pos": 4936,
                 "subst": [],
               },
-              "start": 4965,
-              "end": 4989,
+              "start": 4935,
+              "end": 4959,
             },
-            "loc": [4945, 44],
+            "loc": [4915, 44],
           },
           {
             "items": [
@@ -2601,29 +2483,29 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "type_expr",
-                  "loc": [5004, 5013],
+                  "loc": [4974, 4983],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\",\"", "loc": [5014, 5017] } },
+              { "term": { "$tag": "Image", "0": "\",\"", "loc": [4984, 4987] } },
               {
                 "binder": "type_expr_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_type_expr_list",
-                  "loc": [5033, 5056],
+                  "loc": [5003, 5026],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(type_expr, type_expr_list) ",
-                "utf8_pos": 5058,
+                "utf8_pos": 5028,
                 "subst": [],
               },
-              "start": 5057,
-              "end": 5092,
+              "start": 5027,
+              "end": 5062,
             },
-            "loc": [4994, 98],
+            "loc": [4964, 98],
           },
         ],
       },
@@ -2641,27 +2523,27 @@ test "parser" {
         "clauses": [
           {
             "items": [
-              { "term": { "$tag": "Image", "0": "\"|\"", "loc": [5144, 5147] } },
+              { "term": { "$tag": "Image", "0": "\"|\"", "loc": [5114, 5117] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_clause_list",
-                  "loc": [5148, 5168],
+                  "loc": [5118, 5138],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " $2 ",
-                "utf8_pos": 5170,
+                "utf8_pos": 5140,
                 "subst": [
                   { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 2 } },
                 ],
               },
-              "start": 5169,
-              "end": 5175,
+              "start": 5139,
+              "end": 5145,
             },
-            "loc": [5144, 31],
+            "loc": [5114, 31],
           },
           {
             "items": [
@@ -2669,22 +2551,22 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_clause_list",
-                  "loc": [5180, 5200],
+                  "loc": [5150, 5170],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " $1 ",
-                "utf8_pos": 5202,
+                "utf8_pos": 5172,
                 "subst": [
                   { "start": 1, "end": 3, "desc": { "$tag": "Dollar", "0": 1 } },
                 ],
               },
-              "start": 5201,
-              "end": 5207,
+              "start": 5171,
+              "end": 5177,
             },
-            "loc": [5180, 27],
+            "loc": [5150, 27],
           },
         ],
       },
@@ -2704,46 +2586,46 @@ test "parser" {
             "items": [
               {
                 "binder": "clause",
-                "term": { "$tag": "Symbol", "0": "clause", "loc": [5275, 5281] },
+                "term": { "$tag": "Symbol", "0": "clause", "loc": [5245, 5251] },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(clause, Nil) ",
-                "utf8_pos": 5283,
+                "utf8_pos": 5253,
                 "subst": [],
               },
-              "start": 5282,
-              "end": 5303,
+              "start": 5252,
+              "end": 5273,
             },
-            "loc": [5268, 35],
+            "loc": [5238, 35],
           },
           {
             "items": [
               {
                 "binder": "clause",
-                "term": { "$tag": "Symbol", "0": "clause", "loc": [5315, 5321] },
+                "term": { "$tag": "Symbol", "0": "clause", "loc": [5285, 5291] },
               },
-              { "term": { "$tag": "Image", "0": "\"|\"", "loc": [5322, 5325] } },
+              { "term": { "$tag": "Image", "0": "\"|\"", "loc": [5292, 5295] } },
               {
                 "binder": "clause_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_clause_list",
-                  "loc": [5338, 5358],
+                  "loc": [5308, 5328],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(clause, clause_list) ",
-                "utf8_pos": 5360,
+                "utf8_pos": 5330,
                 "subst": [],
               },
-              "start": 5359,
-              "end": 5388,
+              "start": 5329,
+              "end": 5358,
             },
-            "loc": [5308, 80],
+            "loc": [5278, 80],
           },
         ],
       },
@@ -2761,7 +2643,7 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "item_list",
-                  "loc": [5430, 5439],
+                  "loc": [5400, 5409],
                 },
               },
               {
@@ -2769,7 +2651,7 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "rule_prec",
-                  "loc": [5445, 5454],
+                  "loc": [5415, 5424],
                 },
               },
               {
@@ -2777,24 +2659,24 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "clause_action",
-                  "loc": [5462, 5475],
+                  "loc": [5432, 5445],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " { items: item_list.to_array(), prec, action, loc: ($startpos, $endpos - $startpos) } ",
-                "utf8_pos": 5477,
+                "utf8_pos": 5447,
                 "subst": [
                   { "start": 52, "end": 61, "desc": { "$tag": "StartPos" } },
                   { "start": 63, "end": 70, "desc": { "$tag": "EndPos" } },
                   { "start": 73, "end": 82, "desc": { "$tag": "StartPos" } },
                 ],
               },
-              "start": 5476,
-              "end": 5564,
+              "start": 5446,
+              "end": 5534,
             },
-            "loc": [5420, 144],
+            "loc": [5390, 144],
           },
         ],
       },
@@ -2817,23 +2699,23 @@ test "parser" {
                 "term": {
                   "$tag": "Symbol",
                   "0": "LBRACE_CODE_RBRACE",
-                  "loc": [5614, 5632],
+                  "loc": [5584, 5602],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": "\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\n  ",
-                "utf8_pos": 5634,
+                "utf8_pos": 5604,
                 "subst": [
                   { "start": 96, "end": 105, "desc": { "$tag": "StartPos" } },
                   { "start": 112, "end": 119, "desc": { "$tag": "EndPos" } },
                 ],
               },
-              "start": 5633,
-              "end": 5759,
+              "start": 5603,
+              "end": 5729,
             },
-            "loc": [5609, 150],
+            "loc": [5579, 150],
           },
         ],
       },
@@ -2853,33 +2735,33 @@ test "parser" {
                 "term": {
                   "$tag": "Image",
                   "0": "\"%prec\"",
-                  "loc": [5795, 5802],
+                  "loc": [5765, 5772],
                 },
               },
               {
                 "binder": "symbol",
-                "term": { "$tag": "Symbol", "0": "symbol", "loc": [5810, 5816] },
+                "term": { "$tag": "Symbol", "0": "symbol", "loc": [5780, 5786] },
               },
             ],
             "action": {
               "code": {
                 "code": " Some(symbol) ",
-                "utf8_pos": 5818,
+                "utf8_pos": 5788,
                 "subst": [],
               },
-              "start": 5817,
-              "end": 5833,
+              "start": 5787,
+              "end": 5803,
             },
-            "loc": [5795, 38],
+            "loc": [5765, 38],
           },
           {
             "items": [],
             "action": {
-              "code": { "code": " None ", "utf8_pos": 5839, "subst": [] },
-              "start": 5838,
-              "end": 5846,
+              "code": { "code": " None ", "utf8_pos": 5809, "subst": [] },
+              "start": 5808,
+              "end": 5816,
             },
-            "loc": [5837, 9],
+            "loc": [5807, 9],
           },
         ],
       },
@@ -2899,36 +2781,36 @@ test "parser" {
             "items": [
               {
                 "binder": "item",
-                "term": { "$tag": "Symbol", "0": "item", "loc": [5905, 5909] },
+                "term": { "$tag": "Symbol", "0": "item", "loc": [5875, 5879] },
               },
               {
                 "binder": "item_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "item_list",
-                  "loc": [5920, 5929],
+                  "loc": [5890, 5899],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(item, item_list) ",
-                "utf8_pos": 5931,
+                "utf8_pos": 5901,
                 "subst": [],
               },
-              "start": 5930,
-              "end": 5955,
+              "start": 5900,
+              "end": 5925,
             },
-            "loc": [5900, 55],
+            "loc": [5870, 55],
           },
           {
             "items": [],
             "action": {
-              "code": { "code": " Nil ", "utf8_pos": 5961, "subst": [] },
-              "start": 5960,
-              "end": 5967,
+              "code": { "code": " Nil ", "utf8_pos": 5931, "subst": [] },
+              "start": 5930,
+              "end": 5937,
             },
-            "loc": [5959, 8],
+            "loc": [5929, 8],
           },
         ],
       },
@@ -2943,42 +2825,42 @@ test "parser" {
             "items": [
               {
                 "binder": "term",
-                "term": { "$tag": "Symbol", "0": "term", "loc": [6006, 6010] },
+                "term": { "$tag": "Symbol", "0": "term", "loc": [5976, 5980] },
               },
             ],
             "action": {
               "code": {
                 "code": " { binder: None, term: term } ",
-                "utf8_pos": 6012,
+                "utf8_pos": 5982,
                 "subst": [],
               },
-              "start": 6011,
-              "end": 6043,
+              "start": 5981,
+              "end": 6013,
             },
-            "loc": [6001, 42],
+            "loc": [5971, 42],
           },
           {
             "items": [
               {
                 "binder": "binder",
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [6055, 6060] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [6025, 6030] },
               },
-              { "term": { "$tag": "Image", "0": "\"=\"", "loc": [6061, 6064] } },
+              { "term": { "$tag": "Image", "0": "\"=\"", "loc": [6031, 6034] } },
               {
                 "binder": "term",
-                "term": { "$tag": "Symbol", "0": "term", "loc": [6070, 6074] },
+                "term": { "$tag": "Symbol", "0": "term", "loc": [6040, 6044] },
               },
             ],
             "action": {
               "code": {
                 "code": " { binder: Some(binder), term: term } ",
-                "utf8_pos": 6076,
+                "utf8_pos": 6046,
                 "subst": [],
               },
-              "start": 6075,
-              "end": 6115,
+              "start": 6045,
+              "end": 6085,
             },
-            "loc": [6048, 67],
+            "loc": [6018, 67],
           },
         ],
       },
@@ -2993,43 +2875,43 @@ test "parser" {
             "items": [
               {
                 "binder": "symbol",
-                "term": { "$tag": "Symbol", "0": "symbol", "loc": [6150, 6156] },
+                "term": { "$tag": "Symbol", "0": "symbol", "loc": [6120, 6126] },
               },
             ],
             "action": {
               "code": {
                 "code": " Symbol(symbol, loc=($startpos, $endpos)) ",
-                "utf8_pos": 6158,
+                "utf8_pos": 6128,
                 "subst": [
                   { "start": 21, "end": 30, "desc": { "$tag": "StartPos" } },
                   { "start": 32, "end": 39, "desc": { "$tag": "EndPos" } },
                 ],
               },
-              "start": 6157,
-              "end": 6201,
+              "start": 6127,
+              "end": 6171,
             },
-            "loc": [6143, 58],
+            "loc": [6113, 58],
           },
           {
             "items": [
               {
                 "binder": "symbol",
-                "term": { "$tag": "Symbol", "0": "symbol", "loc": [6213, 6219] },
+                "term": { "$tag": "Symbol", "0": "symbol", "loc": [6183, 6189] },
               },
-              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [6220, 6223] } },
+              { "term": { "$tag": "Image", "0": "\"(\"", "loc": [6190, 6193] } },
               {
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_comma_term_list",
-                  "loc": [6224, 6248],
+                  "loc": [6194, 6218],
                 },
               },
-              { "term": { "$tag": "Image", "0": "\")\"", "loc": [6249, 6252] } },
+              { "term": { "$tag": "Image", "0": "\")\"", "loc": [6219, 6222] } },
             ],
             "action": {
               "code": {
                 "code": " RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) ",
-                "utf8_pos": 6254,
+                "utf8_pos": 6224,
                 "subst": [
                   {
                     "start": 30,
@@ -3054,31 +2936,31 @@ test "parser" {
                   },
                 ],
               },
-              "start": 6253,
-              "end": 6337,
+              "start": 6223,
+              "end": 6307,
             },
-            "loc": [6206, 131],
+            "loc": [6176, 131],
           },
           {
             "items": [
               {
                 "binder": "image",
-                "term": { "$tag": "Symbol", "0": "STRING", "loc": [6348, 6354] },
+                "term": { "$tag": "Symbol", "0": "STRING", "loc": [6318, 6324] },
               },
             ],
             "action": {
               "code": {
                 "code": " Image(image, loc=($startpos, $endpos)) ",
-                "utf8_pos": 6356,
+                "utf8_pos": 6326,
                 "subst": [
                   { "start": 19, "end": 28, "desc": { "$tag": "StartPos" } },
                   { "start": 30, "end": 37, "desc": { "$tag": "EndPos" } },
                 ],
               },
-              "start": 6355,
-              "end": 6397,
+              "start": 6325,
+              "end": 6367,
             },
-            "loc": [6342, 55],
+            "loc": [6312, 55],
           },
         ],
       },
@@ -3098,46 +2980,46 @@ test "parser" {
             "items": [
               {
                 "binder": "term",
-                "term": { "$tag": "Symbol", "0": "term", "loc": [6465, 6469] },
+                "term": { "$tag": "Symbol", "0": "term", "loc": [6435, 6439] },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(term, Nil) ",
-                "utf8_pos": 6471,
+                "utf8_pos": 6441,
                 "subst": [],
               },
-              "start": 6470,
-              "end": 6489,
+              "start": 6440,
+              "end": 6459,
             },
-            "loc": [6460, 29],
+            "loc": [6430, 29],
           },
           {
             "items": [
               {
                 "binder": "term",
-                "term": { "$tag": "Symbol", "0": "term", "loc": [6499, 6503] },
+                "term": { "$tag": "Symbol", "0": "term", "loc": [6469, 6473] },
               },
-              { "term": { "$tag": "Image", "0": "\",\"", "loc": [6504, 6507] } },
+              { "term": { "$tag": "Image", "0": "\",\"", "loc": [6474, 6477] } },
               {
                 "binder": "term_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_comma_term_list",
-                  "loc": [6518, 6542],
+                  "loc": [6488, 6512],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(term, term_list) ",
-                "utf8_pos": 6544,
+                "utf8_pos": 6514,
                 "subst": [],
               },
-              "start": 6543,
-              "end": 6568,
+              "start": 6513,
+              "end": 6538,
             },
-            "loc": [6494, 74],
+            "loc": [6464, 74],
           },
         ],
       },
@@ -3157,45 +3039,45 @@ test "parser" {
             "items": [
               {
                 "binder": "symbol",
-                "term": { "$tag": "Symbol", "0": "symbol", "loc": [6636, 6642] },
+                "term": { "$tag": "Symbol", "0": "symbol", "loc": [6606, 6612] },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(symbol, Nil) ",
-                "utf8_pos": 6644,
+                "utf8_pos": 6614,
                 "subst": [],
               },
-              "start": 6643,
-              "end": 6664,
+              "start": 6613,
+              "end": 6634,
             },
-            "loc": [6629, 35],
+            "loc": [6599, 35],
           },
           {
             "items": [
               {
                 "binder": "symbol",
-                "term": { "$tag": "Symbol", "0": "symbol", "loc": [6676, 6682] },
+                "term": { "$tag": "Symbol", "0": "symbol", "loc": [6646, 6652] },
               },
               {
                 "binder": "symbol_list",
                 "term": {
                   "$tag": "Symbol",
                   "0": "nonempty_symbol_list",
-                  "loc": [6695, 6715],
+                  "loc": [6665, 6685],
                 },
               },
             ],
             "action": {
               "code": {
                 "code": " Cons(symbol, symbol_list) ",
-                "utf8_pos": 6717,
+                "utf8_pos": 6687,
                 "subst": [],
               },
-              "start": 6716,
-              "end": 6745,
+              "start": 6686,
+              "end": 6715,
             },
-            "loc": [6669, 76],
+            "loc": [6639, 76],
           },
         ],
       },
@@ -3210,15 +3092,15 @@ test "parser" {
             "items": [
               {
                 "binder": "ident",
-                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [6783, 6788] },
+                "term": { "$tag": "Symbol", "0": "IDENT", "loc": [6753, 6758] },
               },
             ],
             "action": {
-              "code": { "code": " ident ", "utf8_pos": 6790, "subst": [] },
-              "start": 6789,
-              "end": 6798,
+              "code": { "code": " ident ", "utf8_pos": 6760, "subst": [] },
+              "start": 6759,
+              "end": 6768,
             },
-            "loc": [6777, 21],
+            "loc": [6747, 21],
           },
         ],
       },
