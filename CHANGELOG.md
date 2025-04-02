@@ -1,3 +1,7 @@
+## 0.3.11
+
+- feat: compatible with menhir's optional '|' and ';'
+
 ## 0.3.5
 
 - feat: attach clause source code as comment of action
