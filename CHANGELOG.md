@@ -1,3 +1,7 @@
+## 0.3.14
+
+- feat: support `rule: x=A | x=B { x }`
+
 ## 0.3.13
 
 - feat: support using token image string as prec identifier

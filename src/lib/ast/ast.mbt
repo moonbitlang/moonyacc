@@ -60,6 +60,7 @@ pub(all) enum TypeExpr {
   Arrow(Array[TypeExpr], TypeExpr)
 } derive(Show, ToJson)
 
+///|
 pub(all) typealias TypeString = String
 
 ///|
@@ -82,22 +83,20 @@ pub(all) struct Rule {
   generic_params : Array[String]
   params : Array[(String, TypeExpr?)]
   type_ : TypeExpr?
-  clauses : Array[Clause]
+  clauses : Array[(@immut/list.T[ClauseWithoutAction], ClauseAction)]
 } derive(ToJson)
 
 ///|
-pub(all) struct Clause {
+pub(all) struct ClauseWithoutAction {
   items : Array[ClauseItem]
   prec : PrecSymbol?
-  action : ClauseAction
   loc : (Int, Int) // (utf8_pos, utf8_len)
 } derive(ToJson)
 
 ///|
 pub(all) struct ClauseAction {
   code : CodeWithSubst?
-  start : Int
-  end : Int
+  loc : (Int, Int) // (utf8_pos, utf8_len)
 } derive(ToJson)
 
 ///|
@@ -120,6 +119,7 @@ pub(all) enum Term {
   RuleCall(Symbol, symbol_loc~ : (Int, Int), Array[Term])
 } derive(ToJson)
 
+///|
 pub(all) enum PrecSymbol {
   Symbol(Symbol)
   Image(String)

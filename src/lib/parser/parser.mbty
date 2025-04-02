@@ -137,24 +137,37 @@ nonempty_type_expr_list -> @immut/list.T[@ast.TypeExpr]
   | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { Cons(type_expr, type_expr_list) }
   ;
 
-clause_list -> @immut/list.T[@ast.Clause]
+clause_list -> @immut/list.T[(@immut/list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
   : "|" nonempty_clause_list { $2 }
   | nonempty_clause_list { $1 }
   ;
 
-nonempty_clause_list -> @immut/list.T[@ast.Clause]
-  : clause=clause { Cons(clause, Nil) }
-  | clause=clause "|" clause_list=nonempty_clause_list { Cons(clause, clause_list) }
+nonempty_clause_list -> @immut/list.T[(@immut/list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
+  : clause_woa=clause_without_action action=clause_action { Cons((Cons(clause_woa, Nil), action), Nil) }
+  | clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { Cons((Cons(clause_woa, Nil), action), clause_list) }
+  | clause_woa=nonempty_clause_without_action "|" clause_list=nonempty_clause_list {
+    guard clause_list is Cons((clause_woa_list, action), tail_clause_list)
+    Cons((Cons(clause_woa, clause_woa_list), action), tail_clause_list)
+  }
   ;
 
-clause -> @ast.Clause
-  : item_list=item_list prec=rule_prec action=clause_action { { items: item_list.to_array(), prec, action, loc: ($startpos, $endpos - $startpos) } }
+%inline clause_without_action -> @ast.ClauseWithoutAction
+  : empty_clause_without_action { $1 }
+  | nonempty_clause_without_action { $1 }
+  ;
+
+empty_clause_without_action -> @ast.ClauseWithoutAction
+  : prec=rule_prec { { items: [], prec, loc: ($startpos, $endpos - $startpos) } }
+  ;
+
+nonempty_clause_without_action -> @ast.ClauseWithoutAction
+  : item_list=nonempty_item_list prec=rule_prec { { items: item_list.to_array(), prec, loc: ($startpos, $endpos - $startpos) } }
   ;
 
 clause_action -> @ast.ClauseAction
   : code=LBRACE_CODE_RBRACE {
       let (code, utf8_pos, subst) = code
-      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
+      { code: Some({ code, utf8_pos, subst }), loc: ($startpos, $endpos - $startpos) }
   }
   ;
 
@@ -163,9 +176,9 @@ rule_prec -> @ast.PrecSymbol?
   | { None }
   ;
 
-item_list -> @immut/list.T[@ast.ClauseItem]
-  : item=item item_list=item_list { Cons(item, item_list) }
-  | { Nil }
+nonempty_item_list -> @immut/list.T[@ast.ClauseItem]
+  : item=item { Cons(item, Nil) }
+  | item=item item_list=nonempty_item_list { Cons(item, item_list) }
   ;
 
 item -> @ast.ClauseItem

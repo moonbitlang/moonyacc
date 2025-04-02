@@ -275,7 +275,14 @@ pub fn elaborate(
   for rule_index, ast_rule in ast_spec.rules {
     let rule = rule_by_name[ast_rule.nonterminal].unwrap()
     let rule_param_map : Map[String, TypeExpr] = Map::from_array(rule.params)
-    for clause_index, ast_clause in ast_rule.clauses {
+    let ast_clause_iter = ast_rule.clauses
+      .iter()
+      .flat_map(fn {
+        (clauses, action) => clauses.iter().map(fn(it) { (it, action) })
+      })
+    let mut clause_index = 0
+    for ast_clause in ast_clause_iter {
+      let (ast_clause, ast_clause_action) = ast_clause
       let items = map_error!(ast_clause.items, fn(ast_item) {
         Item::{
           binder: ast_item.binder,
@@ -319,18 +326,19 @@ pub fn elaborate(
         prec,
         action: elaborate_action(
           items,
-          ast_clause.action,
-          parser_spec=ast_spec,
+          ast_clause_action,
           parser_spec_str~,
           filename~,
           rule_index~,
           clause_index~,
+          ast_clause=(ast_clause, ast_clause_action),
           nonterminal_name=rule.name,
           type_=rule.type_,
           json_cst~,
         ),
       }
       rule.clauses.push(clause)
+      clause_index += 1
     }
   }
   let start_rules : Array[Symbol] = []
@@ -399,11 +407,11 @@ pub fn elaborate(
 fn elaborate_action(
   items : Array[Item],
   ast_action : @ast.ClauseAction,
-  parser_spec~ : @ast.ParserSpec,
   parser_spec_str~ : String,
   filename~ : String,
   rule_index~ : Int,
   clause_index~ : Int,
+  ast_clause~ : (@ast.ClauseWithoutAction, @ast.ClauseAction),
   nonterminal_name~ : String,
   type_~ : TypeExpr,
   json_cst~ : JsonCst
@@ -549,15 +557,18 @@ fn elaborate_action(
       )
     }
   }
-  let ast_clause = parser_spec.rules[rule_index].clauses[clause_index]
-  let (line, column) = offset_to_line_column(parser_spec_str, ast_clause.loc.0)
+  let (ast_clause_without_action, ast_clause_action) = ast_clause
+  let (line, column) = offset_to_line_column(
+    parser_spec_str,
+    ast_clause_without_action.loc.0,
+  )
   let original_clause_info = {
     file: filename,
     line: line - 1, // to 0-based
     column: column - 1, // to 0-based
     code: parser_spec_str.substring(
-      start=ast_clause.loc.0,
-      end=ast_clause.loc.0 + ast_clause.loc.1,
+      start=ast_clause_without_action.loc.0,
+      end=ast_clause_action.loc.0 + ast_clause_action.loc.1,
     ),
   }
   Action::{
