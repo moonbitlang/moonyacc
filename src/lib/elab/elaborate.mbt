@@ -202,10 +202,19 @@ pub fn elaborate(
         let prec = curr_prec
         curr_prec += 1
         for ident in idents {
-          prec_map[ident] = (prec, assoc)
-          match token_by_name[ident] {
-            None => ()
-            Some(token) => token.prec = Some((prec, assoc))
+          // TODO: error reporting
+          match ident {
+            Symbol(name) => {
+              if token_by_name[name] is Some(token) {
+                token.prec = Some((prec, assoc))
+              }
+              prec_map[name] = (prec, assoc)
+            }
+            Image(image) => {
+              let token = token_by_image[image].unwrap()
+              token.prec = Some((prec, assoc))
+              prec_map[token.name] = (prec, assoc)
+            }
           }
         }
       }
@@ -274,9 +283,13 @@ pub fn elaborate(
         }
       })
       let prec = match ast_clause.prec {
-        Some(prec) => {
+        Some(ident) => {
           // TODO: error reporting
-          let (prec, _assoc) = prec_map[prec].unwrap()
+          let (prec, _assoc) = match ident {
+            Symbol(name) => prec_map[name].unwrap()
+            Image(image) =>
+              prec_map[token_by_image[image].unwrap().name].unwrap()
+          }
           Some(prec)
         }
         None => {

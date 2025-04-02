@@ -1,3 +1,7 @@
+## 0.3.13
+
+- feat: support using token image string as prec identifier
+
 ## 0.3.11
 
 - feat: compatible with menhir's optional '|' and ';'

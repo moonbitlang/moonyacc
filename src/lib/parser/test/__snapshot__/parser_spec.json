@@ -1,0 +1,4185 @@
+{
+  "decls": [
+    {
+      "$tag": "Position",
+      "type_": "Int"
+    },
+    {
+      "$tag": "Derive",
+      "traits": "Show",
+      "type_": "Token"
+    },
+    {
+      "$tag": "Start",
+      "0": [
+        "spec"
+      ]
+    },
+    {
+      "$tag": "Token",
+      "0": [
+        "EOF"
+      ],
+      "type_": null
+    },
+    {
+      "$tag": "Token",
+      "0": [
+        "IDENT"
+      ],
+      "type_": "String"
+    },
+    {
+      "$tag": "Token",
+      "0": [
+        "STRING"
+      ],
+      "type_": "String"
+    },
+    {
+      "$tag": "Token",
+      "0": [
+        "LANGLE_CODE_RANGLE"
+      ],
+      "type_": "String"
+    },
+    {
+      "$tag": "Token",
+      "0": [
+        "LBRACE_CODE_RBRACE"
+      ],
+      "type_": "(String, Int, Array[@ast.SubstItem])"
+    },
+    {
+      "$tag": "Token",
+      "0": [
+        "PERCENT_LBRACE_CODE_PERCENT_RBRACE"
+      ],
+      "type_": "(String, Int, Int)"
+    },
+    {
+      "$tag": "Token",
+      "0": [
+        "PERCENT_PERCENT_CODE_EOF"
+      ],
+      "type_": "(String, Int, Int)"
+    },
+    {
+      "$tag": "Token",
+      "0": [
+        "PKG_AND_IDENT"
+      ],
+      "type_": "(String, String)"
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_PERCENT",
+      "type_": null,
+      "image": "\"%%\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_START",
+      "type_": null,
+      "image": "\"%start\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_TOKEN",
+      "type_": null,
+      "image": "\"%token\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_TYPE",
+      "type_": null,
+      "image": "\"%type\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_POSITION",
+      "type_": null,
+      "image": "\"%position\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_LEFT",
+      "type_": null,
+      "image": "\"%left\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_RIGHT",
+      "type_": null,
+      "image": "\"%right\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_NONASSOC",
+      "type_": null,
+      "image": "\"%nonassoc\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_PREC",
+      "type_": null,
+      "image": "\"%prec\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_DERIVE",
+      "type_": null,
+      "image": "\"%derive\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "PERCENT_INLINE",
+      "type_": null,
+      "image": "\"%inline\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "LBRACKET",
+      "type_": null,
+      "image": "\"[\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "RBRACKET",
+      "type_": null,
+      "image": "\"]\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "LPAREN",
+      "type_": null,
+      "image": "\"(\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "RPAREN",
+      "type_": null,
+      "image": "\")\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "COMMA",
+      "type_": null,
+      "image": "\",\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "ARROW",
+      "type_": null,
+      "image": "\"->\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "QUESTION",
+      "type_": null,
+      "image": "\"?\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "COLON",
+      "type_": null,
+      "image": "\":\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "BAR",
+      "type_": null,
+      "image": "\"|\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "EQ",
+      "type_": null,
+      "image": "\"=\""
+    },
+    {
+      "$tag": "Token1",
+      "0": "SEMI",
+      "type_": null,
+      "image": "\";\""
+    }
+  ],
+  "rules": [
+    {
+      "inline": false,
+      "nonterminal": "spec",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "ParserSpec",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "header",
+              "term": {
+                "$tag": "Symbol",
+                "0": "header",
+                "loc": [
+                  924,
+                  930
+                ]
+              }
+            },
+            {
+              "binder": "decl_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "decl_list",
+                "loc": [
+                  941,
+                  950
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%%\"",
+                "loc": [
+                  951,
+                  955
+                ]
+              }
+            },
+            {
+              "binder": "rule_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "rule_list",
+                "loc": [
+                  966,
+                  975
+                ]
+              }
+            },
+            {
+              "binder": "trailer",
+              "term": {
+                "$tag": "Symbol",
+                "0": "trailer",
+                "loc": [
+                  984,
+                  991
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "EOF",
+                "loc": [
+                  992,
+                  995
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } ",
+              "utf8_pos": 997,
+              "subst": []
+            },
+            "start": 996,
+            "end": 1077
+          },
+          "loc": [
+            917,
+            160
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "header",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Option",
+        "0": {
+          "$tag": "Tuple",
+          "0": [
+            {
+              "$tag": "Constr",
+              "pkg": "ast",
+              "0": "Code",
+              "1": []
+            },
+            {
+              "$tag": "Constr",
+              "pkg": null,
+              "0": "Int",
+              "1": []
+            },
+            {
+              "$tag": "Constr",
+              "pkg": null,
+              "0": "Int",
+              "1": []
+            }
+          ]
+        }
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "code",
+              "term": {
+                "$tag": "Symbol",
+                "0": "PERCENT_LBRACE_CODE_PERCENT_RBRACE",
+                "loc": [
+                  1125,
+                  1159
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Some(code) ",
+              "utf8_pos": 1161,
+              "subst": []
+            },
+            "start": 1160,
+            "end": 1174
+          },
+          "loc": [
+            1120,
+            54
+          ]
+        },
+        {
+          "items": [],
+          "action": {
+            "code": {
+              "code": " None ",
+              "utf8_pos": 1180,
+              "subst": []
+            },
+            "start": 1179,
+            "end": 1187
+          },
+          "loc": [
+            1178,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "trailer",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Option",
+        "0": {
+          "$tag": "Tuple",
+          "0": [
+            {
+              "$tag": "Constr",
+              "pkg": "ast",
+              "0": "Code",
+              "1": []
+            },
+            {
+              "$tag": "Constr",
+              "pkg": null,
+              "0": "Int",
+              "1": []
+            },
+            {
+              "$tag": "Constr",
+              "pkg": null,
+              "0": "Int",
+              "1": []
+            }
+          ]
+        }
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "code",
+              "term": {
+                "$tag": "Symbol",
+                "0": "PERCENT_LBRACE_CODE_PERCENT_RBRACE",
+                "loc": [
+                  1236,
+                  1270
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Some(code) ",
+              "utf8_pos": 1272,
+              "subst": []
+            },
+            "start": 1271,
+            "end": 1285
+          },
+          "loc": [
+            1231,
+            54
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "code",
+              "term": {
+                "$tag": "Symbol",
+                "0": "PERCENT_PERCENT_CODE_EOF",
+                "loc": [
+                  1295,
+                  1319
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Some(code) ",
+              "utf8_pos": 1321,
+              "subst": []
+            },
+            "start": 1320,
+            "end": 1334
+          },
+          "loc": [
+            1290,
+            44
+          ]
+        },
+        {
+          "items": [],
+          "action": {
+            "code": {
+              "code": " None ",
+              "utf8_pos": 1340,
+              "subst": []
+            },
+            "start": 1339,
+            "end": 1347
+          },
+          "loc": [
+            1338,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "decl_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "Declaration",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "decl",
+              "term": {
+                "$tag": "Symbol",
+                "0": "decl",
+                "loc": [
+                  1407,
+                  1411
+                ]
+              }
+            },
+            {
+              "binder": "decl_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "decl_list",
+                "loc": [
+                  1422,
+                  1431
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(decl, decl_list) ",
+              "utf8_pos": 1433,
+              "subst": []
+            },
+            "start": 1432,
+            "end": 1457
+          },
+          "loc": [
+            1402,
+            55
+          ]
+        },
+        {
+          "items": [],
+          "action": {
+            "code": {
+              "code": " Nil ",
+              "utf8_pos": 1463,
+              "subst": []
+            },
+            "start": 1462,
+            "end": 1469
+          },
+          "loc": [
+            1461,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "decl",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "Declaration",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%start\"",
+                "loc": [
+                  1504,
+                  1512
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_symbol_list",
+                "loc": [
+                  1525,
+                  1545
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Start(symbol_list.to_array()) ",
+              "utf8_pos": 1547,
+              "subst": []
+            },
+            "start": 1546,
+            "end": 1579
+          },
+          "loc": [
+            1504,
+            75
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%token\"",
+                "loc": [
+                  1584,
+                  1592
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_symbol_list",
+                "loc": [
+                  1605,
+                  1625
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Token(symbol_list.to_array(), type_=None) ",
+              "utf8_pos": 1627,
+              "subst": []
+            },
+            "start": 1626,
+            "end": 1671
+          },
+          "loc": [
+            1584,
+            87
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%token\"",
+                "loc": [
+                  1676,
+                  1684
+                ]
+              }
+            },
+            {
+              "binder": "type_",
+              "term": {
+                "$tag": "Symbol",
+                "0": "LANGLE_CODE_RANGLE",
+                "loc": [
+                  1691,
+                  1709
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_symbol_list",
+                "loc": [
+                  1722,
+                  1742
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Token(symbol_list.to_array(), type_=Some(type_)) ",
+              "utf8_pos": 1744,
+              "subst": []
+            },
+            "start": 1743,
+            "end": 1795
+          },
+          "loc": [
+            1676,
+            119
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%token\"",
+                "loc": [
+                  1800,
+                  1808
+                ]
+              }
+            },
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  1816,
+                  1822
+                ]
+              }
+            },
+            {
+              "binder": "image",
+              "term": {
+                "$tag": "Symbol",
+                "0": "STRING",
+                "loc": [
+                  1829,
+                  1835
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Token1(symbol, type_=None, image=image) ",
+              "utf8_pos": 1837,
+              "subst": []
+            },
+            "start": 1836,
+            "end": 1879
+          },
+          "loc": [
+            1800,
+            79
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%token\"",
+                "loc": [
+                  1884,
+                  1892
+                ]
+              }
+            },
+            {
+              "binder": "type_",
+              "term": {
+                "$tag": "Symbol",
+                "0": "LANGLE_CODE_RANGLE",
+                "loc": [
+                  1899,
+                  1917
+                ]
+              }
+            },
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  1925,
+                  1931
+                ]
+              }
+            },
+            {
+              "binder": "image",
+              "term": {
+                "$tag": "Symbol",
+                "0": "STRING",
+                "loc": [
+                  1938,
+                  1944
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Token1(symbol, type_=Some(type_), image=image) ",
+              "utf8_pos": 1946,
+              "subst": []
+            },
+            "start": 1945,
+            "end": 1995
+          },
+          "loc": [
+            1884,
+            111
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%type\"",
+                "loc": [
+                  2000,
+                  2007
+                ]
+              }
+            },
+            {
+              "binder": "type_",
+              "term": {
+                "$tag": "Symbol",
+                "0": "LANGLE_CODE_RANGLE",
+                "loc": [
+                  2014,
+                  2032
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_symbol_list",
+                "loc": [
+                  2045,
+                  2065
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Type(symbol_list.to_array(), type_=type_) ",
+              "utf8_pos": 2067,
+              "subst": []
+            },
+            "start": 2066,
+            "end": 2111
+          },
+          "loc": [
+            2000,
+            111
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%position\"",
+                "loc": [
+                  2116,
+                  2127
+                ]
+              }
+            },
+            {
+              "binder": "type_",
+              "term": {
+                "$tag": "Symbol",
+                "0": "LANGLE_CODE_RANGLE",
+                "loc": [
+                  2134,
+                  2152
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Position(type_=type_) ",
+              "utf8_pos": 2154,
+              "subst": []
+            },
+            "start": 2153,
+            "end": 2178
+          },
+          "loc": [
+            2116,
+            62
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%left\"",
+                "loc": [
+                  2183,
+                  2190
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_prec_symbol_list",
+                "loc": [
+                  2203,
+                  2228
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Left(symbol_list.to_array()) ",
+              "utf8_pos": 2230,
+              "subst": []
+            },
+            "start": 2229,
+            "end": 2261
+          },
+          "loc": [
+            2183,
+            78
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%right\"",
+                "loc": [
+                  2266,
+                  2274
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_prec_symbol_list",
+                "loc": [
+                  2287,
+                  2312
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Right(symbol_list.to_array()) ",
+              "utf8_pos": 2314,
+              "subst": []
+            },
+            "start": 2313,
+            "end": 2346
+          },
+          "loc": [
+            2266,
+            80
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%nonassoc\"",
+                "loc": [
+                  2351,
+                  2362
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_prec_symbol_list",
+                "loc": [
+                  2375,
+                  2400
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Nonassoc(symbol_list.to_array()) ",
+              "utf8_pos": 2402,
+              "subst": []
+            },
+            "start": 2401,
+            "end": 2437
+          },
+          "loc": [
+            2351,
+            86
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%derive\"",
+                "loc": [
+                  2442,
+                  2451
+                ]
+              }
+            },
+            {
+              "binder": "traits",
+              "term": {
+                "$tag": "Symbol",
+                "0": "LANGLE_CODE_RANGLE",
+                "loc": [
+                  2459,
+                  2477
+                ]
+              }
+            },
+            {
+              "binder": "type_",
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  2484,
+                  2489
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Derive(traits=traits, type_=type_) ",
+              "utf8_pos": 2491,
+              "subst": []
+            },
+            "start": 2490,
+            "end": 2528
+          },
+          "loc": [
+            2442,
+            86
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "rule_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "Rule",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "rule",
+              "term": {
+                "$tag": "Symbol",
+                "0": "rule",
+                "loc": [
+                  2581,
+                  2585
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(rule, Nil) ",
+              "utf8_pos": 2587,
+              "subst": []
+            },
+            "start": 2586,
+            "end": 2605
+          },
+          "loc": [
+            2576,
+            29
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "rule",
+              "term": {
+                "$tag": "Symbol",
+                "0": "rule",
+                "loc": [
+                  2615,
+                  2619
+                ]
+              }
+            },
+            {
+              "binder": "rule_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "rule_list",
+                "loc": [
+                  2630,
+                  2639
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(rule, rule_list) ",
+              "utf8_pos": 2641,
+              "subst": []
+            },
+            "start": 2640,
+            "end": 2665
+          },
+          "loc": [
+            2610,
+            55
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "rule",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "Rule",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "rule_no_modifiers",
+                "loc": [
+                  2693,
+                  2710
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " $1 ",
+              "utf8_pos": 2712,
+              "subst": [
+                {
+                  "start": 1,
+                  "end": 3,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 2711,
+            "end": 2717
+          },
+          "loc": [
+            2693,
+            24
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%inline\"",
+                "loc": [
+                  2722,
+                  2731
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "rule_no_modifiers",
+                "loc": [
+                  2732,
+                  2749
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " { ..$2, inline: true } ",
+              "utf8_pos": 2751,
+              "subst": [
+                {
+                  "start": 5,
+                  "end": 7,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 2
+                  }
+                }
+              ]
+            },
+            "start": 2750,
+            "end": 2776
+          },
+          "loc": [
+            2722,
+            54
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "rule_no_modifiers",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "Rule",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "nonterminal",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  2829,
+                  2835
+                ]
+              }
+            },
+            {
+              "binder": "type_",
+              "term": {
+                "$tag": "Symbol",
+                "0": "opt_rule_return_type",
+                "loc": [
+                  2842,
+                  2862
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\":\"",
+                "loc": [
+                  2863,
+                  2866
+                ]
+              }
+            },
+            {
+              "binder": "clause_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "clause_list",
+                "loc": [
+                  2879,
+                  2890
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "RuleCall",
+                "0": "option",
+                "symbol_loc": [
+                  2891,
+                  2897
+                ],
+                "1": [
+                  {
+                    "$tag": "Image",
+                    "0": "\";\"",
+                    "loc": [
+                      2898,
+                      2901
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": "\n    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }\n  ",
+              "utf8_pos": 2904,
+              "subst": []
+            },
+            "start": 2903,
+            "end": 3015
+          },
+          "loc": [
+            2817,
+            198
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "nonterminal",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  3032,
+                  3038
+                ]
+              }
+            },
+            {
+              "binder": "generic_params",
+              "term": {
+                "$tag": "Symbol",
+                "0": "opt_rule_generic_params",
+                "loc": [
+                  3054,
+                  3077
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"(\"",
+                "loc": [
+                  3078,
+                  3081
+                ]
+              }
+            },
+            {
+              "binder": "param_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_rule_param_list",
+                "loc": [
+                  3093,
+                  3117
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\")\"",
+                "loc": [
+                  3118,
+                  3121
+                ]
+              }
+            },
+            {
+              "binder": "type_",
+              "term": {
+                "$tag": "Symbol",
+                "0": "opt_rule_return_type",
+                "loc": [
+                  3128,
+                  3148
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\":\"",
+                "loc": [
+                  3149,
+                  3152
+                ]
+              }
+            },
+            {
+              "binder": "clause_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "clause_list",
+                "loc": [
+                  3165,
+                  3176
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "RuleCall",
+                "0": "option",
+                "symbol_loc": [
+                  3177,
+                  3183
+                ],
+                "1": [
+                  {
+                    "$tag": "Image",
+                    "0": "\";\"",
+                    "loc": [
+                      3184,
+                      3187
+                    ]
+                  }
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": "\n    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }\n  ",
+              "utf8_pos": 3190,
+              "subst": []
+            },
+            "start": 3189,
+            "end": 3317
+          },
+          "loc": [
+            3020,
+            297
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "opt_rule_return_type",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Option",
+        "0": {
+          "$tag": "Constr",
+          "pkg": "ast",
+          "0": "TypeExpr",
+          "1": []
+        }
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"->\"",
+                "loc": [
+                  3366,
+                  3370
+                ]
+              }
+            },
+            {
+              "binder": "type_",
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  3377,
+                  3386
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Some(type_) ",
+              "utf8_pos": 3388,
+              "subst": []
+            },
+            "start": 3387,
+            "end": 3402
+          },
+          "loc": [
+            3366,
+            36
+          ]
+        },
+        {
+          "items": [],
+          "action": {
+            "code": {
+              "code": " None ",
+              "utf8_pos": 3408,
+              "subst": []
+            },
+            "start": 3407,
+            "end": 3415
+          },
+          "loc": [
+            3406,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "nonempty_rule_param_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Tuple",
+            "0": [
+              {
+                "$tag": "Constr",
+                "pkg": null,
+                "0": "String",
+                "1": []
+              },
+              {
+                "$tag": "Option",
+                "0": {
+                  "$tag": "Constr",
+                  "pkg": "ast",
+                  "0": "TypeExpr",
+                  "1": []
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  3493,
+                  3498
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(($1, None), Nil) ",
+              "utf8_pos": 3500,
+              "subst": [
+                {
+                  "start": 7,
+                  "end": 9,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 3499,
+            "end": 3524
+          },
+          "loc": [
+            3493,
+            31
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  3529,
+                  3534
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\":\"",
+                "loc": [
+                  3535,
+                  3538
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  3539,
+                  3548
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(($1, Some($3)), Nil) ",
+              "utf8_pos": 3550,
+              "subst": [
+                {
+                  "start": 7,
+                  "end": 9,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 16,
+                  "end": 18,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 3
+                  }
+                }
+              ]
+            },
+            "start": 3549,
+            "end": 3578
+          },
+          "loc": [
+            3529,
+            49
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  3583,
+                  3588
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\",\"",
+                "loc": [
+                  3589,
+                  3592
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_rule_param_list",
+                "loc": [
+                  3593,
+                  3617
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(($1, None), $3) ",
+              "utf8_pos": 3619,
+              "subst": [
+                {
+                  "start": 7,
+                  "end": 9,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 18,
+                  "end": 20,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 3
+                  }
+                }
+              ]
+            },
+            "start": 3618,
+            "end": 3642
+          },
+          "loc": [
+            3583,
+            59
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  3647,
+                  3652
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\":\"",
+                "loc": [
+                  3653,
+                  3656
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  3657,
+                  3666
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\",\"",
+                "loc": [
+                  3667,
+                  3670
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_rule_param_list",
+                "loc": [
+                  3671,
+                  3695
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(($1, Some($3)), $5) ",
+              "utf8_pos": 3697,
+              "subst": [
+                {
+                  "start": 7,
+                  "end": 9,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 16,
+                  "end": 18,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 3
+                  }
+                },
+                {
+                  "start": 22,
+                  "end": 24,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 5
+                  }
+                }
+              ]
+            },
+            "start": 3696,
+            "end": 3724
+          },
+          "loc": [
+            3647,
+            77
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "opt_rule_generic_params",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": null,
+        "0": "Array",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": null,
+            "0": "String",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [],
+          "action": {
+            "code": {
+              "code": " [] ",
+              "utf8_pos": 3776,
+              "subst": []
+            },
+            "start": 3775,
+            "end": 3781
+          },
+          "loc": [
+            3774,
+            7
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"[\"",
+                "loc": [
+                  3786,
+                  3789
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_comma_ident_list",
+                "loc": [
+                  3790,
+                  3815
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"]\"",
+                "loc": [
+                  3816,
+                  3819
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " $2.to_array() ",
+              "utf8_pos": 3821,
+              "subst": [
+                {
+                  "start": 1,
+                  "end": 3,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 2
+                  }
+                }
+              ]
+            },
+            "start": 3820,
+            "end": 3837
+          },
+          "loc": [
+            3786,
+            51
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "nonempty_comma_ident_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": null,
+            "0": "String",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  3898,
+                  3903
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons($1, Nil) ",
+              "utf8_pos": 3905,
+              "subst": [
+                {
+                  "start": 6,
+                  "end": 8,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 3904,
+            "end": 3921
+          },
+          "loc": [
+            3898,
+            23
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  3926,
+                  3931
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\",\"",
+                "loc": [
+                  3932,
+                  3935
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_comma_ident_list",
+                "loc": [
+                  3936,
+                  3961
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons($1, $3) ",
+              "utf8_pos": 3963,
+              "subst": [
+                {
+                  "start": 6,
+                  "end": 8,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 10,
+                  "end": 12,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 3
+                  }
+                }
+              ]
+            },
+            "start": 3962,
+            "end": 3978
+          },
+          "loc": [
+            3926,
+            52
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "type_expr",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "TypeExpr",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "postfix_type_expr",
+                "loc": [
+                  4015,
+                  4032
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " $1 ",
+              "utf8_pos": 4034,
+              "subst": [
+                {
+                  "start": 1,
+                  "end": 3,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 4033,
+            "end": 4039
+          },
+          "loc": [
+            4015,
+            24
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"(\"",
+                "loc": [
+                  4044,
+                  4047
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\")\"",
+                "loc": [
+                  4048,
+                  4051
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"->\"",
+                "loc": [
+                  4052,
+                  4056
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4057,
+                  4066
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Arrow([], $4) ",
+              "utf8_pos": 4068,
+              "subst": [
+                {
+                  "start": 11,
+                  "end": 13,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 4
+                  }
+                }
+              ]
+            },
+            "start": 4067,
+            "end": 4084
+          },
+          "loc": [
+            4044,
+            40
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"(\"",
+                "loc": [
+                  4089,
+                  4092
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4093,
+                  4102
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\")\"",
+                "loc": [
+                  4103,
+                  4106
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"->\"",
+                "loc": [
+                  4107,
+                  4111
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4112,
+                  4121
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Arrow([$2], $5) ",
+              "utf8_pos": 4123,
+              "subst": [
+                {
+                  "start": 8,
+                  "end": 10,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 2
+                  }
+                },
+                {
+                  "start": 13,
+                  "end": 15,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 5
+                  }
+                }
+              ]
+            },
+            "start": 4122,
+            "end": 4141
+          },
+          "loc": [
+            4089,
+            52
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"(\"",
+                "loc": [
+                  4146,
+                  4149
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4150,
+                  4159
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\",\"",
+                "loc": [
+                  4160,
+                  4163
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\")\"",
+                "loc": [
+                  4164,
+                  4167
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"->\"",
+                "loc": [
+                  4168,
+                  4172
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4173,
+                  4182
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Arrow([$2], $6) ",
+              "utf8_pos": 4184,
+              "subst": [
+                {
+                  "start": 8,
+                  "end": 10,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 2
+                  }
+                },
+                {
+                  "start": 13,
+                  "end": 15,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 6
+                  }
+                }
+              ]
+            },
+            "start": 4183,
+            "end": 4202
+          },
+          "loc": [
+            4146,
+            56
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"(\"",
+                "loc": [
+                  4207,
+                  4210
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4211,
+                  4220
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\",\"",
+                "loc": [
+                  4221,
+                  4224
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_type_expr_list",
+                "loc": [
+                  4225,
+                  4248
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\")\"",
+                "loc": [
+                  4249,
+                  4252
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"->\"",
+                "loc": [
+                  4253,
+                  4257
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4258,
+                  4267
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Arrow(@immut/list.Cons($2, $4).to_array(), $7) ",
+              "utf8_pos": 4269,
+              "subst": [
+                {
+                  "start": 24,
+                  "end": 26,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 2
+                  }
+                },
+                {
+                  "start": 28,
+                  "end": 30,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 4
+                  }
+                },
+                {
+                  "start": 44,
+                  "end": 46,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 7
+                  }
+                }
+              ]
+            },
+            "start": 4268,
+            "end": 4318
+          },
+          "loc": [
+            4207,
+            111
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "postfix_type_expr",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "TypeExpr",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "basic_type_expr",
+                "loc": [
+                  4363,
+                  4378
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " $1 ",
+              "utf8_pos": 4380,
+              "subst": [
+                {
+                  "start": 1,
+                  "end": 3,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 4379,
+            "end": 4385
+          },
+          "loc": [
+            4363,
+            22
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "postfix_type_expr",
+                "loc": [
+                  4390,
+                  4407
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"?\"",
+                "loc": [
+                  4408,
+                  4411
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Option($1) ",
+              "utf8_pos": 4413,
+              "subst": [
+                {
+                  "start": 8,
+                  "end": 10,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 4412,
+            "end": 4426
+          },
+          "loc": [
+            4390,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "basic_type_expr",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "TypeExpr",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  4469,
+                  4474
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Constr(pkg=None, $1, []) ",
+              "utf8_pos": 4476,
+              "subst": [
+                {
+                  "start": 18,
+                  "end": 20,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 4475,
+            "end": 4503
+          },
+          "loc": [
+            4469,
+            34
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "PKG_AND_IDENT",
+                "loc": [
+                  4508,
+                  4521
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Constr(pkg=Some($1.0), $1.1, []) ",
+              "utf8_pos": 4523,
+              "subst": [
+                {
+                  "start": 17,
+                  "end": 19,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 24,
+                  "end": 26,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 4522,
+            "end": 4558
+          },
+          "loc": [
+            4508,
+            50
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  4563,
+                  4568
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"[\"",
+                "loc": [
+                  4569,
+                  4572
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_type_expr_list",
+                "loc": [
+                  4573,
+                  4596
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"]\"",
+                "loc": [
+                  4597,
+                  4600
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Constr(pkg=None, $1, $3.to_array()) ",
+              "utf8_pos": 4602,
+              "subst": [
+                {
+                  "start": 18,
+                  "end": 20,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 22,
+                  "end": 24,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 3
+                  }
+                }
+              ]
+            },
+            "start": 4601,
+            "end": 4640
+          },
+          "loc": [
+            4563,
+            77
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "PKG_AND_IDENT",
+                "loc": [
+                  4645,
+                  4658
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"[\"",
+                "loc": [
+                  4659,
+                  4662
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_type_expr_list",
+                "loc": [
+                  4663,
+                  4686
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"]\"",
+                "loc": [
+                  4687,
+                  4690
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Constr(pkg=Some($1.0), $1.1, $3.to_array()) ",
+              "utf8_pos": 4692,
+              "subst": [
+                {
+                  "start": 17,
+                  "end": 19,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 24,
+                  "end": 26,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 30,
+                  "end": 32,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 3
+                  }
+                }
+              ]
+            },
+            "start": 4691,
+            "end": 4738
+          },
+          "loc": [
+            4645,
+            93
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"(\"",
+                "loc": [
+                  4743,
+                  4746
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4747,
+                  4756
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\",\"",
+                "loc": [
+                  4757,
+                  4760
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_type_expr_list",
+                "loc": [
+                  4761,
+                  4784
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\")\"",
+                "loc": [
+                  4785,
+                  4788
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Tuple(@immut/list.Cons($2, $4).to_array()) ",
+              "utf8_pos": 4790,
+              "subst": [
+                {
+                  "start": 24,
+                  "end": 26,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 2
+                  }
+                },
+                {
+                  "start": 28,
+                  "end": 30,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 4
+                  }
+                }
+              ]
+            },
+            "start": 4789,
+            "end": 4835
+          },
+          "loc": [
+            4743,
+            92
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"(\"",
+                "loc": [
+                  4840,
+                  4843
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4844,
+                  4853
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\")\"",
+                "loc": [
+                  4854,
+                  4857
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " $2 ",
+              "utf8_pos": 4859,
+              "subst": [
+                {
+                  "start": 1,
+                  "end": 3,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 2
+                  }
+                }
+              ]
+            },
+            "start": 4858,
+            "end": 4864
+          },
+          "loc": [
+            4840,
+            24
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "nonempty_type_expr_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "TypeExpr",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "type_expr",
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4940,
+                  4949
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(type_expr, Nil) ",
+              "utf8_pos": 4951,
+              "subst": []
+            },
+            "start": 4950,
+            "end": 4974
+          },
+          "loc": [
+            4930,
+            44
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "type_expr",
+              "term": {
+                "$tag": "Symbol",
+                "0": "type_expr",
+                "loc": [
+                  4989,
+                  4998
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\",\"",
+                "loc": [
+                  4999,
+                  5002
+                ]
+              }
+            },
+            {
+              "binder": "type_expr_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_type_expr_list",
+                "loc": [
+                  5018,
+                  5041
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(type_expr, type_expr_list) ",
+              "utf8_pos": 5043,
+              "subst": []
+            },
+            "start": 5042,
+            "end": 5077
+          },
+          "loc": [
+            4979,
+            98
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "clause_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "Clause",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"|\"",
+                "loc": [
+                  5129,
+                  5132
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_clause_list",
+                "loc": [
+                  5133,
+                  5153
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " $2 ",
+              "utf8_pos": 5155,
+              "subst": [
+                {
+                  "start": 1,
+                  "end": 3,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 2
+                  }
+                }
+              ]
+            },
+            "start": 5154,
+            "end": 5160
+          },
+          "loc": [
+            5129,
+            31
+          ]
+        },
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_clause_list",
+                "loc": [
+                  5165,
+                  5185
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " $1 ",
+              "utf8_pos": 5187,
+              "subst": [
+                {
+                  "start": 1,
+                  "end": 3,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "start": 5186,
+            "end": 5192
+          },
+          "loc": [
+            5165,
+            27
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "nonempty_clause_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "Clause",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "clause",
+              "term": {
+                "$tag": "Symbol",
+                "0": "clause",
+                "loc": [
+                  5260,
+                  5266
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(clause, Nil) ",
+              "utf8_pos": 5268,
+              "subst": []
+            },
+            "start": 5267,
+            "end": 5288
+          },
+          "loc": [
+            5253,
+            35
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "clause",
+              "term": {
+                "$tag": "Symbol",
+                "0": "clause",
+                "loc": [
+                  5300,
+                  5306
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"|\"",
+                "loc": [
+                  5307,
+                  5310
+                ]
+              }
+            },
+            {
+              "binder": "clause_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_clause_list",
+                "loc": [
+                  5323,
+                  5343
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(clause, clause_list) ",
+              "utf8_pos": 5345,
+              "subst": []
+            },
+            "start": 5344,
+            "end": 5373
+          },
+          "loc": [
+            5293,
+            80
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "clause",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "Clause",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "item_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "item_list",
+                "loc": [
+                  5415,
+                  5424
+                ]
+              }
+            },
+            {
+              "binder": "prec",
+              "term": {
+                "$tag": "Symbol",
+                "0": "rule_prec",
+                "loc": [
+                  5430,
+                  5439
+                ]
+              }
+            },
+            {
+              "binder": "action",
+              "term": {
+                "$tag": "Symbol",
+                "0": "clause_action",
+                "loc": [
+                  5447,
+                  5460
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " { items: item_list.to_array(), prec, action, loc: ($startpos, $endpos - $startpos) } ",
+              "utf8_pos": 5462,
+              "subst": [
+                {
+                  "start": 52,
+                  "end": 61,
+                  "desc": {
+                    "$tag": "StartPos"
+                  }
+                },
+                {
+                  "start": 63,
+                  "end": 70,
+                  "desc": {
+                    "$tag": "EndPos"
+                  }
+                },
+                {
+                  "start": 73,
+                  "end": 82,
+                  "desc": {
+                    "$tag": "StartPos"
+                  }
+                }
+              ]
+            },
+            "start": 5461,
+            "end": 5549
+          },
+          "loc": [
+            5405,
+            144
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "clause_action",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "ClauseAction",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "code",
+              "term": {
+                "$tag": "Symbol",
+                "0": "LBRACE_CODE_RBRACE",
+                "loc": [
+                  5599,
+                  5617
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": "\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }\n  ",
+              "utf8_pos": 5619,
+              "subst": [
+                {
+                  "start": 96,
+                  "end": 105,
+                  "desc": {
+                    "$tag": "StartPos"
+                  }
+                },
+                {
+                  "start": 112,
+                  "end": 119,
+                  "desc": {
+                    "$tag": "EndPos"
+                  }
+                }
+              ]
+            },
+            "start": 5618,
+            "end": 5744
+          },
+          "loc": [
+            5594,
+            150
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "rule_prec",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Option",
+        "0": {
+          "$tag": "Constr",
+          "pkg": "ast",
+          "0": "PrecSymbol",
+          "1": []
+        }
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"%prec\"",
+                "loc": [
+                  5784,
+                  5791
+                ]
+              }
+            },
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "prec_symbol",
+                "loc": [
+                  5799,
+                  5810
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Some(symbol) ",
+              "utf8_pos": 5812,
+              "subst": []
+            },
+            "start": 5811,
+            "end": 5827
+          },
+          "loc": [
+            5784,
+            43
+          ]
+        },
+        {
+          "items": [],
+          "action": {
+            "code": {
+              "code": " None ",
+              "utf8_pos": 5833,
+              "subst": []
+            },
+            "start": 5832,
+            "end": 5840
+          },
+          "loc": [
+            5831,
+            9
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "item_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "ClauseItem",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "item",
+              "term": {
+                "$tag": "Symbol",
+                "0": "item",
+                "loc": [
+                  5899,
+                  5903
+                ]
+              }
+            },
+            {
+              "binder": "item_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "item_list",
+                "loc": [
+                  5914,
+                  5923
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(item, item_list) ",
+              "utf8_pos": 5925,
+              "subst": []
+            },
+            "start": 5924,
+            "end": 5949
+          },
+          "loc": [
+            5894,
+            55
+          ]
+        },
+        {
+          "items": [],
+          "action": {
+            "code": {
+              "code": " Nil ",
+              "utf8_pos": 5955,
+              "subst": []
+            },
+            "start": 5954,
+            "end": 5961
+          },
+          "loc": [
+            5953,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "item",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "ClauseItem",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "term",
+              "term": {
+                "$tag": "Symbol",
+                "0": "term",
+                "loc": [
+                  6000,
+                  6004
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " { binder: None, term: term } ",
+              "utf8_pos": 6006,
+              "subst": []
+            },
+            "start": 6005,
+            "end": 6037
+          },
+          "loc": [
+            5995,
+            42
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "binder",
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  6049,
+                  6054
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"=\"",
+                "loc": [
+                  6055,
+                  6058
+                ]
+              }
+            },
+            {
+              "binder": "term",
+              "term": {
+                "$tag": "Symbol",
+                "0": "term",
+                "loc": [
+                  6064,
+                  6068
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " { binder: Some(binder), term: term } ",
+              "utf8_pos": 6070,
+              "subst": []
+            },
+            "start": 6069,
+            "end": 6109
+          },
+          "loc": [
+            6042,
+            67
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "term",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "Term",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  6144,
+                  6150
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Symbol(symbol, loc=($startpos, $endpos)) ",
+              "utf8_pos": 6152,
+              "subst": [
+                {
+                  "start": 21,
+                  "end": 30,
+                  "desc": {
+                    "$tag": "StartPos"
+                  }
+                },
+                {
+                  "start": 32,
+                  "end": 39,
+                  "desc": {
+                    "$tag": "EndPos"
+                  }
+                }
+              ]
+            },
+            "start": 6151,
+            "end": 6195
+          },
+          "loc": [
+            6137,
+            58
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  6207,
+                  6213
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\"(\"",
+                "loc": [
+                  6214,
+                  6217
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_comma_term_list",
+                "loc": [
+                  6218,
+                  6242
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\")\"",
+                "loc": [
+                  6243,
+                  6246
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) ",
+              "utf8_pos": 6248,
+              "subst": [
+                {
+                  "start": 30,
+                  "end": 47,
+                  "desc": {
+                    "$tag": "StartPosOf",
+                    "0": {
+                      "$tag": "Name",
+                      "0": "symbol"
+                    }
+                  }
+                },
+                {
+                  "start": 49,
+                  "end": 64,
+                  "desc": {
+                    "$tag": "EndPosOf",
+                    "0": {
+                      "$tag": "Name",
+                      "0": "symbol"
+                    }
+                  }
+                },
+                {
+                  "start": 67,
+                  "end": 69,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 3
+                  }
+                }
+              ]
+            },
+            "start": 6247,
+            "end": 6331
+          },
+          "loc": [
+            6200,
+            131
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "image",
+              "term": {
+                "$tag": "Symbol",
+                "0": "STRING",
+                "loc": [
+                  6342,
+                  6348
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Image(image, loc=($startpos, $endpos)) ",
+              "utf8_pos": 6350,
+              "subst": [
+                {
+                  "start": 19,
+                  "end": 28,
+                  "desc": {
+                    "$tag": "StartPos"
+                  }
+                },
+                {
+                  "start": 30,
+                  "end": 37,
+                  "desc": {
+                    "$tag": "EndPos"
+                  }
+                }
+              ]
+            },
+            "start": 6349,
+            "end": 6391
+          },
+          "loc": [
+            6336,
+            55
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "nonempty_comma_term_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "Term",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "term",
+              "term": {
+                "$tag": "Symbol",
+                "0": "term",
+                "loc": [
+                  6459,
+                  6463
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(term, Nil) ",
+              "utf8_pos": 6465,
+              "subst": []
+            },
+            "start": 6464,
+            "end": 6483
+          },
+          "loc": [
+            6454,
+            29
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "term",
+              "term": {
+                "$tag": "Symbol",
+                "0": "term",
+                "loc": [
+                  6493,
+                  6497
+                ]
+              }
+            },
+            {
+              "term": {
+                "$tag": "Image",
+                "0": "\",\"",
+                "loc": [
+                  6498,
+                  6501
+                ]
+              }
+            },
+            {
+              "binder": "term_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_comma_term_list",
+                "loc": [
+                  6512,
+                  6536
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(term, term_list) ",
+              "utf8_pos": 6538,
+              "subst": []
+            },
+            "start": 6537,
+            "end": 6562
+          },
+          "loc": [
+            6488,
+            74
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "nonempty_symbol_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "Symbol",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  6630,
+                  6636
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(symbol, Nil) ",
+              "utf8_pos": 6638,
+              "subst": []
+            },
+            "start": 6637,
+            "end": 6658
+          },
+          "loc": [
+            6623,
+            35
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  6670,
+                  6676
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_symbol_list",
+                "loc": [
+                  6689,
+                  6709
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(symbol, symbol_list) ",
+              "utf8_pos": 6711,
+              "subst": []
+            },
+            "start": 6710,
+            "end": 6739
+          },
+          "loc": [
+            6663,
+            76
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "nonempty_prec_symbol_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "PrecSymbol",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "prec_symbol",
+                "loc": [
+                  6816,
+                  6827
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(symbol, Nil) ",
+              "utf8_pos": 6829,
+              "subst": []
+            },
+            "start": 6828,
+            "end": 6849
+          },
+          "loc": [
+            6809,
+            40
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "prec_symbol",
+                "loc": [
+                  6861,
+                  6872
+                ]
+              }
+            },
+            {
+              "binder": "symbol_list",
+              "term": {
+                "$tag": "Symbol",
+                "0": "nonempty_prec_symbol_list",
+                "loc": [
+                  6885,
+                  6910
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Cons(symbol, symbol_list) ",
+              "utf8_pos": 6912,
+              "subst": []
+            },
+            "start": 6911,
+            "end": 6940
+          },
+          "loc": [
+            6854,
+            86
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "prec_symbol",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "PrecSymbol",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "symbol",
+              "term": {
+                "$tag": "Symbol",
+                "0": "symbol",
+                "loc": [
+                  6988,
+                  6994
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Symbol(symbol) ",
+              "utf8_pos": 6996,
+              "subst": []
+            },
+            "start": 6995,
+            "end": 7013
+          },
+          "loc": [
+            6981,
+            32
+          ]
+        },
+        {
+          "items": [
+            {
+              "binder": "image",
+              "term": {
+                "$tag": "Symbol",
+                "0": "STRING",
+                "loc": [
+                  7024,
+                  7030
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " Image(image) ",
+              "utf8_pos": 7032,
+              "subst": []
+            },
+            "start": 7031,
+            "end": 7047
+          },
+          "loc": [
+            7018,
+            29
+          ]
+        }
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "symbol",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "Symbol",
+        "1": []
+      },
+      "clauses": [
+        {
+          "items": [
+            {
+              "binder": "ident",
+              "term": {
+                "$tag": "Symbol",
+                "0": "IDENT",
+                "loc": [
+                  7085,
+                  7090
+                ]
+              }
+            }
+          ],
+          "action": {
+            "code": {
+              "code": " ident ",
+              "utf8_pos": 7092,
+              "subst": []
+            },
+            "start": 7091,
+            "end": 7100
+          },
+          "loc": [
+            7079,
+            21
+          ]
+        }
+      ]
+    }
+  ]
+}

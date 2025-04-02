@@ -70,9 +70,9 @@ pub(all) enum Declaration {
   Type(Array[Symbol], type_~ : TypeString)
   Derive(traits~ : TypeString, type_~ : TypeString)
   Position(type_~ : TypeString)
-  Left(Array[Symbol])
-  Right(Array[Symbol])
-  Nonassoc(Array[Symbol])
+  Left(Array[PrecSymbol])
+  Right(Array[PrecSymbol])
+  Nonassoc(Array[PrecSymbol])
 } derive(ToJson)
 
 ///|
@@ -88,7 +88,7 @@ pub(all) struct Rule {
 ///|
 pub(all) struct Clause {
   items : Array[ClauseItem]
-  prec : Symbol?
+  prec : PrecSymbol?
   action : ClauseAction
   loc : (Int, Int) // (utf8_pos, utf8_len)
 } derive(ToJson)
@@ -118,4 +118,9 @@ pub(all) enum Term {
   Symbol(Symbol, loc~ : (Int, Int))
   Image(String, loc~ : (Int, Int))
   RuleCall(Symbol, symbol_loc~ : (Int, Int), Array[Term])
+} derive(ToJson)
+
+pub(all) enum PrecSymbol {
+  Symbol(Symbol)
+  Image(String)
 } derive(ToJson)

@@ -67,9 +67,9 @@ let parser_spec_src : String =
   #|  | "%token" type_=LANGLE_CODE_RANGLE symbol=symbol image=STRING { Token1(symbol, type_=Some(type_), image=image) }
   #|  | "%type" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
   #|  | "%position" type_=LANGLE_CODE_RANGLE { Position(type_=type_) }
-  #|  | "%left" symbol_list=nonempty_symbol_list { Left(symbol_list.to_array()) }
-  #|  | "%right" symbol_list=nonempty_symbol_list { Right(symbol_list.to_array()) }
-  #|  | "%nonassoc" symbol_list=nonempty_symbol_list { Nonassoc(symbol_list.to_array()) }
+  #|  | "%left" symbol_list=nonempty_prec_symbol_list { Left(symbol_list.to_array()) }
+  #|  | "%right" symbol_list=nonempty_prec_symbol_list { Right(symbol_list.to_array()) }
+  #|  | "%nonassoc" symbol_list=nonempty_prec_symbol_list { Nonassoc(symbol_list.to_array()) }
   #|  | "%derive" traits=LANGLE_CODE_RANGLE type_=IDENT { Derive(traits=traits, type_=type_) }
   #|  ;
   #|
@@ -162,8 +162,8 @@ let parser_spec_src : String =
   #|  }
   #|  ;
   #|
-  #|rule_prec -> @ast.Symbol?
-  #|  : "%prec" symbol=symbol { Some(symbol) }
+  #|rule_prec -> @ast.PrecSymbol?
+  #|  : "%prec" symbol=prec_symbol { Some(symbol) }
   #|  | { None }
   #|  ;
   #|
@@ -191,6 +191,16 @@ let parser_spec_src : String =
   #|nonempty_symbol_list -> @immut/list.T[@ast.Symbol]
   #|  : symbol=symbol { Cons(symbol, Nil) }
   #|  | symbol=symbol symbol_list=nonempty_symbol_list { Cons(symbol, symbol_list) }
+  #|  ;
+  #|
+  #|nonempty_prec_symbol_list -> @immut/list.T[@ast.PrecSymbol]
+  #|  : symbol=prec_symbol { Cons(symbol, Nil) }
+  #|  | symbol=prec_symbol symbol_list=nonempty_prec_symbol_list { Cons(symbol, symbol_list) }
+  #|  ;
+  #|
+  #|prec_symbol -> @ast.PrecSymbol
+  #|  : symbol=symbol { Symbol(symbol) }
+  #|  | image=STRING { Image(image) }
   #|  ;
   #|
   #|symbol -> @ast.Symbol
