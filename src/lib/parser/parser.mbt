@@ -4,7 +4,7 @@ pub(all) enum Token {
   EOF
   IDENT(String)
   STRING(String)
-  LBRACE_CODE_RBRACE((String, Int, Array[SubstItem]))
+  LBRACE_CODE_RBRACE((String, Int, Array[@ast.SubstItem]))
   PERCENT_LBRACE_CODE_PERCENT_RBRACE((String, Int, Int))
   PERCENT_PERCENT_CODE_EOF((String, Int, Int))
   PKG_AND_IDENT((String, String))
@@ -150,59 +150,59 @@ typealias YYObj = Error
 
 priv type! YYObj_Void
 
-priv type! YYObj_Rule Rule
-
-priv type! YYObj_Term Term
-
 priv type! YYObj_Array_String_ Array[String]
-
-priv type! YYObj_Clause Clause
 
 priv type! YYObj_Option_Unit_ Option[Unit]
 
 priv type! YYObj_String String
 
-priv type! YYObj_Symbol Symbol
+priv type! YYObj__ast_Rule @ast.Rule
 
-priv type! YYObj_TypeExpr TypeExpr
+priv type! YYObj__ast_Term @ast.Term
 
-priv type! YYObj_ClauseItem ClauseItem
+priv type! YYObj__ast_Clause @ast.Clause
 
-priv type! YYObj_ParserSpec ParserSpec
+priv type! YYObj__ast_Symbol @ast.Symbol
 
-priv type! YYObj_Declaration Declaration
+priv type! YYObj__ast_TypeExpr @ast.TypeExpr
 
-priv type! YYObj_ClauseAction ClauseAction
+priv type! YYObj__ast_ClauseItem @ast.ClauseItem
 
-priv type! YYObj__immut_list_T_Rule_ @immut/list.T[Rule]
+priv type! YYObj__ast_ParserSpec @ast.ParserSpec
 
-priv type! YYObj__immut_list_T_Term_ @immut/list.T[Term]
+priv type! YYObj__ast_Declaration @ast.Declaration
 
-priv type! YYObj__immut_list_T_Clause_ @immut/list.T[Clause]
+priv type! YYObj__ast_ClauseAction @ast.ClauseAction
 
 priv type! YYObj__immut_list_T_String_ @immut/list.T[String]
 
-priv type! YYObj__immut_list_T_Symbol_ @immut/list.T[Symbol]
+priv type! YYObj__immut_list_T__ast_Rule_ @immut/list.T[@ast.Rule]
 
-priv type! YYObj__immut_list_T_TypeExpr_ @immut/list.T[TypeExpr]
+priv type! YYObj__immut_list_T__ast_Term_ @immut/list.T[@ast.Term]
 
-priv type! YYObj__immut_list_T_ClauseItem_ @immut/list.T[ClauseItem]
+priv type! YYObj__immut_list_T__ast_Clause_ @immut/list.T[@ast.Clause]
 
-priv type! YYObj__immut_list_T_Declaration_ @immut/list.T[Declaration]
+priv type! YYObj__immut_list_T__ast_Symbol_ @immut/list.T[@ast.Symbol]
 
-priv type! YYObj__immut_list_T__String__TypeExpr___ @immut/list.T[(String, TypeExpr?)]
+priv type! YYObj__immut_list_T__ast_TypeExpr_ @immut/list.T[@ast.TypeExpr]
 
-priv type! YYObj_Symbol_ Symbol?
+priv type! YYObj__immut_list_T__ast_ClauseItem_ @immut/list.T[@ast.ClauseItem]
 
-priv type! YYObj_TypeExpr_ TypeExpr?
+priv type! YYObj__immut_list_T__ast_Declaration_ @immut/list.T[@ast.Declaration]
 
-priv type! YYObj__Code__Int__Int__ (Code, Int, Int)?
+priv type! YYObj__immut_list_T__String___ast_TypeExpr___ @immut/list.T[(String, @ast.TypeExpr?)]
+
+priv type! YYObj__ast_Symbol_ @ast.Symbol?
+
+priv type! YYObj__ast_TypeExpr_ @ast.TypeExpr?
+
+priv type! YYObj___ast_Code__Int__Int__ (@ast.Code, Int, Int)?
 
 priv type! YYObj__String__String_ (String, String)
 
 priv type! YYObj__String__Int__Int_ (String, Int, Int)
 
-priv type! YYObj__String__Int__Array_SubstItem__ (String, Int, Array[SubstItem])
+priv type! YYObj__String__Int__Array__ast_SubstItem__ (String, Int, Array[@ast.SubstItem])
 
 typealias YYState = (YYSymbol) -> YYDecision
 
@@ -290,77 +290,77 @@ fn init {
 // file:///./parser.mbty
 // 55|    decl=decl decl_list=decl_list { Cons(decl, decl_list) }
 fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Declaration(decl)
-  guard _args[1].0 is YYObj__immut_list_T_Declaration_(decl_list)
-  YYObj__immut_list_T_Declaration_({();  Cons(decl, decl_list) })
+  guard _args[0].0 is YYObj__ast_Declaration(decl)
+  guard _args[1].0 is YYObj__immut_list_T__ast_Declaration_(decl_list)
+  YYObj__immut_list_T__ast_Declaration_({();  Cons(decl, decl_list) })
 }
 
 // file:///./parser.mbty
 // 62|    "%token" "<" type_=type_expr ">" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=Some(type_)) }
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[2].0 is YYObj_TypeExpr(type_)
-  guard _args[4].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj_Declaration({();  Token(symbol_list.to_array(), type_=Some(type_)) })
+  guard _args[2].0 is YYObj__ast_TypeExpr(type_)
+  guard _args[4].0 is YYObj__immut_list_T__ast_Symbol_(symbol_list)
+  YYObj__ast_Declaration({();  Token(symbol_list.to_array(), type_=Some(type_)) })
 }
 
 // file:///./parser.mbty
 // 70|    "%derive" "<" trait_list=nonempty_type_expr_list ">" type_=IDENT { Derive(traits=trait_list.to_array(), type_=type_) }
 fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[2].0 is YYObj__immut_list_T_TypeExpr_(trait_list)
+  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(trait_list)
   guard _args[4].0 is YYObj_String(type_)
-  YYObj_Declaration({();  Derive(traits=trait_list.to_array(), type_=type_) })
+  YYObj__ast_Declaration({();  Derive(traits=trait_list.to_array(), type_=type_) })
 }
 
 // file:///./parser.mbty
 // 129|    PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__String_(_dollar1)
-  YYObj_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, []) })
+  YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, []) })
 }
 
 // file:///./parser.mbty
 // 178|    symbol=symbol { Symbol(symbol, loc=($startpos, $endpos)) }
 fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Symbol(symbol)
+  guard _args[0].0 is YYObj__ast_Symbol(symbol)
   let _start_pos = _args[0].1
   let _end_pos = _args[0].2
-  YYObj_Term({();  Symbol(symbol, loc=(_start_pos, _end_pos)) })
+  YYObj__ast_Term({();  Symbol(symbol, loc=(_start_pos, _end_pos)) })
 }
 
 // file:///./parser.mbty
 // 190|    symbol=symbol symbol_list=nonempty_symbol_list { Cons(symbol, symbol_list) }
 fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Symbol(symbol)
-  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj__immut_list_T_Symbol_({();  Cons(symbol, symbol_list) })
+  guard _args[0].0 is YYObj__ast_Symbol(symbol)
+  guard _args[1].0 is YYObj__immut_list_T__ast_Symbol_(symbol_list)
+  YYObj__immut_list_T__ast_Symbol_({();  Cons(symbol, symbol_list) })
 }
 
 // file:///./parser.mbty
 // 173|    term=term { { binder: None, term: term } }
 fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Term(term)
-  YYObj_ClauseItem({();  { binder: None, term: term } })
+  guard _args[0].0 is YYObj__ast_Term(term)
+  YYObj__ast_ClauseItem({();  { binder: None, term: term } })
 }
 
 // file:///./parser.mbty
 // 74|    rule=rule { Cons(rule, Nil) }
 fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Rule(rule)
-  YYObj__immut_list_T_Rule_({();  Cons(rule, Nil) })
+  guard _args[0].0 is YYObj__ast_Rule(rule)
+  YYObj__immut_list_T__ast_Rule_({();  Cons(rule, Nil) })
 }
 
 // file:///./parser.mbty
 // 116|    "(" ")" "->" type_expr { Arrow([], $4) }
 fn yy_action_8(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[3].0 is YYObj_TypeExpr(_dollar4)
-  YYObj_TypeExpr({();  Arrow([], _dollar4) })
+  guard _args[3].0 is YYObj__ast_TypeExpr(_dollar4)
+  YYObj__ast_TypeExpr({();  Arrow([], _dollar4) })
 }
 
 // file:///./parser.mbty
 // 189|    symbol=symbol { Cons(symbol, Nil) }
 fn yy_action_9(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Symbol(symbol)
-  YYObj__immut_list_T_Symbol_({();  Cons(symbol, Nil) })
+  guard _args[0].0 is YYObj__ast_Symbol(symbol)
+  YYObj__immut_list_T__ast_Symbol_({();  Cons(symbol, Nil) })
 }
 
 // file:///./parser.mbty
@@ -368,12 +368,12 @@ fn yy_action_9(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 // 88|    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }
 // 89|  }
 fn yy_action_10(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Symbol(nonterminal)
+  guard _args[0].0 is YYObj__ast_Symbol(nonterminal)
   guard _args[1].0 is YYObj_Array_String_(generic_params)
-  guard _args[3].0 is YYObj__immut_list_T__String__TypeExpr___(param_list)
-  guard _args[5].0 is YYObj_TypeExpr_(type_)
-  guard _args[7].0 is YYObj__immut_list_T_Clause_(clause_list)
-  YYObj_Rule({(); 
+  guard _args[3].0 is YYObj__immut_list_T__String___ast_TypeExpr___(param_list)
+  guard _args[5].0 is YYObj__ast_TypeExpr_(type_)
+  guard _args[7].0 is YYObj__immut_list_T__ast_Clause_(clause_list)
+  YYObj__ast_Rule({(); 
     { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }
   })
 }
@@ -381,32 +381,32 @@ fn yy_action_10(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // file:///./parser.mbty
 // 119|    "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
 fn yy_action_11(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_TypeExpr(_dollar2)
-  guard _args[3].0 is YYObj__immut_list_T_TypeExpr_(_dollar4)
-  guard _args[6].0 is YYObj_TypeExpr(_dollar7)
-  YYObj_TypeExpr({();  Arrow(@immut/list.Cons(_dollar2, _dollar4).to_array(), _dollar7) })
+  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
+  guard _args[3].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar4)
+  guard _args[6].0 is YYObj__ast_TypeExpr(_dollar7)
+  YYObj__ast_TypeExpr({();  Arrow(@immut/list.Cons(_dollar2, _dollar4).to_array(), _dollar7) })
 }
 
 // file:///./parser.mbty
 // 128|    IDENT { Constr(pkg=None, $1, []) }
 fn yy_action_12(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
-  YYObj_TypeExpr({();  Constr(pkg=None, _dollar1, []) })
+  YYObj__ast_TypeExpr({();  Constr(pkg=None, _dollar1, []) })
 }
 
 // file:///./parser.mbty
 // 61|    "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
 fn yy_action_13(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj_Declaration({();  Token(symbol_list.to_array(), type_=None) })
+  guard _args[1].0 is YYObj__immut_list_T__ast_Symbol_(symbol_list)
+  YYObj__ast_Declaration({();  Token(symbol_list.to_array(), type_=None) })
 }
 
 // file:///./parser.mbty
 // 168|    item=item item_list=item_list { Cons(item, item_list) }
 fn yy_action_14(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_ClauseItem(item)
-  guard _args[1].0 is YYObj__immut_list_T_ClauseItem_(item_list)
-  YYObj__immut_list_T_ClauseItem_({();  Cons(item, item_list) })
+  guard _args[0].0 is YYObj__ast_ClauseItem(item)
+  guard _args[1].0 is YYObj__immut_list_T__ast_ClauseItem_(item_list)
+  YYObj__immut_list_T__ast_ClauseItem_({();  Cons(item, item_list) })
 }
 
 // file:///./parser.mbty
@@ -415,7 +415,7 @@ fn yy_action_15(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
   guard _args[0].0 is YYObj_String(image)
   let _start_pos = _args[0].1
   let _end_pos = _args[0].2
-  YYObj_Term({();  Image(image, loc=(_start_pos, _end_pos)) })
+  YYObj__ast_Term({();  Image(image, loc=(_start_pos, _end_pos)) })
 }
 
 // file:///./parser.mbty
@@ -424,10 +424,10 @@ fn yy_action_15(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // 158|      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
 // 159|  }
 fn yy_action_16(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__String__Int__Array_SubstItem__(code)
+  guard _args[0].0 is YYObj__String__Int__Array__ast_SubstItem__(code)
   let _start_pos = _args[0].1
   let _end_pos = _args[0].2
-  YYObj_ClauseAction({(); 
+  YYObj__ast_ClauseAction({(); 
       let (code, utf8_pos, subst) = code
       { code: Some({ code, utf8_pos, subst }), start: _start_pos, end: _end_pos }
   })
@@ -436,14 +436,14 @@ fn yy_action_16(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // file:///./parser.mbty
 // 51|    { None }
 fn yy_action_17(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj__Code__Int__Int__({();  None })
+  YYObj___ast_Code__Int__Int__({();  None })
 }
 
 // file:///./parser.mbty
 // 44|    code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
 fn yy_action_18(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__Int__Int_(code)
-  YYObj__Code__Int__Int__({();  Some(code) })
+  YYObj___ast_Code__Int__Int__({();  Some(code) })
 }
 
 // file:///./parser.mbty
@@ -451,10 +451,10 @@ fn yy_action_18(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // 85|    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }
 // 86|  }
 fn yy_action_19(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Symbol(nonterminal)
-  guard _args[1].0 is YYObj_TypeExpr_(type_)
-  guard _args[3].0 is YYObj__immut_list_T_Clause_(clause_list)
-  YYObj_Rule({(); 
+  guard _args[0].0 is YYObj__ast_Symbol(nonterminal)
+  guard _args[1].0 is YYObj__ast_TypeExpr_(type_)
+  guard _args[3].0 is YYObj__immut_list_T__ast_Clause_(clause_list)
+  YYObj__ast_Rule({(); 
     { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }
   })
 }
@@ -462,106 +462,106 @@ fn yy_action_19(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // file:///./parser.mbty
 // 79|    rule_no_modifiers { $1 }
 fn yy_action_20(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Rule(_dollar1)
-  YYObj_Rule({();  _dollar1 })
+  guard _args[0].0 is YYObj__ast_Rule(_dollar1)
+  YYObj__ast_Rule({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 133|    "(" type_expr ")" { $2 }
 fn yy_action_21(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_TypeExpr(_dollar2)
-  YYObj_TypeExpr({();  _dollar2 })
+  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
+  YYObj__ast_TypeExpr({();  _dollar2 })
 }
 
 // file:///./parser.mbty
 // 67|    "%left" symbol_list=nonempty_symbol_list { Left(symbol_list.to_array()) }
 fn yy_action_22(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj_Declaration({();  Left(symbol_list.to_array()) })
+  guard _args[1].0 is YYObj__immut_list_T__ast_Symbol_(symbol_list)
+  YYObj__ast_Declaration({();  Left(symbol_list.to_array()) })
 }
 
 // file:///./parser.mbty
 // 45|    { None }
 fn yy_action_23(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj__Code__Int__Int__({();  None })
+  YYObj___ast_Code__Int__Int__({();  None })
 }
 
 // file:///./parser.mbty
 // 185|    term=term "," term_list=nonempty_comma_term_list { Cons(term, term_list) }
 fn yy_action_24(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Term(term)
-  guard _args[2].0 is YYObj__immut_list_T_Term_(term_list)
-  YYObj__immut_list_T_Term_({();  Cons(term, term_list) })
+  guard _args[0].0 is YYObj__ast_Term(term)
+  guard _args[2].0 is YYObj__immut_list_T__ast_Term_(term_list)
+  YYObj__immut_list_T__ast_Term_({();  Cons(term, term_list) })
 }
 
 // file:///./parser.mbty
 // 164|    { None }
 fn yy_action_25(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj_Symbol_({();  None })
+  YYObj__ast_Symbol_({();  None })
 }
 
 // file:///./parser.mbty
 // 163|    "%prec" symbol=symbol { Some(symbol) }
 fn yy_action_26(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_Symbol(symbol)
-  YYObj_Symbol_({();  Some(symbol) })
+  guard _args[1].0 is YYObj__ast_Symbol(symbol)
+  YYObj__ast_Symbol_({();  Some(symbol) })
 }
 
 // file:///./parser.mbty
 // 142|    "|" nonempty_clause_list { $2 }
 fn yy_action_27(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__immut_list_T_Clause_(_dollar2)
-  YYObj__immut_list_T_Clause_({();  _dollar2 })
+  guard _args[1].0 is YYObj__immut_list_T__ast_Clause_(_dollar2)
+  YYObj__immut_list_T__ast_Clause_({();  _dollar2 })
 }
 
 // file:///./parser.mbty
 // 80|    "%inline" rule_no_modifiers { { ..$2, inline: true } }
 fn yy_action_28(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_Rule(_dollar2)
-  YYObj_Rule({();  { .._dollar2, inline: true } })
+  guard _args[1].0 is YYObj__ast_Rule(_dollar2)
+  YYObj__ast_Rule({();  { .._dollar2, inline: true } })
 }
 
 // file:///./parser.mbty
 // 132|    "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@immut/list.Cons($2, $4).to_array()) }
 fn yy_action_29(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_TypeExpr(_dollar2)
-  guard _args[3].0 is YYObj__immut_list_T_TypeExpr_(_dollar4)
-  YYObj_TypeExpr({();  Tuple(@immut/list.Cons(_dollar2, _dollar4).to_array()) })
+  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
+  guard _args[3].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar4)
+  YYObj__ast_TypeExpr({();  Tuple(@immut/list.Cons(_dollar2, _dollar4).to_array()) })
 }
 
 // file:///./parser.mbty
 // 101|    IDENT ":" type_expr "," nonempty_rule_param_list { Cons(($1, Some($3)), $5) }
 fn yy_action_30(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
-  guard _args[2].0 is YYObj_TypeExpr(_dollar3)
-  guard _args[4].0 is YYObj__immut_list_T__String__TypeExpr___(_dollar5)
-  YYObj__immut_list_T__String__TypeExpr___({();  Cons((_dollar1, Some(_dollar3)), _dollar5) })
+  guard _args[2].0 is YYObj__ast_TypeExpr(_dollar3)
+  guard _args[4].0 is YYObj__immut_list_T__String___ast_TypeExpr___(_dollar5)
+  YYObj__immut_list_T__String___ast_TypeExpr___({();  Cons((_dollar1, Some(_dollar3)), _dollar5) })
 }
 
 // file:///./parser.mbty
 // 130|    IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
 fn yy_action_31(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
-  guard _args[2].0 is YYObj__immut_list_T_TypeExpr_(_dollar3)
-  YYObj_TypeExpr({();  Constr(pkg=None, _dollar1, _dollar3.to_array()) })
+  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar3)
+  YYObj__ast_TypeExpr({();  Constr(pkg=None, _dollar1, _dollar3.to_array()) })
 }
 
 // file:///./parser.mbty
 // 152|    item_list=item_list prec=rule_prec action=clause_action { { items: item_list.to_array(), prec, action, loc: ($startpos, $endpos - $startpos) } }
 fn yy_action_32(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__immut_list_T_ClauseItem_(item_list)
-  guard _args[1].0 is YYObj_Symbol_(prec)
-  guard _args[2].0 is YYObj_ClauseAction(action)
+  guard _args[0].0 is YYObj__immut_list_T__ast_ClauseItem_(item_list)
+  guard _args[1].0 is YYObj__ast_Symbol_(prec)
+  guard _args[2].0 is YYObj__ast_ClauseAction(action)
   let _start_pos = _args[0].1
   let _end_pos = _args[2].2
-  YYObj_Clause({();  { items: item_list.to_array(), prec, action, loc: (_start_pos, _end_pos - _start_pos) } })
+  YYObj__ast_Clause({();  { items: item_list.to_array(), prec, action, loc: (_start_pos, _end_pos - _start_pos) } })
 }
 
 // file:///./parser.mbty
 // 143|    nonempty_clause_list { $1 }
 fn yy_action_33(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__immut_list_T_Clause_(_dollar1)
-  YYObj__immut_list_T_Clause_({();  _dollar1 })
+  guard _args[0].0 is YYObj__immut_list_T__ast_Clause_(_dollar1)
+  YYObj__immut_list_T__ast_Clause_({();  _dollar1 })
 }
 
 // file:///./parser.mbty
@@ -575,68 +575,68 @@ fn yy_action_34(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // file:///./parser.mbty
 // 93|    "->" type_=type_expr { Some(type_) }
 fn yy_action_35(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_TypeExpr(type_)
-  YYObj_TypeExpr_({();  Some(type_) })
+  guard _args[1].0 is YYObj__ast_TypeExpr(type_)
+  YYObj__ast_TypeExpr_({();  Some(type_) })
 }
 
 // file:///./parser.mbty
 // 98|    IDENT { Cons(($1, None), Nil) }
 fn yy_action_36(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
-  YYObj__immut_list_T__String__TypeExpr___({();  Cons((_dollar1, None), Nil) })
+  YYObj__immut_list_T__String___ast_TypeExpr___({();  Cons((_dollar1, None), Nil) })
 }
 
 // file:///./parser.mbty
 // 179|    symbol=symbol "(" nonempty_comma_term_list ")" { RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) }
 fn yy_action_37(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Symbol(symbol)
+  guard _args[0].0 is YYObj__ast_Symbol(symbol)
   let _start_pos_of_item0 = _args[0].1
   let _end_pos_of_item0 = _args[0].2
-  guard _args[2].0 is YYObj__immut_list_T_Term_(_dollar3)
-  YYObj_Term({();  RuleCall(symbol, symbol_loc=(_start_pos_of_item0, _end_pos_of_item0), _dollar3.to_array()) })
+  guard _args[2].0 is YYObj__immut_list_T__ast_Term_(_dollar3)
+  YYObj__ast_Term({();  RuleCall(symbol, symbol_loc=(_start_pos_of_item0, _end_pos_of_item0), _dollar3.to_array()) })
 }
 
 // file:///./parser.mbty
 // 118|    "(" type_expr "," ")" "->" type_expr { Arrow([$2], $6) }
 fn yy_action_38(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_TypeExpr(_dollar2)
-  guard _args[5].0 is YYObj_TypeExpr(_dollar6)
-  YYObj_TypeExpr({();  Arrow([_dollar2], _dollar6) })
+  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
+  guard _args[5].0 is YYObj__ast_TypeExpr(_dollar6)
+  YYObj__ast_TypeExpr({();  Arrow([_dollar2], _dollar6) })
 }
 
 // file:///./parser.mbty
 // 50|    code=PERCENT_PERCENT_CODE_EOF { Some(code) }
 fn yy_action_39(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__Int__Int_(code)
-  YYObj__Code__Int__Int__({();  Some(code) })
+  YYObj___ast_Code__Int__Int__({();  Some(code) })
 }
 
 // file:///./parser.mbty
 // 69|    "%nonassoc" symbol_list=nonempty_symbol_list { Nonassoc(symbol_list.to_array()) }
 fn yy_action_40(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj_Declaration({();  Nonassoc(symbol_list.to_array()) })
+  guard _args[1].0 is YYObj__immut_list_T__ast_Symbol_(symbol_list)
+  YYObj__ast_Declaration({();  Nonassoc(symbol_list.to_array()) })
 }
 
 // file:///./parser.mbty
 // 184|    term=term { Cons(term, Nil) }
 fn yy_action_41(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Term(term)
-  YYObj__immut_list_T_Term_({();  Cons(term, Nil) })
+  guard _args[0].0 is YYObj__ast_Term(term)
+  YYObj__immut_list_T__ast_Term_({();  Cons(term, Nil) })
 }
 
 // file:///./parser.mbty
 // 68|    "%right" symbol_list=nonempty_symbol_list { Right(symbol_list.to_array()) }
 fn yy_action_42(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj_Declaration({();  Right(symbol_list.to_array()) })
+  guard _args[1].0 is YYObj__immut_list_T__ast_Symbol_(symbol_list)
+  YYObj__ast_Declaration({();  Right(symbol_list.to_array()) })
 }
 
 // file:///./parser.mbty
 // 123|    basic_type_expr { $1 }
 fn yy_action_43(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_TypeExpr(_dollar1)
-  YYObj_TypeExpr({();  _dollar1 })
+  guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
+  YYObj__ast_TypeExpr({();  _dollar1 })
 }
 
 // file:///./stdlib.mbty
@@ -655,76 +655,76 @@ fn yy_action_45(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // file:///./parser.mbty
 // 40|    header=header decl_list=decl_list "%%" rule_list=rule_list trailer=trailer EOF { { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } }
 fn yy_action_46(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__Code__Int__Int__(header)
-  guard _args[1].0 is YYObj__immut_list_T_Declaration_(decl_list)
-  guard _args[3].0 is YYObj__immut_list_T_Rule_(rule_list)
-  guard _args[4].0 is YYObj__Code__Int__Int__(trailer)
-  YYObj_ParserSpec({();  { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } })
+  guard _args[0].0 is YYObj___ast_Code__Int__Int__(header)
+  guard _args[1].0 is YYObj__immut_list_T__ast_Declaration_(decl_list)
+  guard _args[3].0 is YYObj__immut_list_T__ast_Rule_(rule_list)
+  guard _args[4].0 is YYObj___ast_Code__Int__Int__(trailer)
+  YYObj__ast_ParserSpec({();  { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } })
 }
 
 // file:///./parser.mbty
 // 174|    binder=IDENT "=" term=term { { binder: Some(binder), term: term } }
 fn yy_action_47(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(binder)
-  guard _args[2].0 is YYObj_Term(term)
-  YYObj_ClauseItem({();  { binder: Some(binder), term: term } })
+  guard _args[2].0 is YYObj__ast_Term(term)
+  YYObj__ast_ClauseItem({();  { binder: Some(binder), term: term } })
 }
 
 // file:///./parser.mbty
 // 65|    "%type" "<" type_=type_expr ">" symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
 fn yy_action_48(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[2].0 is YYObj_TypeExpr(type_)
-  guard _args[4].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj_Declaration({();  Type(symbol_list.to_array(), type_=type_) })
+  guard _args[2].0 is YYObj__ast_TypeExpr(type_)
+  guard _args[4].0 is YYObj__immut_list_T__ast_Symbol_(symbol_list)
+  YYObj__ast_Declaration({();  Type(symbol_list.to_array(), type_=type_) })
 }
 
 // file:///./parser.mbty
 // 117|    "(" type_expr ")" "->" type_expr { Arrow([$2], $5) }
 fn yy_action_49(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_TypeExpr(_dollar2)
-  guard _args[4].0 is YYObj_TypeExpr(_dollar5)
-  YYObj_TypeExpr({();  Arrow([_dollar2], _dollar5) })
+  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
+  guard _args[4].0 is YYObj__ast_TypeExpr(_dollar5)
+  YYObj__ast_TypeExpr({();  Arrow([_dollar2], _dollar5) })
 }
 
 // file:///./parser.mbty
 // 131|    PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
 fn yy_action_50(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__String_(_dollar1)
-  guard _args[2].0 is YYObj__immut_list_T_TypeExpr_(_dollar3)
-  YYObj_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, _dollar3.to_array()) })
+  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar3)
+  YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, _dollar3.to_array()) })
 }
 
 // file:///./parser.mbty
 // 49|    code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
 fn yy_action_51(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__Int__Int_(code)
-  YYObj__Code__Int__Int__({();  Some(code) })
+  YYObj___ast_Code__Int__Int__({();  Some(code) })
 }
 
 // file:///./parser.mbty
 // 56|    { Nil }
 fn yy_action_52(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj__immut_list_T_Declaration_({();  Nil })
+  YYObj__immut_list_T__ast_Declaration_({();  Nil })
 }
 
 // file:///./parser.mbty
 // 66|    "%position" "<" type_=type_expr ">" { Position(type_=type_) }
 fn yy_action_53(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[2].0 is YYObj_TypeExpr(type_)
-  YYObj_Declaration({();  Position(type_=type_) })
+  guard _args[2].0 is YYObj__ast_TypeExpr(type_)
+  YYObj__ast_Declaration({();  Position(type_=type_) })
 }
 
 // file:///./parser.mbty
 // 169|    { Nil }
 fn yy_action_54(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj__immut_list_T_ClauseItem_({();  Nil })
+  YYObj__immut_list_T__ast_ClauseItem_({();  Nil })
 }
 
 // file:///./parser.mbty
 // 60|    "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
 fn yy_action_55(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__immut_list_T_Symbol_(symbol_list)
-  YYObj_Declaration({();  Start(symbol_list.to_array()) })
+  guard _args[1].0 is YYObj__immut_list_T__ast_Symbol_(symbol_list)
+  YYObj__ast_Declaration({();  Start(symbol_list.to_array()) })
 }
 
 // file:///./parser.mbty
@@ -736,47 +736,47 @@ fn yy_action_56(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // file:///./parser.mbty
 // 115|    postfix_type_expr { $1 }
 fn yy_action_57(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_TypeExpr(_dollar1)
-  YYObj_TypeExpr({();  _dollar1 })
+  guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
+  YYObj__ast_TypeExpr({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 75|    rule=rule rule_list=rule_list { Cons(rule, rule_list) }
 fn yy_action_58(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Rule(rule)
-  guard _args[1].0 is YYObj__immut_list_T_Rule_(rule_list)
-  YYObj__immut_list_T_Rule_({();  Cons(rule, rule_list) })
+  guard _args[0].0 is YYObj__ast_Rule(rule)
+  guard _args[1].0 is YYObj__immut_list_T__ast_Rule_(rule_list)
+  YYObj__immut_list_T__ast_Rule_({();  Cons(rule, rule_list) })
 }
 
 // file:///./parser.mbty
 // 148|    clause=clause "|" clause_list=nonempty_clause_list { Cons(clause, clause_list) }
 fn yy_action_59(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Clause(clause)
-  guard _args[2].0 is YYObj__immut_list_T_Clause_(clause_list)
-  YYObj__immut_list_T_Clause_({();  Cons(clause, clause_list) })
+  guard _args[0].0 is YYObj__ast_Clause(clause)
+  guard _args[2].0 is YYObj__immut_list_T__ast_Clause_(clause_list)
+  YYObj__immut_list_T__ast_Clause_({();  Cons(clause, clause_list) })
 }
 
 // file:///./parser.mbty
 // 147|    clause=clause { Cons(clause, Nil) }
 fn yy_action_60(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_Clause(clause)
-  YYObj__immut_list_T_Clause_({();  Cons(clause, Nil) })
+  guard _args[0].0 is YYObj__ast_Clause(clause)
+  YYObj__immut_list_T__ast_Clause_({();  Cons(clause, Nil) })
 }
 
 // file:///./parser.mbty
 // 137|    type_expr=type_expr { Cons(type_expr, Nil) }
 fn yy_action_61(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_TypeExpr(type_expr)
-  YYObj__immut_list_T_TypeExpr_({();  Cons(type_expr, Nil) })
+  guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
+  YYObj__immut_list_T__ast_TypeExpr_({();  Cons(type_expr, Nil) })
 }
 
 // file:///./parser.mbty
 // 64|    "%token" "<" type_=type_expr ">" symbol=symbol image=STRING { Token1(symbol, type_=Some(type_), image=image) }
 fn yy_action_62(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[2].0 is YYObj_TypeExpr(type_)
-  guard _args[4].0 is YYObj_Symbol(symbol)
+  guard _args[2].0 is YYObj__ast_TypeExpr(type_)
+  guard _args[4].0 is YYObj__ast_Symbol(symbol)
   guard _args[5].0 is YYObj_String(image)
-  YYObj_Declaration({();  Token1(symbol, type_=Some(type_), image=image) })
+  YYObj__ast_Declaration({();  Token1(symbol, type_=Some(type_), image=image) })
 }
 
 // file:///./parser.mbty
@@ -789,31 +789,31 @@ fn yy_action_63(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // file:///./parser.mbty
 // 138|    type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { Cons(type_expr, type_expr_list) }
 fn yy_action_64(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_TypeExpr(type_expr)
-  guard _args[2].0 is YYObj__immut_list_T_TypeExpr_(type_expr_list)
-  YYObj__immut_list_T_TypeExpr_({();  Cons(type_expr, type_expr_list) })
+  guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
+  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(type_expr_list)
+  YYObj__immut_list_T__ast_TypeExpr_({();  Cons(type_expr, type_expr_list) })
 }
 
 // file:///./parser.mbty
 // 100|    IDENT "," nonempty_rule_param_list { Cons(($1, None), $3) }
 fn yy_action_65(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
-  guard _args[2].0 is YYObj__immut_list_T__String__TypeExpr___(_dollar3)
-  YYObj__immut_list_T__String__TypeExpr___({();  Cons((_dollar1, None), _dollar3) })
+  guard _args[2].0 is YYObj__immut_list_T__String___ast_TypeExpr___(_dollar3)
+  YYObj__immut_list_T__String___ast_TypeExpr___({();  Cons((_dollar1, None), _dollar3) })
 }
 
 // file:///./parser.mbty
 // 94|    { None }
 fn yy_action_66(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  YYObj_TypeExpr_({();  None })
+  YYObj__ast_TypeExpr_({();  None })
 }
 
 // file:///./parser.mbty
 // 99|    IDENT ":" type_expr { Cons(($1, Some($3)), Nil) }
 fn yy_action_67(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
-  guard _args[2].0 is YYObj_TypeExpr(_dollar3)
-  YYObj__immut_list_T__String__TypeExpr___({();  Cons((_dollar1, Some(_dollar3)), Nil) })
+  guard _args[2].0 is YYObj__ast_TypeExpr(_dollar3)
+  YYObj__immut_list_T__String___ast_TypeExpr___({();  Cons((_dollar1, Some(_dollar3)), Nil) })
 }
 
 // file:///./parser.mbty
@@ -826,23 +826,23 @@ fn yy_action_68(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // file:///./parser.mbty
 // 63|    "%token" symbol=symbol image=STRING { Token1(symbol, type_=None, image=image) }
 fn yy_action_69(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj_Symbol(symbol)
+  guard _args[1].0 is YYObj__ast_Symbol(symbol)
   guard _args[2].0 is YYObj_String(image)
-  YYObj_Declaration({();  Token1(symbol, type_=None, image=image) })
+  YYObj__ast_Declaration({();  Token1(symbol, type_=None, image=image) })
 }
 
 // file:///./parser.mbty
 // 194|    ident=IDENT { ident }
 fn yy_action_70(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(ident)
-  YYObj_Symbol({();  ident })
+  YYObj__ast_Symbol({();  ident })
 }
 
 // file:///./parser.mbty
 // 124|    postfix_type_expr "?" { Option($1) }
 fn yy_action_71(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_TypeExpr(_dollar1)
-  YYObj_TypeExpr({();  Option(_dollar1) })
+  guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
+  YYObj__ast_TypeExpr({();  Option(_dollar1) })
 }
 
 fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSymbol, YYObj) {
@@ -850,7 +850,7 @@ fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSym
     EOF => (T_EOF, YYObj_Void)
     IDENT(data) => (T_IDENT, YYObj_String(data))
     STRING(data) => (T_STRING, YYObj_String(data))
-    LBRACE_CODE_RBRACE(data) => (T_LBRACE_CODE_RBRACE, YYObj__String__Int__Array_SubstItem__(data))
+    LBRACE_CODE_RBRACE(data) => (T_LBRACE_CODE_RBRACE, YYObj__String__Int__Array__ast_SubstItem__(data))
     PERCENT_LBRACE_CODE_PERCENT_RBRACE(data) => (T_PERCENT_LBRACE_CODE_PERCENT_RBRACE, YYObj__String__Int__Int_(data))
     PERCENT_PERCENT_CODE_EOF(data) => (T_PERCENT_PERCENT_CODE_EOF, YYObj__String__Int__Int_(data))
     PKG_AND_IDENT(data) => (T_PKG_AND_IDENT, YYObj__String__String_(data))
@@ -2605,13 +2605,13 @@ fn error(stack : @immut/list.T[YYState], token : Token, loc : (Position, Positio
   raise UnexpectedToken(token, loc, expected)
 }
 
-pub fn spec(read_token : () -> (Token, Position, Position), start_pos : Position) -> ParserSpec!ParseError {
+pub fn spec(read_token : () -> (Token, Position, Position), start_pos : Position) -> @ast.ParserSpec!ParseError {
   yy_parse!(
     read_token,
     start_pos,
     yy_state_0,
     fn {
-      YYObj_ParserSpec(result) => result
+      YYObj__ast_ParserSpec(result) => result
       _ => panic()
     },
   )

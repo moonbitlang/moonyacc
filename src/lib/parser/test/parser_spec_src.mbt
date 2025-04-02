@@ -9,7 +9,7 @@ let parser_spec_src : String =
   #|%token EOF
   #|%token<String> IDENT
   #|%token<String> STRING
-  #|%token<(String, Int, Array[SubstItem])> LBRACE_CODE_RBRACE
+  #|%token<(String, Int, Array[@ast.SubstItem])> LBRACE_CODE_RBRACE
   #|%token<(String, Int, Int)> PERCENT_LBRACE_CODE_PERCENT_RBRACE
   #|%token<(String, Int, Int)> PERCENT_PERCENT_CODE_EOF
   #|%token<(String, String)> PKG_AND_IDENT
@@ -40,27 +40,27 @@ let parser_spec_src : String =
   #|
   #|%%
   #|
-  #|spec -> ParserSpec
+  #|spec -> @ast.ParserSpec
   #|  : header=header decl_list=decl_list "%%" rule_list=rule_list trailer=trailer EOF { { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } }
   #|  ;
   #|
-  #|header -> (Code, Int, Int)?
+  #|header -> (@ast.Code, Int, Int)?
   #|  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
   #|  | { None }
   #|  ;
   #|
-  #|trailer -> (Code, Int, Int)?
+  #|trailer -> (@ast.Code, Int, Int)?
   #|  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
   #|  | code=PERCENT_PERCENT_CODE_EOF { Some(code) }
   #|  | { None }
   #|  ;
   #|
-  #|decl_list -> @immut/list.T[Declaration]
+  #|decl_list -> @immut/list.T[@ast.Declaration]
   #|  : decl=decl decl_list=decl_list { Cons(decl, decl_list) }
   #|  | { Nil }
   #|  ;
   #|
-  #|decl -> Declaration
+  #|decl -> @ast.Declaration
   #|  : "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
   #|  | "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
   #|  | "%token" "<" type_=type_expr ">" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=Some(type_)) }
@@ -74,17 +74,17 @@ let parser_spec_src : String =
   #|  | "%derive" "<" trait_list=nonempty_type_expr_list ">" type_=IDENT { Derive(traits=trait_list.to_array(), type_=type_) }
   #|  ;
   #|
-  #|rule_list -> @immut/list.T[Rule]
+  #|rule_list -> @immut/list.T[@ast.Rule]
   #|  : rule=rule { Cons(rule, Nil) }
   #|  | rule=rule rule_list=rule_list { Cons(rule, rule_list) }
   #|  ;
   #|
-  #|rule -> Rule
+  #|rule -> @ast.Rule
   #|  : rule_no_modifiers { $1 }
   #|  | "%inline" rule_no_modifiers { { ..$2, inline: true } }
   #|  ;
   #|
-  #|rule_no_modifiers -> Rule
+  #|rule_no_modifiers -> @ast.Rule
   #|  : nonterminal=symbol type_=opt_rule_return_type ":" clause_list=clause_list option(";") {
   #|    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }
   #|  }
@@ -93,12 +93,12 @@ let parser_spec_src : String =
   #|  }
   #|  ;
   #|
-  #|opt_rule_return_type -> TypeExpr?
+  #|opt_rule_return_type -> @ast.TypeExpr?
   #|  : "->" type_=type_expr { Some(type_) }
   #|  | { None }
   #|  ;
   #|
-  #|nonempty_rule_param_list -> @immut/list.T[(String, TypeExpr?)]
+  #|nonempty_rule_param_list -> @immut/list.T[(String, @ast.TypeExpr?)]
   #|  : IDENT { Cons(($1, None), Nil) }
   #|  | IDENT ":" type_expr { Cons(($1, Some($3)), Nil) }
   #|  | IDENT "," nonempty_rule_param_list { Cons(($1, None), $3) }
@@ -115,7 +115,7 @@ let parser_spec_src : String =
   #|  | IDENT "," nonempty_comma_ident_list { Cons($1, $3) }
   #|  ;
   #|
-  #|type_expr -> TypeExpr
+  #|type_expr -> @ast.TypeExpr
   #|  : postfix_type_expr { $1 }
   #|  | "(" ")" "->" type_expr { Arrow([], $4) }
   #|  | "(" type_expr ")" "->" type_expr { Arrow([$2], $5) }
@@ -123,12 +123,12 @@ let parser_spec_src : String =
   #|  | "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
   #|  ;
   #|
-  #|postfix_type_expr -> TypeExpr
+  #|postfix_type_expr -> @ast.TypeExpr
   #|  : basic_type_expr { $1 }
   #|  | postfix_type_expr "?" { Option($1) }
   #|  ;
   #|
-  #|basic_type_expr -> TypeExpr
+  #|basic_type_expr -> @ast.TypeExpr
   #|  : IDENT { Constr(pkg=None, $1, []) }
   #|  | PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
   #|  | IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
@@ -137,64 +137,64 @@ let parser_spec_src : String =
   #|  | "(" type_expr ")" { $2 }
   #|  ;
   #|
-  #|nonempty_type_expr_list -> @immut/list.T[TypeExpr]
+  #|nonempty_type_expr_list -> @immut/list.T[@ast.TypeExpr]
   #|  : type_expr=type_expr { Cons(type_expr, Nil) }
   #|  | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { Cons(type_expr, type_expr_list) }
   #|  ;
   #|
-  #|clause_list -> @immut/list.T[Clause]
+  #|clause_list -> @immut/list.T[@ast.Clause]
   #|  : "|" nonempty_clause_list { $2 }
   #|  | nonempty_clause_list { $1 }
   #|  ;
   #|
-  #|nonempty_clause_list -> @immut/list.T[Clause]
+  #|nonempty_clause_list -> @immut/list.T[@ast.Clause]
   #|  : clause=clause { Cons(clause, Nil) }
   #|  | clause=clause "|" clause_list=nonempty_clause_list { Cons(clause, clause_list) }
   #|  ;
   #|
-  #|clause -> Clause
+  #|clause -> @ast.Clause
   #|  : item_list=item_list prec=rule_prec action=clause_action { { items: item_list.to_array(), prec, action, loc: ($startpos, $endpos - $startpos) } }
   #|  ;
   #|
-  #|clause_action -> ClauseAction
+  #|clause_action -> @ast.ClauseAction
   #|  : code=LBRACE_CODE_RBRACE {
   #|      let (code, utf8_pos, subst) = code
   #|      { code: Some({ code, utf8_pos, subst }), start: $startpos, end: $endpos }
   #|  }
   #|  ;
   #|
-  #|rule_prec -> Symbol?
+  #|rule_prec -> @ast.Symbol?
   #|  : "%prec" symbol=symbol { Some(symbol) }
   #|  | { None }
   #|  ;
   #|
-  #|item_list -> @immut/list.T[ClauseItem]
+  #|item_list -> @immut/list.T[@ast.ClauseItem]
   #|  : item=item item_list=item_list { Cons(item, item_list) }
   #|  | { Nil }
   #|  ;
   #|
-  #|item -> ClauseItem
+  #|item -> @ast.ClauseItem
   #|  : term=term { { binder: None, term: term } }
   #|  | binder=IDENT "=" term=term { { binder: Some(binder), term: term } }
   #|  ;
   #|
-  #|term -> Term
+  #|term -> @ast.Term
   #|  : symbol=symbol { Symbol(symbol, loc=($startpos, $endpos)) }
   #|  | symbol=symbol "(" nonempty_comma_term_list ")" { RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) }
   #|  | image=STRING { Image(image, loc=($startpos, $endpos)) }
   #|  ;
   #|
-  #|nonempty_comma_term_list -> @immut/list.T[Term]
+  #|nonempty_comma_term_list -> @immut/list.T[@ast.Term]
   #|  : term=term { Cons(term, Nil) }
   #|  | term=term "," term_list=nonempty_comma_term_list { Cons(term, term_list) }
   #|  ;
   #|
-  #|nonempty_symbol_list -> @immut/list.T[Symbol]
+  #|nonempty_symbol_list -> @immut/list.T[@ast.Symbol]
   #|  : symbol=symbol { Cons(symbol, Nil) }
   #|  | symbol=symbol symbol_list=nonempty_symbol_list { Cons(symbol, symbol_list) }
   #|  ;
   #|
-  #|symbol -> Symbol
+  #|symbol -> @ast.Symbol
   #|  : ident=IDENT { ident }
   #|  ;
   #|

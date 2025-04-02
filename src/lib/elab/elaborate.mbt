@@ -48,7 +48,7 @@ fn build_rules_from_src(
 
 ///|
 pub fn elaborate_with_stdlib_rules(
-  ast_spec : @parser.ParserSpec,
+  ast_spec : @ast.ParserSpec,
   parser_spec_str : String,
   filename : String,
   json_cst~ : JsonCst,
@@ -76,7 +76,7 @@ pub fn elaborate_with_stdlib_rules(
 
 ///|
 pub fn elaborate(
-  ast_spec : @parser.ParserSpec,
+  ast_spec : @ast.ParserSpec,
   parser_spec_str : String,
   filename : String,
   json_cst~ : JsonCst,
@@ -210,7 +210,7 @@ pub fn elaborate(
     }
   }
   fn map_term(
-    ast_term : @parser.Term,
+    ast_term : @ast.Term,
     rule_param_map : Map[String, TypeExpr]
   ) -> Term!ElabError {
     match ast_term {
@@ -365,8 +365,8 @@ pub fn elaborate(
 ///|
 fn elaborate_action(
   items : Array[Item],
-  ast_action : @parser.ClauseAction,
-  parser_spec~ : @parser.ParserSpec,
+  ast_action : @ast.ClauseAction,
+  parser_spec~ : @ast.ParserSpec,
   parser_spec_str~ : String,
   filename~ : String,
   rule_index~ : Int,
@@ -383,7 +383,7 @@ fn elaborate_action(
       Some(name) => name_to_index[name] = index
     }
   }
-  fn item_ident_to_index(ident : @parser.ClauseItemIdent) -> Int {
+  fn item_ident_to_index(ident : @ast.ClauseItemIdent) -> Int {
     match ident {
       Dollar(index) => index
       Name(name) => name_to_index[name].unwrap()
@@ -392,7 +392,7 @@ fn elaborate_action(
 
   let bindings : Array[(BindingSubject, Code)] = []
   let visited = @sorted_set.new()
-  fn add_binding(desc : @parser.SubstItemDesc) {
+  fn add_binding(desc : @ast.SubstItemDesc) {
     guard not(visited.contains(desc)) else { return }
     visited.add(desc)
     match desc {
@@ -539,16 +539,16 @@ fn elaborate_action(
 }
 
 ///|
-fn elaborate_type_expr(ast_type_expr : @parser.TypeExpr) -> TypeExpr {
+fn elaborate_type_expr(ast_type_expr : @ast.TypeExpr) -> TypeExpr {
   elaborate_type_expr_with_generic_params(ast_type_expr, Set::new())
 }
 
 ///|
 fn elaborate_type_expr_with_generic_params(
-  ast_type_expr : @parser.TypeExpr,
+  ast_type_expr : @ast.TypeExpr,
   generic_params : Set[String]
 ) -> TypeExpr {
-  fn elaborate_type_expr(ast_type_expr : @parser.TypeExpr) -> TypeExpr {
+  fn elaborate_type_expr(ast_type_expr : @ast.TypeExpr) -> TypeExpr {
     elaborate_type_expr_with_generic_params(ast_type_expr, generic_params)
   }
 

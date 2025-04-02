@@ -58,7 +58,7 @@ pub(all) enum TypeExpr {
   Option(TypeExpr)
   Tuple(Array[TypeExpr])
   Arrow(Array[TypeExpr], TypeExpr)
-} derive(ToJson)
+} derive(Show, ToJson)
 
 ///|
 pub(all) enum Declaration {
@@ -94,8 +94,8 @@ pub(all) struct Clause {
 ///|
 pub(all) struct ClauseAction {
   code : CodeWithSubst?
-  start : Position
-  end : Position
+  start : Int
+  end : Int
 } derive(ToJson)
 
 ///|

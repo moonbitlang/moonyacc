@@ -3626,7 +3626,7 @@ let __mbtlex_engine_code_rbrace : LexEngine = {
 ///|
 fn code_rbrace(
   sb : StringBuilder,
-  subst : Array[SubstItem],
+  subst : Array[@ast.SubstItem],
   base : Int,
   lexbuf : Lexbuf
 ) -> Unit!LexError {
@@ -3666,7 +3666,7 @@ fn code_rbrace(
       let (_start_pos_of_t2, _end_pos_of_t2) = __mbtlex_captures[2]
       let t2 : String = lexbuf.substring(_start_pos_of_t2, _end_pos_of_t2)
       sb.write_string(t)
-      let arg : ClauseItemIdent = if t2.starts_with("$") {
+      let arg : @ast.ClauseItemIdent = if t2.starts_with("$") {
         let index = try {
           @strconv.parse_int!(t2.substring(start=1), base=10)
         } catch {

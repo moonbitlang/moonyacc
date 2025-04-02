@@ -111,7 +111,7 @@ rule code_percent_rbrace(sb : StringBuilder) -> Unit!LexError {
   }
 }
 
-rule code_rbrace(sb : StringBuilder, subst: Array[SubstItem], base : Int) -> Unit!LexError {
+rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int) -> Unit!LexError {
   parse {
     "{" => {
       sb.write_string("{")
@@ -132,7 +132,7 @@ rule code_rbrace(sb : StringBuilder, subst: Array[SubstItem], base : Int) -> Uni
     }
     ("$" (("startpos" | "endpos" | "loc") as t1) "(" [' ' '\t']* (("$" ['0'-'9']+ | ['A'-'Z' 'a'-'z' '_'] ['A'-'Z' 'a'-'z' '0'-'9' '_']*) as t2) [' ' '\t']* ")") as t => {
       sb.write_string(t)
-      let arg : ClauseItemIdent = if t2.starts_with("$") {
+      let arg : @ast.ClauseItemIdent = if t2.starts_with("$") {
         let index = try @strconv.parse_int!(t2.substring(start=1), base=10) catch { err => abort(Show::to_string(err)) }
         Dollar(index)
       } else {
