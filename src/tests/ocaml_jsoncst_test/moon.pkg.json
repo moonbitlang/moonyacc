@@ -1,0 +1,20 @@
+{
+  "pre-build": [
+    {
+      "command": ":embed --name binary_search_ml_str -i $input -o $output",
+      "input": "binary_search.ml",
+      "output": "binary_search.mbt"
+    },
+    {
+      "command": "node $mod_dir/boot/moonlex.js $input | moonfmt > $output",
+      "input": "lexer.mbtx",
+      "output": "lexer.mbt"
+    },
+    {
+      "command": "node $mod_dir/boot/moonyacc.js --mode json-cst --input-mode pull --force-token-no-payload --force-int-position $input -o $output",
+      "input": "ocaml.mly",
+      "output": "ocaml.mbt"
+    }
+  ],
+  "warn-list": "-2-6"
+}
