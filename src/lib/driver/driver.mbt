@@ -15,7 +15,7 @@
 ///|
 pub(all) enum Mode {
   Default
-  JsonCst(token_payload_rewrite~ : TokenPayloadRewrite?)
+  JsonCst
   OnlyTokens
 }
 
@@ -23,6 +23,7 @@ pub(all) enum Mode {
 pub(all) enum TokenPayloadRewrite {
   NoPayload
   JsonPayload
+  NoRewrite
 }
 
 ///|
@@ -40,6 +41,7 @@ pub fn compile(
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
   no_std~ : Bool = false,
+  token_payload_rewrite~ : TokenPayloadRewrite = NoRewrite,
   force_int_position~ : Bool = false,
   source_map_builder? : &@codegen.SourceMapBuilder,
   generator~ : &@codegen.CodeGenerator
@@ -81,13 +83,15 @@ pub fn compile(
       parser_spec_str,
       @_driver_util.path_basename(filename),
       json_cst=match mode {
-        JsonCst(token_payload_rewrite=None) => Yes(None)
-        JsonCst(token_payload_rewrite=Some(NoPayload)) => Yes(Some(NoPayload))
-        JsonCst(token_payload_rewrite=Some(JsonPayload)) =>
-          Yes(Some(JsonPayload))
+        JsonCst => Yes
         Default | OnlyTokens => No
       },
       no_std~,
+      token_payload_rewrite=match token_payload_rewrite {
+        NoRewrite => NoRewrite
+        JsonPayload => JsonPayload
+        NoPayload => NoPayload
+      },
       force_int_position~,
     )
   } catch {
@@ -258,11 +262,7 @@ pub fn compile(
     mode=match mode {
       OnlyTokens => panic()
       Default => Default
-      JsonCst(token_payload_rewrite=None) => JsonCst(token_payload_rewrite=None)
-      JsonCst(token_payload_rewrite=Some(NoPayload)) =>
-        JsonCst(token_payload_rewrite=Some(NoPayload))
-      JsonCst(token_payload_rewrite=Some(JsonPayload)) =>
-        JsonCst(token_payload_rewrite=Some(JsonPayload))
+      JsonCst => JsonCst
     },
     input_mode=match input_mode {
       Array => Array

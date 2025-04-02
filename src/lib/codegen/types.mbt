@@ -15,7 +15,7 @@
 ///|
 pub(all) enum Mode {
   Default
-  JsonCst(token_payload_rewrite~ : TokenPayloadRewrite?)
+  JsonCst
 }
 
 ///|

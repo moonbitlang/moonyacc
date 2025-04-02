@@ -21,13 +21,14 @@ pub type! ElabError {
 ///|
 pub(all) enum JsonCst {
   No
-  Yes(TokenPayloadRewrite?)
+  Yes
 }
 
 ///|
 pub(all) enum TokenPayloadRewrite {
   NoPayload
   JsonPayload
+  NoRewrite
 }
 
 ///|
@@ -35,6 +36,7 @@ fn build_rules_from_src(
   src : String,
   filename~ : String,
   json_cst~ : JsonCst,
+  token_payload_rewrite~ : TokenPayloadRewrite,
   force_int_position~ : Bool
 ) -> Map[String, Rule] {
   let lexer = @parser.new_lexer(src)
@@ -43,7 +45,14 @@ fn build_rules_from_src(
   }
 
   let ast_spec = @parser.spec?(token, 0).unwrap()
-  let spec = elaborate?(ast_spec, src, filename, json_cst~, force_int_position~).unwrap()
+  let spec = elaborate?(
+    ast_spec,
+    src,
+    filename,
+    json_cst~,
+    token_payload_rewrite~,
+    force_int_position~,
+  ).unwrap()
   spec.rules
 }
 
@@ -54,6 +63,7 @@ pub fn elaborate_with_stdlib_rules(
   filename : String,
   json_cst~ : JsonCst,
   no_std~ : Bool,
+  token_payload_rewrite~ : TokenPayloadRewrite,
   force_int_position~ : Bool
 ) -> ParserSpec!ElabError {
   elaborate!(
@@ -68,9 +78,11 @@ pub fn elaborate_with_stdlib_rules(
         stdlib_src,
         filename="stdlib.mbty",
         json_cst~,
+        token_payload_rewrite~,
         force_int_position~,
       )
     },
+    token_payload_rewrite~,
     force_int_position~,
   )
 }
@@ -82,6 +94,7 @@ pub fn elaborate(
   filename : String,
   json_cst~ : JsonCst,
   stdlib_rules? : Map[String, Rule],
+  token_payload_rewrite~ : TokenPayloadRewrite,
   force_int_position~ : Bool
 ) -> ParserSpec!ElabError {
   let mut header = match ast_spec.header {
@@ -124,14 +137,14 @@ pub fn elaborate(
 
   // Prepare tokens
   fn elaborate_token_type(type_ : @ast.TypeString?) -> TypeExpr!ElabError {
-    match json_cst {
-      No | Yes(None) =>
+    match token_payload_rewrite {
+      NoRewrite =>
         match type_ {
           Some(type_) => parse_and_elaborate_type_expr!(type_)
           None => Constr(pkg=None, "Unit", [])
         }
-      Yes(Some(JsonPayload)) => Constr(pkg=None, "Json", [])
-      Yes(Some(NoPayload)) => Constr(pkg=None, "Unit", [])
+      JsonPayload => Constr(pkg=None, "Json", [])
+      NoPayload => Constr(pkg=None, "Unit", [])
     }
   }
 
@@ -168,15 +181,14 @@ pub fn elaborate(
       }
       (name, type_)
     })
-    let type_ = match ast_rule.type_ {
-      Some(type_) =>
-        elaborate_type_expr_with_generic_params(type_, generic_params)
-      None =>
-        if json_cst is Yes(_) {
-          Constr(pkg=None, "Json", [])
-        } else {
-          Constr(pkg=None, "Unit", [])
-        }
+    let type_ = if json_cst is Yes(_) {
+      Constr(pkg=None, "Json", [])
+    } else {
+      match ast_rule.type_ {
+        Some(type_) =>
+          elaborate_type_expr_with_generic_params(type_, generic_params)
+        None => Constr(pkg=None, "Unit", [])
+      }
     }
     let rule : Rule = {
       inline: ast_rule.inline,
@@ -226,7 +238,7 @@ pub fn elaborate(
                 None => panic()
                 Some(rule) =>
                   // TODO: report error if rule already has a type
-                  if json_cst is (No | Yes(None)) {
+                  if token_payload_rewrite is NoRewrite {
                     rule.type_ = parse_and_elaborate_type_expr!(type_)
                   }
               }
@@ -370,27 +382,10 @@ pub fn elaborate(
 
   // TODO: Make this non target specific
   // JsonCst
-  match json_cst {
-    No => ()
-    Yes(rewrite) => {
-      header = @immut/array.new()
-      trailer = @immut/array.new()
-      match rewrite {
-        None => ()
-        Some(_) => derive_map.add("Token", Constr(pkg=None, "Show", []))
-      }
-    }
-  }
-  match json_cst {
-    No | Yes(None) => ()
-    Yes(Some(NoPayload)) =>
-      for token in tokens {
-        token.type_ = Constr(pkg=None, "Unit", [])
-      }
-    Yes(Some(JsonPayload)) =>
-      for token in tokens {
-        token.type_ = Constr(pkg=None, "Json", [])
-      }
+
+  if json_cst is Yes {
+    header = @immut/array.new()
+    trailer = @immut/array.new()
   }
   ParserSpec::{
     header,

@@ -16,32 +16,37 @@
 fn main {
   let usage =
     #|Usage: moonyacc [options] <input-file>
-  let output_file = @ref.new("")
-  let output_map_file : Ref[String?] = @ref.new(None)
-  let input_file = @ref.new("")
-  let mode : Ref[@driver.Mode] = @ref.new(Default)
-  let input_mode : Ref[@driver.InputMode] = @ref.new(Array)
-  let external_tokens : Ref[Bool] = @ref.new(false)
-  let no_comments : Ref[Bool] = @ref.new(false)
-  let no_std : Ref[Bool] = @ref.new(false)
-  let token_payload_rewrite : Ref[@driver.TokenPayloadRewrite?] = @ref.new(None)
-  let force_int_position : Ref[Bool] = @ref.new(false)
+  let mut output_file = ""
+  let mut output_map_file : String? = None
+  let mut input_file : String = ""
+  let mut mode : @driver.Mode = Default
+  let mut input_mode : @driver.InputMode = Array
+  let mut external_tokens : Bool = false
+  let mut no_comments : Bool = false
+  let mut no_std : Bool = false
+  let mut token_payload_rewrite : @driver.TokenPayloadRewrite = NoRewrite
+  let mut force_int_position : Bool = false
   @ArgParser.parse(
     [
-      ("--output-file", "-o", Set_string(output_file), "Output file"),
+      (
+        "--output-file",
+        "-o",
+        String(fn(file) { output_file = file }),
+        "Output file",
+      ),
       (
         "--output-map-file",
         "--output-map-file",
-        String(fn(file) { output_map_file.val = Some(file) }),
+        String(fn(file) { output_map_file = Some(file) }),
         "Output source map file, if not specified, it will be the output file with .map.json extension",
       ),
       (
         "--mode",
         "--mode",
         String(fn(mode_sym) {
-          mode.val = match mode_sym {
+          mode = match mode_sym {
             "default" => Default
-            "json-cst" => JsonCst(token_payload_rewrite=None)
+            "json-cst" => JsonCst
             "only-tokens" => OnlyTokens
             _ => {
               println_to_stderr("Unsupported mode: \{mode_sym}")
@@ -56,8 +61,8 @@ fn main {
         "--input-mode",
         String(fn(input_mode_sym) {
           match input_mode_sym {
-            "array" => input_mode.val = Array
-            "pull" => input_mode.val = Pull
+            "array" => input_mode = Array
+            "pull" => input_mode = Pull
             _ => {
               println_to_stderr("Unsupported input mode: \{input_mode_sym}")
               exit(1)
@@ -69,37 +74,37 @@ fn main {
       (
         "--external-tokens",
         "--external-tokens",
-        Unit(fn() { external_tokens.val = true }),
+        Unit(fn() { external_tokens = true }),
         "Use external tokens",
       ),
       (
         "--force-token-json-payload",
         "--force-token-json-payload",
-        Unit(fn() { token_payload_rewrite.val = Some(JsonPayload) }),
-        "Force token to use JSON payload (only for json-cst mode)",
+        Unit(fn() { token_payload_rewrite = JsonPayload }),
+        "Force token to use JSON payload",
       ),
       (
         "--force-token-no-payload",
         "--force-token-no-payload",
-        Unit(fn() { token_payload_rewrite.val = Some(NoPayload) }),
-        "Force token to not use payload (only for json-cst mode)",
+        Unit(fn() { token_payload_rewrite = NoPayload }),
+        "Force token to not use payload",
       ),
       (
         "--force-int-position",
         "--force-int-position",
-        Unit(fn() { force_int_position.val = true }),
+        Unit(fn() { force_int_position = true }),
         "Overwrite the position type to int",
       ),
       (
         "--no-comments",
         "--no-comments",
-        Unit(fn() { no_comments.val = true }),
+        Unit(fn() { no_comments = true }),
         "Do not include comments in the output",
       ),
       (
         "--no-std",
         "--no-std",
-        Unit(fn() { no_std.val = true }),
+        Unit(fn() { no_std = true }),
         "Do not include standard library",
       ),
       (
@@ -112,34 +117,31 @@ fn main {
         "Show version",
       ),
     ],
-    fn(rest) { input_file.val = rest },
+    fn(rest) { input_file = rest },
     usage,
     @sys.get_cli_args(),
   )
-  guard input_file.val != "" else {
+  guard input_file != "" else {
     println_to_stderr("Input file is required")
     exit(1)
   }
   let parser_spec_src = try {
-    @fs.read_file_to_string!(input_file.val)
+    @fs.read_file_to_string!(input_file)
   } catch {
     err => abort(Show::to_string(err))
-  }
-  let mode : @driver.Mode = match mode.val {
-    JsonCst(_) => JsonCst(token_payload_rewrite=token_payload_rewrite.val)
-    mode => mode
   }
   let source_map = @codegen.SourceMap::new()
   let output = @driver.compile(
     parser_spec_src,
     mode~,
     source_map_builder=source_map,
-    input_mode=input_mode.val,
-    filename=input_file.val,
-    external_tokens=external_tokens.val,
-    no_comments=no_comments.val,
-    no_std=no_std.val,
-    force_int_position=force_int_position.val,
+    input_mode~,
+    filename=input_file,
+    external_tokens~,
+    no_comments~,
+    no_std~,
+    token_payload_rewrite~,
+    force_int_position~,
     generator=@gen_mbt.generator,
   )
   fn write_map_file!(file : String) {
@@ -149,14 +151,14 @@ fn main {
     )
   }
 
-  if output_file.val == "" {
+  if output_file == "" {
     println(output)
-    match output_map_file.val {
+    match output_map_file {
       Some(file) => write_map_file?(file).unwrap()
       None => ()
     }
   } else {
-    @fs.write_string_to_file?(output_file.val, output).unwrap()
-    write_map_file?(output_map_file.val.or("\{output_file.val}.map.json")).unwrap()
+    @fs.write_string_to_file?(output_file, output).unwrap()
+    write_map_file?(output_map_file.or("\{output_file}.map.json")).unwrap()
   }
 }
