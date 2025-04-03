@@ -219,6 +219,30 @@ pub fn compile(
     augmented_start_nt.productions.push(production)
     production
   })
+
+  // fix prec for productions
+  for prod in productions {
+    match prod.prec {
+      Some(_) => ()
+      None => {
+        let rightmost_term = prod.rhs.rev_iter().find_first(fn(x) { x is T(_) })
+        match rightmost_term {
+          Some(T(terminal)) => {
+            let term = get_terminal_by_name(terminal.name)
+            prod.prec = match term.prec {
+              Some((prec, _)) => Some(prec)
+              None => None
+            }
+          }
+          Some(NT(_)) => panic()
+          None => ()
+        }
+      }
+    }
+  }
+  // for prod in productions {
+  //   println(prod)
+  // }
   let grammar : @grm.Grammar = { terminals, nonterminals, productions, starts }
   let automaton = @lr1.Automaton::build(grammar, user_eoi=input_mode is Pull)
   let errors = @lr1.resolve_conflicts(automaton.conflicts)

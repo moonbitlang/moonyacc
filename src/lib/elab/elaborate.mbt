@@ -312,27 +312,12 @@ pub fn elaborate(
           }
           Some(prec)
         }
-        None => {
-          /// FROM ocamlyacc's manual
-          // > Tokens and rules have precedences.
-          // > By default, the precedence of a rule is the precedence of its rightmost terminal.
-          // I don't what "rightmost terminal" means, but I guess it means the last terminal in the rule.
-          // So, I'll use the precedence of the last terminal in the rule.
-          let mut last_prec = None
-          for item in items.rev_iter() {
-            match item.term {
-              Token(token) => {
-                last_prec = match token.prec {
-                  None => None
-                  Some((prec, _assoc)) => Some(prec)
-                }
-                break
-              }
-              Param(_) | RuleCall(_) => ()
-            }
-          }
-          last_prec
-        }
+        None =>
+          // The prec should be determined by the rightmost terminal
+          // in the rule. But the items of rule may be modified later, So
+          // we will set it to None for now, and delay the decision
+          // at building lr1 grammar.
+          None
       }
       let clause = Clause::{
         items,
