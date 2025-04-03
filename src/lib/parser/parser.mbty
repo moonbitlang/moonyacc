@@ -36,18 +36,16 @@
 %%
 
 spec -> @ast.ParserSpec
-  : header=header decl_list=decl_list "%%" rule_list=rule_list trailer=trailer EOF { { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } }
-  ;
-
-header -> (@ast.Code, Int, Int)?
-  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
-  | { None }
-  ;
-
-trailer -> (@ast.Code, Int, Int)?
-  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
-  | code=PERCENT_PERCENT_CODE_EOF { Some(code) }
-  | { None }
+  : decl_list=decl_list "%%" rule_list=rule_list trailer=trailer EOF {
+    let decls = decl_list.to_array()
+    match trailer {
+      Some((code, utf8_pos, subst)) => {
+        decls.push(Trailer(code, utf8_pos, subst))
+      }
+      None => ()
+    }
+    { decls, rules: rule_list.to_array() }
+  }
   ;
 
 decl_list -> @immut/list.T[@ast.Declaration]
@@ -56,7 +54,8 @@ decl_list -> @immut/list.T[@ast.Declaration]
   ;
 
 decl -> @ast.Declaration
-  : "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
+  : PERCENT_LBRACE_CODE_PERCENT_RBRACE { Header($1.0, $1.1, $1.2) }
+  | "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
   | "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
   | "%token" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=Some(type_)) }
   | "%token" symbol=symbol image=STRING { Token1(symbol, type_=None, image=image) }
@@ -72,6 +71,12 @@ decl -> @ast.Declaration
 rule_list -> @immut/list.T[@ast.Rule]
   : rule=rule { Cons(rule, Nil) }
   | rule=rule rule_list=rule_list { Cons(rule, rule_list) }
+  ;
+
+trailer -> (@ast.Code, Int, Int)?
+  : code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
+  | code=PERCENT_PERCENT_CODE_EOF { Some(code) }
+  | { None }
   ;
 
 rule -> @ast.Rule

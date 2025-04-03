@@ -222,24 +222,13 @@
             {
               "items": [
                 {
-                  "binder": "header",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "header",
-                    "loc": [
-                      924,
-                      930
-                    ]
-                  }
-                },
-                {
                   "binder": "decl_list",
                   "term": {
                     "$tag": "Symbol",
                     "0": "decl_list",
                     "loc": [
-                      941,
-                      950
+                      927,
+                      936
                     ]
                   }
                 },
@@ -248,8 +237,8 @@
                     "$tag": "Image",
                     "0": "\"%%\"",
                     "loc": [
-                      951,
-                      955
+                      937,
+                      941
                     ]
                   }
                 },
@@ -259,8 +248,8 @@
                     "$tag": "Symbol",
                     "0": "rule_list",
                     "loc": [
-                      966,
-                      975
+                      952,
+                      961
                     ]
                   }
                 },
@@ -270,8 +259,8 @@
                     "$tag": "Symbol",
                     "0": "trailer",
                     "loc": [
-                      984,
-                      991
+                      970,
+                      977
                     ]
                   }
                 },
@@ -280,27 +269,27 @@
                     "$tag": "Symbol",
                     "0": "EOF",
                     "loc": [
-                      992,
-                      995
+                      978,
+                      981
                     ]
                   }
                 }
               ],
               "loc": [
                 917,
-                78
+                64
               ]
             }
           ],
           {
             "code": {
-              "code": " { header, decls: decl_list.to_array(), rules: rule_list.to_array(), trailer } ",
-              "utf8_pos": 997,
+              "code": "\n    let decls = decl_list.to_array()\n    match trailer {\n      Some((code, utf8_pos, subst)) => {\n        decls.push(Trailer(code, utf8_pos, subst))\n      }\n      None => ()\n    }\n    { decls, rules: rule_list.to_array() }\n  ",
+              "utf8_pos": 983,
               "subst": []
             },
             "loc": [
-              996,
-              81
+              982,
+              228
             ]
           }
         ]
@@ -308,34 +297,21 @@
     },
     {
       "inline": false,
-      "nonterminal": "header",
+      "nonterminal": "decl_list",
       "generic_params": [],
       "params": [],
       "type_": {
-        "$tag": "Option",
-        "0": {
-          "$tag": "Tuple",
-          "0": [
-            {
-              "$tag": "Constr",
-              "pkg": "ast",
-              "0": "Code",
-              "1": []
-            },
-            {
-              "$tag": "Constr",
-              "pkg": null,
-              "0": "Int",
-              "1": []
-            },
-            {
-              "$tag": "Constr",
-              "pkg": null,
-              "0": "Int",
-              "1": []
-            }
-          ]
-        }
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "Declaration",
+            "1": []
+          }
+        ]
       },
       "clauses": [
         [
@@ -343,32 +319,43 @@
             {
               "items": [
                 {
-                  "binder": "code",
+                  "binder": "decl",
                   "term": {
                     "$tag": "Symbol",
-                    "0": "PERCENT_LBRACE_CODE_PERCENT_RBRACE",
+                    "0": "decl",
                     "loc": [
-                      1125,
-                      1159
+                      1270,
+                      1274
+                    ]
+                  }
+                },
+                {
+                  "binder": "decl_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "decl_list",
+                    "loc": [
+                      1285,
+                      1294
                     ]
                   }
                 }
               ],
               "loc": [
-                1120,
-                39
+                1265,
+                29
               ]
             }
           ],
           {
             "code": {
-              "code": " Some(code) ",
-              "utf8_pos": 1161,
+              "code": " Cons(decl, decl_list) ",
+              "utf8_pos": 1296,
               "subst": []
             },
             "loc": [
-              1160,
-              14
+              1295,
+              25
             ]
           }
         ],
@@ -377,20 +364,742 @@
             {
               "items": [],
               "loc": [
-                1178,
+                1324,
                 0
               ]
             }
           ],
           {
             "code": {
-              "code": " None ",
-              "utf8_pos": 1180,
+              "code": " Nil ",
+              "utf8_pos": 1326,
               "subst": []
             },
             "loc": [
-              1179,
-              8
+              1325,
+              7
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "decl",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "ast",
+        "0": "Declaration",
+        "1": []
+      },
+      "clauses": [
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "PERCENT_LBRACE_CODE_PERCENT_RBRACE",
+                    "loc": [
+                      1367,
+                      1401
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                1367,
+                34
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Header($1.0, $1.1, $1.2) ",
+              "utf8_pos": 1403,
+              "subst": [
+                {
+                  "start": 8,
+                  "end": 10,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 14,
+                  "end": 16,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                },
+                {
+                  "start": 20,
+                  "end": 22,
+                  "desc": {
+                    "$tag": "Dollar",
+                    "0": 1
+                  }
+                }
+              ]
+            },
+            "loc": [
+              1402,
+              28
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%start\"",
+                    "loc": [
+                      1435,
+                      1443
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "nonempty_symbol_list",
+                    "loc": [
+                      1456,
+                      1476
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                1435,
+                41
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Start(symbol_list.to_array()) ",
+              "utf8_pos": 1478,
+              "subst": []
+            },
+            "loc": [
+              1477,
+              33
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%token\"",
+                    "loc": [
+                      1515,
+                      1523
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "nonempty_symbol_list",
+                    "loc": [
+                      1536,
+                      1556
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                1515,
+                41
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Token(symbol_list.to_array(), type_=None) ",
+              "utf8_pos": 1558,
+              "subst": []
+            },
+            "loc": [
+              1557,
+              45
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%token\"",
+                    "loc": [
+                      1607,
+                      1615
+                    ]
+                  }
+                },
+                {
+                  "binder": "type_",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "LANGLE_CODE_RANGLE",
+                    "loc": [
+                      1622,
+                      1640
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "nonempty_symbol_list",
+                    "loc": [
+                      1653,
+                      1673
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                1607,
+                66
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Token(symbol_list.to_array(), type_=Some(type_)) ",
+              "utf8_pos": 1675,
+              "subst": []
+            },
+            "loc": [
+              1674,
+              52
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%token\"",
+                    "loc": [
+                      1731,
+                      1739
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "symbol",
+                    "loc": [
+                      1747,
+                      1753
+                    ]
+                  }
+                },
+                {
+                  "binder": "image",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "STRING",
+                    "loc": [
+                      1760,
+                      1766
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                1731,
+                35
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Token1(symbol, type_=None, image=image) ",
+              "utf8_pos": 1768,
+              "subst": []
+            },
+            "loc": [
+              1767,
+              43
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%token\"",
+                    "loc": [
+                      1815,
+                      1823
+                    ]
+                  }
+                },
+                {
+                  "binder": "type_",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "LANGLE_CODE_RANGLE",
+                    "loc": [
+                      1830,
+                      1848
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "symbol",
+                    "loc": [
+                      1856,
+                      1862
+                    ]
+                  }
+                },
+                {
+                  "binder": "image",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "STRING",
+                    "loc": [
+                      1869,
+                      1875
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                1815,
+                60
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Token1(symbol, type_=Some(type_), image=image) ",
+              "utf8_pos": 1877,
+              "subst": []
+            },
+            "loc": [
+              1876,
+              50
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%type\"",
+                    "loc": [
+                      1931,
+                      1938
+                    ]
+                  }
+                },
+                {
+                  "binder": "type_",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "LANGLE_CODE_RANGLE",
+                    "loc": [
+                      1945,
+                      1963
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "nonempty_symbol_list",
+                    "loc": [
+                      1976,
+                      1996
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                1931,
+                65
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Type(symbol_list.to_array(), type_=type_) ",
+              "utf8_pos": 1998,
+              "subst": []
+            },
+            "loc": [
+              1997,
+              45
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%position\"",
+                    "loc": [
+                      2047,
+                      2058
+                    ]
+                  }
+                },
+                {
+                  "binder": "type_",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "LANGLE_CODE_RANGLE",
+                    "loc": [
+                      2065,
+                      2083
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                2047,
+                36
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Position(type_=type_) ",
+              "utf8_pos": 2085,
+              "subst": []
+            },
+            "loc": [
+              2084,
+              25
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%left\"",
+                    "loc": [
+                      2114,
+                      2121
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "nonempty_prec_symbol_list",
+                    "loc": [
+                      2134,
+                      2159
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                2114,
+                45
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Left(symbol_list.to_array()) ",
+              "utf8_pos": 2161,
+              "subst": []
+            },
+            "loc": [
+              2160,
+              32
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%right\"",
+                    "loc": [
+                      2197,
+                      2205
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "nonempty_prec_symbol_list",
+                    "loc": [
+                      2218,
+                      2243
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                2197,
+                46
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Right(symbol_list.to_array()) ",
+              "utf8_pos": 2245,
+              "subst": []
+            },
+            "loc": [
+              2244,
+              33
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%nonassoc\"",
+                    "loc": [
+                      2282,
+                      2293
+                    ]
+                  }
+                },
+                {
+                  "binder": "symbol_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "nonempty_prec_symbol_list",
+                    "loc": [
+                      2306,
+                      2331
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                2282,
+                49
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Nonassoc(symbol_list.to_array()) ",
+              "utf8_pos": 2333,
+              "subst": []
+            },
+            "loc": [
+              2332,
+              36
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "term": {
+                    "$tag": "Image",
+                    "0": "\"%derive\"",
+                    "loc": [
+                      2373,
+                      2382
+                    ]
+                  }
+                },
+                {
+                  "binder": "traits",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "LANGLE_CODE_RANGLE",
+                    "loc": [
+                      2390,
+                      2408
+                    ]
+                  }
+                },
+                {
+                  "binder": "type_",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "IDENT",
+                    "loc": [
+                      2415,
+                      2420
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                2373,
+                47
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Derive(traits=traits, type_=type_) ",
+              "utf8_pos": 2422,
+              "subst": []
+            },
+            "loc": [
+              2421,
+              38
+            ]
+          }
+        ]
+      ]
+    },
+    {
+      "inline": false,
+      "nonterminal": "rule_list",
+      "generic_params": [],
+      "params": [],
+      "type_": {
+        "$tag": "Constr",
+        "pkg": "immut/list",
+        "0": "T",
+        "1": [
+          {
+            "$tag": "Constr",
+            "pkg": "ast",
+            "0": "Rule",
+            "1": []
+          }
+        ]
+      },
+      "clauses": [
+        [
+          [
+            {
+              "items": [
+                {
+                  "binder": "rule",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "rule",
+                    "loc": [
+                      2512,
+                      2516
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                2507,
+                9
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Cons(rule, Nil) ",
+              "utf8_pos": 2518,
+              "subst": []
+            },
+            "loc": [
+              2517,
+              19
+            ]
+          }
+        ],
+        [
+          [
+            {
+              "items": [
+                {
+                  "binder": "rule",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "rule",
+                    "loc": [
+                      2546,
+                      2550
+                    ]
+                  }
+                },
+                {
+                  "binder": "rule_list",
+                  "term": {
+                    "$tag": "Symbol",
+                    "0": "rule_list",
+                    "loc": [
+                      2561,
+                      2570
+                    ]
+                  }
+                }
+              ],
+              "loc": [
+                2541,
+                29
+              ]
+            }
+          ],
+          {
+            "code": {
+              "code": " Cons(rule, rule_list) ",
+              "utf8_pos": 2572,
+              "subst": []
+            },
+            "loc": [
+              2571,
+              25
             ]
           }
         ]
@@ -438,14 +1147,14 @@
                     "$tag": "Symbol",
                     "0": "PERCENT_LBRACE_CODE_PERCENT_RBRACE",
                     "loc": [
-                      1236,
-                      1270
+                      2645,
+                      2679
                     ]
                   }
                 }
               ],
               "loc": [
-                1231,
+                2640,
                 39
               ]
             }
@@ -453,11 +1162,11 @@
           {
             "code": {
               "code": " Some(code) ",
-              "utf8_pos": 1272,
+              "utf8_pos": 2681,
               "subst": []
             },
             "loc": [
-              1271,
+              2680,
               14
             ]
           }
@@ -472,14 +1181,14 @@
                     "$tag": "Symbol",
                     "0": "PERCENT_PERCENT_CODE_EOF",
                     "loc": [
-                      1295,
-                      1319
+                      2704,
+                      2728
                     ]
                   }
                 }
               ],
               "loc": [
-                1290,
+                2699,
                 29
               ]
             }
@@ -487,11 +1196,11 @@
           {
             "code": {
               "code": " Some(code) ",
-              "utf8_pos": 1321,
+              "utf8_pos": 2730,
               "subst": []
             },
             "loc": [
-              1320,
+              2729,
               14
             ]
           }
@@ -501,7 +1210,7 @@
             {
               "items": [],
               "loc": [
-                1338,
+                2747,
                 0
               ]
             }
@@ -509,764 +1218,12 @@
           {
             "code": {
               "code": " None ",
-              "utf8_pos": 1340,
+              "utf8_pos": 2749,
               "subst": []
             },
             "loc": [
-              1339,
+              2748,
               8
-            ]
-          }
-        ]
-      ]
-    },
-    {
-      "inline": false,
-      "nonterminal": "decl_list",
-      "generic_params": [],
-      "params": [],
-      "type_": {
-        "$tag": "Constr",
-        "pkg": "immut/list",
-        "0": "T",
-        "1": [
-          {
-            "$tag": "Constr",
-            "pkg": "ast",
-            "0": "Declaration",
-            "1": []
-          }
-        ]
-      },
-      "clauses": [
-        [
-          [
-            {
-              "items": [
-                {
-                  "binder": "decl",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "decl",
-                    "loc": [
-                      1407,
-                      1411
-                    ]
-                  }
-                },
-                {
-                  "binder": "decl_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "decl_list",
-                    "loc": [
-                      1422,
-                      1431
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                1402,
-                29
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Cons(decl, decl_list) ",
-              "utf8_pos": 1433,
-              "subst": []
-            },
-            "loc": [
-              1432,
-              25
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [],
-              "loc": [
-                1461,
-                0
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Nil ",
-              "utf8_pos": 1463,
-              "subst": []
-            },
-            "loc": [
-              1462,
-              7
-            ]
-          }
-        ]
-      ]
-    },
-    {
-      "inline": false,
-      "nonterminal": "decl",
-      "generic_params": [],
-      "params": [],
-      "type_": {
-        "$tag": "Constr",
-        "pkg": "ast",
-        "0": "Declaration",
-        "1": []
-      },
-      "clauses": [
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%start\"",
-                    "loc": [
-                      1504,
-                      1512
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "nonempty_symbol_list",
-                    "loc": [
-                      1525,
-                      1545
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                1504,
-                41
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Start(symbol_list.to_array()) ",
-              "utf8_pos": 1547,
-              "subst": []
-            },
-            "loc": [
-              1546,
-              33
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%token\"",
-                    "loc": [
-                      1584,
-                      1592
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "nonempty_symbol_list",
-                    "loc": [
-                      1605,
-                      1625
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                1584,
-                41
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Token(symbol_list.to_array(), type_=None) ",
-              "utf8_pos": 1627,
-              "subst": []
-            },
-            "loc": [
-              1626,
-              45
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%token\"",
-                    "loc": [
-                      1676,
-                      1684
-                    ]
-                  }
-                },
-                {
-                  "binder": "type_",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "LANGLE_CODE_RANGLE",
-                    "loc": [
-                      1691,
-                      1709
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "nonempty_symbol_list",
-                    "loc": [
-                      1722,
-                      1742
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                1676,
-                66
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Token(symbol_list.to_array(), type_=Some(type_)) ",
-              "utf8_pos": 1744,
-              "subst": []
-            },
-            "loc": [
-              1743,
-              52
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%token\"",
-                    "loc": [
-                      1800,
-                      1808
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "symbol",
-                    "loc": [
-                      1816,
-                      1822
-                    ]
-                  }
-                },
-                {
-                  "binder": "image",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "STRING",
-                    "loc": [
-                      1829,
-                      1835
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                1800,
-                35
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Token1(symbol, type_=None, image=image) ",
-              "utf8_pos": 1837,
-              "subst": []
-            },
-            "loc": [
-              1836,
-              43
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%token\"",
-                    "loc": [
-                      1884,
-                      1892
-                    ]
-                  }
-                },
-                {
-                  "binder": "type_",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "LANGLE_CODE_RANGLE",
-                    "loc": [
-                      1899,
-                      1917
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "symbol",
-                    "loc": [
-                      1925,
-                      1931
-                    ]
-                  }
-                },
-                {
-                  "binder": "image",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "STRING",
-                    "loc": [
-                      1938,
-                      1944
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                1884,
-                60
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Token1(symbol, type_=Some(type_), image=image) ",
-              "utf8_pos": 1946,
-              "subst": []
-            },
-            "loc": [
-              1945,
-              50
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%type\"",
-                    "loc": [
-                      2000,
-                      2007
-                    ]
-                  }
-                },
-                {
-                  "binder": "type_",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "LANGLE_CODE_RANGLE",
-                    "loc": [
-                      2014,
-                      2032
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "nonempty_symbol_list",
-                    "loc": [
-                      2045,
-                      2065
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                2000,
-                65
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Type(symbol_list.to_array(), type_=type_) ",
-              "utf8_pos": 2067,
-              "subst": []
-            },
-            "loc": [
-              2066,
-              45
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%position\"",
-                    "loc": [
-                      2116,
-                      2127
-                    ]
-                  }
-                },
-                {
-                  "binder": "type_",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "LANGLE_CODE_RANGLE",
-                    "loc": [
-                      2134,
-                      2152
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                2116,
-                36
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Position(type_=type_) ",
-              "utf8_pos": 2154,
-              "subst": []
-            },
-            "loc": [
-              2153,
-              25
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%left\"",
-                    "loc": [
-                      2183,
-                      2190
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "nonempty_prec_symbol_list",
-                    "loc": [
-                      2203,
-                      2228
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                2183,
-                45
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Left(symbol_list.to_array()) ",
-              "utf8_pos": 2230,
-              "subst": []
-            },
-            "loc": [
-              2229,
-              32
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%right\"",
-                    "loc": [
-                      2266,
-                      2274
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "nonempty_prec_symbol_list",
-                    "loc": [
-                      2287,
-                      2312
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                2266,
-                46
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Right(symbol_list.to_array()) ",
-              "utf8_pos": 2314,
-              "subst": []
-            },
-            "loc": [
-              2313,
-              33
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%nonassoc\"",
-                    "loc": [
-                      2351,
-                      2362
-                    ]
-                  }
-                },
-                {
-                  "binder": "symbol_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "nonempty_prec_symbol_list",
-                    "loc": [
-                      2375,
-                      2400
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                2351,
-                49
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Nonassoc(symbol_list.to_array()) ",
-              "utf8_pos": 2402,
-              "subst": []
-            },
-            "loc": [
-              2401,
-              36
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "term": {
-                    "$tag": "Image",
-                    "0": "\"%derive\"",
-                    "loc": [
-                      2442,
-                      2451
-                    ]
-                  }
-                },
-                {
-                  "binder": "traits",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "LANGLE_CODE_RANGLE",
-                    "loc": [
-                      2459,
-                      2477
-                    ]
-                  }
-                },
-                {
-                  "binder": "type_",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "IDENT",
-                    "loc": [
-                      2484,
-                      2489
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                2442,
-                47
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Derive(traits=traits, type_=type_) ",
-              "utf8_pos": 2491,
-              "subst": []
-            },
-            "loc": [
-              2490,
-              38
-            ]
-          }
-        ]
-      ]
-    },
-    {
-      "inline": false,
-      "nonterminal": "rule_list",
-      "generic_params": [],
-      "params": [],
-      "type_": {
-        "$tag": "Constr",
-        "pkg": "immut/list",
-        "0": "T",
-        "1": [
-          {
-            "$tag": "Constr",
-            "pkg": "ast",
-            "0": "Rule",
-            "1": []
-          }
-        ]
-      },
-      "clauses": [
-        [
-          [
-            {
-              "items": [
-                {
-                  "binder": "rule",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "rule",
-                    "loc": [
-                      2581,
-                      2585
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                2576,
-                9
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Cons(rule, Nil) ",
-              "utf8_pos": 2587,
-              "subst": []
-            },
-            "loc": [
-              2586,
-              19
-            ]
-          }
-        ],
-        [
-          [
-            {
-              "items": [
-                {
-                  "binder": "rule",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "rule",
-                    "loc": [
-                      2615,
-                      2619
-                    ]
-                  }
-                },
-                {
-                  "binder": "rule_list",
-                  "term": {
-                    "$tag": "Symbol",
-                    "0": "rule_list",
-                    "loc": [
-                      2630,
-                      2639
-                    ]
-                  }
-                }
-              ],
-              "loc": [
-                2610,
-                29
-              ]
-            }
-          ],
-          {
-            "code": {
-              "code": " Cons(rule, rule_list) ",
-              "utf8_pos": 2641,
-              "subst": []
-            },
-            "loc": [
-              2640,
-              25
             ]
           }
         ]
@@ -1293,14 +1250,14 @@
                     "$tag": "Symbol",
                     "0": "rule_no_modifiers",
                     "loc": [
-                      2693,
-                      2710
+                      2784,
+                      2801
                     ]
                   }
                 }
               ],
               "loc": [
-                2693,
+                2784,
                 17
               ]
             }
@@ -1308,7 +1265,7 @@
           {
             "code": {
               "code": " $1 ",
-              "utf8_pos": 2712,
+              "utf8_pos": 2803,
               "subst": [
                 {
                   "start": 1,
@@ -1321,7 +1278,7 @@
               ]
             },
             "loc": [
-              2711,
+              2802,
               6
             ]
           }
@@ -1335,8 +1292,8 @@
                     "$tag": "Image",
                     "0": "\"%inline\"",
                     "loc": [
-                      2722,
-                      2731
+                      2813,
+                      2822
                     ]
                   }
                 },
@@ -1345,14 +1302,14 @@
                     "$tag": "Symbol",
                     "0": "rule_no_modifiers",
                     "loc": [
-                      2732,
-                      2749
+                      2823,
+                      2840
                     ]
                   }
                 }
               ],
               "loc": [
-                2722,
+                2813,
                 27
               ]
             }
@@ -1360,7 +1317,7 @@
           {
             "code": {
               "code": " { ..$2, inline: true } ",
-              "utf8_pos": 2751,
+              "utf8_pos": 2842,
               "subst": [
                 {
                   "start": 5,
@@ -1373,7 +1330,7 @@
               ]
             },
             "loc": [
-              2750,
+              2841,
               26
             ]
           }
@@ -1402,8 +1359,8 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      2829,
-                      2835
+                      2920,
+                      2926
                     ]
                   }
                 },
@@ -1413,8 +1370,8 @@
                     "$tag": "Symbol",
                     "0": "opt_rule_return_type",
                     "loc": [
-                      2842,
-                      2862
+                      2933,
+                      2953
                     ]
                   }
                 },
@@ -1423,8 +1380,8 @@
                     "$tag": "Image",
                     "0": "\":\"",
                     "loc": [
-                      2863,
-                      2866
+                      2954,
+                      2957
                     ]
                   }
                 },
@@ -1434,8 +1391,8 @@
                     "$tag": "Symbol",
                     "0": "clause_list",
                     "loc": [
-                      2879,
-                      2890
+                      2970,
+                      2981
                     ]
                   }
                 },
@@ -1444,16 +1401,16 @@
                     "$tag": "RuleCall",
                     "0": "option",
                     "symbol_loc": [
-                      2891,
-                      2897
+                      2982,
+                      2988
                     ],
                     "1": [
                       {
                         "$tag": "Image",
                         "0": "\";\"",
                         "loc": [
-                          2898,
-                          2901
+                          2989,
+                          2992
                         ]
                       }
                     ]
@@ -1461,7 +1418,7 @@
                 }
               ],
               "loc": [
-                2817,
+                2908,
                 85
               ]
             }
@@ -1469,11 +1426,11 @@
           {
             "code": {
               "code": "\n    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }\n  ",
-              "utf8_pos": 2904,
+              "utf8_pos": 2995,
               "subst": []
             },
             "loc": [
-              2903,
+              2994,
               112
             ]
           }
@@ -1488,8 +1445,8 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      3032,
-                      3038
+                      3123,
+                      3129
                     ]
                   }
                 },
@@ -1499,8 +1456,8 @@
                     "$tag": "Symbol",
                     "0": "opt_rule_generic_params",
                     "loc": [
-                      3054,
-                      3077
+                      3145,
+                      3168
                     ]
                   }
                 },
@@ -1509,8 +1466,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      3078,
-                      3081
+                      3169,
+                      3172
                     ]
                   }
                 },
@@ -1520,8 +1477,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_rule_param_list",
                     "loc": [
-                      3093,
-                      3117
+                      3184,
+                      3208
                     ]
                   }
                 },
@@ -1530,8 +1487,8 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      3118,
-                      3121
+                      3209,
+                      3212
                     ]
                   }
                 },
@@ -1541,8 +1498,8 @@
                     "$tag": "Symbol",
                     "0": "opt_rule_return_type",
                     "loc": [
-                      3128,
-                      3148
+                      3219,
+                      3239
                     ]
                   }
                 },
@@ -1551,8 +1508,8 @@
                     "$tag": "Image",
                     "0": "\":\"",
                     "loc": [
-                      3149,
-                      3152
+                      3240,
+                      3243
                     ]
                   }
                 },
@@ -1562,8 +1519,8 @@
                     "$tag": "Symbol",
                     "0": "clause_list",
                     "loc": [
-                      3165,
-                      3176
+                      3256,
+                      3267
                     ]
                   }
                 },
@@ -1572,16 +1529,16 @@
                     "$tag": "RuleCall",
                     "0": "option",
                     "symbol_loc": [
-                      3177,
-                      3183
+                      3268,
+                      3274
                     ],
                     "1": [
                       {
                         "$tag": "Image",
                         "0": "\";\"",
                         "loc": [
-                          3184,
-                          3187
+                          3275,
+                          3278
                         ]
                       }
                     ]
@@ -1589,7 +1546,7 @@
                 }
               ],
               "loc": [
-                3020,
+                3111,
                 168
               ]
             }
@@ -1597,11 +1554,11 @@
           {
             "code": {
               "code": "\n    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }\n  ",
-              "utf8_pos": 3190,
+              "utf8_pos": 3281,
               "subst": []
             },
             "loc": [
-              3189,
+              3280,
               128
             ]
           }
@@ -1632,8 +1589,8 @@
                     "$tag": "Image",
                     "0": "\"->\"",
                     "loc": [
-                      3366,
-                      3370
+                      3457,
+                      3461
                     ]
                   }
                 },
@@ -1643,14 +1600,14 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      3377,
-                      3386
+                      3468,
+                      3477
                     ]
                   }
                 }
               ],
               "loc": [
-                3366,
+                3457,
                 20
               ]
             }
@@ -1658,11 +1615,11 @@
           {
             "code": {
               "code": " Some(type_) ",
-              "utf8_pos": 3388,
+              "utf8_pos": 3479,
               "subst": []
             },
             "loc": [
-              3387,
+              3478,
               15
             ]
           }
@@ -1672,7 +1629,7 @@
             {
               "items": [],
               "loc": [
-                3406,
+                3497,
                 0
               ]
             }
@@ -1680,11 +1637,11 @@
           {
             "code": {
               "code": " None ",
-              "utf8_pos": 3408,
+              "utf8_pos": 3499,
               "subst": []
             },
             "loc": [
-              3407,
+              3498,
               8
             ]
           }
@@ -1733,14 +1690,14 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      3493,
-                      3498
+                      3584,
+                      3589
                     ]
                   }
                 }
               ],
               "loc": [
-                3493,
+                3584,
                 5
               ]
             }
@@ -1748,7 +1705,7 @@
           {
             "code": {
               "code": " Cons(($1, None), Nil) ",
-              "utf8_pos": 3500,
+              "utf8_pos": 3591,
               "subst": [
                 {
                   "start": 7,
@@ -1761,7 +1718,7 @@
               ]
             },
             "loc": [
-              3499,
+              3590,
               25
             ]
           }
@@ -1775,8 +1732,8 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      3529,
-                      3534
+                      3620,
+                      3625
                     ]
                   }
                 },
@@ -1785,8 +1742,8 @@
                     "$tag": "Image",
                     "0": "\":\"",
                     "loc": [
-                      3535,
-                      3538
+                      3626,
+                      3629
                     ]
                   }
                 },
@@ -1795,14 +1752,14 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      3539,
-                      3548
+                      3630,
+                      3639
                     ]
                   }
                 }
               ],
               "loc": [
-                3529,
+                3620,
                 19
               ]
             }
@@ -1810,7 +1767,7 @@
           {
             "code": {
               "code": " Cons(($1, Some($3)), Nil) ",
-              "utf8_pos": 3550,
+              "utf8_pos": 3641,
               "subst": [
                 {
                   "start": 7,
@@ -1831,7 +1788,7 @@
               ]
             },
             "loc": [
-              3549,
+              3640,
               29
             ]
           }
@@ -1845,8 +1802,8 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      3583,
-                      3588
+                      3674,
+                      3679
                     ]
                   }
                 },
@@ -1855,8 +1812,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      3589,
-                      3592
+                      3680,
+                      3683
                     ]
                   }
                 },
@@ -1865,14 +1822,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_rule_param_list",
                     "loc": [
-                      3593,
-                      3617
+                      3684,
+                      3708
                     ]
                   }
                 }
               ],
               "loc": [
-                3583,
+                3674,
                 34
               ]
             }
@@ -1880,7 +1837,7 @@
           {
             "code": {
               "code": " Cons(($1, None), $3) ",
-              "utf8_pos": 3619,
+              "utf8_pos": 3710,
               "subst": [
                 {
                   "start": 7,
@@ -1901,7 +1858,7 @@
               ]
             },
             "loc": [
-              3618,
+              3709,
               24
             ]
           }
@@ -1915,8 +1872,8 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      3647,
-                      3652
+                      3738,
+                      3743
                     ]
                   }
                 },
@@ -1925,8 +1882,8 @@
                     "$tag": "Image",
                     "0": "\":\"",
                     "loc": [
-                      3653,
-                      3656
+                      3744,
+                      3747
                     ]
                   }
                 },
@@ -1935,8 +1892,8 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      3657,
-                      3666
+                      3748,
+                      3757
                     ]
                   }
                 },
@@ -1945,8 +1902,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      3667,
-                      3670
+                      3758,
+                      3761
                     ]
                   }
                 },
@@ -1955,14 +1912,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_rule_param_list",
                     "loc": [
-                      3671,
-                      3695
+                      3762,
+                      3786
                     ]
                   }
                 }
               ],
               "loc": [
-                3647,
+                3738,
                 48
               ]
             }
@@ -1970,7 +1927,7 @@
           {
             "code": {
               "code": " Cons(($1, Some($3)), $5) ",
-              "utf8_pos": 3697,
+              "utf8_pos": 3788,
               "subst": [
                 {
                   "start": 7,
@@ -1999,7 +1956,7 @@
               ]
             },
             "loc": [
-              3696,
+              3787,
               28
             ]
           }
@@ -2030,7 +1987,7 @@
             {
               "items": [],
               "loc": [
-                3774,
+                3865,
                 0
               ]
             }
@@ -2038,11 +1995,11 @@
           {
             "code": {
               "code": " [] ",
-              "utf8_pos": 3776,
+              "utf8_pos": 3867,
               "subst": []
             },
             "loc": [
-              3775,
+              3866,
               6
             ]
           }
@@ -2056,8 +2013,8 @@
                     "$tag": "Image",
                     "0": "\"[\"",
                     "loc": [
-                      3786,
-                      3789
+                      3877,
+                      3880
                     ]
                   }
                 },
@@ -2066,8 +2023,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_comma_ident_list",
                     "loc": [
-                      3790,
-                      3815
+                      3881,
+                      3906
                     ]
                   }
                 },
@@ -2076,14 +2033,14 @@
                     "$tag": "Image",
                     "0": "\"]\"",
                     "loc": [
-                      3816,
-                      3819
+                      3907,
+                      3910
                     ]
                   }
                 }
               ],
               "loc": [
-                3786,
+                3877,
                 33
               ]
             }
@@ -2091,7 +2048,7 @@
           {
             "code": {
               "code": " $2.to_array() ",
-              "utf8_pos": 3821,
+              "utf8_pos": 3912,
               "subst": [
                 {
                   "start": 1,
@@ -2104,7 +2061,7 @@
               ]
             },
             "loc": [
-              3820,
+              3911,
               17
             ]
           }
@@ -2139,14 +2096,14 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      3898,
-                      3903
+                      3989,
+                      3994
                     ]
                   }
                 }
               ],
               "loc": [
-                3898,
+                3989,
                 5
               ]
             }
@@ -2154,7 +2111,7 @@
           {
             "code": {
               "code": " Cons($1, Nil) ",
-              "utf8_pos": 3905,
+              "utf8_pos": 3996,
               "subst": [
                 {
                   "start": 6,
@@ -2167,7 +2124,7 @@
               ]
             },
             "loc": [
-              3904,
+              3995,
               17
             ]
           }
@@ -2181,8 +2138,8 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      3926,
-                      3931
+                      4017,
+                      4022
                     ]
                   }
                 },
@@ -2191,8 +2148,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      3932,
-                      3935
+                      4023,
+                      4026
                     ]
                   }
                 },
@@ -2201,14 +2158,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_comma_ident_list",
                     "loc": [
-                      3936,
-                      3961
+                      4027,
+                      4052
                     ]
                   }
                 }
               ],
               "loc": [
-                3926,
+                4017,
                 35
               ]
             }
@@ -2216,7 +2173,7 @@
           {
             "code": {
               "code": " Cons($1, $3) ",
-              "utf8_pos": 3963,
+              "utf8_pos": 4054,
               "subst": [
                 {
                   "start": 6,
@@ -2237,7 +2194,7 @@
               ]
             },
             "loc": [
-              3962,
+              4053,
               16
             ]
           }
@@ -2265,14 +2222,14 @@
                     "$tag": "Symbol",
                     "0": "postfix_type_expr",
                     "loc": [
-                      4015,
-                      4032
+                      4106,
+                      4123
                     ]
                   }
                 }
               ],
               "loc": [
-                4015,
+                4106,
                 17
               ]
             }
@@ -2280,7 +2237,7 @@
           {
             "code": {
               "code": " $1 ",
-              "utf8_pos": 4034,
+              "utf8_pos": 4125,
               "subst": [
                 {
                   "start": 1,
@@ -2293,7 +2250,7 @@
               ]
             },
             "loc": [
-              4033,
+              4124,
               6
             ]
           }
@@ -2307,8 +2264,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      4044,
-                      4047
+                      4135,
+                      4138
                     ]
                   }
                 },
@@ -2317,8 +2274,8 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      4048,
-                      4051
+                      4139,
+                      4142
                     ]
                   }
                 },
@@ -2327,8 +2284,8 @@
                     "$tag": "Image",
                     "0": "\"->\"",
                     "loc": [
-                      4052,
-                      4056
+                      4143,
+                      4147
                     ]
                   }
                 },
@@ -2337,14 +2294,14 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4057,
-                      4066
+                      4148,
+                      4157
                     ]
                   }
                 }
               ],
               "loc": [
-                4044,
+                4135,
                 22
               ]
             }
@@ -2352,7 +2309,7 @@
           {
             "code": {
               "code": " Arrow([], $4) ",
-              "utf8_pos": 4068,
+              "utf8_pos": 4159,
               "subst": [
                 {
                   "start": 11,
@@ -2365,7 +2322,7 @@
               ]
             },
             "loc": [
-              4067,
+              4158,
               17
             ]
           }
@@ -2379,8 +2336,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      4089,
-                      4092
+                      4180,
+                      4183
                     ]
                   }
                 },
@@ -2389,8 +2346,8 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4093,
-                      4102
+                      4184,
+                      4193
                     ]
                   }
                 },
@@ -2399,8 +2356,8 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      4103,
-                      4106
+                      4194,
+                      4197
                     ]
                   }
                 },
@@ -2409,8 +2366,8 @@
                     "$tag": "Image",
                     "0": "\"->\"",
                     "loc": [
-                      4107,
-                      4111
+                      4198,
+                      4202
                     ]
                   }
                 },
@@ -2419,14 +2376,14 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4112,
-                      4121
+                      4203,
+                      4212
                     ]
                   }
                 }
               ],
               "loc": [
-                4089,
+                4180,
                 32
               ]
             }
@@ -2434,7 +2391,7 @@
           {
             "code": {
               "code": " Arrow([$2], $5) ",
-              "utf8_pos": 4123,
+              "utf8_pos": 4214,
               "subst": [
                 {
                   "start": 8,
@@ -2455,7 +2412,7 @@
               ]
             },
             "loc": [
-              4122,
+              4213,
               19
             ]
           }
@@ -2469,8 +2426,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      4146,
-                      4149
+                      4237,
+                      4240
                     ]
                   }
                 },
@@ -2479,8 +2436,8 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4150,
-                      4159
+                      4241,
+                      4250
                     ]
                   }
                 },
@@ -2489,8 +2446,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      4160,
-                      4163
+                      4251,
+                      4254
                     ]
                   }
                 },
@@ -2499,8 +2456,8 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      4164,
-                      4167
+                      4255,
+                      4258
                     ]
                   }
                 },
@@ -2509,8 +2466,8 @@
                     "$tag": "Image",
                     "0": "\"->\"",
                     "loc": [
-                      4168,
-                      4172
+                      4259,
+                      4263
                     ]
                   }
                 },
@@ -2519,14 +2476,14 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4173,
-                      4182
+                      4264,
+                      4273
                     ]
                   }
                 }
               ],
               "loc": [
-                4146,
+                4237,
                 36
               ]
             }
@@ -2534,7 +2491,7 @@
           {
             "code": {
               "code": " Arrow([$2], $6) ",
-              "utf8_pos": 4184,
+              "utf8_pos": 4275,
               "subst": [
                 {
                   "start": 8,
@@ -2555,7 +2512,7 @@
               ]
             },
             "loc": [
-              4183,
+              4274,
               19
             ]
           }
@@ -2569,8 +2526,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      4207,
-                      4210
+                      4298,
+                      4301
                     ]
                   }
                 },
@@ -2579,8 +2536,8 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4211,
-                      4220
+                      4302,
+                      4311
                     ]
                   }
                 },
@@ -2589,8 +2546,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      4221,
-                      4224
+                      4312,
+                      4315
                     ]
                   }
                 },
@@ -2599,8 +2556,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_type_expr_list",
                     "loc": [
-                      4225,
-                      4248
+                      4316,
+                      4339
                     ]
                   }
                 },
@@ -2609,8 +2566,8 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      4249,
-                      4252
+                      4340,
+                      4343
                     ]
                   }
                 },
@@ -2619,8 +2576,8 @@
                     "$tag": "Image",
                     "0": "\"->\"",
                     "loc": [
-                      4253,
-                      4257
+                      4344,
+                      4348
                     ]
                   }
                 },
@@ -2629,14 +2586,14 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4258,
-                      4267
+                      4349,
+                      4358
                     ]
                   }
                 }
               ],
               "loc": [
-                4207,
+                4298,
                 60
               ]
             }
@@ -2644,7 +2601,7 @@
           {
             "code": {
               "code": " Arrow(@immut/list.Cons($2, $4).to_array(), $7) ",
-              "utf8_pos": 4269,
+              "utf8_pos": 4360,
               "subst": [
                 {
                   "start": 24,
@@ -2673,7 +2630,7 @@
               ]
             },
             "loc": [
-              4268,
+              4359,
               50
             ]
           }
@@ -2701,14 +2658,14 @@
                     "$tag": "Symbol",
                     "0": "basic_type_expr",
                     "loc": [
-                      4363,
-                      4378
+                      4454,
+                      4469
                     ]
                   }
                 }
               ],
               "loc": [
-                4363,
+                4454,
                 15
               ]
             }
@@ -2716,7 +2673,7 @@
           {
             "code": {
               "code": " $1 ",
-              "utf8_pos": 4380,
+              "utf8_pos": 4471,
               "subst": [
                 {
                   "start": 1,
@@ -2729,7 +2686,7 @@
               ]
             },
             "loc": [
-              4379,
+              4470,
               6
             ]
           }
@@ -2743,8 +2700,8 @@
                     "$tag": "Symbol",
                     "0": "postfix_type_expr",
                     "loc": [
-                      4390,
-                      4407
+                      4481,
+                      4498
                     ]
                   }
                 },
@@ -2753,14 +2710,14 @@
                     "$tag": "Image",
                     "0": "\"?\"",
                     "loc": [
-                      4408,
-                      4411
+                      4499,
+                      4502
                     ]
                   }
                 }
               ],
               "loc": [
-                4390,
+                4481,
                 21
               ]
             }
@@ -2768,7 +2725,7 @@
           {
             "code": {
               "code": " Option($1) ",
-              "utf8_pos": 4413,
+              "utf8_pos": 4504,
               "subst": [
                 {
                   "start": 8,
@@ -2781,7 +2738,7 @@
               ]
             },
             "loc": [
-              4412,
+              4503,
               14
             ]
           }
@@ -2809,14 +2766,14 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      4469,
-                      4474
+                      4560,
+                      4565
                     ]
                   }
                 }
               ],
               "loc": [
-                4469,
+                4560,
                 5
               ]
             }
@@ -2824,7 +2781,7 @@
           {
             "code": {
               "code": " Constr(pkg=None, $1, []) ",
-              "utf8_pos": 4476,
+              "utf8_pos": 4567,
               "subst": [
                 {
                   "start": 18,
@@ -2837,7 +2794,7 @@
               ]
             },
             "loc": [
-              4475,
+              4566,
               28
             ]
           }
@@ -2851,14 +2808,14 @@
                     "$tag": "Symbol",
                     "0": "PKG_AND_IDENT",
                     "loc": [
-                      4508,
-                      4521
+                      4599,
+                      4612
                     ]
                   }
                 }
               ],
               "loc": [
-                4508,
+                4599,
                 13
               ]
             }
@@ -2866,7 +2823,7 @@
           {
             "code": {
               "code": " Constr(pkg=Some($1.0), $1.1, []) ",
-              "utf8_pos": 4523,
+              "utf8_pos": 4614,
               "subst": [
                 {
                   "start": 17,
@@ -2887,7 +2844,7 @@
               ]
             },
             "loc": [
-              4522,
+              4613,
               36
             ]
           }
@@ -2901,8 +2858,8 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      4563,
-                      4568
+                      4654,
+                      4659
                     ]
                   }
                 },
@@ -2911,8 +2868,8 @@
                     "$tag": "Image",
                     "0": "\"[\"",
                     "loc": [
-                      4569,
-                      4572
+                      4660,
+                      4663
                     ]
                   }
                 },
@@ -2921,8 +2878,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_type_expr_list",
                     "loc": [
-                      4573,
-                      4596
+                      4664,
+                      4687
                     ]
                   }
                 },
@@ -2931,14 +2888,14 @@
                     "$tag": "Image",
                     "0": "\"]\"",
                     "loc": [
-                      4597,
-                      4600
+                      4688,
+                      4691
                     ]
                   }
                 }
               ],
               "loc": [
-                4563,
+                4654,
                 37
               ]
             }
@@ -2946,7 +2903,7 @@
           {
             "code": {
               "code": " Constr(pkg=None, $1, $3.to_array()) ",
-              "utf8_pos": 4602,
+              "utf8_pos": 4693,
               "subst": [
                 {
                   "start": 18,
@@ -2967,7 +2924,7 @@
               ]
             },
             "loc": [
-              4601,
+              4692,
               39
             ]
           }
@@ -2981,8 +2938,8 @@
                     "$tag": "Symbol",
                     "0": "PKG_AND_IDENT",
                     "loc": [
-                      4645,
-                      4658
+                      4736,
+                      4749
                     ]
                   }
                 },
@@ -2991,8 +2948,8 @@
                     "$tag": "Image",
                     "0": "\"[\"",
                     "loc": [
-                      4659,
-                      4662
+                      4750,
+                      4753
                     ]
                   }
                 },
@@ -3001,8 +2958,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_type_expr_list",
                     "loc": [
-                      4663,
-                      4686
+                      4754,
+                      4777
                     ]
                   }
                 },
@@ -3011,14 +2968,14 @@
                     "$tag": "Image",
                     "0": "\"]\"",
                     "loc": [
-                      4687,
-                      4690
+                      4778,
+                      4781
                     ]
                   }
                 }
               ],
               "loc": [
-                4645,
+                4736,
                 45
               ]
             }
@@ -3026,7 +2983,7 @@
           {
             "code": {
               "code": " Constr(pkg=Some($1.0), $1.1, $3.to_array()) ",
-              "utf8_pos": 4692,
+              "utf8_pos": 4783,
               "subst": [
                 {
                   "start": 17,
@@ -3055,7 +3012,7 @@
               ]
             },
             "loc": [
-              4691,
+              4782,
               47
             ]
           }
@@ -3069,8 +3026,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      4743,
-                      4746
+                      4834,
+                      4837
                     ]
                   }
                 },
@@ -3079,8 +3036,8 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4747,
-                      4756
+                      4838,
+                      4847
                     ]
                   }
                 },
@@ -3089,8 +3046,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      4757,
-                      4760
+                      4848,
+                      4851
                     ]
                   }
                 },
@@ -3099,8 +3056,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_type_expr_list",
                     "loc": [
-                      4761,
-                      4784
+                      4852,
+                      4875
                     ]
                   }
                 },
@@ -3109,14 +3066,14 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      4785,
-                      4788
+                      4876,
+                      4879
                     ]
                   }
                 }
               ],
               "loc": [
-                4743,
+                4834,
                 45
               ]
             }
@@ -3124,7 +3081,7 @@
           {
             "code": {
               "code": " Tuple(@immut/list.Cons($2, $4).to_array()) ",
-              "utf8_pos": 4790,
+              "utf8_pos": 4881,
               "subst": [
                 {
                   "start": 24,
@@ -3145,7 +3102,7 @@
               ]
             },
             "loc": [
-              4789,
+              4880,
               46
             ]
           }
@@ -3159,8 +3116,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      4840,
-                      4843
+                      4931,
+                      4934
                     ]
                   }
                 },
@@ -3169,8 +3126,8 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4844,
-                      4853
+                      4935,
+                      4944
                     ]
                   }
                 },
@@ -3179,14 +3136,14 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      4854,
-                      4857
+                      4945,
+                      4948
                     ]
                   }
                 }
               ],
               "loc": [
-                4840,
+                4931,
                 17
               ]
             }
@@ -3194,7 +3151,7 @@
           {
             "code": {
               "code": " $2 ",
-              "utf8_pos": 4859,
+              "utf8_pos": 4950,
               "subst": [
                 {
                   "start": 1,
@@ -3207,7 +3164,7 @@
               ]
             },
             "loc": [
-              4858,
+              4949,
               6
             ]
           }
@@ -3243,14 +3200,14 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4940,
-                      4949
+                      5031,
+                      5040
                     ]
                   }
                 }
               ],
               "loc": [
-                4930,
+                5021,
                 19
               ]
             }
@@ -3258,11 +3215,11 @@
           {
             "code": {
               "code": " Cons(type_expr, Nil) ",
-              "utf8_pos": 4951,
+              "utf8_pos": 5042,
               "subst": []
             },
             "loc": [
-              4950,
+              5041,
               24
             ]
           }
@@ -3277,8 +3234,8 @@
                     "$tag": "Symbol",
                     "0": "type_expr",
                     "loc": [
-                      4989,
-                      4998
+                      5080,
+                      5089
                     ]
                   }
                 },
@@ -3287,8 +3244,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      4999,
-                      5002
+                      5090,
+                      5093
                     ]
                   }
                 },
@@ -3298,14 +3255,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_type_expr_list",
                     "loc": [
-                      5018,
-                      5041
+                      5109,
+                      5132
                     ]
                   }
                 }
               ],
               "loc": [
-                4979,
+                5070,
                 62
               ]
             }
@@ -3313,11 +3270,11 @@
           {
             "code": {
               "code": " Cons(type_expr, type_expr_list) ",
-              "utf8_pos": 5043,
+              "utf8_pos": 5134,
               "subst": []
             },
             "loc": [
-              5042,
+              5133,
               35
             ]
           }
@@ -3370,8 +3327,8 @@
                     "$tag": "Image",
                     "0": "\"|\"",
                     "loc": [
-                      5178,
-                      5181
+                      5269,
+                      5272
                     ]
                   }
                 },
@@ -3380,14 +3337,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_clause_list",
                     "loc": [
-                      5182,
-                      5202
+                      5273,
+                      5293
                     ]
                   }
                 }
               ],
               "loc": [
-                5178,
+                5269,
                 24
               ]
             }
@@ -3395,7 +3352,7 @@
           {
             "code": {
               "code": " $2 ",
-              "utf8_pos": 5204,
+              "utf8_pos": 5295,
               "subst": [
                 {
                   "start": 1,
@@ -3408,7 +3365,7 @@
               ]
             },
             "loc": [
-              5203,
+              5294,
               6
             ]
           }
@@ -3422,14 +3379,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_clause_list",
                     "loc": [
-                      5214,
-                      5234
+                      5305,
+                      5325
                     ]
                   }
                 }
               ],
               "loc": [
-                5214,
+                5305,
                 20
               ]
             }
@@ -3437,7 +3394,7 @@
           {
             "code": {
               "code": " $1 ",
-              "utf8_pos": 5236,
+              "utf8_pos": 5327,
               "subst": [
                 {
                   "start": 1,
@@ -3450,7 +3407,7 @@
               ]
             },
             "loc": [
-              5235,
+              5326,
               6
             ]
           }
@@ -3504,8 +3461,8 @@
                     "$tag": "Symbol",
                     "0": "clause_without_action",
                     "loc": [
-                      5362,
-                      5383
+                      5453,
+                      5474
                     ]
                   }
                 },
@@ -3515,14 +3472,14 @@
                     "$tag": "Symbol",
                     "0": "clause_action",
                     "loc": [
-                      5391,
-                      5404
+                      5482,
+                      5495
                     ]
                   }
                 }
               ],
               "loc": [
-                5351,
+                5442,
                 53
               ]
             }
@@ -3530,11 +3487,11 @@
           {
             "code": {
               "code": " Cons((Cons(clause_woa, Nil), action), Nil) ",
-              "utf8_pos": 5406,
+              "utf8_pos": 5497,
               "subst": []
             },
             "loc": [
-              5405,
+              5496,
               46
             ]
           }
@@ -3549,8 +3506,8 @@
                     "$tag": "Symbol",
                     "0": "clause_without_action",
                     "loc": [
-                      5467,
-                      5488
+                      5558,
+                      5579
                     ]
                   }
                 },
@@ -3560,8 +3517,8 @@
                     "$tag": "Symbol",
                     "0": "clause_action",
                     "loc": [
-                      5496,
-                      5509
+                      5587,
+                      5600
                     ]
                   }
                 },
@@ -3570,8 +3527,8 @@
                     "$tag": "Image",
                     "0": "\"|\"",
                     "loc": [
-                      5510,
-                      5513
+                      5601,
+                      5604
                     ]
                   }
                 },
@@ -3581,14 +3538,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_clause_list",
                     "loc": [
-                      5526,
-                      5546
+                      5617,
+                      5637
                     ]
                   }
                 }
               ],
               "loc": [
-                5456,
+                5547,
                 90
               ]
             }
@@ -3596,11 +3553,11 @@
           {
             "code": {
               "code": " Cons((Cons(clause_woa, Nil), action), clause_list) ",
-              "utf8_pos": 5548,
+              "utf8_pos": 5639,
               "subst": []
             },
             "loc": [
-              5547,
+              5638,
               54
             ]
           }
@@ -3615,8 +3572,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_clause_without_action",
                     "loc": [
-                      5617,
-                      5647
+                      5708,
+                      5738
                     ]
                   }
                 },
@@ -3625,8 +3582,8 @@
                     "$tag": "Image",
                     "0": "\"|\"",
                     "loc": [
-                      5648,
-                      5651
+                      5739,
+                      5742
                     ]
                   }
                 },
@@ -3636,14 +3593,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_clause_list",
                     "loc": [
-                      5664,
-                      5684
+                      5755,
+                      5775
                     ]
                   }
                 }
               ],
               "loc": [
-                5606,
+                5697,
                 78
               ]
             }
@@ -3651,11 +3608,11 @@
           {
             "code": {
               "code": "\n    guard clause_list is Cons((clause_woa_list, action), tail_clause_list)\n    Cons((Cons(clause_woa, clause_woa_list), action), tail_clause_list)\n  ",
-              "utf8_pos": 5686,
+              "utf8_pos": 5777,
               "subst": []
             },
             "loc": [
-              5685,
+              5776,
               152
             ]
           }
@@ -3683,14 +3640,14 @@
                     "$tag": "Symbol",
                     "0": "empty_clause_without_action",
                     "loc": [
-                      5905,
-                      5932
+                      5996,
+                      6023
                     ]
                   }
                 }
               ],
               "loc": [
-                5905,
+                5996,
                 27
               ]
             }
@@ -3698,7 +3655,7 @@
           {
             "code": {
               "code": " $1 ",
-              "utf8_pos": 5934,
+              "utf8_pos": 6025,
               "subst": [
                 {
                   "start": 1,
@@ -3711,7 +3668,7 @@
               ]
             },
             "loc": [
-              5933,
+              6024,
               6
             ]
           }
@@ -3725,14 +3682,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_clause_without_action",
                     "loc": [
-                      5944,
-                      5974
+                      6035,
+                      6065
                     ]
                   }
                 }
               ],
               "loc": [
-                5944,
+                6035,
                 30
               ]
             }
@@ -3740,7 +3697,7 @@
           {
             "code": {
               "code": " $1 ",
-              "utf8_pos": 5976,
+              "utf8_pos": 6067,
               "subst": [
                 {
                   "start": 1,
@@ -3753,7 +3710,7 @@
               ]
             },
             "loc": [
-              5975,
+              6066,
               6
             ]
           }
@@ -3782,14 +3739,14 @@
                     "$tag": "Symbol",
                     "0": "rule_prec",
                     "loc": [
-                      6052,
-                      6061
+                      6143,
+                      6152
                     ]
                   }
                 }
               ],
               "loc": [
-                6047,
+                6138,
                 14
               ]
             }
@@ -3797,7 +3754,7 @@
           {
             "code": {
               "code": " { items: [], prec, loc: ($startpos, $endpos - $startpos) } ",
-              "utf8_pos": 6063,
+              "utf8_pos": 6154,
               "subst": [
                 {
                   "start": 26,
@@ -3823,7 +3780,7 @@
               ]
             },
             "loc": [
-              6062,
+              6153,
               62
             ]
           }
@@ -3852,8 +3809,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_item_list",
                     "loc": [
-                      6203,
-                      6221
+                      6294,
+                      6312
                     ]
                   }
                 },
@@ -3863,14 +3820,14 @@
                     "$tag": "Symbol",
                     "0": "rule_prec",
                     "loc": [
-                      6227,
-                      6236
+                      6318,
+                      6327
                     ]
                   }
                 }
               ],
               "loc": [
-                6193,
+                6284,
                 43
               ]
             }
@@ -3878,7 +3835,7 @@
           {
             "code": {
               "code": " { items: item_list.to_array(), prec, loc: ($startpos, $endpos - $startpos) } ",
-              "utf8_pos": 6238,
+              "utf8_pos": 6329,
               "subst": [
                 {
                   "start": 44,
@@ -3904,7 +3861,7 @@
               ]
             },
             "loc": [
-              6237,
+              6328,
               80
             ]
           }
@@ -3933,14 +3890,14 @@
                     "$tag": "Symbol",
                     "0": "LBRACE_CODE_RBRACE",
                     "loc": [
-                      6367,
-                      6385
+                      6458,
+                      6476
                     ]
                   }
                 }
               ],
               "loc": [
-                6362,
+                6453,
                 23
               ]
             }
@@ -3948,7 +3905,7 @@
           {
             "code": {
               "code": "\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), loc: ($startpos, $endpos - $startpos) }\n  ",
-              "utf8_pos": 6387,
+              "utf8_pos": 6478,
               "subst": [
                 {
                   "start": 95,
@@ -3974,7 +3931,7 @@
               ]
             },
             "loc": [
-              6386,
+              6477,
               133
             ]
           }
@@ -4005,8 +3962,8 @@
                     "$tag": "Image",
                     "0": "\"%prec\"",
                     "loc": [
-                      6559,
-                      6566
+                      6650,
+                      6657
                     ]
                   }
                 },
@@ -4016,14 +3973,14 @@
                     "$tag": "Symbol",
                     "0": "prec_symbol",
                     "loc": [
-                      6574,
-                      6585
+                      6665,
+                      6676
                     ]
                   }
                 }
               ],
               "loc": [
-                6559,
+                6650,
                 26
               ]
             }
@@ -4031,11 +3988,11 @@
           {
             "code": {
               "code": " Some(symbol) ",
-              "utf8_pos": 6587,
+              "utf8_pos": 6678,
               "subst": []
             },
             "loc": [
-              6586,
+              6677,
               16
             ]
           }
@@ -4045,7 +4002,7 @@
             {
               "items": [],
               "loc": [
-                6606,
+                6697,
                 0
               ]
             }
@@ -4053,11 +4010,11 @@
           {
             "code": {
               "code": " None ",
-              "utf8_pos": 6608,
+              "utf8_pos": 6699,
               "subst": []
             },
             "loc": [
-              6607,
+              6698,
               8
             ]
           }
@@ -4093,14 +4050,14 @@
                     "$tag": "Symbol",
                     "0": "item",
                     "loc": [
-                      6683,
-                      6687
+                      6774,
+                      6778
                     ]
                   }
                 }
               ],
               "loc": [
-                6678,
+                6769,
                 9
               ]
             }
@@ -4108,11 +4065,11 @@
           {
             "code": {
               "code": " Cons(item, Nil) ",
-              "utf8_pos": 6689,
+              "utf8_pos": 6780,
               "subst": []
             },
             "loc": [
-              6688,
+              6779,
               19
             ]
           }
@@ -4127,8 +4084,8 @@
                     "$tag": "Symbol",
                     "0": "item",
                     "loc": [
-                      6717,
-                      6721
+                      6808,
+                      6812
                     ]
                   }
                 },
@@ -4138,14 +4095,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_item_list",
                     "loc": [
-                      6732,
-                      6750
+                      6823,
+                      6841
                     ]
                   }
                 }
               ],
               "loc": [
-                6712,
+                6803,
                 38
               ]
             }
@@ -4153,11 +4110,11 @@
           {
             "code": {
               "code": " Cons(item, item_list) ",
-              "utf8_pos": 6752,
+              "utf8_pos": 6843,
               "subst": []
             },
             "loc": [
-              6751,
+              6842,
               25
             ]
           }
@@ -4186,14 +4143,14 @@
                     "$tag": "Symbol",
                     "0": "term",
                     "loc": [
-                      6815,
-                      6819
+                      6906,
+                      6910
                     ]
                   }
                 }
               ],
               "loc": [
-                6810,
+                6901,
                 9
               ]
             }
@@ -4201,11 +4158,11 @@
           {
             "code": {
               "code": " { binder: None, term: term } ",
-              "utf8_pos": 6821,
+              "utf8_pos": 6912,
               "subst": []
             },
             "loc": [
-              6820,
+              6911,
               32
             ]
           }
@@ -4220,8 +4177,8 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      6864,
-                      6869
+                      6955,
+                      6960
                     ]
                   }
                 },
@@ -4230,8 +4187,8 @@
                     "$tag": "Image",
                     "0": "\"=\"",
                     "loc": [
-                      6870,
-                      6873
+                      6961,
+                      6964
                     ]
                   }
                 },
@@ -4241,14 +4198,14 @@
                     "$tag": "Symbol",
                     "0": "term",
                     "loc": [
-                      6879,
-                      6883
+                      6970,
+                      6974
                     ]
                   }
                 }
               ],
               "loc": [
-                6857,
+                6948,
                 26
               ]
             }
@@ -4256,11 +4213,11 @@
           {
             "code": {
               "code": " { binder: Some(binder), term: term } ",
-              "utf8_pos": 6885,
+              "utf8_pos": 6976,
               "subst": []
             },
             "loc": [
-              6884,
+              6975,
               40
             ]
           }
@@ -4289,14 +4246,14 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      6959,
-                      6965
+                      7050,
+                      7056
                     ]
                   }
                 }
               ],
               "loc": [
-                6952,
+                7043,
                 13
               ]
             }
@@ -4304,7 +4261,7 @@
           {
             "code": {
               "code": " Symbol(symbol, loc=($startpos, $endpos)) ",
-              "utf8_pos": 6967,
+              "utf8_pos": 7058,
               "subst": [
                 {
                   "start": 21,
@@ -4323,7 +4280,7 @@
               ]
             },
             "loc": [
-              6966,
+              7057,
               44
             ]
           }
@@ -4338,8 +4295,8 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      7022,
-                      7028
+                      7113,
+                      7119
                     ]
                   }
                 },
@@ -4348,8 +4305,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      7029,
-                      7032
+                      7120,
+                      7123
                     ]
                   }
                 },
@@ -4358,8 +4315,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_comma_term_list",
                     "loc": [
-                      7033,
-                      7057
+                      7124,
+                      7148
                     ]
                   }
                 },
@@ -4368,14 +4325,14 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      7058,
-                      7061
+                      7149,
+                      7152
                     ]
                   }
                 }
               ],
               "loc": [
-                7015,
+                7106,
                 46
               ]
             }
@@ -4383,7 +4340,7 @@
           {
             "code": {
               "code": " RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) ",
-              "utf8_pos": 7063,
+              "utf8_pos": 7154,
               "subst": [
                 {
                   "start": 30,
@@ -4418,7 +4375,7 @@
               ]
             },
             "loc": [
-              7062,
+              7153,
               84
             ]
           }
@@ -4433,14 +4390,14 @@
                     "$tag": "Symbol",
                     "0": "STRING",
                     "loc": [
-                      7157,
-                      7163
+                      7248,
+                      7254
                     ]
                   }
                 }
               ],
               "loc": [
-                7151,
+                7242,
                 12
               ]
             }
@@ -4448,7 +4405,7 @@
           {
             "code": {
               "code": " Image(image, loc=($startpos, $endpos)) ",
-              "utf8_pos": 7165,
+              "utf8_pos": 7256,
               "subst": [
                 {
                   "start": 19,
@@ -4467,7 +4424,7 @@
               ]
             },
             "loc": [
-              7164,
+              7255,
               42
             ]
           }
@@ -4503,14 +4460,14 @@
                     "$tag": "Symbol",
                     "0": "term",
                     "loc": [
-                      7274,
-                      7278
+                      7365,
+                      7369
                     ]
                   }
                 }
               ],
               "loc": [
-                7269,
+                7360,
                 9
               ]
             }
@@ -4518,11 +4475,11 @@
           {
             "code": {
               "code": " Cons(term, Nil) ",
-              "utf8_pos": 7280,
+              "utf8_pos": 7371,
               "subst": []
             },
             "loc": [
-              7279,
+              7370,
               19
             ]
           }
@@ -4537,8 +4494,8 @@
                     "$tag": "Symbol",
                     "0": "term",
                     "loc": [
-                      7308,
-                      7312
+                      7399,
+                      7403
                     ]
                   }
                 },
@@ -4547,8 +4504,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      7313,
-                      7316
+                      7404,
+                      7407
                     ]
                   }
                 },
@@ -4558,14 +4515,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_comma_term_list",
                     "loc": [
-                      7327,
-                      7351
+                      7418,
+                      7442
                     ]
                   }
                 }
               ],
               "loc": [
-                7303,
+                7394,
                 48
               ]
             }
@@ -4573,11 +4530,11 @@
           {
             "code": {
               "code": " Cons(term, term_list) ",
-              "utf8_pos": 7353,
+              "utf8_pos": 7444,
               "subst": []
             },
             "loc": [
-              7352,
+              7443,
               25
             ]
           }
@@ -4613,14 +4570,14 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      7445,
-                      7451
+                      7536,
+                      7542
                     ]
                   }
                 }
               ],
               "loc": [
-                7438,
+                7529,
                 13
               ]
             }
@@ -4628,11 +4585,11 @@
           {
             "code": {
               "code": " Cons(symbol, Nil) ",
-              "utf8_pos": 7453,
+              "utf8_pos": 7544,
               "subst": []
             },
             "loc": [
-              7452,
+              7543,
               21
             ]
           }
@@ -4647,8 +4604,8 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      7485,
-                      7491
+                      7576,
+                      7582
                     ]
                   }
                 },
@@ -4658,14 +4615,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_symbol_list",
                     "loc": [
-                      7504,
-                      7524
+                      7595,
+                      7615
                     ]
                   }
                 }
               ],
               "loc": [
-                7478,
+                7569,
                 46
               ]
             }
@@ -4673,11 +4630,11 @@
           {
             "code": {
               "code": " Cons(symbol, symbol_list) ",
-              "utf8_pos": 7526,
+              "utf8_pos": 7617,
               "subst": []
             },
             "loc": [
-              7525,
+              7616,
               29
             ]
           }
@@ -4713,14 +4670,14 @@
                     "$tag": "Symbol",
                     "0": "prec_symbol",
                     "loc": [
-                      7631,
-                      7642
+                      7722,
+                      7733
                     ]
                   }
                 }
               ],
               "loc": [
-                7624,
+                7715,
                 18
               ]
             }
@@ -4728,11 +4685,11 @@
           {
             "code": {
               "code": " Cons(symbol, Nil) ",
-              "utf8_pos": 7644,
+              "utf8_pos": 7735,
               "subst": []
             },
             "loc": [
-              7643,
+              7734,
               21
             ]
           }
@@ -4747,8 +4704,8 @@
                     "$tag": "Symbol",
                     "0": "prec_symbol",
                     "loc": [
-                      7676,
-                      7687
+                      7767,
+                      7778
                     ]
                   }
                 },
@@ -4758,14 +4715,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_prec_symbol_list",
                     "loc": [
-                      7700,
-                      7725
+                      7791,
+                      7816
                     ]
                   }
                 }
               ],
               "loc": [
-                7669,
+                7760,
                 56
               ]
             }
@@ -4773,11 +4730,11 @@
           {
             "code": {
               "code": " Cons(symbol, symbol_list) ",
-              "utf8_pos": 7727,
+              "utf8_pos": 7818,
               "subst": []
             },
             "loc": [
-              7726,
+              7817,
               29
             ]
           }
@@ -4806,14 +4763,14 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      7803,
-                      7809
+                      7894,
+                      7900
                     ]
                   }
                 }
               ],
               "loc": [
-                7796,
+                7887,
                 13
               ]
             }
@@ -4821,11 +4778,11 @@
           {
             "code": {
               "code": " Symbol(symbol) ",
-              "utf8_pos": 7811,
+              "utf8_pos": 7902,
               "subst": []
             },
             "loc": [
-              7810,
+              7901,
               18
             ]
           }
@@ -4840,14 +4797,14 @@
                     "$tag": "Symbol",
                     "0": "STRING",
                     "loc": [
-                      7839,
-                      7845
+                      7930,
+                      7936
                     ]
                   }
                 }
               ],
               "loc": [
-                7833,
+                7924,
                 12
               ]
             }
@@ -4855,11 +4812,11 @@
           {
             "code": {
               "code": " Image(image) ",
-              "utf8_pos": 7847,
+              "utf8_pos": 7938,
               "subst": []
             },
             "loc": [
-              7846,
+              7937,
               16
             ]
           }
@@ -4888,14 +4845,14 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      7900,
-                      7905
+                      7991,
+                      7996
                     ]
                   }
                 }
               ],
               "loc": [
-                7894,
+                7985,
                 11
               ]
             }
@@ -4903,11 +4860,11 @@
           {
             "code": {
               "code": " ident ",
-              "utf8_pos": 7907,
+              "utf8_pos": 7998,
               "subst": []
             },
             "loc": [
-              7906,
+              7997,
               9
             ]
           }

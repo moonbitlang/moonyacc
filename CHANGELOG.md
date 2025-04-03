@@ -1,3 +1,7 @@
+## 0.3.18
+
+- feat: allow header to be placed in the middle of declarations
+
 ## 0.3.14
 
 - feat: support `rule: x=A | x=B { x }`

@@ -97,15 +97,16 @@ pub fn elaborate(
   token_payload_rewrite~ : TokenPayloadRewrite,
   force_int_position~ : Bool
 ) -> ParserSpec!ElabError {
-  let mut header = match ast_spec.header {
-    None => @immut/array.new()
-    Some((code, utf8_pos, utf8_len)) =>
-      @immut/array.of([(code, Some((utf8_pos, utf8_len)))])
-  }
-  let mut trailer = match ast_spec.trailer {
-    None => @immut/array.new()
-    Some((code, utf8_pos, utf8_len)) =>
-      @immut/array.of([(code, Some((utf8_pos, utf8_len)))])
+  let mut header = @immut/array.new()
+  let mut trailer = @immut/array.new()
+  for decl in ast_spec.decls {
+    match decl {
+      Header(code, utf8_pos, utf8_len) =>
+        header = header.push((code, Some((utf8_pos, utf8_len))))
+      Trailer(code, utf8_pos, utf8_len) =>
+        trailer = trailer.push((code, Some((utf8_pos, utf8_len))))
+      _ => ()
+    }
   }
   let token_by_name : Map[String, Token] = {}
   let rule_by_name : Map[String, Rule] = {}

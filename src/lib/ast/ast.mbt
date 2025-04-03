@@ -14,8 +14,6 @@
 
 ///|
 pub(all) struct ParserSpec {
-  header : (Code, Int, Int)? // (code, utf8_pos, utf8_len)
-  trailer : (Code, Int, Int)? // (code, utf8_pos, utf8_len)
   decls : Array[Declaration]
   rules : Array[Rule]
 } derive(ToJson)
@@ -65,6 +63,8 @@ pub(all) typealias TypeString = String
 
 ///|
 pub(all) enum Declaration {
+  Header(Code, Int, Int) // (code, utf8_pos, utf8_len)
+  Trailer(Code, Int, Int) // (code, utf8_pos, utf8_len)
   Start(Array[Symbol])
   Token(Array[Symbol], type_~ : TypeString?)
   Token1(Symbol, type_~ : TypeString?, image~ : String)
