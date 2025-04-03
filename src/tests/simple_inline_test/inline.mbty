@@ -11,7 +11,7 @@
 %%
 
 start
-  : a=a b=b x b { a + b + $3 + $4 }
+  : a=a b=b x x b { a + b + $3 + $4 + $5 }
   ;
 
 %inline a
