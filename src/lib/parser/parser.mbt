@@ -276,7 +276,7 @@ priv enum YYSymbol {
   NT_nonempty_prec_symbol_list
   NT_prec_symbol
   NT_symbol
-  NT_option__SEMI
+  NT_option_SEMI_
   EOI
 }
 
@@ -1365,8 +1365,8 @@ fn yy_state_36(_lookahead : YYSymbol) -> YYDecision {
 // [16, rule_list → • rule rule_list, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
 // [20, rule → • rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [21, rule → • PERCENT_INLINE rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [22, rule_no_modifiers → • symbol opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [23, rule_no_modifiers → • symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule_no_modifiers → • symbol opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → • symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [76, symbol → • IDENT, LBRACKET / LPAREN / ARROW / COLON]
 fn yy_state_37(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -1380,8 +1380,8 @@ fn yy_state_37(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [22, rule_no_modifiers → symbol • opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [23, rule_no_modifiers → symbol • opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule_no_modifiers → symbol • opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol • opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [24, opt_rule_return_type → • ARROW type_expr, COLON]
 // [25, opt_rule_return_type → •, COLON]
 // [30, opt_rule_generic_params → •, LPAREN]
@@ -1893,7 +1893,7 @@ fn yy_state_76(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(2, NT_opt_rule_return_type, yy_action_12)
 }
 
-// [23, rule_no_modifiers → symbol opt_rule_generic_params • LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol opt_rule_generic_params • LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_77(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LPAREN => Shift(yy_state_78)
@@ -1901,7 +1901,7 @@ fn yy_state_77(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN • nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN • nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [26, nonempty_rule_param_list → • IDENT, RPAREN]
 // [27, nonempty_rule_param_list → • IDENT COLON type_expr, RPAREN]
 // [28, nonempty_rule_param_list → • IDENT COMMA nonempty_rule_param_list, RPAREN]
@@ -2000,7 +2000,7 @@ fn yy_state_85(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(5, NT_nonempty_rule_param_list, yy_action_73)
 }
 
-// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list • RPAREN opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list • RPAREN opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_86(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_RPAREN => Shift(yy_state_87)
@@ -2008,7 +2008,7 @@ fn yy_state_86(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN • opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN • opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [24, opt_rule_return_type → • ARROW type_expr, COLON]
 // [25, opt_rule_return_type → •, COLON]
 fn yy_state_87(_lookahead : YYSymbol) -> YYDecision {
@@ -2020,7 +2020,7 @@ fn yy_state_87(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type • COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type • COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_88(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_COLON => Shift(yy_state_89)
@@ -2028,7 +2028,7 @@ fn yy_state_88(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON • clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON • clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [49, clause_list → • BAR nonempty_clause_list, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE / SEMI]
 // [50, clause_list → • nonempty_clause_list, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE / SEMI]
 // [51, nonempty_clause_list → • empty_clause_without_action clause_action, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE / SEMI]
@@ -2469,29 +2469,29 @@ fn yy_state_122(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(2, NT_clause_list, yy_action_72)
 }
 
-// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list • option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [77, option__SEMI → •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [78, option__SEMI → • SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list • option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [77, option(SEMI) → •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [78, option(SEMI) → • SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_123(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_SEMI => Shift(yy_state_124)
-    NT_option__SEMI => Shift(yy_state_125)
-    T_EOF | T_IDENT | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF | T_PERCENT_INLINE => Reduce(0, NT_option__SEMI, yy_action_50)
+    NT_option_SEMI_ => Shift(yy_state_125)
+    T_EOF | T_IDENT | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF | T_PERCENT_INLINE => Reduce(0, NT_option_SEMI_, yy_action_50)
     _ => Error
   }
 }
 
-// [78, option__SEMI → SEMI •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [78, option(SEMI) → SEMI •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_124(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_option__SEMI, yy_action_52)
+  ReduceNoLookahead(1, NT_option_SEMI_, yy_action_52)
 }
 
-// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option__SEMI •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option(SEMI) •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_125(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(9, NT_rule_no_modifiers, yy_action_21)
 }
 
-// [22, rule_no_modifiers → symbol opt_rule_return_type • COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule_no_modifiers → symbol opt_rule_return_type • COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_126(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_COLON => Shift(yy_state_127)
@@ -2499,7 +2499,7 @@ fn yy_state_126(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [22, rule_no_modifiers → symbol opt_rule_return_type COLON • clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule_no_modifiers → symbol opt_rule_return_type COLON • clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [49, clause_list → • BAR nonempty_clause_list, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE / SEMI]
 // [50, clause_list → • nonempty_clause_list, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE / SEMI]
 // [51, nonempty_clause_list → • empty_clause_without_action clause_action, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE / SEMI]
@@ -2539,26 +2539,26 @@ fn yy_state_127(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [22, rule_no_modifiers → symbol opt_rule_return_type COLON clause_list • option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [77, option__SEMI → •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [78, option__SEMI → • SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule_no_modifiers → symbol opt_rule_return_type COLON clause_list • option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [77, option(SEMI) → •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [78, option(SEMI) → • SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_128(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_SEMI => Shift(yy_state_124)
-    NT_option__SEMI => Shift(yy_state_129)
-    T_EOF | T_IDENT | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF | T_PERCENT_INLINE => Reduce(0, NT_option__SEMI, yy_action_50)
+    NT_option_SEMI_ => Shift(yy_state_129)
+    T_EOF | T_IDENT | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF | T_PERCENT_INLINE => Reduce(0, NT_option_SEMI_, yy_action_50)
     _ => Error
   }
 }
 
-// [22, rule_no_modifiers → symbol opt_rule_return_type COLON clause_list option__SEMI •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule_no_modifiers → symbol opt_rule_return_type COLON clause_list option(SEMI) •, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 fn yy_state_129(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(5, NT_rule_no_modifiers, yy_action_31)
 }
 
 // [21, rule → PERCENT_INLINE • rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [22, rule_no_modifiers → • symbol opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [23, rule_no_modifiers → • symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule_no_modifiers → • symbol opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → • symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [76, symbol → • IDENT, LBRACKET / LPAREN / ARROW / COLON]
 fn yy_state_130(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -2585,8 +2585,8 @@ fn yy_state_132(_lookahead : YYSymbol) -> YYDecision {
 // [16, rule_list → rule • rule_list, EOF / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF]
 // [20, rule → • rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [21, rule → • PERCENT_INLINE rule_no_modifiers, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [22, rule_no_modifiers → • symbol opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
-// [23, rule_no_modifiers → • symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option__SEMI, EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [22, rule_no_modifiers → • symbol opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
+// [23, rule_no_modifiers → • symbol opt_rule_generic_params LPAREN nonempty_rule_param_list RPAREN opt_rule_return_type COLON clause_list option(SEMI), EOF / IDENT / PERCENT_LBRACE_CODE_PERCENT_RBRACE / PERCENT_PERCENT_CODE_EOF / PERCENT_INLINE]
 // [76, symbol → • IDENT, LBRACKET / LPAREN / ARROW / COLON]
 fn yy_state_133(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {

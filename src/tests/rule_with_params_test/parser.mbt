@@ -62,8 +62,8 @@ priv enum YYSymbol {
   T_LBRACE
   T_RBRACE
   NT_start
-  NT_list__LETTER
-  NT_loption__delimited__LBRACE_list__LETTER_RBRACE
+  NT_list_LETTER_
+  NT_loption_delimited_LBRACE_list_LETTER__RBRACE__
   EOI
 }
 
@@ -125,16 +125,16 @@ fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSym
   }
 }
 
-// [0, start → • loption__delimited__LBRACE_list__LETTER_RBRACE, $]
-// [3, loption__delimited__LBRACE_list__LETTER_RBRACE → •, $]
-// [4, loption__delimited__LBRACE_list__LETTER_RBRACE → • LBRACE list__LETTER RBRACE, $]
+// [0, start → • loption(delimited(LBRACE,list(LETTER),RBRACE)), $]
+// [3, loption(delimited(LBRACE,list(LETTER),RBRACE)) → •, $]
+// [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → • LBRACE list(LETTER) RBRACE, $]
 // [5, start_prime → • start, $]
 fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     NT_start => Shift(yy_state_1)
     T_LBRACE => Shift(yy_state_2)
-    NT_loption__delimited__LBRACE_list__LETTER_RBRACE => Shift(yy_state_7)
-    EOI => Reduce(0, NT_loption__delimited__LBRACE_list__LETTER_RBRACE, yy_action_2)
+    NT_loption_delimited_LBRACE_list_LETTER__RBRACE__ => Shift(yy_state_7)
+    EOI => Reduce(0, NT_loption_delimited_LBRACE_list_LETTER__RBRACE__, yy_action_2)
     _ => Error
   }
 }
@@ -144,19 +144,19 @@ fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
   Accept
 }
 
-// [1, list__LETTER → •, RBRACE]
-// [2, list__LETTER → • LETTER list__LETTER, RBRACE]
-// [4, loption__delimited__LBRACE_list__LETTER_RBRACE → LBRACE • list__LETTER RBRACE, $]
+// [1, list(LETTER) → •, RBRACE]
+// [2, list(LETTER) → • LETTER list(LETTER), RBRACE]
+// [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → LBRACE • list(LETTER) RBRACE, $]
 fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
-    NT_list__LETTER => Shift(yy_state_3)
+    NT_list_LETTER_ => Shift(yy_state_3)
     T_LETTER => Shift(yy_state_5)
-    T_RBRACE => Reduce(0, NT_list__LETTER, yy_action_0)
+    T_RBRACE => Reduce(0, NT_list_LETTER_, yy_action_0)
     _ => Error
   }
 }
 
-// [4, loption__delimited__LBRACE_list__LETTER_RBRACE → LBRACE list__LETTER • RBRACE, $]
+// [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → LBRACE list(LETTER) • RBRACE, $]
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_RBRACE => Shift(yy_state_4)
@@ -164,29 +164,29 @@ fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
-// [4, loption__delimited__LBRACE_list__LETTER_RBRACE → LBRACE list__LETTER RBRACE •, $]
+// [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → LBRACE list(LETTER) RBRACE •, $]
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_loption__delimited__LBRACE_list__LETTER_RBRACE, yy_action_4)
+  ReduceNoLookahead(3, NT_loption_delimited_LBRACE_list_LETTER__RBRACE__, yy_action_4)
 }
 
-// [1, list__LETTER → •, RBRACE]
-// [2, list__LETTER → • LETTER list__LETTER, RBRACE]
-// [2, list__LETTER → LETTER • list__LETTER, RBRACE]
+// [1, list(LETTER) → •, RBRACE]
+// [2, list(LETTER) → • LETTER list(LETTER), RBRACE]
+// [2, list(LETTER) → LETTER • list(LETTER), RBRACE]
 fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LETTER => Shift(yy_state_5)
-    NT_list__LETTER => Shift(yy_state_6)
-    T_RBRACE => Reduce(0, NT_list__LETTER, yy_action_0)
+    NT_list_LETTER_ => Shift(yy_state_6)
+    T_RBRACE => Reduce(0, NT_list_LETTER_, yy_action_0)
     _ => Error
   }
 }
 
-// [2, list__LETTER → LETTER list__LETTER •, RBRACE]
+// [2, list(LETTER) → LETTER list(LETTER) •, RBRACE]
 fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_list__LETTER, yy_action_3)
+  ReduceNoLookahead(2, NT_list_LETTER_, yy_action_3)
 }
 
-// [0, start → loption__delimited__LBRACE_list__LETTER_RBRACE •, $]
+// [0, start → loption(delimited(LBRACE,list(LETTER),RBRACE)) •, $]
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_start, yy_action_5)
 }

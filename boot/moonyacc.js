@@ -1098,14 +1098,12 @@ function $64$moonbitlang$47$core$47$builtin$46$ForeachResult$JumpOuter$55$(param
   this._0 = param0;
 }
 $64$moonbitlang$47$core$47$builtin$46$ForeachResult$JumpOuter$55$.prototype.$tag = 4;
-function $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$T(param0, param1) {
+function $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$T(param0) {
   this._0 = param0;
-  this._1 = param1;
 }
 $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$T.prototype.$tag = 0;
-function $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$NT(param0, param1) {
+function $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$NT(param0) {
   this._0 = param0;
-  this._1 = param1;
 }
 $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$NT.prototype.$tag = 1;
 const $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$EOI = { $tag: 2 };
@@ -26919,7 +26917,7 @@ function moonbitlang$yacc$lib$desugar$$derive_term_ident(term) {
         return _rule_name;
       } else {
         const _bind = moonbitlang$core$array$$Array$iter$144$(_x);
-        return `${_rule_name}__${moonbitlang$core$builtin$$Iter$join((_p) => _bind((_p$2) => _p(moonbitlang$yacc$lib$desugar$$derive_term_ident(_p$2))), "_")}`;
+        return `${_rule_name}(${moonbitlang$core$builtin$$Iter$join((_p) => _bind((_p$2) => _p(moonbitlang$yacc$lib$desugar$$derive_term_ident(_p$2))), ",")})`;
       }
     }
   }
@@ -27693,78 +27691,78 @@ function moonbitlang$yacc$lib$util$default_hashmap$$DefaultHashMap$get$103$(self
     return _func(key);
   });
 }
-function moonbitlang$core$builtin$$Eq$op_equal$90$(_x_340, _x_341) {
-  switch (_x_340.$tag) {
+function moonbitlang$core$builtin$$Eq$op_equal$90$(_x_322, _x_323) {
+  switch (_x_322.$tag) {
     case 0: {
-      if (_x_341.$tag === 0) {
+      if (_x_323.$tag === 0) {
         return true;
       } else {
         return false;
       }
     }
     case 1: {
-      const _Shift = _x_340;
-      const _$42$x0_342 = _Shift._0;
-      if (_x_341.$tag === 1) {
-        const _Shift$2 = _x_341;
-        const _$42$y0_343 = _Shift$2._0;
-        return _$42$x0_342 === _$42$y0_343;
+      const _Shift = _x_322;
+      const _$42$x0_324 = _Shift._0;
+      if (_x_323.$tag === 1) {
+        const _Shift$2 = _x_323;
+        const _$42$y0_325 = _Shift$2._0;
+        return _$42$x0_324 === _$42$y0_325;
       } else {
         return false;
       }
     }
     case 2: {
-      const _Reduce = _x_340;
-      const _$42$x0_344 = _Reduce._0;
-      const _$42$x1_345 = _Reduce._1;
-      const _$42$x2_346 = _Reduce._2;
-      if (_x_341.$tag === 2) {
-        const _Reduce$2 = _x_341;
-        const _$42$y0_347 = _Reduce$2._0;
-        const _$42$y1_348 = _Reduce$2._1;
-        const _$42$y2_349 = _Reduce$2._2;
-        return _$42$x0_344 === _$42$y0_347 && (_$42$x1_345 === _$42$y1_348 && _$42$x2_346 === _$42$y2_349);
+      const _Reduce = _x_322;
+      const _$42$x0_326 = _Reduce._0;
+      const _$42$x1_327 = _Reduce._1;
+      const _$42$x2_328 = _Reduce._2;
+      if (_x_323.$tag === 2) {
+        const _Reduce$2 = _x_323;
+        const _$42$y0_329 = _Reduce$2._0;
+        const _$42$y1_330 = _Reduce$2._1;
+        const _$42$y2_331 = _Reduce$2._2;
+        return _$42$x0_326 === _$42$y0_329 && (moonbitlang$core$builtin$$Eq$op_equal$121$(_$42$x1_327, _$42$y1_330) && _$42$x2_328 === _$42$y2_331);
       } else {
         return false;
       }
     }
     default: {
-      const _ReduceNoLookahead = _x_340;
-      const _$42$x0_350 = _ReduceNoLookahead._0;
-      const _$42$x1_351 = _ReduceNoLookahead._1;
-      const _$42$x2_352 = _ReduceNoLookahead._2;
-      if (_x_341.$tag === 3) {
-        const _ReduceNoLookahead$2 = _x_341;
-        const _$42$y0_353 = _ReduceNoLookahead$2._0;
-        const _$42$y1_354 = _ReduceNoLookahead$2._1;
-        const _$42$y2_355 = _ReduceNoLookahead$2._2;
-        return _$42$x0_350 === _$42$y0_353 && (_$42$x1_351 === _$42$y1_354 && _$42$x2_352 === _$42$y2_355);
+      const _ReduceNoLookahead = _x_322;
+      const _$42$x0_332 = _ReduceNoLookahead._0;
+      const _$42$x1_333 = _ReduceNoLookahead._1;
+      const _$42$x2_334 = _ReduceNoLookahead._2;
+      if (_x_323.$tag === 3) {
+        const _ReduceNoLookahead$2 = _x_323;
+        const _$42$y0_335 = _ReduceNoLookahead$2._0;
+        const _$42$y1_336 = _ReduceNoLookahead$2._1;
+        const _$42$y2_337 = _ReduceNoLookahead$2._2;
+        return _$42$x0_332 === _$42$y0_335 && (moonbitlang$core$builtin$$Eq$op_equal$121$(_$42$x1_333, _$42$y1_336) && _$42$x2_334 === _$42$y2_337);
       } else {
         return false;
       }
     }
   }
 }
-function moonbitlang$core$builtin$$Compare$compare$90$(_x_300, _x_301) {
-  switch (_x_300.$tag) {
+function moonbitlang$core$builtin$$Compare$compare$90$(_x_282, _x_283) {
+  switch (_x_282.$tag) {
     case 0: {
-      if (_x_301.$tag === 0) {
+      if (_x_283.$tag === 0) {
         return 0;
       } else {
         return -1;
       }
     }
     case 1: {
-      const _Shift = _x_300;
-      const _$42$x0_302 = _Shift._0;
-      switch (_x_301.$tag) {
+      const _Shift = _x_282;
+      const _$42$x0_284 = _Shift._0;
+      switch (_x_283.$tag) {
         case 0: {
           return 1;
         }
         case 1: {
-          const _Shift$2 = _x_301;
-          const _$42$y0_303 = _Shift$2._0;
-          return $compare_int(_$42$x0_302, _$42$y0_303);
+          const _Shift$2 = _x_283;
+          const _$42$y0_285 = _Shift$2._0;
+          return $compare_int(_$42$x0_284, _$42$y0_285);
         }
         default: {
           return -1;
@@ -27772,11 +27770,11 @@ function moonbitlang$core$builtin$$Compare$compare$90$(_x_300, _x_301) {
       }
     }
     case 2: {
-      const _Reduce = _x_300;
-      const _$42$x0_304 = _Reduce._0;
-      const _$42$x1_305 = _Reduce._1;
-      const _$42$x2_306 = _Reduce._2;
-      switch (_x_301.$tag) {
+      const _Reduce = _x_282;
+      const _$42$x0_286 = _Reduce._0;
+      const _$42$x1_287 = _Reduce._1;
+      const _$42$x2_288 = _Reduce._2;
+      switch (_x_283.$tag) {
         case 0: {
           return 1;
         }
@@ -27784,15 +27782,15 @@ function moonbitlang$core$builtin$$Compare$compare$90$(_x_300, _x_301) {
           return 1;
         }
         case 2: {
-          const _Reduce$2 = _x_301;
-          const _$42$y0_307 = _Reduce$2._0;
-          const _$42$y1_308 = _Reduce$2._1;
-          const _$42$y2_309 = _Reduce$2._2;
-          const _bind = $compare_int(_$42$x0_304, _$42$y0_307);
+          const _Reduce$2 = _x_283;
+          const _$42$y0_289 = _Reduce$2._0;
+          const _$42$y1_290 = _Reduce$2._1;
+          const _$42$y2_291 = _Reduce$2._2;
+          const _bind = $compare_int(_$42$x0_286, _$42$y0_289);
           if (_bind === 0) {
-            const _bind$2 = moonbitlang$core$builtin$$Compare$compare$14$(_$42$x1_305, _$42$y1_308);
+            const _bind$2 = moonbitlang$core$builtin$$Compare$compare$121$(_$42$x1_287, _$42$y1_290);
             if (_bind$2 === 0) {
-              return $compare_int(_$42$x2_306, _$42$y2_309);
+              return $compare_int(_$42$x2_288, _$42$y2_291);
             } else {
               return _bind$2;
             }
@@ -27806,11 +27804,11 @@ function moonbitlang$core$builtin$$Compare$compare$90$(_x_300, _x_301) {
       }
     }
     default: {
-      const _ReduceNoLookahead = _x_300;
-      const _$42$x0_312 = _ReduceNoLookahead._0;
-      const _$42$x1_313 = _ReduceNoLookahead._1;
-      const _$42$x2_314 = _ReduceNoLookahead._2;
-      switch (_x_301.$tag) {
+      const _ReduceNoLookahead = _x_282;
+      const _$42$x0_294 = _ReduceNoLookahead._0;
+      const _$42$x1_295 = _ReduceNoLookahead._1;
+      const _$42$x2_296 = _ReduceNoLookahead._2;
+      switch (_x_283.$tag) {
         case 0: {
           return 1;
         }
@@ -27821,15 +27819,15 @@ function moonbitlang$core$builtin$$Compare$compare$90$(_x_300, _x_301) {
           return 1;
         }
         default: {
-          const _ReduceNoLookahead$2 = _x_301;
-          const _$42$y0_315 = _ReduceNoLookahead$2._0;
-          const _$42$y1_316 = _ReduceNoLookahead$2._1;
-          const _$42$y2_317 = _ReduceNoLookahead$2._2;
-          const _bind$2 = $compare_int(_$42$x0_312, _$42$y0_315);
+          const _ReduceNoLookahead$2 = _x_283;
+          const _$42$y0_297 = _ReduceNoLookahead$2._0;
+          const _$42$y1_298 = _ReduceNoLookahead$2._1;
+          const _$42$y2_299 = _ReduceNoLookahead$2._2;
+          const _bind$2 = $compare_int(_$42$x0_294, _$42$y0_297);
           if (_bind$2 === 0) {
-            const _bind$3 = moonbitlang$core$builtin$$Compare$compare$14$(_$42$x1_313, _$42$y1_316);
+            const _bind$3 = moonbitlang$core$builtin$$Compare$compare$121$(_$42$x1_295, _$42$y1_298);
             if (_bind$3 === 0) {
-              return $compare_int(_$42$x2_314, _$42$y2_317);
+              return $compare_int(_$42$x2_296, _$42$y2_299);
             } else {
               return _bind$3;
             }
@@ -27841,44 +27839,30 @@ function moonbitlang$core$builtin$$Compare$compare$90$(_x_300, _x_301) {
     }
   }
 }
-function moonbitlang$core$builtin$$Compare$compare$61$(_x_256, _x_257) {
-  switch (_x_256.$tag) {
+function moonbitlang$core$builtin$$Compare$compare$61$(_x_258, _x_259) {
+  switch (_x_258.$tag) {
     case 0: {
-      const _T = _x_256;
-      const _$42$x0_258 = _T._0;
-      const _$42$x1_259 = _T._1;
-      if (_x_257.$tag === 0) {
-        const _T$2 = _x_257;
-        const _$42$y0_260 = _T$2._0;
-        const _$42$y1_261 = _T$2._1;
-        const _bind = $compare_int(_$42$x0_258, _$42$y0_260);
-        if (_bind === 0) {
-          return moonbitlang$core$builtin$$Compare$compare$14$(_$42$x1_259, _$42$y1_261);
-        } else {
-          return _bind;
-        }
+      const _T = _x_258;
+      const _$42$x0_260 = _T._0;
+      if (_x_259.$tag === 0) {
+        const _T$2 = _x_259;
+        const _$42$y0_261 = _T$2._0;
+        return moonbitlang$core$builtin$$Compare$compare$120$(_$42$x0_260, _$42$y0_261);
       } else {
         return -1;
       }
     }
     case 1: {
-      const _NT = _x_256;
-      const _$42$x0_263 = _NT._0;
-      const _$42$x1_264 = _NT._1;
-      switch (_x_257.$tag) {
+      const _NT = _x_258;
+      const _$42$x0_262 = _NT._0;
+      switch (_x_259.$tag) {
         case 0: {
           return 1;
         }
         case 1: {
-          const _NT$2 = _x_257;
-          const _$42$y0_265 = _NT$2._0;
-          const _$42$y1_266 = _NT$2._1;
-          const _bind = $compare_int(_$42$x0_263, _$42$y0_265);
-          if (_bind === 0) {
-            return moonbitlang$core$builtin$$Compare$compare$14$(_$42$x1_264, _$42$y1_266);
-          } else {
-            return _bind;
-          }
+          const _NT$2 = _x_259;
+          const _$42$y0_263 = _NT$2._0;
+          return moonbitlang$core$builtin$$Compare$compare$121$(_$42$x0_262, _$42$y0_263);
         }
         default: {
           return -1;
@@ -27886,7 +27870,7 @@ function moonbitlang$core$builtin$$Compare$compare$61$(_x_256, _x_257) {
       }
     }
     default: {
-      switch (_x_257.$tag) {
+      switch (_x_259.$tag) {
         case 0: {
           return 1;
         }
@@ -27900,17 +27884,21 @@ function moonbitlang$core$builtin$$Compare$compare$61$(_x_256, _x_257) {
     }
   }
 }
+function moonbitlang$yacc$lib$codegen$gen_mbt$$derive_nonterminal_ident(nont) {
+  const name = nont.name;
+  return moonbitlang$core$string$$String$replace_all(moonbitlang$core$string$$String$replace_all(moonbitlang$core$string$$String$replace_all(moonbitlang$core$string$$String$replace_all(name, " ", "_"), "(", "_"), ")", "_"), ",", "_");
+}
 function moonbitlang$yacc$lib$codegen$gen_mbt$$CodegenSymbol$to_string(self) {
   switch (self.$tag) {
     case 0: {
       const _T = self;
-      const _name = _T._1;
-      return `T_${moonbitlang$core$builtin$$Show$to_string$14$(_name)}`;
+      const _t = _T._0;
+      return `T_${moonbitlang$core$builtin$$Show$to_string$14$(_t.name)}`;
     }
     case 1: {
       const _NT = self;
-      const _name$2 = _NT._1;
-      return `NT_${moonbitlang$core$builtin$$Show$to_string$14$(_name$2)}`;
+      const _nt = _NT._0;
+      return `NT_${moonbitlang$core$builtin$$Show$to_string$14$(moonbitlang$yacc$lib$codegen$gen_mbt$$derive_nonterminal_ident(_nt))}`;
     }
     default: {
       return "EOI";
@@ -28131,14 +28119,14 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$add_symbol_decision$27
   switch (symbol.$tag) {
     case 0: {
       const _T = symbol;
-      const _num = _T._0;
-      sum.val = sum.val + _num | 0;
+      const _t = _T._0;
+      sum.val = sum.val + _t.num | 0;
       return;
     }
     case 1: {
       const _NT = symbol;
-      const _num$2 = _NT._0;
-      sum.val = sum.val + (grammar.terminals.length + _num$2 | 0) | 0;
+      const _nt = _NT._0;
+      sum.val = sum.val + (grammar.terminals.length + _nt.num | 0) | 0;
       return;
     }
     default: {
@@ -28148,14 +28136,14 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$add_symbol_decision$27
   }
 }
 function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$get_action_id_by_prod_num$274$(_env, prod_num) {
-  const _production_meta = _env._1;
-  const stamp_to_action_id = _env._0;
+  const stamp_to_action_id = _env._1;
+  const _production_meta = _env._0;
   return moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$get_action_id$272$(stamp_to_action_id, _production_meta(prod_num).action);
 }
 function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$gen_decision$275$(_env, decision) {
-  const _production_meta = _env._1;
-  const stamp_to_action_id = _env._0;
-  const _env$2 = { _0: stamp_to_action_id, _1: _production_meta };
+  const stamp_to_action_id = _env._1;
+  const _production_meta = _env._0;
+  const _env$2 = { _0: _production_meta, _1: stamp_to_action_id };
   switch (decision.$tag) {
     case 0: {
       return "Accept";
@@ -28170,14 +28158,14 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$gen_decision$275$(_env
       const _num_symbols = _Reduce._0;
       const _nonterm = _Reduce._1;
       const _prod_num = _Reduce._2;
-      return `Reduce(${moonbitlang$core$builtin$$Show$to_string$13$(_num_symbols)}, NT_${moonbitlang$core$builtin$$Show$to_string$14$(_nonterm)}, yy_action_${moonbitlang$core$builtin$$Show$to_string$13$(moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$get_action_id_by_prod_num$274$(_env$2, _prod_num))})`;
+      return `Reduce(${moonbitlang$core$builtin$$Show$to_string$13$(_num_symbols)}, NT_${moonbitlang$core$builtin$$Show$to_string$14$(moonbitlang$yacc$lib$codegen$gen_mbt$$derive_nonterminal_ident(_nonterm))}, yy_action_${moonbitlang$core$builtin$$Show$to_string$13$(moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$get_action_id_by_prod_num$274$(_env$2, _prod_num))})`;
     }
     default: {
       const _ReduceNoLookahead = decision;
       const _num_symbols$2 = _ReduceNoLookahead._0;
       const _nonterm$2 = _ReduceNoLookahead._1;
       const _prod_num$2 = _ReduceNoLookahead._2;
-      return `ReduceNoLookahead(${moonbitlang$core$builtin$$Show$to_string$13$(_num_symbols$2)}, NT_${moonbitlang$core$builtin$$Show$to_string$14$(_nonterm$2)}, yy_action_${moonbitlang$core$builtin$$Show$to_string$13$(moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$get_action_id_by_prod_num$274$(_env$2, _prod_num$2))})`;
+      return `ReduceNoLookahead(${moonbitlang$core$builtin$$Show$to_string$13$(_num_symbols$2)}, NT_${moonbitlang$core$builtin$$Show$to_string$14$(moonbitlang$yacc$lib$codegen$gen_mbt$$derive_nonterminal_ident(_nonterm$2))}, yy_action_${moonbitlang$core$builtin$$Show$to_string$13$(moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$get_action_id_by_prod_num$274$(_env$2, _prod_num$2))})`;
     }
   }
 }
@@ -28331,7 +28319,7 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
         const nonterm = _arr$2[_i];
         const _bind$3 = moonbitlang$core$array$$Array$iter$56$(grammar.starts);
         if (!moonbitlang$core$builtin$$Iter$contains$121$((_p) => _bind$3((_p$2) => _p(_p$2.lhs)), nonterm)) {
-          moonbitlang$core$builtin$$Logger$write_string$252$(output, `  NT_${moonbitlang$core$builtin$$Show$to_string$14$(nonterm.name)}\n`);
+          moonbitlang$core$builtin$$Logger$write_string$252$(output, `  NT_${moonbitlang$core$builtin$$Show$to_string$14$(moonbitlang$yacc$lib$codegen$gen_mbt$$derive_nonterminal_ident(nonterm))}\n`);
         } else {
           break _L;
         }
@@ -28701,7 +28689,7 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
         if (input.$tag === 1) {
           const _Input = input;
           const _term = _Input._0;
-          _tmp$7 = new $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$T(_term.num, _term.name);
+          _tmp$7 = new $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$T(_term);
         } else {
           _tmp$7 = $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$EOI;
         }
@@ -28721,7 +28709,7 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
           case 1: {
             const _Reduce = decision;
             const _production = _Reduce._0;
-            _tmp$9 = new $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenDecision$Reduce(_production.rhs.length, _production.lhs.name, _production.num);
+            _tmp$9 = new $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenDecision$Reduce(_production.rhs.length, _production.lhs, _production.num);
             break;
           }
           default: {
@@ -28736,7 +28724,7 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
         if (symbol.$tag === 1) {
           const _NT = symbol;
           const _nonterm = _NT._0;
-          moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$add_symbol_decision$273$(_env, new $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$NT(_nonterm.num, _nonterm.name), new $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenDecision$Shift(state$2.num));
+          moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$add_symbol_decision$273$(_env, new $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenSymbol$NT(_nonterm), new $64$moonbitlang$47$yacc$47$lib$47$codegen$47$gen_mbt$46$CodegenDecision$Shift(state$2.num));
         }
         return 1;
       });
@@ -28778,7 +28766,7 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen(grammar, automaton, meta,
         }
       }
       total = total + (grammar.terminals.length + grammar.nonterminals.length | 0) | 0;
-      const _env$2 = { _0: stamp_to_action_id, _1: _production_meta };
+      const _env$2 = { _0: _production_meta, _1: stamp_to_action_id };
       let _tmp$9;
       if (moonbitlang$core$sorted_map$$T$size$85$(decision_groups) === 1) {
         const _bind$6 = moonbitlang$core$array$$Array$op_get$90$(moonbitlang$core$sorted_map$$T$keys$85$(decision_groups), 0);

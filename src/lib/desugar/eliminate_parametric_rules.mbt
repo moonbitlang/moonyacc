@@ -148,7 +148,7 @@ fn derive_term_ident(term : @elab.Term) -> String {
     Param(_) => panic()
     RuleCall(rule_name, [], _type) => rule_name
     RuleCall(rule_name, args, _type) =>
-      rule_name + "__" + args.iter().map(derive_term_ident).join("_")
+      rule_name + "(" + args.iter().map(derive_term_ident).join(",") + ")"
   }
 }
 

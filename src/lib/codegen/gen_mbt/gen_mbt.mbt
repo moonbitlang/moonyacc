@@ -14,16 +14,16 @@
 
 ///|
 priv enum CodegenSymbol {
-  T(Int, String)
-  NT(Int, String)
+  T(@grm.Terminal)
+  NT(@grm.Nonterminal)
   EOI
 } derive(Eq, Compare)
 
 ///|
 fn to_string(self : CodegenSymbol) -> String {
   match self {
-    T(_, name) => "T_\{name}"
-    NT(_, name) => "NT_\{name}"
+    T(t) => "T_\{t.name}"
+    NT(nt) => "NT_\{derive_nonterminal_ident(nt)}"
     EOI => "EOI"
   }
 }
@@ -32,9 +32,19 @@ fn to_string(self : CodegenSymbol) -> String {
 priv enum CodegenDecision {
   Accept
   Shift(Int)
-  Reduce(Int, String, Int)
-  ReduceNoLookahead(Int, String, Int)
+  Reduce(Int, @grm.Nonterminal, Int)
+  ReduceNoLookahead(Int, @grm.Nonterminal, Int)
 } derive(Eq, Compare)
+
+///|
+fn derive_nonterminal_ident(nont : @grm.Nonterminal) -> String {
+  let name = nont.name
+  name
+  .replace_all(old=" ", new="_")
+  .replace_all(old="(", new="_")
+  .replace_all(old=")", new="_")
+  .replace_all(old=",", new="_")
+}
 
 ///|
 fn derive_type_ident(type_ : @elab.TypeExpr) -> String {
@@ -377,7 +387,7 @@ fn codegen(
       continue
     }
     output.write_string(
-      $|  NT_\{nonterm.name}
+      $|  NT_\{derive_nonterminal_ident(nonterm)}
       $|
       ,
     )
@@ -645,8 +655,8 @@ fn codegen(
         .or(@immut/sorted_set.new())
         .add(symbol)
       match symbol {
-        T(num, _) => sum += num
-        NT(num, _) => sum += grammar.terminals.length() + num
+        T(t) => sum += t.num
+        NT(nt) => sum += grammar.terminals.length() + nt.num
         EOI => sum += grammar.terminals.length() + grammar.nonterminals.length()
       }
     }
@@ -654,22 +664,21 @@ fn codegen(
     for input, decision in state.action {
       add_symbol_decision(
         match input {
-          Input(term) => T(term.num, term.name)
+          Input(term) => T(term)
           EndOfInput => EOI
         },
         match decision {
           Accept => Accept
           Shift(next_state) => Shift(next_state.num)
           Reduce(production) =>
-            Reduce(production.rhs.length(), production.lhs.name, production.num)
+            Reduce(production.rhs.length(), production.lhs, production.num)
           Conflict(_) => panic()
         },
       )
     }
     for symbol, state in state.goto {
       match symbol {
-        NT(nonterm) =>
-          add_symbol_decision(NT(nonterm.num, nonterm.name), Shift(state.num))
+        NT(nonterm) => add_symbol_decision(NT(nonterm), Shift(state.num))
         _ => ()
       }
     }
@@ -702,9 +711,9 @@ fn codegen(
         Accept => "Accept"
         Shift(state_num) => "Shift(yy_state_\{state_num})"
         Reduce(num_symbols, nonterm, prod_num) =>
-          "Reduce(\{num_symbols}, NT_\{nonterm}, yy_action_\{get_action_id_by_prod_num(prod_num)})"
+          "Reduce(\{num_symbols}, NT_\{derive_nonterminal_ident(nonterm)}, yy_action_\{get_action_id_by_prod_num(prod_num)})"
         ReduceNoLookahead(num_symbols, nonterm, prod_num) =>
-          "ReduceNoLookahead(\{num_symbols}, NT_\{nonterm}, yy_action_\{get_action_id_by_prod_num(prod_num)})"
+          "ReduceNoLookahead(\{num_symbols}, NT_\{derive_nonterminal_ident(nonterm)}, yy_action_\{get_action_id_by_prod_num(prod_num)})"
       }
     }
 
