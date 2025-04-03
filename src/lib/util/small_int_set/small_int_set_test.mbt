@@ -467,6 +467,17 @@ test "@small_int_set.subset" {
 }
 
 ///|
+test "@small_int_set.subset: bad case" {
+  inspect!(
+    @small_int_set.subset(
+      @small_int_set.from_iter([64].iter()),
+      @small_int_set.from_iter([21, 48, 58, 61, 81].iter()),
+    ),
+    content="false",
+  )
+}
+
+///|
 test "@small_int_set.is_singleton" {
   // Test with empty set
   let empty = @small_int_set.empty()

@@ -27,6 +27,15 @@ pub fn empty() -> Int128IntSet {
 }
 
 ///|
+pub fn is_singleton(self : Int128IntSet, key : Int) -> Bool {
+  if key < 64 {
+    self.a == (1L << key) && self.b == 0
+  } else {
+    self.a == 0 && self.b == (1L << (key - 64))
+  }
+}
+
+///|
 pub impl Show for Int128IntSet with output(self, logger) {
   logger.write_string("{")
   let mut first = true

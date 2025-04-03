@@ -1,3 +1,7 @@
+## 0.3.23
+
+- fix: fix bug in small_int_set which causes building incorrect lr1 automaton
+
 ## 0.3.18
 
 - feat: allow header to be placed in the middle of declarations

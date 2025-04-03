@@ -396,23 +396,22 @@ pub fn subset(self : SmallIntSet, other : SmallIntSet) -> Bool {
     let ib = bitmask1.ctz()
     let jb = bitmask2.ctz()
     if ib < jb {
-      return false
+      i += 1
+      bitmask1 = bitmask1 & (bitmask1 - 1)
+    } else if ib > jb {
+      j += 1
+      bitmask2 = bitmask2 & (bitmask2 - 1)
     } else {
       if ib == 32 {
         break
       }
-      if ib > jb {
-        i += 1
-        bitmask1 = bitmask1 & (bitmask1 - 1)
-      } else {
-        if (self._[i] & other._[j]) != self._[i] {
-          return false
-        }
-        i += 1
-        j += 1
-        bitmask1 = bitmask1 & (bitmask1 - 1)
-        bitmask2 = bitmask2 & (bitmask2 - 1)
+      if (self._[i] & other._[j]) != self._[i] {
+        return false
       }
+      i += 1
+      j += 1
+      bitmask1 = bitmask1 & (bitmask1 - 1)
+      bitmask2 = bitmask2 & (bitmask2 - 1)
     }
   }
   return true
