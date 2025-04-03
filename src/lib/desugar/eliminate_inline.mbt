@@ -50,110 +50,73 @@ fn eliminate_inline_rules(
   }
 
   fn expand(clause : @elab.Clause, yield_ : (@elab.Clause) -> Unit) {
-    // assert(clause.action.sub_actions.length() == 0)
-    let expand_points : Map[Int, (Ref[Int], Int)] = {}
-    for index, item in clause.items {
-      match item.term {
-        Token(_) => ()
-        RuleCall(rule_name, [], _type) =>
-          if inline_rules.contains(rule_name) {
-            let rule = spec.rules[rule_name].unwrap()
-            expand_points[index] = ({ val: 0 }, rule.clauses.length() - 1)
+    fn cont(
+      cont_items : @immut/array.T[@elab.Item],
+      cont_bindings : @immut/array.T[(@elab.BindingSubject, @elab.Code)],
+      cont_subactions : @immut/array.T[@elab.SubAction],
+      index : Int
+    ) {
+      if index >= clause.items.length() {
+        yield_({
+          ..clause,
+          items: cont_items.to_array(),
+          action: {
+            ..clause.action,
+            stamp: @stamp.new(),
+            sub_actions: cont_subactions.to_array(),
+            bindings: cont_bindings.to_array(),
+          },
+        })
+      } else {
+        let item = clause.items[index]
+        if item.term is RuleCall(rule_name, [], _) &&
+          inline_rules.contains(rule_name) {
+          let inline_rule = spec.rules[rule_name].unwrap()
+          for inline_clause in inline_rule.clauses {
+            let next_cont_items = cont_items +
+              @immut/array.from_array(inline_clause.items)
+            let start_index = cont_items.length()
+            let end_index = start_index + inline_clause.items.length()
+            let next_cont_subactions = cont_subactions.push({
+              start: start_index,
+              end: end_index,
+              action: inline_clause.action,
+            })
+            let index_shift = inline_clause.items.length() - 1
+            let next_cont_bindings = cont_bindings.map(fn(binding) {
+              let (subject, code) = binding
+              let new_subject : @elab.BindingSubject = match subject {
+                Data(data_index, type_~) if data_index == start_index =>
+                  SubAction(start=start_index, type_~)
+                Data(data_index, type_~) if data_index > start_index =>
+                  Data(data_index + index_shift, type_~)
+                StartPos(data_index) if data_index > start_index =>
+                  StartPos(data_index + index_shift)
+                EndPos(data_index) if data_index > start_index =>
+                  EndPos(data_index + index_shift)
+                _ => subject
+              }
+              (new_subject, code)
+            })
+            cont(
+              next_cont_items,
+              next_cont_bindings,
+              next_cont_subactions,
+              index + 1,
+            )
           }
-        Param(_) | RuleCall(_, _, _) => panic()
-      }
-    }
-    let expand_point_indexes = expand_points.keys().to_array()
-    let mut expand_cursor = expand_point_indexes.length() - 1
-    while true {
-      let expand_point_index = expand_point_indexes[expand_cursor]
-      let new_items : Array[@elab.Item] = []
-      let sub_actions : Array[@elab.SubAction] = []
-      let bindings : Array[(@elab.BindingSubject, @elab.Code)] = clause.action.bindings.copy()
-      for index, item in clause.items {
-        match item.term {
-          Token(_) => new_items.push(item)
-          RuleCall(rule_name, [], _type) =>
-            if inline_rules.contains(rule_name) {
-              let rule = spec.rules[rule_name].unwrap()
-              let (curr, max) = expand_points[index].unwrap()
-              let inline_items = rule.clauses[curr.val].items
-              let start_index = new_items.length()
-              for inline_item in inline_items {
-                new_items.push(inline_item)
-              }
-              let end_index = new_items.length()
-              sub_actions.push({
-                start: start_index,
-                end: end_index,
-                action: rule.clauses[curr.val].action,
-              })
-              // Fix the bindings
-              for binding_index, binding in bindings {
-                let (subject, code) = binding
-                match subject {
-                  Data(data_index, type_~) =>
-                    if data_index == index {
-                      bindings[binding_index] = (
-                        SubAction(start=start_index, type_~),
-                        code,
-                      )
-                    } else if data_index > index {
-                      bindings[binding_index] = (
-                        Data(data_index + end_index - start_index - 1, type_~),
-                        code,
-                      )
-                    }
-                  StartPos(data_index) =>
-                    if data_index > index {
-                      bindings[binding_index] = (
-                        StartPos(data_index + end_index - start_index - 1),
-                        code,
-                      )
-                    }
-                  EndPos(data_index) =>
-                    if data_index > index {
-                      bindings[binding_index] = (
-                        EndPos(data_index + end_index - start_index - 1),
-                        code,
-                      )
-                    }
-                  _ => ()
-                }
-              }
-              if expand_point_index == index {
-                if curr.val >= max {
-                  curr.val = 0
-                  fn back() {
-                    expand_cursor -= 1
-                    if expand_cursor >= 0 {
-                      let (curr, max) = expand_points[expand_point_indexes[expand_cursor]].unwrap()
-                      if curr.val >= max {
-                        back()
-                      }
-                    }
-                  }
-
-                  back()
-                } else {
-                  curr.val += 1
-                }
-              }
-            } else {
-              new_items.push(item)
-            }
-          Param(_) | RuleCall(_, _, _) => panic()
+        } else {
+          cont(cont_items.push(item), cont_bindings, cont_subactions, index + 1)
         }
       }
-      yield_({
-        ..clause,
-        items: new_items,
-        action: { ..clause.action, stamp: @stamp.new(), bindings, sub_actions },
-      })
-      if expand_cursor < 0 {
-        break
-      }
     }
+
+    cont(
+      @immut/array.new(),
+      @immut/array.from_array(clause.action.bindings),
+      @immut/array.new(),
+      0,
+    )
   }
 
   for rule_name, rule in spec.rules {
