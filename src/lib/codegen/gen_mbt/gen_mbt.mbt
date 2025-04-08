@@ -518,13 +518,21 @@ fn codegen(
             )
           }
         }
-        LastPos =>
+        StartPos =>
+          // action.arity possibly wrong here because of inline actions
           output.write_string(
-            $|  let \{binding.1} = _last_pos
+            $|  let \{binding.1} = if _args.length() == 0 { _last_pos } else { _args[0].1 }
             $|
             ,
           )
-        StartPos(index) | EndPos(index) =>
+        EndPos =>
+          // action.arity possibly wrong here because of inline actions
+          output.write_string(
+            $|  let \{binding.1} = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
+            $|
+            ,
+          )
+        StartPosOf(index) | EndPosOf(index) =>
           if action.arity == 0 {
             output.write_string(
               $|  let \{binding.1} = _last_pos
@@ -533,8 +541,8 @@ fn codegen(
             )
           } else {
             let field = match binding.0 {
-              StartPos(_) => 1
-              EndPos(_) => 2
+              StartPosOf(_) => 1
+              EndPosOf(_) => 2
               _ => panic()
             }
             output.write_string(

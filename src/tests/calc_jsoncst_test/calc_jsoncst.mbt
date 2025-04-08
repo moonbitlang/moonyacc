@@ -109,8 +109,12 @@ fn yy_action_0(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[2].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
   YYObj_Json(
     {
       ()
@@ -134,8 +138,12 @@ fn yy_action_1(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
   YYObj_Json(
     {
       ()
@@ -159,8 +167,12 @@ fn yy_action_2(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[2].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
   YYObj_Json(
     {
       ()
@@ -184,8 +196,12 @@ fn yy_action_3(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
   YYObj_Json(
     {
       ()
@@ -209,8 +225,12 @@ fn yy_action_4(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[2].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
   YYObj_Json(
     {
       ()
@@ -234,8 +254,12 @@ fn yy_action_5(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[2].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
   YYObj_Json(
     {
       ()
@@ -259,8 +283,12 @@ fn yy_action_6(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[1].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
   YYObj_Json(
     {
       ()
@@ -284,8 +312,12 @@ fn yy_action_7(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
-  let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
   YYObj_Json(
     {
       ()

@@ -136,9 +136,10 @@ pub(all) struct SubAction {
 ///|
 pub(all) enum BindingSubject {
   Data(Int, type_~ : TypeExpr)
-  LastPos
-  StartPos(Int)
-  EndPos(Int)
+  StartPosOf(Int)
+  EndPosOf(Int)
+  StartPos
+  EndPos
   SymbolStartPos
   SubAction(index~ : Int, type_~ : TypeExpr)
 }

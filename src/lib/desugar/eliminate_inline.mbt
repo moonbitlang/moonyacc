@@ -91,10 +91,10 @@ fn eliminate_inline_rules(
                   SubAction(index=subaction_index, type_~)
                 Data(data_index, type_~) if data_index > start_index =>
                   Data(data_index + index_shift, type_~)
-                StartPos(data_index) if data_index > start_index =>
-                  StartPos(data_index + index_shift)
-                EndPos(data_index) if data_index > start_index =>
-                  EndPos(data_index + index_shift)
+                StartPosOf(data_index) if data_index > start_index =>
+                  StartPosOf(data_index + index_shift)
+                EndPosOf(data_index) if data_index > start_index =>
+                  EndPosOf(data_index + index_shift)
                 _ => subject
               }
               (new_subject, code)

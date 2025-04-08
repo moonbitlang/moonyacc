@@ -422,29 +422,19 @@ fn elaborate_action(
         let name = "_dollar\{index}"
         bindings.push((Data(index - 1, type_=items[index - 1].type_()), name))
       }
-      StartPos =>
-        if arity == 0 {
-          bindings.push((LastPos, "_start_pos"))
-        } else {
-          bindings.push((StartPos(0), "_start_pos"))
-        }
+      StartPos => bindings.push((StartPos, "_start_pos"))
       Loc => {
         add_binding(StartPos)
         add_binding(EndPos)
       }
-      EndPos =>
-        if arity == 0 {
-          bindings.push((LastPos, "_end_pos"))
-        } else {
-          bindings.push((EndPos(arity - 1), "_end_pos"))
-        }
+      EndPos => bindings.push((EndPos, "_end_pos"))
       StartPosOf(arg) => {
         let index = item_ident_to_index(arg)
-        bindings.push((StartPos(index), "_start_pos_of_item\{index}"))
+        bindings.push((StartPosOf(index), "_start_pos_of_item\{index}"))
       }
       EndPosOf(arg) => {
         let index = item_ident_to_index(arg)
-        bindings.push((EndPos(index), "_end_pos_of_item\{index}"))
+        bindings.push((EndPosOf(index), "_end_pos_of_item\{index}"))
       }
       LocOf(arg) => {
         add_binding(StartPosOf(arg))

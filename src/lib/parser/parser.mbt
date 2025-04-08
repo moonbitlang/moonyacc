@@ -371,8 +371,8 @@ fn yy_action_10(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // 197|    image=STRING { Image(image, loc=($startpos, $endpos)) }
 fn yy_action_11(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(image)
-  let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
   YYObj__ast_Term({();  Image(image, loc=(_start_pos, _end_pos)) })
 }
 
@@ -412,8 +412,8 @@ fn yy_action_15(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // 176|  }
 fn yy_action_16(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__String__Int__Array__ast_SubstItem__(code)
-  let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
   YYObj__ast_ClauseAction({(); 
       let (code, utf8_pos, subst) = code
       { code: Some({ code, utf8_pos, subst }), loc: (_start_pos, _end_pos - _start_pos) }
@@ -515,8 +515,8 @@ fn yy_action_27(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 fn yy_action_28(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__immut_list_T__ast_ClauseItem_(item_list)
   guard _args[1].0 is YYObj__ast_PrecSymbol_(prec)
-  let _start_pos = _args[0].1
-  let _end_pos = _args[1].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
   YYObj__ast_ClauseWithoutAction({();  { items: item_list.to_array(), prec, loc: (_start_pos, _end_pos - _start_pos) } })
 }
 
@@ -524,8 +524,8 @@ fn yy_action_28(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // 165|    prec=rule_prec { { items: [], prec, loc: ($startpos, $endpos - $startpos) } }
 fn yy_action_29(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_PrecSymbol_(prec)
-  let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
   YYObj__ast_ClauseWithoutAction({();  { items: [], prec, loc: (_start_pos, _end_pos - _start_pos) } })
 }
 
@@ -657,8 +657,8 @@ fn yy_action_45(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 // 195|    symbol=symbol { Symbol(symbol, loc=($startpos, $endpos)) }
 fn yy_action_46(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_Symbol(symbol)
-  let _start_pos = _args[0].1
-  let _end_pos = _args[0].2
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
   YYObj__ast_Term({();  Symbol(symbol, loc=(_start_pos, _end_pos)) })
 }
 
