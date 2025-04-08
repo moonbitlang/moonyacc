@@ -140,7 +140,7 @@ pub(all) enum BindingSubject {
   StartPos(Int)
   EndPos(Int)
   SymbolStartPos
-  SubAction(start~ : Int, type_~ : TypeExpr)
+  SubAction(index~ : Int, type_~ : TypeExpr)
 }
 
 ///|

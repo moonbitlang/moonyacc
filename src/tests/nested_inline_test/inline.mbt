@@ -87,8 +87,8 @@ fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 // file:///./inline.mbty
 // 18|    A y B { "a" + $2 + "b" }
 fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  let _sub_action_1_result = yy_action_4(_args[0].2, _args[1:3])
-  guard _sub_action_1_result is YYObj_String(_dollar2)
+  let _sub_action_0_result = yy_action_4(_args[0].2, _args[1:3])
+  guard _sub_action_0_result is YYObj_String(_dollar2)
   YYObj_String({();  "a" + _dollar2 + "b" })
 }
 
@@ -117,8 +117,8 @@ fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 // file:///./inline.mbty
 // 18|    A y B { "a" + $2 + "b" }
 fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  let _sub_action_1_result = yy_action_1(_args[0].2, _args[1:3])
-  guard _sub_action_1_result is YYObj_String(_dollar2)
+  let _sub_action_0_result = yy_action_1(_args[0].2, _args[1:3])
+  guard _sub_action_0_result is YYObj_String(_dollar2)
   YYObj_String({();  "a" + _dollar2 + "b" })
 }
 

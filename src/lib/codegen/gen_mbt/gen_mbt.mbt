@@ -461,7 +461,7 @@ fn codegen(
       $|
       ,
     )
-    for sub_action in action.sub_actions {
+    for index, sub_action in action.sub_actions {
       let { start, end, action: action2 } = sub_action
       let last_pos_code = if start == 0 {
         "_last_pos"
@@ -469,7 +469,7 @@ fn codegen(
         "_args[\{start - 1}].2"
       }
       output.write_string(
-        $|  let _sub_action_\{start}_result = yy_action_\{get_action_id(action2)}(\{last_pos_code}, _args[\{start}:\{end}])
+        $|  let _sub_action_\{index}_result = yy_action_\{get_action_id(action2)}(\{last_pos_code}, _args[\{start}:\{end}])
         $|
         ,
       )
@@ -525,10 +525,10 @@ fn codegen(
             ,
           )
         }
-        SubAction(start~, type_~) => {
+        SubAction(index~, type_~) => {
           let data_type = type_
           output.write_string(
-            $|  guard _sub_action_\{start}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
+            $|  guard _sub_action_\{index}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
             $|
             ,
           )

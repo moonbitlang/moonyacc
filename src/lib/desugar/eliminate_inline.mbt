@@ -77,6 +77,7 @@ fn eliminate_inline_rules(
               @immut/array.from_array(inline_clause.items)
             let start_index = cont_items.length()
             let end_index = start_index + inline_clause.items.length()
+            let subaction_index = cont_subactions.length()
             let next_cont_subactions = cont_subactions.push({
               start: start_index,
               end: end_index,
@@ -87,7 +88,7 @@ fn eliminate_inline_rules(
               let (subject, code) = binding
               let new_subject : @elab.BindingSubject = match subject {
                 Data(data_index, type_~) if data_index == start_index =>
-                  SubAction(start=start_index, type_~)
+                  SubAction(index=subaction_index, type_~)
                 Data(data_index, type_~) if data_index > start_index =>
                   Data(data_index + index_shift, type_~)
                 StartPos(data_index) if data_index > start_index =>
@@ -114,7 +115,7 @@ fn eliminate_inline_rules(
     cont(
       @immut/array.new(),
       @immut/array.from_array(clause.action.bindings),
-      @immut/array.new(),
+      @immut/array.from_array(clause.action.sub_actions),
       0,
     )
   }
