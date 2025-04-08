@@ -311,12 +311,38 @@ fn codegen(
           data_types.add(meta.data_type)
         }
       }
-      for nonterm in grammar.nonterminals {
-        guard not(grammar.starts.iter().map(fn(p) { p.lhs }).contains(nonterm)) else {
-          continue
+      let dedup : Set[@stamp.T] = Set::new()
+      fn add_action(action : @elab.Action) {
+        if dedup.add_and_check(action.stamp) {
+          for sub_action in action.sub_actions {
+            add_action(sub_action.action)
+          }
+          for binding in action.bindings {
+            if binding.0 is Data(_, type_~) {
+              if type_ is Constr(pkg=None, "Unit", []) {
+                ()
+              } else {
+                data_types.add(type_)
+              }
+            }
+          }
+          data_types.add(action.type_)
         }
-        let meta = nonterminal_meta(nonterm.name)
-        data_types.add(meta.data_type)
+      }
+
+      for state in automaton.states {
+        for _, action in state.action {
+          match action {
+            Shift(_) => ()
+            Accept => ()
+            Reduce(production) =>
+              if not(grammar.starts.contains(production)) {
+                let meta = production_meta(production.num)
+                add_action(meta.action)
+              }
+            Conflict(_) => panic()
+          }
+        }
       }
       output.write_string(
         $|priv type! YYObj_Void
@@ -527,11 +553,19 @@ fn codegen(
         }
         SubAction(index~, type_~) => {
           let data_type = type_
-          output.write_string(
-            $|  guard _sub_action_\{index}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
-            $|
-            ,
-          )
+          if data_type is Constr(pkg=None, "Unit", []) {
+            output.write_string(
+              $|  let \{binding.1} = ()
+              $|
+              ,
+            )
+          } else {
+            output.write_string(
+              $|  guard _sub_action_\{index}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
+              $|
+              ,
+            )
+          }
         }
       }
     }
