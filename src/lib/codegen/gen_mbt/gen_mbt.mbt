@@ -74,7 +74,7 @@ fn derive_type_ident(type_ : @elab.TypeExpr) -> String {
     Arrow(args, ret) =>
       "_" +
       args.iter().map(derive_type_ident).join("__") +
-      "_ -> " +
+      "_____" +
       derive_type_ident(ret)
   }
 }
