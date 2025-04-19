@@ -33,7 +33,7 @@ fn EpsilonLookaheadSet::union[T : AbstractLookaheadSet](
 
 ///|
 /// epsilon free first
-fn EpsilonLookaheadSet::op_add[T : AbstractLookaheadSet](
+impl[T : AbstractLookaheadSet] Add for EpsilonLookaheadSet[T] with op_add(
   set1 : EpsilonLookaheadSet[T],
   set2 : EpsilonLookaheadSet[T]
 ) -> EpsilonLookaheadSet[T] {

@@ -4,17 +4,10 @@
     "moonbitlang/yacc/lib/parser",
     "moonbitlang/yacc/lib/codegen",
     "moonbitlang/yacc/lib/lr1",
-    {
-      "path": "moonbitlang/yacc/lib/driver/util",
-      "alias": "_driver_util",
-      "value": [
-        "println_to_stderr",
-        "exit"
-      ]
-    },
     "moonbitlang/yacc/lib/util/logger_with_cursor",
     "moonbitlang/yacc/lib/elab",
     "moonbitlang/yacc/lib/util/array_multimap",
-    "moonbitlang/yacc/lib/desugar"
+    "moonbitlang/yacc/lib/desugar",
+    "moonbitlang/yacc/lib/driver/util"
   ]
 }

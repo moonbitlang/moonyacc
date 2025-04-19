@@ -5,15 +5,9 @@
     "moonbitlang/x/sys",
     "Yoorkin/ArgParser",
     "moonbitlang/yacc/lib/driver",
-    {
-      "path": "moonbitlang/yacc/lib/driver/util",
-      "value": [
-        "println_to_stderr",
-        "exit"
-      ]
-    },
     "moonbitlang/yacc/lib/codegen",
-    "moonbitlang/yacc/lib/codegen/gen_mbt"
+    "moonbitlang/yacc/lib/codegen/gen_mbt",
+    "moonbitlang/yacc/lib/driver/util"
   ],
   "link": {
     "native": {

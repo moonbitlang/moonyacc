@@ -13,6 +13,9 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+fnalias @util.(println_to_stderr, exit, path_basename)
+
+///|
 pub(all) enum Mode {
   Default
   JsonCst
@@ -81,7 +84,7 @@ pub fn compile(
     @elab.elaborate_with_stdlib_rules!(
       spec,
       parser_spec_str,
-      @_driver_util.path_basename(filename),
+      path_basename(filename),
       json_cst=match mode {
         JsonCst => Yes
         Default | OnlyTokens => No
@@ -282,7 +285,7 @@ pub fn compile(
     meta,
     output,
     source_map_builder~,
-    grammar_filename=@_driver_util.path_basename(filename),
+    grammar_filename=path_basename(filename),
     mode=match mode {
       OnlyTokens => panic()
       Default => Default

@@ -146,7 +146,7 @@ rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int) -
     }
     ("$" (("startpos" | "endpos" | "loc") as t1) "(" [' ' '\t']* (("$" ['0'-'9']+ | ['A'-'Z' 'a'-'z' '_'] ['A'-'Z' 'a'-'z' '0'-'9' '_']*) as t2) [' ' '\t']* ")") as t => {
       sb.write_string(t)
-      let arg : @ast.ClauseItemIdent = if t2.starts_with("$") {
+      let arg : @ast.ClauseItemIdent = if t2.has_prefix("$") {
         let index = try @strconv.parse_int!(t2.substring(start=1), base=10) catch { err => abort(Show::to_string(err)) }
         Dollar(index)
       } else {

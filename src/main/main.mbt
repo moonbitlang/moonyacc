@@ -12,6 +12,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
+fnalias @util.(println_to_stderr, exit)
+
 ///|
 fn main {
   let usage =

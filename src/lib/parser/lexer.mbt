@@ -3656,7 +3656,7 @@ fn code_rbrace(
       let (_start_pos_of_t2, _end_pos_of_t2) = __mbtlex_captures[2]
       let t2 : String = lexbuf.substring(_start_pos_of_t2, _end_pos_of_t2)
       sb.write_string(t)
-      let arg : @ast.ClauseItemIdent = if t2.starts_with("$") {
+      let arg : @ast.ClauseItemIdent = if t2.has_prefix("$") {
         let index = try {
           @strconv.parse_int!(t2.substring(start=1), base=10)
         } catch {
