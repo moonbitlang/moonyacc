@@ -12,6 +12,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
+///|
 fnalias @util.(println_to_stderr, exit)
 
 ///|
@@ -28,8 +29,15 @@ fn main {
   let mut no_std : Bool = false
   let mut token_payload_rewrite : @driver.TokenPayloadRewrite = NoRewrite
   let mut force_int_position : Bool = false
+  let mut print_as_mly_without_actions : Bool = false
   @ArgParser.parse(
     [
+      (
+        "--print-as-mly-without-actions",
+        "--print-as-mly-without-actions",
+        Unit(fn() { print_as_mly_without_actions = true }),
+        "Print as mly without actions",
+      ),
       (
         "--output-file",
         "-o",
@@ -131,6 +139,18 @@ fn main {
     @fs.read_file_to_string!(input_file)
   } catch {
     err => abort(Show::to_string(err))
+  }
+  if print_as_mly_without_actions {
+    let lexer = @parser.new_lexer(parser_spec_src)
+    fn token() {
+      lexer.next_token?().unwrap()
+    }
+
+    let spec = @parser.spec?(token, 0).unwrap()
+    let out = StringBuilder::new()
+    @ast.print_spec(spec, out)
+    println(out.to_string())
+    exit(0)
   }
   let source_map = @codegen.SourceMap::new()
   let output = @driver.compile(

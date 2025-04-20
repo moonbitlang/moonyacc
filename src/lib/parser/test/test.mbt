@@ -44,4 +44,32 @@ test "parser" (it : @test.T) {
   let spec = @parser.spec!(token, 0)
   it.writeln(spec.to_json().stringify(indent=2))
   it.snapshot!(filename="parser_spec.json")
+  it.buffer.reset()
+  @ast.print_spec(spec, it.buffer)
+  it.snapshot!(filename="parser_spec.mbty")
+}
+
+///|
+test "parser" (it : @test.T) {
+  let lexer = @parser.new_lexer(parser_spec_src)
+  fn token() {
+    lexer.next_token?().unwrap()
+  }
+
+  let spec = @parser.spec!(token, 0)
+  it.writeln(spec.to_json().stringify(indent=2))
+  it.snapshot!(filename="parser_spec.json")
+}
+
+///|
+test "parser" (it : @test.T) {
+  let lexer = @parser.new_lexer(parser_spec_src)
+  fn token() {
+    lexer.next_token?().unwrap()
+  }
+
+  let spec = @parser.spec!(token, 0)
+  it.buffer.reset()
+  @ast.print_spec(spec, it.buffer)
+  it.snapshot!(filename="parser_spec.mbty")
 }

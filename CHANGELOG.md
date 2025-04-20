@@ -1,3 +1,7 @@
+## 0.3.37
+
+- feat: Print as mly without actions
+
 ## 0.3.23
 
 - fix: fix bug in small_int_set which causes building incorrect lr1 automaton

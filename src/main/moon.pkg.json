@@ -7,7 +7,9 @@
     "moonbitlang/yacc/lib/driver",
     "moonbitlang/yacc/lib/codegen",
     "moonbitlang/yacc/lib/codegen/gen_mbt",
-    "moonbitlang/yacc/lib/driver/util"
+    "moonbitlang/yacc/lib/driver/util",
+    "moonbitlang/yacc/lib/parser",
+    "moonbitlang/yacc/lib/ast"
   ],
   "link": {
     "native": {
