@@ -36,6 +36,46 @@ pub(all) enum InputMode {
 }
 
 ///|
+pub fn print(
+  parser_spec_str : String,
+  filename~ : String,
+  out~ : StringBuilder
+) -> Unit {
+  let lexer = @parser.new_lexer(parser_spec_str)
+  fn token() {
+    try {
+      lexer.next_token!()
+    } catch {
+      @parser.Unrecognized(x, pos) => {
+        let pos_str = pos_to_string(filename, parser_spec_str, pos)
+        println_to_stderr(
+          "SyntaxError: Unrecognized character \{x.escape()}, at \{pos_str}",
+        )
+        exit(1)
+      }
+      @parser.UnexpectedEndOfFile => {
+        println_to_stderr("SyntaxError: Unexpected end of file")
+        exit(1)
+      }
+    }
+  }
+
+  let spec = try {
+    @parser.spec!(token, 0)
+  } catch {
+    @parser.UnexpectedToken(token, loc, expected) => {
+      let loc_str = loc_to_string(filename, parser_spec_str, loc)
+      let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
+      println_to_stderr(
+        "SyntaxError: Unexpected token \{token.kind()}, expected \{expected_str}.\n  at \{loc_str}",
+      )
+      exit(1)
+    }
+  }
+  @ast.print_spec(spec, out)
+}
+
+///|
 pub fn compile(
   parser_spec_str : String,
   mode~ : Mode = Default,

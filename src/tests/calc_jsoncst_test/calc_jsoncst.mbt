@@ -347,7 +347,7 @@ fn yy_input(
         YYObj_Json({
           "type": "TERMINAL",
           "name": "EOF",
-          "data": Null,
+          "data": Json::null(),
           "start": _start_pos.to_json(),
           "end": _end_pos.to_json(),
         }),
@@ -358,7 +358,7 @@ fn yy_input(
         YYObj_Json({
           "type": "TERMINAL",
           "name": "NUMBER",
-          "data": Null,
+          "data": Json::null(),
           "start": _start_pos.to_json(),
           "end": _end_pos.to_json(),
         }),
@@ -369,7 +369,7 @@ fn yy_input(
         YYObj_Json({
           "type": "TERMINAL",
           "name": "PLUS",
-          "data": Null,
+          "data": Json::null(),
           "start": _start_pos.to_json(),
           "end": _end_pos.to_json(),
         }),
@@ -380,7 +380,7 @@ fn yy_input(
         YYObj_Json({
           "type": "TERMINAL",
           "name": "MINUS",
-          "data": Null,
+          "data": Json::null(),
           "start": _start_pos.to_json(),
           "end": _end_pos.to_json(),
         }),
@@ -391,7 +391,7 @@ fn yy_input(
         YYObj_Json({
           "type": "TERMINAL",
           "name": "STAR",
-          "data": Null,
+          "data": Json::null(),
           "start": _start_pos.to_json(),
           "end": _end_pos.to_json(),
         }),
@@ -402,7 +402,7 @@ fn yy_input(
         YYObj_Json({
           "type": "TERMINAL",
           "name": "LPAREN",
-          "data": Null,
+          "data": Json::null(),
           "start": _start_pos.to_json(),
           "end": _end_pos.to_json(),
         }),
@@ -413,7 +413,7 @@ fn yy_input(
         YYObj_Json({
           "type": "TERMINAL",
           "name": "RPAREN",
-          "data": Null,
+          "data": Json::null(),
           "start": _start_pos.to_json(),
           "end": _end_pos.to_json(),
         }),
@@ -746,7 +746,7 @@ pub fn start(
 
 ///|
 fn args_to_json(args : ArrayView[(YYObj, Position, Position)]) -> Json {
-  Array(
+  Json::array(
     args
     .iter()
     .map(fn {

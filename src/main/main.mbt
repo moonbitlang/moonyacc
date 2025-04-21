@@ -141,15 +141,8 @@ fn main {
     err => abort(Show::to_string(err))
   }
   if print_as_mly_without_actions {
-    let lexer = @parser.new_lexer(parser_spec_src)
-    fn token() {
-      lexer.next_token?().unwrap()
-    }
-
-    let spec = @parser.spec?(token, 0).unwrap()
     let out = StringBuilder::new()
-    @ast.print_spec(spec, out)
-    println(out.to_string())
+    @driver.print(parser_spec_src, filename=input_file, out~)
     exit(0)
   }
   let source_map = @codegen.SourceMap::new()

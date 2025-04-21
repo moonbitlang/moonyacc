@@ -67,7 +67,7 @@ test {
                       {
                         "type": "TERMINAL",
                         "name": "NUMBER",
-                        "data": Null,
+                        "data": Json::null(),
                         "start": 0,
                         "end": 1,
                       },
@@ -86,7 +86,7 @@ test {
           {
             "type": "TERMINAL",
             "name": "PLUS",
-            "data": Null,
+            "data": Json::null(),
             "start": 1,
             "end": 2,
           },
@@ -111,7 +111,7 @@ test {
                       {
                         "type": "TERMINAL",
                         "name": "LPAREN",
-                        "data": Null,
+                        "data": Json::null(),
                         "start": 2,
                         "end": 3,
                       },
@@ -142,7 +142,7 @@ test {
                                       {
                                         "type": "TERMINAL",
                                         "name": "NUMBER",
-                                        "data": Null,
+                                        "data": Json::null(),
                                         "start": 3,
                                         "end": 4,
                                       },
@@ -161,7 +161,7 @@ test {
                           {
                             "type": "TERMINAL",
                             "name": "MINUS",
-                            "data": Null,
+                            "data": Json::null(),
                             "start": 4,
                             "end": 5,
                           },
@@ -180,7 +180,7 @@ test {
                                   {
                                     "type": "TERMINAL",
                                     "name": "NUMBER",
-                                    "data": Null,
+                                    "data": Json::null(),
                                     "start": 5,
                                     "end": 6,
                                   },
@@ -199,7 +199,7 @@ test {
                       {
                         "type": "TERMINAL",
                         "name": "RPAREN",
-                        "data": Null,
+                        "data": Json::null(),
                         "start": 6,
                         "end": 7,
                       },
@@ -214,7 +214,7 @@ test {
               {
                 "type": "TERMINAL",
                 "name": "STAR",
-                "data": Null,
+                "data": Json::null(),
                 "start": 7,
                 "end": 8,
               },
@@ -227,7 +227,7 @@ test {
                   {
                     "type": "TERMINAL",
                     "name": "NUMBER",
-                    "data": Null,
+                    "data": Json::null(),
                     "start": 8,
                     "end": 9,
                   },
@@ -243,7 +243,7 @@ test {
         "start": 0,
         "end": 9,
       },
-      { "type": "TERMINAL", "name": "EOF", "data": Null, "start": 9, "end": 9 },
+      { "type": "TERMINAL", "name": "EOF", "data": Json::null(), "start": 9, "end": 9 },
     ],
     "start": 0,
     "end": 9,

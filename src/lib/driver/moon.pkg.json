@@ -8,6 +8,7 @@
     "moonbitlang/yacc/lib/elab",
     "moonbitlang/yacc/lib/util/array_multimap",
     "moonbitlang/yacc/lib/desugar",
-    "moonbitlang/yacc/lib/driver/util"
+    "moonbitlang/yacc/lib/driver/util",
+    "moonbitlang/yacc/lib/ast"
   ]
 }

@@ -643,7 +643,7 @@ fn codegen(
           "(data)"
         }
         let data_code = if meta.data_type is Constr(pkg=None, "Unit", []) {
-          "Null"
+          "Json::null()"
         } else {
           "data.to_json()"
         }
@@ -1155,7 +1155,7 @@ fn codegen(
       output.write_string(
         $|
         $|fn args_to_json(args : ArrayView[(YYObj, Position, Position)]) -> Json {
-        $|  Array(args.iter().map(fn {
+        $|  Json::array(args.iter().map(fn {
         $|    (YYObj_Json(json), _, _) => json
         $|    _ => panic()
         $|  }).to_array())
