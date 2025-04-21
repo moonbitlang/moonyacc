@@ -146,7 +146,17 @@ fn main {
       lexer.next_token?().unwrap()
     }
 
-    let spec = @parser.spec?(token, 0).unwrap()
+    let spec = match @parser.spec?(token, 0) {
+      Ok(spec) => spec
+      Err(UnexpectedToken(expected)) => {
+        let loc_str = loc_to_string(filename, parser_spec_str, loc)
+        let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
+        println_to_stderr(
+          "SyntaxError: Unexpected token \{token.kind()}, expected \{expected_str}.\n  at \{loc_str}",
+        )
+        exit(1)
+      }
+    }
     let out = StringBuilder::new()
     @ast.print_spec(spec, out)
     println(out.to_string())
