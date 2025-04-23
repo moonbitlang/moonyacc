@@ -479,7 +479,7 @@ fn codegen(
           output.write_string(" ".repeat(clause_info.column))
         }
       }
-      output.write_string(line)
+      output.write_string(line.to_string())
       output.write_char('\n')
     }
     output.write_string(
