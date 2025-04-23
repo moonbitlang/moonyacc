@@ -73,6 +73,7 @@ pub fn print(
     }
   }
   @ast.print_spec(spec, out)
+  println(out.to_string())
 }
 
 ///|

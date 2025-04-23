@@ -26215,6 +26215,7 @@ function moonbitlang$yacc$lib$driver$$print(parser_spec_str, filename, out) {
     spec = moonbitlang$yacc$lib$driver$util$$exit$25$(1);
   }
   moonbitlang$yacc$lib$ast$$print_spec(spec, out, moonbitlang$yacc$lib$ast$$print_spec$46$actions$46$default());
+  moonbitlang$core$builtin$$println$10$(moonbitlang$core$builtin$$StringBuilder$to_string(out));
 }
 function moonbitlang$yacc$lib$driver$$compile$46$get_terminal_by_name$124$46(terminal_by_name, name) {
   return moonbitlang$core$option$$Option$unwrap$112$(moonbitlang$core$builtin$$Map$get$146$(terminal_by_name, name));
