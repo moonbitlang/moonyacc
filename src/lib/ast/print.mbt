@@ -20,10 +20,12 @@ pub fn print_spec(
   }
   for decl in start_decls {
     match decl {
-      Start(symbols) => {
+      Start(symbols, type_~) => {
         out.write_string("%start")
         if not(actions) {
           out.write_string("<unit>")
+        } else {
+          out.write_string("<\{type_}>")
         }
         for symbol in symbols {
           out.write_string(" ")

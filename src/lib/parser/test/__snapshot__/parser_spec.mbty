@@ -45,6 +45,7 @@ decl_list
 decl
   : PERCENT_LBRACE_CODE_PERCENT_RBRACE {}
   | "%start" nonempty_symbol_list {}
+  | "%start" LANGLE_CODE_RANGLE nonempty_symbol_list {}
   | "%token" nonempty_symbol_list {}
   | "%token" LANGLE_CODE_RANGLE nonempty_symbol_list {}
   | "%token" symbol STRING {}

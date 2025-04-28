@@ -65,7 +65,7 @@ pub(all) typealias TypeString = String
 pub(all) enum Declaration {
   Header(Code, Int, Int) // (code, utf8_pos, utf8_len)
   Trailer(Code, Int, Int) // (code, utf8_pos, utf8_len)
-  Start(Array[Symbol])
+  Start(Array[Symbol], type_~: TypeString?)
   Token(Array[Symbol], type_~ : TypeString?)
   Token1(Symbol, type_~ : TypeString?, image~ : String)
   Type(Array[Symbol], type_~ : TypeString)

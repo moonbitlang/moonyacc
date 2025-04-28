@@ -55,7 +55,8 @@ decl_list -> @immut/list.T[@ast.Declaration]
 
 decl -> @ast.Declaration
   : PERCENT_LBRACE_CODE_PERCENT_RBRACE { Header($1.0, $1.1, $1.2) }
-  | "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array()) }
+  | "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array(), type_=None) }
+  | "%start" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Start(symbol_list.to_array(), type_=Some(type_)) }
   | "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
   | "%token" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=Some(type_)) }
   | "%token" symbol=symbol image=STRING { Token1(symbol, type_=None, image=image) }

@@ -203,6 +203,7 @@ pub fn elaborate(
   }
   let mut curr_prec = 0
   let prec_map = @sorted_map.new()
+  let start_rules : Array[Symbol] = []
   for ast_decl in ast_spec.decls {
     match ast_decl {
       Left(idents) | Right(idents) | Nonassoc(idents) => {
@@ -231,6 +232,17 @@ pub fn elaborate(
           }
         }
       }
+      Start(symbols, type_~) =>
+        for symbol in symbols {
+          start_rules.push(symbol)
+          guard rule_by_name[symbol] is Some(rule) else {
+            // TODO: error reporting
+            panic()
+          }
+          if json_cst is No && type_ is Some(type_) {
+            rule.type_ = parse_and_elaborate_type_expr!(type_)
+          }
+        }
       Type(idents, type_~) =>
         for ident in idents {
           match token_by_name[ident] {
@@ -239,11 +251,14 @@ pub fn elaborate(
                 None => panic()
                 Some(rule) =>
                   // TODO: report error if rule already has a type
-                  if token_payload_rewrite is NoRewrite {
+                  if json_cst is No {
                     rule.type_ = parse_and_elaborate_type_expr!(type_)
                   }
               }
-            Some(token) => token.type_ = elaborate_token_type!(Some(type_))
+            Some(token) =>
+              if token_payload_rewrite is NoRewrite {
+                token.type_ = elaborate_token_type!(Some(type_))
+              }
           }
         }
       _ => ()
@@ -339,7 +354,6 @@ pub fn elaborate(
       clause_index += 1
     }
   }
-  let start_rules : Array[Symbol] = []
   let mut position_type : TypeExpr = if force_int_position {
     Constr(pkg=None, "Int", [])
   } else {
@@ -348,10 +362,6 @@ pub fn elaborate(
   let derive_map = @array_multimap.new()
   for ast_decl in ast_spec.decls {
     match ast_decl {
-      Start(symbols) =>
-        for symbol in symbols {
-          start_rules.push(symbol)
-        }
       Position(type_~) =>
         if not(force_int_position) {
           position_type = parse_and_elaborate_type_expr!(type_)

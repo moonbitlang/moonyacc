@@ -1,3 +1,7 @@
+## 0.3.40
+
+- feat: support `%start` with type, eg. `%start<Type> start_rule`
+
 ## 0.3.37
 
 - feat: Print as mly without actions
