@@ -103,7 +103,7 @@ fn init {
 }
 
 // file:///./calc_jsoncst.mbty
-// 26|    add "+" factor  { $1 + $3 }
+// 32|    factor "*" term { $1 * $3 }
 ///|
 fn yy_action_0(
   _last_pos : Position,
@@ -120,8 +120,37 @@ fn yy_action_0(
       ()
       {
         "type": "NONTERMINAL",
-        "name": "add",
-        "rule_index": 1,
+        "name": "factor",
+        "rule_index": 2,
+        "clause_index": 0,
+        "children": args_to_json(_args),
+        "start": _start_pos.to_json(),
+        "end": _end_pos.to_json(),
+      }
+    },
+  )
+}
+
+// file:///./calc_jsoncst.mbty
+// 37|    NUMBER          { $1 }
+///|
+fn yy_action_1(
+  _last_pos : Position,
+  _args : ArrayView[(YYObj, Position, Position)]
+) -> YYObj {
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
+  YYObj_Json(
+    {
+      ()
+      {
+        "type": "NONTERMINAL",
+        "name": "term",
+        "rule_index": 3,
         "clause_index": 0,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
@@ -134,7 +163,7 @@ fn yy_action_0(
 // file:///./calc_jsoncst.mbty
 // 28|    factor          { $1 }
 ///|
-fn yy_action_1(
+fn yy_action_2(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -161,36 +190,7 @@ fn yy_action_1(
 }
 
 // file:///./calc_jsoncst.mbty
-// 38|    "(" add ")"     { $2 }
-///|
-fn yy_action_2(
-  _last_pos : Position,
-  _args : ArrayView[(YYObj, Position, Position)]
-) -> YYObj {
-  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      ()
-      {
-        "type": "NONTERMINAL",
-        "name": "term",
-        "rule_index": 3,
-        "clause_index": 1,
-        "children": args_to_json(_args),
-        "start": _start_pos.to_json(),
-        "end": _end_pos.to_json(),
-      }
-    },
-  )
-}
-
-// file:///./calc_jsoncst.mbty
-// 37|    NUMBER          { $1 }
+// 33|    term            { $1 }
 ///|
 fn yy_action_3(
   _last_pos : Position,
@@ -207,9 +207,9 @@ fn yy_action_3(
       ()
       {
         "type": "NONTERMINAL",
-        "name": "term",
-        "rule_index": 3,
-        "clause_index": 0,
+        "name": "factor",
+        "rule_index": 2,
+        "clause_index": 1,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -248,7 +248,7 @@ fn yy_action_4(
 }
 
 // file:///./calc_jsoncst.mbty
-// 32|    factor "*" term { $1 * $3 }
+// 38|    "(" add ")"     { $2 }
 ///|
 fn yy_action_5(
   _last_pos : Position,
@@ -265,8 +265,37 @@ fn yy_action_5(
       ()
       {
         "type": "NONTERMINAL",
-        "name": "factor",
-        "rule_index": 2,
+        "name": "term",
+        "rule_index": 3,
+        "clause_index": 1,
+        "children": args_to_json(_args),
+        "start": _start_pos.to_json(),
+        "end": _end_pos.to_json(),
+      }
+    },
+  )
+}
+
+// file:///./calc_jsoncst.mbty
+// 26|    add "+" factor  { $1 + $3 }
+///|
+fn yy_action_6(
+  _last_pos : Position,
+  _args : ArrayView[(YYObj, Position, Position)]
+) -> YYObj {
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+  let _end_pos = if _args.length() == 0 {
+    _last_pos
+  } else {
+    _args[_args.length() - 1].2
+  }
+  YYObj_Json(
+    {
+      ()
+      {
+        "type": "NONTERMINAL",
+        "name": "add",
+        "rule_index": 1,
         "clause_index": 0,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
@@ -279,7 +308,7 @@ fn yy_action_5(
 // file:///./calc_jsoncst.mbty
 // 22|    add EOF         { $1 }
 ///|
-fn yy_action_6(
+fn yy_action_7(
   _last_pos : Position,
   _args : ArrayView[(YYObj, Position, Position)]
 ) -> YYObj {
@@ -297,35 +326,6 @@ fn yy_action_6(
         "name": "start",
         "rule_index": 0,
         "clause_index": 0,
-        "children": args_to_json(_args),
-        "start": _start_pos.to_json(),
-        "end": _end_pos.to_json(),
-      }
-    },
-  )
-}
-
-// file:///./calc_jsoncst.mbty
-// 33|    term            { $1 }
-///|
-fn yy_action_7(
-  _last_pos : Position,
-  _args : ArrayView[(YYObj, Position, Position)]
-) -> YYObj {
-  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      ()
-      {
-        "type": "NONTERMINAL",
-        "name": "factor",
-        "rule_index": 2,
-        "clause_index": 1,
         "children": args_to_json(_args),
         "start": _start_pos.to_json(),
         "end": _end_pos.to_json(),
@@ -472,13 +472,13 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
 // [6, term → NUMBER •, EOF / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_term, yy_action_3)
+  ReduceNoLookahead(1, NT_term, yy_action_1)
 }
 
 // [5, factor → term •, EOF / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_factor, yy_action_7)
+  ReduceNoLookahead(1, NT_factor, yy_action_3)
 }
 
 // [3, add → factor •, EOF / PLUS / MINUS / RPAREN]
@@ -487,7 +487,7 @@ fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(1, NT_add, yy_action_1)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(1, NT_add, yy_action_2)
     _ => Error
   }
 }
@@ -508,7 +508,7 @@ fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
 // [4, factor → factor STAR term •, EOF / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_factor, yy_action_5)
+  ReduceNoLookahead(3, NT_factor, yy_action_0)
 }
 
 // [1, add → add • PLUS factor, PLUS / MINUS / RPAREN]
@@ -527,7 +527,7 @@ fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
 // [7, term → LPAREN add RPAREN •, EOF / PLUS / MINUS / STAR / RPAREN]
 ///|
 fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_term, yy_action_2)
+  ReduceNoLookahead(3, NT_term, yy_action_5)
 }
 
 // [2, add → add MINUS • factor, EOF / PLUS / MINUS / RPAREN]
@@ -579,7 +579,7 @@ fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_STAR => Shift(yy_state_6)
-    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_0)
+    T_EOF | T_PLUS | T_MINUS | T_RPAREN => Reduce(3, NT_add, yy_action_6)
     _ => Error
   }
 }
@@ -600,7 +600,7 @@ fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
 // [0, start → add EOF •, $]
 ///|
 fn yy_state_15(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_start, yy_action_6)
+  ReduceNoLookahead(2, NT_start, yy_action_7)
 }
 
 ///|

@@ -67,6 +67,7 @@ pub fn eliminate_rule_args(
           }),
           action: {
             ..clause.action,
+            stamp: @stamp.new(),
             bindings: clause.action.bindings.map(fn(binding) {
               let (subject, code) = binding
               let new_subject : @elab.BindingSubject = match subject {
@@ -110,6 +111,7 @@ pub fn eliminate_rule_args(
           items: new_items,
           action: {
             ..clause.action,
+            stamp: @stamp.new(),
             bindings: clause.action.bindings.map(fn(binding) {
               let (subject, code) = binding
               let new_subject : @elab.BindingSubject = match subject {

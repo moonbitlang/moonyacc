@@ -2,123 +2,123 @@
   "mappings": [
     {
       "source": "inline.mbty",
-      "original_offset": 177,
-      "generated_offset": 1172,
-      "length": 5
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 227,
-      "generated_offset": 1344,
-      "length": 5
-    },
-    {
-      "source": "inline.mbty",
       "original_offset": 131,
-      "generated_offset": 1980,
+      "generated_offset": 1636,
       "length": 9
     },
     {
       "source": "inline.mbty",
       "original_offset": 142,
-      "generated_offset": 1997,
+      "generated_offset": 1653,
       "length": 3
     },
     {
       "source": "inline.mbty",
       "original_offset": 147,
-      "generated_offset": 2008,
+      "generated_offset": 1664,
       "length": 3
     },
     {
       "source": "inline.mbty",
       "original_offset": 152,
-      "generated_offset": 2019,
+      "generated_offset": 1675,
       "length": 1
     },
     {
       "source": "inline.mbty",
       "original_offset": 198,
-      "generated_offset": 2187,
+      "generated_offset": 1843,
       "length": 5
     },
     {
       "source": "inline.mbty",
       "original_offset": 131,
-      "generated_offset": 2823,
+      "generated_offset": 2479,
       "length": 9
     },
     {
       "source": "inline.mbty",
       "original_offset": 142,
-      "generated_offset": 2840,
+      "generated_offset": 2496,
       "length": 3
     },
     {
       "source": "inline.mbty",
       "original_offset": 147,
-      "generated_offset": 2851,
+      "generated_offset": 2507,
       "length": 3
     },
     {
       "source": "inline.mbty",
       "original_offset": 152,
-      "generated_offset": 2862,
+      "generated_offset": 2518,
+      "length": 1
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 177,
+      "generated_offset": 2686,
+      "length": 5
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 131,
+      "generated_offset": 3322,
+      "length": 9
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 142,
+      "generated_offset": 3339,
+      "length": 3
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 147,
+      "generated_offset": 3350,
+      "length": 3
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 152,
+      "generated_offset": 3361,
+      "length": 1
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 131,
+      "generated_offset": 3993,
+      "length": 9
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 142,
+      "generated_offset": 4010,
+      "length": 3
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 147,
+      "generated_offset": 4021,
+      "length": 3
+    },
+    {
+      "source": "inline.mbty",
+      "original_offset": 152,
+      "generated_offset": 4032,
       "length": 1
     },
     {
       "source": "inline.mbty",
       "original_offset": 241,
-      "generated_offset": 3030,
+      "generated_offset": 4200,
       "length": 5
     },
     {
       "source": "inline.mbty",
-      "original_offset": 131,
-      "generated_offset": 3666,
-      "length": 9
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 142,
-      "generated_offset": 3683,
-      "length": 3
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 147,
-      "generated_offset": 3694,
-      "length": 3
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 152,
-      "generated_offset": 3705,
-      "length": 1
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 131,
-      "generated_offset": 4337,
-      "length": 9
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 142,
-      "generated_offset": 4354,
-      "length": 3
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 147,
-      "generated_offset": 4365,
-      "length": 3
-    },
-    {
-      "source": "inline.mbty",
-      "original_offset": 152,
-      "generated_offset": 4376,
-      "length": 1
+      "original_offset": 227,
+      "generated_offset": 4372,
+      "length": 5
     }
   ]
 }

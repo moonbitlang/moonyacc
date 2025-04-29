@@ -115,123 +115,123 @@ fn init {
 }
 
 // file:///./parser.mbty
-// 40|    postfix_type_expr { $1 }
+// 49|    postfix_type_expr "?" { Option($1) }
 fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
-  YYObj__ast_TypeExpr({();  _dollar1 })
+  YYObj__ast_TypeExpr({();  Option(_dollar1) })
 }
 
 // file:///./parser.mbty
-// 57|    "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@immut/list.Cons($2, $4).to_array()) }
+// 44|    "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
 fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[3].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar4)
-  YYObj__ast_TypeExpr({();  Tuple(@immut/list.Cons(_dollar2, _dollar4).to_array()) })
-}
-
-// file:///./parser.mbty
-// 48|    basic_type_expr { $1 }
-fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
-  YYObj__ast_TypeExpr({();  _dollar1 })
-}
-
-// file:///./parser.mbty
-// 43|    "(" type_expr "," ")" "->" type_expr { Arrow([$2], $6) }
-fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
-  guard _args[5].0 is YYObj__ast_TypeExpr(_dollar6)
-  YYObj__ast_TypeExpr({();  Arrow([_dollar2], _dollar6) })
-}
-
-// file:///./parser.mbty
-// 55|    IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
-fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj_String(_dollar1)
-  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar3)
-  YYObj__ast_TypeExpr({();  Constr(pkg=None, _dollar1, _dollar3.to_array()) })
-}
-
-// file:///./parser.mbty
-// 58|    "(" type_expr ")" { $2 }
-fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
-  YYObj__ast_TypeExpr({();  _dollar2 })
-}
-
-// file:///./parser.mbty
-// 54|    PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
-fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__String__String_(_dollar1)
-  YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, []) })
-}
-
-// file:///./parser.mbty
-// 63|    type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { Cons(type_expr, type_expr_list) }
-fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
-  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(type_expr_list)
-  YYObj__immut_list_T__ast_TypeExpr_({();  Cons(type_expr, type_expr_list) })
+  guard _args[6].0 is YYObj__ast_TypeExpr(_dollar7)
+  YYObj__ast_TypeExpr({();  Arrow(@immut/list.Cons(_dollar2, _dollar4).to_array(), _dollar7) })
 }
 
 // file:///./parser.mbty
 // 42|    "(" type_expr ")" "->" type_expr { Arrow([$2], $5) }
-fn yy_action_8(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[4].0 is YYObj__ast_TypeExpr(_dollar5)
   YYObj__ast_TypeExpr({();  Arrow([_dollar2], _dollar5) })
 }
 
 // file:///./parser.mbty
-// 62|    type_expr=type_expr { Cons(type_expr, Nil) }
-fn yy_action_9(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
-  YYObj__immut_list_T__ast_TypeExpr_({();  Cons(type_expr, Nil) })
-}
-
-// file:///./parser.mbty
-// 49|    postfix_type_expr "?" { Option($1) }
-fn yy_action_10(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
-  YYObj__ast_TypeExpr({();  Option(_dollar1) })
-}
-
-// file:///./parser.mbty
-// 56|    PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
-fn yy_action_11(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[0].0 is YYObj__String__String_(_dollar1)
-  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar3)
-  YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, _dollar3.to_array()) })
-}
-
-// file:///./parser.mbty
-// 41|    "(" ")" "->" type_expr { Arrow([], $4) }
-fn yy_action_12(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
-  guard _args[3].0 is YYObj__ast_TypeExpr(_dollar4)
-  YYObj__ast_TypeExpr({();  Arrow([], _dollar4) })
-}
-
-// file:///./parser.mbty
-// 36|    type_expr EOF { $1 }
-fn yy_action_13(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+// 48|    basic_type_expr { $1 }
+fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
   YYObj__ast_TypeExpr({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 53|    IDENT { Constr(pkg=None, $1, []) }
-fn yy_action_14(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
   YYObj__ast_TypeExpr({();  Constr(pkg=None, _dollar1, []) })
 }
 
 // file:///./parser.mbty
-// 44|    "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
-fn yy_action_15(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+// 63|    type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { Cons(type_expr, type_expr_list) }
+fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
+  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(type_expr_list)
+  YYObj__immut_list_T__ast_TypeExpr_({();  Cons(type_expr, type_expr_list) })
+}
+
+// file:///./parser.mbty
+// 62|    type_expr=type_expr { Cons(type_expr, Nil) }
+fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
+  YYObj__immut_list_T__ast_TypeExpr_({();  Cons(type_expr, Nil) })
+}
+
+// file:///./parser.mbty
+// 40|    postfix_type_expr { $1 }
+fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
+  YYObj__ast_TypeExpr({();  _dollar1 })
+}
+
+// file:///./parser.mbty
+// 41|    "(" ")" "->" type_expr { Arrow([], $4) }
+fn yy_action_8(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[3].0 is YYObj__ast_TypeExpr(_dollar4)
+  YYObj__ast_TypeExpr({();  Arrow([], _dollar4) })
+}
+
+// file:///./parser.mbty
+// 36|    type_expr EOF { $1 }
+fn yy_action_9(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
+  YYObj__ast_TypeExpr({();  _dollar1 })
+}
+
+// file:///./parser.mbty
+// 43|    "(" type_expr "," ")" "->" type_expr { Arrow([$2], $6) }
+fn yy_action_10(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
+  guard _args[5].0 is YYObj__ast_TypeExpr(_dollar6)
+  YYObj__ast_TypeExpr({();  Arrow([_dollar2], _dollar6) })
+}
+
+// file:///./parser.mbty
+// 58|    "(" type_expr ")" { $2 }
+fn yy_action_11(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
+  YYObj__ast_TypeExpr({();  _dollar2 })
+}
+
+// file:///./parser.mbty
+// 55|    IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
+fn yy_action_12(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj_String(_dollar1)
+  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar3)
+  YYObj__ast_TypeExpr({();  Constr(pkg=None, _dollar1, _dollar3.to_array()) })
+}
+
+// file:///./parser.mbty
+// 57|    "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@immut/list.Cons($2, $4).to_array()) }
+fn yy_action_13(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[3].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar4)
-  guard _args[6].0 is YYObj__ast_TypeExpr(_dollar7)
-  YYObj__ast_TypeExpr({();  Arrow(@immut/list.Cons(_dollar2, _dollar4).to_array(), _dollar7) })
+  YYObj__ast_TypeExpr({();  Tuple(@immut/list.Cons(_dollar2, _dollar4).to_array()) })
+}
+
+// file:///./parser.mbty
+// 54|    PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
+fn yy_action_14(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj__String__String_(_dollar1)
+  YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, []) })
+}
+
+// file:///./parser.mbty
+// 56|    PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
+fn yy_action_15(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+  guard _args[0].0 is YYObj__String__String_(_dollar1)
+  guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar3)
+  YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, _dollar3.to_array()) })
 }
 
 fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSymbol, YYObj) {
@@ -287,7 +287,7 @@ fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LBRACKET => Shift(yy_state_3)
-    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA | T_QUESTION => Reduce(1, NT_basic_type_expr, yy_action_6)
+    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA | T_QUESTION => Reduce(1, NT_basic_type_expr, yy_action_14)
     _ => Error
   }
 }
@@ -326,7 +326,7 @@ fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_COMMA => Shift(yy_state_5)
-    T_RPAREN | T_RBRACKET => Reduce(1, NT_nonempty_type_expr_list, yy_action_9)
+    T_RPAREN | T_RBRACKET => Reduce(1, NT_nonempty_type_expr_list, yy_action_6)
     _ => Error
   }
 }
@@ -362,7 +362,7 @@ fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
 
 // [15, nonempty_type_expr_list → type_expr COMMA nonempty_type_expr_list •, RPAREN / RBRACKET]
 fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_nonempty_type_expr_list, yy_action_7)
+  ReduceNoLookahead(3, NT_nonempty_type_expr_list, yy_action_5)
 }
 
 // [8, basic_type_expr → IDENT •, EOF / RPAREN / RBRACKET / COMMA / QUESTION]
@@ -370,7 +370,7 @@ fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LBRACKET => Shift(yy_state_8)
-    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA | T_QUESTION => Reduce(1, NT_basic_type_expr, yy_action_14)
+    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA | T_QUESTION => Reduce(1, NT_basic_type_expr, yy_action_4)
     _ => Error
   }
 }
@@ -414,12 +414,12 @@ fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
 
 // [10, basic_type_expr → IDENT LBRACKET nonempty_type_expr_list RBRACKET •, EOF / RPAREN / RBRACKET / COMMA / QUESTION]
 fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(4, NT_basic_type_expr, yy_action_4)
+  ReduceNoLookahead(4, NT_basic_type_expr, yy_action_12)
 }
 
 // [6, postfix_type_expr → basic_type_expr •, EOF / RPAREN / RBRACKET / COMMA / QUESTION]
 fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_postfix_type_expr, yy_action_2)
+  ReduceNoLookahead(1, NT_postfix_type_expr, yy_action_3)
 }
 
 // [1, type_expr → • postfix_type_expr, RPAREN / COMMA]
@@ -513,7 +513,7 @@ fn yy_state_15(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_16(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_ARROW => Shift(yy_state_17)
-    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA | T_QUESTION => Reduce(5, NT_basic_type_expr, yy_action_1)
+    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA | T_QUESTION => Reduce(5, NT_basic_type_expr, yy_action_13)
     _ => Error
   }
 }
@@ -546,7 +546,7 @@ fn yy_state_17(_lookahead : YYSymbol) -> YYDecision {
 
 // [5, type_expr → LPAREN type_expr COMMA nonempty_type_expr_list RPAREN ARROW type_expr •, EOF / RPAREN / RBRACKET / COMMA]
 fn yy_state_18(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(7, NT_type_expr, yy_action_15)
+  ReduceNoLookahead(7, NT_type_expr, yy_action_1)
 }
 
 // [1, type_expr → postfix_type_expr •, EOF / RPAREN / RBRACKET / COMMA]
@@ -554,14 +554,14 @@ fn yy_state_18(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_19(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_QUESTION => Shift(yy_state_20)
-    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA => Reduce(1, NT_type_expr, yy_action_0)
+    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA => Reduce(1, NT_type_expr, yy_action_7)
     _ => Error
   }
 }
 
 // [7, postfix_type_expr → postfix_type_expr QUESTION •, EOF / RPAREN / RBRACKET / COMMA / QUESTION]
 fn yy_state_20(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_postfix_type_expr, yy_action_10)
+  ReduceNoLookahead(2, NT_postfix_type_expr, yy_action_0)
 }
 
 // [4, type_expr → LPAREN type_expr COMMA RPAREN • ARROW type_expr, EOF / RPAREN / RBRACKET / COMMA]
@@ -600,7 +600,7 @@ fn yy_state_22(_lookahead : YYSymbol) -> YYDecision {
 
 // [4, type_expr → LPAREN type_expr COMMA RPAREN ARROW type_expr •, EOF / RPAREN / RBRACKET / COMMA]
 fn yy_state_23(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(6, NT_type_expr, yy_action_3)
+  ReduceNoLookahead(6, NT_type_expr, yy_action_10)
 }
 
 // [3, type_expr → LPAREN type_expr RPAREN • ARROW type_expr, EOF / RPAREN / RBRACKET / COMMA]
@@ -608,7 +608,7 @@ fn yy_state_23(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_24(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_ARROW => Shift(yy_state_25)
-    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA | T_QUESTION => Reduce(3, NT_basic_type_expr, yy_action_5)
+    T_EOF | T_RPAREN | T_RBRACKET | T_COMMA | T_QUESTION => Reduce(3, NT_basic_type_expr, yy_action_11)
     _ => Error
   }
 }
@@ -641,7 +641,7 @@ fn yy_state_25(_lookahead : YYSymbol) -> YYDecision {
 
 // [3, type_expr → LPAREN type_expr RPAREN ARROW type_expr •, EOF / RPAREN / RBRACKET / COMMA]
 fn yy_state_26(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(5, NT_type_expr, yy_action_8)
+  ReduceNoLookahead(5, NT_type_expr, yy_action_2)
 }
 
 // [2, type_expr → LPAREN RPAREN • ARROW type_expr, EOF / RPAREN / RBRACKET / COMMA]
@@ -680,7 +680,7 @@ fn yy_state_28(_lookahead : YYSymbol) -> YYDecision {
 
 // [2, type_expr → LPAREN RPAREN ARROW type_expr •, EOF / RPAREN / RBRACKET / COMMA]
 fn yy_state_29(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(4, NT_type_expr, yy_action_12)
+  ReduceNoLookahead(4, NT_type_expr, yy_action_8)
 }
 
 // [11, basic_type_expr → PKG_AND_IDENT LBRACKET nonempty_type_expr_list • RBRACKET, EOF / RPAREN / RBRACKET / COMMA / QUESTION]
@@ -693,7 +693,7 @@ fn yy_state_30(_lookahead : YYSymbol) -> YYDecision {
 
 // [11, basic_type_expr → PKG_AND_IDENT LBRACKET nonempty_type_expr_list RBRACKET •, EOF / RPAREN / RBRACKET / COMMA / QUESTION]
 fn yy_state_31(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(4, NT_basic_type_expr, yy_action_11)
+  ReduceNoLookahead(4, NT_basic_type_expr, yy_action_15)
 }
 
 // [0, parse_type_expr → type_expr • EOF, $]
@@ -706,7 +706,7 @@ fn yy_state_32(_lookahead : YYSymbol) -> YYDecision {
 
 // [0, parse_type_expr → type_expr EOF •, $]
 fn yy_state_33(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_parse_type_expr, yy_action_13)
+  ReduceNoLookahead(2, NT_parse_type_expr, yy_action_9)
 }
 
 fn yy_parse[T](

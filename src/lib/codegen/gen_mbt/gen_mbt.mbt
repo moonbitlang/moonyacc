@@ -437,6 +437,9 @@ fn codegen(
   // yy_action_xxx
   let actions : @hashmap.T[@stamp.T, @elab.Action] = @hashmap.new()
   fn add_action(action : @elab.Action) {
+    if actions.contains(action.stamp) {
+      return
+    }
     for sub_action in action.sub_actions {
       add_action(sub_action.action)
     }

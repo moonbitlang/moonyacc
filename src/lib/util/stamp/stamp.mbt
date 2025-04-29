@@ -35,3 +35,8 @@ pub fn new() -> Stamp {
   next_stamp.val += 1
   stamp
 }
+
+///|
+pub fn unsafe_from_int(stamp : Int) -> Stamp {
+  stamp
+}
