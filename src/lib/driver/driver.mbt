@@ -151,7 +151,13 @@ pub fn compile(
       exit(1)
     }
   }
-  let spec = @desugar.eliminate_rule_args(spec)
+  let spec = @desugar.eliminate_rule_args(
+    spec,
+    json_cst=match mode {
+      JsonCst => Yes
+      Default | OnlyTokens => No
+    },
+  )
   let spec = @desugar.eliminate_inline(spec)
   let terminals = []
   let nonterminals = []

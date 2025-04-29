@@ -1,3 +1,7 @@
+## 0.3.41
+
+- fix: fix parametric rules not working under json-cst mode
+
 ## 0.3.40
 
 - feat: support `%start` with type, eg. `%start<Type> start_rule`
