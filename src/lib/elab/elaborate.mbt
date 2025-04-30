@@ -417,7 +417,7 @@ fn elaborate_action(
   }
   fn item_ident_to_index(ident : @ast.ClauseItemIdent) -> Int {
     match ident {
-      Dollar(index) => index
+      Dollar(index) => index - 1
       Name(name) => name_to_index[name].unwrap()
     }
   }

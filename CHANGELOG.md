@@ -1,3 +1,7 @@
+## 0.3.43
+
+- fix: fix `$startpos($2)`
+
 ## 0.3.41
 
 - fix: fix parametric rules not working under json-cst mode
