@@ -1093,7 +1093,7 @@ fn codegen(
     match input_mode {
       Array =>
         output.write_string(
-          $|pub fn \{original_name}(tokens : Array[(Token, Position, Position)], initial_pos? : Position) -> \{nonterminal_meta(name).data_type}!ParseError {
+          $|pub fn \{original_name}(tokens : Array[(Token, Position, Position)], initial_pos? : Position) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())}!ParseError {
           $|  yy_parse!(
           $|    tokens,
           $|    yy_state_\{start_state.num},
@@ -1109,7 +1109,7 @@ fn codegen(
         )
       Pull =>
         output.write_string(
-          $|pub fn \{original_name}(read_token : () -> (Token, Position, Position), start_pos : Position) -> \{nonterminal_meta(name).data_type}!ParseError {
+          $|pub fn \{original_name}(read_token : () -> (Token, Position, Position), start_pos : Position) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())}!ParseError {
           $|  yy_parse!(
           $|    read_token,
           $|    start_pos,
@@ -1243,3 +1243,12 @@ impl @codegen.CodeGenerator for CodeGenerator with codegen(
 
 ///|
 pub let generator : &@codegen.CodeGenerator = CodeGenerator(())
+
+///|
+fn fix_result_type(str : String) -> String {
+  if str.contains("->") {
+    "(\{str})"
+  } else {
+    str
+  }
+}

@@ -1,3 +1,7 @@
+## 0.3.44
+
+- fix: fix bug case which start rules result type contains "->"
+
 ## 0.3.43
 
 - fix: fix `$startpos($2)`

@@ -1,6 +1,6 @@
 {
   "name": "moonbitlang/yacc",
-  "version": "0.3.43",
+  "version": "0.3.44",
   "deps": {
     "moonbitlang/x": "0.4.23",
     "Yoorkin/ArgParser": "0.1.9"
