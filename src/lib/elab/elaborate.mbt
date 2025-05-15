@@ -219,13 +219,13 @@ pub fn elaborate(
           // TODO: error reporting
           match ident {
             Symbol(name) => {
-              if token_by_name[name] is Some(token) {
+              if token_by_name.get(name) is Some(token) {
                 token.prec = Some((prec, assoc))
               }
               prec_map[name] = (prec, assoc)
             }
             Image(image) => {
-              let token = token_by_image[image].unwrap()
+              let token = token_by_image.get(image).unwrap()
               token.prec = Some((prec, assoc))
               prec_map[token.name] = (prec, assoc)
             }
@@ -235,7 +235,7 @@ pub fn elaborate(
       Start(symbols, type_~) =>
         for symbol in symbols {
           start_rules.push(symbol)
-          guard rule_by_name[symbol] is Some(rule) else {
+          guard rule_by_name.get(symbol) is Some(rule) else {
             // TODO: error reporting
             panic()
           }
@@ -245,9 +245,9 @@ pub fn elaborate(
         }
       Type(idents, type_~) =>
         for ident in idents {
-          match token_by_name[ident] {
+          match token_by_name.get(ident) {
             None =>
-              match rule_by_name[ident] {
+              match rule_by_name.get(ident) {
                 None => panic()
                 Some(rule) =>
                   // TODO: report error if rule already has a type
@@ -270,12 +270,12 @@ pub fn elaborate(
   ) -> Term!ElabError {
     match ast_term {
       Symbol(symbol, loc~) =>
-        match token_by_name[symbol] {
+        match token_by_name.get(symbol) {
           None =>
-            match rule_param_map[symbol] {
+            match rule_param_map.get(symbol) {
               Some(type_) => Param(symbol, type_)
               None =>
-                match rule_by_name[symbol] {
+                match rule_by_name.get(symbol) {
                   None => raise UnresolvedSymbol(symbol, loc~)
                   Some(rule) => RuleCall(symbol, [], rule.type_)
                 }
@@ -283,12 +283,12 @@ pub fn elaborate(
           Some(token) => Token(token)
         }
       Image(image, loc~) =>
-        match token_by_image[image] {
+        match token_by_image.get(image) {
           None => raise UnresolvedSymbol(image.escape(), loc~)
           Some(token) => Token(token)
         }
       RuleCall(symbol, symbol_loc~, args) =>
-        match rule_by_name[symbol] {
+        match rule_by_name.get(symbol) {
           None => raise UnresolvedSymbol(symbol, loc=symbol_loc)
           Some(rule) =>
             RuleCall(
@@ -301,7 +301,7 @@ pub fn elaborate(
   }
 
   for rule_index, ast_rule in ast_spec.rules {
-    let rule = rule_by_name[ast_rule.nonterminal].unwrap()
+    let rule = rule_by_name.get(ast_rule.nonterminal).unwrap()
     let rule_param_map : Map[String, TypeExpr] = Map::from_array(rule.params)
     let ast_clause_iter = ast_rule.clauses
       .iter()
@@ -321,9 +321,9 @@ pub fn elaborate(
         Some(ident) => {
           // TODO: error reporting
           let (prec, _assoc) = match ident {
-            Symbol(name) => prec_map[name].unwrap()
+            Symbol(name) => prec_map.get(name).unwrap()
             Image(image) =>
-              prec_map[token_by_image[image].unwrap().name].unwrap()
+              prec_map.get(token_by_image.get(image).unwrap().name).unwrap()
           }
           Some(prec)
         }
@@ -418,7 +418,7 @@ fn elaborate_action(
   fn item_ident_to_index(ident : @ast.ClauseItemIdent) -> Int {
     match ident {
       Dollar(index) => index - 1
-      Name(name) => name_to_index[name].unwrap()
+      Name(name) => name_to_index.get(name).unwrap()
     }
   }
 

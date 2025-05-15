@@ -57,7 +57,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
   let nonterminals = []
   let productions = []
   fn get_terminal(name : BuilderSymbol) -> Terminal {
-    match terminal_by_name[name] {
+    match terminal_by_name.get(name) {
       Some(t) => t
       None => {
         let t = Terminal::{ num: terminal_by_name.size(), name, prec: None }
@@ -69,7 +69,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
   }
 
   fn get_nonterminal(name : BuilderSymbol) -> Nonterminal {
-    match nonterminal_by_name[name] {
+    match nonterminal_by_name.get(name) {
       Some(nt) => nt
       None => {
         let nt = Nonterminal::{
@@ -99,7 +99,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
           num,
           lhs: nt,
           rhs: rhs.map(fn(symbol) {
-            match nonterminal_by_name[symbol] {
+            match nonterminal_by_name.get(symbol) {
               Some(nt) => NT(nt)
               None => T(get_terminal(symbol))
             }

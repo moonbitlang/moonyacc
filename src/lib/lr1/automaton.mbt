@@ -120,7 +120,7 @@ pub fn LR1State::set_action(
   input : Lookahead,
   decision : Decision
 ) -> Unit {
-  match self.action[input] {
+  match self.action.get(input) {
     Some(Conflict(decisions)) =>
       if not(decisions.contains(decision)) {
         self.action[input] = Conflict(Cons(decision, decisions))
@@ -394,7 +394,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
   // Populate actions
   let conflicts = @hashmap2.new(capacity=16)
   fn check_add_conflict(state : LR1State, input : Lookahead) {
-    match state.action[input] {
+    match state.action.get(input) {
       Some(Conflict(decisions)) => conflicts.set({ state, input }, decisions)
       Some(_) | None => ()
     }
@@ -407,7 +407,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
       match symbol {
         NT(_) => ()
         T(term) => {
-          state.set_action(Input(term), Shift(state.goto[T(term)].unwrap()))
+          state.set_action(Input(term), Shift(state.goto.get(T(term)).unwrap()))
           check_add_conflict(state, Input(term))
         }
       }

@@ -696,7 +696,7 @@ fn codegen(
       @immut/sorted_set.T[CodegenSymbol],
     ] = @sorted_map.new()
     fn add_symbol_decision(symbol, decision) {
-      decision_groups[decision] = decision_groups[decision]
+      decision_groups[decision] = decision_groups.get(decision)
         .or(@immut/sorted_set.new())
         .add(symbol)
       match symbol {

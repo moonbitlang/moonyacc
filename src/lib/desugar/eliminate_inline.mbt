@@ -71,7 +71,7 @@ fn eliminate_inline_rules(
         let item = clause.items[index]
         if item.term is RuleCall(rule_name, [], _) &&
           inline_rules.contains(rule_name) {
-          let inline_rule = spec.rules[rule_name].unwrap()
+          let inline_rule = spec.rules.get(rule_name).unwrap()
           for inline_clause in inline_rule.clauses {
             let next_cont_items = cont_items +
               @immut/array.from_array(inline_clause.items)

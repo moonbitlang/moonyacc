@@ -65,7 +65,7 @@ pub fn build_closure_fn[LookaheadSet : AbstractLookaheadSet](
       Some(NT(nt)) =>
         for production in nt.productions {
           let encoded_item = EncodedLR0Item::new(production, 0)
-          node.epsilon_transitions.push(node_by_item[encoded_item].unwrap())
+          node.epsilon_transitions.push(node_by_item.get(encoded_item).unwrap())
         }
     }
   }
@@ -98,7 +98,7 @@ pub fn build_closure_fn[LookaheadSet : AbstractLookaheadSet](
 
     for item in item_set {
       let (item, lookahead_set) = item
-      let node = node_by_item[item].unwrap()
+      let node = node_by_item.get(item).unwrap()
       node.lookahead_set = lookahead_set
       follow(node)
     }

@@ -258,7 +258,7 @@ pub fn compile(
     }
     nonterminal_by_name[augmented_start_nt.name] = augmented_start_nt
     nonterminals.push(augmented_start_nt)
-    nonterminal_meta_map[augmented_start_nt.num] = nonterminal_meta_map[start_nt.num].unwrap()
+    nonterminal_meta_map[augmented_start_nt.num] = nonterminal_meta_map.get(start_nt.num).unwrap()
     let production : @grm.Production = {
       num: productions.length(),
       lhs: augmented_start_nt,
@@ -319,9 +319,9 @@ pub fn compile(
       })
     },
     nonterminal_meta: fn(name) {
-      nonterminal_meta_map[get_nonterminal_by_name(name).num].unwrap()
+      nonterminal_meta_map.get(get_nonterminal_by_name(name).num).unwrap()
     },
-    production_meta: fn(num) { production_meta_map[num].unwrap() },
+    production_meta: fn(num) { production_meta_map.get(num).unwrap() },
     derive_map,
   }
   let output_buffer = StringBuilder::new()

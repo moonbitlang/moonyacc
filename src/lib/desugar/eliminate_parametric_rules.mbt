@@ -24,7 +24,7 @@ pub fn eliminate_rule_args(
       Token(_) => term
       RuleCall(rule_name, [], type_) => RuleCall(rule_name, [], type_)
       RuleCall(rule_name, args, _type) => {
-        let parametric_rule = spec.rules[rule_name].unwrap()
+        let parametric_rule = spec.rules.get(rule_name).unwrap()
         let args = args.map(fn(arg) { map_term(arg, env) })
         let type_ = infer_return_type(
           parametric_rule,
@@ -46,7 +46,7 @@ pub fn eliminate_rule_args(
         RuleCall(specialized_rule_name, [], type_)
       }
       Param(name, _type) =>
-        match env[name] {
+        match env.get(name) {
           Some(term) => term
           None => term
         }
@@ -91,7 +91,7 @@ pub fn eliminate_rule_args(
   }
   fn specialize_rule(dsr : DeferredSpecializedRule) -> @elab.Rule {
     let { parametric_rule_name, specialized_rule_name, args, env } = dsr
-    let parametric_rule = parametric_rules[parametric_rule_name].unwrap()
+    let parametric_rule = parametric_rules.get(parametric_rule_name).unwrap()
     let mut env : @immut/sorted_map.T[String, @elab.Term] = env
     for index, param in parametric_rule.params {
       env = env.add(param.0, args[index])
@@ -198,7 +198,7 @@ fn infer_return_type(
   }
 
   for param in parametric_rule.params {
-    let arg = env[param.0].unwrap()
+    let arg = env.get(param.0).unwrap()
     unify(
       param.1,
       match arg {
@@ -210,7 +210,7 @@ fn infer_return_type(
   }
   fn process_type(type_ : @elab.TypeExpr) -> @elab.TypeExpr {
     match type_ {
-      Param(name) => generic_param_map[name].unwrap()
+      Param(name) => generic_param_map.get(name).unwrap()
       Constr(pkg~, name, args) => Constr(pkg~, name, args.map(process_type))
       Option(type_) => Option(process_type(type_))
       Tuple(types) => Tuple(types.map(process_type))

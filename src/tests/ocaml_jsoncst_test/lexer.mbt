@@ -4453,7 +4453,7 @@ fn token(lexbuf : Lexbuf) -> (Token, Position, Position) {
       let (_start_pos_of_t, _end_pos_of_t) = __mbtlex_captures[0]
       let t : String = lexbuf.substring(_start_pos_of_t, _end_pos_of_t)
       ignore(t)
-      (all_keywords[t].or(LIDENT), _start_pos_of_t, _end_pos_of_t)
+      (all_keywords.get(t).or(LIDENT), _start_pos_of_t, _end_pos_of_t)
     }
     (41, __mbtlex_captures) => {
       let (_start_pos_of_t, _end_pos_of_t) = __mbtlex_captures[0]

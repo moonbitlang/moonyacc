@@ -50,7 +50,7 @@ pub fn parse(
     //   println(item)
     // }
     // println("symbol \{Show::to_string(lookahead)}")
-    match state.action[lookahead.0] {
+    match state.action.get(lookahead.0) {
       Some(Accept) => return data_stack.unsafe_pop()
       Some(Shift(next_state)) => {
         state_stack.push(next_state)
@@ -66,7 +66,7 @@ pub fn parse(
 
         }
         data_stack.push(result)
-        let next_state = state_stack.last().unwrap().goto[NT(production.lhs)]
+        let next_state = state_stack.last().unwrap().goto.get(NT(production.lhs))
         guard next_state is Some(next_state)
         state_stack.push(next_state)
       }
@@ -87,7 +87,7 @@ type! ObjUnit Unit
 fn make_action_provider(
   actions : Map[Int, (ArrayView[Obj]) -> Obj]
 ) -> ProductionActionProvider {
-  { get_action: fn(num) { actions[num].unwrap() } }
+  { get_action: fn(num) { actions.get(num).unwrap() } }
 }
 
 ///|
