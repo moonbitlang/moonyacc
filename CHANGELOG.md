@@ -1,3 +1,9 @@
+## 0.4.0
+
+### Breaking Changes
+
+- no longer generate `Position` type declaration.
+
 ## 0.3.44
 
 - fix: fix bug case which start rules result type contains "->"

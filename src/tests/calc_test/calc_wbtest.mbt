@@ -27,7 +27,7 @@ test {
     NUMBER(0),
   ]
   let mut cursor = 0
-  fn read_token() -> (Token, Position, Position) {
+  fn read_token() -> (Token, Int, Int) {
     guard cursor < tokens.length() else { (EOF, cursor, cursor) }
     let token = tokens[cursor]
     cursor += 1
@@ -42,7 +42,7 @@ test {
 test {
   let tokens = [NUMBER(3), PLUS, LPAREN, NUMBER(2), MINUS, NUMBER(5)]
   let mut cursor = 0
-  fn read_token() -> (Token, Position, Position) {
+  fn read_token() -> (Token, Int, Int) {
     guard cursor < tokens.length() else { (EOF, cursor, cursor) }
     let token = tokens[cursor]
     cursor += 1

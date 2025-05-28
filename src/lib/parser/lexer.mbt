@@ -3635,9 +3635,7 @@ fn code_rbrace(
       let (_start_pos_of_t1, _end_pos_of_t1) = __mbtlex_captures[1]
       let t1 : String = lexbuf.substring(_start_pos_of_t1, _end_pos_of_t1)
       sb.write_string(t)
-      let index = try {
-        @strconv.parse_int!(t1, base=10)
-      } catch {
+      let index = try @strconv.parse_int!(t1, base=10) catch {
         err => abort(Show::to_string(err))
       }
       subst.push({
@@ -3657,9 +3655,7 @@ fn code_rbrace(
       let t2 : String = lexbuf.substring(_start_pos_of_t2, _end_pos_of_t2)
       sb.write_string(t)
       let arg : @ast.ClauseItemIdent = if t2.has_prefix("$") {
-        let index = try {
-          @strconv.parse_int!(t2.substring(start=1), base=10)
-        } catch {
+        let index = try @strconv.parse_int!(t2.substring(start=1), base=10) catch {
           err => abort(Show::to_string(err))
         }
         Dollar(index)

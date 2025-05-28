@@ -1,4 +1,3 @@
-pub(all) typealias Position = Int
 
 pub(all) enum Token {
   EOF
@@ -59,8 +58,8 @@ pub impl Show for TokenKind with output(self, logger) {
 }
 
 pub type! ParseError {
-  UnexpectedToken(Token, (Position, Position), Array[TokenKind])
-  UnexpectedEndOfInput(Position, Array[TokenKind])
+  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
+  UnexpectedEndOfInput(Int, Array[TokenKind])
 } derive(Show)
 
 typealias YYObj = Error
@@ -77,7 +76,7 @@ priv type! YYObj__String__String_ (String, String)
 
 typealias YYState = (YYSymbol) -> YYDecision
 
-typealias YYAction = (Position, ArrayView[(YYObj, Position, Position)]) -> YYObj
+typealias YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
 
 priv enum YYDecision {
   Accept
@@ -116,14 +115,14 @@ fn init {
 
 // file:///./parser.mbty
 // 49|    postfix_type_expr "?" { Option($1) }
-fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
   YYObj__ast_TypeExpr({();  Option(_dollar1) })
 }
 
 // file:///./parser.mbty
 // 44|    "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
-fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[3].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar4)
   guard _args[6].0 is YYObj__ast_TypeExpr(_dollar7)
@@ -132,7 +131,7 @@ fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 // file:///./parser.mbty
 // 42|    "(" type_expr ")" "->" type_expr { Arrow([$2], $5) }
-fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[4].0 is YYObj__ast_TypeExpr(_dollar5)
   YYObj__ast_TypeExpr({();  Arrow([_dollar2], _dollar5) })
@@ -140,21 +139,21 @@ fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 // file:///./parser.mbty
 // 48|    basic_type_expr { $1 }
-fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
   YYObj__ast_TypeExpr({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 53|    IDENT { Constr(pkg=None, $1, []) }
-fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
   YYObj__ast_TypeExpr({();  Constr(pkg=None, _dollar1, []) })
 }
 
 // file:///./parser.mbty
 // 63|    type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { Cons(type_expr, type_expr_list) }
-fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
   guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(type_expr_list)
   YYObj__immut_list_T__ast_TypeExpr_({();  Cons(type_expr, type_expr_list) })
@@ -162,35 +161,35 @@ fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 // file:///./parser.mbty
 // 62|    type_expr=type_expr { Cons(type_expr, Nil) }
-fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
   YYObj__immut_list_T__ast_TypeExpr_({();  Cons(type_expr, Nil) })
 }
 
 // file:///./parser.mbty
 // 40|    postfix_type_expr { $1 }
-fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
   YYObj__ast_TypeExpr({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 41|    "(" ")" "->" type_expr { Arrow([], $4) }
-fn yy_action_8(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[3].0 is YYObj__ast_TypeExpr(_dollar4)
   YYObj__ast_TypeExpr({();  Arrow([], _dollar4) })
 }
 
 // file:///./parser.mbty
 // 36|    type_expr EOF { $1 }
-fn yy_action_9(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_9(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
   YYObj__ast_TypeExpr({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 43|    "(" type_expr "," ")" "->" type_expr { Arrow([$2], $6) }
-fn yy_action_10(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_10(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[5].0 is YYObj__ast_TypeExpr(_dollar6)
   YYObj__ast_TypeExpr({();  Arrow([_dollar2], _dollar6) })
@@ -198,14 +197,14 @@ fn yy_action_10(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 
 // file:///./parser.mbty
 // 58|    "(" type_expr ")" { $2 }
-fn yy_action_11(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_11(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   YYObj__ast_TypeExpr({();  _dollar2 })
 }
 
 // file:///./parser.mbty
 // 55|    IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
-fn yy_action_12(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_12(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
   guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar3)
   YYObj__ast_TypeExpr({();  Constr(pkg=None, _dollar1, _dollar3.to_array()) })
@@ -213,7 +212,7 @@ fn yy_action_12(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 
 // file:///./parser.mbty
 // 57|    "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@immut/list.Cons($2, $4).to_array()) }
-fn yy_action_13(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[3].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar4)
   YYObj__ast_TypeExpr({();  Tuple(@immut/list.Cons(_dollar2, _dollar4).to_array()) })
@@ -221,20 +220,20 @@ fn yy_action_13(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positi
 
 // file:///./parser.mbty
 // 54|    PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
-fn yy_action_14(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_14(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__String__String_(_dollar1)
   YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, []) })
 }
 
 // file:///./parser.mbty
 // 56|    PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
-fn yy_action_15(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_15(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__String__String_(_dollar1)
   guard _args[2].0 is YYObj__immut_list_T__ast_TypeExpr_(_dollar3)
   YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, _dollar3.to_array()) })
 }
 
-fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSymbol, YYObj) {
+fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (YYSymbol, YYObj) {
   match token {
     EOF => (T_EOF, YYObj_Void)
     LPAREN => (T_LPAREN, YYObj_Void)
@@ -710,17 +709,17 @@ fn yy_state_33(_lookahead : YYSymbol) -> YYDecision {
 }
 
 fn yy_parse[T](
-  tokens : Array[(Token, Position, Position)],
+  tokens : Array[(Token, Int, Int)],
   start : YYState,
   return_ : (YYObj) -> T,
-  initial_pos? : Position,
+  initial_pos? : Int,
 ) -> T!ParseError {
   let mut cursor = 0
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
-  let data_stack : Array[(YYObj, Position, Position)] = []
+  let data_stack : Array[(YYObj, Int, Int)] = []
   let mut last_pos = initial_pos.or(tokens[0].1)
   let mut state = start
-  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token?)] = None
+  let mut lookahead : Option[(YYSymbol, (YYObj, Int, Int), Token?)] = None
   let mut last_shifted_state_stack = state_stack
   while true {
     let decision = match state(EOI) {
@@ -793,7 +792,7 @@ fn yy_parse[T](
   panic()
 }
 
-fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Position, Position)) -> Unit!ParseError {
+fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Int, Int)) -> Unit!ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @immut/list.T[YYState]) {
@@ -830,7 +829,7 @@ fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Position, Positi
   }
 }
 
-pub fn parse_type_expr(tokens : Array[(Token, Position, Position)], initial_pos? : Position) -> @ast.TypeExpr!ParseError {
+pub fn parse_type_expr(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> @ast.TypeExpr!ParseError {
   yy_parse!(
     tokens,
     yy_state_0,

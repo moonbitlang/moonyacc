@@ -1,8 +1,7 @@
-pub(all) typealias Position = Int
 
 pub type! ParseError {
-  UnexpectedToken(Token, (Position, Position), Array[TokenKind])
-  UnexpectedEndOfInput(Position, Array[TokenKind])
+  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
+  UnexpectedEndOfInput(Int, Array[TokenKind])
 } derive(Show)
 
 typealias YYObj = Error
@@ -13,7 +12,7 @@ priv type! YYObj_Int Int
 
 typealias YYState = (YYSymbol) -> YYDecision
 
-typealias YYAction = (Position, ArrayView[(YYObj, Position, Position)]) -> YYObj
+typealias YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
 
 priv enum YYDecision {
   Accept
@@ -47,7 +46,7 @@ fn init {
 
 // file:///./calc.mbty
 // 31|    factor "*" term { $1 * $3 }
-fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   guard _args[2].0 is YYObj_Int(_dollar3)
   YYObj_Int({();  _dollar1 * _dollar3 })
@@ -55,28 +54,28 @@ fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 // file:///./calc.mbty
 // 36|    NUMBER          { $1 }
-fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
 // 27|    factor          { $1 }
-fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
 // 32|    term            { $1 }
-fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
 // 26|    add "-" factor  { $1 - $3 }
-fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   guard _args[2].0 is YYObj_Int(_dollar3)
   YYObj_Int({();  _dollar1 - _dollar3 })
@@ -84,14 +83,14 @@ fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 // file:///./calc.mbty
 // 37|    "(" add ")"     { $2 }
-fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj_Int(_dollar2)
   YYObj_Int({();  _dollar2 })
 }
 
 // file:///./calc.mbty
 // 25|    add "+" factor  { $1 + $3 }
-fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   guard _args[2].0 is YYObj_Int(_dollar3)
   YYObj_Int({();  _dollar1 + _dollar3 })
@@ -99,12 +98,12 @@ fn yy_action_6(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 // file:///./calc.mbty
 // 21|    add             { $1 }
-fn yy_action_7(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
-fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSymbol, YYObj) {
+fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (YYSymbol, YYObj) {
   match token {
     NUMBER(data) => (T_NUMBER, YYObj_Int(data))
     PLUS => (T_PLUS, YYObj_Void)
@@ -277,17 +276,17 @@ fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
 }
 
 fn yy_parse[T](
-  tokens : Array[(Token, Position, Position)],
+  tokens : Array[(Token, Int, Int)],
   start : YYState,
   return_ : (YYObj) -> T,
-  initial_pos? : Position,
+  initial_pos? : Int,
 ) -> T!ParseError {
   let mut cursor = 0
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
-  let data_stack : Array[(YYObj, Position, Position)] = []
+  let data_stack : Array[(YYObj, Int, Int)] = []
   let mut last_pos = initial_pos.or(tokens[0].1)
   let mut state = start
-  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token?)] = None
+  let mut lookahead : Option[(YYSymbol, (YYObj, Int, Int), Token?)] = None
   let mut last_shifted_state_stack = state_stack
   while true {
     let decision = match state(EOI) {
@@ -360,7 +359,7 @@ fn yy_parse[T](
   panic()
 }
 
-fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Position, Position)) -> Unit!ParseError {
+fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Int, Int)) -> Unit!ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @immut/list.T[YYState]) {
@@ -397,7 +396,7 @@ fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Position, Positi
   }
 }
 
-pub fn start(tokens : Array[(Token, Position, Position)], initial_pos? : Position) -> Int!ParseError {
+pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Int!ParseError {
   yy_parse!(
     tokens,
     yy_state_0,

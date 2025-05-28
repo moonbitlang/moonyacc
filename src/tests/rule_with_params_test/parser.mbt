@@ -1,4 +1,3 @@
-pub(all) typealias Position = Unit
 
 pub(all) enum Token {
   LETTER(Char)
@@ -31,8 +30,8 @@ pub impl Show for TokenKind with output(self, logger) {
 }
 
 pub type! ParseError {
-  UnexpectedToken(Token, (Position, Position), Array[TokenKind])
-  UnexpectedEndOfInput(Position, Array[TokenKind])
+  UnexpectedToken(Token, (Unit, Unit), Array[TokenKind])
+  UnexpectedEndOfInput(Unit, Array[TokenKind])
 }
 
 typealias YYObj = Error
@@ -47,7 +46,7 @@ priv type! YYObj__immut_list_T_Char_ @immut/list.T[Char]
 
 typealias YYState = (YYSymbol) -> YYDecision
 
-typealias YYAction = (Position, ArrayView[(YYObj, Position, Position)]) -> YYObj
+typealias YYAction = (Unit, ArrayView[(YYObj, Unit, Unit)]) -> YYObj
 
 priv enum YYDecision {
   Accept
@@ -77,14 +76,14 @@ fn init {
 
 // file:///./parser.mbty
 // 18|    OPEN X CLOSE { $2 }
-fn yy_action_0(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   guard _args[1].0 is YYObj__immut_list_T_Char_(_dollar2)
   YYObj__immut_list_T_Char_({();  _dollar2 })
 }
 
 // file:///./parser.mbty
 // 14|    X list(X) { Cons($1, $2) }
-fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   guard _args[0].0 is YYObj_Char(_dollar1)
   guard _args[1].0 is YYObj__immut_list_T_Char_(_dollar2)
   YYObj__immut_list_T_Char_({();  Cons(_dollar1, _dollar2) })
@@ -92,14 +91,14 @@ fn yy_action_1(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 // file:///./parser.mbty
 // 9|    loption(delimited("{", list(LETTER), "}")) { $1.iter().map(fn (it) { String::make(1, it) }).join("") }
-fn yy_action_2(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   guard _args[0].0 is YYObj__immut_list_T_Char_(_dollar1)
   YYObj_String({();  _dollar1.iter().map(fn (it) { String::make(1, it) }).join("") })
 }
 
 // file:///./stdlib.mbty
 // 15|    X { $1 }
-fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_0(_last_pos, _args[0:3])
   guard _sub_action_0_result is YYObj__immut_list_T_Char_(_dollar1)
   YYObj__immut_list_T_Char_({();  _dollar1 })
@@ -107,17 +106,17 @@ fn yy_action_3(_last_pos : Position, _args : ArrayView[(YYObj, Position, Positio
 
 // file:///./stdlib.mbty
 // 14|    { Nil }
-fn yy_action_4(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj__immut_list_T_Char_({();  Nil })
 }
 
 // file:///./parser.mbty
 // 13|    { Nil }
-fn yy_action_5(_last_pos : Position, _args : ArrayView[(YYObj, Position, Position)]) -> YYObj {
+fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj__immut_list_T_Char_({();  Nil })
 }
 
-fn yy_input(token : Token, _start_pos : Position, _end_pos : Position) -> (YYSymbol, YYObj) {
+fn yy_input(token : Token, _start_pos : Unit, _end_pos : Unit) -> (YYSymbol, YYObj) {
   match token {
     LETTER(data) => (T_LETTER, YYObj_Char(data))
     LBRACE => (T_LBRACE, YYObj_Void)
@@ -192,17 +191,17 @@ fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
 }
 
 fn yy_parse[T](
-  tokens : Array[(Token, Position, Position)],
+  tokens : Array[(Token, Unit, Unit)],
   start : YYState,
   return_ : (YYObj) -> T,
-  initial_pos? : Position,
+  initial_pos? : Unit,
 ) -> T!ParseError {
   let mut cursor = 0
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
-  let data_stack : Array[(YYObj, Position, Position)] = []
+  let data_stack : Array[(YYObj, Unit, Unit)] = []
   let mut last_pos = initial_pos.or(tokens[0].1)
   let mut state = start
-  let mut lookahead : Option[(YYSymbol, (YYObj, Position, Position), Token?)] = None
+  let mut lookahead : Option[(YYSymbol, (YYObj, Unit, Unit), Token?)] = None
   let mut last_shifted_state_stack = state_stack
   while true {
     let decision = match state(EOI) {
@@ -275,7 +274,7 @@ fn yy_parse[T](
   panic()
 }
 
-fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Position, Position)) -> Unit!ParseError {
+fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Unit, Unit)) -> Unit!ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @immut/list.T[YYState]) {
@@ -312,7 +311,7 @@ fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Position, Positi
   }
 }
 
-pub fn start(tokens : Array[(Token, Position, Position)], initial_pos? : Position) -> String!ParseError {
+pub fn start(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> String!ParseError {
   yy_parse!(
     tokens,
     yy_state_0,

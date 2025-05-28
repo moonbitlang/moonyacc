@@ -54,7 +54,7 @@ let all_keywords : Map[String, Token] = {
 }
 }
 
-rule token() -> (Token, Position, Position) {
+rule token() -> (Token, Int, Int) {
   parse {
     [' ' '\t' '\x0c' '\r' '\n']+ => { token(lexbuf) }
     "&&" as t => { (AMPERAMPER, $startpos(t), $endpos(t)) }
@@ -132,7 +132,7 @@ pub fn new_lexer(input : String) -> Lexer {
   Lexbuf::from_string(input)
 }
 
-pub fn next_token(self : Lexer) -> (Token, Position, Position) {
+pub fn next_token(self : Lexer) -> (Token, Int, Int) {
   token(self._)
 }
 }

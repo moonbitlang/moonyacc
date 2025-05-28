@@ -4212,7 +4212,7 @@ let __mbtlex_engine_token : LexEngine = {
 }
 
 ///|
-fn token(lexbuf : Lexbuf) -> (Token, Position, Position) {
+fn token(lexbuf : Lexbuf) -> (Token, Int, Int) {
   match __mbtlex_engine_token.run(lexbuf) {
     (0, __mbtlex_captures) => token(lexbuf)
     (1, __mbtlex_captures) => {
@@ -4627,6 +4627,6 @@ pub fn new_lexer(input : String) -> Lexer {
 }
 
 ///|
-pub fn next_token(self : Lexer) -> (Token, Position, Position) {
+pub fn next_token(self : Lexer) -> (Token, Int, Int) {
   token(self._)
 }
