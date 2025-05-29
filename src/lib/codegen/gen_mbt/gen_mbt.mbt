@@ -781,10 +781,11 @@ fn codegen(
         ,
       )
       for decision, symbols in decision_groups {
-        let pattern = @string.concat(
-          symbols.iter().map(CodegenSymbol::to_string).to_array(),
-          separator=" | ",
-        )
+        let pattern = symbols
+          .iter()
+          .map(CodegenSymbol::to_string)
+          .to_array()
+          .join(" | ")
         output.write_string(
           $|    \{pattern} => \{gen_decision(decision)}
           $|

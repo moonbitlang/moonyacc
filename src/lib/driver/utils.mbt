@@ -17,7 +17,7 @@ fn offset_to_line_column(content : String, offset : Int) -> (Int, Int) {
   let mut line = 1
   let mut column = 1
   for i in 0..<offset {
-    if content[i] == '\n' {
+    if content.charcode_at(i) == '\n' {
       line += 1
       column = 1
     } else {
@@ -33,7 +33,7 @@ fn array_to_or_list(arr : ArrayView[String]) -> String {
     [] => panic()
     [x] => x
     [.. xs, x] => {
-      let left = @string.concat([..xs], separator=", ")
+      let left = [..xs].join(", ")
       "\{left} or \{x}"
     }
   }

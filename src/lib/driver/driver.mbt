@@ -43,13 +43,11 @@ pub fn print(
 ) -> Unit {
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
-    try {
-      lexer.next_token!()
-    } catch {
+    try lexer.next_token!() catch {
       @parser.Unrecognized(x, pos) => {
         let pos_str = pos_to_string(filename, parser_spec_str, pos)
         println_to_stderr(
-          "SyntaxError: Unrecognized character \{x.escape()}, at \{pos_str}",
+          "SyntaxError: Unrecognized character \{([x] : String).escape()}, at \{pos_str}",
         )
         exit(1)
       }
@@ -60,9 +58,7 @@ pub fn print(
     }
   }
 
-  let spec = try {
-    @parser.spec!(token, 0)
-  } catch {
+  let spec = try @parser.spec!(token, 0) catch {
     @parser.UnexpectedToken(token, loc, expected) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
@@ -92,13 +88,11 @@ pub fn compile(
 ) -> String {
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
-    try {
-      lexer.next_token!()
-    } catch {
+    try lexer.next_token!() catch {
       @parser.Unrecognized(x, pos) => {
         let pos_str = pos_to_string(filename, parser_spec_str, pos)
         println_to_stderr(
-          "SyntaxError: Unrecognized character \{x.escape()}, at \{pos_str}",
+          "SyntaxError: Unrecognized character \{([x] : String).escape()}, at \{pos_str}",
         )
         exit(1)
       }
@@ -109,9 +103,7 @@ pub fn compile(
     }
   }
 
-  let spec = try {
-    @parser.spec!(token, 0)
-  } catch {
+  let spec = try @parser.spec!(token, 0) catch {
     @parser.UnexpectedToken(token, loc, expected) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
@@ -121,7 +113,7 @@ pub fn compile(
       exit(1)
     }
   }
-  let spec = try {
+  let spec = try
     @elab.elaborate_with_stdlib_rules!(
       spec,
       parser_spec_str,
@@ -137,8 +129,7 @@ pub fn compile(
         NoPayload => NoPayload
       },
       force_int_position~,
-    )
-  } catch {
+    ) catch {
     @elab.UnresolvedSymbol(symbol, loc~) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       println_to_stderr("Unresolved symbol \{symbol}, at \{loc_str}")
@@ -258,7 +249,9 @@ pub fn compile(
     }
     nonterminal_by_name[augmented_start_nt.name] = augmented_start_nt
     nonterminals.push(augmented_start_nt)
-    nonterminal_meta_map[augmented_start_nt.num] = nonterminal_meta_map.get(start_nt.num).unwrap()
+    nonterminal_meta_map[augmented_start_nt.num] = nonterminal_meta_map
+      .get(start_nt.num)
+      .unwrap()
     let production : @grm.Production = {
       num: productions.length(),
       lhs: augmented_start_nt,
