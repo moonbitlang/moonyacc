@@ -20,7 +20,7 @@ type! ParseOrLexError {
 
 ///|
 pub fn parse(str : String) -> @ast.TypeExpr!ParseOrLexError {
-  let lexbuf = Lexbuf::from_string(str)
+  let lexbuf = @lexbuf.StringLexbuf::from_string(str)
   let tokens = []
   while true {
     let triple = try {

@@ -14,15 +14,15 @@
 
 {
 pub type! LexError {
-  Unrecognized(String, Int)
+  Unrecognized(Char, Int)
 } derive(Show)
 }
 
-let ident_start = ['A'-'Z' 'a'-'z' '_'];
-let ident_char = ['A'-'Z' 'a'-'z' '0'-'9' '_'];
-let ident = ident_start ident_char*;
+regex ident_start = ['A'-'Z' 'a'-'z' '_'];
+regex ident_char = ['A'-'Z' 'a'-'z' '0'-'9' '_'];
+regex ident = ident_start ident_char*;
 
-rule token() -> (Token, Int, Int)!LexError {
+rule token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)!LexError {
   parse {
     [' ' '\t' '\n' ]+ => { token!(lexbuf) }
     "@" (ident ("/" ident)* as pkg) "." (ident as id) as t => { (PKG_AND_IDENT((pkg, id)), $startpos(t), $endpos(t)) }

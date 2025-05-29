@@ -29,5 +29,8 @@
   "test-import": [
     "moonbitlang/yacc/lib/parser",
     "moonbitlang/yacc/lib/ast"
+  ],
+  "import": [
+    "moonbitlang/ulex-runtime/lexbuf"
   ]
 }

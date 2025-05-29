@@ -1,5 +1,5 @@
 {
-pub(all) type Lexer Lexbuf
+pub(all) type Lexer @lexbuf.StringLexbuf
 
 let all_keywords : Map[String, Token] = {
   "and": AND,
@@ -54,7 +54,7 @@ let all_keywords : Map[String, Token] = {
 }
 }
 
-rule token() -> (Token, Int, Int) {
+rule token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) {
   parse {
     [' ' '\t' '\x0c' '\r' '\n']+ => { token(lexbuf) }
     "&&" as t => { (AMPERAMPER, $startpos(t), $endpos(t)) }
@@ -129,7 +129,7 @@ rule token() -> (Token, Int, Int) {
 
 {
 pub fn new_lexer(input : String) -> Lexer {
-  Lexbuf::from_string(input)
+  @lexbuf.StringLexbuf::from_string(input)
 }
 
 pub fn next_token(self : Lexer) -> (Token, Int, Int) {

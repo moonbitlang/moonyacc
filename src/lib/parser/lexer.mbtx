@@ -1,11 +1,11 @@
 {
 pub type! LexError {
   UnexpectedEndOfFile
-  Unrecognized(String, Int)
+  Unrecognized(Char, Int)
 }
 
 struct Lexer {
-  buf : Lexbuf
+  buf : @lexbuf.StringLexbuf
   // 0 %%
   // %% 1
   // %% %% 2
@@ -13,11 +13,11 @@ struct Lexer {
 }
 }
 
-let ident_start = ['A'-'Z' 'a'-'z' '_'];
-let ident_char = ['A'-'Z' 'a'-'z' '0'-'9' '_'];
-let ident = ident_start ident_char*;
+regex ident_start = ['A'-'Z' 'a'-'z' '_'];
+regex ident_char = ['A'-'Z' 'a'-'z' '0'-'9' '_'];
+regex ident = ident_start ident_char*;
 
-rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
+rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)!LexError {
   parse {
     [' ' '\t' '\n' ]+ => { token!(phase, lexbuf) }
     "(*)" => { token!(phase, lexbuf) }
@@ -84,7 +84,7 @@ rule token(phase : Ref[Int]) -> (Token, Int, Int)!LexError {
   }
 }
 
-rule comment_star_rparen() -> Unit!LexError {
+rule comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
   parse {
     "(*" => {
       comment_star_rparen!(lexbuf)
@@ -96,36 +96,36 @@ rule comment_star_rparen() -> Unit!LexError {
   }
 }
 
-rule code_eof(sb : StringBuilder) -> Unit {
+rule code_eof(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit {
   parse {
-    _ as t => { sb.write_string(t); code_eof(sb, lexbuf) }
+    _ as t => { sb.write_char(t); code_eof(sb, lexbuf) }
     eof => { () }
   }
 }
 
-rule code_rangle(sb : StringBuilder) -> Unit!LexError {
+rule code_rangle(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
   parse {
     ">" => { () }
     _ as t => {
-      sb.write_string(t)
+      sb.write_char(t)
       code_rangle!(sb, lexbuf)
     }
     eof => { raise(UnexpectedEndOfFile) }
   }
 }
 
-rule code_percent_rbrace(sb : StringBuilder) -> Unit!LexError {
+rule code_percent_rbrace(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
   parse {
     "%}" => { () }
     _ as t => {
-      sb.write_string(t)
+      sb.write_char(t)
       code_percent_rbrace!(sb, lexbuf)
     }
     eof => { raise(UnexpectedEndOfFile) }
   }
 }
 
-rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int) -> Unit!LexError {
+rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
   parse {
     "{" => {
       sb.write_string("{")
@@ -185,7 +185,7 @@ rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int) -
       code_rbrace!(sb, subst, base, lexbuf)
     }
     _ as t => {
-      sb.write_string(t)
+      sb.write_char(t)
       code_rbrace!(sb, subst, base, lexbuf)
     }
     eof => { raise(UnexpectedEndOfFile) }
@@ -194,7 +194,7 @@ rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int) -
 
 {
 pub fn new_lexer(input : String) -> Lexer {
-  { buf : Lexbuf::from_string(input), phase: { val: 0 } }
+  { buf : @lexbuf.StringLexbuf::from_string(input), phase: { val: 0 } }
 }
 
 pub fn next_token(self : Lexer) -> (Token, Int, Int)!LexError {

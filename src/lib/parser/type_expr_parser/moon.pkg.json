@@ -12,6 +12,7 @@
     }
   ],
   "import": [
-    "moonbitlang/yacc/lib/ast"
+    "moonbitlang/yacc/lib/ast",
+    "moonbitlang/ulex-runtime/lexbuf"
   ]
 }
