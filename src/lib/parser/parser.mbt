@@ -137,75 +137,75 @@ pub impl Show for TokenKind with output(self, logger) {
   )
 }
 
-pub type! ParseError {
+pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
 }
 
-typealias YYObj = Error
+typealias Error as YYObj
 
-priv type! YYObj_Void
+priv suberror YYObj_Void
 
-priv type! YYObj_Array_String_ Array[String]
+priv suberror YYObj_Array_String_ Array[String]
 
-priv type! YYObj_Option_Unit_ Option[Unit]
+priv suberror YYObj_Option_Unit_ Option[Unit]
 
-priv type! YYObj_String String
+priv suberror YYObj_String String
 
-priv type! YYObj__ast_Rule @ast.Rule
+priv suberror YYObj__ast_Rule @ast.Rule
 
-priv type! YYObj__ast_Term @ast.Term
+priv suberror YYObj__ast_Term @ast.Term
 
-priv type! YYObj__ast_Symbol @ast.Symbol
+priv suberror YYObj__ast_Symbol @ast.Symbol
 
-priv type! YYObj__ast_TypeExpr @ast.TypeExpr
+priv suberror YYObj__ast_TypeExpr @ast.TypeExpr
 
-priv type! YYObj__ast_ClauseItem @ast.ClauseItem
+priv suberror YYObj__ast_ClauseItem @ast.ClauseItem
 
-priv type! YYObj__ast_ParserSpec @ast.ParserSpec
+priv suberror YYObj__ast_ParserSpec @ast.ParserSpec
 
-priv type! YYObj__ast_PrecSymbol @ast.PrecSymbol
+priv suberror YYObj__ast_PrecSymbol @ast.PrecSymbol
 
-priv type! YYObj__ast_Declaration @ast.Declaration
+priv suberror YYObj__ast_Declaration @ast.Declaration
 
-priv type! YYObj__ast_ClauseAction @ast.ClauseAction
+priv suberror YYObj__ast_ClauseAction @ast.ClauseAction
 
-priv type! YYObj__ast_ClauseWithoutAction @ast.ClauseWithoutAction
+priv suberror YYObj__ast_ClauseWithoutAction @ast.ClauseWithoutAction
 
-priv type! YYObj__immut_list_T_String_ @immut/list.T[String]
+priv suberror YYObj__immut_list_T_String_ @immut/list.T[String]
 
-priv type! YYObj__immut_list_T__ast_Rule_ @immut/list.T[@ast.Rule]
+priv suberror YYObj__immut_list_T__ast_Rule_ @immut/list.T[@ast.Rule]
 
-priv type! YYObj__immut_list_T__ast_Term_ @immut/list.T[@ast.Term]
+priv suberror YYObj__immut_list_T__ast_Term_ @immut/list.T[@ast.Term]
 
-priv type! YYObj__immut_list_T__ast_Symbol_ @immut/list.T[@ast.Symbol]
+priv suberror YYObj__immut_list_T__ast_Symbol_ @immut/list.T[@ast.Symbol]
 
-priv type! YYObj__immut_list_T__ast_TypeExpr_ @immut/list.T[@ast.TypeExpr]
+priv suberror YYObj__immut_list_T__ast_TypeExpr_ @immut/list.T[@ast.TypeExpr]
 
-priv type! YYObj__immut_list_T__ast_ClauseItem_ @immut/list.T[@ast.ClauseItem]
+priv suberror YYObj__immut_list_T__ast_ClauseItem_ @immut/list.T[@ast.ClauseItem]
 
-priv type! YYObj__immut_list_T__ast_PrecSymbol_ @immut/list.T[@ast.PrecSymbol]
+priv suberror YYObj__immut_list_T__ast_PrecSymbol_ @immut/list.T[@ast.PrecSymbol]
 
-priv type! YYObj__immut_list_T__ast_Declaration_ @immut/list.T[@ast.Declaration]
+priv suberror YYObj__immut_list_T__ast_Declaration_ @immut/list.T[@ast.Declaration]
 
-priv type! YYObj__immut_list_T__String___ast_TypeExpr___ @immut/list.T[(String, @ast.TypeExpr?)]
+priv suberror YYObj__immut_list_T__String___ast_TypeExpr___ @immut/list.T[(String, @ast.TypeExpr?)]
 
-priv type! YYObj__immut_list_T___immut_list_T__ast_ClauseWithoutAction____ast_ClauseAction__ @immut/list.T[(@immut/list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
+priv suberror YYObj__immut_list_T___immut_list_T__ast_ClauseWithoutAction____ast_ClauseAction__ @immut/list.T[(@immut/list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
 
-priv type! YYObj__ast_TypeExpr_ @ast.TypeExpr?
+priv suberror YYObj__ast_TypeExpr_ @ast.TypeExpr?
 
-priv type! YYObj__ast_PrecSymbol_ @ast.PrecSymbol?
+priv suberror YYObj__ast_PrecSymbol_ @ast.PrecSymbol?
 
-priv type! YYObj___ast_Code__Int__Int__ (@ast.Code, Int, Int)?
+priv suberror YYObj___ast_Code__Int__Int__ (@ast.Code, Int, Int)?
 
-priv type! YYObj__String__String_ (String, String)
+priv suberror YYObj__String__String_ (String, String)
 
-priv type! YYObj__String__Int__Int_ (String, Int, Int)
+priv suberror YYObj__String__Int__Int_ (String, Int, Int)
 
-priv type! YYObj__String__Int__Array__ast_SubstItem__ (String, Int, Array[@ast.SubstItem])
+priv suberror YYObj__String__Int__Array__ast_SubstItem__ (String, Int, Array[@ast.SubstItem])
 
-typealias YYState = (YYSymbol) -> YYDecision
+typealias (YYSymbol) -> YYDecision as YYState
 
-typealias YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
+typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
 
 priv enum YYDecision {
   Accept
@@ -2672,12 +2672,12 @@ fn yy_state_141(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(5, NT_spec, yy_action_79)
 }
 
-fn yy_parse[T](
+fn[T] yy_parse(
   read_token : () -> (Token, Int, Int),
   start_pos : Int,
   start : YYState,
   return_ : (YYObj) -> T
-) -> T!ParseError {
+) -> T raise ParseError {
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
   let data_stack : Array[(YYObj, Int, Int)] = []
   let mut last_pos = start_pos
@@ -2742,14 +2742,14 @@ fn yy_parse[T](
       }
       Error => {
         let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        error(last_shifted_state_stack, token, (start_pos, end_pos))
       }
     }
   }
   panic()
 }
 
-fn error(stack : @immut/list.T[YYState], token : Token, loc : (Int, Int)) -> Unit!ParseError {
+fn error(stack : @immut/list.T[YYState], token : Token, loc : (Int, Int)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @immut/list.T[YYState]) {
@@ -2783,8 +2783,8 @@ fn error(stack : @immut/list.T[YYState], token : Token, loc : (Int, Int)) -> Uni
   raise UnexpectedToken(token, loc, expected)
 }
 
-pub fn spec(read_token : () -> (Token, Int, Int), start_pos : Int) -> @ast.ParserSpec!ParseError {
-  yy_parse!(
+pub fn spec(read_token : () -> (Token, Int, Int), start_pos : Int) -> @ast.ParserSpec raise ParseError {
+  yy_parse(
     read_token,
     start_pos,
     yy_state_0,

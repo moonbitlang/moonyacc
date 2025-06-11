@@ -45,19 +45,19 @@ pub impl Show for TokenKind with output(self, logger) {
   )
 }
 
-pub type! ParseError {
+pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
 } derive(Show)
 
-typealias YYObj = Error
+typealias Error as YYObj
 
-priv type! YYObj_Void
+priv suberror YYObj_Void
 
-priv type! YYObj_Int Int
+priv suberror YYObj_Int Int
 
-typealias YYState = (YYSymbol) -> YYDecision
+typealias (YYSymbol) -> YYDecision as YYState
 
-typealias YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
+typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
 
 priv enum YYDecision {
   Accept
@@ -327,12 +327,12 @@ fn yy_state_15(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(2, NT_start, yy_action_7)
 }
 
-fn yy_parse[T](
+fn[T] yy_parse(
   read_token : () -> (Token, Int, Int),
   start_pos : Int,
   start : YYState,
   return_ : (YYObj) -> T
-) -> T!ParseError {
+) -> T raise ParseError {
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
   let data_stack : Array[(YYObj, Int, Int)] = []
   let mut last_pos = start_pos
@@ -397,14 +397,14 @@ fn yy_parse[T](
       }
       Error => {
         let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        error(last_shifted_state_stack, token, (start_pos, end_pos))
       }
     }
   }
   panic()
 }
 
-fn error(stack : @immut/list.T[YYState], token : Token, loc : (Int, Int)) -> Unit!ParseError {
+fn error(stack : @immut/list.T[YYState], token : Token, loc : (Int, Int)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @immut/list.T[YYState]) {
@@ -438,8 +438,8 @@ fn error(stack : @immut/list.T[YYState], token : Token, loc : (Int, Int)) -> Uni
   raise UnexpectedToken(token, loc, expected)
 }
 
-pub fn start(read_token : () -> (Token, Int, Int), start_pos : Int) -> Int!ParseError {
-  yy_parse!(
+pub fn start(read_token : () -> (Token, Int, Int), start_pos : Int) -> Int raise ParseError {
+  yy_parse(
     read_token,
     start_pos,
     yy_state_0,

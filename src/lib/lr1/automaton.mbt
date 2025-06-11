@@ -207,7 +207,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
   }
 
   fn explore(kernel_items : EncodedLR0ItemSet) -> LR0Node {
-    let mut defer = None
+    let mut defer_ = None
     let node = node_by_kernel_items.get_or_init(kernel_items, fn(kernel_items) {
       let symbolic_items = closure(
         kernel_items.items
@@ -223,10 +223,10 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
         ),
         closure_symbolic_lookahead_set: symbolic_items.map(fn(item) { item.1 }),
       }
-      defer = Some(symbolic_items)
+      defer_ = Some(symbolic_items)
       node
     })
-    match defer {
+    match defer_ {
       Some(symbolic_items) => {
         node_reductions.push(get_reductions(symbolic_items))
         node_transitions.push(@hashmap2.new(capacity=16))

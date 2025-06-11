@@ -31,12 +31,11 @@ priv struct Node[LookaheadSet] {
 }
 
 ///|
-pub fn build_closure_fn[LookaheadSet : AbstractLookaheadSet](
+pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
   grammar : @grm.Grammar
-) ->
-     (Iter[(EncodedLR0Item, LookaheadSet)]) -> Array[
-       (EncodedLR0Item, LookaheadSet),
-     ] {
+) -> (Iter[(EncodedLR0Item, LookaheadSet)]) -> Array[
+  (EncodedLR0Item, LookaheadSet),
+] {
   let first = compute_first_fn(grammar)
   let node_by_item : @hashmap.T[EncodedLR0Item, Node[LookaheadSet]] = @hashmap.new()
   for production in grammar.productions {

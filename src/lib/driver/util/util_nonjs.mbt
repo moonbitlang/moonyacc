@@ -19,7 +19,7 @@ pub fn println_to_stderr(msg : String) -> Unit {
 }
 
 ///|
-pub fn exit[T](code : Int) -> T {
+pub fn[T] exit(code : Int) -> T {
   // TODO
   abort("exit: \{code}")
 }

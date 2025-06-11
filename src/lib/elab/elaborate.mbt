@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-pub type! ElabError {
+pub suberror ElabError {
   UnresolvedSymbol(String, loc~ : (Int, Int))
   FailedToParseTypeExpr(String)
 }
@@ -41,18 +41,18 @@ fn build_rules_from_src(
 ) -> Map[String, Rule] {
   let lexer = @parser.new_lexer(src)
   fn token() {
-    lexer.next_token?().unwrap()
+    (try? lexer.next_token()).unwrap()
   }
 
-  let ast_spec = @parser.spec?(token, 0).unwrap()
-  let spec = elaborate?(
+  let ast_spec = (try? @parser.spec(token, 0)).unwrap()
+  let spec = (try? elaborate(
     ast_spec,
     src,
     filename,
     json_cst~,
     token_payload_rewrite~,
     force_int_position~,
-  ).unwrap()
+  )).unwrap()
   spec.rules
 }
 
@@ -65,8 +65,8 @@ pub fn elaborate_with_stdlib_rules(
   no_std~ : Bool,
   token_payload_rewrite~ : TokenPayloadRewrite,
   force_int_position~ : Bool
-) -> ParserSpec!ElabError {
-  elaborate!(
+) -> ParserSpec raise ElabError {
+  elaborate(
     ast_spec,
     parser_spec_str,
     filename,
@@ -96,7 +96,7 @@ pub fn elaborate(
   stdlib_rules? : Map[String, Rule],
   token_payload_rewrite~ : TokenPayloadRewrite,
   force_int_position~ : Bool
-) -> ParserSpec!ElabError {
+) -> ParserSpec raise ElabError {
   let mut header = @immut/array.new()
   let mut trailer = @immut/array.new()
   for decl in ast_spec.decls {
@@ -137,11 +137,13 @@ pub fn elaborate(
   }
 
   // Prepare tokens
-  fn elaborate_token_type(type_ : @ast.TypeString?) -> TypeExpr!ElabError {
+  fn elaborate_token_type(
+    type_ : @ast.TypeString?
+  ) -> TypeExpr raise ElabError {
     match token_payload_rewrite {
       NoRewrite =>
         match type_ {
-          Some(type_) => parse_and_elaborate_type_expr!(type_)
+          Some(type_) => parse_and_elaborate_type_expr(type_)
           None => Constr(pkg=None, "Unit", [])
         }
       JsonPayload => Constr(pkg=None, "Json", [])
@@ -154,11 +156,11 @@ pub fn elaborate(
       Token(names, type_~) =>
         for name in names {
           let token = get_token_by_name(name)
-          token.type_ = elaborate_token_type!(type_)
+          token.type_ = elaborate_token_type(type_)
         }
       Token1(name, type_~, image~) => {
         let token = get_token_by_name(name)
-        token.type_ = elaborate_token_type!(type_)
+        token.type_ = elaborate_token_type(type_)
         token.image = Some(image)
         token_by_image[image] = token
       }
@@ -240,7 +242,7 @@ pub fn elaborate(
             panic()
           }
           if json_cst is No && type_ is Some(type_) {
-            rule.type_ = parse_and_elaborate_type_expr!(type_)
+            rule.type_ = parse_and_elaborate_type_expr(type_)
           }
         }
       Type(idents, type_~) =>
@@ -252,12 +254,12 @@ pub fn elaborate(
                 Some(rule) =>
                   // TODO: report error if rule already has a type
                   if json_cst is No {
-                    rule.type_ = parse_and_elaborate_type_expr!(type_)
+                    rule.type_ = parse_and_elaborate_type_expr(type_)
                   }
               }
             Some(token) =>
               if token_payload_rewrite is NoRewrite {
-                token.type_ = elaborate_token_type!(Some(type_))
+                token.type_ = elaborate_token_type(Some(type_))
               }
           }
         }
@@ -267,7 +269,7 @@ pub fn elaborate(
   fn map_term(
     ast_term : @ast.Term,
     rule_param_map : Map[String, TypeExpr]
-  ) -> Term!ElabError {
+  ) -> Term raise ElabError {
     match ast_term {
       Symbol(symbol, loc~) =>
         match token_by_name.get(symbol) {
@@ -293,7 +295,7 @@ pub fn elaborate(
           Some(rule) =>
             RuleCall(
               symbol,
-              map_error!(args, fn(arg) { map_term!(arg, rule_param_map) }),
+              map_error(args, fn(arg) { map_term(arg, rule_param_map) }),
               rule.type_,
             )
         }
@@ -311,10 +313,10 @@ pub fn elaborate(
     let mut clause_index = 0
     for ast_clause in ast_clause_iter {
       let (ast_clause, ast_clause_action) = ast_clause
-      let items = map_error!(ast_clause.items, fn(ast_item) {
+      let items = map_error(ast_clause.items, fn(ast_item) {
         Item::{
           binder: ast_item.binder,
-          term: map_term!(ast_item.term, rule_param_map),
+          term: map_term(ast_item.term, rule_param_map),
         }
       })
       let prec = match ast_clause.prec {
@@ -364,12 +366,12 @@ pub fn elaborate(
     match ast_decl {
       Position(type_~) =>
         if not(force_int_position) {
-          position_type = parse_and_elaborate_type_expr!(type_)
+          position_type = parse_and_elaborate_type_expr(type_)
         }
       Derive(traits~, type_~) => {
         let traits = traits.split(",").map(fn { t => t.trim(" ").to_string() })
         for trait_ in traits {
-          derive_map.add(type_, parse_and_elaborate_type_expr!(trait_))
+          derive_map.add(type_, parse_and_elaborate_type_expr(trait_))
         }
       }
       _ => ()
@@ -564,10 +566,10 @@ fn elaborate_action(
 }
 
 ///|
-fn parse_and_elaborate_type_expr(str : @ast.TypeString) -> TypeExpr!ElabError {
-  let type_expr = try {
-    @type_expr_parser.parse!(str)
-  } catch {
+fn parse_and_elaborate_type_expr(
+  str : @ast.TypeString
+) -> TypeExpr raise ElabError {
+  let type_expr = @type_expr_parser.parse(str) catch {
     _ => raise FailedToParseTypeExpr(str)
   }
   elaborate_type_expr(type_expr)
@@ -599,13 +601,13 @@ fn elaborate_type_expr_with_generic_params(
 }
 
 ///|
-fn map_error[T, R](
+fn[T, R] map_error(
   arr : Array[T],
-  f : (T) -> R!ElabError
-) -> Array[R]!ElabError {
+  f : (T) -> R raise ElabError
+) -> Array[R] raise ElabError {
   let result : Array[R] = []
   for item in arr {
-    result.push(f!(item))
+    result.push(f(item))
   }
   result
 }

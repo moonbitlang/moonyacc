@@ -31,18 +31,18 @@ priv struct Entry[K, V] {
 
 ///|
 /// Capacity must be a power of 2.
-pub fn new[K, V](capacity~ : Int) -> T[K, V] {
+pub fn[K, V] new(capacity~ : Int) -> T[K, V] {
   let bucket = FixedArray::make(capacity, None)
   { bucket, entry: None, bitmask: capacity - 1, size: 0 }
 }
 
 ///|
-pub fn size[K, V](self : T[K, V]) -> Int {
+pub fn[K, V] size(self : T[K, V]) -> Int {
   self.size
 }
 
 ///|
-pub fn iter[K, V](self : T[K, V]) -> Iter[(K, V)] {
+pub fn[K, V] iter(self : T[K, V]) -> Iter[(K, V)] {
   Iter::new(fn(yield_) {
     loop self.entry {
       None => IterContinue
@@ -56,7 +56,7 @@ pub fn iter[K, V](self : T[K, V]) -> Iter[(K, V)] {
 }
 
 ///|
-pub fn iter2[K, V](self : T[K, V]) -> Iter2[K, V] {
+pub fn[K, V] iter2(self : T[K, V]) -> Iter2[K, V] {
   Iter2::new(fn(yield_) {
     loop self.entry {
       None => IterContinue
@@ -70,7 +70,7 @@ pub fn iter2[K, V](self : T[K, V]) -> Iter2[K, V] {
 }
 
 ///|
-pub fn get[K : Hash + Eq, V](self : T[K, V], key : K) -> V? {
+pub fn[K : Hash + Eq, V] get(self : T[K, V], key : K) -> V? {
   match self.get_entry_with_hash(key, key.hash()) {
     Some(entry) => Some(entry.value)
     None => None
@@ -78,7 +78,7 @@ pub fn get[K : Hash + Eq, V](self : T[K, V], key : K) -> V? {
 }
 
 ///|
-fn get_entry_with_hash[K : Eq, V](
+fn[K : Eq, V] get_entry_with_hash(
   self : T[K, V],
   key : K,
   hash : Int
@@ -103,7 +103,7 @@ fn get_entry_with_hash[K : Eq, V](
 }
 
 ///|
-pub fn get_or_init[K : Hash + Eq, V](
+pub fn[K : Hash + Eq, V] get_or_init(
   self : T[K, V],
   key : K,
   init : (K) -> V
@@ -126,7 +126,7 @@ pub fn get_or_init[K : Hash + Eq, V](
 }
 
 ///|
-pub fn set[K : Hash + Eq, V](self : T[K, V], key : K, value : V) -> Unit {
+pub fn[K : Hash + Eq, V] set(self : T[K, V], key : K, value : V) -> Unit {
   let hash = key.hash()
   match self.get_entry_with_hash(key, hash) {
     Some(entry) => entry.value = value
@@ -143,7 +143,7 @@ pub fn set[K : Hash + Eq, V](self : T[K, V], key : K, value : V) -> Unit {
 }
 
 ///|
-fn grow[K, V](self : T[K, V]) -> Unit {
+fn[K, V] grow(self : T[K, V]) -> Unit {
   let capacity = (self.bitmask + 1) * 2
   let bitmask = capacity - 1
   let bucket = FixedArray::make(capacity, None)
@@ -160,7 +160,7 @@ fn grow[K, V](self : T[K, V]) -> Unit {
 }
 
 ///|
-fn put_entry[K, V](
+fn[K, V] put_entry(
   self : T[K, V],
   index : Int,
   bitmask : Int,

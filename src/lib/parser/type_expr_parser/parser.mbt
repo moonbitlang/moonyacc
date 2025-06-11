@@ -57,26 +57,26 @@ pub impl Show for TokenKind with output(self, logger) {
   )
 }
 
-pub type! ParseError {
+pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
   UnexpectedEndOfInput(Int, Array[TokenKind])
 } derive(Show)
 
-typealias YYObj = Error
+typealias Error as YYObj
 
-priv type! YYObj_Void
+priv suberror YYObj_Void
 
-priv type! YYObj_String String
+priv suberror YYObj_String String
 
-priv type! YYObj__ast_TypeExpr @ast.TypeExpr
+priv suberror YYObj__ast_TypeExpr @ast.TypeExpr
 
-priv type! YYObj__immut_list_T__ast_TypeExpr_ @immut/list.T[@ast.TypeExpr]
+priv suberror YYObj__immut_list_T__ast_TypeExpr_ @immut/list.T[@ast.TypeExpr]
 
-priv type! YYObj__String__String_ (String, String)
+priv suberror YYObj__String__String_ (String, String)
 
-typealias YYState = (YYSymbol) -> YYDecision
+typealias (YYSymbol) -> YYDecision as YYState
 
-typealias YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
+typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
 
 priv enum YYDecision {
   Accept
@@ -708,12 +708,12 @@ fn yy_state_33(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(2, NT_parse_type_expr, yy_action_9)
 }
 
-fn yy_parse[T](
+fn[T] yy_parse(
   tokens : Array[(Token, Int, Int)],
   start : YYState,
   return_ : (YYObj) -> T,
   initial_pos? : Int,
-) -> T!ParseError {
+) -> T raise ParseError {
   let mut cursor = 0
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
   let data_stack : Array[(YYObj, Int, Int)] = []
@@ -785,14 +785,14 @@ fn yy_parse[T](
       }
       Error => {
         let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        error(last_shifted_state_stack, token, (start_pos, end_pos))
       }
     }
   }
   panic()
 }
 
-fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Int, Int)) -> Unit!ParseError {
+fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @immut/list.T[YYState]) {
@@ -829,8 +829,8 @@ fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Int, Int)) -> Un
   }
 }
 
-pub fn parse_type_expr(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> @ast.TypeExpr!ParseError {
-  yy_parse!(
+pub fn parse_type_expr(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> @ast.TypeExpr raise ParseError {
+  yy_parse(
     tokens,
     yy_state_0,
     fn {

@@ -13,29 +13,23 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-type! ParseOrLexError {
+suberror ParseOrLexError {
   ParseError(ParseError)
   LexError(LexError)
 } derive(Show)
 
 ///|
-pub fn parse(str : String) -> @ast.TypeExpr!ParseOrLexError {
+pub fn parse(str : String) -> @ast.TypeExpr raise ParseOrLexError {
   let lexbuf = @lexbuf.StringLexbuf::from_string(str)
   let tokens = []
   while true {
-    let triple = try {
-      token!(lexbuf)
-    } catch {
-      err => raise LexError(err)
-    }
+    let triple = token(lexbuf) catch { err => raise LexError(err) }
     tokens.push(triple)
     if triple.0 is EOF {
       break
     }
   }
-  try {
-    parse_type_expr!(tokens)
-  } catch {
+  parse_type_expr(tokens) catch {
     err => raise ParseError(err)
   }
 }

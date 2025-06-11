@@ -20,7 +20,7 @@ pub(all) enum Associativity {
 }
 
 ///|
-pub(all) typealias Code = String
+pub typealias String as Code
 
 ///|
 pub(all) enum TypeExpr {
@@ -84,7 +84,7 @@ pub(all) struct Token {
 }
 
 ///|
-pub(all) typealias Symbol = String
+pub typealias String as Symbol
 
 ///|
 pub(all) struct Rule {
@@ -105,7 +105,7 @@ pub(all) struct Clause {
 
 // (code, (utf8_pos, utf8_len)?)
 ///|
-pub(all) typealias CodeChunk = (String, (Int, Int)?)
+pub typealias (String, (Int, Int)?) as CodeChunk
 
 ///|
 pub(all) struct Action {

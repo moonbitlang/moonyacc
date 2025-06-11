@@ -21,7 +21,7 @@ pub extern "js" fn println_to_stderr(msg : String) -> Unit =
   #|(msg) => { console.error("%s", msg); }
 
 ///|
-pub fn exit[T](code : Int) -> T {
+pub fn[T] exit(code : Int) -> T {
   ffi_exit(code)
   panic()
 }

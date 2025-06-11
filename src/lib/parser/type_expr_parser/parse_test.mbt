@@ -14,8 +14,8 @@
 
 ///|
 test {
-  inspect!(
-    parse?("Int"),
+  inspect(
+    try? parse("Int"),
     content=
       #|Ok(Constr(pkg=None, "Int", []))
     ,
@@ -24,8 +24,8 @@ test {
 
 ///|
 test {
-  inspect!(
-    parse?("Array[Int]"),
+  inspect(
+    try? parse("Array[Int]"),
     content=
       #|Ok(Constr(pkg=None, "Array", [Constr(pkg=None, "Int", [])]))
     ,
@@ -34,8 +34,8 @@ test {
 
 ///|
 test {
-  inspect!(
-    parse?("Array[(Int, Int)]"),
+  inspect(
+    try? parse("Array[(Int, Int)]"),
     content=
       #|Ok(Constr(pkg=None, "Array", [Tuple([Constr(pkg=None, "Int", []), Constr(pkg=None, "Int", [])])]))
     ,
@@ -44,8 +44,8 @@ test {
 
 ///|
 test {
-  inspect!(
-    parse?("Array[(Int, Map[String, (Int, Int) -> Int])]"),
+  inspect(
+    try? parse("Array[(Int, Map[String, (Int, Int) -> Int])]"),
     content=
       #|Ok(Constr(pkg=None, "Array", [Tuple([Constr(pkg=None, "Int", []), Constr(pkg=None, "Map", [Constr(pkg=None, "String", []), Arrow([Constr(pkg=None, "Int", []), Constr(pkg=None, "Int", [])], Constr(pkg=None, "Int", []))])])]))
     ,

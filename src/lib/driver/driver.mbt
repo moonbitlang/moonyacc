@@ -43,7 +43,7 @@ pub fn print(
 ) -> Unit {
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
-    try lexer.next_token!() catch {
+    lexer.next_token() catch {
       @parser.Unrecognized(x, pos) => {
         let pos_str = pos_to_string(filename, parser_spec_str, pos)
         println_to_stderr(
@@ -58,7 +58,7 @@ pub fn print(
     }
   }
 
-  let spec = try @parser.spec!(token, 0) catch {
+  let spec = @parser.spec(token, 0) catch {
     @parser.UnexpectedToken(token, loc, expected) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
@@ -88,7 +88,7 @@ pub fn compile(
 ) -> String {
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
-    try lexer.next_token!() catch {
+    lexer.next_token() catch {
       @parser.Unrecognized(x, pos) => {
         let pos_str = pos_to_string(filename, parser_spec_str, pos)
         println_to_stderr(
@@ -103,7 +103,7 @@ pub fn compile(
     }
   }
 
-  let spec = try @parser.spec!(token, 0) catch {
+  let spec = @parser.spec(token, 0) catch {
     @parser.UnexpectedToken(token, loc, expected) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
@@ -113,23 +113,22 @@ pub fn compile(
       exit(1)
     }
   }
-  let spec = try
-    @elab.elaborate_with_stdlib_rules!(
-      spec,
-      parser_spec_str,
-      path_basename(filename),
-      json_cst=match mode {
-        JsonCst => Yes
-        Default | OnlyTokens => No
-      },
-      no_std~,
-      token_payload_rewrite=match token_payload_rewrite {
-        NoRewrite => NoRewrite
-        JsonPayload => JsonPayload
-        NoPayload => NoPayload
-      },
-      force_int_position~,
-    ) catch {
+  let spec = @elab.elaborate_with_stdlib_rules(
+    spec,
+    parser_spec_str,
+    path_basename(filename),
+    json_cst=match mode {
+      JsonCst => Yes
+      Default | OnlyTokens => No
+    },
+    no_std~,
+    token_payload_rewrite=match token_payload_rewrite {
+      NoRewrite => NoRewrite
+      JsonPayload => JsonPayload
+      NoPayload => NoPayload
+    },
+    force_int_position~,
+  ) catch {
     @elab.UnresolvedSymbol(symbol, loc~) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       println_to_stderr("Unresolved symbol \{symbol}, at \{loc_str}")

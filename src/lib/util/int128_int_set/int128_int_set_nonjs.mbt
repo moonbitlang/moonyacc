@@ -19,7 +19,7 @@ struct Int128IntSet {
 } derive(Eq, Compare, Hash)
 
 ///|
-pub typealias T = Int128IntSet
+pub typealias Int128IntSet as T
 
 ///|
 pub fn empty() -> Int128IntSet {

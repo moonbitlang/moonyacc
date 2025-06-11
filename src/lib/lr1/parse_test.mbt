@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-typealias Obj = Error
+typealias Error as Obj
 
 ///|
 struct InputProvider {
@@ -66,7 +66,9 @@ pub fn parse(
 
         }
         data_stack.push(result)
-        let next_state = state_stack.last().unwrap().goto.get(NT(production.lhs))
+        let next_state = state_stack.last().unwrap().goto.get(
+          NT(production.lhs),
+        )
         guard next_state is Some(next_state)
         state_stack.push(next_state)
       }
@@ -78,10 +80,10 @@ pub fn parse(
 }
 
 ///|
-type! ObjNumber Int
+suberror ObjNumber Int
 
 ///|
-type! ObjUnit Unit
+suberror ObjUnit Unit
 
 ///|
 fn make_action_provider(
@@ -173,5 +175,5 @@ test "parse" {
   let action_provider = make_action_provider(actions)
   let result = parse(grammar, input_provider, action_provider)
   guard result is ObjNumber(n)
-  assert_eq!(n, 3)
+  assert_eq(n, 3)
 }

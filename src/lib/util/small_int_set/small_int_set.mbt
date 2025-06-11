@@ -16,7 +16,7 @@
 type SmallIntSet Array[Int] derive(Eq, Compare)
 
 ///|
-pub typealias T = SmallIntSet
+pub typealias SmallIntSet as T
 
 ///|
 let _empty = [0]

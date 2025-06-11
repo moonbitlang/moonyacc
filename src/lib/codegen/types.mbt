@@ -31,7 +31,7 @@ pub(all) enum InputMode {
 }
 
 ///|
-pub(all) typealias CodeFragment = String
+pub typealias String as CodeFragment
 
 ///|
 pub(all) struct ProductionMeta {

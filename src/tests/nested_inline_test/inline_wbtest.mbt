@@ -14,12 +14,7 @@
 
 ///|
 test {
-  let tokens = [
-    (A, (), ()),
-    (B, (), ()),
-    (B, (), ()),
-    (B, (), ()),
-  ]
-  let result = start!(tokens)
-  assert_eq!(result, "aybb")
+  let tokens = [(A, (), ()), (B, (), ()), (B, (), ()), (B, (), ())]
+  let result = start(tokens)
+  assert_eq(result, "aybb")
 }

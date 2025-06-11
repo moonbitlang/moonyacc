@@ -19,7 +19,7 @@ pub(all) struct ParserSpec {
 } derive(ToJson)
 
 ///|
-pub(all) typealias Code = String
+pub typealias String as Code
 
 ///|
 pub(all) enum SubstItemDesc {
@@ -48,7 +48,7 @@ pub(all) struct SubstItem {
 } derive(Show, ToJson)
 
 ///|
-pub(all) typealias Symbol = String
+pub typealias String as Symbol
 
 ///|
 pub(all) enum TypeExpr {
@@ -59,13 +59,13 @@ pub(all) enum TypeExpr {
 } derive(Show, ToJson)
 
 ///|
-pub(all) typealias TypeString = String
+pub typealias String as TypeString
 
 ///|
 pub(all) enum Declaration {
   Header(Code, Int, Int) // (code, utf8_pos, utf8_len)
   Trailer(Code, Int, Int) // (code, utf8_pos, utf8_len)
-  Start(Array[Symbol], type_~: TypeString?)
+  Start(Array[Symbol], type_~ : TypeString?)
   Token(Array[Symbol], type_~ : TypeString?)
   Token1(Symbol, type_~ : TypeString?, image~ : String)
   Type(Array[Symbol], type_~ : TypeString)

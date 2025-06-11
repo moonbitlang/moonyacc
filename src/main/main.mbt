@@ -135,7 +135,7 @@ fn main {
     println_to_stderr("Input file is required")
     exit(1)
   }
-  let parser_spec_src = try @fs.read_file_to_string!(input_file) catch {
+  let parser_spec_src = @fs.read_file_to_string(input_file) catch {
     err => abort(Show::to_string(err))
   }
   if print_as_mly_without_actions {
@@ -157,18 +157,20 @@ fn main {
     force_int_position~,
     generator=@gen_mbt.generator,
   )
-  fn write_map_file!(file : String) {
-    @fs.write_string_to_file!(file, source_map.to_json().stringify(indent=2))
+  fn write_map_file(file : String) raise {
+    @fs.write_string_to_file(file, source_map.to_json().stringify(indent=2))
   }
 
   if output_file == "" {
     println(output)
     match output_map_file {
-      Some(file) => write_map_file?(file).unwrap()
+      Some(file) => (try? write_map_file(file)).unwrap()
       None => ()
     }
   } else {
-    @fs.write_string_to_file?(output_file, output).unwrap()
-    write_map_file?(output_map_file.or("\{output_file}.map.json")).unwrap()
+    (try? {
+      @fs.write_string_to_file(output_file, output)
+      write_map_file(output_map_file.or("\{output_file}.map.json"))
+    }).unwrap()
   }
 }

@@ -33,8 +33,8 @@ test {
     (token, cursor - 1, cursor)
   }
 
-  let result = start!(read_token, 0)
-  @json.inspect!(result, content={
+  let result = start(read_token, 0)
+  @json.inspect(result, content={
     "type": "NONTERMINAL",
     "name": "start",
     "rule_index": 0,
@@ -243,7 +243,13 @@ test {
         "start": 0,
         "end": 9,
       },
-      { "type": "TERMINAL", "name": "EOF", "data": Json::null(), "start": 9, "end": 9 },
+      {
+        "type": "TERMINAL",
+        "name": "EOF",
+        "data": Json::null(),
+        "start": 9,
+        "end": 9,
+      },
     ],
     "start": 0,
     "end": 9,

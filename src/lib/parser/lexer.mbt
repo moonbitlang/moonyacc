@@ -1,5 +1,5 @@
 ///|
-pub type! LexError {
+pub suberror LexError {
   UnexpectedEndOfFile
   Unrecognized(Char, Int)
 }
@@ -17,7 +17,7 @@ struct Lexer {
 fn token(
   phase : Ref[Int],
   lexbuf : @lexbuf.StringLexbuf
-) -> (Token, Int, Int)!LexError {
+) -> (Token, Int, Int) raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value
   let mut _match_start = lexbuf.curr_pos()
@@ -779,24 +779,24 @@ fn token(
   match _match_pattern {
     0 => {
       ()
-      token!(phase, lexbuf)
+      token(phase, lexbuf)
     }
     1 => {
       ()
-      token!(phase, lexbuf)
+      token(phase, lexbuf)
     }
     2 => {
       ()
-      comment_star_rparen!(lexbuf)
-      token!(phase, lexbuf)
+      comment_star_rparen(lexbuf)
+      token(phase, lexbuf)
     }
     3 => {
       ()
-      token!(phase, lexbuf)
+      token(phase, lexbuf)
     }
     4 => {
       ()
-      token!(phase, lexbuf)
+      token(phase, lexbuf)
     }
     5 => {
       ()
@@ -927,7 +927,7 @@ fn token(
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
       let sb = StringBuilder::new()
-      code_percent_rbrace!(sb, lexbuf)
+      code_percent_rbrace(sb, lexbuf)
       (
         PERCENT_LBRACE_CODE_PERCENT_RBRACE(
           (sb.to_string(), _capture_0_end, lexbuf.pos - _capture_0_end),
@@ -941,7 +941,7 @@ fn token(
       let t = lexbuf.get_char(_capture_0_start, _capture_0_end)
       let _ = t
       let sb = StringBuilder::new()
-      code_rangle!(sb, lexbuf)
+      code_rangle(sb, lexbuf)
       (LANGLE_CODE_RANGLE(sb.to_string()), _capture_0_start, lexbuf.pos)
     }
     25 => {
@@ -987,7 +987,7 @@ fn token(
       let sb = StringBuilder::new()
       let subst = []
       let base = lexbuf.pos
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
       (
         LBRACE_CODE_RBRACE((sb.to_string(), base, subst)),
         _capture_0_start,
@@ -1017,7 +1017,7 @@ fn token(
 }
 
 ///|
-fn comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
+fn comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value
   let mut _match_start = lexbuf.curr_pos()
@@ -1093,8 +1093,8 @@ fn comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
   match _match_pattern {
     0 => {
       ()
-      comment_star_rparen!(lexbuf)
-      comment_star_rparen!(lexbuf)
+      comment_star_rparen(lexbuf)
+      comment_star_rparen(lexbuf)
     }
     1 => {
       ()
@@ -1102,7 +1102,7 @@ fn comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
     }
     2 => {
       ()
-      comment_star_rparen!(lexbuf)
+      comment_star_rparen(lexbuf)
     }
     3 => {
       ()
@@ -1171,7 +1171,7 @@ fn code_eof(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit {
 fn code_rangle(
   sb : StringBuilder,
   lexbuf : @lexbuf.StringLexbuf
-) -> Unit!LexError {
+) -> Unit raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value
   let mut _match_start = lexbuf.curr_pos()
@@ -1228,7 +1228,7 @@ fn code_rangle(
       ()
       let t = lexbuf.get_char(_capture_0_start, _capture_0_end)
       sb.write_char(t)
-      code_rangle!(sb, lexbuf)
+      code_rangle(sb, lexbuf)
     }
     2 => {
       ()
@@ -1242,7 +1242,7 @@ fn code_rangle(
 fn code_percent_rbrace(
   sb : StringBuilder,
   lexbuf : @lexbuf.StringLexbuf
-) -> Unit!LexError {
+) -> Unit raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value
   let mut _match_start = lexbuf.curr_pos()
@@ -1311,7 +1311,7 @@ fn code_percent_rbrace(
       ()
       let t = lexbuf.get_char(_capture_0_start, _capture_0_end)
       sb.write_char(t)
-      code_percent_rbrace!(sb, lexbuf)
+      code_percent_rbrace(sb, lexbuf)
     }
     2 => {
       ()
@@ -1327,7 +1327,7 @@ fn code_rbrace(
   subst : Array[@ast.SubstItem],
   base : Int,
   lexbuf : @lexbuf.StringLexbuf
-) -> Unit!LexError {
+) -> Unit raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value
   let mut _match_start = lexbuf.curr_pos()
@@ -1970,9 +1970,9 @@ fn code_rbrace(
     0 => {
       ()
       sb.write_string("{")
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
       sb.write_string("}")
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     1 => {
       ()
@@ -1984,7 +1984,7 @@ fn code_rbrace(
       let _ = t
       let t1 = lexbuf.get_string(_capture_1_start, _capture_1_end)
       sb.write_string(t)
-      let index = try @strconv.parse_int!(t1, base=10) catch {
+      let index = @strconv.parse_int(t1, base=10) catch {
         err => abort(Show::to_string(err))
       }
       subst.push({
@@ -1992,7 +1992,7 @@ fn code_rbrace(
         end: _capture_0_end - base,
         desc: Dollar(index),
       })
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     3 => {
       ()
@@ -2002,7 +2002,7 @@ fn code_rbrace(
       let t2 = lexbuf.get_string(_capture_2_start, _capture_2_end)
       sb.write_string(t)
       let arg : @ast.ClauseItemIdent = if t2.has_prefix("$") {
-        let index = try @strconv.parse_int!(t2.substring(start=1), base=10) catch {
+        let index = @strconv.parse_int(t2.substring(start=1), base=10) catch {
           err => abort(Show::to_string(err))
         }
         Dollar(index)
@@ -2019,7 +2019,7 @@ fn code_rbrace(
           _ => panic()
         },
       })
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     4 => {
       ()
@@ -2039,19 +2039,19 @@ fn code_rbrace(
           _ => panic()
         },
       })
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     5 => {
       ()
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       sb.write_string(t)
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     6 => {
       ()
       let t = lexbuf.get_char(_capture_0_start, _capture_0_end)
       sb.write_char(t)
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     7 => {
       ()
@@ -2067,6 +2067,6 @@ pub fn new_lexer(input : String) -> Lexer {
 }
 
 ///|
-pub fn next_token(self : Lexer) -> (Token, Int, Int)!LexError {
-  token!(self.phase, self.buf)
+pub fn next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
+  token(self.phase, self.buf)
 }

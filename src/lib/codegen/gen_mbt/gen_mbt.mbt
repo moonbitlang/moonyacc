@@ -271,7 +271,7 @@ fn codegen(
 
   // ParseError
   output.write_string(
-    $|pub type! ParseError {
+    $|pub suberror ParseError {
     $|  UnexpectedToken(Token, (\{meta.position_data_type}, \{meta.position_data_type}), Array[TokenKind])
     $|
     ,
@@ -294,7 +294,7 @@ fn codegen(
 
   // YYObj_xxx
   output.write_string(
-    $|typealias YYObj = Error
+    $|typealias Error as YYObj
     $|
     $|
     ,
@@ -344,14 +344,14 @@ fn codegen(
         }
       }
       output.write_string(
-        $|priv type! YYObj_Void
+        $|priv suberror YYObj_Void
         $|
         $|
         ,
       )
       for data_type in data_types {
         output.write_string(
-          $|priv type! YYObj_\{derive_type_ident(data_type)} \{data_type}
+          $|priv suberror YYObj_\{derive_type_ident(data_type)} \{data_type}
           $|
           $|
           ,
@@ -361,14 +361,14 @@ fn codegen(
     JsonCst(_) => {
       if input_mode is Array {
         output.write_string(
-          $|priv type! YYObj_Void
+          $|priv suberror YYObj_Void
           $|
           $|
           ,
         )
       }
       output.write_string(
-        $|priv type! YYObj_Json Json
+        $|priv suberror YYObj_Json Json
         $|
         $|
         ,
@@ -378,9 +378,9 @@ fn codegen(
 
   // YYState, YYAction, YYDecision
   output.write_string(
-    $|typealias YYState = (YYSymbol) -> YYDecision
+    $|typealias (YYSymbol) -> YYDecision as YYState
     $|
-    $|typealias YYAction = (\{meta.position_data_type}, ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj
+    $|typealias (\{meta.position_data_type}, ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj as YYAction
     $|
     $|priv enum YYDecision {
     $|  Accept
@@ -822,12 +822,12 @@ fn codegen(
   match input_mode {
     Array =>
       output.write_string(
-        $|fn yy_parse[T](
+        $|fn[T] yy_parse(
         $|  tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})],
         $|  start : YYState,
         $|  return_ : (YYObj) -> T,
         $|  initial_pos? : \{meta.position_data_type},
-        $|) -> T!ParseError {
+        $|) -> T raise ParseError {
         $|  let mut cursor = 0
         $|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
         $|  let data_stack : Array[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})] = []
@@ -899,7 +899,7 @@ fn codegen(
         $|      }
         $|      Error => {
         $|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        $|        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        $|        error(last_shifted_state_stack, token, (start_pos, end_pos))
         $|      }
         $|    }
         $|  }
@@ -911,12 +911,12 @@ fn codegen(
       )
     Pull =>
       output.write_string(
-        $|fn yy_parse[T](
+        $|fn[T] yy_parse(
         $|  read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}),
         $|  start_pos : \{meta.position_data_type},
         $|  start : YYState,
         $|  return_ : (YYObj) -> T
-        $|) -> T!ParseError {
+        $|) -> T raise ParseError {
         $|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
         $|  let data_stack : Array[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})] = []
         $|  let mut last_pos = start_pos
@@ -981,7 +981,7 @@ fn codegen(
         $|      }
         $|      Error => {
         $|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        $|        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        $|        error(last_shifted_state_stack, token, (start_pos, end_pos))
         $|      }
         $|    }
         $|  }
@@ -995,13 +995,13 @@ fn codegen(
   match input_mode {
     Array =>
       output.write_string(
-        $|fn error(stack : @immut/list.T[YYState], token : Token?, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit!ParseError {
+        $|fn error(stack : @immut/list.T[YYState], token : Token?, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit raise ParseError {
         $|
         ,
       )
     Pull =>
       output.write_string(
-        $|fn error(stack : @immut/list.T[YYState], token : Token, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit!ParseError {
+        $|fn error(stack : @immut/list.T[YYState], token : Token, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit raise ParseError {
         $|
         ,
       )
@@ -1094,8 +1094,8 @@ fn codegen(
     match input_mode {
       Array =>
         output.write_string(
-          $|pub fn \{original_name}(tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})], initial_pos? : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())}!ParseError {
-          $|  yy_parse!(
+          $|pub fn \{original_name}(tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})], initial_pos? : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())} raise ParseError {
+          $|  yy_parse(
           $|    tokens,
           $|    yy_state_\{start_state.num},
           $|    fn {
@@ -1110,8 +1110,8 @@ fn codegen(
         )
       Pull =>
         output.write_string(
-          $|pub fn \{original_name}(read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}), start_pos : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())}!ParseError {
-          $|  yy_parse!(
+          $|pub fn \{original_name}(read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}), start_pos : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())} raise ParseError {
+          $|  yy_parse(
           $|    read_token,
           $|    start_pos,
           $|    yy_state_\{start_state.num},

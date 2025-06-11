@@ -24,7 +24,7 @@ impl[T : Eq] Eq for EpsilonLookaheadSet[T] with op_equal(self, other) {
 }
 
 ///|
-fn EpsilonLookaheadSet::union[T : AbstractLookaheadSet](
+fn[T : AbstractLookaheadSet] EpsilonLookaheadSet::union(
   set1 : EpsilonLookaheadSet[T],
   set2 : EpsilonLookaheadSet[T]
 ) -> EpsilonLookaheadSet[T] {

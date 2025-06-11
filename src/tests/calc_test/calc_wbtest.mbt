@@ -34,8 +34,8 @@ test {
     (token, cursor - 1, cursor)
   }
 
-  let result = start!(read_token, 0)
-  assert_eq!(result, 3)
+  let result = start(read_token, 0)
+  assert_eq(result, 3)
 }
 
 ///|
@@ -49,14 +49,12 @@ test {
     (token, cursor - 1, cursor)
   }
 
-  let err : ParseError? = try {
-    start!(read_token, 0)
-  } catch {
+  let err : ParseError? = try start(read_token, 0) catch {
     err => Some(err)
   } else {
     _ => None
   }
-  inspect!(
+  inspect(
     err,
     content=
       #|Some(UnexpectedToken(EOF, (6, 6), ["+", "-", "*", ")"]))

@@ -15,7 +15,7 @@
 // TODO: test this
 
 ///|
-fn compute_first_fn[T : AbstractLookaheadSet](
+fn[T : AbstractLookaheadSet] compute_first_fn(
   grammar : @grm.Grammar
 ) -> (ArrayView[@grm.Symbol]) -> EpsilonLookaheadSet[T] {
   let nt_first_map : Array[EpsilonLookaheadSet[T]] = Array::make(

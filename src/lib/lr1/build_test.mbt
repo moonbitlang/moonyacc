@@ -17,7 +17,7 @@ fn test_grammar(
   grammar~ : @grm.Grammar,
   filename~ : String,
   it : @test.T
-) -> Unit! {
+) -> Unit raise {
   it.write("## grammar\n")
   it.write("### terminals\n")
   for terminal in grammar.terminals {
@@ -117,7 +117,7 @@ fn test_grammar(
     }
     it.write("|\n")
   }
-  it.snapshot!(filename~)
+  it.snapshot(filename~)
 }
 
 ///|
@@ -132,7 +132,7 @@ test "1" (it : @test.T) {
     let _ = ctx.add_production("B", ["1"])
     ctx.set_start("S")
   })
-  test_grammar!(grammar~, filename="1.md", it)
+  test_grammar(grammar~, filename="1.md", it)
 }
 
 ///|
@@ -145,7 +145,7 @@ test "2" (it : @test.T) {
     let _ = ctx.add_production("A", ["b"])
     ctx.set_start("S'")
   })
-  test_grammar!(grammar~, filename="2.md", it)
+  test_grammar(grammar~, filename="2.md", it)
 }
 
 ///|
@@ -162,5 +162,5 @@ test "3" (it : @test.T) {
     let _ = ctx.add_production("Term", ["Number"])
     ctx.set_start("Start")
   })
-  test_grammar!(grammar~, filename="3.md", it)
+  test_grammar(grammar~, filename="3.md", it)
 }

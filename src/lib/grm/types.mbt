@@ -138,7 +138,7 @@ pub impl Hash for Production with hash_combine(self, hasher) {
 }
 
 ///|
-pub fn Production::output_with_opt_dot[Logger : Logger](
+pub fn[Logger : Logger] Production::output_with_opt_dot(
   self : Production,
   logger : Logger,
   dot? : Int

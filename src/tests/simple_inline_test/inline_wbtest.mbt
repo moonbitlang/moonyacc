@@ -13,14 +13,14 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-fn case!(arr : Array[Token]) -> String {
-  start!(arr.map(fn(token) { (token, (), ()) }))
+fn case(arr : Array[Token]) -> String raise {
+  start(arr.map(fn(token) { (token, (), ()) }))
 }
 
 ///|
 test {
-  assert_eq!(case!([A, B, A, A, B]), "abaab")
-  assert_eq!(case!([A, B, A, B, B]), "ababb")
-  assert_eq!(case!([A, B, B, A, B]), "abbab")
-  assert_eq!(case!([A, B, B, B, B]), "abbbb")
+  assert_eq(case([A, B, A, A, B]), "abaab")
+  assert_eq(case([A, B, A, B, B]), "ababb")
+  assert_eq(case([A, B, B, A, B]), "abbab")
+  assert_eq(case([A, B, B, B, B]), "abbbb")
 }

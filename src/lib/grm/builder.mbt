@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-pub(all) typealias BuilderSymbol = String
+pub typealias String as BuilderSymbol
 
 ///|
 pub struct BuilderContext {
@@ -87,13 +87,13 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
   let starts : Array[String] = []
   let mut num_productions = 0
   let mut production_added = false
-  let defer = []
+  let defer_ = []
   let ctx = BuilderContext::{
     _add_production: fn(lhs, rhs) {
       let nt = get_nonterminal(lhs)
       let num = num_productions
       num_productions += 1
-      defer.push(fn() {
+      defer_.push(fn() {
         let mut last_prec = None
         let production = Production::{
           num,
@@ -127,7 +127,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
     _set_start: fn(name) { starts.push(name) },
   }
   f(ctx)
-  for f in defer {
+  for f in defer_ {
     f()
   }
   let starts = starts.map(fn(name) {

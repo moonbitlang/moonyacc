@@ -25,20 +25,20 @@ pub impl Show for TokenKind with output(self, logger) {
   )
 }
 
-pub type! ParseError {
+pub suberror ParseError {
   UnexpectedToken(Token, (Unit, Unit), Array[TokenKind])
   UnexpectedEndOfInput(Unit, Array[TokenKind])
 }
 
-typealias YYObj = Error
+typealias Error as YYObj
 
-priv type! YYObj_Void
+priv suberror YYObj_Void
 
-priv type! YYObj_String String
+priv suberror YYObj_String String
 
-typealias YYState = (YYSymbol) -> YYDecision
+typealias (YYSymbol) -> YYDecision as YYState
 
-typealias YYAction = (Unit, ArrayView[(YYObj, Unit, Unit)]) -> YYObj
+typealias (Unit, ArrayView[(YYObj, Unit, Unit)]) -> YYObj as YYAction
 
 priv enum YYDecision {
   Accept
@@ -279,12 +279,12 @@ fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(5, NT_start, yy_action_7)
 }
 
-fn yy_parse[T](
+fn[T] yy_parse(
   tokens : Array[(Token, Unit, Unit)],
   start : YYState,
   return_ : (YYObj) -> T,
   initial_pos? : Unit,
-) -> T!ParseError {
+) -> T raise ParseError {
   let mut cursor = 0
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
   let data_stack : Array[(YYObj, Unit, Unit)] = []
@@ -356,14 +356,14 @@ fn yy_parse[T](
       }
       Error => {
         let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        error(last_shifted_state_stack, token, (start_pos, end_pos))
       }
     }
   }
   panic()
 }
 
-fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Unit, Unit)) -> Unit!ParseError {
+fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Unit, Unit)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @immut/list.T[YYState]) {
@@ -400,8 +400,8 @@ fn error(stack : @immut/list.T[YYState], token : Token?, loc : (Unit, Unit)) -> 
   }
 }
 
-pub fn start(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> String!ParseError {
-  yy_parse!(
+pub fn start(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> String raise ParseError {
+  yy_parse(
     tokens,
     yy_state_0,
     fn {

@@ -49,21 +49,21 @@ pub impl Show for TokenKind with output(self, logger) {
 }
 
 ///|
-pub type! ParseError {
+pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
 } derive(Show)
 
 ///|
-typealias YYObj = Error
+typealias Error as YYObj
 
 ///|
-priv type! YYObj_Json Json
+priv suberror YYObj_Json Json
 
 ///|
-typealias YYState = (YYSymbol) -> YYDecision
+typealias (YYSymbol) -> YYDecision as YYState
 
 ///|
-typealias YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
+typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
 
 ///|
 priv enum YYDecision {
@@ -582,7 +582,7 @@ fn[T] yy_parse(
   start_pos : Int,
   start : YYState,
   return_ : (YYObj) -> T
-) -> T!ParseError {
+) -> T raise ParseError {
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
   let data_stack : Array[(YYObj, Int, Int)] = []
   let mut last_pos = start_pos
@@ -646,7 +646,7 @@ fn[T] yy_parse(
         }
       Error => {
         let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        error!(last_shifted_state_stack, token, (start_pos, end_pos))
+        error(last_shifted_state_stack, token, (start_pos, end_pos))
       }
     }
   }
@@ -658,7 +658,7 @@ fn error(
   stack : @immut/list.T[YYState],
   token : Token,
   loc : (Int, Int)
-) -> Unit!ParseError {
+) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @immut/list.T[YYState]) {
@@ -710,8 +710,8 @@ fn error(
 pub fn start(
   read_token : () -> (Token, Int, Int),
   start_pos : Int
-) -> Json!ParseError {
-  yy_parse!(read_token, start_pos, yy_state_0, fn {
+) -> Json raise ParseError {
+  yy_parse(read_token, start_pos, yy_state_0, fn {
     YYObj_Json(result) => result
     _ => panic()
   })

@@ -26,6 +26,6 @@ test {
     (STAR, 7, 8),
     (NUMBER(0), 8, 9),
   ]
-  let result = start!(tokens)
-  assert_eq!(result, 3)
+  let result = start(tokens)
+  assert_eq(result, 3)
 }

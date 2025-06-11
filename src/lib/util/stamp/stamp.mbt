@@ -16,7 +16,7 @@
 type Stamp Int derive(Eq, Hash)
 
 ///|
-pub typealias T = Stamp
+pub typealias Stamp as T
 
 ///|
 let next_stamp : Ref[Int] = { val: 0 }

@@ -19,8 +19,8 @@ test {
     (LETTER('a'), (), ()),
     (LETTER('b'), (), ()),
     (LETTER('c'), (), ()),
-    (RBRACE, () , () ),
+    (RBRACE, (), ()),
   ]
-  let result = start!(tokens, initial_pos=())
-  assert_eq!(result, "abc")
+  let result = start(tokens, initial_pos=())
+  assert_eq(result, "abc")
 }
