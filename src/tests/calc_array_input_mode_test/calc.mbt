@@ -90,6 +90,7 @@ priv enum YYSymbol {
 }
 
 // Workaround for EOI unused warning
+
 ///|
 fn init {
   match (EOI : YYSymbol) {
@@ -100,6 +101,7 @@ fn init {
 
 // file:///./calc.mbty
 // 31|    factor "*" term { $1 * $3 }
+
 ///|
 fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
@@ -114,6 +116,7 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 
 // file:///./calc.mbty
 // 36|    NUMBER          { $1 }
+
 ///|
 fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
@@ -127,6 +130,7 @@ fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 
 // file:///./calc.mbty
 // 27|    factor          { $1 }
+
 ///|
 fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
@@ -140,6 +144,7 @@ fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 
 // file:///./calc.mbty
 // 32|    term            { $1 }
+
 ///|
 fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
@@ -153,6 +158,7 @@ fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 
 // file:///./calc.mbty
 // 26|    add "-" factor  { $1 - $3 }
+
 ///|
 fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
@@ -167,6 +173,7 @@ fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 
 // file:///./calc.mbty
 // 37|    "(" add ")"     { $2 }
+
 ///|
 fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj_Int(_dollar2)
@@ -180,6 +187,7 @@ fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 
 // file:///./calc.mbty
 // 25|    add "+" factor  { $1 + $3 }
+
 ///|
 fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
@@ -194,6 +202,7 @@ fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 
 // file:///./calc.mbty
 // 21|    add             { $1 }
+
 ///|
 fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_Int(_dollar1)
@@ -230,6 +239,7 @@ fn yy_input(
 // [6, term → • NUMBER, $ / PLUS / MINUS / STAR]
 // [7, term → • LPAREN add RPAREN, $ / PLUS / MINUS / STAR]
 // [8, start_prime → • start, $]
+
 ///|
 fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -244,6 +254,7 @@ fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [8, start_prime → start •, $]
+
 ///|
 fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
   Accept
@@ -257,6 +268,7 @@ fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
 // [6, term → • NUMBER, PLUS / MINUS / STAR / RPAREN]
 // [7, term → • LPAREN add RPAREN, PLUS / MINUS / STAR / RPAREN]
 // [7, term → LPAREN • add RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -270,12 +282,14 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [6, term → NUMBER •, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_term, yy_action_1)
 }
 
 // [5, factor → term •, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_factor, yy_action_3)
@@ -283,6 +297,7 @@ fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
 
 // [3, add → factor •, $ / PLUS / MINUS / RPAREN]
 // [4, factor → factor • STAR term, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -295,6 +310,7 @@ fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
 // [4, factor → factor STAR • term, $ / PLUS / MINUS / STAR / RPAREN]
 // [6, term → • NUMBER, $ / PLUS / MINUS / STAR / RPAREN]
 // [7, term → • LPAREN add RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -306,6 +322,7 @@ fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [4, factor → factor STAR term •, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(3, NT_factor, yy_action_0)
@@ -314,6 +331,7 @@ fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
 // [1, add → add • PLUS factor, PLUS / MINUS / RPAREN]
 // [2, add → add • MINUS factor, PLUS / MINUS / RPAREN]
 // [7, term → LPAREN add • RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -325,6 +343,7 @@ fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
 }
 
 // [7, term → LPAREN add RPAREN •, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(3, NT_term, yy_action_5)
@@ -335,6 +354,7 @@ fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
 // [5, factor → • term, $ / PLUS / MINUS / STAR / RPAREN]
 // [6, term → • NUMBER, $ / PLUS / MINUS / STAR / RPAREN]
 // [7, term → • LPAREN add RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -348,6 +368,7 @@ fn yy_state_10(_lookahead : YYSymbol) -> YYDecision {
 
 // [2, add → add MINUS factor •, $ / PLUS / MINUS / RPAREN]
 // [4, factor → factor • STAR term, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -362,6 +383,7 @@ fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
 // [5, factor → • term, $ / PLUS / MINUS / STAR / RPAREN]
 // [6, term → • NUMBER, $ / PLUS / MINUS / STAR / RPAREN]
 // [7, term → • LPAREN add RPAREN, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -375,6 +397,7 @@ fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
 
 // [1, add → add PLUS factor •, $ / PLUS / MINUS / RPAREN]
 // [4, factor → factor • STAR term, $ / PLUS / MINUS / STAR / RPAREN]
+
 ///|
 fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -387,6 +410,7 @@ fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
 // [0, start → add •, $]
 // [1, add → add • PLUS factor, $ / PLUS / MINUS]
 // [2, add → add • MINUS factor, $ / PLUS / MINUS]
+
 ///|
 fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -545,9 +569,9 @@ pub fn start(
   yy_parse(
     tokens,
     yy_state_0,
-    fn {
-      YYObj_Int(result) => result
-      _ => panic()
+    it => {
+      guard it is YYObj_Int(result)
+      result
     },
     initial_pos?,
   )

@@ -19,6 +19,7 @@
 // Copyright Inria. All rights reserved. This file is distributed under
 // the terms of the GNU General Public License version 2, as described in
 // the file LICENSE.
+
 ///|
 priv struct Node[LookaheadSet] {
   item : EncodedLR0Item
@@ -71,7 +72,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
   fn(item_set) {
     let stamp = @stamp.new()
     let nodes = []
-    fn visit(
+    letrec visit = fn(
       node : Node[LookaheadSet],
       lookahead_set : EpsilonLookaheadSet[LookaheadSet],
       parent : Node[LookaheadSet]
@@ -86,8 +87,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
         follow(node)
       }
     }
-
-    fn follow(node : Node[LookaheadSet]) -> Unit {
+    and follow = fn(node : Node[LookaheadSet]) -> Unit {
       node.stamp = stamp
       nodes.push(node)
       for epsilon_transition in node.epsilon_transitions {

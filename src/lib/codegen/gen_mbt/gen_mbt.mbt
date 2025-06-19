@@ -1098,9 +1098,9 @@ fn codegen(
           $|  yy_parse(
           $|    tokens,
           $|    yy_state_\{start_state.num},
-          $|    fn {
-          $|      YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result) => result
-          $|      _ => panic()
+          $|    (it) => {
+          $|      guard it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
+          $|      result
           $|    },
           $|    initial_pos?,
           $|  )
@@ -1115,9 +1115,9 @@ fn codegen(
           $|    read_token,
           $|    start_pos,
           $|    yy_state_\{start_state.num},
-          $|    fn {
-          $|      YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result) => result
-          $|      _ => panic()
+          $|    (it) => {
+          $|      guard it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
+          $|      result
           $|    },
           $|  )
           $|}
@@ -1159,9 +1159,9 @@ fn codegen(
       output.write_string(
         $|
         $|fn args_to_json(args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> Json {
-        $|  Json::array(args.iter().map(fn {
-        $|    (YYObj_Json(json), _, _) => json
-        $|    _ => panic()
+        $|  Json::array(args.iter().map((it) => {
+        $|    guard it.0 is YYObj_Json(json)
+        $|    json
         $|  }).to_array())
         $|}
         $|

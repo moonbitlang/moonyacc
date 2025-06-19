@@ -28,8 +28,8 @@ pub fn EncodedLR0Item::decode(
   self : EncodedLR0Item,
   grammar : @grm.Grammar
 ) -> LR0Item {
-  let production = grammar.productions[self._ >> 10]
-  let dot = self._ & 0x3FF
+  let production = grammar.productions[self.inner() >> 10]
+  let dot = self.inner() & 0x3FF
   { production, dot }
 }
 
@@ -38,7 +38,7 @@ pub fn EncodedLR0Item::decode_production(
   self : EncodedLR0Item,
   grammar : @grm.Grammar
 ) -> @grm.Production {
-  grammar.productions[self._ >> 10]
+  grammar.productions[self.inner() >> 10]
 }
 
 ///|
@@ -46,12 +46,12 @@ pub fn EncodedLR0Item::decode_postdot(
   self : EncodedLR0Item,
   grammar : @grm.Grammar
 ) -> @grm.Symbol? {
-  let production = grammar.productions[self._ >> 10]
-  let dot = self._ & 0x3FF
+  let production = grammar.productions[self.inner() >> 10]
+  let dot = self.inner() & 0x3FF
   production.rhs.get(dot)
 }
 
 ///|
 pub fn EncodedLR0Item::unsafe_shift(self : EncodedLR0Item) -> EncodedLR0Item {
-  self._ + 1
+  self.inner() + 1
 }

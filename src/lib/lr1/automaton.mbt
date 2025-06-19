@@ -278,7 +278,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
     starts.push((start_production, start_state))
     queue.push(start_state)
   }
-  fn examine(candidate : LR1PreState) -> Unit {
+  letrec examine = fn(candidate : LR1PreState) -> Unit {
     let family = families[candidate.items.core.num]
     for state in family {
       if candidate.items.subsume(state.items) {
@@ -287,8 +287,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
     }
     fuse(family, candidate)
   }
-
-  fn fuse(family : Array[LR1PreState], candidate : LR1PreState) -> Unit {
+  and fuse = fn(family : Array[LR1PreState], candidate : LR1PreState) -> Unit {
     for state in family {
       if state.items.weak_compat(candidate.items) &&
         (if user_eoi { state.items.eoi_compact(candidate.items) } else { true }) {

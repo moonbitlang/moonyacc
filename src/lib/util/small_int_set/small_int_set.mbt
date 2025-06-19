@@ -37,19 +37,19 @@ pub fn singleton(key : Int) -> SmallIntSet {
 
 ///|
 pub fn is_empty(self : SmallIntSet) -> Bool {
-  self._.length() == 1
+  self.inner().length() == 1
 }
 
 ///|
 pub fn is_singleton(self : SmallIntSet, key : Int) -> Bool {
-  self._.length() == 2 &&
-  self._[0] == (1 << (key >> 5)) &&
-  self._[1] == (1 << (key & 31))
+  self.inner().length() == 2 &&
+  self.inner()[0] == 1 << (key >> 5) &&
+  self.inner()[1] == 1 << (key & 31)
 }
 
 ///|
 pub impl Hash for SmallIntSet with hash_combine(self, hasher) {
-  for x in self._ {
+  for x in self.inner() {
     hasher.combine_int(x)
   }
 }
@@ -73,13 +73,13 @@ pub impl Show for SmallIntSet with output(self, logger) {
 pub fn iter(self : SmallIntSet) -> Iter[Int] {
   Iter::new(fn(yield_) {
     let mut i = 0
-    let mut bitmask = self._[0]
+    let mut bitmask = self.inner()[0]
     while true {
       if bitmask == 0 {
         break
       }
       let word_index = bitmask.ctz()
-      let mut word = self._[1 + i]
+      let mut word = self.inner()[1 + i]
       while true {
         if word == 0 {
           break
@@ -118,34 +118,36 @@ pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
 ///|
 pub fn contains(self : SmallIntSet, key : Int) -> Bool {
   let word_index = key >> 5
-  let bitmask = self._[0]
+  let bitmask = self.inner()[0]
   if (bitmask & (1 << word_index)) == 0 {
     return false
   }
   let data_index = 1 + (bitmask & ((1 << word_index) - 1)).popcnt()
-  (self._[data_index] & (1 << (key & 31))) != 0
+  (self.inner()[data_index] & (1 << (key & 31))) != 0
 }
 
 ///|
 pub fn add(self : SmallIntSet, key : Int) -> SmallIntSet {
   let word_index = key >> 5
-  let bitmask0 = self._[0]
+  let bitmask0 = self.inner()[0]
   let bitmask = bitmask0 | (1 << word_index)
   let data_index = 1 + (bitmask & ((1 << word_index) - 1)).popcnt()
   if bitmask == bitmask0 {
-    if (self._[data_index] & (1 << (key & 31))) != 0 {
+    if (self.inner()[data_index] & (1 << (key & 31))) != 0 {
       return self
     }
-    let result = self._.copy()
+    let result = self.inner().copy()
     result[data_index] = result[data_index] | (1 << (key & 31))
     result
   } else {
     let result = Array::make(1 + bitmask.popcnt(), 0)
     result[0] = bitmask
-    self._.blit_to(result, len=data_index - 1, src_offset=1, dst_offset=1)
-    self._.blit_to(
+    self.inner().blit_to(result, len=data_index - 1, src_offset=1, dst_offset=1)
+    self
+    .inner()
+    .blit_to(
       result,
-      len=self._.length() - data_index,
+      len=self.inner().length() - data_index,
       src_offset=data_index,
       dst_offset=data_index + 1,
     )
@@ -157,13 +159,13 @@ pub fn add(self : SmallIntSet, key : Int) -> SmallIntSet {
 ///|
 pub fn remove(self : SmallIntSet, key : Int) -> SmallIntSet {
   let word_index = key >> 5
-  let bitmask = self._[0]
+  let bitmask = self.inner()[0]
   if (bitmask & (1 << word_index)) == 0 {
     return self
   }
-  let result = self._.copy()
+  let result = self.inner().copy()
   let data_index = 1 + (bitmask & ((1 << word_index) - 1)).popcnt()
-  result[data_index] = self._[data_index] & (1 << (key & 31)).lnot()
+  result[data_index] = self.inner()[data_index] & (1 << (key & 31)).lnot()
   if result[data_index] == 0 {
     result[0] = bitmask & (1 << word_index).lnot()
     result.remove(data_index) |> ignore
@@ -173,11 +175,11 @@ pub fn remove(self : SmallIntSet, key : Int) -> SmallIntSet {
 
 ///|
 pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
-  let bitmask1 = self._[0]
+  let bitmask1 = self.inner()[0]
   if bitmask1 == 0 {
     return other
   }
-  let bitmask2 = other._[0]
+  let bitmask2 = other.inner()[0]
   if bitmask2 == 0 {
     return self
   }
@@ -186,7 +188,7 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
     if physical_equal(self, other) {
       return self
     }
-    let result = self._.copy()
+    let result = self.inner().copy()
     let mut bitmask2 = bitmask2
     let mut j = 1
     while true {
@@ -195,7 +197,7 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
         break
       }
       let i = 1 + (bitmask1 & ((1 << jb) - 1)).popcnt()
-      result[i] = result[i] | other._[j]
+      result[i] = result[i] | other.inner()[j]
       j += 1
       bitmask2 = bitmask2 & (bitmask2 - 1)
     }
@@ -204,7 +206,7 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
     if physical_equal(self, other) {
       return self
     }
-    let result = other._.copy()
+    let result = other.inner().copy()
     let mut bitmask1 = bitmask1
     let mut i = 1
     while true {
@@ -213,7 +215,7 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
         break
       }
       let j = 1 + (bitmask2 & ((1 << ib) - 1)).popcnt()
-      result[j] = result[j] | self._[i]
+      result[j] = result[j] | self.inner()[i]
       i += 1
       bitmask1 = bitmask1 & (bitmask1 - 1)
     }
@@ -230,18 +232,18 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
       let ib = bitmask1.ctz()
       let jb = bitmask2.ctz()
       if ib < jb {
-        result[k] = self._[i]
+        result[k] = self.inner()[i]
         i += 1
         bitmask1 = bitmask1 & (bitmask1 - 1)
       } else if ib > jb {
-        result[k] = other._[j]
+        result[k] = other.inner()[j]
         j += 1
         bitmask2 = bitmask2 & (bitmask2 - 1)
       } else {
         if ib == 32 {
           break
         }
-        result[k] = self._[i] | other._[j]
+        result[k] = self.inner()[i] | other.inner()[j]
         i += 1
         j += 1
         bitmask1 = bitmask1 & (bitmask1 - 1)
@@ -255,8 +257,8 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 
 ///|
 pub fn intersection(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
-  let bitmask1 = self._[0]
-  let bitmask2 = other._[0]
+  let bitmask1 = self.inner()[0]
+  let bitmask2 = other.inner()[0]
   let mut bitmask = bitmask1 & bitmask2
   let result = Array::make(1 + bitmask.popcnt(), 0)
   let to_remove_data_indices = []
@@ -278,7 +280,7 @@ pub fn intersection(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
       if ib == 32 {
         break
       }
-      result[k] = self._[i] & other._[j]
+      result[k] = self.inner()[i] & other.inner()[j]
       if result[k] == 0 {
         to_remove_data_indices.push(k)
       }
@@ -300,8 +302,8 @@ pub fn intersection(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 
 ///|
 pub fn difference(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
-  let bitmask1 = self._[0]
-  let bitmask2 = other._[0]
+  let bitmask1 = self.inner()[0]
+  let bitmask2 = other.inner()[0]
   let mut bitmask = bitmask1
   let result = Array::make(1 + bitmask.popcnt(), 0)
   let to_remove_data_indices = []
@@ -314,7 +316,7 @@ pub fn difference(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
     let ib = bitmask1.ctz()
     let jb = bitmask2.ctz()
     if ib < jb {
-      result[k] = self._[i]
+      result[k] = self.inner()[i]
       i += 1
       k += 1
       bitmask1 = bitmask1 & (bitmask1 - 1)
@@ -325,7 +327,7 @@ pub fn difference(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
       if ib == 32 {
         break
       }
-      result[k] = self._[i] & other._[j].lnot()
+      result[k] = self.inner()[i] & other.inner()[j].lnot()
       if result[k] == 0 {
         to_remove_data_indices.push(k)
       }
@@ -347,8 +349,8 @@ pub fn difference(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 
 ///|
 pub fn disjoint(self : SmallIntSet, other : SmallIntSet) -> Bool {
-  let bitmask1 = self._[0]
-  let bitmask2 = other._[0]
+  let bitmask1 = self.inner()[0]
+  let bitmask2 = other.inner()[0]
   if (bitmask1 & bitmask2) != 0 {
     return false
   }
@@ -369,7 +371,7 @@ pub fn disjoint(self : SmallIntSet, other : SmallIntSet) -> Bool {
       if ib == 32 {
         break
       }
-      if (self._[i] & other._[j]) != 0 {
+      if (self.inner()[i] & other.inner()[j]) != 0 {
         return false
       }
       i += 1
@@ -383,8 +385,8 @@ pub fn disjoint(self : SmallIntSet, other : SmallIntSet) -> Bool {
 
 ///|
 pub fn subset(self : SmallIntSet, other : SmallIntSet) -> Bool {
-  let bitmask1 = self._[0]
-  let bitmask2 = other._[0]
+  let bitmask1 = self.inner()[0]
+  let bitmask2 = other.inner()[0]
   if (bitmask1 & bitmask2) != bitmask1 {
     return false
   }
@@ -405,7 +407,7 @@ pub fn subset(self : SmallIntSet, other : SmallIntSet) -> Bool {
       if ib == 32 {
         break
       }
-      if (self._[i] & other._[j]) != self._[i] {
+      if (self.inner()[i] & other.inner()[j]) != self.inner()[i] {
         return false
       }
       i += 1

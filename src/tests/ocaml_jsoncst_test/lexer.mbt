@@ -1310,5 +1310,5 @@ pub fn new_lexer(input : String) -> Lexer {
 
 ///|
 pub fn next_token(self : Lexer) -> (Token, Int, Int) {
-  token(self._)
+  token(self.inner())
 }

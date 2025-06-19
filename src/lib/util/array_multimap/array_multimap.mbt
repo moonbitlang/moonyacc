@@ -22,7 +22,7 @@ pub fn[K, V] new() -> T[K, V] {
 
 ///|
 pub fn[K : Hash + Eq, V : Eq] add(self : T[K, V], key : K, value : V) -> Unit {
-  let arr = self._.get_or_init(key, fn(_) { [] })
+  let arr = self.inner().get_or_init(key, fn(_) { [] })
   if not(arr.contains(value)) {
     arr.push(value)
   }
@@ -30,18 +30,18 @@ pub fn[K : Hash + Eq, V : Eq] add(self : T[K, V], key : K, value : V) -> Unit {
 
 ///|
 pub fn[K : Hash + Eq, V] get(self : T[K, V], key : K) -> Array[V] {
-  self._.get(key).or([])
+  self.inner().get(key).or([])
 }
 
 ///|
 pub impl[K : Eq + Hash + Show, V : ToJson] ToJson for T[K, V] with to_json(self) {
-  Map::from_iter(self._.iter()).to_json()
+  Map::from_iter(self.inner().iter()).to_json()
 }
 
 ///|
 pub fn[K : Hash + Eq, V] copy(self : T[K, V]) -> T[K, V] {
   let map2 = @hashmap2.new(capacity=16)
-  for entry in self._.iter() {
+  for entry in self.inner().iter() {
     map2.set(entry.0, entry.1)
   }
   T(map2)

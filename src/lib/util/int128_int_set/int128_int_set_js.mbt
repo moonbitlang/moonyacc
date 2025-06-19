@@ -32,14 +32,14 @@ pub fn empty() -> Int128IntSet {
 pub fn is_singleton(self : Int128IntSet, key : Int) -> Bool {
   if key < 64 {
     if key < 32 {
-      self.a == (1 << key) && self.b == 0 && self.c == 0 && self.d == 0
+      self.a == 1 << key && self.b == 0 && self.c == 0 && self.d == 0
     } else {
-      self.a == 0 && self.b == (1 << (key - 32)) && self.c == 0 && self.d == 0
+      self.a == 0 && self.b == 1 << (key - 32) && self.c == 0 && self.d == 0
     }
   } else if key < 96 {
-    self.a == 0 && self.b == 0 && self.c == (1 << (key - 64)) && self.d == 0
+    self.a == 0 && self.b == 0 && self.c == 1 << (key - 64) && self.d == 0
   } else {
-    self.a == 0 && self.b == 0 && self.c == 0 && self.d == (1 << (key - 96))
+    self.a == 0 && self.b == 0 && self.c == 0 && self.d == 1 << (key - 96)
   }
 }
 

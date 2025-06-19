@@ -404,9 +404,9 @@ pub fn start(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> String
   yy_parse(
     tokens,
     yy_state_0,
-    fn {
-      YYObj_String(result) => result
-      _ => panic()
+    (it) => {
+      guard it is YYObj_String(result)
+      result
     },
     initial_pos?,
   )

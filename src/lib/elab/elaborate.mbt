@@ -307,8 +307,9 @@ pub fn elaborate(
     let rule_param_map : Map[String, TypeExpr] = Map::from_array(rule.params)
     let ast_clause_iter = ast_rule.clauses
       .iter()
-      .flat_map(fn {
-        (clauses, action) => clauses.iter().map(fn(it) { (it, action) })
+      .flat_map(it => {
+        let (clauses, action) = it
+        clauses.iter().map(fn(it) { (it, action) })
       })
     let mut clause_index = 0
     for ast_clause in ast_clause_iter {
@@ -369,7 +370,7 @@ pub fn elaborate(
           position_type = parse_and_elaborate_type_expr(type_)
         }
       Derive(traits~, type_~) => {
-        let traits = traits.split(",").map(fn { t => t.trim(" ").to_string() })
+        let traits = traits.split(",").map(t => t.trim(" ").to_string())
         for trait_ in traits {
           derive_map.add(type_, parse_and_elaborate_type_expr(trait_))
         }

@@ -2788,9 +2788,9 @@ pub fn spec(read_token : () -> (Token, Int, Int), start_pos : Int) -> @ast.Parse
     read_token,
     start_pos,
     yy_state_0,
-    fn {
-      YYObj__ast_ParserSpec(result) => result
-      _ => panic()
+    (it) => {
+      guard it is YYObj__ast_ParserSpec(result)
+      result
     },
   )
 }

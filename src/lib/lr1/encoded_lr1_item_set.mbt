@@ -54,22 +54,6 @@ fn EncodedLR1ItemSet::decode_item_groups(
 }
 
 ///|
-fn EncodedLR1ItemSet::decode_iter(
-  self : EncodedLR1ItemSet,
-  grammar : @grm.Grammar
-) -> Iter[LR1Item] {
-  self
-  .decode_item_groups(grammar)
-  .flat_map(fn(group) {
-    group.lookahead_set
-    .iter()
-    .map(fn(lookahead) {
-      { production: group.core.production, dot: group.core.dot, lookahead }
-    })
-  })
-}
-
-///|
 fn EncodedLR1ItemSet::merge(
   self : EncodedLR1ItemSet,
   other : EncodedLR1ItemSet

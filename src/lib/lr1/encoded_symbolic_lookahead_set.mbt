@@ -46,11 +46,11 @@ impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with singleton(
 
 ///|
 fn EncodedSymbolicLookaheadSet::variable(
-  var : Int
+  var_ : Int
 ) -> EncodedSymbolicLookaheadSet {
   {
     concrete_set: EncodedLookaheadSet::empty(),
-    vars: @small_int_set.singleton(var),
+    vars: @small_int_set.singleton(var_),
   }
 }
 
@@ -66,22 +66,12 @@ impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with union(
 }
 
 ///|
-fn EncodedSymbolicLookaheadSet::from_iter(
-  iter : Iter[Lookahead]
-) -> EncodedSymbolicLookaheadSet {
-  {
-    concrete_set: EncodedLookaheadSet::from_iter(iter),
-    vars: @small_int_set.empty(),
-  }
-}
-
-///|
 fn EncodedSymbolicLookaheadSet::interpret(
   self : EncodedSymbolicLookaheadSet,
   subst : Array[EncodedLookaheadSet]
 ) -> EncodedLookaheadSet {
   self.vars
   .iter()
-  .map(fn(var) { subst[var] })
+  .map(fn(var_) { subst[var_] })
   .fold(init=self.concrete_set, EncodedLookaheadSet::union)
 }

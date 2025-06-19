@@ -18,16 +18,13 @@
 priv type EncodedLookaheadSet @small_int_set.T derive(Eq, Compare, Hash)
 
 ///|
-fn EncodedLookaheadSet::is_empty(self : EncodedLookaheadSet) -> Bool {
-  self._.is_empty()
-}
-
-///|
 fn EncodedLookaheadSet::is_singleton(
   self : EncodedLookaheadSet,
   key : Lookahead
 ) -> Bool {
-  self._.is_singleton(
+  self
+  .inner()
+  .is_singleton(
     match key {
       EndOfInput => 0
       Input(key) => key.num + 1
@@ -36,38 +33,8 @@ fn EncodedLookaheadSet::is_singleton(
 }
 
 ///|
-fn EncodedLookaheadSet::contains(
-  self : EncodedLookaheadSet,
-  lookahead : Lookahead
-) -> Bool {
-  match lookahead {
-    Input(t) => self._.contains(t.num + 1)
-    EndOfInput => self._.contains(0)
-  }
-}
-
-///|
 fn EncodedLookaheadSet::empty() -> EncodedLookaheadSet {
   @small_int_set.empty()
-}
-
-///|
-fn EncodedLookaheadSet::default() -> EncodedLookaheadSet {
-  EncodedLookaheadSet::empty()
-}
-
-///|
-fn EncodedLookaheadSet::from_iter(
-  iter : Iter[Lookahead]
-) -> EncodedLookaheadSet {
-  @small_int_set.from_iter(
-    iter.map(fn(lookahead) {
-      match lookahead {
-        Input(t) => t.num + 1
-        EndOfInput => 0
-      }
-    }),
-  )
 }
 
 ///|
@@ -93,7 +60,8 @@ fn EncodedLookaheadSet::decode_iter(
   self : EncodedLookaheadSet,
   grammar : @grm.Grammar
 ) -> Iter[Lookahead] {
-  self._
+  self
+  .inner()
   .iter()
   .map(fn(t) {
     if t == 0 {
@@ -109,7 +77,7 @@ fn EncodedLookaheadSet::union(
   self : EncodedLookaheadSet,
   other : EncodedLookaheadSet
 ) -> EncodedLookaheadSet {
-  self._.union(other._)
+  self.inner().union(other.inner())
 }
 
 ///|
@@ -117,7 +85,7 @@ fn EncodedLookaheadSet::disjoint(
   self : EncodedLookaheadSet,
   other : EncodedLookaheadSet
 ) -> Bool {
-  self._.disjoint(other._)
+  self.inner().disjoint(other.inner())
 }
 
 ///|
@@ -125,5 +93,5 @@ fn EncodedLookaheadSet::subset(
   self : EncodedLookaheadSet,
   other : EncodedLookaheadSet
 ) -> Bool {
-  self._.subset(other._)
+  self.inner().subset(other.inner())
 }

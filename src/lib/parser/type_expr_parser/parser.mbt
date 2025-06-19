@@ -833,9 +833,9 @@ pub fn parse_type_expr(tokens : Array[(Token, Int, Int)], initial_pos? : Int) ->
   yy_parse(
     tokens,
     yy_state_0,
-    fn {
-      YYObj__ast_TypeExpr(result) => result
-      _ => panic()
+    (it) => {
+      guard it is YYObj__ast_TypeExpr(result)
+      result
     },
     initial_pos?,
   )

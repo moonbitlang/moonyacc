@@ -400,9 +400,9 @@ pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Int raise
   yy_parse(
     tokens,
     yy_state_0,
-    fn {
-      YYObj_Int(result) => result
-      _ => panic()
+    (it) => {
+      guard it is YYObj_Int(result)
+      result
     },
     initial_pos?,
   )

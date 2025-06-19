@@ -9,24 +9,24 @@ fn find_leaf_inline_rules(rules : Map[String, @elab.Rule]) -> Set[String] {
   Set::from_iter(
     all_inline_rules
     .iter()
-    .filter(fn {
-      (_, rule) =>
-        rule.clauses
+    .filter(it => {
+      let (_, rule) = it
+      rule.clauses
+      .iter()
+      .all(fn(clause) {
+        clause.items
         .iter()
-        .all(fn(clause) {
-          clause.items
-          .iter()
-          .all(fn(item) {
-            match item.term {
-              Token(_) => true
-              RuleCall(rule_name, [], _type) =>
-                not(all_inline_rules.contains(rule_name))
-              Param(_) | RuleCall(_, _, _) => panic()
-            }
-          })
+        .all(fn(item) {
+          match item.term {
+            Token(_) => true
+            RuleCall(rule_name, [], _type) =>
+              not(all_inline_rules.contains(rule_name))
+            Param(_) | RuleCall(_, _, _) => panic()
+          }
         })
+      })
     })
-    .map(fn { (rule_name, _) => rule_name }),
+    .map(it => it.0),
   )
 }
 

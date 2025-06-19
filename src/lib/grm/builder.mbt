@@ -109,7 +109,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
         productions.push(production)
         for symbol in production.rhs {
           match symbol {
-            T(t) => last_prec = t.prec.map(fn { (level, _) => level })
+            T(t) => last_prec = t.prec.map(it => it.0)
             NT(_) => ()
           }
         }
