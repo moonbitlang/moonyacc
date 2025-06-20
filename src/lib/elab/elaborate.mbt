@@ -16,6 +16,7 @@
 pub suberror ElabError {
   UnresolvedSymbol(String, loc~ : (Int, Int))
   FailedToParseTypeExpr(String)
+  OutOfBoundsAccess(Int, loc~ : (Int, Int))
 }
 
 ///|
@@ -409,7 +410,7 @@ fn elaborate_action(
   nonterminal_name~ : String,
   type_~ : TypeExpr,
   json_cst~ : JsonCst
-) -> Action {
+) -> Action raise ElabError {
   let arity = items.length()
   let name_to_index : Map[String, Int] = {}
   for index, item in items {
@@ -427,18 +428,21 @@ fn elaborate_action(
 
   let bindings : Array[(BindingSubject, Code)] = []
   let visited = @sorted_set.new()
-  fn add_binding(desc : @ast.SubstItemDesc) {
+  fn add_binding(desc : @ast.SubstItemDesc, loc : (Int, Int)) raise ElabError {
     guard not(visited.contains(desc)) else { return }
     visited.add(desc)
     match desc {
       Dollar(index) => {
         let name = "_dollar\{index}"
+        guard index - 1 < items.length() else {
+          raise OutOfBoundsAccess(index, loc~) // TODO: correct loc
+        }
         bindings.push((Data(index - 1, type_=items[index - 1].type_()), name))
       }
       StartPos => bindings.push((StartPos, "_start_pos"))
       Loc => {
-        add_binding(StartPos)
-        add_binding(EndPos)
+        add_binding(StartPos, loc)
+        add_binding(EndPos, loc)
       }
       EndPos => bindings.push((EndPos, "_end_pos"))
       StartPosOf(arg) => {
@@ -450,13 +454,13 @@ fn elaborate_action(
         bindings.push((EndPosOf(index), "_end_pos_of_item\{index}"))
       }
       LocOf(arg) => {
-        add_binding(StartPosOf(arg))
-        add_binding(EndPosOf(arg))
+        add_binding(StartPosOf(arg), loc)
+        add_binding(EndPosOf(arg), loc)
       }
       SymbolStartPos => bindings.push((SymbolStartPos, "_symbol_start_pos"))
       Sloc => {
-        add_binding(SymbolStartPos)
-        add_binding(EndPos)
+        add_binding(SymbolStartPos, loc)
+        add_binding(EndPos, loc)
       }
     }
   }
@@ -485,7 +489,10 @@ fn elaborate_action(
                 ),
               )
             }
-            add_binding(item.desc)
+            add_binding(
+              item.desc,
+              (code.utf8_pos + item.start, code.utf8_pos + item.end),
+            )
             body.push(
               (
                 match item.desc {
@@ -521,8 +528,8 @@ fn elaborate_action(
       }
     }
     Yes(_) => {
-      add_binding(StartPos)
-      add_binding(EndPos)
+      add_binding(StartPos, (0, 0)) // TODO: correct loc
+      add_binding(EndPos, (0, 0)) // TODO: correct loc
       body.push(
         (
           #|{

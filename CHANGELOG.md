@@ -1,3 +1,7 @@
+## 0.5.2
+
+- feat: check for out-of-bounds access (eg. `$3`) while elaborating.
+
 ## 0.4.0
 
 ### Breaking Changes
