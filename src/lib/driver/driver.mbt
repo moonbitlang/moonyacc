@@ -140,6 +140,11 @@ pub fn compile(
       println_to_stderr("Failed to parse type expression \{type_expr_str}")
       exit(1)
     }
+    @elab.OutOfBoundsAccess(index, loc~) => {
+      let loc_str = loc_to_string(filename, parser_spec_str, loc)
+      println_to_stderr("Out of bounds access \{index}, at \{loc_str}")
+      exit(1)
+    }
   }
   let spec = @desugar.eliminate_rule_args(
     spec,
