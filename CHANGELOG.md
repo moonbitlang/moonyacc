@@ -1,3 +1,7 @@
+## 0.6.3
+
+- feat: report unresolved symbol in rule declaration.
+
 ## 0.5.2
 
 - feat: check for out-of-bounds access (eg. `$3`) while elaborating.

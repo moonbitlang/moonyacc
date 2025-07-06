@@ -29,7 +29,7 @@ pub fn print_spec(
         }
         for symbol in symbols {
           out.write_string(" ")
-          out.write_string(symbol)
+          out.write_string(symbol.symbol)
         }
         out.write_string("\n")
       }
@@ -50,7 +50,7 @@ pub fn print_spec(
         }
         for symbol in symbols {
           out.write_string(" ")
-          out.write_string(symbol)
+          out.write_string(symbol.symbol)
         }
         out.write_string("\n")
       }
@@ -60,7 +60,7 @@ pub fn print_spec(
           out.write_string("<\{type_}>")
         }
         out.write_string(" ")
-        out.write_string(symbol)
+        out.write_string(symbol.symbol)
         out.write_string(" ")
         out.write_string(image)
         out.write_string("\n")
@@ -71,7 +71,7 @@ pub fn print_spec(
           out.write_string("<\{type_}>")
           for symbol in symbols {
             out.write_string(" ")
-            out.write_string(symbol)
+            out.write_string(symbol.symbol)
           }
           out.write_string("\n")
         }

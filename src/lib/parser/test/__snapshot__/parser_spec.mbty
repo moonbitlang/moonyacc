@@ -44,13 +44,13 @@ decl_list
 
 decl
   : PERCENT_LBRACE_CODE_PERCENT_RBRACE {}
-  | "%start" nonempty_symbol_list {}
-  | "%start" LANGLE_CODE_RANGLE nonempty_symbol_list {}
-  | "%token" nonempty_symbol_list {}
-  | "%token" LANGLE_CODE_RANGLE nonempty_symbol_list {}
-  | "%token" symbol STRING {}
-  | "%token" LANGLE_CODE_RANGLE symbol STRING {}
-  | "%type" LANGLE_CODE_RANGLE nonempty_symbol_list {}
+  | "%start" nonempty_symbol_with_loc_list {}
+  | "%start" LANGLE_CODE_RANGLE nonempty_symbol_with_loc_list {}
+  | "%token" nonempty_symbol_with_loc_list {}
+  | "%token" LANGLE_CODE_RANGLE nonempty_symbol_with_loc_list {}
+  | "%token" symbol_with_loc STRING {}
+  | "%token" LANGLE_CODE_RANGLE symbol_with_loc STRING {}
+  | "%type" LANGLE_CODE_RANGLE nonempty_symbol_with_loc_list {}
   | "%position" LANGLE_CODE_RANGLE {}
   | "%left" nonempty_prec_symbol_list {}
   | "%right" nonempty_prec_symbol_list {}
@@ -182,9 +182,9 @@ nonempty_comma_term_list
   | term "," nonempty_comma_term_list {}
   ;
 
-nonempty_symbol_list
-  : symbol {}
-  | symbol nonempty_symbol_list {}
+nonempty_symbol_with_loc_list
+  : symbol_with_loc {}
+  | symbol_with_loc nonempty_symbol_with_loc_list {}
   ;
 
 nonempty_prec_symbol_list
@@ -195,6 +195,10 @@ nonempty_prec_symbol_list
 prec_symbol
   : symbol {}
   | STRING {}
+  ;
+
+symbol_with_loc
+  : symbol {}
   ;
 
 symbol

@@ -156,11 +156,11 @@ pub fn elaborate(
     match ast_decl {
       Token(names, type_~) =>
         for name in names {
-          let token = get_token_by_name(name)
+          let token = get_token_by_name(name.symbol)
           token.type_ = elaborate_token_type(type_)
         }
       Token1(name, type_~, image~) => {
-        let token = get_token_by_name(name)
+        let token = get_token_by_name(name.symbol)
         token.type_ = elaborate_token_type(type_)
         token.image = Some(image)
         token_by_image[image] = token
@@ -237,10 +237,9 @@ pub fn elaborate(
       }
       Start(symbols, type_~) =>
         for symbol in symbols {
-          start_rules.push(symbol)
-          guard rule_by_name.get(symbol) is Some(rule) else {
-            // TODO: error reporting
-            panic()
+          start_rules.push(symbol.symbol)
+          guard rule_by_name.get(symbol.symbol) is Some(rule) else {
+            raise UnresolvedSymbol(symbol.symbol, loc=symbol.loc)
           }
           if json_cst is No && type_ is Some(type_) {
             rule.type_ = parse_and_elaborate_type_expr(type_)
@@ -248,9 +247,9 @@ pub fn elaborate(
         }
       Type(idents, type_~) =>
         for ident in idents {
-          match token_by_name.get(ident) {
+          match token_by_name.get(ident.symbol) {
             None =>
-              match rule_by_name.get(ident) {
+              match rule_by_name.get(ident.symbol) {
                 None => panic()
                 Some(rule) =>
                   // TODO: report error if rule already has a type

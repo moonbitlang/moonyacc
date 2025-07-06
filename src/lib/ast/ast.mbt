@@ -65,15 +65,21 @@ pub typealias String as TypeString
 pub(all) enum Declaration {
   Header(Code, Int, Int) // (code, utf8_pos, utf8_len)
   Trailer(Code, Int, Int) // (code, utf8_pos, utf8_len)
-  Start(Array[Symbol], type_~ : TypeString?)
-  Token(Array[Symbol], type_~ : TypeString?)
-  Token1(Symbol, type_~ : TypeString?, image~ : String)
-  Type(Array[Symbol], type_~ : TypeString)
+  Start(Array[SymbolWithLoc], type_~ : TypeString?)
+  Token(Array[SymbolWithLoc], type_~ : TypeString?)
+  Token1(SymbolWithLoc, type_~ : TypeString?, image~ : String)
+  Type(Array[SymbolWithLoc], type_~ : TypeString)
   Derive(traits~ : TypeString, type_~ : TypeString)
   Position(type_~ : TypeString)
   Left(Array[PrecSymbol])
   Right(Array[PrecSymbol])
   Nonassoc(Array[PrecSymbol])
+} derive(ToJson)
+
+///|
+pub(all) struct SymbolWithLoc {
+  symbol : Symbol
+  loc : (Int, Int) // (utf8_pos, utf8_pos)
 } derive(ToJson)
 
 ///|

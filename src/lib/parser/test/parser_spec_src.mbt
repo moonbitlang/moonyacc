@@ -59,13 +59,13 @@ let parser_spec_src : String =
   #|
   #|decl -> @ast.Declaration
   #|  : PERCENT_LBRACE_CODE_PERCENT_RBRACE { Header($1.0, $1.1, $1.2) }
-  #|  | "%start" symbol_list=nonempty_symbol_list { Start(symbol_list.to_array(), type_=None) }
-  #|  | "%start" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Start(symbol_list.to_array(), type_=Some(type_)) }
-  #|  | "%token" symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=None) }
-  #|  | "%token" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Token(symbol_list.to_array(), type_=Some(type_)) }
-  #|  | "%token" symbol=symbol image=STRING { Token1(symbol, type_=None, image=image) }
-  #|  | "%token" type_=LANGLE_CODE_RANGLE symbol=symbol image=STRING { Token1(symbol, type_=Some(type_), image=image) }
-  #|  | "%type" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_list { Type(symbol_list.to_array(), type_=type_) }
+  #|  | "%start" symbol_list=nonempty_symbol_with_loc_list { Start(symbol_list.to_array(), type_=None) }
+  #|  | "%start" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_with_loc_list { Start(symbol_list.to_array(), type_=Some(type_)) }
+  #|  | "%token" symbol_list=nonempty_symbol_with_loc_list { Token(symbol_list.to_array(), type_=None) }
+  #|  | "%token" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_with_loc_list { Token(symbol_list.to_array(), type_=Some(type_)) }
+  #|  | "%token" symbol=symbol_with_loc image=STRING { Token1(symbol, type_=None, image=image) }
+  #|  | "%token" type_=LANGLE_CODE_RANGLE symbol=symbol_with_loc image=STRING { Token1(symbol, type_=Some(type_), image=image) }
+  #|  | "%type" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_with_loc_list { Type(symbol_list.to_array(), type_=type_) }
   #|  | "%position" type_=LANGLE_CODE_RANGLE { Position(type_=type_) }
   #|  | "%left" symbol_list=nonempty_prec_symbol_list { Left(symbol_list.to_array()) }
   #|  | "%right" symbol_list=nonempty_prec_symbol_list { Right(symbol_list.to_array()) }
@@ -207,9 +207,9 @@ let parser_spec_src : String =
   #|  | term=term "," term_list=nonempty_comma_term_list { Cons(term, term_list) }
   #|  ;
   #|
-  #|nonempty_symbol_list -> @immut/list.T[@ast.Symbol]
-  #|  : symbol=symbol { Cons(symbol, Nil) }
-  #|  | symbol=symbol symbol_list=nonempty_symbol_list { Cons(symbol, symbol_list) }
+  #|nonempty_symbol_with_loc_list -> @immut/list.T[@ast.SymbolWithLoc]
+  #|  : symbol=symbol_with_loc { Cons(symbol, Nil) }
+  #|  | symbol=symbol_with_loc symbol_list=nonempty_symbol_with_loc_list { Cons(symbol, symbol_list) }
   #|  ;
   #|
   #|nonempty_prec_symbol_list -> @immut/list.T[@ast.PrecSymbol]
@@ -220,6 +220,10 @@ let parser_spec_src : String =
   #|prec_symbol -> @ast.PrecSymbol
   #|  : symbol=symbol { Symbol(symbol) }
   #|  | image=STRING { Image(image) }
+  #|  ;
+  #|
+  #|symbol_with_loc -> @ast.SymbolWithLoc
+  #|  : symbol=symbol { { symbol, loc: ($startpos, $endpos) } }
   #|  ;
   #|
   #|symbol -> @ast.Symbol
