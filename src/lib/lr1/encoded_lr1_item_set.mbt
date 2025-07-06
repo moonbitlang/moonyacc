@@ -19,14 +19,6 @@ struct EncodedLR1ItemSet {
 }
 
 ///|
-impl Hash for EncodedLR1ItemSet with hash_combine(self, hasher) {
-  hasher.combine(self.core)
-  for kernel_lookahead_set in self.kernel_lookahead_set_table {
-    hasher.combine(kernel_lookahead_set)
-  }
-}
-
-///|
 fn EncodedLR1ItemSet::decode_item_groups(
   self : EncodedLR1ItemSet,
   grammar : @grm.Grammar

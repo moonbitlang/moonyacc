@@ -51,13 +51,13 @@ test {
 
   let err : ParseError? = try start(read_token, 0) catch {
     err => Some(err)
-  } else {
+  } noraise {
     _ => None
   }
   inspect(
     err,
-    content=
+    content=(
       #|Some(UnexpectedToken(EOF, (6, 6), ["+", "-", "*", ")"]))
-    ,
+    ),
   )
 }

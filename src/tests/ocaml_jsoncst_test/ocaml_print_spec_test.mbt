@@ -6,7 +6,8 @@ test "parser" (it : @test.T) {
   }
 
   let spec = @parser.spec(token, 0)
-  it.buffer.reset()
-  @ast.print_spec(spec, it.buffer)
+  let buf = StringBuilder::new()
+  @ast.print_spec(spec, buf)
+  it.write(buf.to_string())
   it.snapshot(filename="ocaml.mly")
 }

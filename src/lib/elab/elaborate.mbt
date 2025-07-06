@@ -532,17 +532,18 @@ fn elaborate_action(
       add_binding(EndPos, (0, 0)) // TODO: correct loc
       body.push(
         (
-          #|{
-          #|  "type": "NONTERMINAL",
-          $|  "name": "\{nonterminal_name}",
-          $|  "rule_index": \{rule_index},
-          $|  "clause_index": \{clause_index},
-          $|  "children": args_to_json(_args),
-          $|  "start": _start_pos.to_json(),
-          $|  "end": _end_pos.to_json(),
-          $|}
-          $|
-          ,
+          (
+            #|{
+            #|  "type": "NONTERMINAL",
+            $|  "name": "\{nonterminal_name}",
+            $|  "rule_index": \{rule_index},
+            $|  "clause_index": \{clause_index},
+            $|  "children": args_to_json(_args),
+            $|  "start": _start_pos.to_json(),
+            $|  "end": _end_pos.to_json(),
+            $|}
+            $|
+          ),
           None,
         ),
       )

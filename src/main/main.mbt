@@ -170,7 +170,7 @@ fn main {
   } else {
     (try? {
       @fs.write_string_to_file(output_file, output)
-      write_map_file(output_map_file.or("\{output_file}.map.json"))
+      write_map_file(output_map_file.unwrap_or("\{output_file}.map.json"))
     }).unwrap()
   }
 }

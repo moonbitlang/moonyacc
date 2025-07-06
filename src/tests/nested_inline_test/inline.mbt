@@ -208,7 +208,7 @@ fn[T] yy_parse(
   let mut cursor = 0
   let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
   let data_stack : Array[(YYObj, Unit, Unit)] = []
-  let mut last_pos = initial_pos.or(tokens[0].1)
+  let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
   let mut state = start
   let mut lookahead : Option[(YYSymbol, (YYObj, Unit, Unit), Token?)] = None
   let mut last_shifted_state_stack = state_stack

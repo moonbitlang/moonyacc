@@ -1135,7 +1135,7 @@ fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) {
       ()
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
-      (all_keywords.get(t).or(LIDENT), _capture_0_start, _capture_0_end)
+      (all_keywords.get(t).unwrap_or(LIDENT), _capture_0_start, _capture_0_end)
     }
     41 => {
       ()

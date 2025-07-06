@@ -33,22 +33,7 @@ test "lexer" (it : @test.T) {
 }
 
 ///|
-test "parser" (it : @test.T) {
-  let lexer = @parser.new_lexer(parser_spec_src)
-  fn token() {
-    (try? lexer.next_token()).unwrap()
-  }
-
-  let spec = @parser.spec(token, 0)
-  it.writeln(spec.to_json().stringify(indent=2))
-  it.snapshot(filename="parser_spec.json")
-  it.buffer.reset()
-  @ast.print_spec(spec, it.buffer)
-  it.snapshot(filename="parser_spec.mbty")
-}
-
-///|
-test "parser" (it : @test.T) {
+test "parser_spec.json" (it : @test.T) {
   let lexer = @parser.new_lexer(parser_spec_src)
   fn token() {
     (try? lexer.next_token()).unwrap()
@@ -60,14 +45,15 @@ test "parser" (it : @test.T) {
 }
 
 ///|
-test "parser" (it : @test.T) {
+test "parser_spec.mbty" (it : @test.T) {
   let lexer = @parser.new_lexer(parser_spec_src)
   fn token() {
     (try? lexer.next_token()).unwrap()
   }
 
   let spec = @parser.spec(token, 0)
-  it.buffer.reset()
-  @ast.print_spec(spec, it.buffer)
+  let buf = StringBuilder::new()
+  @ast.print_spec(spec, buf)
+  it.write(buf.to_string())
   it.snapshot(filename="parser_spec.mbty")
 }

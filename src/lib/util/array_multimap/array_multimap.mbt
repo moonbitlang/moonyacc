@@ -30,7 +30,7 @@ pub fn[K : Hash + Eq, V : Eq] add(self : T[K, V], key : K, value : V) -> Unit {
 
 ///|
 pub fn[K : Hash + Eq, V] get(self : T[K, V], key : K) -> Array[V] {
-  self.inner().get(key).or([])
+  self.inner().get(key).unwrap_or([])
 }
 
 ///|

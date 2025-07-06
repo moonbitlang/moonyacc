@@ -68,16 +68,6 @@ impl Eq for LR0Node with op_equal(self, other) {
 }
 
 ///|
-impl Compare for LR0Node with compare(self, other) {
-  self.num.compare(other.num)
-}
-
-///|
-impl Hash for LR0Node with hash_combine(self, hasher) {
-  hasher.combine_int(self.num)
-}
-
-///|
 priv struct LR1PreState {
   items : EncodedLR1ItemSet
   mut state : LR1State?

@@ -15,7 +15,7 @@
 ///|
 /// 0: EndOfInput
 /// 1..<1024: Terminal number + 1
-priv type EncodedLookaheadSet @small_int_set.T derive(Eq, Compare, Hash)
+priv type EncodedLookaheadSet @small_int_set.T derive(Eq)
 
 ///|
 fn EncodedLookaheadSet::is_singleton(

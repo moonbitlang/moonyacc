@@ -96,7 +96,7 @@ rule token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) {
     "[%%" as t => { (LBRACKETPERCENTPERCENT, $startpos(t), $endpos(t)) }
     "<" as t => { (LESS, $startpos(t), $endpos(t)) }
     "<-" as t => { (LESSMINUS, $startpos(t), $endpos(t)) }
-    (['a'-'z'] ['A'-'Z' 'a'-'z' '_' '0'-'9']*) as t => { (all_keywords.get(t).or(LIDENT), $startpos(t), $endpos(t)) }
+    (['a'-'z'] ['A'-'Z' 'a'-'z' '_' '0'-'9']*) as t => { (all_keywords.get(t).unwrap_or(LIDENT), $startpos(t), $endpos(t)) }
     "(" as t => { (LPAREN, $startpos(t), $endpos(t)) }
     "[@" as t => { (LBRACKETAT, $startpos(t), $endpos(t)) }
     "[@@" as t => { (LBRACKETATAT, $startpos(t), $endpos(t)) }

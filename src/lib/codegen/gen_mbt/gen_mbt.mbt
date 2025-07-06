@@ -108,85 +108,96 @@ fn codegen_tokens(
   }
 
   output.write_string(
-    $|pub(all) enum Token {
-    $|
-    ,
+    (
+      $|pub(all) enum Token {
+      $|
+    ),
   )
   for term in terminals {
     let meta = terminal_meta(term.name)
     if meta.data_type is Constr(pkg=None, "Unit", []) {
       output.write_string(
-        $|  \{term.name}
-        $|
-        ,
+        (
+          $|  \{term.name}
+          $|
+        ),
       )
     } else {
       output.write_string(
-        $|  \{term.name}(\{meta.data_type})
-        $|
-        ,
+        (
+          $|  \{term.name}(\{meta.data_type})
+          $|
+        ),
       )
     }
   }
   output.write_string(
-    $|}\{inject_derive(PUB_TYPE_TOKEN)}
-    $|
-    $|pub fn Token::kind(self : Token) -> TokenKind {
-    $|  match self {
-    $|
-    ,
+    (
+      $|}\{inject_derive(PUB_TYPE_TOKEN)}
+      $|
+      $|pub fn Token::kind(self : Token) -> TokenKind {
+      $|  match self {
+      $|
+    ),
   )
   for term in terminals {
     let meta = terminal_meta(term.name)
     if meta.data_type is Constr(pkg=None, "Unit", []) {
       output.write_string(
-        $|    \{term.name} => TK_\{term.name}
-        $|
-        ,
+        (
+          $|    \{term.name} => TK_\{term.name}
+          $|
+        ),
       )
     } else {
       output.write_string(
-        $|    \{term.name}(_) => TK_\{term.name}
-        $|
-        ,
+        (
+          $|    \{term.name}(_) => TK_\{term.name}
+          $|
+        ),
       )
     }
   }
   output.write_string(
-    $|  }
-    $|}
-    $|
-    $|
-    ,
+    (
+      $|  }
+      $|}
+      $|
+      $|
+    ),
   )
 
   // TokenKind
   output.write_string(
-    $|pub(all) enum TokenKind {
-    $|
-    ,
+    (
+      $|pub(all) enum TokenKind {
+      $|
+    ),
   )
   for term in terminals {
     output.write_string(
-      $|  TK_\{term.name}
-      $|
-      ,
+      (
+        $|  TK_\{term.name}
+        $|
+      ),
     )
   }
   output.write_string(
-    $|}\{inject_derive(PUB_TYPE_TOKEN_KIND)}
-    $|
-    $|
-    ,
+    (
+      $|}\{inject_derive(PUB_TYPE_TOKEN_KIND)}
+      $|
+      $|
+    ),
   )
 
   // TokenKind::to_string
   output.write_string(
-    $|pub impl Show for TokenKind with output(self, logger) {
-    $|  logger.write_string(
-    $|    match self {
-    $|
-    ,
+    (
+      $|pub impl Show for TokenKind with output(self, logger) {
+      $|  logger.write_string(
+      $|    match self {
+      $|
+    ),
   )
   for term in terminals {
     let name = match terminal_meta(term.name).image {
@@ -194,18 +205,20 @@ fn codegen_tokens(
       None => term.name
     }
     output.write_string(
-      $|      TK_\{term.name} => \{name.escape()}
-      $|
-      ,
+      (
+        $|      TK_\{term.name} => \{name.escape()}
+        $|
+      ),
     )
   }
   output.write_string(
-    $|    }
-    $|  )
-    $|}
-    $|
-    $|
-    ,
+    (
+      $|    }
+      $|  )
+      $|}
+      $|
+      $|
+    ),
   )
 }
 
@@ -251,9 +264,10 @@ fn codegen(
 
   // Position
   output.write_string(
-    $|
-    $|
-    ,
+    (
+      $|
+      $|
+    ),
   )
 
   // Token, TokenKind
@@ -271,33 +285,37 @@ fn codegen(
 
   // ParseError
   output.write_string(
-    $|pub suberror ParseError {
-    $|  UnexpectedToken(Token, (\{meta.position_data_type}, \{meta.position_data_type}), Array[TokenKind])
-    $|
-    ,
+    (
+      $|pub suberror ParseError {
+      $|  UnexpectedToken(Token, (\{meta.position_data_type}, \{meta.position_data_type}), Array[TokenKind])
+      $|
+    ),
   )
   match input_mode {
     Array =>
       output.write_string(
-        $|  UnexpectedEndOfInput(\{meta.position_data_type}, Array[TokenKind])
-        $|
-        ,
+        (
+          $|  UnexpectedEndOfInput(\{meta.position_data_type}, Array[TokenKind])
+          $|
+        ),
       )
     Pull => ()
   }
   output.write_string(
-    $|}\{inject_derive(PUB_TYPE_PARSE_ERROR)}
-    $|
-    $|
-    ,
+    (
+      $|}\{inject_derive(PUB_TYPE_PARSE_ERROR)}
+      $|
+      $|
+    ),
   )
 
   // YYObj_xxx
   output.write_string(
-    $|typealias Error as YYObj
-    $|
-    $|
-    ,
+    (
+      $|typealias Error as YYObj
+      $|
+      $|
+    ),
   )
   match mode {
     Default => {
@@ -344,67 +362,74 @@ fn codegen(
         }
       }
       output.write_string(
-        $|priv suberror YYObj_Void
-        $|
-        $|
-        ,
+        (
+          $|priv suberror YYObj_Void
+          $|
+          $|
+        ),
       )
       for data_type in data_types {
         output.write_string(
-          $|priv suberror YYObj_\{derive_type_ident(data_type)} \{data_type}
-          $|
-          $|
-          ,
+          (
+            $|priv suberror YYObj_\{derive_type_ident(data_type)} \{data_type}
+            $|
+            $|
+          ),
         )
       }
     }
     JsonCst(_) => {
       if input_mode is Array {
         output.write_string(
-          $|priv suberror YYObj_Void
-          $|
-          $|
-          ,
+          (
+            $|priv suberror YYObj_Void
+            $|
+            $|
+          ),
         )
       }
       output.write_string(
-        $|priv suberror YYObj_Json Json
-        $|
-        $|
-        ,
+        (
+          $|priv suberror YYObj_Json Json
+          $|
+          $|
+        ),
       )
     }
   }
 
   // YYState, YYAction, YYDecision
   output.write_string(
-    $|typealias (YYSymbol) -> YYDecision as YYState
-    $|
-    $|typealias (\{meta.position_data_type}, ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj as YYAction
-    $|
-    $|priv enum YYDecision {
-    $|  Accept
-    $|  Shift(YYState)
-    $|  Reduce(Int, YYSymbol, YYAction)
-    $|  ReduceNoLookahead(Int, YYSymbol, YYAction)
-    $|  Error
-    $|}
-    $|
-    $|
-    ,
+    (
+      $|typealias (YYSymbol) -> YYDecision as YYState
+      $|
+      $|typealias (\{meta.position_data_type}, ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj as YYAction
+      $|
+      $|priv enum YYDecision {
+      $|  Accept
+      $|  Shift(YYState)
+      $|  Reduce(Int, YYSymbol, YYAction)
+      $|  ReduceNoLookahead(Int, YYSymbol, YYAction)
+      $|  Error
+      $|}
+      $|
+      $|
+    ),
   )
 
   // YYSymbol
   output.write_string(
-    $|priv enum YYSymbol {
-    $|
-    ,
+    (
+      $|priv enum YYSymbol {
+      $|
+    ),
   )
   for term in grammar.terminals {
     output.write_string(
-      $|  T_\{term.name}
-      $|
-      ,
+      (
+        $|  T_\{term.name}
+        $|
+      ),
     )
   }
   for nonterm in grammar.nonterminals {
@@ -412,25 +437,27 @@ fn codegen(
       continue
     }
     output.write_string(
-      $|  NT_\{derive_nonterminal_ident(nonterm)}
-      $|
-      ,
+      (
+        $|  NT_\{derive_nonterminal_ident(nonterm)}
+        $|
+      ),
     )
   }
   output.write_string(
-    $|  EOI
-    $|}
-    $|
-    $|// Workaround for EOI unused warning
-    $|fn init {
-    $|  match (EOI : YYSymbol) {
-    $|    EOI => ()
-    $|    _ => ()
-    $|  }
-    $|}
-    $|
-    $|
-    ,
+    (
+      $|  EOI
+      $|}
+      $|
+      $|// Workaround for EOI unused warning
+      $|fn init {
+      $|  match (EOI : YYSymbol) {
+      $|    EOI => ()
+      $|    _ => ()
+      $|  }
+      $|}
+      $|
+      $|
+    ),
   )
 
   // yy_action_xxx
@@ -485,9 +512,10 @@ fn codegen(
       output.write_char('\n')
     }
     output.write_string(
-      $|fn yy_action_\{get_action_id(action)}(_last_pos : \{meta.position_data_type}, _args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj {
-      $|
-      ,
+      (
+        $|fn yy_action_\{get_action_id(action)}(_last_pos : \{meta.position_data_type}, _args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj {
+        $|
+      ),
     )
     for index, sub_action in action.sub_actions {
       let { start, end, action: action2 } = sub_action
@@ -497,9 +525,10 @@ fn codegen(
         "_args[\{start - 1}].2"
       }
       output.write_string(
-        $|  let _sub_action_\{index}_result = yy_action_\{get_action_id(action2)}(\{last_pos_code}, _args[\{start}:\{end}])
-        $|
-        ,
+        (
+          $|  let _sub_action_\{index}_result = yy_action_\{get_action_id(action2)}(\{last_pos_code}, _args[\{start}:\{end}])
+          $|
+        ),
       )
     }
     for binding in action.bindings {
@@ -508,38 +537,43 @@ fn codegen(
           let data_type = type_
           if data_type is Constr(pkg=None, "Unit", []) {
             output.write_string(
-              $|  let \{binding.1} = ()
-              $|
-              ,
+              (
+                $|  let \{binding.1} = ()
+                $|
+              ),
             )
           } else {
             output.write_string(
-              $|  guard _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
-              $|
-              ,
+              (
+                $|  guard _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
+                $|
+              ),
             )
           }
         }
         StartPos =>
           // action.arity possibly wrong here because of inline actions
           output.write_string(
-            $|  let \{binding.1} = if _args.length() == 0 { _last_pos } else { _args[0].1 }
-            $|
-            ,
+            (
+              $|  let \{binding.1} = if _args.length() == 0 { _last_pos } else { _args[0].1 }
+              $|
+            ),
           )
         EndPos =>
           // action.arity possibly wrong here because of inline actions
           output.write_string(
-            $|  let \{binding.1} = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
-            $|
-            ,
+            (
+              $|  let \{binding.1} = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
+              $|
+            ),
           )
         StartPosOf(index) | EndPosOf(index) =>
           if action.arity == 0 {
             output.write_string(
-              $|  let \{binding.1} = _last_pos
-              $|
-              ,
+              (
+                $|  let \{binding.1} = _last_pos
+                $|
+              ),
             )
           } else {
             let field = match binding.0 {
@@ -548,32 +582,36 @@ fn codegen(
               _ => panic()
             }
             output.write_string(
-              $|  let \{binding.1} = _args[\{index}].\{field}
-              $|
-              ,
+              (
+                $|  let \{binding.1} = _args[\{index}].\{field}
+                $|
+              ),
             )
           }
         SymbolStartPos => {
           used_runtime_funcs.add("_get_symbol_start_pos")
           output.write_string(
-            $|  let \{binding.1} = _get_symbol_start_pos(_args, _last_pos)
-            $|
-            ,
+            (
+              $|  let \{binding.1} = _get_symbol_start_pos(_args, _last_pos)
+              $|
+            ),
           )
         }
         SubAction(index~, type_~) => {
           let data_type = type_
           if data_type is Constr(pkg=None, "Unit", []) {
             output.write_string(
-              $|  let \{binding.1} = ()
-              $|
-              ,
+              (
+                $|  let \{binding.1} = ()
+                $|
+              ),
             )
           } else {
             output.write_string(
-              $|  guard _sub_action_\{index}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
-              $|
-              ,
+              (
+                $|  guard _sub_action_\{index}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
+                $|
+              ),
             )
           }
         }
@@ -607,19 +645,21 @@ fn codegen(
     }
     output.write_string("})\n")
     output.write_string(
-      $|}
-      $|
-      $|
-      ,
+      (
+        $|}
+        $|
+        $|
+      ),
     )
   }
 
   // yy_input
   output.write_string(
-    $|fn yy_input(token : Token, _start_pos : \{meta.position_data_type}, _end_pos : \{meta.position_data_type}) -> (YYSymbol, YYObj) {
-    $|  match token {
-    $|
-    ,
+    (
+      $|fn yy_input(token : Token, _start_pos : \{meta.position_data_type}, _end_pos : \{meta.position_data_type}) -> (YYSymbol, YYObj) {
+      $|  match token {
+      $|
+    ),
   )
   for term in grammar.terminals {
     let meta = terminal_meta(term.name)
@@ -627,15 +667,17 @@ fn codegen(
       Default =>
         if meta.data_type is Constr(pkg=None, "Unit", []) {
           output.write_string(
-            $|    \{term.name} => (T_\{term.name}, YYObj_Void)
-            $|
-            ,
+            (
+              $|    \{term.name} => (T_\{term.name}, YYObj_Void)
+              $|
+            ),
           )
         } else {
           output.write_string(
-            $|    \{term.name}(data) => (T_\{term.name}, YYObj_\{derive_type_ident(meta.data_type)}(data))
-            $|
-            ,
+            (
+              $|    \{term.name}(data) => (T_\{term.name}, YYObj_\{derive_type_ident(meta.data_type)}(data))
+              $|
+            ),
           )
         }
       JsonCst(_) => {
@@ -650,25 +692,27 @@ fn codegen(
           "data.to_json()"
         }
         output.write_string(
-          $|    \{term.name}\{payload_code} => (T_\{term.name}, YYObj_Json({
-          $|      "type": "TERMINAL",
-          $|      "name": "\{term.name}",
-          $|      "data": \{data_code},
-          $|      "start": _start_pos.to_json(),
-          $|      "end": _end_pos.to_json()
-          $|    }))
-          $|
-          ,
+          (
+            $|    \{term.name}\{payload_code} => (T_\{term.name}, YYObj_Json({
+            $|      "type": "TERMINAL",
+            $|      "name": "\{term.name}",
+            $|      "data": \{data_code},
+            $|      "start": _start_pos.to_json(),
+            $|      "end": _end_pos.to_json()
+            $|    }))
+            $|
+          ),
         )
       }
     }
   }
   output.write_string(
-    $|  }
-    $|}
-    $|
-    $|
-    ,
+    (
+      $|  }
+      $|}
+      $|
+      $|
+    ),
   )
 
   // yy_state_xxx
@@ -676,16 +720,18 @@ fn codegen(
     if not(no_comments) {
       for item in state.iter_item_groups() {
         output.write_string(
-          $|// \{item}
-          $|
-          ,
+          (
+            $|// \{item}
+            $|
+          ),
         )
       }
     }
     output.write_string(
-      $|fn yy_state_\{state.num}(_lookahead : YYSymbol) -> YYDecision {
-      $|
-      ,
+      (
+        $|fn yy_state_\{state.num}(_lookahead : YYSymbol) -> YYDecision {
+        $|
+      ),
     )
 
     // `sum` is used to detect if it is exhaustive match
@@ -697,7 +743,7 @@ fn codegen(
     fn add_symbol_decision(symbol, decision) {
       decision_groups[decision] = decision_groups
         .get(decision)
-        .or(@immut/sorted_set.new())
+        .unwrap_or(@immut/sorted_set.new())
         .add(symbol)
       match symbol {
         T(t) => sum += t.num
@@ -770,15 +816,17 @@ fn codegen(
         key => key
       }
       output.write_string(
-        $|  \{gen_decision(decision)}
-        $|
-        ,
+        (
+          $|  \{gen_decision(decision)}
+          $|
+        ),
       )
     } else {
       output.write_string(
-        $|  match _lookahead {
-        $|
-        ,
+        (
+          $|  match _lookahead {
+          $|
+        ),
       )
       for decision, symbols in decision_groups {
         let pattern = symbols
@@ -787,30 +835,34 @@ fn codegen(
           .to_array()
           .join(" | ")
         output.write_string(
-          $|    \{pattern} => \{gen_decision(decision)}
-          $|
-          ,
+          (
+            $|    \{pattern} => \{gen_decision(decision)}
+            $|
+          ),
         )
       }
       let exhaustive = sum == total
       if not(exhaustive) {
         output.write_string(
-          $|    _ => Error
-          $|
-          ,
+          (
+            $|    _ => Error
+            $|
+          ),
         )
       }
       output.write_string(
-        $|  }
-        $|
-        ,
+        (
+          $|  }
+          $|
+        ),
       )
     }
     output.write_string(
-      $|}
-      $|
-      $|
-      ,
+      (
+        $|}
+        $|
+        $|
+      ),
     )
   }
 
@@ -822,220 +874,225 @@ fn codegen(
   match input_mode {
     Array =>
       output.write_string(
-        $|fn[T] yy_parse(
-        $|  tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})],
-        $|  start : YYState,
-        $|  return_ : (YYObj) -> T,
-        $|  initial_pos? : \{meta.position_data_type},
-        $|) -> T raise ParseError {
-        $|  let mut cursor = 0
-        $|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
-        $|  let data_stack : Array[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})] = []
-        $|  let mut last_pos = initial_pos.or(tokens[0].1)
-        $|  let mut state = start
-        $|  let mut lookahead : Option[(YYSymbol, (YYObj, \{meta.position_data_type}, \{meta.position_data_type}), Token?)] = None
-        $|  let mut last_shifted_state_stack = state_stack
-        $|  while true {
-        $|    let decision = match state(EOI) {
-        $|      ReduceNoLookahead(_) | Accept as t => t
-        $|      _ => {
-        $|        match lookahead {
-        $|          Some(la) => state(la.0)
-        $|          None => {
-        $|            if cursor < tokens.length() {
-        $|              let (token, start_pos, end_pos) = tokens[cursor]
-        $|              cursor += 1
-        $|              let (symbol, data) = yy_input(token, start_pos, end_pos)
-        $|              lookahead = Some((symbol, (data, start_pos, end_pos), Some(token)))
-        $|              state(symbol)
-        $|            } else {
-        $|              lookahead = Some((EOI, (YYObj_Void, last_pos, last_pos), None))
-        $|              state(EOI)
-        $|            }
-        $|          }
-        $|        }
-        $|      }
-        $|    }
-        $|    match decision {
-        $|      Accept => return return_(data_stack.unsafe_pop().0)
-        $|      Shift(next_state) => {
-        $|        guard lookahead is Some(la)
-        $|        data_stack.push(la.1)
-        $|        state_stack = Cons(next_state, state_stack)
-        $|        last_shifted_state_stack = state_stack
-        $|        state = next_state
-        $|        last_pos = la.1.2
-        $|        lookahead = None
-        $|      }
-        $|      Reduce(count, symbol, action)
-        $|      | ReduceNoLookahead(count, symbol, action) => {
-        $|        loop (count, symbol, action) {
-        $|          _ => {
-        $|            let args = data_stack[data_stack.length() - count:]
-        $|            let data = action(last_pos, args)
-        $|            let (start_pos, end_pos) = if args.length() == 0 {
-        $|              (last_pos, last_pos)
-        $|            } else {
-        $|              (args[0].1, args[args.length() - 1].2)
-        $|            }
-        $|            for i in 0..<count {
-        $|              ignore(data_stack.unsafe_pop())
-        $|              state_stack = state_stack.tail()
-        $|            }
-        $|            state = state_stack.unsafe_head()
-        $|            data_stack.push((data, start_pos, end_pos))
-        $|            match state(symbol) {
-        $|              Accept => return return_(data_stack.unsafe_pop().0)
-        $|              Shift(next_state) => {
-        $|                state_stack = Cons(next_state, state_stack)
-        $|                state = next_state
-        $|              }
-        $|              Reduce(count, symbol, action)
-        $|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
-        $|              _ => panic()
-        $|            }
-        $|          }
-        $|        }
-        $|      }
-        $|      Error => {
-        $|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        $|        error(last_shifted_state_stack, token, (start_pos, end_pos))
-        $|      }
-        $|    }
-        $|  }
-        $|  panic()
-        $|}
-        $|
-        $|
-        ,
+        (
+          $|fn[T] yy_parse(
+          $|  tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})],
+          $|  start : YYState,
+          $|  return_ : (YYObj) -> T,
+          $|  initial_pos? : \{meta.position_data_type},
+          $|) -> T raise ParseError {
+          $|  let mut cursor = 0
+          $|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
+          $|  let data_stack : Array[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})] = []
+          $|  let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
+          $|  let mut state = start
+          $|  let mut lookahead : Option[(YYSymbol, (YYObj, \{meta.position_data_type}, \{meta.position_data_type}), Token?)] = None
+          $|  let mut last_shifted_state_stack = state_stack
+          $|  while true {
+          $|    let decision = match state(EOI) {
+          $|      ReduceNoLookahead(_) | Accept as t => t
+          $|      _ => {
+          $|        match lookahead {
+          $|          Some(la) => state(la.0)
+          $|          None => {
+          $|            if cursor < tokens.length() {
+          $|              let (token, start_pos, end_pos) = tokens[cursor]
+          $|              cursor += 1
+          $|              let (symbol, data) = yy_input(token, start_pos, end_pos)
+          $|              lookahead = Some((symbol, (data, start_pos, end_pos), Some(token)))
+          $|              state(symbol)
+          $|            } else {
+          $|              lookahead = Some((EOI, (YYObj_Void, last_pos, last_pos), None))
+          $|              state(EOI)
+          $|            }
+          $|          }
+          $|        }
+          $|      }
+          $|    }
+          $|    match decision {
+          $|      Accept => return return_(data_stack.unsafe_pop().0)
+          $|      Shift(next_state) => {
+          $|        guard lookahead is Some(la)
+          $|        data_stack.push(la.1)
+          $|        state_stack = Cons(next_state, state_stack)
+          $|        last_shifted_state_stack = state_stack
+          $|        state = next_state
+          $|        last_pos = la.1.2
+          $|        lookahead = None
+          $|      }
+          $|      Reduce(count, symbol, action)
+          $|      | ReduceNoLookahead(count, symbol, action) => {
+          $|        loop (count, symbol, action) {
+          $|          _ => {
+          $|            let args = data_stack[data_stack.length() - count:]
+          $|            let data = action(last_pos, args)
+          $|            let (start_pos, end_pos) = if args.length() == 0 {
+          $|              (last_pos, last_pos)
+          $|            } else {
+          $|              (args[0].1, args[args.length() - 1].2)
+          $|            }
+          $|            for i in 0..<count {
+          $|              ignore(data_stack.unsafe_pop())
+          $|              state_stack = state_stack.tail()
+          $|            }
+          $|            state = state_stack.unsafe_head()
+          $|            data_stack.push((data, start_pos, end_pos))
+          $|            match state(symbol) {
+          $|              Accept => return return_(data_stack.unsafe_pop().0)
+          $|              Shift(next_state) => {
+          $|                state_stack = Cons(next_state, state_stack)
+          $|                state = next_state
+          $|              }
+          $|              Reduce(count, symbol, action)
+          $|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
+          $|              _ => panic()
+          $|            }
+          $|          }
+          $|        }
+          $|      }
+          $|      Error => {
+          $|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
+          $|        error(last_shifted_state_stack, token, (start_pos, end_pos))
+          $|      }
+          $|    }
+          $|  }
+          $|  panic()
+          $|}
+          $|
+          $|
+        ),
       )
     Pull =>
       output.write_string(
-        $|fn[T] yy_parse(
-        $|  read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}),
-        $|  start_pos : \{meta.position_data_type},
-        $|  start : YYState,
-        $|  return_ : (YYObj) -> T
-        $|) -> T raise ParseError {
-        $|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
-        $|  let data_stack : Array[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})] = []
-        $|  let mut last_pos = start_pos
-        $|  let mut state = start
-        $|  let mut lookahead : Option[(YYSymbol, (YYObj, \{meta.position_data_type}, \{meta.position_data_type}), Token)] = None
-        $|  let mut last_shifted_state_stack = state_stack
-        $|  while true {
-        $|    let decision = match state(EOI) {
-        $|      ReduceNoLookahead(_) | Accept as t => t
-        $|      _ => {
-        $|        match lookahead {
-        $|          Some(la) => state(la.0)
-        $|          None => {
-        $|            let (token, start_pos, end_pos) = read_token()
-        $|            let (symbol, data) = yy_input(token, start_pos, end_pos)
-        $|            lookahead = Some((symbol, (data, start_pos, end_pos), token))
-        $|            state(symbol)
-        $|          }
-        $|        }
-        $|      }
-        $|    }
-        $|    match decision {
-        $|      Accept => return return_(data_stack.unsafe_pop().0)
-        $|      Shift(next_state) => {
-        $|        guard lookahead is Some(la)
-        $|        data_stack.push(la.1)
-        $|        state_stack = Cons(next_state, state_stack)
-        $|        last_shifted_state_stack = state_stack
-        $|        state = next_state
-        $|        last_pos = la.1.2
-        $|        lookahead = None
-        $|      }
-        $|      Reduce(count, symbol, action)
-        $|      | ReduceNoLookahead(count, symbol, action) => {
-        $|        loop (count, symbol, action) {
-        $|          _ => {
-        $|            let args = data_stack[data_stack.length() - count:]
-        $|            let data = action(last_pos, args)
-        $|            let (start_pos, end_pos) = if args.length() == 0 {
-        $|              (last_pos, last_pos)
-        $|            } else {
-        $|              (args[0].1, args[args.length() - 1].2)
-        $|            }
-        $|            for i in 0..<count {
-        $|              ignore(data_stack.unsafe_pop())
-        $|              state_stack = state_stack.tail()
-        $|            }
-        $|            state = state_stack.unsafe_head()
-        $|            data_stack.push((data, start_pos, end_pos))
-        $|            match state(symbol) {
-        $|              Accept => return return_(data_stack.unsafe_pop().0)
-        $|              Shift(next_state) => {
-        $|                state_stack = Cons(next_state, state_stack)
-        $|                state = next_state
-        $|              }
-        $|              Reduce(count, symbol, action)
-        $|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
-        $|              _ => panic()
-        $|            }
-        $|          }
-        $|        }
-        $|      }
-        $|      Error => {
-        $|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-        $|        error(last_shifted_state_stack, token, (start_pos, end_pos))
-        $|      }
-        $|    }
-        $|  }
-        $|  panic()
-        $|}
-        $|
-        $|
-        ,
+        (
+          $|fn[T] yy_parse(
+          $|  read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}),
+          $|  start_pos : \{meta.position_data_type},
+          $|  start : YYState,
+          $|  return_ : (YYObj) -> T
+          $|) -> T raise ParseError {
+          $|  let mut state_stack : @immut/list.T[YYState] = Cons(start, Nil)
+          $|  let data_stack : Array[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})] = []
+          $|  let mut last_pos = start_pos
+          $|  let mut state = start
+          $|  let mut lookahead : Option[(YYSymbol, (YYObj, \{meta.position_data_type}, \{meta.position_data_type}), Token)] = None
+          $|  let mut last_shifted_state_stack = state_stack
+          $|  while true {
+          $|    let decision = match state(EOI) {
+          $|      ReduceNoLookahead(_) | Accept as t => t
+          $|      _ => {
+          $|        match lookahead {
+          $|          Some(la) => state(la.0)
+          $|          None => {
+          $|            let (token, start_pos, end_pos) = read_token()
+          $|            let (symbol, data) = yy_input(token, start_pos, end_pos)
+          $|            lookahead = Some((symbol, (data, start_pos, end_pos), token))
+          $|            state(symbol)
+          $|          }
+          $|        }
+          $|      }
+          $|    }
+          $|    match decision {
+          $|      Accept => return return_(data_stack.unsafe_pop().0)
+          $|      Shift(next_state) => {
+          $|        guard lookahead is Some(la)
+          $|        data_stack.push(la.1)
+          $|        state_stack = Cons(next_state, state_stack)
+          $|        last_shifted_state_stack = state_stack
+          $|        state = next_state
+          $|        last_pos = la.1.2
+          $|        lookahead = None
+          $|      }
+          $|      Reduce(count, symbol, action)
+          $|      | ReduceNoLookahead(count, symbol, action) => {
+          $|        loop (count, symbol, action) {
+          $|          _ => {
+          $|            let args = data_stack[data_stack.length() - count:]
+          $|            let data = action(last_pos, args)
+          $|            let (start_pos, end_pos) = if args.length() == 0 {
+          $|              (last_pos, last_pos)
+          $|            } else {
+          $|              (args[0].1, args[args.length() - 1].2)
+          $|            }
+          $|            for i in 0..<count {
+          $|              ignore(data_stack.unsafe_pop())
+          $|              state_stack = state_stack.tail()
+          $|            }
+          $|            state = state_stack.unsafe_head()
+          $|            data_stack.push((data, start_pos, end_pos))
+          $|            match state(symbol) {
+          $|              Accept => return return_(data_stack.unsafe_pop().0)
+          $|              Shift(next_state) => {
+          $|                state_stack = Cons(next_state, state_stack)
+          $|                state = next_state
+          $|              }
+          $|              Reduce(count, symbol, action)
+          $|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
+          $|              _ => panic()
+          $|            }
+          $|          }
+          $|        }
+          $|      }
+          $|      Error => {
+          $|        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
+          $|        error(last_shifted_state_stack, token, (start_pos, end_pos))
+          $|      }
+          $|    }
+          $|  }
+          $|  panic()
+          $|}
+          $|
+          $|
+        ),
       )
   }
   match input_mode {
     Array =>
       output.write_string(
-        $|fn error(stack : @immut/list.T[YYState], token : Token?, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit raise ParseError {
-        $|
-        ,
+        (
+          $|fn error(stack : @immut/list.T[YYState], token : Token?, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit raise ParseError {
+          $|
+        ),
       )
     Pull =>
       output.write_string(
-        $|fn error(stack : @immut/list.T[YYState], token : Token, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit raise ParseError {
-        $|
-        ,
+        (
+          $|fn error(stack : @immut/list.T[YYState], token : Token, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit raise ParseError {
+          $|
+        ),
       )
   }
   output.write_string(
-    $|  let expected = []
-    $|  fn try_add(symbol : YYSymbol, kind : TokenKind) {
-    $|    fn go(stack : @immut/list.T[YYState]) {
-    $|      match stack {
-    $|        Nil => ()
-    $|        Cons(state, _) => {
-    $|          match state(symbol) {
-    $|            Accept | Shift(_) => expected.push(kind)
-    $|            Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
-    $|              fn inner_go(stack : @immut/list.T[YYState], count, symbol) {
-    $|                let stack = stack.drop(count)
-    $|                guard stack is Cons(state, _)
-    $|                match state(symbol) {
-    $|                  Shift(state) => go(Cons(state, stack))
-    $|                  Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
-    $|                  _ => panic()
-    $|                }
-    $|              }
-    $|              inner_go(stack, count, symbol)
-    $|            }
-    $|            Error => ()
-    $|          }
-    $|        }
-    $|      }
-    $|    }
-    $|    go(stack)
-    $|  }
-    $|
-    ,
+    (
+      $|  let expected = []
+      $|  fn try_add(symbol : YYSymbol, kind : TokenKind) {
+      $|    fn go(stack : @immut/list.T[YYState]) {
+      $|      match stack {
+      $|        Nil => ()
+      $|        Cons(state, _) => {
+      $|          match state(symbol) {
+      $|            Accept | Shift(_) => expected.push(kind)
+      $|            Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
+      $|              fn inner_go(stack : @immut/list.T[YYState], count, symbol) {
+      $|                let stack = stack.drop(count)
+      $|                guard stack is Cons(state, _)
+      $|                match state(symbol) {
+      $|                  Shift(state) => go(Cons(state, stack))
+      $|                  Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
+      $|                  _ => panic()
+      $|                }
+      $|              }
+      $|              inner_go(stack, count, symbol)
+      $|            }
+      $|            Error => ()
+      $|          }
+      $|        }
+      $|      }
+      $|    }
+      $|    go(stack)
+      $|  }
+      $|
+    ),
   )
   // Note: this is a workaround since moonc will stack overflow if the code is too long like this
   // ```
@@ -1056,33 +1113,37 @@ fn codegen(
   }
   output.write_string("] : Array[(YYSymbol, TokenKind)]) {\n")
   output.write_string(
-    $|    try_add(term.0, term.1)
-    $|  }
-    $|
-    ,
+    (
+      $|    try_add(term.0, term.1)
+      $|  }
+      $|
+    ),
   )
   match input_mode {
     Array =>
       output.write_string(
-        $|  match token {
-        $|    None => raise UnexpectedEndOfInput(loc.1, expected)
-        $|    Some(token) => raise UnexpectedToken(token, loc, expected)
-        $|  }
-        $|
-        ,
+        (
+          $|  match token {
+          $|    None => raise UnexpectedEndOfInput(loc.1, expected)
+          $|    Some(token) => raise UnexpectedToken(token, loc, expected)
+          $|  }
+          $|
+        ),
       )
     Pull =>
       output.write_string(
-        $|  raise UnexpectedToken(token, loc, expected)
-        $|
-        ,
+        (
+          $|  raise UnexpectedToken(token, loc, expected)
+          $|
+        ),
       )
   }
   output.write_string(
-    $|}
-    $|
-    $|
-    ,
+    (
+      $|}
+      $|
+      $|
+    ),
   )
   for start in automaton.starts {
     let (start_production, start_state) = start
@@ -1094,35 +1155,37 @@ fn codegen(
     match input_mode {
       Array =>
         output.write_string(
-          $|pub fn \{original_name}(tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})], initial_pos? : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())} raise ParseError {
-          $|  yy_parse(
-          $|    tokens,
-          $|    yy_state_\{start_state.num},
-          $|    (it) => {
-          $|      guard it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
-          $|      result
-          $|    },
-          $|    initial_pos?,
-          $|  )
-          $|}
-          $|
-          ,
+          (
+            $|pub fn \{original_name}(tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})], initial_pos? : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())} raise ParseError {
+            $|  yy_parse(
+            $|    tokens,
+            $|    yy_state_\{start_state.num},
+            $|    (it) => {
+            $|      guard it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
+            $|      result
+            $|    },
+            $|    initial_pos?,
+            $|  )
+            $|}
+            $|
+          ),
         )
       Pull =>
         output.write_string(
-          $|pub fn \{original_name}(read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}), start_pos : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())} raise ParseError {
-          $|  yy_parse(
-          $|    read_token,
-          $|    start_pos,
-          $|    yy_state_\{start_state.num},
-          $|    (it) => {
-          $|      guard it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
-          $|      result
-          $|    },
-          $|  )
-          $|}
-          $|
-          ,
+          (
+            $|pub fn \{original_name}(read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}), start_pos : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())} raise ParseError {
+            $|  yy_parse(
+            $|    read_token,
+            $|    start_pos,
+            $|    yy_state_\{start_state.num},
+            $|    (it) => {
+            $|      guard it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
+            $|      result
+            $|    },
+            $|  )
+            $|}
+            $|
+          ),
         )
     }
   }
@@ -1132,23 +1195,24 @@ fn codegen(
     match func {
       "_get_symbol_start_pos" =>
         output.write_string(
-          $|
-          $|fn _get_symbol_start_pos(args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})], last_pos : \{meta.position_data_type}) -> \{meta.position_data_type} {
-          $|  if args.length() == 0 {
-          $|    last_pos
-          $|  } else {
-          $|    for i = 0; i < args.length(); i = i + 1 {
-          $|      let (_, start_pos, end_pos) = args[i]
-          $|      if start_pos == end_pos {
-          $|        continue
-          $|      }
-          $|      return start_pos
-          $|    }
-          $|    args[args.length() - 1].2
-          $|  }
-          $|}
-          $|
-          ,
+          (
+            $|
+            $|fn _get_symbol_start_pos(args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})], last_pos : \{meta.position_data_type}) -> \{meta.position_data_type} {
+            $|  if args.length() == 0 {
+            $|    last_pos
+            $|  } else {
+            $|    for i = 0; i < args.length(); i = i + 1 {
+            $|      let (_, start_pos, end_pos) = args[i]
+            $|      if start_pos == end_pos {
+            $|        continue
+            $|      }
+            $|      return start_pos
+            $|    }
+            $|    args[args.length() - 1].2
+            $|  }
+            $|}
+            $|
+          ),
         )
       _ => panic()
     }
@@ -1157,15 +1221,16 @@ fn codegen(
     Default => ()
     JsonCst(_) =>
       output.write_string(
-        $|
-        $|fn args_to_json(args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> Json {
-        $|  Json::array(args.iter().map((it) => {
-        $|    guard it.0 is YYObj_Json(json)
-        $|    json
-        $|  }).to_array())
-        $|}
-        $|
-        ,
+        (
+          $|
+          $|fn args_to_json(args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> Json {
+          $|  Json::array(args.iter().map((it) => {
+          $|    guard it.0 is YYObj_Json(json)
+          $|    json
+          $|  }).to_array())
+          $|}
+          $|
+        ),
       )
   }
 
