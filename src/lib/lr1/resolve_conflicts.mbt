@@ -36,7 +36,7 @@ pub(all) enum ResolveConflictError {
 
 ///| Resolve conflicts by using precedence and associativity information
 pub fn resolve_conflicts(
-  conflicts : @hashmap2.T[ConflictLocation, @immut/list.T[Decision]]
+  conflicts : @hashmap2.T[ConflictLocation, @list.T[Decision]]
 ) -> Array[ResolveConflictError] {
   let errors = []
   for location, decisions in conflicts {

@@ -52,9 +52,9 @@ let parser_spec_src : String =
   #|  }
   #|  ;
   #|
-  #|decl_list -> @immut/list.T[@ast.Declaration]
-  #|  : decl=decl decl_list=decl_list { Cons(decl, decl_list) }
-  #|  | { Nil }
+  #|decl_list -> @list.T[@ast.Declaration]
+  #|  : decl=decl decl_list=decl_list { @list.construct(decl, decl_list) }
+  #|  | { @list.empty() }
   #|  ;
   #|
   #|decl -> @ast.Declaration
@@ -73,9 +73,9 @@ let parser_spec_src : String =
   #|  | "%derive" traits=LANGLE_CODE_RANGLE type_=IDENT { Derive(traits=traits, type_=type_) }
   #|  ;
   #|
-  #|rule_list -> @immut/list.T[@ast.Rule]
-  #|  : rule=rule { Cons(rule, Nil) }
-  #|  | rule=rule rule_list=rule_list { Cons(rule, rule_list) }
+  #|rule_list -> @list.T[@ast.Rule]
+  #|  : rule=rule { @list.construct(rule, @list.empty()) }
+  #|  | rule=rule rule_list=rule_list { @list.construct(rule, rule_list) }
   #|  ;
   #|
   #|trailer -> (@ast.Code, Int, Int)?
@@ -103,11 +103,11 @@ let parser_spec_src : String =
   #|  | { None }
   #|  ;
   #|
-  #|nonempty_rule_param_list -> @immut/list.T[(String, @ast.TypeExpr?)]
-  #|  : IDENT { Cons(($1, None), Nil) }
-  #|  | IDENT ":" type_expr { Cons(($1, Some($3)), Nil) }
-  #|  | IDENT "," nonempty_rule_param_list { Cons(($1, None), $3) }
-  #|  | IDENT ":" type_expr "," nonempty_rule_param_list { Cons(($1, Some($3)), $5) }
+  #|nonempty_rule_param_list -> @list.T[(String, @ast.TypeExpr?)]
+  #|  : IDENT { @list.construct(($1, None), @list.empty()) }
+  #|  | IDENT ":" type_expr { @list.construct(($1, Some($3)), @list.empty()) }
+  #|  | IDENT "," nonempty_rule_param_list { @list.construct(($1, None), $3) }
+  #|  | IDENT ":" type_expr "," nonempty_rule_param_list { @list.construct(($1, Some($3)), $5) }
   #|  ;
   #|
   #|opt_rule_generic_params -> Array[String]
@@ -115,9 +115,9 @@ let parser_spec_src : String =
   #|  | "[" nonempty_comma_ident_list "]" { $2.to_array() }
   #|  ;
   #|
-  #|nonempty_comma_ident_list -> @immut/list.T[String]
-  #|  : IDENT { Cons($1, Nil) }
-  #|  | IDENT "," nonempty_comma_ident_list { Cons($1, $3) }
+  #|nonempty_comma_ident_list -> @list.T[String]
+  #|  : IDENT { @list.construct($1, @list.empty()) }
+  #|  | IDENT "," nonempty_comma_ident_list { @list.construct($1, $3) }
   #|  ;
   #|
   #|type_expr -> @ast.TypeExpr
@@ -125,7 +125,7 @@ let parser_spec_src : String =
   #|  | "(" ")" "->" type_expr { Arrow([], $4) }
   #|  | "(" type_expr ")" "->" type_expr { Arrow([$2], $5) }
   #|  | "(" type_expr "," ")" "->" type_expr { Arrow([$2], $6) }
-  #|  | "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@immut/list.Cons($2, $4).to_array(), $7) }
+  #|  | "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@list.construct($2, $4).to_array(), $7) }
   #|  ;
   #|
   #|postfix_type_expr -> @ast.TypeExpr
@@ -138,26 +138,26 @@ let parser_spec_src : String =
   #|  | PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
   #|  | IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
   #|  | PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
-  #|  | "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@immut/list.Cons($2, $4).to_array()) }
+  #|  | "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@list.construct($2, $4).to_array()) }
   #|  | "(" type_expr ")" { $2 }
   #|  ;
   #|
-  #|nonempty_type_expr_list -> @immut/list.T[@ast.TypeExpr]
-  #|  : type_expr=type_expr { Cons(type_expr, Nil) }
-  #|  | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { Cons(type_expr, type_expr_list) }
+  #|nonempty_type_expr_list -> @list.T[@ast.TypeExpr]
+  #|  : type_expr=type_expr { @list.construct(type_expr, @list.empty()) }
+  #|  | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.construct(type_expr, type_expr_list) }
   #|  ;
   #|
-  #|clause_list -> @immut/list.T[(@immut/list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
+  #|clause_list -> @list.T[(@list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
   #|  : "|" nonempty_clause_list { $2 }
   #|  | nonempty_clause_list { $1 }
   #|  ;
   #|
-  #|nonempty_clause_list -> @immut/list.T[(@immut/list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
-  #|  : clause_woa=clause_without_action action=clause_action { Cons((Cons(clause_woa, Nil), action), Nil) }
-  #|  | clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { Cons((Cons(clause_woa, Nil), action), clause_list) }
+  #|nonempty_clause_list -> @list.T[(@list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
+  #|  : clause_woa=clause_without_action action=clause_action { @list.construct((@list.construct(clause_woa, @list.empty()), action), @list.empty()) }
+  #|  | clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.construct((@list.construct(clause_woa, @list.empty()), action), clause_list) }
   #|  | clause_woa=nonempty_clause_without_action "|" clause_list=nonempty_clause_list {
-  #|    guard clause_list is Cons((clause_woa_list, action), tail_clause_list)
-  #|    Cons((Cons(clause_woa, clause_woa_list), action), tail_clause_list)
+  #|    guard clause_list is More((clause_woa_list, action), tail=tail_clause_list)
+  #|    @list.construct((@list.construct(clause_woa, clause_woa_list), action), tail_clause_list)
   #|  }
   #|  ;
   #|
@@ -186,9 +186,9 @@ let parser_spec_src : String =
   #|  | { None }
   #|  ;
   #|
-  #|nonempty_item_list -> @immut/list.T[@ast.ClauseItem]
-  #|  : item=item { Cons(item, Nil) }
-  #|  | item=item item_list=nonempty_item_list { Cons(item, item_list) }
+  #|nonempty_item_list -> @list.T[@ast.ClauseItem]
+  #|  : item=item { @list.construct(item, @list.empty()) }
+  #|  | item=item item_list=nonempty_item_list { @list.construct(item, item_list) }
   #|  ;
   #|
   #|item -> @ast.ClauseItem
@@ -202,19 +202,19 @@ let parser_spec_src : String =
   #|  | image=STRING { Image(image, loc=($startpos, $endpos)) }
   #|  ;
   #|
-  #|nonempty_comma_term_list -> @immut/list.T[@ast.Term]
-  #|  : term=term { Cons(term, Nil) }
-  #|  | term=term "," term_list=nonempty_comma_term_list { Cons(term, term_list) }
+  #|nonempty_comma_term_list -> @list.T[@ast.Term]
+  #|  : term=term { @list.construct(term, @list.empty()) }
+  #|  | term=term "," term_list=nonempty_comma_term_list { @list.construct(term, term_list) }
   #|  ;
   #|
-  #|nonempty_symbol_with_loc_list -> @immut/list.T[@ast.SymbolWithLoc]
-  #|  : symbol=symbol_with_loc { Cons(symbol, Nil) }
-  #|  | symbol=symbol_with_loc symbol_list=nonempty_symbol_with_loc_list { Cons(symbol, symbol_list) }
+  #|nonempty_symbol_with_loc_list -> @list.T[@ast.SymbolWithLoc]
+  #|  : symbol=symbol_with_loc { @list.construct(symbol, @list.empty()) }
+  #|  | symbol=symbol_with_loc symbol_list=nonempty_symbol_with_loc_list { @list.construct(symbol, symbol_list) }
   #|  ;
   #|
-  #|nonempty_prec_symbol_list -> @immut/list.T[@ast.PrecSymbol]
-  #|  : symbol=prec_symbol { Cons(symbol, Nil) }
-  #|  | symbol=prec_symbol symbol_list=nonempty_prec_symbol_list { Cons(symbol, symbol_list) }
+  #|nonempty_prec_symbol_list -> @list.T[@ast.PrecSymbol]
+  #|  : symbol=prec_symbol { @list.construct(symbol, @list.empty()) }
+  #|  | symbol=prec_symbol symbol_list=nonempty_prec_symbol_list { @list.construct(symbol, symbol_list) }
   #|  ;
   #|
   #|prec_symbol -> @ast.PrecSymbol

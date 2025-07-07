@@ -27,7 +27,7 @@ priv struct Node[LookaheadSet] {
   epsilon_transitions : Array[Node[LookaheadSet]]
   // Below are transient states
   mut stamp : @stamp.T
-  mut predecessors : @immut/list.T[Node[LookaheadSet]]
+  mut predecessors : @list.T[Node[LookaheadSet]]
   mut lookahead_set : LookaheadSet
 }
 
@@ -52,7 +52,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
         partial_lookahead_set,
         epsilon_transitions: [],
         stamp: @stamp.initial(),
-        predecessors: Nil,
+        predecessors: @list.empty(),
         lookahead_set: LookaheadSet::empty(),
       }
       node_by_item[item] = node
@@ -78,7 +78,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
       parent : Node[LookaheadSet]
     ) {
       if lookahead_set.nullable {
-        node.predecessors = Cons(parent, node.predecessors)
+        node.predecessors = @list.construct(parent, node.predecessors)
       }
       if node.stamp == stamp {
         node.lookahead_set = node.lookahead_set.union(lookahead_set.set)
@@ -122,7 +122,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
     let closure = nodes.map(fn(node) { (node.item, node.lookahead_set) })
     // Cleanup the transient states
     for node in nodes {
-      node.predecessors = Nil
+      node.predecessors = @list.empty()
       node.lookahead_set = LookaheadSet::empty()
     }
     closure.sort_by_key(fn(pair) { pair.0 })

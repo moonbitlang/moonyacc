@@ -52,7 +52,7 @@ pub(all) enum Decision {
   Reduce(@grm.Production)
   Accept
   // Error
-  Conflict(@immut/list.T[Decision])
+  Conflict(@list.T[Decision])
 } derive(Eq)
 
 ///|
@@ -113,11 +113,13 @@ pub fn LR1State::set_action(
   match self.action.get(input) {
     Some(Conflict(decisions)) =>
       if not(decisions.contains(decision)) {
-        self.action[input] = Conflict(Cons(decision, decisions))
+        self.action[input] = Conflict(@list.construct(decision, decisions))
       }
     Some(decision0) =>
       if decision0 != decision {
-        self.action[input] = Conflict(Cons(decision, Cons(decision0, Nil)))
+        self.action[input] = Conflict(
+          @list.construct(decision, @list.construct(decision0, @list.empty())),
+        )
       }
     None => self.action[input] = decision
   }
@@ -135,7 +137,7 @@ pub(all) struct Automaton {
   starts : Array[(@grm.Production, LR1State)]
   // The resolved decision will be stored in the state's action table.
   // Here records the original decisions that lead to the conflict.
-  conflicts : @hashmap2.T[ConflictLocation, @immut/list.T[Decision]]
+  conflicts : @hashmap2.T[ConflictLocation, @list.T[Decision]]
 }
 
 ///|
