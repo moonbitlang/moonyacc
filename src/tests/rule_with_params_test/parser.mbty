@@ -9,11 +9,6 @@ start -> String
   : loption(delimited("{", list(LETTER), "}")) { $1.iter().map(fn (it) { String::make(1, it) }).join("") }
   ;
 
-list[T](X : T) -> @immut/list.T[T]
-  : { Nil }
-  | X list(X) { Cons($1, $2) }
-  ;
-
 %inline delimited[T](OPEN, X: T, CLOSE) -> T
   : OPEN X CLOSE { $2 }
   ;
