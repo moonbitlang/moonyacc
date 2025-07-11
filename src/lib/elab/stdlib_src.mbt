@@ -15,7 +15,7 @@ let stdlib_src : String =
   #|  ;
   #|
   #|loption[T](X : @list.T[T]) -> @list.T[T]
-  #|  : { @list.new() }
+  #|  : { @list.empty() }
   #|  | X { $1 }
   #|  ;
   #|
@@ -45,7 +45,7 @@ let stdlib_src : String =
   #|  ;
   #|
   #|list[T](X : T) -> @list.T[T]
-  #|  : { @list.new() }
+  #|  : { @list.empty() }
   #|  | X list(X) { $2.add($1) }
   #|  ;
   #|
@@ -55,7 +55,7 @@ let stdlib_src : String =
   #|  ;
   #|
   #|separated_list[T](SEP, X : T) -> @list.T[T]
-  #|  : { @list.new() }
+  #|  : { @list.empty() }
   #|  | separated_nonempty_list(SEP, X) { $1 }
   #|  ;
   #|
