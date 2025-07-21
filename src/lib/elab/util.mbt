@@ -3,7 +3,7 @@ fn offset_to_line_column(content : String, offset : Int) -> (Int, Int) {
   let mut line = 1
   let mut column = 1
   for i in 0..<offset {
-    if content.charcode_at(i) == '\n' {
+    if content[i] == '\n' {
       line += 1
       column = 1
     } else {

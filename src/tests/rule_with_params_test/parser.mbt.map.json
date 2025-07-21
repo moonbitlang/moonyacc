@@ -2,68 +2,68 @@
   "mappings": [
     {
       "source": "parser.mbty",
-      "original_offset": 650,
-      "generated_offset": 1430,
-      "length": 13
+      "original_offset": 652,
+      "generated_offset": 1432,
+      "length": 15
     },
     {
       "source": "parser.mbty",
       "original_offset": 193,
-      "generated_offset": 1611,
-      "length": 13
+      "generated_offset": 1617,
+      "length": 15
     },
     {
       "source": "parser.mbty",
       "original_offset": 138,
-      "generated_offset": 1923,
+      "generated_offset": 1931,
       "length": 1
     },
     {
       "source": "parser.mbty",
       "original_offset": 141,
-      "generated_offset": 1932,
+      "generated_offset": 1940,
       "length": 54
     },
     {
       "source": "parser.mbty",
-      "original_offset": 680,
-      "generated_offset": 2258,
+      "original_offset": 684,
+      "generated_offset": 2266,
       "length": 1
     },
     {
       "source": "parser.mbty",
-      "original_offset": 683,
-      "generated_offset": 2267,
+      "original_offset": 687,
+      "generated_offset": 2275,
       "length": 5
     },
     {
       "source": "parser.mbty",
-      "original_offset": 690,
-      "generated_offset": 2280,
+      "original_offset": 694,
+      "generated_offset": 2288,
       "length": 2
     },
     {
       "source": "parser.mbty",
-      "original_offset": 215,
-      "generated_offset": 2569,
+      "original_offset": 217,
+      "generated_offset": 2577,
       "length": 1
     },
     {
       "source": "parser.mbty",
-      "original_offset": 218,
-      "generated_offset": 2578,
+      "original_offset": 220,
+      "generated_offset": 2586,
       "length": 1
     },
     {
       "source": "parser.mbty",
       "original_offset": 265,
-      "generated_offset": 2803,
+      "generated_offset": 2811,
       "length": 1
     },
     {
       "source": "parser.mbty",
       "original_offset": 268,
-      "generated_offset": 2812,
+      "generated_offset": 2820,
       "length": 1
     }
   ]

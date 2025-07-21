@@ -16,7 +16,7 @@ struct Lexer {
 ///|
 fn token(
   phase : Ref[Int],
-  lexbuf : @lexbuf.StringLexbuf
+  lexbuf : @lexbuf.StringLexbuf,
 ) -> (Token, Int, Int) raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value
@@ -1170,7 +1170,7 @@ fn code_eof(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit {
 ///|
 fn code_rangle(
   sb : StringBuilder,
-  lexbuf : @lexbuf.StringLexbuf
+  lexbuf : @lexbuf.StringLexbuf,
 ) -> Unit raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value
@@ -1241,7 +1241,7 @@ fn code_rangle(
 ///|
 fn code_percent_rbrace(
   sb : StringBuilder,
-  lexbuf : @lexbuf.StringLexbuf
+  lexbuf : @lexbuf.StringLexbuf,
 ) -> Unit raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value
@@ -1326,7 +1326,7 @@ fn code_rbrace(
   sb : StringBuilder,
   subst : Array[@ast.SubstItem],
   base : Int,
-  lexbuf : @lexbuf.StringLexbuf
+  lexbuf : @lexbuf.StringLexbuf,
 ) -> Unit raise LexError {
   // The matched pattern id
   let mut _match_pattern = @int.max_value

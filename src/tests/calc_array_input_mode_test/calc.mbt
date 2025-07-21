@@ -218,7 +218,7 @@ fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 fn yy_input(
   token : Token,
   _start_pos : Int,
-  _end_pos : Int
+  _end_pos : Int,
 ) -> (YYSymbol, YYObj) {
   match token {
     NUMBER(data) => (T_NUMBER, YYObj_Int(data))
@@ -426,7 +426,7 @@ fn[T] yy_parse(
   tokens : Array[(Token, Int, Int)],
   start : YYState,
   return_ : (YYObj) -> T,
-  initial_pos? : Int
+  initial_pos? : Int,
 ) -> T raise ParseError {
   let mut cursor = 0
   let mut state_stack : @list.T[YYState] = @list.construct(start, @list.empty())
@@ -510,7 +510,7 @@ fn[T] yy_parse(
 fn error(
   stack : @list.T[YYState],
   token : Token?,
-  loc : (Int, Int)
+  loc : (Int, Int),
 ) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
@@ -564,7 +564,7 @@ fn error(
 ///|
 pub fn start(
   tokens : Array[(Token, Int, Int)],
-  initial_pos? : Int
+  initial_pos? : Int,
 ) -> Int raise ParseError {
   yy_parse(
     tokens,

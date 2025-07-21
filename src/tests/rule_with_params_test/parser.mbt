@@ -75,15 +75,15 @@ fn init {
 }
 
 // file:///./stdlib.mbty
-// 44|    { @list.new() }
+// 44|    { @list.empty() }
 fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  YYObj__list_T_Char_({();  @list.new() })
+  YYObj__list_T_Char_({();  @list.empty() })
 }
 
 // file:///./stdlib.mbty
-// 14|    { @list.new() }
+// 14|    { @list.empty() }
 fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  YYObj__list_T_Char_({();  @list.new() })
+  YYObj__list_T_Char_({();  @list.empty() })
 }
 
 // file:///./parser.mbty
