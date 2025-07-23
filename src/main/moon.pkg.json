@@ -13,6 +13,9 @@
     "native": {
       "cc": "clang",
       "cc-flags": "-O2 .mooncakes/moonbitlang/x/fs/internal/ffi/native_stub.c"
+    },
+    "js": {
+      "format": "cjs"
     }
   },
   "bin-name": "moonyacc",

@@ -2,4 +2,4 @@
 
 boot:
 	moon build --target js
-	cp target/js/release/build/main/main.js boot/moonyacc.js
+	cp target/js/release/build/main/main.js boot/moonyacc.cjs
