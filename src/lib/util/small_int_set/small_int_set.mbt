@@ -100,17 +100,24 @@ pub fn iter(self : SmallIntSet) -> Iter[Int] {
 
 ///|
 pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
+  let word_map = @hashmap.new()
   let mut bitmask = 0
   for key in iter {
     let word_index = key >> 5
+    let bit_index = key & 31
     bitmask = bitmask | (1 << word_index)
+    let current_bits = word_map.get_or_default(word_index, 0)
+    word_map[word_index] = current_bits | (1 << bit_index)
   }
   let result = Array::make(1 + bitmask.popcnt(), 0)
   result[0] = bitmask
-  for key in iter {
-    let word_index = key >> 5
-    let data_index = 1 + (bitmask & ((1 << word_index) - 1)).popcnt()
-    result[data_index] = result[data_index] | (1 << (key & 31))
+  let mut data_index = 1
+  let mut remaining_bitmask = bitmask
+  while remaining_bitmask != 0 {
+    let word_index = remaining_bitmask.ctz()
+    result[data_index] = word_map.get_or_default(word_index, 0)
+    data_index += 1
+    remaining_bitmask = remaining_bitmask & (remaining_bitmask - 1)
   }
   result
 }
@@ -175,6 +182,10 @@ pub fn remove(self : SmallIntSet, key : Int) -> SmallIntSet {
 
 ///|
 pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
+  // Early return for identical objects
+  if physical_equal(self, other) {
+    return self
+  }
   let bitmask1 = self.inner()[0]
   if bitmask1 == 0 {
     return other
@@ -185,9 +196,6 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
   }
   let bitmask = bitmask1 | bitmask2
   if bitmask == bitmask1 {
-    if physical_equal(self, other) {
-      return self
-    }
     let result = self.inner().copy()
     let mut bitmask2 = bitmask2
     let mut j = 1
@@ -203,9 +211,6 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
     }
     result
   } else if bitmask == bitmask2 {
-    if physical_equal(self, other) {
-      return self
-    }
     let result = other.inner().copy()
     let mut bitmask1 = bitmask1
     let mut i = 1
@@ -257,6 +262,10 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 
 ///|
 pub fn intersection(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
+  // Early return for identical objects
+  if physical_equal(self, other) {
+    return self
+  }
   let bitmask1 = self.inner()[0]
   let bitmask2 = other.inner()[0]
   let mut bitmask = bitmask1 & bitmask2
@@ -302,6 +311,10 @@ pub fn intersection(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 
 ///|
 pub fn difference(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
+  // Early return for identical objects
+  if physical_equal(self, other) {
+    return empty()
+  }
   let bitmask1 = self.inner()[0]
   let bitmask2 = other.inner()[0]
   let mut bitmask = bitmask1
@@ -349,6 +362,10 @@ pub fn difference(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 
 ///|
 pub fn disjoint(self : SmallIntSet, other : SmallIntSet) -> Bool {
+  // Early return for identical objects
+  if physical_equal(self, other) {
+    return self.is_empty()
+  }
   let bitmask1 = self.inner()[0]
   let bitmask2 = other.inner()[0]
   if (bitmask1 & bitmask2) != 0 {
@@ -385,6 +402,10 @@ pub fn disjoint(self : SmallIntSet, other : SmallIntSet) -> Bool {
 
 ///|
 pub fn subset(self : SmallIntSet, other : SmallIntSet) -> Bool {
+  // Early return for identical objects
+  if physical_equal(self, other) {
+    return true
+  }
   let bitmask1 = self.inner()[0]
   let bitmask2 = other.inner()[0]
   if (bitmask1 & bitmask2) != bitmask1 {

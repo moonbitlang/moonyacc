@@ -1,3 +1,5 @@
+import { readFileSync, writeFileSync } from 'fs';
+
 const $64$moonbitlang$47$ulex$47$lib$47$regex$46$RegexDesc$EOF = { $tag: 0 };
 function $64$moonbitlang$47$ulex$47$lib$47$regex$46$RegexDesc$Character(param0) {
   this._0 = param0;
@@ -933,9 +935,8 @@ const moonbitlang$x$sys$internal$ffi$$get_cli_args_internal = function() {
   return process.argv;
  };
 const moonbitlang$x$fs$$read_file_ffi = function(path) {
-   var fs = require('fs');
    try {
-     const content = fs.readFileSync(path);
+     const content = readFileSync(path);
      globalThis.fileContent = content;
      return 0;
    } catch (error) {
@@ -944,9 +945,8 @@ const moonbitlang$x$fs$$read_file_ffi = function(path) {
    }
  };
 const moonbitlang$x$fs$$write_file_ffi = function(path, content) {
-   var fs = require('fs');
    try {
-     fs.writeFileSync(path, Buffer.from(content));
+     writeFileSync(path, Buffer.from(content));
      return 0;
    } catch (error) {
      globalThis.errorMessage = error.message;

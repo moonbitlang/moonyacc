@@ -1,3 +1,5 @@
+import { readFileSync, writeFileSync } from 'fs';
+
 const $1L = { hi: 0, lo: 1 };
 const $0L = { hi: 0, lo: 0 };
 class $PanicError extends Error {}
@@ -529,9 +531,8 @@ function $64$moonbitlang$47$core$47$list$46$T$More$29$(param0, param1) {
 }
 $64$moonbitlang$47$core$47$list$46$T$More$29$.prototype.$tag = 1;
 const moonbitlang$x$fs$$read_file_ffi = function(path) {
-   var fs = require('fs');
    try {
-     const content = fs.readFileSync(path);
+     const content = readFileSync(path);
      globalThis.fileContent = content;
      return 0;
    } catch (error) {
@@ -540,9 +541,8 @@ const moonbitlang$x$fs$$read_file_ffi = function(path) {
    }
  };
 const moonbitlang$x$fs$$write_file_ffi = function(path, content) {
-   var fs = require('fs');
    try {
-     fs.writeFileSync(path, Buffer.from(content));
+     writeFileSync(path, Buffer.from(content));
      return 0;
    } catch (error) {
      globalThis.errorMessage = error.message;

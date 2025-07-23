@@ -16,6 +16,49 @@
 fnalias @util.(println_to_stderr, exit, path_basename)
 
 ///|
+fn handle_lex_error(filename : String, parser_spec_str : String, err : @parser.LexError) -> Unit {
+  match err {
+    @parser.Unrecognized(x, pos) => {
+      let pos_str = pos_to_string(filename, parser_spec_str, pos)
+      println_to_stderr(
+        "SyntaxError: Unrecognized character \{([x] : String).escape()}, at \{pos_str}",
+      )
+      exit(1)
+    }
+    @parser.UnexpectedEndOfFile => {
+      println_to_stderr("SyntaxError: Unexpected end of file")
+      exit(1)
+    }
+  }
+}
+
+///|
+fn handle_parse_error(filename : String, parser_spec_str : String, err : @parser.ParseError) -> Unit {
+  match err {
+    @parser.UnexpectedToken(token, loc, expected) => {
+      let loc_str = loc_to_string(filename, parser_spec_str, loc)
+      let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
+      println_to_stderr(
+        "SyntaxError: Unexpected token \{token.kind()}, expected \{expected_str}.\n  at \{loc_str}",
+      )
+      exit(1)
+    }
+  }
+}
+
+///|
+fn create_token_fn(lexer : @parser.Lexer, filename : String, parser_spec_str : String) -> () -> (@parser.Token, Int, Int) {
+  fn() {
+    lexer.next_token() catch {
+      err => {
+        handle_lex_error(filename, parser_spec_str, err)
+        panic() // This will never be reached due to exit(1) in handle_lex_error
+      }
+    }
+  }
+}
+
+///|
 pub(all) enum Mode {
   Default
   JsonCst
@@ -42,30 +85,11 @@ pub fn print(
   out~ : StringBuilder
 ) -> Unit {
   let lexer = @parser.new_lexer(parser_spec_str)
-  fn token() {
-    lexer.next_token() catch {
-      @parser.Unrecognized(x, pos) => {
-        let pos_str = pos_to_string(filename, parser_spec_str, pos)
-        println_to_stderr(
-          "SyntaxError: Unrecognized character \{([x] : String).escape()}, at \{pos_str}",
-        )
-        exit(1)
-      }
-      @parser.UnexpectedEndOfFile => {
-        println_to_stderr("SyntaxError: Unexpected end of file")
-        exit(1)
-      }
-    }
-  }
-
+  let token = create_token_fn(lexer, filename, parser_spec_str)
   let spec = @parser.spec(token, 0) catch {
-    @parser.UnexpectedToken(token, loc, expected) => {
-      let loc_str = loc_to_string(filename, parser_spec_str, loc)
-      let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
-      println_to_stderr(
-        "SyntaxError: Unexpected token \{token.kind()}, expected \{expected_str}.\n  at \{loc_str}",
-      )
-      exit(1)
+    err => {
+      handle_parse_error(filename, parser_spec_str, err)
+      panic() // This will never be reached due to exit(1) in handle_parse_error
     }
   }
   @ast.print_spec(spec, out)
@@ -87,30 +111,11 @@ pub fn compile(
   generator~ : &@codegen.CodeGenerator
 ) -> String {
   let lexer = @parser.new_lexer(parser_spec_str)
-  fn token() {
-    lexer.next_token() catch {
-      @parser.Unrecognized(x, pos) => {
-        let pos_str = pos_to_string(filename, parser_spec_str, pos)
-        println_to_stderr(
-          "SyntaxError: Unrecognized character \{([x] : String).escape()}, at \{pos_str}",
-        )
-        exit(1)
-      }
-      @parser.UnexpectedEndOfFile => {
-        println_to_stderr("SyntaxError: Unexpected end of file")
-        exit(1)
-      }
-    }
-  }
-
+  let token = create_token_fn(lexer, filename, parser_spec_str)
   let spec = @parser.spec(token, 0) catch {
-    @parser.UnexpectedToken(token, loc, expected) => {
-      let loc_str = loc_to_string(filename, parser_spec_str, loc)
-      let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
-      println_to_stderr(
-        "SyntaxError: Unexpected token \{token.kind()}, expected \{expected_str}.\n  at \{loc_str}",
-      )
-      exit(1)
+    err => {
+      handle_parse_error(filename, parser_spec_str, err)
+      panic() // This will never be reached due to exit(1) in handle_parse_error
     }
   }
   let spec = @elab.elaborate_with_stdlib_rules(

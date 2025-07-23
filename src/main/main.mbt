@@ -16,48 +16,69 @@
 fnalias @util.(println_to_stderr, exit)
 
 ///|
-fn main {
-  let usage =
-    #|Usage: moonyacc [options] <input-file>
-  let mut output_file = ""
-  let mut output_map_file : String? = None
-  let mut input_file : String = ""
-  let mut mode : @driver.Mode = Default
-  let mut input_mode : @driver.InputMode = Array
-  let mut external_tokens : Bool = false
-  let mut no_comments : Bool = false
-  let mut no_std : Bool = false
-  let mut token_payload_rewrite : @driver.TokenPayloadRewrite = NoRewrite
-  let mut force_int_position : Bool = false
-  let mut print_as_mly_without_actions : Bool = false
+struct Config {
+  mut output_file : String
+  mut output_map_file : String?
+  mut input_file : String
+  mut mode : @driver.Mode
+  mut input_mode : @driver.InputMode
+  mut external_tokens : Bool
+  mut no_comments : Bool
+  mut no_std : Bool
+  mut token_payload_rewrite : @driver.TokenPayloadRewrite
+  mut force_int_position : Bool
+  mut print_as_mly_without_actions : Bool
+}
+
+///|
+fn Config::default() -> Config {
+  {
+    output_file: "",
+    output_map_file: None,
+    input_file: "",
+    mode: @driver.Default,
+    input_mode: @driver.Array,
+    external_tokens: false,
+    no_comments: false,
+    no_std: false,
+    token_payload_rewrite: @driver.NoRewrite,
+    force_int_position: false,
+    print_as_mly_without_actions: false,
+  }
+}
+
+///|
+fn parse_args() -> Config {
+  let config = Config::default()
+  let usage = "Usage: moonyacc [options] <input-file>"
   @ArgParser.parse(
     [
       (
         "--print-as-mly-without-actions",
         "--print-as-mly-without-actions",
-        Unit(fn() { print_as_mly_without_actions = true }),
+        Unit(fn() { config.print_as_mly_without_actions = true }),
         "Print as mly without actions",
       ),
       (
         "--output-file",
         "-o",
-        String(fn(file) { output_file = file }),
+        String(fn(file) { config.output_file = file }),
         "Output file",
       ),
       (
         "--output-map-file",
         "--output-map-file",
-        String(fn(file) { output_map_file = Some(file) }),
+        String(fn(file) { config.output_map_file = Some(file) }),
         "Output source map file, if not specified, it will be the output file with .map.json extension",
       ),
       (
         "--mode",
         "--mode",
         String(fn(mode_sym) {
-          mode = match mode_sym {
-            "default" => Default
-            "json-cst" => JsonCst
-            "only-tokens" => OnlyTokens
+          config.mode = match mode_sym {
+            "default" => @driver.Default
+            "json-cst" => @driver.JsonCst
+            "only-tokens" => @driver.OnlyTokens
             _ => {
               println_to_stderr("Unsupported mode: \{mode_sym}")
               exit(1)
@@ -71,8 +92,8 @@ fn main {
         "--input-mode",
         String(fn(input_mode_sym) {
           match input_mode_sym {
-            "array" => input_mode = Array
-            "pull" => input_mode = Pull
+            "array" => config.input_mode = @driver.Array
+            "pull" => config.input_mode = @driver.Pull
             _ => {
               println_to_stderr("Unsupported input mode: \{input_mode_sym}")
               exit(1)
@@ -84,37 +105,37 @@ fn main {
       (
         "--external-tokens",
         "--external-tokens",
-        Unit(fn() { external_tokens = true }),
+        Unit(fn() { config.external_tokens = true }),
         "Use external tokens",
       ),
       (
         "--force-token-json-payload",
         "--force-token-json-payload",
-        Unit(fn() { token_payload_rewrite = JsonPayload }),
+        Unit(fn() { config.token_payload_rewrite = @driver.JsonPayload }),
         "Force token to use JSON payload",
       ),
       (
         "--force-token-no-payload",
         "--force-token-no-payload",
-        Unit(fn() { token_payload_rewrite = NoPayload }),
+        Unit(fn() { config.token_payload_rewrite = @driver.NoPayload }),
         "Force token to not use payload",
       ),
       (
         "--force-int-position",
         "--force-int-position",
-        Unit(fn() { force_int_position = true }),
+        Unit(fn() { config.force_int_position = true }),
         "Overwrite the position type to int",
       ),
       (
         "--no-comments",
         "--no-comments",
-        Unit(fn() { no_comments = true }),
+        Unit(fn() { config.no_comments = true }),
         "Do not include comments in the output",
       ),
       (
         "--no-std",
         "--no-std",
-        Unit(fn() { no_std = true }),
+        Unit(fn() { config.no_std = true }),
         "Do not include standard library",
       ),
       (
@@ -127,50 +148,56 @@ fn main {
         "Show version",
       ),
     ],
-    fn(rest) { input_file = rest },
+    fn(rest) { config.input_file = rest },
     usage,
     @sys.get_cli_args(),
   )
-  guard input_file != "" else {
+  guard config.input_file != "" else {
     println_to_stderr("Input file is required")
     exit(1)
   }
-  let parser_spec_src = @fs.read_file_to_string(input_file) catch {
+  config
+}
+
+///|
+fn main {
+  let config = parse_args()
+  let parser_spec_src = @fs.read_file_to_string(config.input_file) catch {
     err => abort(Show::to_string(err))
   }
-  if print_as_mly_without_actions {
+  if config.print_as_mly_without_actions {
     let out = StringBuilder::new()
-    @driver.print(parser_spec_src, filename=input_file, out~)
+    @driver.print(parser_spec_src, filename=config.input_file, out~)
     exit(0)
   }
   let source_map = @codegen.SourceMap::new()
   let output = @driver.compile(
     parser_spec_src,
-    mode~,
+    mode=config.mode,
     source_map_builder=source_map,
-    input_mode~,
-    filename=input_file,
-    external_tokens~,
-    no_comments~,
-    no_std~,
-    token_payload_rewrite~,
-    force_int_position~,
+    input_mode=config.input_mode,
+    filename=config.input_file,
+    external_tokens=config.external_tokens,
+    no_comments=config.no_comments,
+    no_std=config.no_std,
+    token_payload_rewrite=config.token_payload_rewrite,
+    force_int_position=config.force_int_position,
     generator=@gen_mbt.generator,
   )
   fn write_map_file(file : String) raise {
     @fs.write_string_to_file(file, source_map.to_json().stringify(indent=2))
   }
 
-  if output_file == "" {
+  if config.output_file == "" {
     println(output)
-    match output_map_file {
+    match config.output_map_file {
       Some(file) => (try? write_map_file(file)).unwrap()
       None => ()
     }
   } else {
     (try? {
-      @fs.write_string_to_file(output_file, output)
-      write_map_file(output_map_file.unwrap_or("\{output_file}.map.json"))
+      @fs.write_string_to_file(config.output_file, output)
+      write_map_file(config.output_map_file.unwrap_or("\{config.output_file}.map.json"))
     }).unwrap()
   }
 }
