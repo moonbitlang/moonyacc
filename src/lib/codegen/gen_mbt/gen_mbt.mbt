@@ -94,14 +94,14 @@ fn codegen_tokens(
   terminal_meta : (String) -> @codegen.TerminalMeta,
   output : &Logger,
   no_comments~ : Bool = false,
-  derive_map~ : @array_multimap.T[String, @elab.TypeExpr] = @array_multimap.new()
+  derive_map~ : @array_multimap.T[String, String] = @array_multimap.new()
 ) -> Unit {
   ignore(no_comments)
   fn inject_derive(type_ : String) -> @codegen.CodeFragment {
     match derive_map.get(type_) {
       [] => ""
       traits => {
-        let joined = traits.iter().map(@elab.TypeExpr::to_string).join(", ")
+        let joined = traits.iter().join(", ")
         " derive(\{joined})"
       }
     }
@@ -241,7 +241,7 @@ fn codegen(
     match meta.derive_map.get(type_) {
       [] => ""
       traits => {
-        let joined = traits.iter().map(@elab.TypeExpr::to_string).join(", ")
+        let joined = traits.iter().join(", ")
         " derive(\{joined})"
       }
     }

@@ -72,7 +72,7 @@ pub(all) struct ParserSpec {
   rules : Map[Symbol, Rule]
   start_rules : Array[Symbol]
   position_type : TypeExpr
-  derive_map : @array_multimap.T[String, TypeExpr]
+  derive_map : @array_multimap.T[String, String]
 }
 
 ///|

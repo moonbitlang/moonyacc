@@ -1,3 +1,7 @@
+## 0.6.9
+
+- feat: allow complex derive, eg `%derive(ToJson(style="legacy"))`
+
 ## 0.6.3
 
 - feat: report unresolved symbol in rule declaration.

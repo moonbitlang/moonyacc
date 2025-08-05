@@ -57,5 +57,5 @@ pub(all) struct MetaProvider {
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
   production_meta : (Int) -> ProductionMeta
-  derive_map : @array_multimap.T[String, @elab.TypeExpr]
+  derive_map : @array_multimap.T[String, String]
 }
