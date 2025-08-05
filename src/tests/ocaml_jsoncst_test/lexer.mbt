@@ -1,5 +1,5 @@
 ///|
-pub(all) type Lexer @lexbuf.StringLexbuf
+pub(all) struct Lexer(@lexbuf.StringLexbuf)
 
 ///|
 let all_keywords : Map[String, Token] = {

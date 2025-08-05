@@ -15,15 +15,15 @@
 ///|
 /// 0: EndOfInput
 /// 1..<1024: Terminal number + 1
-priv type EncodedLookaheadSet @small_int_set.T derive(Eq)
+priv struct EncodedLookaheadSet(@small_int_set.T) derive(Eq)
 
 ///|
 fn EncodedLookaheadSet::is_singleton(
   self : EncodedLookaheadSet,
-  key : Lookahead
+  key : Lookahead,
 ) -> Bool {
   self
-  .inner()
+  .0
   .is_singleton(
     match key {
       EndOfInput => 0
@@ -58,10 +58,10 @@ fn EncodedLookaheadSet::singleton(input : Lookahead) -> EncodedLookaheadSet {
 ///|
 fn EncodedLookaheadSet::decode_iter(
   self : EncodedLookaheadSet,
-  grammar : @grm.Grammar
+  grammar : @grm.Grammar,
 ) -> Iter[Lookahead] {
   self
-  .inner()
+  .0
   .iter()
   .map(fn(t) {
     if t == 0 {
@@ -75,23 +75,23 @@ fn EncodedLookaheadSet::decode_iter(
 ///|
 fn EncodedLookaheadSet::union(
   self : EncodedLookaheadSet,
-  other : EncodedLookaheadSet
+  other : EncodedLookaheadSet,
 ) -> EncodedLookaheadSet {
-  self.inner().union(other.inner())
+  self.0.union(other.0)
 }
 
 ///|
 fn EncodedLookaheadSet::disjoint(
   self : EncodedLookaheadSet,
-  other : EncodedLookaheadSet
+  other : EncodedLookaheadSet,
 ) -> Bool {
-  self.inner().disjoint(other.inner())
+  self.0.disjoint(other.0)
 }
 
 ///|
 fn EncodedLookaheadSet::subset(
   self : EncodedLookaheadSet,
-  other : EncodedLookaheadSet
+  other : EncodedLookaheadSet,
 ) -> Bool {
-  self.inner().subset(other.inner())
+  self.0.subset(other.0)
 }

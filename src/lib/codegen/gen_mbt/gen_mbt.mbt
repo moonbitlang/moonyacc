@@ -1251,7 +1251,7 @@ fn codegen(
 }
 
 ///|
-priv type CodeGenerator Unit
+priv struct CodeGenerator (Unit)
 
 ///|
 impl @codegen.CodeGenerator for CodeGenerator with void_type(self) {

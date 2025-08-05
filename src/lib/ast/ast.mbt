@@ -32,13 +32,13 @@ pub(all) enum SubstItemDesc {
   LocOf(ClauseItemIdent)
   SymbolStartPos
   Sloc
-} derive(Eq, Compare, Show, ToJson)
+} derive(Eq, Compare, Show, ToJson(style="legacy"))
 
 ///|
 pub(all) enum ClauseItemIdent {
   Dollar(Int)
   Name(Code)
-} derive(Eq, Compare, Show, ToJson)
+} derive(Eq, Compare, Show, ToJson(style="legacy"))
 
 ///|
 pub(all) struct SubstItem {
@@ -56,7 +56,7 @@ pub(all) enum TypeExpr {
   Option(TypeExpr)
   Tuple(Array[TypeExpr])
   Arrow(Array[TypeExpr], TypeExpr)
-} derive(Show, ToJson)
+} derive(Show, ToJson(style="legacy"))
 
 ///|
 pub typealias String as TypeString
@@ -74,7 +74,7 @@ pub(all) enum Declaration {
   Left(Array[PrecSymbol])
   Right(Array[PrecSymbol])
   Nonassoc(Array[PrecSymbol])
-} derive(ToJson)
+} derive(ToJson(style="legacy"))
 
 ///|
 pub(all) struct SymbolWithLoc {
@@ -123,10 +123,10 @@ pub(all) enum Term {
   Symbol(Symbol, loc~ : (Int, Int))
   Image(String, loc~ : (Int, Int))
   RuleCall(Symbol, symbol_loc~ : (Int, Int), Array[Term])
-} derive(ToJson)
+} derive(ToJson(style="legacy"))
 
 ///|
 pub(all) enum PrecSymbol {
   Symbol(Symbol)
   Image(String)
-} derive(ToJson)
+} derive(ToJson(style="legacy"))
