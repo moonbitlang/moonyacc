@@ -58,7 +58,7 @@ basic_type_expr -> @ast.TypeExpr
   | "(" type_expr ")" { $2 }
   ;
 
-nonempty_type_expr_list -> @list.T[@ast.TypeExpr]
+nonempty_type_expr_list -> @list.List[@ast.TypeExpr]
   : type_expr=type_expr { @list.construct(type_expr, @list.empty()) }
   | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.construct(type_expr, type_expr_list) }
   ;

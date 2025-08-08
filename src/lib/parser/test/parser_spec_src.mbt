@@ -52,7 +52,7 @@ let parser_spec_src : String =
   #|  }
   #|  ;
   #|
-  #|decl_list -> @list.T[@ast.Declaration]
+  #|decl_list -> @list.List[@ast.Declaration]
   #|  : decl=decl decl_list=decl_list { @list.construct(decl, decl_list) }
   #|  | { @list.empty() }
   #|  ;
@@ -73,7 +73,7 @@ let parser_spec_src : String =
   #|  | "%derive" traits=LANGLE_CODE_RANGLE type_=IDENT { Derive(traits=traits, type_=type_) }
   #|  ;
   #|
-  #|rule_list -> @list.T[@ast.Rule]
+  #|rule_list -> @list.List[@ast.Rule]
   #|  : rule=rule { @list.construct(rule, @list.empty()) }
   #|  | rule=rule rule_list=rule_list { @list.construct(rule, rule_list) }
   #|  ;
@@ -103,7 +103,7 @@ let parser_spec_src : String =
   #|  | { None }
   #|  ;
   #|
-  #|nonempty_rule_param_list -> @list.T[(String, @ast.TypeExpr?)]
+  #|nonempty_rule_param_list -> @list.List[(String, @ast.TypeExpr?)]
   #|  : IDENT { @list.construct(($1, None), @list.empty()) }
   #|  | IDENT ":" type_expr { @list.construct(($1, Some($3)), @list.empty()) }
   #|  | IDENT "," nonempty_rule_param_list { @list.construct(($1, None), $3) }
@@ -115,7 +115,7 @@ let parser_spec_src : String =
   #|  | "[" nonempty_comma_ident_list "]" { $2.to_array() }
   #|  ;
   #|
-  #|nonempty_comma_ident_list -> @list.T[String]
+  #|nonempty_comma_ident_list -> @list.List[String]
   #|  : IDENT { @list.construct($1, @list.empty()) }
   #|  | IDENT "," nonempty_comma_ident_list { @list.construct($1, $3) }
   #|  ;
@@ -142,17 +142,17 @@ let parser_spec_src : String =
   #|  | "(" type_expr ")" { $2 }
   #|  ;
   #|
-  #|nonempty_type_expr_list -> @list.T[@ast.TypeExpr]
+  #|nonempty_type_expr_list -> @list.List[@ast.TypeExpr]
   #|  : type_expr=type_expr { @list.construct(type_expr, @list.empty()) }
   #|  | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.construct(type_expr, type_expr_list) }
   #|  ;
   #|
-  #|clause_list -> @list.T[(@list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
+  #|clause_list -> @list.List[(@list.List[@ast.ClauseWithoutAction], @ast.ClauseAction)]
   #|  : "|" nonempty_clause_list { $2 }
   #|  | nonempty_clause_list { $1 }
   #|  ;
   #|
-  #|nonempty_clause_list -> @list.T[(@list.T[@ast.ClauseWithoutAction], @ast.ClauseAction)]
+  #|nonempty_clause_list -> @list.List[(@list.List[@ast.ClauseWithoutAction], @ast.ClauseAction)]
   #|  : clause_woa=clause_without_action action=clause_action { @list.construct((@list.construct(clause_woa, @list.empty()), action), @list.empty()) }
   #|  | clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.construct((@list.construct(clause_woa, @list.empty()), action), clause_list) }
   #|  | clause_woa=nonempty_clause_without_action "|" clause_list=nonempty_clause_list {
@@ -186,7 +186,7 @@ let parser_spec_src : String =
   #|  | { None }
   #|  ;
   #|
-  #|nonempty_item_list -> @list.T[@ast.ClauseItem]
+  #|nonempty_item_list -> @list.List[@ast.ClauseItem]
   #|  : item=item { @list.construct(item, @list.empty()) }
   #|  | item=item item_list=nonempty_item_list { @list.construct(item, item_list) }
   #|  ;
@@ -202,17 +202,17 @@ let parser_spec_src : String =
   #|  | image=STRING { Image(image, loc=($startpos, $endpos)) }
   #|  ;
   #|
-  #|nonempty_comma_term_list -> @list.T[@ast.Term]
+  #|nonempty_comma_term_list -> @list.List[@ast.Term]
   #|  : term=term { @list.construct(term, @list.empty()) }
   #|  | term=term "," term_list=nonempty_comma_term_list { @list.construct(term, term_list) }
   #|  ;
   #|
-  #|nonempty_symbol_with_loc_list -> @list.T[@ast.SymbolWithLoc]
+  #|nonempty_symbol_with_loc_list -> @list.List[@ast.SymbolWithLoc]
   #|  : symbol=symbol_with_loc { @list.construct(symbol, @list.empty()) }
   #|  | symbol=symbol_with_loc symbol_list=nonempty_symbol_with_loc_list { @list.construct(symbol, symbol_list) }
   #|  ;
   #|
-  #|nonempty_prec_symbol_list -> @list.T[@ast.PrecSymbol]
+  #|nonempty_prec_symbol_list -> @list.List[@ast.PrecSymbol]
   #|  : symbol=prec_symbol { @list.construct(symbol, @list.empty()) }
   #|  | symbol=prec_symbol symbol_list=nonempty_prec_symbol_list { @list.construct(symbol, symbol_list) }
   #|  ;

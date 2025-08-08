@@ -52,7 +52,7 @@ pub(all) enum Decision {
   Reduce(@grm.Production)
   Accept
   // Error
-  Conflict(@list.T[Decision])
+  Conflict(@list.List[Decision])
 } derive(Eq)
 
 ///|
@@ -137,7 +137,7 @@ pub(all) struct Automaton {
   starts : Array[(@grm.Production, LR1State)]
   // The resolved decision will be stored in the state's action table.
   // Here records the original decisions that lead to the conflict.
-  conflicts : @hashmap2.T[ConflictLocation, @list.T[Decision]]
+  conflicts : @hashmap2.T[ConflictLocation, @list.List[Decision]]
 }
 
 ///|

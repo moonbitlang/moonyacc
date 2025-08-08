@@ -429,7 +429,10 @@ fn[T] yy_parse(
   initial_pos? : Int,
 ) -> T raise ParseError {
   let mut cursor = 0
-  let mut state_stack : @list.T[YYState] = @list.construct(start, @list.empty())
+  let mut state_stack : @list.List[YYState] = @list.construct(
+    start,
+    @list.empty(),
+  )
   let data_stack : Array[(YYObj, Int, Int)] = []
   let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
   let mut state = start
@@ -508,20 +511,20 @@ fn[T] yy_parse(
 
 ///|
 fn error(
-  stack : @list.T[YYState],
+  stack : @list.List[YYState],
   token : Token?,
   loc : (Int, Int),
 ) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
-    fn go(stack : @list.T[YYState]) {
+    fn go(stack : @list.List[YYState]) {
       match stack {
         Empty => ()
         More(state, ..) =>
           match state(symbol) {
             Accept | Shift(_) => expected.push(kind)
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
-              fn inner_go(stack : @list.T[YYState], count, symbol) {
+              fn inner_go(stack : @list.List[YYState], count, symbol) {
                 let stack = stack.drop(count)
                 guard stack is More(state, ..)
                 match state(symbol) {

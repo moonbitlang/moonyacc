@@ -14,7 +14,7 @@ let stdlib_src : String =
   #|  | X { Some($1) }
   #|  ;
   #|
-  #|loption[T](X : @list.T[T]) -> @list.T[T]
+  #|loption[T](X : @list.List[T]) -> @list.List[T]
   #|  : { @list.empty() }
   #|  | X { $1 }
   #|  ;
@@ -44,22 +44,22 @@ let stdlib_src : String =
   #|  : L X R { $2 }
   #|  ;
   #|
-  #|list[T](X : T) -> @list.T[T]
+  #|list[T](X : T) -> @list.List[T]
   #|  : { @list.empty() }
   #|  | X list(X) { $2.add($1) }
   #|  ;
   #|
-  #|nonempty_list[T](X : T) -> @list.T[T]
+  #|nonempty_list[T](X : T) -> @list.List[T]
   #|  : X { @list.singleton($1) }
   #|  | X nonempty_list(X) { $2.add($1) }
   #|  ;
   #|
-  #|separated_list[T](SEP, X : T) -> @list.T[T]
+  #|separated_list[T](SEP, X : T) -> @list.List[T]
   #|  : { @list.empty() }
   #|  | separated_nonempty_list(SEP, X) { $1 }
   #|  ;
   #|
-  #|separated_nonempty_list[T](SEP, X : T) -> @list.T[T]
+  #|separated_nonempty_list[T](SEP, X : T) -> @list.List[T]
   #|  : X { @list.singleton($1) }
   #|  | X SEP separated_nonempty_list(SEP, X) { $3.add($1) }
   #|  ;

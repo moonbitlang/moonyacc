@@ -2,68 +2,68 @@
   "mappings": [
     {
       "source": "parser.mbty",
-      "original_offset": 652,
-      "generated_offset": 1432,
+      "original_offset": 661,
+      "generated_offset": 1441,
       "length": 15
     },
     {
       "source": "parser.mbty",
-      "original_offset": 193,
-      "generated_offset": 1617,
+      "original_offset": 199,
+      "generated_offset": 1629,
       "length": 15
     },
     {
       "source": "parser.mbty",
       "original_offset": 138,
-      "generated_offset": 1931,
+      "generated_offset": 1946,
       "length": 1
     },
     {
       "source": "parser.mbty",
       "original_offset": 141,
-      "generated_offset": 1940,
+      "generated_offset": 1955,
       "length": 54
     },
     {
       "source": "parser.mbty",
-      "original_offset": 684,
-      "generated_offset": 2266,
+      "original_offset": 693,
+      "generated_offset": 2287,
       "length": 1
     },
     {
       "source": "parser.mbty",
-      "original_offset": 687,
-      "generated_offset": 2275,
+      "original_offset": 696,
+      "generated_offset": 2296,
       "length": 5
     },
     {
       "source": "parser.mbty",
-      "original_offset": 694,
-      "generated_offset": 2288,
+      "original_offset": 703,
+      "generated_offset": 2309,
       "length": 2
     },
     {
       "source": "parser.mbty",
-      "original_offset": 217,
-      "generated_offset": 2577,
+      "original_offset": 223,
+      "generated_offset": 2604,
       "length": 1
     },
     {
       "source": "parser.mbty",
-      "original_offset": 220,
-      "generated_offset": 2586,
+      "original_offset": 226,
+      "generated_offset": 2613,
       "length": 1
     },
     {
       "source": "parser.mbty",
       "original_offset": 265,
-      "generated_offset": 2811,
+      "generated_offset": 2844,
       "length": 1
     },
     {
       "source": "parser.mbty",
       "original_offset": 268,
-      "generated_offset": 2820,
+      "generated_offset": 2853,
       "length": 1
     }
   ]

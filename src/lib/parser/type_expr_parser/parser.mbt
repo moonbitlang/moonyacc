@@ -70,7 +70,7 @@ priv suberror YYObj_String String
 
 priv suberror YYObj__ast_TypeExpr @ast.TypeExpr
 
-priv suberror YYObj__list_T__ast_TypeExpr_ @list.T[@ast.TypeExpr]
+priv suberror YYObj__list_List__ast_TypeExpr_ @list.List[@ast.TypeExpr]
 
 priv suberror YYObj__String__String_ (String, String)
 
@@ -124,7 +124,7 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 // 44|    "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@list.construct($2, $4).to_array(), $7) }
 fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
-  guard _args[3].0 is YYObj__list_T__ast_TypeExpr_(_dollar4)
+  guard _args[3].0 is YYObj__list_List__ast_TypeExpr_(_dollar4)
   guard _args[6].0 is YYObj__ast_TypeExpr(_dollar7)
   YYObj__ast_TypeExpr({();  Arrow(@list.construct(_dollar2, _dollar4).to_array(), _dollar7) })
 }
@@ -155,15 +155,15 @@ fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 // 63|    type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.construct(type_expr, type_expr_list) }
 fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
-  guard _args[2].0 is YYObj__list_T__ast_TypeExpr_(type_expr_list)
-  YYObj__list_T__ast_TypeExpr_({();  @list.construct(type_expr, type_expr_list) })
+  guard _args[2].0 is YYObj__list_List__ast_TypeExpr_(type_expr_list)
+  YYObj__list_List__ast_TypeExpr_({();  @list.construct(type_expr, type_expr_list) })
 }
 
 // file:///./parser.mbty
 // 62|    type_expr=type_expr { @list.construct(type_expr, @list.empty()) }
 fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
-  YYObj__list_T__ast_TypeExpr_({();  @list.construct(type_expr, @list.empty()) })
+  YYObj__list_List__ast_TypeExpr_({();  @list.construct(type_expr, @list.empty()) })
 }
 
 // file:///./parser.mbty
@@ -206,7 +206,7 @@ fn yy_action_11(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 55|    IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
 fn yy_action_12(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj_String(_dollar1)
-  guard _args[2].0 is YYObj__list_T__ast_TypeExpr_(_dollar3)
+  guard _args[2].0 is YYObj__list_List__ast_TypeExpr_(_dollar3)
   YYObj__ast_TypeExpr({();  Constr(pkg=None, _dollar1, _dollar3.to_array()) })
 }
 
@@ -214,7 +214,7 @@ fn yy_action_12(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 57|    "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@list.construct($2, $4).to_array()) }
 fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
-  guard _args[3].0 is YYObj__list_T__ast_TypeExpr_(_dollar4)
+  guard _args[3].0 is YYObj__list_List__ast_TypeExpr_(_dollar4)
   YYObj__ast_TypeExpr({();  Tuple(@list.construct(_dollar2, _dollar4).to_array()) })
 }
 
@@ -229,7 +229,7 @@ fn yy_action_14(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 56|    PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
 fn yy_action_15(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__String__String_(_dollar1)
-  guard _args[2].0 is YYObj__list_T__ast_TypeExpr_(_dollar3)
+  guard _args[2].0 is YYObj__list_List__ast_TypeExpr_(_dollar3)
   YYObj__ast_TypeExpr({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, _dollar3.to_array()) })
 }
 
@@ -715,7 +715,7 @@ fn[T] yy_parse(
   initial_pos? : Int,
 ) -> T raise ParseError {
   let mut cursor = 0
-  let mut state_stack : @list.T[YYState] = @list.construct(start, @list.empty())
+  let mut state_stack : @list.List[YYState] = @list.construct(start, @list.empty())
   let data_stack : Array[(YYObj, Int, Int)] = []
   let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
   let mut state = start
@@ -792,17 +792,17 @@ fn[T] yy_parse(
   panic()
 }
 
-fn error(stack : @list.T[YYState], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
+fn error(stack : @list.List[YYState], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
-    fn go(stack : @list.T[YYState]) {
+    fn go(stack : @list.List[YYState]) {
       match stack {
         Empty => ()
         More(state, ..) => {
           match state(symbol) {
             Accept | Shift(_) => expected.push(kind)
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
-              fn inner_go(stack : @list.T[YYState], count, symbol) {
+              fn inner_go(stack : @list.List[YYState], count, symbol) {
                 let stack = stack.drop(count)
                 guard stack is More(state, ..)
                 match state(symbol) {

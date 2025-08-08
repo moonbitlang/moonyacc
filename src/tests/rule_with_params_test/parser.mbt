@@ -42,7 +42,7 @@ priv suberror YYObj_Char Char
 
 priv suberror YYObj_String String
 
-priv suberror YYObj__list_T_Char_ @list.T[Char]
+priv suberror YYObj__list_List_Char_ @list.List[Char]
 
 typealias (YYSymbol) -> YYDecision as YYState
 
@@ -77,43 +77,43 @@ fn init {
 // file:///./stdlib.mbty
 // 44|    { @list.empty() }
 fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  YYObj__list_T_Char_({();  @list.empty() })
+  YYObj__list_List_Char_({();  @list.empty() })
 }
 
 // file:///./stdlib.mbty
 // 14|    { @list.empty() }
 fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  YYObj__list_T_Char_({();  @list.empty() })
+  YYObj__list_List_Char_({();  @list.empty() })
 }
 
 // file:///./parser.mbty
 // 9|    loption(delimited("{", list(LETTER), "}")) { $1.iter().map(fn (it) { String::make(1, it) }).join("") }
 fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  guard _args[0].0 is YYObj__list_T_Char_(_dollar1)
+  guard _args[0].0 is YYObj__list_List_Char_(_dollar1)
   YYObj_String({();  _dollar1.iter().map(fn (it) { String::make(1, it) }).join("") })
 }
 
 // file:///./stdlib.mbty
 // 45|    X list(X) { $2.add($1) }
 fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  guard _args[1].0 is YYObj__list_T_Char_(_dollar2)
+  guard _args[1].0 is YYObj__list_List_Char_(_dollar2)
   guard _args[0].0 is YYObj_Char(_dollar1)
-  YYObj__list_T_Char_({();  _dollar2.add(_dollar1) })
+  YYObj__list_List_Char_({();  _dollar2.add(_dollar1) })
 }
 
 // file:///./stdlib.mbty
 // 15|    X { $1 }
 fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_5(_last_pos, _args[0:3])
-  guard _sub_action_0_result is YYObj__list_T_Char_(_dollar1)
-  YYObj__list_T_Char_({();  _dollar1 })
+  guard _sub_action_0_result is YYObj__list_List_Char_(_dollar1)
+  YYObj__list_List_Char_({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 13|    OPEN X CLOSE { $2 }
 fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  guard _args[1].0 is YYObj__list_T_Char_(_dollar2)
-  YYObj__list_T_Char_({();  _dollar2 })
+  guard _args[1].0 is YYObj__list_List_Char_(_dollar2)
+  YYObj__list_List_Char_({();  _dollar2 })
 }
 
 fn yy_input(token : Token, _start_pos : Unit, _end_pos : Unit) -> (YYSymbol, YYObj) {
@@ -197,7 +197,7 @@ fn[T] yy_parse(
   initial_pos? : Unit,
 ) -> T raise ParseError {
   let mut cursor = 0
-  let mut state_stack : @list.T[YYState] = @list.construct(start, @list.empty())
+  let mut state_stack : @list.List[YYState] = @list.construct(start, @list.empty())
   let data_stack : Array[(YYObj, Unit, Unit)] = []
   let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
   let mut state = start
@@ -274,17 +274,17 @@ fn[T] yy_parse(
   panic()
 }
 
-fn error(stack : @list.T[YYState], token : Token?, loc : (Unit, Unit)) -> Unit raise ParseError {
+fn error(stack : @list.List[YYState], token : Token?, loc : (Unit, Unit)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
-    fn go(stack : @list.T[YYState]) {
+    fn go(stack : @list.List[YYState]) {
       match stack {
         Empty => ()
         More(state, ..) => {
           match state(symbol) {
             Accept | Shift(_) => expected.push(kind)
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
-              fn inner_go(stack : @list.T[YYState], count, symbol) {
+              fn inner_go(stack : @list.List[YYState], count, symbol) {
                 let stack = stack.drop(count)
                 guard stack is More(state, ..)
                 match state(symbol) {

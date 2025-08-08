@@ -89,7 +89,7 @@ pub(all) struct Rule {
   generic_params : Array[String]
   params : Array[(String, TypeExpr?)]
   type_ : TypeExpr?
-  clauses : Array[(@list.T[ClauseWithoutAction], ClauseAction)]
+  clauses : Array[(@list.List[ClauseWithoutAction], ClauseAction)]
 } derive(ToJson)
 
 ///|

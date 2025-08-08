@@ -27,7 +27,7 @@ priv struct Node[LookaheadSet] {
   epsilon_transitions : Array[Node[LookaheadSet]]
   // Below are transient states
   mut stamp : @stamp.T
-  mut predecessors : @list.T[Node[LookaheadSet]]
+  mut predecessors : @list.List[Node[LookaheadSet]]
   mut lookahead_set : LookaheadSet
 }
 
