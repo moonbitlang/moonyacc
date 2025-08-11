@@ -19538,36 +19538,38 @@ function moonbitlang$yacc$lib$parser$$code_rbrace(sb, subst, base, lexbuf) {
       switch (_param) {
         case 0: {
           const _bind = moonbitlang$ulex$45$runtime$lexbuf$$IStringLexbuf$next_as_int$181$(lexbuf);
-          _L$3: {
-            _L$4: {
-              if (_bind < 123) {
-                if (_bind < 0) {
-                  if (_bind < -1) {
-                    break _L$4;
-                  } else {
-                    _tmp = 1;
-                  }
-                } else {
-                  _tmp = _bind > 35 ? (_bind < 37 ? 3 : 2) : 2;
-                }
+          if (_bind === -1) {
+            _tmp = 1;
+          } else {
+            if (_bind >= 0 && _bind <= 35) {
+              _tmp = 2;
+            } else {
+              if (_bind === 36) {
+                _tmp = 3;
               } else {
-                if (_bind > 123) {
-                  if (_bind < 126) {
-                    _tmp = _bind < 125 ? 2 : 5;
+                if (_bind >= 37 && _bind <= 122) {
+                  _tmp = 2;
+                } else {
+                  if (_bind === 123) {
+                    _tmp = 4;
                   } else {
-                    if (_bind > 1114111) {
-                      break _L$4;
-                    } else {
+                    if (_bind === 124) {
                       _tmp = 2;
+                    } else {
+                      if (_bind === 125) {
+                        _tmp = 5;
+                      } else {
+                        if (_bind >= 126 && _bind <= 1114111) {
+                          _tmp = 2;
+                        } else {
+                          break _L$2;
+                        }
+                      }
                     }
                   }
-                } else {
-                  _tmp = 4;
                 }
               }
-              break _L$3;
             }
-            break _L$2;
           }
           continue _L$2;
         }
@@ -19595,60 +19597,46 @@ function moonbitlang$yacc$lib$parser$$code_rbrace(sb, subst, base, lexbuf) {
             _capture_0_end = _match_start + 1 | 0;
           }
           const _bind$2 = moonbitlang$ulex$45$runtime$lexbuf$$IStringLexbuf$next_as_int$181$(lexbuf);
-          _L$4: {
-            _L$5: {
-              if (_bind$2 < 97) {
-                if (_bind$2 < 65) {
-                  if (_bind$2 < 48) {
-                    break _L$5;
-                  } else {
-                    if (_bind$2 > 57) {
-                      break _L$5;
-                    } else {
-                      _tmp = 6;
-                    }
-                  }
-                } else {
-                  if (_bind$2 > 90) {
-                    if (_bind$2 < 95) {
-                      break _L$5;
-                    } else {
-                      if (_bind$2 > 95) {
-                        break _L$5;
-                      } else {
-                        _tmp = 7;
-                      }
-                    }
-                  } else {
-                    _tmp = 7;
-                  }
-                }
+          if (_bind$2 >= 48 && _bind$2 <= 57) {
+            _tmp = 6;
+          } else {
+            if (_bind$2 >= 65 && _bind$2 <= 90) {
+              _tmp = 7;
+            } else {
+              if (_bind$2 === 95) {
+                _tmp = 7;
               } else {
-                if (_bind$2 > 100) {
-                  if (_bind$2 < 109) {
-                    _tmp = _bind$2 < 102 ? 8 : _bind$2 > 107 ? 9 : 7;
+                if (_bind$2 >= 97 && _bind$2 <= 100) {
+                  _tmp = 7;
+                } else {
+                  if (_bind$2 === 101) {
+                    _tmp = 8;
                   } else {
-                    if (_bind$2 > 114) {
-                      if (_bind$2 < 116) {
-                        _tmp = 10;
+                    if (_bind$2 >= 102 && _bind$2 <= 107) {
+                      _tmp = 7;
+                    } else {
+                      if (_bind$2 === 108) {
+                        _tmp = 9;
                       } else {
-                        if (_bind$2 > 122) {
-                          break _L$5;
-                        } else {
+                        if (_bind$2 >= 109 && _bind$2 <= 114) {
                           _tmp = 7;
+                        } else {
+                          if (_bind$2 === 115) {
+                            _tmp = 10;
+                          } else {
+                            if (_bind$2 >= 116 && _bind$2 <= 122) {
+                              _tmp = 7;
+                            } else {
+                              break _L$2;
+                            }
+                          }
                         }
                       }
-                    } else {
-                      _tmp = 7;
                     }
                   }
-                } else {
-                  _tmp = 7;
                 }
               }
-              break _L$4;
             }
-            break _L$2;
           }
           continue _L$2;
         }
@@ -19788,60 +19776,46 @@ function moonbitlang$yacc$lib$parser$$code_rbrace(sb, subst, base, lexbuf) {
             _capture_0_end = _match_end;
           }
           const _bind$7 = moonbitlang$ulex$45$runtime$lexbuf$$IStringLexbuf$next_as_int$181$(lexbuf);
-          _L$5: {
-            _L$6: {
-              if (_bind$7 < 97) {
-                if (_bind$7 < 65) {
-                  if (_bind$7 < 48) {
-                    break _L$6;
-                  } else {
-                    if (_bind$7 > 57) {
-                      break _L$6;
-                    } else {
-                      _tmp = 7;
-                    }
-                  }
-                } else {
-                  if (_bind$7 > 90) {
-                    if (_bind$7 < 95) {
-                      break _L$6;
-                    } else {
-                      if (_bind$7 > 95) {
-                        break _L$6;
-                      } else {
-                        _tmp = 7;
-                      }
-                    }
-                  } else {
-                    _tmp = 7;
-                  }
-                }
+          if (_bind$7 >= 48 && _bind$7 <= 57) {
+            _tmp = 7;
+          } else {
+            if (_bind$7 >= 65 && _bind$7 <= 90) {
+              _tmp = 7;
+            } else {
+              if (_bind$7 === 95) {
+                _tmp = 7;
               } else {
-                if (_bind$7 > 107) {
-                  if (_bind$7 < 117) {
-                    _tmp = _bind$7 < 109 ? 13 : _bind$7 > 115 ? 14 : 7;
+                if (_bind$7 >= 97 && _bind$7 <= 107) {
+                  _tmp = 7;
+                } else {
+                  if (_bind$7 === 108) {
+                    _tmp = 13;
                   } else {
-                    if (_bind$7 > 120) {
-                      if (_bind$7 < 122) {
-                        _tmp = 15;
+                    if (_bind$7 >= 109 && _bind$7 <= 115) {
+                      _tmp = 7;
+                    } else {
+                      if (_bind$7 === 116) {
+                        _tmp = 14;
                       } else {
-                        if (_bind$7 > 122) {
-                          break _L$6;
-                        } else {
+                        if (_bind$7 >= 117 && _bind$7 <= 120) {
                           _tmp = 7;
+                        } else {
+                          if (_bind$7 === 121) {
+                            _tmp = 15;
+                          } else {
+                            if (_bind$7 === 122) {
+                              _tmp = 7;
+                            } else {
+                              break _L$2;
+                            }
+                          }
                         }
                       }
-                    } else {
-                      _tmp = 7;
                     }
                   }
-                } else {
-                  _tmp = 7;
                 }
               }
-              break _L$5;
             }
-            break _L$2;
           }
           continue _L$2;
         }
@@ -20970,36 +20944,30 @@ function moonbitlang$yacc$lib$parser$$comment_star_rparen(lexbuf) {
       switch (_param) {
         case 0: {
           const _bind = moonbitlang$ulex$45$runtime$lexbuf$$IStringLexbuf$next_as_int$181$(lexbuf);
-          _L$3: {
-            _L$4: {
-              if (_bind < 41) {
-                if (_bind < 0) {
-                  if (_bind < -1) {
-                    break _L$4;
-                  } else {
-                    _tmp = 1;
-                  }
-                } else {
-                  _tmp = _bind > 39 ? 3 : 2;
-                }
+          if (_bind === -1) {
+            _tmp = 1;
+          } else {
+            if (_bind >= 0 && _bind <= 39) {
+              _tmp = 2;
+            } else {
+              if (_bind === 40) {
+                _tmp = 3;
               } else {
-                if (_bind > 41) {
-                  if (_bind < 43) {
+                if (_bind === 41) {
+                  _tmp = 2;
+                } else {
+                  if (_bind === 42) {
                     _tmp = 4;
                   } else {
-                    if (_bind > 1114111) {
-                      break _L$4;
-                    } else {
+                    if (_bind >= 43 && _bind <= 1114111) {
                       _tmp = 2;
+                    } else {
+                      break _L$2;
                     }
                   }
-                } else {
-                  _tmp = 2;
                 }
               }
-              break _L$3;
             }
-            break _L$2;
           }
           continue _L$2;
         }
@@ -21114,60 +21082,150 @@ function moonbitlang$yacc$lib$parser$$token(phase, lexbuf) {
       switch (_param) {
         case 0: {
           const _bind = moonbitlang$ulex$45$runtime$lexbuf$$IStringLexbuf$next_as_int$181$(lexbuf);
-          _L$3: {
-            _L$4: {
-              if (_bind < 58) {
-                if (_bind < 37) {
-                  if (_bind < 11) {
-                    if (_bind < 0) {
-                      if (_bind < -1) {
-                        break _L$4;
-                      } else {
-                        _tmp = 1;
-                      }
-                    } else {
-                      _tmp = _bind > 8 ? 3 : 2;
-                    }
-                  } else {
-                    _tmp = _bind > 31 ? (_bind < 34 ? (_bind < 33 ? 3 : 2) : _bind > 34 ? 2 : 4) : 2;
-                  }
-                } else {
-                  _tmp = _bind > 37 ? (_bind < 44 ? (_bind < 41 ? (_bind < 40 ? 2 : 6) : _bind > 41 ? 2 : 7) : _bind > 44 ? (_bind < 47 ? (_bind < 46 ? 9 : 2) : _bind > 47 ? 2 : 10) : 8) : 5;
-                }
+          if (_bind === -1) {
+            _tmp = 1;
+          } else {
+            if (_bind >= 0 && _bind <= 8) {
+              _tmp = 2;
+            } else {
+              if (_bind >= 9 && _bind <= 10) {
+                _tmp = 3;
               } else {
-                if (_bind > 58) {
-                  if (_bind < 93) {
-                    _tmp = _bind < 63 ? (_bind < 61 ? (_bind < 60 ? 12 : 13) : _bind > 61 ? 2 : 14) : _bind > 63 ? (_bind < 91 ? (_bind < 65 ? 16 : 17) : _bind > 91 ? 2 : 18) : 15;
+                if (_bind >= 11 && _bind <= 31) {
+                  _tmp = 2;
+                } else {
+                  if (_bind === 32) {
+                    _tmp = 3;
                   } else {
-                    if (_bind > 93) {
-                      if (_bind < 123) {
-                        _tmp = _bind < 96 ? (_bind < 95 ? 2 : 17) : _bind > 96 ? 17 : 2;
+                    if (_bind === 33) {
+                      _tmp = 2;
+                    } else {
+                      if (_bind === 34) {
+                        _tmp = 4;
                       } else {
-                        if (_bind > 123) {
-                          if (_bind < 125) {
-                            _tmp = 21;
+                        if (_bind >= 35 && _bind <= 36) {
+                          _tmp = 2;
+                        } else {
+                          if (_bind === 37) {
+                            _tmp = 5;
                           } else {
-                            if (_bind > 1114111) {
-                              break _L$4;
-                            } else {
+                            if (_bind >= 38 && _bind <= 39) {
                               _tmp = 2;
+                            } else {
+                              if (_bind === 40) {
+                                _tmp = 6;
+                              } else {
+                                if (_bind === 41) {
+                                  _tmp = 7;
+                                } else {
+                                  if (_bind >= 42 && _bind <= 43) {
+                                    _tmp = 2;
+                                  } else {
+                                    if (_bind === 44) {
+                                      _tmp = 8;
+                                    } else {
+                                      if (_bind === 45) {
+                                        _tmp = 9;
+                                      } else {
+                                        if (_bind === 46) {
+                                          _tmp = 2;
+                                        } else {
+                                          if (_bind === 47) {
+                                            _tmp = 10;
+                                          } else {
+                                            if (_bind >= 48 && _bind <= 57) {
+                                              _tmp = 2;
+                                            } else {
+                                              if (_bind === 58) {
+                                                _tmp = 11;
+                                              } else {
+                                                if (_bind === 59) {
+                                                  _tmp = 12;
+                                                } else {
+                                                  if (_bind === 60) {
+                                                    _tmp = 13;
+                                                  } else {
+                                                    if (_bind === 61) {
+                                                      _tmp = 14;
+                                                    } else {
+                                                      if (_bind === 62) {
+                                                        _tmp = 2;
+                                                      } else {
+                                                        if (_bind === 63) {
+                                                          _tmp = 15;
+                                                        } else {
+                                                          if (_bind === 64) {
+                                                            _tmp = 16;
+                                                          } else {
+                                                            if (_bind >= 65 && _bind <= 90) {
+                                                              _tmp = 17;
+                                                            } else {
+                                                              if (_bind === 91) {
+                                                                _tmp = 18;
+                                                              } else {
+                                                                if (_bind === 92) {
+                                                                  _tmp = 2;
+                                                                } else {
+                                                                  if (_bind === 93) {
+                                                                    _tmp = 19;
+                                                                  } else {
+                                                                    if (_bind === 94) {
+                                                                      _tmp = 2;
+                                                                    } else {
+                                                                      if (_bind === 95) {
+                                                                        _tmp = 17;
+                                                                      } else {
+                                                                        if (_bind === 96) {
+                                                                          _tmp = 2;
+                                                                        } else {
+                                                                          if (_bind >= 97 && _bind <= 122) {
+                                                                            _tmp = 17;
+                                                                          } else {
+                                                                            if (_bind === 123) {
+                                                                              _tmp = 20;
+                                                                            } else {
+                                                                              if (_bind === 124) {
+                                                                                _tmp = 21;
+                                                                              } else {
+                                                                                if (_bind >= 125 && _bind <= 1114111) {
+                                                                                  _tmp = 2;
+                                                                                } else {
+                                                                                  break _L$2;
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          }
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  }
+                                                                }
+                                                              }
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
                             }
                           }
-                        } else {
-                          _tmp = 20;
                         }
                       }
-                    } else {
-                      _tmp = 19;
                     }
                   }
-                } else {
-                  _tmp = 11;
                 }
               }
-              break _L$3;
             }
-            break _L$2;
           }
           continue _L$2;
         }
@@ -23934,7 +23992,7 @@ function moonbitlang$yacc$lib$lr1$$EncodedLR0Item$decode_postdot(self, grammar) 
   const dot = self & 1023;
   return moonbitlang$core$array$$Array$get$90$(production.rhs, dot);
 }
-function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$7243(_env, node, lookahead_set, parent) {
+function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$7238(_env, node, lookahead_set, parent) {
   const stamp = _env._1;
   if (lookahead_set.nullable) {
     const _p = node.predecessors;
@@ -23946,11 +24004,11 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$7243(_env, node,
     return;
   } else {
     node.lookahead_set = lookahead_set.set;
-    moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$7244(_env, node);
+    moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$7239(_env, node);
     return;
   }
 }
-function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$7244(_env, node) {
+function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$7239(_env, node) {
   const stamp = _env._1;
   const nodes = _env._0;
   node.stamp = stamp;
@@ -23962,7 +24020,7 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$7244(_env, node
     const _i = _tmp;
     if (_i < _len) {
       const epsilon_transition = _arr[_i];
-      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$7243(_env, epsilon_transition, node.partial_lookahead_set, node);
+      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$visit$47$7238(_env, epsilon_transition, node.partial_lookahead_set, node);
       _tmp = _i + 1 | 0;
       continue;
     } else {
@@ -23970,12 +24028,12 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$7244(_env, node
     }
   }
 }
-function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$7245(stamp, node) {
+function moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$7240(stamp, node) {
   if (moonbitlang$core$builtin$$op_notequal$58$(node.stamp, stamp)) {
     node.stamp = stamp;
     const _bind = moonbitlang$core$list$$List$iter$161$(node.predecessors);
     _bind((predecessor) => {
-      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$7245(stamp, predecessor);
+      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$7240(stamp, predecessor);
       node.lookahead_set = moonbitlang$yacc$lib$lr1$$AbstractLookaheadSet$union$163$(node.lookahead_set, predecessor.lookahead_set);
       return 1;
     });
@@ -24072,7 +24130,7 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$163$(grammar) {
         node = _p$2;
       }
       node.lookahead_set = _lookahead_set;
-      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$7244(_env, node);
+      moonbitlang$yacc$lib$lr1$$build_closure_fn$46$follow$47$7239(_env, node);
       return 1;
     });
     const stamp$2 = moonbitlang$yacc$lib$util$stamp$$new();
@@ -24082,7 +24140,7 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$163$(grammar) {
       const _i = _tmp$2;
       if (_i < _len$2) {
         const node = nodes[_i];
-        moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$7245(stamp$2, node);
+        moonbitlang$yacc$lib$lr1$$build_closure_fn$46$walk$47$7240(stamp$2, node);
         _tmp$2 = _i + 1 | 0;
         continue;
       } else {
@@ -25879,52 +25937,98 @@ function moonbitlang$yacc$lib$parser$type_expr_parser$$token(lexbuf) {
       switch (_param) {
         case 0: {
           const _bind = moonbitlang$ulex$45$runtime$lexbuf$$IStringLexbuf$next_as_int$181$(lexbuf);
-          _L$3: {
-            _L$4: {
-              if (_bind < 46) {
-                if (_bind < 33) {
-                  if (_bind < 9) {
-                    if (_bind < -1) {
-                      break _L$4;
-                    } else {
-                      _tmp = _bind > -1 ? 2 : 1;
-                    }
-                  } else {
-                    _tmp = _bind > 10 ? (_bind < 32 ? 2 : 3) : 3;
-                  }
-                } else {
-                  _tmp = _bind > 39 ? (_bind < 42 ? (_bind < 41 ? 4 : 5) : _bind > 43 ? (_bind < 45 ? 6 : 7) : 2) : 2;
-                }
+          if (_bind === -1) {
+            _tmp = 1;
+          } else {
+            if (_bind >= 0 && _bind <= 8) {
+              _tmp = 2;
+            } else {
+              if (_bind >= 9 && _bind <= 10) {
+                _tmp = 3;
               } else {
-                if (_bind > 62) {
-                  if (_bind < 94) {
-                    _tmp = _bind < 91 ? (_bind < 64 ? 8 : _bind > 64 ? 10 : 9) : _bind > 91 ? (_bind < 93 ? 2 : 12) : 11;
+                if (_bind >= 11 && _bind <= 31) {
+                  _tmp = 2;
+                } else {
+                  if (_bind === 32) {
+                    _tmp = 3;
                   } else {
-                    if (_bind > 94) {
-                      if (_bind < 97) {
-                        _tmp = _bind < 96 ? 10 : 2;
+                    if (_bind >= 33 && _bind <= 39) {
+                      _tmp = 2;
+                    } else {
+                      if (_bind === 40) {
+                        _tmp = 4;
                       } else {
-                        if (_bind > 122) {
-                          if (_bind < 1114112) {
+                        if (_bind === 41) {
+                          _tmp = 5;
+                        } else {
+                          if (_bind >= 42 && _bind <= 43) {
                             _tmp = 2;
                           } else {
-                            break _L$4;
+                            if (_bind === 44) {
+                              _tmp = 6;
+                            } else {
+                              if (_bind === 45) {
+                                _tmp = 7;
+                              } else {
+                                if (_bind >= 46 && _bind <= 62) {
+                                  _tmp = 2;
+                                } else {
+                                  if (_bind === 63) {
+                                    _tmp = 8;
+                                  } else {
+                                    if (_bind === 64) {
+                                      _tmp = 9;
+                                    } else {
+                                      if (_bind >= 65 && _bind <= 90) {
+                                        _tmp = 10;
+                                      } else {
+                                        if (_bind === 91) {
+                                          _tmp = 11;
+                                        } else {
+                                          if (_bind === 92) {
+                                            _tmp = 2;
+                                          } else {
+                                            if (_bind === 93) {
+                                              _tmp = 12;
+                                            } else {
+                                              if (_bind === 94) {
+                                                _tmp = 2;
+                                              } else {
+                                                if (_bind === 95) {
+                                                  _tmp = 10;
+                                                } else {
+                                                  if (_bind === 96) {
+                                                    _tmp = 2;
+                                                  } else {
+                                                    if (_bind >= 97 && _bind <= 122) {
+                                                      _tmp = 10;
+                                                    } else {
+                                                      if (_bind >= 123 && _bind <= 1114111) {
+                                                        _tmp = 2;
+                                                      } else {
+                                                        break _L$2;
+                                                      }
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
                           }
-                        } else {
-                          _tmp = 10;
                         }
                       }
-                    } else {
-                      _tmp = 2;
                     }
                   }
-                } else {
-                  _tmp = 2;
                 }
               }
-              break _L$3;
             }
-            break _L$2;
           }
           continue _L$2;
         }
