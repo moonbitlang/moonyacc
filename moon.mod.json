@@ -1,15 +1,15 @@
 {
   "name": "moonbitlang/yacc",
-  "version": "0.6.11",
+  "version": "0.6.12",
   "deps": {
     "moonbitlang/x": "0.4.30",
-    "Yoorkin/ArgParser": "0.1.9",
+    "Yoorkin/ArgParser": "0.1.10",
     "moonbitlang/ulex-runtime": "0.4.1"
   },
   "readme": "README.md",
   "repository": "",
   "license": "GPL-2.0-only",
   "keywords": [],
-  "description": "",
+  "description": "https://github.com/moonbitlang/moonyacc",
   "source": "src"
 }
