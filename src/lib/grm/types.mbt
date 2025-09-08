@@ -47,7 +47,7 @@ pub(all) struct Terminal {
 }
 
 ///|
-pub impl Eq for Terminal with op_equal(self, other) {
+pub impl Eq for Terminal with equal(self, other) {
   self.num == other.num
 }
 
@@ -81,7 +81,7 @@ pub(all) struct Nonterminal {
 }
 
 ///|
-pub impl Eq for Nonterminal with op_equal(self, other) {
+pub impl Eq for Nonterminal with equal(self, other) {
   self.num == other.num
 }
 
@@ -123,7 +123,7 @@ pub(all) struct Production {
 }
 
 ///|
-pub impl Eq for Production with op_equal(self, other) {
+pub impl Eq for Production with equal(self, other) {
   self.num == other.num
 }
 
@@ -141,7 +141,7 @@ pub impl Hash for Production with hash_combine(self, hasher) {
 pub fn[Logger : Logger] Production::output_with_opt_dot(
   self : Production,
   logger : Logger,
-  dot? : Int
+  dot? : Int,
 ) -> Unit {
   (logger : &Logger).write_object(self.lhs)
   logger.write_string(" →")

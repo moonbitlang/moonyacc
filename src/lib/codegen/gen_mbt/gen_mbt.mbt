@@ -93,8 +93,8 @@ fn codegen_tokens(
   terminals : Array[@grm.Terminal],
   terminal_meta : (String) -> @codegen.TerminalMeta,
   output : &Logger,
-  no_comments~ : Bool = false,
-  derive_map~ : @array_multimap.T[String, String] = @array_multimap.new()
+  no_comments? : Bool = false,
+  derive_map? : @array_multimap.T[String, String] = @array_multimap.new(),
 ) -> Unit {
   ignore(no_comments)
   fn inject_derive(type_ : String) -> @codegen.CodeFragment {
@@ -230,10 +230,10 @@ fn codegen(
   output : @logger_with_cursor.LoggerWithCursor,
   source_map_builder? : &@codegen.SourceMapBuilder,
   grammar_filename~ : String,
-  external_tokens~ : Bool = false,
-  no_comments~ : Bool = false,
-  mode~ : @codegen.Mode = Default,
-  input_mode~ : @codegen.InputMode = Array
+  external_tokens? : Bool = false,
+  no_comments? : Bool = false,
+  mode? : @codegen.Mode = Default,
+  input_mode? : @codegen.InputMode = Array,
 ) -> Unit {
   let used_runtime_funcs = @sorted_set.new()
   let { terminal_meta, nonterminal_meta, production_meta, .. } = meta
@@ -461,7 +461,7 @@ fn codegen(
   )
 
   // yy_action_xxx
-  let actions : @hashmap.T[@stamp.T, @elab.Action] = @hashmap.new()
+  let actions : @hashmap2.T[@stamp.T, @elab.Action] = @hashmap2.new(capacity=16)
   fn add_action(action : @elab.Action) {
     if actions.contains(action.stamp) {
       return
@@ -469,7 +469,7 @@ fn codegen(
     for sub_action in action.sub_actions {
       add_action(sub_action.action)
     }
-    actions[action.stamp] = action
+    actions.set(action.stamp, action)
   }
 
   for state in automaton.states {
@@ -736,9 +736,9 @@ fn codegen(
 
     // `sum` is used to detect if it is exhaustive match
     let mut sum = 0
-    let decision_groups : @sorted_map.T[
+    let decision_groups : @sorted_map.SortedMap[
       CodegenDecision,
-      @immut/sorted_set.T[CodegenSymbol],
+      @immut/sorted_set.SortedSet[CodegenSymbol],
     ] = @sorted_map.new()
     fn add_symbol_decision(symbol, decision) {
       decision_groups[decision] = decision_groups
@@ -774,7 +774,7 @@ fn codegen(
       }
     }
     fn no_lookahead_needed() -> Bool {
-      match decision_groups.keys()[0] {
+      match [..decision_groups.keys_as_iter()][0] {
         Reduce(_) | Accept => true
         _ => false
       }
@@ -809,7 +809,7 @@ fn codegen(
     }
 
     if decision_groups.size() == 1 && no_lookahead_needed() {
-      let decision = decision_groups.keys()[0]
+      let decision = [..decision_groups.keys_as_iter()][0]
       let decision = match decision {
         Reduce(num_symbols, nonterm, prod_num) =>
           ReduceNoLookahead(num_symbols, nonterm, prod_num)
@@ -1251,7 +1251,7 @@ fn codegen(
 }
 
 ///|
-priv struct CodeGenerator (Unit)
+priv struct CodeGenerator(Unit)
 
 ///|
 impl @codegen.CodeGenerator for CodeGenerator with void_type(self) {
@@ -1272,7 +1272,7 @@ impl @codegen.CodeGenerator for CodeGenerator with codegen_tokens(
   terminal_meta,
   output,
   no_comments~,
-  derive_map~
+  derive_map~,
 ) {
   ignore(self)
   codegen_tokens(terminals, terminal_meta, output, no_comments~, derive_map~)
@@ -1290,7 +1290,7 @@ impl @codegen.CodeGenerator for CodeGenerator with codegen(
   external_tokens~,
   no_comments~,
   mode~,
-  input_mode~
+  input_mode~,
 ) {
   ignore(self)
   codegen(

@@ -63,7 +63,7 @@ priv struct LR0Node {
 }
 
 ///|
-impl Eq for LR0Node with op_equal(self, other) {
+impl Eq for LR0Node with equal(self, other) {
   self.num == other.num
 }
 
@@ -79,13 +79,13 @@ pub(all) struct LR1State {
   grammar : @grm.Grammar
   mut num : Int
   items : EncodedLR1ItemSet
-  goto : @sorted_map.T[@grm.Symbol, LR1State]
-  action : @sorted_map.T[Lookahead, Decision]
+  goto : @sorted_map.SortedMap[@grm.Symbol, LR1State]
+  action : @sorted_map.SortedMap[Lookahead, Decision]
   mut stamp : @stamp.T
 }
 
 ///|
-pub impl Eq for LR1State with op_equal(self, other) {
+pub impl Eq for LR1State with equal(self, other) {
   self.num == other.num
 }
 
@@ -108,7 +108,7 @@ pub fn LR1State::iter_item_groups(self : LR1State) -> Iter[LR1ItemGroup] {
 pub fn LR1State::set_action(
   self : LR1State,
   input : Lookahead,
-  decision : Decision
+  decision : Decision,
 ) -> Unit {
   match self.action.get(input) {
     Some(Conflict(decisions)) =>
@@ -158,7 +158,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
 
   //
   fn get_reductions(
-    symbolic_items : Array[(EncodedLR0Item, EncodedSymbolicLookaheadSet)]
+    symbolic_items : Array[(EncodedLR0Item, EncodedSymbolicLookaheadSet)],
   ) -> Array[(EncodedSymbolicLookaheadSet, @grm.Production)] {
     let result = []
     for symbolic_item in symbolic_items {
@@ -174,7 +174,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
 
   //
   fn transitions(
-    symbolic_items : Array[(EncodedLR0Item, EncodedSymbolicLookaheadSet)]
+    symbolic_items : Array[(EncodedLR0Item, EncodedSymbolicLookaheadSet)],
   ) {
     let trans : @hashmap2.T[
       @grm.Symbol,
@@ -305,7 +305,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
     for entry in trans {
       let (_symbol, (target_node, kernel_symbolic_lookahead_set_array)) = entry
       let kernel_lookahead_set_table = kernel_symbolic_lookahead_set_array.map(fn(
-        symbolic_lookahead_set
+        symbolic_lookahead_set,
       ) {
         symbolic_lookahead_set.interpret(state.items.kernel_lookahead_set_table)
       })
@@ -358,7 +358,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
         [target_state] => target_state
         family => {
           let kernel_lookahead_set_table = symbolic_lookahead_set_array.map(fn(
-            symbolic_lookahead_set
+            symbolic_lookahead_set,
           ) {
             symbolic_lookahead_set.interpret(
               state.items.kernel_lookahead_set_table,

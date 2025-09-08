@@ -38,7 +38,7 @@ fn build_rules_from_src(
   filename~ : String,
   json_cst~ : JsonCst,
   token_payload_rewrite~ : TokenPayloadRewrite,
-  force_int_position~ : Bool
+  force_int_position~ : Bool,
 ) -> Map[String, Rule] {
   let lexer = @parser.new_lexer(src)
   fn token() {
@@ -65,7 +65,7 @@ pub fn elaborate_with_stdlib_rules(
   json_cst~ : JsonCst,
   no_std~ : Bool,
   token_payload_rewrite~ : TokenPayloadRewrite,
-  force_int_position~ : Bool
+  force_int_position~ : Bool,
 ) -> ParserSpec raise ElabError {
   elaborate(
     ast_spec,
@@ -96,7 +96,7 @@ pub fn elaborate(
   json_cst~ : JsonCst,
   stdlib_rules? : Map[String, Rule],
   token_payload_rewrite~ : TokenPayloadRewrite,
-  force_int_position~ : Bool
+  force_int_position~ : Bool,
 ) -> ParserSpec raise ElabError {
   let mut header = @immut/array.new()
   let mut trailer = @immut/array.new()
@@ -139,7 +139,7 @@ pub fn elaborate(
 
   // Prepare tokens
   fn elaborate_token_type(
-    type_ : @ast.TypeString?
+    type_ : @ast.TypeString?,
   ) -> TypeExpr raise ElabError {
     match token_payload_rewrite {
       NoRewrite =>
@@ -268,7 +268,7 @@ pub fn elaborate(
   }
   fn map_term(
     ast_term : @ast.Term,
-    rule_param_map : Map[String, TypeExpr]
+    rule_param_map : Map[String, TypeExpr],
   ) -> Term raise ElabError {
     match ast_term {
       Symbol(symbol, loc~) =>
@@ -408,7 +408,7 @@ fn elaborate_action(
   ast_clause~ : (@ast.ClauseWithoutAction, @ast.ClauseAction),
   nonterminal_name~ : String,
   type_~ : TypeExpr,
-  json_cst~ : JsonCst
+  json_cst~ : JsonCst,
 ) -> Action raise ElabError {
   let arity = items.length()
   let name_to_index : Map[String, Int] = {}
@@ -575,7 +575,7 @@ fn elaborate_action(
 
 ///|
 fn parse_and_elaborate_type_expr(
-  str : @ast.TypeString
+  str : @ast.TypeString,
 ) -> TypeExpr raise ElabError {
   let type_expr = @type_expr_parser.parse(str) catch {
     _ => raise FailedToParseTypeExpr(str)
@@ -591,7 +591,7 @@ fn elaborate_type_expr(ast_type_expr : @ast.TypeExpr) -> TypeExpr {
 ///|
 fn elaborate_type_expr_with_generic_params(
   ast_type_expr : @ast.TypeExpr,
-  generic_params : Set[String]
+  generic_params : Set[String],
 ) -> TypeExpr {
   fn elaborate_type_expr(ast_type_expr : @ast.TypeExpr) -> TypeExpr {
     elaborate_type_expr_with_generic_params(ast_type_expr, generic_params)
@@ -611,7 +611,7 @@ fn elaborate_type_expr_with_generic_params(
 ///|
 fn[T, R] map_error(
   arr : Array[T],
-  f : (T) -> R raise ElabError
+  f : (T) -> R raise ElabError,
 ) -> Array[R] raise ElabError {
   let result : Array[R] = []
   for item in arr {

@@ -29,7 +29,7 @@ struct ProductionActionProvider {
 pub fn parse(
   grammar : @grm.Grammar,
   input_provider : InputProvider,
-  action_provider : ProductionActionProvider
+  action_provider : ProductionActionProvider,
 ) -> Obj {
   let automaton = @lr1.Automaton::build(grammar, user_eoi=false)
   let state_stack = []
@@ -87,7 +87,7 @@ suberror ObjUnit Unit
 
 ///|
 fn make_action_provider(
-  actions : Map[Int, (ArrayView[Obj]) -> Obj]
+  actions : Map[Int, (ArrayView[Obj]) -> Obj],
 ) -> ProductionActionProvider {
   { get_action: fn(num) { actions.get(num).unwrap() } }
 }
@@ -95,7 +95,7 @@ fn make_action_provider(
 ///|
 fn make_input_provider(
   tokens : Array[(String, Obj)],
-  terminal_by_name : @sorted_map.T[String, @grm.Terminal]
+  terminal_by_name : @sorted_map.SortedMap[String, @grm.Terminal],
 ) -> InputProvider {
   let mut i = 0
   {

@@ -5,20 +5,20 @@ priv struct DeferredSpecializedRule {
   parametric_rule_name : String
   specialized_rule_name : String
   args : Array[@elab.Term]
-  env : @immut/sorted_map.T[String, @elab.Term]
+  env : @immut/sorted_map.SortedMap[String, @elab.Term]
 }
 
 ///|
 pub fn eliminate_rule_args(
   spec : @elab.ParserSpec,
-  json_cst~ : @elab.JsonCst
+  json_cst~ : @elab.JsonCst,
 ) -> @elab.ParserSpec {
   let mut deferred_specialized_rules : Map[String, DeferredSpecializedRule] = {}
   let parametric_rules : Map[String, @elab.Rule] = {}
   let new_rules : Map[String, @elab.Rule] = {}
   fn map_term(
     term : @elab.Term,
-    env : @immut/sorted_map.T[String, @elab.Term]
+    env : @immut/sorted_map.SortedMap[String, @elab.Term],
   ) -> @elab.Term {
     match term {
       Token(_) => term
@@ -92,7 +92,7 @@ pub fn eliminate_rule_args(
   fn specialize_rule(dsr : DeferredSpecializedRule) -> @elab.Rule {
     let { parametric_rule_name, specialized_rule_name, args, env } = dsr
     let parametric_rule = parametric_rules.get(parametric_rule_name).unwrap()
-    let mut env : @immut/sorted_map.T[String, @elab.Term] = env
+    let mut env : @immut/sorted_map.SortedMap[String, @elab.Term] = env
     for index, param in parametric_rule.params {
       env = env.add(param.0, args[index])
     }
@@ -161,8 +161,8 @@ fn derive_term_ident(term : @elab.Term) -> String {
 ///|
 fn infer_return_type(
   parametric_rule : @elab.Rule,
-  env : @immut/sorted_map.T[String, @elab.Term],
-  json_cst~ : @elab.JsonCst
+  env : @immut/sorted_map.SortedMap[String, @elab.Term],
+  json_cst~ : @elab.JsonCst,
 ) -> @elab.TypeExpr {
   if json_cst is Yes {
     return Constr(pkg=None, "Json", [])

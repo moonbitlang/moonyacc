@@ -69,26 +69,6 @@ fn init {
 fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_1(_last_pos, _args[0:1])
   let _sub_action_1_result = yy_action_2(_args[1].2, _args[2:3])
-  let _sub_action_2_result = yy_action_3(_args[2].2, _args[3:4])
-  guard _sub_action_0_result is YYObj_String(a)
-  guard _args[1].0 is YYObj_String(b)
-  guard _sub_action_1_result is YYObj_String(_dollar3)
-  guard _sub_action_2_result is YYObj_String(_dollar4)
-  guard _args[4].0 is YYObj_String(_dollar5)
-  YYObj_String({();  a + b + _dollar3 + _dollar4 + _dollar5 })
-}
-
-// file:///./inline.mbty
-// 22|    B { "b" }
-fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  YYObj_String({();  "b" })
-}
-
-// file:///./inline.mbty
-// 14|    a=a b=b x x b { a + b + $3 + $4 + $5 }
-fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  let _sub_action_0_result = yy_action_1(_last_pos, _args[0:1])
-  let _sub_action_1_result = yy_action_3(_args[1].2, _args[2:3])
   let _sub_action_2_result = yy_action_2(_args[2].2, _args[3:4])
   guard _sub_action_0_result is YYObj_String(a)
   guard _args[1].0 is YYObj_String(b)
@@ -99,8 +79,36 @@ fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 }
 
 // file:///./inline.mbty
-// 18|    A { "a" }
-fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+// 14|    a=a b=b x x b { a + b + $3 + $4 + $5 }
+fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+  let _sub_action_0_result = yy_action_1(_last_pos, _args[0:1])
+  let _sub_action_1_result = yy_action_2(_args[1].2, _args[2:3])
+  let _sub_action_2_result = yy_action_4(_args[2].2, _args[3:4])
+  guard _sub_action_0_result is YYObj_String(a)
+  guard _args[1].0 is YYObj_String(b)
+  guard _sub_action_1_result is YYObj_String(_dollar3)
+  guard _sub_action_2_result is YYObj_String(_dollar4)
+  guard _args[4].0 is YYObj_String(_dollar5)
+  YYObj_String({();  a + b + _dollar3 + _dollar4 + _dollar5 })
+}
+
+// file:///./inline.mbty
+// 14|    a=a b=b x x b { a + b + $3 + $4 + $5 }
+fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+  let _sub_action_0_result = yy_action_1(_last_pos, _args[0:1])
+  let _sub_action_1_result = yy_action_4(_args[1].2, _args[2:3])
+  let _sub_action_2_result = yy_action_2(_args[2].2, _args[3:4])
+  guard _sub_action_0_result is YYObj_String(a)
+  guard _args[1].0 is YYObj_String(b)
+  guard _sub_action_1_result is YYObj_String(_dollar3)
+  guard _sub_action_2_result is YYObj_String(_dollar4)
+  guard _args[4].0 is YYObj_String(_dollar5)
+  YYObj_String({();  a + b + _dollar3 + _dollar4 + _dollar5 })
+}
+
+// file:///./inline.mbty
+// 26|    A { "a" }
+fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj_String({();  "a" })
 }
 
@@ -108,22 +116,8 @@ fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 // 14|    a=a b=b x x b { a + b + $3 + $4 + $5 }
 fn yy_action_6(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_1(_last_pos, _args[0:1])
-  let _sub_action_1_result = yy_action_2(_args[1].2, _args[2:3])
-  let _sub_action_2_result = yy_action_2(_args[2].2, _args[3:4])
-  guard _sub_action_0_result is YYObj_String(a)
-  guard _args[1].0 is YYObj_String(b)
-  guard _sub_action_1_result is YYObj_String(_dollar3)
-  guard _sub_action_2_result is YYObj_String(_dollar4)
-  guard _args[4].0 is YYObj_String(_dollar5)
-  YYObj_String({();  a + b + _dollar3 + _dollar4 + _dollar5 })
-}
-
-// file:///./inline.mbty
-// 14|    a=a b=b x x b { a + b + $3 + $4 + $5 }
-fn yy_action_7(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  let _sub_action_0_result = yy_action_1(_last_pos, _args[0:1])
-  let _sub_action_1_result = yy_action_3(_args[1].2, _args[2:3])
-  let _sub_action_2_result = yy_action_3(_args[2].2, _args[3:4])
+  let _sub_action_1_result = yy_action_4(_args[1].2, _args[2:3])
+  let _sub_action_2_result = yy_action_4(_args[2].2, _args[3:4])
   guard _sub_action_0_result is YYObj_String(a)
   guard _args[1].0 is YYObj_String(b)
   guard _sub_action_1_result is YYObj_String(_dollar3)
@@ -134,14 +128,20 @@ fn yy_action_7(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 
 // file:///./inline.mbty
 // 27|    B { "b" }
-fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj_String({();  "b" })
 }
 
 // file:///./inline.mbty
-// 26|    A { "a" }
-fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+// 18|    A { "a" }
+fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj_String({();  "a" })
+}
+
+// file:///./inline.mbty
+// 22|    B { "b" }
+fn yy_action_7(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+  YYObj_String({();  "b" })
 }
 
 fn yy_input(token : Token, _start_pos : Unit, _end_pos : Unit) -> (YYSymbol, YYObj) {
@@ -184,7 +184,7 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
 
 // [4, b → B •, $ / A / B]
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_b, yy_action_4)
+  ReduceNoLookahead(1, NT_b, yy_action_7)
 }
 
 // [0, start → A b • A A b, $]
@@ -236,7 +236,7 @@ fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
 
 // [2, start → A b B A b •, $]
 fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(5, NT_start, yy_action_0)
+  ReduceNoLookahead(5, NT_start, yy_action_5)
 }
 
 // [0, start → A b A • A b, $]
@@ -261,7 +261,7 @@ fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
 
 // [1, start → A b A B b •, $]
 fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(5, NT_start, yy_action_5)
+  ReduceNoLookahead(5, NT_start, yy_action_3)
 }
 
 // [0, start → A b A A • b, $]
@@ -276,7 +276,7 @@ fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
 
 // [0, start → A b A A b •, $]
 fn yy_state_14(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(5, NT_start, yy_action_7)
+  ReduceNoLookahead(5, NT_start, yy_action_0)
 }
 
 fn[T] yy_parse(

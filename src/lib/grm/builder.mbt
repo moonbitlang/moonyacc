@@ -27,7 +27,7 @@ pub fn BuilderContext::set_prec(
   self : BuilderContext,
   term : BuilderSymbol,
   assoc : Associativity,
-  level : Int
+  level : Int,
 ) -> Unit {
   (self._set_prec)(term, assoc, level)
 }
@@ -36,7 +36,7 @@ pub fn BuilderContext::set_prec(
 pub fn BuilderContext::add_production(
   self : BuilderContext,
   lhs : BuilderSymbol,
-  rhs : Array[BuilderSymbol]
+  rhs : Array[BuilderSymbol],
 ) -> Int {
   (self._add_production)(lhs, rhs)
 }
@@ -44,7 +44,7 @@ pub fn BuilderContext::add_production(
 ///|
 pub fn BuilderContext::set_start(
   self : BuilderContext,
-  name : BuilderSymbol
+  name : BuilderSymbol,
 ) -> Unit {
   (self._set_start)(name)
 }

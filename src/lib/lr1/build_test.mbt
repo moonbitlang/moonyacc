@@ -16,7 +16,7 @@
 fn test_grammar(
   grammar~ : @grm.Grammar,
   filename~ : String,
-  it : @test.T
+  it : @test.T,
 ) -> Unit raise {
   it.write("## grammar\n")
   it.write("### terminals\n")

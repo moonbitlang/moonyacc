@@ -1,9 +1,9 @@
 {
   "name": "moonbitlang/yacc",
-  "version": "0.6.12",
+  "version": "0.6.13",
   "deps": {
     "moonbitlang/x": "0.4.30",
-    "Yoorkin/ArgParser": "0.1.10",
+    "Yoorkin/ArgParser": "0.1.11",
     "moonbitlang/ulex-runtime": "0.4.1"
   },
   "readme": "README.md",

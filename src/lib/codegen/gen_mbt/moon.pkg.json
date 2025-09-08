@@ -7,7 +7,8 @@
     "moonbitlang/yacc/lib/util/array_multimap",
     "moonbitlang/yacc/lib/elab",
     "moonbitlang/yacc/lib/util/stamp",
-    "moonbitlang/yacc/lib/util/default_hashmap"
+    "moonbitlang/yacc/lib/util/default_hashmap",
+    "moonbitlang/yacc/lib/util/hashmap2"
   ],
   "warn-list": "-6"
 }

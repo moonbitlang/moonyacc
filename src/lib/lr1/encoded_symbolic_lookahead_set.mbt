@@ -25,7 +25,7 @@ let _empty : EncodedSymbolicLookaheadSet = {
 }
 
 ///|
-impl Eq for EncodedSymbolicLookaheadSet with op_equal(self, other) {
+impl Eq for EncodedSymbolicLookaheadSet with equal(self, other) {
   self.concrete_set == other.concrete_set && self.vars == other.vars
 }
 
@@ -36,7 +36,7 @@ impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with empty() {
 
 ///|
 impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with singleton(
-  lookahead
+  lookahead,
 ) {
   {
     concrete_set: EncodedLookaheadSet::singleton(lookahead),
@@ -46,7 +46,7 @@ impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with singleton(
 
 ///|
 fn EncodedSymbolicLookaheadSet::variable(
-  var_ : Int
+  var_ : Int,
 ) -> EncodedSymbolicLookaheadSet {
   {
     concrete_set: EncodedLookaheadSet::empty(),
@@ -57,7 +57,7 @@ fn EncodedSymbolicLookaheadSet::variable(
 ///|
 impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with union(
   self,
-  other
+  other,
 ) {
   {
     concrete_set: self.concrete_set.union(other.concrete_set),
@@ -68,7 +68,7 @@ impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with union(
 ///|
 fn EncodedSymbolicLookaheadSet::interpret(
   self : EncodedSymbolicLookaheadSet,
-  subst : Array[EncodedLookaheadSet]
+  subst : Array[EncodedLookaheadSet],
 ) -> EncodedLookaheadSet {
   self.vars
   .iter()

@@ -74,28 +74,16 @@ fn init {
   }
 }
 
-// file:///./stdlib.mbty
-// 44|    { @list.empty() }
-fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  YYObj__list_List_Char_({();  @list.empty() })
-}
-
-// file:///./stdlib.mbty
-// 14|    { @list.empty() }
-fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  YYObj__list_List_Char_({();  @list.empty() })
-}
-
 // file:///./parser.mbty
 // 9|    loption(delimited("{", list(LETTER), "}")) { $1.iter().map(fn (it) { String::make(1, it) }).join("") }
-fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   guard _args[0].0 is YYObj__list_List_Char_(_dollar1)
   YYObj_String({();  _dollar1.iter().map(fn (it) { String::make(1, it) }).join("") })
 }
 
 // file:///./stdlib.mbty
 // 45|    X list(X) { $2.add($1) }
-fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   guard _args[1].0 is YYObj__list_List_Char_(_dollar2)
   guard _args[0].0 is YYObj_Char(_dollar1)
   YYObj__list_List_Char_({();  _dollar2.add(_dollar1) })
@@ -103,17 +91,29 @@ fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 
 // file:///./stdlib.mbty
 // 15|    X { $1 }
-fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  let _sub_action_0_result = yy_action_5(_last_pos, _args[0:3])
+fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+  let _sub_action_0_result = yy_action_3(_last_pos, _args[0:3])
   guard _sub_action_0_result is YYObj__list_List_Char_(_dollar1)
   YYObj__list_List_Char_({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 13|    OPEN X CLOSE { $2 }
-fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   guard _args[1].0 is YYObj__list_List_Char_(_dollar2)
   YYObj__list_List_Char_({();  _dollar2 })
+}
+
+// file:///./stdlib.mbty
+// 44|    { @list.empty() }
+fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+  YYObj__list_List_Char_({();  @list.empty() })
+}
+
+// file:///./stdlib.mbty
+// 14|    { @list.empty() }
+fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
+  YYObj__list_List_Char_({();  @list.empty() })
 }
 
 fn yy_input(token : Token, _start_pos : Unit, _end_pos : Unit) -> (YYSymbol, YYObj) {
@@ -133,7 +133,7 @@ fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
     NT_start => Shift(yy_state_1)
     T_LBRACE => Shift(yy_state_2)
     NT_loption_delimited_LBRACE_list_LETTER__RBRACE__ => Shift(yy_state_7)
-    EOI => Reduce(0, NT_loption_delimited_LBRACE_list_LETTER__RBRACE__, yy_action_1)
+    EOI => Reduce(0, NT_loption_delimited_LBRACE_list_LETTER__RBRACE__, yy_action_5)
     _ => Error
   }
 }
@@ -150,7 +150,7 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     NT_list_LETTER_ => Shift(yy_state_3)
     T_LETTER => Shift(yy_state_5)
-    T_RBRACE => Reduce(0, NT_list_LETTER_, yy_action_0)
+    T_RBRACE => Reduce(0, NT_list_LETTER_, yy_action_4)
     _ => Error
   }
 }
@@ -165,7 +165,7 @@ fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
 
 // [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → LBRACE list(LETTER) RBRACE •, $]
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_loption_delimited_LBRACE_list_LETTER__RBRACE__, yy_action_4)
+  ReduceNoLookahead(3, NT_loption_delimited_LBRACE_list_LETTER__RBRACE__, yy_action_2)
 }
 
 // [1, list(LETTER) → •, RBRACE]
@@ -175,19 +175,19 @@ fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LETTER => Shift(yy_state_5)
     NT_list_LETTER_ => Shift(yy_state_6)
-    T_RBRACE => Reduce(0, NT_list_LETTER_, yy_action_0)
+    T_RBRACE => Reduce(0, NT_list_LETTER_, yy_action_4)
     _ => Error
   }
 }
 
 // [2, list(LETTER) → LETTER list(LETTER) •, RBRACE]
 fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_list_LETTER_, yy_action_3)
+  ReduceNoLookahead(2, NT_list_LETTER_, yy_action_1)
 }
 
 // [0, start → loption(delimited(LBRACE,list(LETTER),RBRACE)) •, $]
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_start, yy_action_2)
+  ReduceNoLookahead(1, NT_start, yy_action_0)
 }
 
 fn[T] yy_parse(

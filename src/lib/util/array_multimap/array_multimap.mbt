@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct T[K, V] (@hashmap2.T[K, Array[V]])
+struct T[K, V](@hashmap2.T[K, Array[V]])
 
 ///|
 pub fn[K, V] new() -> T[K, V] {

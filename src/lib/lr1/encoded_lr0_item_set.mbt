@@ -12,14 +12,15 @@
 // You should have received a copy of the GNU General Public License
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
-///| Always sorted
+///|
+/// Always sorted
 pub(all) struct EncodedLR0ItemSet {
   items : Array[EncodedLR0Item]
   mut hash : Int?
 }
 
 ///|
-pub impl Eq for EncodedLR0ItemSet with op_equal(self, other) {
+pub impl Eq for EncodedLR0ItemSet with equal(self, other) {
   self.items == other.items
 }
 
@@ -57,7 +58,7 @@ pub impl Default for EncodedLR0ItemSet with default() {
 
 ///|
 pub fn EncodedLR0ItemSet::from_sorted_array(
-  items : Array[EncodedLR0Item]
+  items : Array[EncodedLR0Item],
 ) -> EncodedLR0ItemSet {
   { items, hash: None }
 }
@@ -65,7 +66,7 @@ pub fn EncodedLR0ItemSet::from_sorted_array(
 ///|
 pub fn EncodedLR0ItemSet::decode_iter(
   self : EncodedLR0ItemSet,
-  grammar : @grm.Grammar
+  grammar : @grm.Grammar,
 ) -> Iter[(Int, LR0Item)] {
   Iter::new(fn(yield_) {
     let mut index = 0

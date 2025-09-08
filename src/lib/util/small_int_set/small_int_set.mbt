@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct SmallIntSet (Array[Int]) derive(Eq, Compare)
+struct SmallIntSet(Array[Int]) derive(Eq, Compare)
 
 ///|
 pub typealias SmallIntSet as T
@@ -143,9 +143,7 @@ pub fn add(self : SmallIntSet, key : Int) -> SmallIntSet {
     let result = Array::make(1 + bitmask.popcnt(), 0)
     result[0] = bitmask
     self.0.blit_to(result, len=data_index - 1, src_offset=1, dst_offset=1)
-    self
-    .0
-    .blit_to(
+    self.0.blit_to(
       result,
       len=self.0.length() - data_index,
       src_offset=data_index,

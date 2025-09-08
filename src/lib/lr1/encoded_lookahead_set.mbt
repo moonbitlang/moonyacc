@@ -22,9 +22,7 @@ fn EncodedLookaheadSet::is_singleton(
   self : EncodedLookaheadSet,
   key : Lookahead,
 ) -> Bool {
-  self
-  .0
-  .is_singleton(
+  self.0.is_singleton(
     match key {
       EndOfInput => 0
       Input(key) => key.num + 1
@@ -60,8 +58,7 @@ fn EncodedLookaheadSet::decode_iter(
   self : EncodedLookaheadSet,
   grammar : @grm.Grammar,
 ) -> Iter[Lookahead] {
-  self
-  .0
+  self.0
   .iter()
   .map(fn(t) {
     if t == 0 {

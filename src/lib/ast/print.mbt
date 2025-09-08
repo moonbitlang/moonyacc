@@ -2,7 +2,7 @@
 pub fn print_spec(
   spec : ParserSpec,
   out : StringBuilder,
-  actions~ : Bool = false
+  actions? : Bool = false,
 ) -> Unit {
   let mut header = None
   let mut trailer = None

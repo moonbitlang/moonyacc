@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct Stamp (Int) derive(Eq, Hash)
+struct Stamp(Int) derive(Eq, Hash)
 
 ///|
 pub typealias Stamp as T

@@ -33,7 +33,7 @@ fn find_leaf_inline_rules(rules : Map[String, @elab.Rule]) -> Set[String] {
 ///|
 fn eliminate_inline_rules(
   spec : @elab.ParserSpec,
-  inline_rules : Set[String]
+  inline_rules : Set[String],
 ) -> @elab.ParserSpec {
   // assert not(inline_rules.is_empty())
   let new_rules : Map[String, @elab.Rule] = {}
@@ -54,7 +54,7 @@ fn eliminate_inline_rules(
       cont_items : @immut/array.T[@elab.Item],
       cont_bindings : @immut/array.T[(@elab.BindingSubject, @elab.Code)],
       cont_subactions : @immut/array.T[@elab.SubAction],
-      index : Int
+      index : Int,
     ) {
       if index >= clause.items.length() {
         yield_({

@@ -16,7 +16,7 @@
 
 ///|
 fn[T : AbstractLookaheadSet] compute_first_fn(
-  grammar : @grm.Grammar
+  grammar : @grm.Grammar,
 ) -> (ArrayView[@grm.Symbol]) -> EpsilonLookaheadSet[T] {
   let nt_first_map : Array[EpsilonLookaheadSet[T]] = Array::make(
     grammar.nonterminals.length(),

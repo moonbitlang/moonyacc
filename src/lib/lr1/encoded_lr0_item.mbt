@@ -13,12 +13,12 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-pub(all) struct EncodedLR0Item (Int) derive(Eq, Compare, Hash)
+pub(all) struct EncodedLR0Item(Int) derive(Eq, Compare, Hash)
 
 ///|
 pub fn EncodedLR0Item::new(
   production : @grm.Production,
-  dot : Int
+  dot : Int,
 ) -> EncodedLR0Item {
   (production.num << 10) | dot
 }
@@ -26,7 +26,7 @@ pub fn EncodedLR0Item::new(
 ///|
 pub fn EncodedLR0Item::decode(
   self : EncodedLR0Item,
-  grammar : @grm.Grammar
+  grammar : @grm.Grammar,
 ) -> LR0Item {
   let production = grammar.productions[self.0 >> 10]
   let dot = self.0 & 0x3FF
@@ -36,7 +36,7 @@ pub fn EncodedLR0Item::decode(
 ///|
 pub fn EncodedLR0Item::decode_production(
   self : EncodedLR0Item,
-  grammar : @grm.Grammar
+  grammar : @grm.Grammar,
 ) -> @grm.Production {
   grammar.productions[self.0 >> 10]
 }
@@ -44,7 +44,7 @@ pub fn EncodedLR0Item::decode_production(
 ///|
 pub fn EncodedLR0Item::decode_postdot(
   self : EncodedLR0Item,
-  grammar : @grm.Grammar
+  grammar : @grm.Grammar,
 ) -> @grm.Symbol? {
   let production = grammar.productions[self.0 >> 10]
   let dot = self.0 & 0x3FF

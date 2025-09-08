@@ -33,12 +33,14 @@ priv struct Node[LookaheadSet] {
 
 ///|
 pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
-  grammar : @grm.Grammar
+  grammar : @grm.Grammar,
 ) -> (Iter[(EncodedLR0Item, LookaheadSet)]) -> Array[
   (EncodedLR0Item, LookaheadSet),
 ] {
   let first = compute_first_fn(grammar)
-  let node_by_item : @hashmap.T[EncodedLR0Item, Node[LookaheadSet]] = @hashmap.new()
+  let node_by_item : @hashmap2.T[EncodedLR0Item, Node[LookaheadSet]] = @hashmap2.new(
+    capacity=16,
+  )
   for production in grammar.productions {
     for dot in 0..=production.rhs.length() {
       let item = EncodedLR0Item::new(production, dot)
@@ -55,7 +57,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
         predecessors: @list.empty(),
         lookahead_set: LookaheadSet::empty(),
       }
-      node_by_item[item] = node
+      node_by_item.set(item, node)
     }
   }
   for pair in node_by_item {
@@ -75,7 +77,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
     letrec visit = fn(
       node : Node[LookaheadSet],
       lookahead_set : EpsilonLookaheadSet[LookaheadSet],
-      parent : Node[LookaheadSet]
+      parent : Node[LookaheadSet],
     ) {
       if lookahead_set.nullable {
         node.predecessors = @list.construct(parent, node.predecessors)

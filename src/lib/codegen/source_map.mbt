@@ -27,7 +27,7 @@ pub impl SourceMapBuilder for SourceMap with add_mapping(
   source,
   original_offset_in_utf8,
   generated_offset_in_utf8,
-  length_in_utf8
+  length_in_utf8,
 ) {
   self.mappings.push({
     source,

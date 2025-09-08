@@ -5,7 +5,7 @@ struct LoggerWithCursor {
 }
 
 ///|
-pub fn new(logger : &Logger, cursor~ : Int = 0) -> LoggerWithCursor {
+pub fn new(logger : &Logger, cursor? : Int = 0) -> LoggerWithCursor {
   { logger, cursor }
 }
 
