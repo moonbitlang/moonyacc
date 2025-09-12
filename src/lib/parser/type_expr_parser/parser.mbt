@@ -173,20 +173,20 @@ fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 }
 
 // file:///./parser.mbty
-// 44|    "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@list.construct($2, $4).to_array(), $7) }
+// 44|    "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@list.cons($2, $4).to_array(), $7) }
 fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[3].0 is YYObj__list_List__ast_TypeExpr_(_dollar4)
   guard _args[6].0 is YYObj__ast_TypeExpr(_dollar7)
-  YYObj__ast_TypeExpr({();  Arrow(@list.construct(_dollar2, _dollar4).to_array(), _dollar7) })
+  YYObj__ast_TypeExpr({();  Arrow(@list.cons(_dollar2, _dollar4).to_array(), _dollar7) })
 }
 
 // file:///./parser.mbty
-// 57|    "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@list.construct($2, $4).to_array()) }
+// 57|    "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@list.cons($2, $4).to_array()) }
 fn yy_action_9(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard _args[3].0 is YYObj__list_List__ast_TypeExpr_(_dollar4)
-  YYObj__ast_TypeExpr({();  Tuple(@list.construct(_dollar2, _dollar4).to_array()) })
+  YYObj__ast_TypeExpr({();  Tuple(@list.cons(_dollar2, _dollar4).to_array()) })
 }
 
 // file:///./parser.mbty
@@ -212,18 +212,18 @@ fn yy_action_12(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 63|    type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.construct(type_expr, type_expr_list) }
+// 63|    type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.cons(type_expr, type_expr_list) }
 fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
   guard _args[2].0 is YYObj__list_List__ast_TypeExpr_(type_expr_list)
-  YYObj__list_List__ast_TypeExpr_({();  @list.construct(type_expr, type_expr_list) })
+  YYObj__list_List__ast_TypeExpr_({();  @list.cons(type_expr, type_expr_list) })
 }
 
 // file:///./parser.mbty
-// 62|    type_expr=type_expr { @list.construct(type_expr, @list.empty()) }
+// 62|    type_expr=type_expr { @list.cons(type_expr, @list.empty()) }
 fn yy_action_14(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard _args[0].0 is YYObj__ast_TypeExpr(type_expr)
-  YYObj__list_List__ast_TypeExpr_({();  @list.construct(type_expr, @list.empty()) })
+  YYObj__list_List__ast_TypeExpr_({();  @list.cons(type_expr, @list.empty()) })
 }
 
 // file:///./parser.mbty
@@ -715,7 +715,7 @@ fn[T] yy_parse(
   initial_pos? : Int,
 ) -> T raise ParseError {
   let mut cursor = 0
-  let mut state_stack : @list.List[YYState] = @list.construct(start, @list.empty())
+  let mut state_stack : @list.List[YYState] = @list.cons(start, @list.empty())
   let data_stack : Array[(YYObj, Int, Int)] = []
   let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
   let mut state = start
@@ -747,7 +747,7 @@ fn[T] yy_parse(
       Shift(next_state) => {
         guard lookahead is Some(la)
         data_stack.push(la.1)
-        state_stack = @list.construct(next_state, state_stack)
+        state_stack = @list.cons(next_state, state_stack)
         last_shifted_state_stack = state_stack
         state = next_state
         last_pos = la.1.2
@@ -773,7 +773,7 @@ fn[T] yy_parse(
             match state(symbol) {
               Accept => return return_(data_stack.unsafe_pop().0)
               Shift(next_state) => {
-                state_stack = @list.construct(next_state, state_stack)
+                state_stack = @list.cons(next_state, state_stack)
                 state = next_state
               }
               Reduce(count, symbol, action)
@@ -806,7 +806,7 @@ fn error(stack : @list.List[YYState], token : Token?, loc : (Int, Int)) -> Unit 
                 let stack = stack.drop(count)
                 guard stack is More(state, ..)
                 match state(symbol) {
-                  Shift(state) => go(@list.construct(state, stack))
+                  Shift(state) => go(@list.cons(state, stack))
                   Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
                   _ => panic()
                 }

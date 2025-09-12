@@ -1820,7 +1820,7 @@ fn code_rbrace(
       let t2 = lexbuf.get_string(_capture_2_start, _capture_2_end)
       sb.write_string(t)
       let arg : @ast.ClauseItemIdent = if t2.has_prefix("$") {
-        let index = @strconv.parse_int(t2.substring(start=1), base=10) catch {
+        let index = @strconv.parse_int(try! t2[1:].to_string(), base=10) catch {
           err => abort(Show::to_string(err))
         }
         Dollar(index)

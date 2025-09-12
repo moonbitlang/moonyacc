@@ -113,12 +113,12 @@ pub fn LR1State::set_action(
   match self.action.get(input) {
     Some(Conflict(decisions)) =>
       if not(decisions.contains(decision)) {
-        self.action[input] = Conflict(@list.construct(decision, decisions))
+        self.action[input] = Conflict(@list.cons(decision, decisions))
       }
     Some(decision0) =>
       if decision0 != decision {
         self.action[input] = Conflict(
-          @list.construct(decision, @list.construct(decision0, @list.empty())),
+          @list.cons(decision, @list.cons(decision0, @list.empty())),
         )
       }
     None => self.action[input] = decision

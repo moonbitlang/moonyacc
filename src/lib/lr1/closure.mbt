@@ -80,7 +80,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
       parent : Node[LookaheadSet],
     ) {
       if lookahead_set.nullable {
-        node.predecessors = @list.construct(parent, node.predecessors)
+        node.predecessors = @list.cons(parent, node.predecessors)
       }
       if node.stamp == stamp {
         node.lookahead_set = node.lookahead_set.union(lookahead_set.set)

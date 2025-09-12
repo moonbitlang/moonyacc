@@ -483,7 +483,7 @@ fn elaborate_action(
               let len = item.start - last_index
               body.push(
                 (
-                  code.code.substring(start=last_index, end=item.start),
+                  try! code.code[last_index:item.start].to_string(),
                   Some((code.utf8_pos + last_index, len)),
                 ),
               )
@@ -518,7 +518,7 @@ fn elaborate_action(
             let len = code.code.length() - last_index
             body.push(
               (
-                code.code.substring(start=last_index, end=code.code.length()),
+                try! code.code[last_index:code.code.length()].to_string(),
                 Some((code.utf8_pos + last_index, len)),
               ),
             )
@@ -557,10 +557,8 @@ fn elaborate_action(
     file: filename,
     line: line - 1, // to 0-based
     column: column - 1, // to 0-based
-    code: parser_spec_str.substring(
-      start=ast_clause_without_action.loc.0,
-      end=ast_clause_action.loc.0 + ast_clause_action.loc.1,
-    ),
+    code: try! parser_spec_str[ast_clause_without_action.loc.0:ast_clause_action.loc.0 +
+    ast_clause_action.loc.1].to_string(),
   }
   Action::{
     stamp: @stamp.new(),
