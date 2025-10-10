@@ -27,6 +27,8 @@ fn main {
   let mut external_tokens : Bool = false
   let mut no_comments : Bool = false
   let mut no_std : Bool = false
+  let mut table = false
+  let mut compress = false
   let mut token_payload_rewrite : @driver.TokenPayloadRewrite = NoRewrite
   let mut force_int_position : Bool = false
   let mut print_as_mly_without_actions : Bool = false
@@ -117,6 +119,16 @@ fn main {
         Unit(fn() { no_std = true }),
         "Do not include standard library",
       ),
+      ("--table", "--table", Unit(fn() { table = true }), "Use table engine"),
+      (
+        "--compress-table",
+        "--compress-table",
+        Unit(fn() {
+          compress = true
+          table = true
+        }),
+        "Use table engine with compression",
+      ),
       (
         "--version",
         "-v",
@@ -155,7 +167,15 @@ fn main {
     no_std~,
     token_payload_rewrite~,
     force_int_position~,
-    generator=@gen_mbt.generator,
+    generator=if table {
+      if compress {
+        @gen_mbt_table.compress_generator
+      } else {
+        @gen_mbt_table.generator
+      }
+    } else {
+      @gen_mbt.generator
+    },
   )
   fn write_map_file(file : String) raise {
     @fs.write_string_to_file(file, source_map.to_json().stringify(indent=2))
