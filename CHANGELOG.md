@@ -1,3 +1,8 @@
+## 0.7.0
+
+- feat: add --table option to use table-driven parser engine.
+- feat: add --compress-table option to generate compressed parsing table.
+
 ## 0.6.9
 
 - feat: allow complex derive, eg `%derive(ToJson(style="legacy"))`
