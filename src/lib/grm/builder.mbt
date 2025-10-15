@@ -60,7 +60,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
     match terminal_by_name.get(name) {
       Some(t) => t
       None => {
-        let t = Terminal::{ num: terminal_by_name.size(), name, prec: None }
+        let t = Terminal::{ num: terminal_by_name.length(), name, prec: None }
         terminal_by_name[name] = t
         terminals.push(t)
         t
@@ -73,7 +73,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
       Some(nt) => nt
       None => {
         let nt = Nonterminal::{
-          num: nonterminal_by_name.size(),
+          num: nonterminal_by_name.length(),
           name,
           productions: [],
         }

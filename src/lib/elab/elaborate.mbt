@@ -178,7 +178,7 @@ pub fn elaborate(
         Some(type_) =>
           elaborate_type_expr_with_generic_params(type_, generic_params)
         None => {
-          let generic_param = "_\{generic_params.size()}"
+          let generic_param = "_\{generic_params.length()}"
           generic_params.add(generic_param)
           Param(generic_param)
         }
@@ -370,7 +370,7 @@ pub fn elaborate(
           position_type = parse_and_elaborate_type_expr(type_)
         }
       Derive(traits~, type_~) => {
-        let traits = traits.split(",").map(t => t.trim(" ").to_string())
+        let traits = traits.split(",").map(t => t.trim(char_set=" ").to_string())
         for trait_ in traits {
           derive_map.add(type_, trait_)
         }

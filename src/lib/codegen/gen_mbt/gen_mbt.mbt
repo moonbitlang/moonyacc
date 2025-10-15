@@ -808,7 +808,7 @@ fn codegen(
       }
     }
 
-    if decision_groups.size() == 1 && no_lookahead_needed() {
+    if decision_groups.length() == 1 && no_lookahead_needed() {
       let decision = [..decision_groups.keys_as_iter()][0]
       let decision = match decision {
         Reduce(num_symbols, nonterm, prod_num) =>
