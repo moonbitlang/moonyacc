@@ -1,0 +1,11 @@
+# https://github.com/github-linguist/linguist/blob/main/docs/overrides.md
+# https://git-scm.com/docs/gitattributes#_description
+#
+# > The rules by which the pattern matches paths are the same as in .gitignore files (see gitignore[5]), with a few exceptions:
+# > negative patterns are forbidden
+# > patterns that match a directory do not recursively match paths inside that directory 
+# > (so using the trailing-slash path/ syntax is pointless in an attributes file; use path/** instead)
+# 
+# you can use `git check-attr linguist-generated -- boot/**` this shell command to test pattern matching results.
+
+boot/** linguist-generated
