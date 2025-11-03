@@ -13,6 +13,6 @@ pub fn[K, V] new(default_fn : (K) -> V) -> T[K, V] {
 }
 
 ///|
-pub fn[K : Eq + Hash, V] get(self : T[K, V], key : K) -> V {
+pub fn[K : Eq + Hash, V] T::get(self : T[K, V], key : K) -> V {
   self.map.get_or_init(key, fn(key) { (self.default_fn)(key) })
 }

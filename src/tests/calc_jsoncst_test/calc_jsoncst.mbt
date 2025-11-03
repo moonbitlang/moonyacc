@@ -60,10 +60,10 @@ typealias Error as YYObj
 priv suberror YYObj_Json Json
 
 ///|
-typealias (YYSymbol) -> YYDecision as YYState
+type YYState = (YYSymbol) -> YYDecision
 
 ///|
-typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
+type YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
 
 ///|
 priv enum YYDecision {

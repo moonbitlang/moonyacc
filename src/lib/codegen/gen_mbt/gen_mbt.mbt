@@ -20,7 +20,7 @@ priv enum CodegenSymbol {
 } derive(Eq, Compare)
 
 ///|
-fn to_string(self : CodegenSymbol) -> String {
+fn CodegenSymbol::to_string(self : CodegenSymbol) -> String {
   match self {
     T(t) => "T_\{t.name}"
     NT(nt) => "NT_\{derive_nonterminal_ident(nt)}"

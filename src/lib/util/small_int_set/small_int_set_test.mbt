@@ -138,7 +138,7 @@ test "@small_int_set.add/idempotent" {
 }
 
 ///|
-test "@small_int_set.remove" {
+test "@small_int_set.remove basic" {
   // Test basic remove functionality
   let set = @small_int_set.empty()
   let set1 = set.add(5)

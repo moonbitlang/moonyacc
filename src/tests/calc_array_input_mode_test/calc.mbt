@@ -60,10 +60,10 @@ priv suberror YYObj_Void
 priv suberror YYObj_Int Int
 
 ///|
-typealias (YYSymbol) -> YYDecision as YYState
+type YYState = (YYSymbol) -> YYDecision
 
 ///|
-typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
+type YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
 
 ///|
 priv enum YYDecision {

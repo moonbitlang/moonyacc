@@ -332,8 +332,8 @@ fn token(
     34 => {
       _tag_0 = lexbuf.curr_pos()
       continue match lexbuf.next_as_int() {
-          46 => 49
-          47 => 50
+          46 => 60
+          47 => 62
           48..=57 => 34
           65..=90 => 34
           95 => 34
@@ -344,9 +344,9 @@ fn token(
     35 =>
       continue match lexbuf.next_as_int() {
           0..=41 => 35
-          42 => 52
+          42 => 65
           43..=46 => 35
-          47 => 53
+          47 => 64
           48..=1114111 => 35
           _ => break
         }
@@ -355,7 +355,7 @@ fn token(
       _match_end = lexbuf.curr_pos()
       continue match lexbuf.next_as_int() {
           0..=9 => 36
-          10 => 51
+          10 => 63
           11..=1114111 => 36
           _ => break
         }
@@ -364,7 +364,7 @@ fn token(
       _match_pattern = 2
       _match_end = lexbuf.curr_pos()
       continue match lexbuf.next_as_int() {
-          41 => 54
+          41 => 49
           _ => break
         }
     }
@@ -377,146 +377,119 @@ fn token(
     }
     39 =>
       continue match lexbuf.next_as_int() {
-          108 => 55
+          108 => 50
           _ => break
         }
     40 =>
       continue match lexbuf.next_as_int() {
-          114 => 56
+          114 => 51
           _ => break
         }
     41 =>
       continue match lexbuf.next_as_int() {
-          110 => 57
+          110 => 52
           _ => break
         }
     42 =>
       continue match lexbuf.next_as_int() {
-          103 => 58
+          103 => 53
           _ => break
         }
     43 =>
       continue match lexbuf.next_as_int() {
-          102 => 59
+          102 => 54
           _ => break
         }
     44 =>
       continue match lexbuf.next_as_int() {
-          115 => 61
+          115 => 56
           _ => break
         }
     45 =>
       continue match lexbuf.next_as_int() {
-          101 => 60
+          101 => 55
           _ => break
         }
     46 =>
       continue match lexbuf.next_as_int() {
-          107 => 63
+          107 => 58
           _ => break
         }
     47 =>
       continue match lexbuf.next_as_int() {
-          112 => 62
+          112 => 57
           _ => break
         }
     48 =>
       continue match lexbuf.next_as_int() {
-          97 => 64
+          97 => 59
           _ => break
         }
     49 => {
-      _tag_1 = lexbuf.curr_pos()
-      continue match lexbuf.next_as_int() {
-          65..=90 => 65
-          95 => 65
-          97..=122 => 65
-          _ => break
-        }
-    }
-    50 =>
-      continue match lexbuf.next_as_int() {
-          65..=90 => 34
-          95 => 34
-          97..=122 => 34
-          _ => break
-        }
-    51 => {
-      _match_pattern = 4
-      _match_end = lexbuf.curr_pos()
-      break
-    }
-    52 =>
-      continue match lexbuf.next_as_int() {
-          0..=41 => 35
-          42 => 52
-          43..=46 => 35
-          47 => 66
-          48..=1114111 => 35
-          _ => break
-        }
-    53 =>
-      continue match lexbuf.next_as_int() {
-          0..=41 => 35
-          43..=1114111 => 35
-          _ => break
-        }
-    54 => {
       _match_pattern = 1
       _match_end = lexbuf.curr_pos()
       break
     }
-    55 =>
+    50 =>
       continue match lexbuf.next_as_int() {
           105 => 67
           _ => break
         }
-    56 =>
+    51 =>
       continue match lexbuf.next_as_int() {
           105 => 68
           _ => break
         }
-    57 =>
+    52 =>
       continue match lexbuf.next_as_int() {
           97 => 69
           _ => break
         }
-    58 =>
+    53 =>
       continue match lexbuf.next_as_int() {
           104 => 70
           _ => break
         }
-    59 =>
+    54 =>
       continue match lexbuf.next_as_int() {
           116 => 71
           _ => break
         }
-    60 =>
+    55 =>
       continue match lexbuf.next_as_int() {
           99 => 72
           _ => break
         }
-    61 =>
+    56 =>
       continue match lexbuf.next_as_int() {
           105 => 73
           _ => break
         }
-    62 =>
+    57 =>
       continue match lexbuf.next_as_int() {
           101 => 74
           _ => break
         }
-    63 =>
+    58 =>
       continue match lexbuf.next_as_int() {
           101 => 75
           _ => break
         }
-    64 =>
+    59 =>
       continue match lexbuf.next_as_int() {
           114 => 76
           _ => break
         }
-    65 => {
+    60 => {
+      _tag_1 = lexbuf.curr_pos()
+      continue match lexbuf.next_as_int() {
+          65..=90 => 61
+          95 => 61
+          97..=122 => 61
+          _ => break
+        }
+    }
+    61 => {
       _match_pattern = 5
       _match_end = lexbuf.curr_pos()
       _capture_0_start = _match_start
@@ -526,13 +499,40 @@ fn token(
       _capture_2_start = _match_start + 1
       _capture_2_end = _tag_0
       continue match lexbuf.next_as_int() {
-          48..=57 => 65
-          65..=90 => 65
-          95 => 65
-          97..=122 => 65
+          48..=57 => 61
+          65..=90 => 61
+          95 => 61
+          97..=122 => 61
           _ => break
         }
     }
+    62 =>
+      continue match lexbuf.next_as_int() {
+          65..=90 => 34
+          95 => 34
+          97..=122 => 34
+          _ => break
+        }
+    63 => {
+      _match_pattern = 4
+      _match_end = lexbuf.curr_pos()
+      break
+    }
+    64 =>
+      continue match lexbuf.next_as_int() {
+          0..=41 => 35
+          43..=1114111 => 35
+          _ => break
+        }
+    65 =>
+      continue match lexbuf.next_as_int() {
+          0..=41 => 35
+          42 => 65
+          43..=46 => 35
+          47 => 66
+          48..=1114111 => 35
+          _ => break
+        }
     66 => {
       _match_pattern = 3
       _match_end = lexbuf.curr_pos()
@@ -1442,7 +1442,7 @@ fn code_rbrace(
       _capture_1_start = _match_start + 1
       _capture_1_end = _match_end
       continue match lexbuf.next_as_int() {
-          40 => 21
+          40 => 38
           48..=57 => 7
           65..=90 => 7
           95 => 7
@@ -1460,7 +1460,7 @@ fn code_rbrace(
           65..=90 => 7
           95 => 7
           97..=111 => 7
-          112 => 22
+          112 => 37
           113..=122 => 7
           _ => break
         }
@@ -1475,7 +1475,7 @@ fn code_rbrace(
           65..=90 => 7
           95 => 7
           97..=98 => 7
-          99 => 23
+          99 => 21
           100..=122 => 7
           _ => break
         }
@@ -1490,7 +1490,7 @@ fn code_rbrace(
           65..=90 => 7
           95 => 7
           97 => 7
-          98 => 24
+          98 => 22
           99..=122 => 7
           _ => break
         }
@@ -1505,39 +1505,12 @@ fn code_rbrace(
           65..=90 => 7
           95 => 7
           97..=113 => 7
-          114 => 25
+          114 => 23
           115..=122 => 7
           _ => break
         }
     }
     21 => {
-      _tag_1 = lexbuf.curr_pos()
-      continue match lexbuf.next_as_int() {
-          9 => 21
-          32 => 21
-          36 => 26
-          65..=90 => 27
-          95 => 27
-          97..=122 => 27
-          _ => break
-        }
-    }
-    22 => {
-      _match_pattern = 5
-      _match_end = lexbuf.curr_pos()
-      _capture_0_start = _match_start
-      _capture_0_end = _match_end
-      continue match lexbuf.next_as_int() {
-          48..=57 => 7
-          65..=90 => 7
-          95 => 7
-          97..=110 => 7
-          111 => 28
-          112..=122 => 7
-          _ => break
-        }
-    }
-    23 => {
       _match_pattern = 4
       _match_end = lexbuf.curr_pos()
       _capture_0_start = _match_start
@@ -1552,7 +1525,7 @@ fn code_rbrace(
           _ => break
         }
     }
-    24 => {
+    22 => {
       _match_pattern = 5
       _match_end = lexbuf.curr_pos()
       _capture_0_start = _match_start
@@ -1562,12 +1535,12 @@ fn code_rbrace(
           65..=90 => 7
           95 => 7
           97..=110 => 7
-          111 => 29
+          111 => 24
           112..=122 => 7
           _ => break
         }
     }
-    25 => {
+    23 => {
       _match_pattern = 5
       _match_end = lexbuf.curr_pos()
       _capture_0_start = _match_start
@@ -1582,40 +1555,7 @@ fn code_rbrace(
           _ => break
         }
     }
-    26 =>
-      continue match lexbuf.next_as_int() {
-          48..=57 => 32
-          _ => break
-        }
-    27 => {
-      _tag_2 = lexbuf.curr_pos()
-      continue match lexbuf.next_as_int() {
-          9 => 30
-          32 => 30
-          41 => 31
-          48..=57 => 27
-          65..=90 => 27
-          95 => 27
-          97..=122 => 27
-          _ => break
-        }
-    }
-    28 => {
-      _match_pattern = 5
-      _match_end = lexbuf.curr_pos()
-      _capture_0_start = _match_start
-      _capture_0_end = _match_end
-      continue match lexbuf.next_as_int() {
-          48..=57 => 7
-          65..=90 => 7
-          95 => 7
-          97..=114 => 7
-          115 => 16
-          116..=122 => 7
-          _ => break
-        }
-    }
-    29 => {
+    24 => {
       _match_pattern = 5
       _match_end = lexbuf.curr_pos()
       _capture_0_start = _match_start
@@ -1625,19 +1565,42 @@ fn code_rbrace(
           65..=90 => 7
           95 => 7
           97..=107 => 7
-          108 => 33
+          108 => 27
           109..=122 => 7
           _ => break
         }
     }
-    30 =>
+    25 =>
       continue match lexbuf.next_as_int() {
-          9 => 30
-          32 => 30
-          41 => 31
+          48..=57 => 26
           _ => break
         }
-    31 => {
+    26 => {
+      _tag_2 = lexbuf.curr_pos()
+      continue match lexbuf.next_as_int() {
+          9 => 29
+          32 => 29
+          41 => 28
+          48..=57 => 26
+          _ => break
+        }
+    }
+    27 => {
+      _match_pattern = 5
+      _match_end = lexbuf.curr_pos()
+      _capture_0_start = _match_start
+      _capture_0_end = _match_end
+      continue match lexbuf.next_as_int() {
+          48..=57 => 7
+          65..=90 => 7
+          95 => 7
+          97..=114 => 7
+          115 => 30
+          116..=122 => 7
+          _ => break
+        }
+    }
+    28 => {
       _match_pattern = 3
       _match_end = lexbuf.curr_pos()
       _capture_0_start = _match_start
@@ -1648,13 +1611,54 @@ fn code_rbrace(
       _capture_2_end = _tag_2
       break
     }
-    32 => {
-      _tag_2 = lexbuf.curr_pos()
+    29 =>
       continue match lexbuf.next_as_int() {
-          9 => 30
-          32 => 30
-          41 => 31
-          48..=57 => 32
+          9 => 29
+          32 => 29
+          41 => 28
+          _ => break
+        }
+    30 => {
+      _match_pattern = 5
+      _match_end = lexbuf.curr_pos()
+      _capture_0_start = _match_start
+      _capture_0_end = _match_end
+      continue match lexbuf.next_as_int() {
+          48..=57 => 7
+          65..=90 => 7
+          95 => 7
+          97..=115 => 7
+          116 => 31
+          117..=122 => 7
+          _ => break
+        }
+    }
+    31 => {
+      _match_pattern = 5
+      _match_end = lexbuf.curr_pos()
+      _capture_0_start = _match_start
+      _capture_0_end = _match_end
+      continue match lexbuf.next_as_int() {
+          48..=57 => 7
+          65..=90 => 7
+          95 => 7
+          97 => 32
+          98..=122 => 7
+          _ => break
+        }
+    }
+    32 => {
+      _match_pattern = 5
+      _match_end = lexbuf.curr_pos()
+      _capture_0_start = _match_start
+      _capture_0_end = _match_end
+      continue match lexbuf.next_as_int() {
+          48..=57 => 7
+          65..=90 => 7
+          95 => 7
+          97..=113 => 7
+          114 => 33
+          115..=122 => 7
           _ => break
         }
     }
@@ -1667,9 +1671,9 @@ fn code_rbrace(
           48..=57 => 7
           65..=90 => 7
           95 => 7
-          97..=114 => 7
-          115 => 34
-          116..=122 => 7
+          97..=115 => 7
+          116 => 34
+          117..=122 => 7
           _ => break
         }
     }
@@ -1682,9 +1686,9 @@ fn code_rbrace(
           48..=57 => 7
           65..=90 => 7
           95 => 7
-          97..=115 => 7
-          116 => 35
-          117..=122 => 7
+          97..=111 => 7
+          112 => 35
+          113..=122 => 7
           _ => break
         }
     }
@@ -1697,8 +1701,9 @@ fn code_rbrace(
           48..=57 => 7
           65..=90 => 7
           95 => 7
-          97 => 36
-          98..=122 => 7
+          97..=110 => 7
+          111 => 36
+          112..=122 => 7
           _ => break
         }
     }
@@ -1711,43 +1716,13 @@ fn code_rbrace(
           48..=57 => 7
           65..=90 => 7
           95 => 7
-          97..=113 => 7
-          114 => 37
-          115..=122 => 7
+          97..=114 => 7
+          115 => 21
+          116..=122 => 7
           _ => break
         }
     }
     37 => {
-      _match_pattern = 5
-      _match_end = lexbuf.curr_pos()
-      _capture_0_start = _match_start
-      _capture_0_end = _match_end
-      continue match lexbuf.next_as_int() {
-          48..=57 => 7
-          65..=90 => 7
-          95 => 7
-          97..=115 => 7
-          116 => 38
-          117..=122 => 7
-          _ => break
-        }
-    }
-    38 => {
-      _match_pattern = 5
-      _match_end = lexbuf.curr_pos()
-      _capture_0_start = _match_start
-      _capture_0_end = _match_end
-      continue match lexbuf.next_as_int() {
-          48..=57 => 7
-          65..=90 => 7
-          95 => 7
-          97..=111 => 7
-          112 => 39
-          113..=122 => 7
-          _ => break
-        }
-    }
-    39 => {
       _match_pattern = 5
       _match_end = lexbuf.curr_pos()
       _capture_0_start = _match_start
@@ -1762,6 +1737,31 @@ fn code_rbrace(
           _ => break
         }
     }
+    38 => {
+      _tag_1 = lexbuf.curr_pos()
+      continue match lexbuf.next_as_int() {
+          9 => 38
+          32 => 38
+          36 => 25
+          65..=90 => 39
+          95 => 39
+          97..=122 => 39
+          _ => break
+        }
+    }
+    39 => {
+      _tag_2 = lexbuf.curr_pos()
+      continue match lexbuf.next_as_int() {
+          9 => 29
+          32 => 29
+          41 => 28
+          48..=57 => 39
+          65..=90 => 39
+          95 => 39
+          97..=122 => 39
+          _ => break
+        }
+    }
     40 => {
       _match_pattern = 5
       _match_end = lexbuf.curr_pos()
@@ -1772,7 +1772,7 @@ fn code_rbrace(
           65..=90 => 7
           95 => 7
           97..=114 => 7
-          115 => 23
+          115 => 16
           116..=122 => 7
           _ => break
         }
@@ -1885,6 +1885,6 @@ pub fn new_lexer(input : String) -> Lexer {
 }
 
 ///|
-pub fn next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
+pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
   token(self.phase, self.buf)
 }

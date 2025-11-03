@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-fnalias @util.(println_to_stderr, exit)
+using @util {println_to_stderr, exit}
 
 ///|
 fn main {

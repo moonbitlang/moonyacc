@@ -29,7 +29,7 @@ pub fn empty() -> Int128IntSet {
 }
 
 ///|
-pub fn is_singleton(self : Int128IntSet, key : Int) -> Bool {
+pub fn Int128IntSet::is_singleton(self : Int128IntSet, key : Int) -> Bool {
   if key < 64 {
     if key < 32 {
       self.a == 1 << key && self.b == 0 && self.c == 0 && self.d == 0
@@ -59,7 +59,7 @@ pub impl Show for Int128IntSet with output(self, logger) {
 }
 
 ///|
-pub fn iter(self : Int128IntSet) -> Iter[Int] {
+pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
   Iter::new(fn(yield_) {
     let mut bitmask = self.a
     while true {
@@ -151,12 +151,12 @@ pub fn singleton(key : Int) -> Int128IntSet {
 }
 
 ///|
-pub fn is_empty(self : Int128IntSet) -> Bool {
+pub fn Int128IntSet::is_empty(self : Int128IntSet) -> Bool {
   self.a == 0 && self.b == 0 && self.c == 0 && self.d == 0
 }
 
 ///|
-pub fn contains(self : Int128IntSet, key : Int) -> Bool {
+pub fn Int128IntSet::contains(self : Int128IntSet, key : Int) -> Bool {
   if key < 64 {
     if key < 32 {
       (self.a & (1 << key)) != 0
@@ -171,7 +171,7 @@ pub fn contains(self : Int128IntSet, key : Int) -> Bool {
 }
 
 ///|
-pub fn add(self : Int128IntSet, key : Int) -> Int128IntSet {
+pub fn Int128IntSet::add(self : Int128IntSet, key : Int) -> Int128IntSet {
   if key < 64 {
     if key < 32 {
       { a: self.a | (1 << key), b: self.b, c: self.c, d: self.d }
@@ -186,7 +186,7 @@ pub fn add(self : Int128IntSet, key : Int) -> Int128IntSet {
 }
 
 ///|
-pub fn remove(self : Int128IntSet, key : Int) -> Int128IntSet {
+pub fn Int128IntSet::remove(self : Int128IntSet, key : Int) -> Int128IntSet {
   if key < 64 {
     if key < 32 {
       { a: self.a & (1 << key).lnot(), b: self.b, c: self.c, d: self.d }
@@ -201,7 +201,10 @@ pub fn remove(self : Int128IntSet, key : Int) -> Int128IntSet {
 }
 
 ///|
-pub fn union(self : Int128IntSet, other : Int128IntSet) -> Int128IntSet {
+pub fn Int128IntSet::union(
+  self : Int128IntSet,
+  other : Int128IntSet,
+) -> Int128IntSet {
   {
     a: self.a | other.a,
     b: self.b | other.b,
@@ -211,7 +214,10 @@ pub fn union(self : Int128IntSet, other : Int128IntSet) -> Int128IntSet {
 }
 
 ///|
-pub fn intersection(self : Int128IntSet, other : Int128IntSet) -> Int128IntSet {
+pub fn Int128IntSet::intersection(
+  self : Int128IntSet,
+  other : Int128IntSet,
+) -> Int128IntSet {
   {
     a: self.a & other.a,
     b: self.b & other.b,
@@ -221,7 +227,10 @@ pub fn intersection(self : Int128IntSet, other : Int128IntSet) -> Int128IntSet {
 }
 
 ///|
-pub fn difference(self : Int128IntSet, other : Int128IntSet) -> Int128IntSet {
+pub fn Int128IntSet::difference(
+  self : Int128IntSet,
+  other : Int128IntSet,
+) -> Int128IntSet {
   {
     a: self.a & other.a.lnot(),
     b: self.b & other.b.lnot(),
@@ -231,7 +240,10 @@ pub fn difference(self : Int128IntSet, other : Int128IntSet) -> Int128IntSet {
 }
 
 ///|
-pub fn disjoint(self : Int128IntSet, other : Int128IntSet) -> Bool {
+pub fn Int128IntSet::disjoint(
+  self : Int128IntSet,
+  other : Int128IntSet,
+) -> Bool {
   (self.a & other.a) == 0 &&
   (self.b & other.b) == 0 &&
   (self.c & other.c) == 0 &&
@@ -239,7 +251,7 @@ pub fn disjoint(self : Int128IntSet, other : Int128IntSet) -> Bool {
 }
 
 ///|
-pub fn subset(self : Int128IntSet, other : Int128IntSet) -> Bool {
+pub fn Int128IntSet::subset(self : Int128IntSet, other : Int128IntSet) -> Bool {
   (self.a & other.a) == self.a &&
   (self.b & other.b) == self.b &&
   (self.c & other.c) == self.c &&

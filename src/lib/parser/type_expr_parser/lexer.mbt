@@ -158,7 +158,7 @@ fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
       _tag_0 = lexbuf.curr_pos()
       continue match lexbuf.next_as_int() {
           46 => 15
-          47 => 16
+          47 => 17
           48..=57 => 14
           65..=90 => 14
           95 => 14
@@ -169,20 +169,13 @@ fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
     15 => {
       _tag_1 = lexbuf.curr_pos()
       continue match lexbuf.next_as_int() {
-          65..=90 => 17
-          95 => 17
-          97..=122 => 17
+          65..=90 => 16
+          95 => 16
+          97..=122 => 16
           _ => break
         }
     }
-    16 =>
-      continue match lexbuf.next_as_int() {
-          65..=90 => 14
-          95 => 14
-          97..=122 => 14
-          _ => break
-        }
-    17 => {
+    16 => {
       _match_pattern = 1
       _match_end = lexbuf.curr_pos()
       _capture_0_start = _match_start
@@ -192,13 +185,20 @@ fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
       _capture_2_start = _match_start + 1
       _capture_2_end = _tag_0
       continue match lexbuf.next_as_int() {
-          48..=57 => 17
-          65..=90 => 17
-          95 => 17
-          97..=122 => 17
+          48..=57 => 16
+          65..=90 => 16
+          95 => 16
+          97..=122 => 16
           _ => break
         }
     }
+    17 =>
+      continue match lexbuf.next_as_int() {
+          65..=90 => 14
+          95 => 14
+          97..=122 => 14
+          _ => break
+        }
     _ => panic()
   }
   guard _match_pattern <= 11 else {

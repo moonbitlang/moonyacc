@@ -370,7 +370,9 @@ pub fn elaborate(
           position_type = parse_and_elaborate_type_expr(type_)
         }
       Derive(traits~, type_~) => {
-        let traits = traits.split(",").map(t => t.trim(char_set=" ").to_string())
+        let traits = traits
+          .split(",")
+          .map(t => t.trim(char_set=" ").to_string())
         for trait_ in traits {
           derive_map.add(type_, trait_)
         }

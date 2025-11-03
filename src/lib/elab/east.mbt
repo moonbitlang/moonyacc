@@ -106,7 +106,7 @@ pub(all) struct Clause {
 // (code, (utf8_pos, utf8_len)?)
 
 ///|
-pub typealias (String, (Int, Int)?) as CodeChunk
+pub type CodeChunk = (String, (Int, Int)?)
 
 ///|
 pub(all) struct Action {

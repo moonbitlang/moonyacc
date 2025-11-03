@@ -19,7 +19,7 @@ struct SmallIntSet(Array[Int]) derive(Eq, Compare)
 pub typealias SmallIntSet as T
 
 ///|
-let _empty = [0]
+let _empty : Array[Int] = [0]
 
 ///|
 pub fn empty() -> SmallIntSet {
@@ -36,12 +36,12 @@ pub fn singleton(key : Int) -> SmallIntSet {
 }
 
 ///|
-pub fn is_empty(self : SmallIntSet) -> Bool {
+pub fn SmallIntSet::is_empty(self : SmallIntSet) -> Bool {
   self.0.length() == 1
 }
 
 ///|
-pub fn is_singleton(self : SmallIntSet, key : Int) -> Bool {
+pub fn SmallIntSet::is_singleton(self : SmallIntSet, key : Int) -> Bool {
   self.0.length() == 2 &&
   self.0[0] == 1 << (key >> 5) &&
   self.0[1] == 1 << (key & 31)
@@ -70,7 +70,7 @@ pub impl Show for SmallIntSet with output(self, logger) {
 }
 
 ///|
-pub fn iter(self : SmallIntSet) -> Iter[Int] {
+pub fn SmallIntSet::iter(self : SmallIntSet) -> Iter[Int] {
   Iter::new(fn(yield_) {
     let mut i = 0
     let mut bitmask = self.0[0]
@@ -116,7 +116,7 @@ pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
 }
 
 ///|
-pub fn contains(self : SmallIntSet, key : Int) -> Bool {
+pub fn SmallIntSet::contains(self : SmallIntSet, key : Int) -> Bool {
   let word_index = key >> 5
   let bitmask = self.0[0]
   if (bitmask & (1 << word_index)) == 0 {
@@ -127,7 +127,7 @@ pub fn contains(self : SmallIntSet, key : Int) -> Bool {
 }
 
 ///|
-pub fn add(self : SmallIntSet, key : Int) -> SmallIntSet {
+pub fn SmallIntSet::add(self : SmallIntSet, key : Int) -> SmallIntSet {
   let word_index = key >> 5
   let bitmask0 = self.0[0]
   let bitmask = bitmask0 | (1 << word_index)
@@ -155,7 +155,7 @@ pub fn add(self : SmallIntSet, key : Int) -> SmallIntSet {
 }
 
 ///|
-pub fn remove(self : SmallIntSet, key : Int) -> SmallIntSet {
+pub fn SmallIntSet::remove(self : SmallIntSet, key : Int) -> SmallIntSet {
   let word_index = key >> 5
   let bitmask = self.0[0]
   if (bitmask & (1 << word_index)) == 0 {
@@ -172,7 +172,10 @@ pub fn remove(self : SmallIntSet, key : Int) -> SmallIntSet {
 }
 
 ///|
-pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
+pub fn SmallIntSet::union(
+  self : SmallIntSet,
+  other : SmallIntSet,
+) -> SmallIntSet {
   let bitmask1 = self.0[0]
   if bitmask1 == 0 {
     return other
@@ -254,7 +257,10 @@ pub fn union(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 }
 
 ///|
-pub fn intersection(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
+pub fn SmallIntSet::intersection(
+  self : SmallIntSet,
+  other : SmallIntSet,
+) -> SmallIntSet {
   let bitmask1 = self.0[0]
   let bitmask2 = other.0[0]
   let mut bitmask = bitmask1 & bitmask2
@@ -299,7 +305,10 @@ pub fn intersection(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 }
 
 ///|
-pub fn difference(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
+pub fn SmallIntSet::difference(
+  self : SmallIntSet,
+  other : SmallIntSet,
+) -> SmallIntSet {
   let bitmask1 = self.0[0]
   let bitmask2 = other.0[0]
   let mut bitmask = bitmask1
@@ -346,7 +355,7 @@ pub fn difference(self : SmallIntSet, other : SmallIntSet) -> SmallIntSet {
 }
 
 ///|
-pub fn disjoint(self : SmallIntSet, other : SmallIntSet) -> Bool {
+pub fn SmallIntSet::disjoint(self : SmallIntSet, other : SmallIntSet) -> Bool {
   let bitmask1 = self.0[0]
   let bitmask2 = other.0[0]
   if (bitmask1 & bitmask2) != 0 {
@@ -382,7 +391,7 @@ pub fn disjoint(self : SmallIntSet, other : SmallIntSet) -> Bool {
 }
 
 ///|
-pub fn subset(self : SmallIntSet, other : SmallIntSet) -> Bool {
+pub fn SmallIntSet::subset(self : SmallIntSet, other : SmallIntSet) -> Bool {
   let bitmask1 = self.0[0]
   let bitmask2 = other.0[0]
   if (bitmask1 & bitmask2) != bitmask1 {
