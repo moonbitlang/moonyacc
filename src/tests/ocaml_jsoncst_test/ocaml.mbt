@@ -497,13 +497,13 @@ pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
 }
 
-typealias Error as YYObj
+type YYObj = Error
 
 priv suberror YYObj_Json Json
 
-typealias Int as YYState
+type YYState = Int
 
-typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
+type YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
 
 priv enum YYDecision {
   Accept
@@ -513,7 +513,7 @@ priv enum YYDecision {
   Error
 }
 
-typealias Int as YYSymbol
+type YYSymbol = Int
 
 // file:///./ocaml.mly
 // 653|    structure EOF                        { extra_str 1 $1 }

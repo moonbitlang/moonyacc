@@ -16,7 +16,7 @@
 struct Stamp(Int) derive(Eq, Hash)
 
 ///|
-pub typealias Stamp as T
+pub type T = Stamp
 
 ///|
 let next_stamp : Ref[Int] = { val: 0 }

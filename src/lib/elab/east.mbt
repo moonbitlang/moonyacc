@@ -20,7 +20,7 @@ pub(all) enum Associativity {
 }
 
 ///|
-pub typealias String as Code
+pub type Code = String
 
 ///|
 pub(all) enum TypeExpr {
@@ -84,7 +84,7 @@ pub(all) struct Token {
 }
 
 ///|
-pub typealias String as Symbol
+pub type Symbol = String
 
 ///|
 pub(all) struct Rule {

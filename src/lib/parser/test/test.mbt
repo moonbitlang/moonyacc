@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-test "lexer" (it : @test.T) {
+test "lexer" (it : @test.Test) {
   let lexer = @parser.new_lexer(parser_spec_src)
   fn token() {
     lexer.next_token() catch {
@@ -33,7 +33,7 @@ test "lexer" (it : @test.T) {
 }
 
 ///|
-test "parser_spec.json" (it : @test.T) {
+test "parser_spec.json" (it : @test.Test) {
   let lexer = @parser.new_lexer(parser_spec_src)
   fn token() {
     (try? lexer.next_token()).unwrap()
@@ -45,7 +45,7 @@ test "parser_spec.json" (it : @test.T) {
 }
 
 ///|
-test "parser_spec.mbty" (it : @test.T) {
+test "parser_spec.mbty" (it : @test.Test) {
   let lexer = @parser.new_lexer(parser_spec_src)
   fn token() {
     (try? lexer.next_token()).unwrap()

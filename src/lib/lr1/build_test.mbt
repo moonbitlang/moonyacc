@@ -16,7 +16,7 @@
 fn test_grammar(
   grammar~ : @grm.Grammar,
   filename~ : String,
-  it : @test.T,
+  it : @test.Test,
 ) -> Unit raise {
   it.write("## grammar\n")
   it.write("### terminals\n")
@@ -121,7 +121,7 @@ fn test_grammar(
 }
 
 ///|
-test "1" (it : @test.T) {
+test "1" (it : @test.Test) {
   // test data from https://en.wikipedia.org/wiki/LR_parser
   let grammar = @grm.build(fn(ctx) {
     let _ = ctx.add_production("S", ["E"])
@@ -136,7 +136,7 @@ test "1" (it : @test.T) {
 }
 
 ///|
-test "2" (it : @test.T) {
+test "2" (it : @test.Test) {
   // test data from https://www.javatpoint.com/clr-1-parsing
   let grammar = @grm.build(fn(ctx) {
     let _ = ctx.add_production("S'", ["S"])
@@ -149,7 +149,7 @@ test "2" (it : @test.T) {
 }
 
 ///|
-test "3" (it : @test.T) {
+test "3" (it : @test.Test) {
   // test data from https://www.javatpoint.com/clr-1-parsing
   let grammar = @grm.build(fn(ctx) {
     let _ = ctx.add_production("Start", ["Add"])

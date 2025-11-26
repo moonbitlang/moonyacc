@@ -34,7 +34,7 @@ pub suberror ParseError {
   UnexpectedEndOfInput(Unit, Array[TokenKind])
 }
 
-typealias Error as YYObj
+type YYObj = Error
 
 priv suberror YYObj_Void
 
@@ -44,9 +44,9 @@ priv suberror YYObj_String String
 
 priv suberror YYObj__list_List_Char_ @list.List[Char]
 
-typealias (YYSymbol) -> YYDecision as YYState
+type YYState = (YYSymbol) -> YYDecision
 
-typealias (Unit, ArrayView[(YYObj, Unit, Unit)]) -> YYObj as YYAction
+type YYAction = (Unit, ArrayView[(YYObj, Unit, Unit)]) -> YYObj
 
 priv enum YYDecision {
   Accept

@@ -16,7 +16,7 @@
 struct SmallIntSet(Array[Int]) derive(Eq, Compare)
 
 ///|
-pub typealias SmallIntSet as T
+pub type T = SmallIntSet
 
 ///|
 let _empty : Array[Int] = [0]
@@ -142,13 +142,8 @@ pub fn SmallIntSet::add(self : SmallIntSet, key : Int) -> SmallIntSet {
   } else {
     let result = Array::make(1 + bitmask.popcnt(), 0)
     result[0] = bitmask
-    self.0.blit_to(result, len=data_index - 1, src_offset=1, dst_offset=1)
-    self.0.blit_to(
-      result,
-      len=self.0.length() - data_index,
-      src_offset=data_index,
-      dst_offset=data_index + 1,
-    )
+    self.0[1:data_index].blit_to(result, dst_offset=1)
+    self.0[data_index:].blit_to(result, dst_offset=data_index + 1)
     result[data_index] = 1 << (key & 31)
     result
   }

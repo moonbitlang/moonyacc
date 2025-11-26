@@ -1,5 +1,5 @@
 ///|
-pub typealias DefaultHashMap as T
+pub type T[K, V] = DefaultHashMap[K, V]
 
 ///|
 struct DefaultHashMap[K, V] {

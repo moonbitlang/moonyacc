@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-pub typealias String as BuilderSymbol
+pub type BuilderSymbol = String
 
 ///|
 pub struct BuilderContext {

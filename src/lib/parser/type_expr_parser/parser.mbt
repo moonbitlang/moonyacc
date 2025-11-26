@@ -62,7 +62,7 @@ pub suberror ParseError {
   UnexpectedEndOfInput(Int, Array[TokenKind])
 } derive(Show)
 
-typealias Error as YYObj
+type YYObj = Error
 
 priv suberror YYObj_Void
 
@@ -74,9 +74,9 @@ priv suberror YYObj__list_List__ast_TypeExpr_ @list.List[@ast.TypeExpr]
 
 priv suberror YYObj__String__String_ (String, String)
 
-typealias (YYSymbol) -> YYDecision as YYState
+type YYState = (YYSymbol) -> YYDecision
 
-typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
+type YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
 
 priv enum YYDecision {
   Accept

@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-typealias Error as Obj
+type Obj = Error
 
 ///|
 struct InputProvider {

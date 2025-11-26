@@ -1,5 +1,5 @@
 ///|
-test "parser" (it : @test.T) {
+test "parser" (it : @test.Test) {
   let lexer = @parser.new_lexer(ocaml_parser_spec_src)
   fn token() {
     (try? lexer.next_token()).unwrap()

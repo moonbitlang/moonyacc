@@ -312,7 +312,7 @@ fn codegen(
   // YYObj_xxx
   output.write_string(
     (
-      $|typealias Error as YYObj
+      $|type YYObj = Error
       $|
       $|
     ),
@@ -401,9 +401,9 @@ fn codegen(
   // YYState, YYAction, YYDecision
   output.write_string(
     (
-      $|typealias (YYSymbol) -> YYDecision as YYState
+      $|type YYState = (YYSymbol) -> YYDecision
       $|
-      $|typealias (\{meta.position_data_type}, ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj as YYAction
+      $|type YYAction = (\{meta.position_data_type}, ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj
       $|
       $|priv enum YYDecision {
       $|  Accept

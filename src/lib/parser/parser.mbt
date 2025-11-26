@@ -141,7 +141,7 @@ pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
 }
 
-typealias Error as YYObj
+type YYObj = Error
 
 priv suberror YYObj_Void
 
@@ -205,9 +205,9 @@ priv suberror YYObj__String__Int__Int_ (String, Int, Int)
 
 priv suberror YYObj__String__Int__Array__ast_SubstItem__ (String, Int, Array[@ast.SubstItem])
 
-typealias (YYSymbol) -> YYDecision as YYState
+type YYState = (YYSymbol) -> YYDecision
 
-typealias (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj as YYAction
+type YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
 
 priv enum YYDecision {
   Accept
