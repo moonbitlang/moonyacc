@@ -3525,7 +3525,7 @@ function moonbitlang$core$immut$sorted_set$$SortedSet$add$64$(self, value) {
     }
   }
 }
-function moonbitlang$core$immut$sorted_set$$iter$46$go$47$576(yield_, t) {
+function moonbitlang$core$immut$sorted_set$$iter$46$go$47$579(yield_, t) {
   let _tmp = t;
   while (true) {
     const t$2 = _tmp;
@@ -3536,7 +3536,7 @@ function moonbitlang$core$immut$sorted_set$$iter$46$go$47$576(yield_, t) {
       const _left = _Node._0;
       const _right = _Node._1;
       const _value = _Node._3;
-      const _bind = moonbitlang$core$immut$sorted_set$$iter$46$go$47$576(yield_, _left);
+      const _bind = moonbitlang$core$immut$sorted_set$$iter$46$go$47$579(yield_, _left);
       if (_bind === 0) {
         return 0;
       } else {
@@ -3552,7 +3552,7 @@ function moonbitlang$core$immut$sorted_set$$iter$46$go$47$576(yield_, t) {
   }
 }
 function moonbitlang$core$immut$sorted_set$$SortedSet$iter$64$(self) {
-  const _p = (yield_) => moonbitlang$core$immut$sorted_set$$iter$46$go$47$576(yield_, self);
+  const _p = (yield_) => moonbitlang$core$immut$sorted_set$$iter$46$go$47$579(yield_, self);
   return _p;
 }
 function moonbitlang$core$bytes$$Bytes$from_array(arr) {
@@ -4193,7 +4193,7 @@ function moonbitlang$core$immut$array$$Tree$get$19$(self, index, shift) {
     }
   }
 }
-function moonbitlang$core$immut$array$$push_end$46$worker$47$793(value, node, shift) {
+function moonbitlang$core$immut$array$$push_end$46$worker$47$796(value, node, shift) {
   switch (node.$tag) {
     case 2: {
       const _Leaf = node;
@@ -4210,7 +4210,7 @@ function moonbitlang$core$immut$array$$push_end$46$worker$47$793(value, node, sh
       const len = _nodes.length;
       const _tmp = len - 1 | 0;
       $bound_check(_nodes, _tmp);
-      const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$793(value, _nodes[_tmp], shift - 5 | 0);
+      const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$796(value, _nodes[_tmp], shift - 5 | 0);
       if (_bind === undefined) {
         if (len < 32) {
           let sizes;
@@ -4256,7 +4256,7 @@ function moonbitlang$core$immut$array$$push_end$46$worker$47$793(value, node, sh
   }
 }
 function moonbitlang$core$immut$array$$Tree$push_end$66$(self, shift, value) {
-  const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$793(value, self, shift);
+  const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$796(value, self, shift);
   if (_bind === undefined) {
     const new_branch = moonbitlang$core$immut$array$$new_branch_left$66$([value], shift);
     let _tmp;
@@ -4293,7 +4293,7 @@ function moonbitlang$core$immut$array$$Tree$push_end$66$(self, shift, value) {
     return { _0: _new_tree, _1: shift };
   }
 }
-function moonbitlang$core$immut$array$$push_end$46$worker$47$829(value, node, shift) {
+function moonbitlang$core$immut$array$$push_end$46$worker$47$832(value, node, shift) {
   switch (node.$tag) {
     case 2: {
       const _Leaf = node;
@@ -4310,7 +4310,7 @@ function moonbitlang$core$immut$array$$push_end$46$worker$47$829(value, node, sh
       const len = _nodes.length;
       const _tmp = len - 1 | 0;
       $bound_check(_nodes, _tmp);
-      const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$829(value, _nodes[_tmp], shift - 5 | 0);
+      const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$832(value, _nodes[_tmp], shift - 5 | 0);
       if (_bind === undefined) {
         if (len < 32) {
           let sizes;
@@ -4356,7 +4356,7 @@ function moonbitlang$core$immut$array$$push_end$46$worker$47$829(value, node, sh
   }
 }
 function moonbitlang$core$immut$array$$Tree$push_end$24$(self, shift, value) {
-  const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$829(value, self, shift);
+  const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$832(value, self, shift);
   if (_bind === undefined) {
     const new_branch = moonbitlang$core$immut$array$$new_branch_left$24$([value], shift);
     let _tmp;
@@ -4393,7 +4393,7 @@ function moonbitlang$core$immut$array$$Tree$push_end$24$(self, shift, value) {
     return { _0: _new_tree, _1: shift };
   }
 }
-function moonbitlang$core$immut$array$$push_end$46$worker$47$865(value, node, shift) {
+function moonbitlang$core$immut$array$$push_end$46$worker$47$868(value, node, shift) {
   switch (node.$tag) {
     case 2: {
       const _Leaf = node;
@@ -4410,7 +4410,7 @@ function moonbitlang$core$immut$array$$push_end$46$worker$47$865(value, node, sh
       const len = _nodes.length;
       const _tmp = len - 1 | 0;
       $bound_check(_nodes, _tmp);
-      const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$865(value, _nodes[_tmp], shift - 5 | 0);
+      const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$868(value, _nodes[_tmp], shift - 5 | 0);
       if (_bind === undefined) {
         if (len < 32) {
           let sizes;
@@ -4456,7 +4456,7 @@ function moonbitlang$core$immut$array$$push_end$46$worker$47$865(value, node, sh
   }
 }
 function moonbitlang$core$immut$array$$Tree$push_end$20$(self, shift, value) {
-  const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$865(value, self, shift);
+  const _bind = moonbitlang$core$immut$array$$push_end$46$worker$47$868(value, self, shift);
   if (_bind === undefined) {
     const new_branch = moonbitlang$core$immut$array$$new_branch_left$20$([value], shift);
     let _tmp;
@@ -5040,7 +5040,7 @@ function moonbitlang$core$immut$array$$redis_plan$24$(t) {
   }
   return { _0: node_counts, _1: new_len };
 }
-function moonbitlang$core$immut$array$$tri_merge$46$get_children$47$1066(self) {
+function moonbitlang$core$immut$array$$tri_merge$46$get_children$47$1069(self) {
   switch (self.$tag) {
     case 1: {
       const _Node = self;
@@ -5058,9 +5058,9 @@ function moonbitlang$core$immut$array$$tri_merge$24$(left, center, right) {
   if (moonbitlang$core$immut$array$$Tree$is_leaf$24$(left) || (!moonbitlang$core$immut$array$$Tree$is_node$24$(center) || moonbitlang$core$immut$array$$Tree$is_leaf$24$(right))) {
     moonbitlang$core$abort$$abort$3$("Unreachable: input to merge is invalid");
   }
-  const left_children = moonbitlang$core$immut$array$$tri_merge$46$get_children$47$1066(left);
-  const center_children = moonbitlang$core$immut$array$$tri_merge$46$get_children$47$1066(center);
-  const right_children = moonbitlang$core$immut$array$$tri_merge$46$get_children$47$1066(right);
+  const left_children = moonbitlang$core$immut$array$$tri_merge$46$get_children$47$1069(left);
+  const center_children = moonbitlang$core$immut$array$$tri_merge$46$get_children$47$1069(center);
+  const right_children = moonbitlang$core$immut$array$$tri_merge$46$get_children$47$1069(right);
   const left_len = left_children.length;
   const left_len$2 = left_len === 0 ? 0 : left_len - 1 | 0;
   const center_len = center_children.length;
@@ -7136,7 +7136,7 @@ function moonbitlang$core$sorted_map$$SortedMap$get$86$(self, key) {
     }
   }
 }
-function moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1801(yield_, x) {
+function moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1804(yield_, x) {
   let _tmp = x;
   while (true) {
     const x$2 = _tmp;
@@ -7148,7 +7148,7 @@ function moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1801(yield_, x) {
       const _left = _x.left;
       const _right = _x.right;
       const _key = _x.key;
-      const _bind = moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1801(yield_, _left);
+      const _bind = moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1804(yield_, _left);
       if (_bind === 0) {
         return 0;
       } else {
@@ -7164,10 +7164,10 @@ function moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1801(yield_, x) {
   }
 }
 function moonbitlang$core$sorted_map$$SortedMap$keys_as_iter$85$(self) {
-  const _p = (yield_) => moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1801(yield_, self.root);
+  const _p = (yield_) => moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1804(yield_, self.root);
   return _p;
 }
-function moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1815(yield_, x) {
+function moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1818(yield_, x) {
   let _tmp = x;
   while (true) {
     const x$2 = _tmp;
@@ -7179,7 +7179,7 @@ function moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1815(yield_, x) {
       const _left = _x.left;
       const _right = _x.right;
       const _key = _x.key;
-      const _bind = moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1815(yield_, _left);
+      const _bind = moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1818(yield_, _left);
       if (_bind === 0) {
         return 0;
       } else {
@@ -7195,7 +7195,7 @@ function moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1815(yield_, x) {
   }
 }
 function moonbitlang$core$sorted_map$$SortedMap$keys_as_iter$86$(self) {
-  const _p = (yield_) => moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1815(yield_, self.root);
+  const _p = (yield_) => moonbitlang$core$sorted_map$$keys_as_iter$46$go$47$1818(yield_, self.root);
   return _p;
 }
 function moonbitlang$core$sorted_map$$SortedMap$iterator2$83$(self) {
@@ -34602,13 +34602,11 @@ function moonbitlang$yacc$main$$_init$42$46$write_map_file$124$25(source_map, fi
   const token_payload_rewrite = { val: 2 };
   const force_int_position = { val: false };
   const print_as_mly_without_actions = { val: false };
-  Yoorkin$ArgParser$$parse([{ _0: "--print-as-mly-without-actions", _1: "--print-as-mly-without-actions", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
-    print_as_mly_without_actions.val = true;
-  }), _3: "Print as mly without actions" }, { _0: "--output-file", _1: "-o", _2: new $64$Yoorkin$47$ArgParser$46$Spec$String((file) => {
+  Yoorkin$ArgParser$$parse([{ _0: "--output-file", _1: "-o", _2: new $64$Yoorkin$47$ArgParser$46$Spec$String((file) => {
     output_file.val = file;
-  }), _3: "Output file" }, { _0: "--output-map-file", _1: "--output-map-file", _2: new $64$Yoorkin$47$ArgParser$46$Spec$String((file) => {
+  }), _3: "Output file" }, { _0: "--output-map-file", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$String((file) => {
     output_map_file.val = file;
-  }), _3: "Output source map file, if not specified, it will be the output file with .map.json extension" }, { _0: "--mode", _1: "--mode", _2: new $64$Yoorkin$47$ArgParser$46$Spec$String((mode_sym) => {
+  }), _3: "Output source map file, if not specified, it will be the output file with .map.json extension" }, { _0: "--mode", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$String((mode_sym) => {
     let _tmp;
     switch (mode_sym) {
       case "default": {
@@ -34629,7 +34627,7 @@ function moonbitlang$yacc$main$$_init$42$46$write_map_file$124$25(source_map, fi
       }
     }
     mode.val = _tmp;
-  }), _3: "Specify mode (default, json-cst)" }, { _0: "--input-mode", _1: "--input-mode", _2: new $64$Yoorkin$47$ArgParser$46$Spec$String((input_mode_sym) => {
+  }), _3: "Specify mode (default, json-cst)" }, { _0: "--input-mode", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$String((input_mode_sym) => {
     switch (input_mode_sym) {
       case "array": {
         input_mode.val = 0;
@@ -34645,27 +34643,29 @@ function moonbitlang$yacc$main$$_init$42$46$write_map_file$124$25(source_map, fi
         return;
       }
     }
-  }), _3: "Specify input mode (array, pull). Default is array" }, { _0: "--external-tokens", _1: "--external-tokens", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+  }), _3: "Specify input mode (array, pull). Default is array" }, { _0: "--external-tokens", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
     external_tokens.val = true;
-  }), _3: "Use external tokens" }, { _0: "--force-token-json-payload", _1: "--force-token-json-payload", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
-    token_payload_rewrite.val = 1;
-  }), _3: "Force token to use JSON payload" }, { _0: "--force-token-no-payload", _1: "--force-token-no-payload", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
-    token_payload_rewrite.val = 0;
-  }), _3: "Force token to not use payload" }, { _0: "--force-int-position", _1: "--force-int-position", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
-    force_int_position.val = true;
-  }), _3: "Overwrite the position type to int" }, { _0: "--no-comments", _1: "--no-comments", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+  }), _3: "Use external tokens" }, { _0: "--no-comments", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
     no_comments.val = true;
-  }), _3: "Do not include comments in the output" }, { _0: "--no-std", _1: "--no-std", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+  }), _3: "Do not include comments in the output" }, { _0: "--no-std", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
     no_std.val = true;
-  }), _3: "Do not include standard library" }, { _0: "--table", _1: "--table", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+  }), _3: "Do not include standard library" }, { _0: "--table", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
     table.val = true;
-  }), _3: "Use table engine" }, { _0: "--compress-table", _1: "--compress-table", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+  }), _3: "Use table engine" }, { _0: "--compress-table", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
     compress.val = true;
     table.val = true;
   }), _3: "Use table engine with compression" }, { _0: "--version", _1: "-v", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
     moonbitlang$core$builtin$$println$2$("moonyacc 0.1.0");
     moonbitlang$yacc$lib$driver$util$$exit$3$(0);
-  }), _3: "Show version" }], (rest) => {
+  }), _3: "Show version" }, { _0: "--print-as-mly-without-actions", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+    print_as_mly_without_actions.val = true;
+  }), _3: "Print as mly without actions" }, { _0: "--force-token-json-payload", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+    token_payload_rewrite.val = 1;
+  }), _3: "Force token to use JSON payload" }, { _0: "--force-token-no-payload", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+    token_payload_rewrite.val = 0;
+  }), _3: "Force token to not use payload" }, { _0: "--force-int-position", _1: "", _2: new $64$Yoorkin$47$ArgParser$46$Spec$Unit(() => {
+    force_int_position.val = true;
+  }), _3: "Overwrite the position type to int" }], (rest) => {
     input_file.val = rest;
   }, moonbitlang$yacc$main$$_init$42$46$usage$124$1, moonbitlang$x$sys$$get_cli_args());
   const _p = input_file.val;

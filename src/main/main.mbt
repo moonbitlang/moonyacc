@@ -35,12 +35,6 @@ fn main {
   @ArgParser.parse(
     [
       (
-        "--print-as-mly-without-actions",
-        "--print-as-mly-without-actions",
-        Unit(fn() { print_as_mly_without_actions = true }),
-        "Print as mly without actions",
-      ),
-      (
         "--output-file",
         "-o",
         String(fn(file) { output_file = file }),
@@ -48,13 +42,13 @@ fn main {
       ),
       (
         "--output-map-file",
-        "--output-map-file",
+        "",
         String(fn(file) { output_map_file = Some(file) }),
         "Output source map file, if not specified, it will be the output file with .map.json extension",
       ),
       (
         "--mode",
-        "--mode",
+        "",
         String(fn(mode_sym) {
           mode = match mode_sym {
             "default" => Default
@@ -70,7 +64,7 @@ fn main {
       ),
       (
         "--input-mode",
-        "--input-mode",
+        "",
         String(fn(input_mode_sym) {
           match input_mode_sym {
             "array" => input_mode = Array
@@ -85,44 +79,26 @@ fn main {
       ),
       (
         "--external-tokens",
-        "--external-tokens",
+        "",
         Unit(fn() { external_tokens = true }),
         "Use external tokens",
       ),
       (
-        "--force-token-json-payload",
-        "--force-token-json-payload",
-        Unit(fn() { token_payload_rewrite = JsonPayload }),
-        "Force token to use JSON payload",
-      ),
-      (
-        "--force-token-no-payload",
-        "--force-token-no-payload",
-        Unit(fn() { token_payload_rewrite = NoPayload }),
-        "Force token to not use payload",
-      ),
-      (
-        "--force-int-position",
-        "--force-int-position",
-        Unit(fn() { force_int_position = true }),
-        "Overwrite the position type to int",
-      ),
-      (
         "--no-comments",
-        "--no-comments",
+        "",
         Unit(fn() { no_comments = true }),
         "Do not include comments in the output",
       ),
       (
         "--no-std",
-        "--no-std",
+        "",
         Unit(fn() { no_std = true }),
         "Do not include standard library",
       ),
-      ("--table", "--table", Unit(fn() { table = true }), "Use table engine"),
+      ("--table", "", Unit(fn() { table = true }), "Use table engine"),
       (
         "--compress-table",
-        "--compress-table",
+        "",
         Unit(fn() {
           compress = true
           table = true
@@ -137,6 +113,30 @@ fn main {
           exit(0)
         }),
         "Show version",
+      ),
+      (
+        "--print-as-mly-without-actions",
+        "",
+        Unit(fn() { print_as_mly_without_actions = true }),
+        "Print as mly without actions",
+      ),
+      (
+        "--force-token-json-payload",
+        "",
+        Unit(fn() { token_payload_rewrite = JsonPayload }),
+        "Force token to use JSON payload",
+      ),
+      (
+        "--force-token-no-payload",
+        "",
+        Unit(fn() { token_payload_rewrite = NoPayload }),
+        "Force token to not use payload",
+      ),
+      (
+        "--force-int-position",
+        "",
+        Unit(fn() { force_int_position = true }),
+        "Overwrite the position type to int",
       ),
     ],
     fn(rest) { input_file = rest },
