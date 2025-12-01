@@ -3,7 +3,7 @@
   "version": "0.7.4",
   "deps": {
     "moonbitlang/x": "0.4.30",
-    "Yoorkin/ArgParser": "0.1.11",
+    "Yoorkin/ArgParser": "0.2.0",
     "moonbitlang/ulex-runtime": "0.4.1"
   },
   "readme": "README.md",
