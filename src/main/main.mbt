@@ -142,7 +142,9 @@ fn main {
     fn(rest) { input_file = rest },
     usage,
     @sys.get_cli_args(),
-  )
+  ) catch {
+    err => println_to_stderr(err.to_string())
+  }
   guard input_file != "" else {
     println_to_stderr("Input file is required")
     exit(1)
