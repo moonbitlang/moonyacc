@@ -27,7 +27,7 @@ pub impl Logger for LoggerWithCursor with write_string(self, str) {
 }
 
 ///|
-pub impl Logger for LoggerWithCursor with write_substring(self, str, start, len) {
-  self.logger.write_substring(str, start, len)
-  self.cursor += len
+pub impl Logger for LoggerWithCursor with write_view(self, view) {
+  self.logger.write_view(view)
+  self.cursor += view.length()
 }
