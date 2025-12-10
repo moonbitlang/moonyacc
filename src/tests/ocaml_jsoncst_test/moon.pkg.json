@@ -25,7 +25,7 @@
       "command": ":embed --name ocaml_parser_spec_src -i $input -o $output"
     }
   ],
-  "warn-list": "-2-6",
+  "warn-list": "-2-6-33",
   "test-import": [
     "moonbitlang/yacc/lib/parser",
     "moonbitlang/yacc/lib/ast"
