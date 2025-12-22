@@ -11,7 +11,7 @@
       "output": "lexer.mbt"
     },
     {
-      "command": "node $mod_dir/boot/moonyacc.cjs --compress-table --mode json-cst --input-mode pull --force-token-no-payload --force-int-position $input -o $output",
+      "command": "node $mod_dir/boot/moonyacc.cjs --compress-table --mode json-cst --input-mode pull --force-token-no-payload --force-int-position $input -o $output && moonfmt -w $output && moonfmt -w $output",
       "input": "ocaml.mly",
       "output": "ocaml.mbt"
     },
