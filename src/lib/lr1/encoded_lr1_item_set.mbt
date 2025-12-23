@@ -22,26 +22,21 @@ struct EncodedLR1ItemSet {
 fn EncodedLR1ItemSet::decode_item_groups(
   self : EncodedLR1ItemSet,
   grammar : @grm.Grammar,
-) -> Iter[LR1ItemGroup] {
-  Iter::new(fn(yield_) {
-    let lookahead_set_array = self.core.closure_symbolic_lookahead_set.map(fn(
-      symbolic_lookahead_set,
-    ) {
-      symbolic_lookahead_set.interpret(self.kernel_lookahead_set_table)
-    })
-    for item in self.core.closure_items.decode_iter(grammar) {
-      let (index, item) = item
-      let lookahead_set = lookahead_set_array[index]
-      match
-        yield_(LR1ItemGroup::{
-          core: item,
-          lookahead_set: lookahead_set.decode_iter(grammar),
-        }) {
-        IterEnd => return IterEnd
-        IterContinue => ()
-      }
+) -> Iterator[LR1ItemGroup] {
+  let lookahead_set_array = self.core.closure_symbolic_lookahead_set.map(fn(
+    symbolic_lookahead_set,
+  ) {
+    symbolic_lookahead_set.interpret(self.kernel_lookahead_set_table)
+  })
+  self.core.closure_items
+  .decode_iter(grammar)
+  .map(item => {
+    let (index, item) = item
+    let lookahead_set = lookahead_set_array[index]
+    LR1ItemGroup::{
+      core: item,
+      lookahead_set: lookahead_set.decode_iter(grammar),
     }
-    IterContinue
   })
 }
 

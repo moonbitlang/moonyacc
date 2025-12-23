@@ -13,15 +13,13 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#alias(T)
 struct Int128IntSet {
   a : Int
   b : Int
   c : Int
   d : Int
 } derive(Eq, Compare, Hash)
-
-///|
-pub typealias Int128IntSet as T
 
 ///|
 pub fn empty() -> Int128IntSet {
@@ -59,67 +57,86 @@ pub impl Show for Int128IntSet with output(self, logger) {
 }
 
 ///|
-pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
-  Iter::new(fn(yield_) {
-    let mut bitmask = self.a
-    while true {
-      if bitmask == 0 {
-        break
+// pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
+//   Iter::new(fn(yield_) {
+//     let mut bitmask = self.a
+//     while true {
+//       if bitmask == 0 {
+//         break
+//       }
+//       let bit = bitmask.ctz()
+//       match yield_(bit) {
+//         IterEnd => return IterEnd
+//         IterContinue => ()
+//       }
+//       bitmask = bitmask & (bitmask - 1)
+//     }
+//     let mut bitmask = self.b
+//     while true {
+//       if bitmask == 0 {
+//         break
+//       }
+//       let bit = bitmask.ctz()
+//       match yield_(bit + 32) {
+//         IterEnd => return IterEnd
+//         IterContinue => ()
+//       }
+//       bitmask = bitmask & (bitmask - 1)
+//     }
+//     let mut bitmask = self.c
+//     while true {
+//       if bitmask == 0 {
+//         break
+//       }
+//       let bit = bitmask.ctz()
+//       match yield_(bit + 64) {
+//         IterEnd => return IterEnd
+//         IterContinue => ()
+//       }
+//       bitmask = bitmask & (bitmask - 1)
+//     }
+//     let mut bitmask = self.d
+//     while true {
+//       if bitmask == 0 {
+//         break
+//       }
+//       let bit = bitmask.ctz()
+//       match yield_(bit + 96) {
+//         IterEnd => return IterEnd
+//         IterContinue => ()
+//       }
+//       bitmask = bitmask & (bitmask - 1)
+//     }
+//     IterContinue
+//   })
+// }
+
+pub fn Int128IntSet::iterator(self : Int128IntSet) -> Iterator[Int] {
+  let mut bitmask = self.a
+  let mut offset = 0
+  let int128intset_rest = [(self.d, 96), (self.c, 64), (self.b, 32)]
+  Iterator::new(fn() {
+    if bitmask == 0 {
+      if int128intset_rest.pop() is Some((new_bitmask, new_offset)) {
+        bitmask = new_bitmask
+        offset = new_offset
+      } else {
+        return None
       }
-      let bit = bitmask.ctz()
-      match yield_(bit) {
-        IterEnd => return IterEnd
-        IterContinue => ()
-      }
-      bitmask = bitmask & (bitmask - 1)
     }
-    let mut bitmask = self.b
-    while true {
-      if bitmask == 0 {
-        break
-      }
-      let bit = bitmask.ctz()
-      match yield_(bit + 32) {
-        IterEnd => return IterEnd
-        IterContinue => ()
-      }
-      bitmask = bitmask & (bitmask - 1)
-    }
-    let mut bitmask = self.c
-    while true {
-      if bitmask == 0 {
-        break
-      }
-      let bit = bitmask.ctz()
-      match yield_(bit + 64) {
-        IterEnd => return IterEnd
-        IterContinue => ()
-      }
-      bitmask = bitmask & (bitmask - 1)
-    }
-    let mut bitmask = self.d
-    while true {
-      if bitmask == 0 {
-        break
-      }
-      let bit = bitmask.ctz()
-      match yield_(bit + 96) {
-        IterEnd => return IterEnd
-        IterContinue => ()
-      }
-      bitmask = bitmask & (bitmask - 1)
-    }
-    IterContinue
+    let bit = bitmask.ctz()
+    bitmask = bitmask & (bitmask - 1)
+    return Some(bit + offset)
   })
 }
 
 ///|
-pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
+pub fn from_iterator(iterator : Iterator[Int]) -> Int128IntSet {
   let mut a = 0
   let mut b = 0
   let mut c = 0
   let mut d = 0
-  for key in iter {
+  for key in iterator {
     if key < 64 {
       if key < 32 {
         a = a | (1 << key)

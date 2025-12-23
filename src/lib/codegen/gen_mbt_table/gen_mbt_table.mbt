@@ -785,21 +785,12 @@ fn codegen(
 
   // yy_state_xxx
   let state_table = []
-  fn iter_symbol() -> Iter[CodegenSymbol] {
-    Iter::new(yield_ => {
-      guard yield_(CodegenSymbol::eoi()) is IterContinue else { return IterEnd }
-      for t in grammar.terminals {
-        guard yield_(CodegenSymbol::terminal(t)) is IterContinue else {
-          return IterEnd
-        }
-      }
-      for nt in grammar.nonterminals {
-        guard yield_(CodegenSymbol::nonterminal(nt)) is IterContinue else {
-          return IterEnd
-        }
-      }
-      IterContinue
-    })
+  fn iter_symbol() -> Iterator[CodegenSymbol] {
+    Iterator::singleton(CodegenSymbol::eoi())
+    .add(grammar.terminals.iterator().map(t => CodegenSymbol::terminal(t)))
+    .add(
+      grammar.nonterminals.iterator().map(nt => CodegenSymbol::nonterminal(nt)),
+    )
   }
 
   fn emit_state(state : @lr1.LR1State) {

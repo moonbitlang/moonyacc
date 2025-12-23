@@ -67,16 +67,6 @@ pub fn EncodedLR0ItemSet::from_sorted_array(
 pub fn EncodedLR0ItemSet::decode_iter(
   self : EncodedLR0ItemSet,
   grammar : @grm.Grammar,
-) -> Iter[(Int, LR0Item)] {
-  Iter::new(fn(yield_) {
-    let mut index = 0
-    for item in self.items {
-      match yield_((index, item.decode(grammar))) {
-        IterEnd => return IterEnd
-        IterContinue => ()
-      }
-      index += 1
-    }
-    IterContinue
-  })
+) -> Iterator[(Int, LR0Item)] {
+  self.items.iterator().mapi((index, item) => (index, item.decode(grammar)))
 }
