@@ -41,30 +41,55 @@ pub fn[K, V] T::size(self : T[K, V]) -> Int {
   self.size
 }
 
+// ///|
+// pub fn[K, V] T::iter(self : T[K, V]) -> Iter[(K, V)] {
+//   Iter::new(fn(yield_) {
+//     loop self.entry {
+//       None => IterContinue
+//       Some(entry) =>
+//         match yield_((entry.key, entry.value)) {
+//           IterEnd => return IterEnd
+//           IterContinue => continue entry.prev
+//         }
+//     }
+//   })
+// }
+
 ///|
-pub fn[K, V] T::iter(self : T[K, V]) -> Iter[(K, V)] {
-  Iter::new(fn(yield_) {
-    loop self.entry {
-      None => IterContinue
-      Some(entry) =>
-        match yield_((entry.key, entry.value)) {
-          IterEnd => return IterEnd
-          IterContinue => continue entry.prev
-        }
+pub fn[K, V] T::iterator(self : T[K, V]) -> Iterator[(K, V)] {
+  let mut current_entry = self.entry
+  Iterator::new(fn() {
+    if current_entry is Some(entry) {
+      current_entry = entry.prev
+      return Some((entry.key, entry.value))
+    } else {
+      return None
     }
   })
 }
 
 ///|
-pub fn[K, V] T::iter2(self : T[K, V]) -> Iter2[K, V] {
-  Iter2::new(fn(yield_) {
-    loop self.entry {
-      None => IterContinue
-      Some(entry) =>
-        match yield_(entry.key, entry.value) {
-          IterEnd => return IterEnd
-          IterContinue => continue entry.prev
-        }
+// pub fn[K, V] T::iter2(self : T[K, V]) -> Iter2[K, V] {
+//   Iter2::new(fn(yield_) {
+//     loop self.entry {
+//       None => IterContinue
+//       Some(entry) =>
+//         match yield_(entry.key, entry.value) {
+//           IterEnd => return IterEnd
+//           IterContinue => continue entry.prev
+//         }
+//     }
+//   })
+// }
+
+pub fn[K, V] T::iterator2(self : T[K, V]) -> Iterator2[K, V] {
+  let mut current_entry = self.entry
+  Iterator2::new(fn() {
+    if current_entry is Some(entry) {
+      current_entry = entry.prev
+      return Some((entry.key, entry.value))
+    } else {
+      return None
     }
   })
 }

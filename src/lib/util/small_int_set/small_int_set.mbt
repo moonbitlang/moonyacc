@@ -70,44 +70,89 @@ pub impl Show for SmallIntSet with output(self, logger) {
 }
 
 ///|
-pub fn SmallIntSet::iter(self : SmallIntSet) -> Iter[Int] {
-  Iter::new(fn(yield_) {
-    let mut i = 0
-    let mut bitmask = self.0[0]
-    while true {
-      if bitmask == 0 {
-        break
-      }
-      let word_index = bitmask.ctz()
-      let mut word = self.0[1 + i]
-      while true {
-        if word == 0 {
-          break
-        }
-        let bit = word.ctz()
-        match yield_(word_index * 32 + bit) {
-          IterEnd => return IterEnd
-          IterContinue => ()
-        }
-        word = word & (1 << bit).lnot()
-      }
+// pub fn SmallIntSet::iter(self : SmallIntSet) -> Iter[Int] {
+//   Iter::new(fn(yield_) {
+//     let mut i = 0
+//     let mut bitmask = self.0[0]
+//     while true {
+//       if bitmask == 0 {
+//         break
+//       }
+//       let word_index = bitmask.ctz()
+//       let mut word = self.0[1 + i]
+//       while true {
+//         if word == 0 {
+//           break
+//         }
+//         let bit = word.ctz()
+//         match yield_(word_index * 32 + bit) {
+//           IterEnd => return IterEnd
+//           IterContinue => ()
+//         }
+//         word = word & (1 << bit).lnot()
+//       }
+//       bitmask = bitmask & (1 << word_index).lnot()
+//       i += 1
+//     }
+//     IterContinue
+//   })
+// }
+
+pub fn SmallIntSet::iterator(self : SmallIntSet) -> Iterator[Int] {
+  let mut i = 0
+  let mut bitmask = self.0[0]
+  // handle empty input
+  if bitmask == 0 {
+    return Iterator::empty()
+  }
+  let mut word = self.0[1 + i]
+  Iterator::new(fn() {
+    if bitmask == 0 {
+      return None
+    }
+    let mut word_index = bitmask.ctz()
+    if word == 0 {
       bitmask = bitmask & (1 << word_index).lnot()
       i += 1
+      if bitmask == 0 {
+        return None
+      }
+      word_index = bitmask.ctz()
+      word = self.0[1 + i]
     }
-    IterContinue
+    let bit = word.ctz()
+    word = word & (1 << bit).lnot()
+    return Some(word_index * 32 + bit)
   })
 }
 
 ///|
-pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
+// pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
+//   let mut bitmask = 0
+//   for key in iter {
+//     let word_index = key >> 5
+//     bitmask = bitmask | (1 << word_index)
+//   }
+//   let result = Array::make(1 + bitmask.popcnt(), 0)
+//   result[0] = bitmask
+//   for key in iter {
+//     let word_index = key >> 5
+//     let data_index = 1 + (bitmask & ((1 << word_index) - 1)).popcnt()
+//     result[data_index] = result[data_index] | (1 << (key & 31))
+//   }
+//   result
+// }
+
+pub fn from_iterator(iterator : Iterator[Int]) -> SmallIntSet {
+  let data = iterator.collect()
   let mut bitmask = 0
-  for key in iter {
+  for key in data {
     let word_index = key >> 5
     bitmask = bitmask | (1 << word_index)
   }
   let result = Array::make(1 + bitmask.popcnt(), 0)
   result[0] = bitmask
-  for key in iter {
+  for key in data {
     let word_index = key >> 5
     let data_index = 1 + (bitmask & ((1 << word_index) - 1)).popcnt()
     result[data_index] = result[data_index] | (1 << (key & 31))

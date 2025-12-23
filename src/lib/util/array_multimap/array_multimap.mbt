@@ -39,13 +39,13 @@ pub fn[K : Hash + Eq, V] T::get(self : T[K, V], key : K) -> Array[V] {
 
 ///|
 pub impl[K : Eq + Hash + Show, V : ToJson] ToJson for T[K, V] with to_json(self) {
-  Map::from_iter(self.0.iter()).to_json()
+  Map::from_iterator(self.0.iterator()).to_json()
 }
 
 ///|
 pub fn[K : Hash + Eq, V] T::copy(self : T[K, V]) -> T[K, V] {
   let map2 = @hashmap2.new(capacity=16)
-  for entry in self.0.iter() {
+  for entry in self.0.iterator() {
     map2.set(entry.0, entry.1)
   }
   T(map2)

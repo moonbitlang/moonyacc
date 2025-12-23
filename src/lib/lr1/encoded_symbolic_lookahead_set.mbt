@@ -71,7 +71,7 @@ fn EncodedSymbolicLookaheadSet::interpret(
   subst : Array[EncodedLookaheadSet],
 ) -> EncodedLookaheadSet {
   self.vars
-  .iter()
+  .iterator()
   .map(fn(var_) { subst[var_] })
   .fold(init=self.concrete_set, EncodedLookaheadSet::union)
 }

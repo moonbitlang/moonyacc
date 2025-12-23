@@ -51,41 +51,64 @@ pub impl Show for Int128IntSet with output(self, logger) {
 }
 
 ///|
-pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
-  Iter::new(fn(yield_) {
-    let mut bitmask = self.a
-    while true {
-      if bitmask == 0 {
-        break
+// pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
+//   Iter::new(fn(yield_) {
+//     let mut bitmask = self.a
+//     while true {
+//       if bitmask == 0 {
+//         break
+//       }
+//       let bit = bitmask.ctz()
+//       match yield_(bit) {
+//         IterEnd => return IterEnd
+//         IterContinue => ()
+//       }
+//       bitmask = bitmask & (bitmask - 1)
+//     }
+//     let mut bitmask = self.b
+//     while true {
+//       if bitmask == 0 {
+//         break
+//       }
+//       let bit = bitmask.ctz()
+//       match yield_(bit + 64) {
+//         IterEnd => return IterEnd
+//         IterContinue => ()
+//       }
+//       bitmask = bitmask & (bitmask - 1)
+//     }
+//     IterContinue
+//   })
+// }
+
+pub fn Int128IntSet::iterator(self : Int128IntSet) -> Iterator[Int] {
+  let mut bitmask = self.a
+  let mut has_rest = true
+  let mut offset = 0
+  Iterator::new(fn() {
+    if bitmask == 0 {
+      if has_rest {
+        bitmask = self.b
+        has_rest = false
+        offset = 64
+        if bitmask == 0 {
+          return None
+        }
+      } else {
+        return None
       }
-      let bit = bitmask.ctz()
-      match yield_(bit) {
-        IterEnd => return IterEnd
-        IterContinue => ()
-      }
-      bitmask = bitmask & (bitmask - 1)
     }
-    let mut bitmask = self.b
-    while true {
-      if bitmask == 0 {
-        break
-      }
-      let bit = bitmask.ctz()
-      match yield_(bit + 64) {
-        IterEnd => return IterEnd
-        IterContinue => ()
-      }
-      bitmask = bitmask & (bitmask - 1)
-    }
-    IterContinue
+    let bit = bitmask.clz()
+    bitmask = bitmask & (bitmask - 1)
+    return Some(bit + offset)
   })
 }
 
 ///|
-pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
+pub fn from_iterator(iterator : Iterator[Int]) -> Int128IntSet {
   let mut a = 0L
   let mut b = 0L
-  for key in iter {
+  for key in iterator {
     if key < 64 {
       a = a | (1L << key)
     } else {
