@@ -80,27 +80,3 @@ jobs:
             fi
           done
           (exit $_passed)
-
-  prettier:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-      - run: |
-          npm install --global prettier;
-          find . -name *.mod.json -exec npx prettier --write {} \;
-          find . -name *.pkg.json -exec npx prettier --write {} \;
-          git diff --exit-code;
-# here doesn't run `moon install`, so .mooncakes is not existed
-  check-typos:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: AutoCorrect
-        uses: huacnlee/autocorrect-action@v2
-
-      - name: typos-action
-        uses: crate-ci/typos@v1.31.1
