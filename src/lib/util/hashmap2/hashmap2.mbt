@@ -56,9 +56,9 @@ pub fn[K, V] T::size(self : T[K, V]) -> Int {
 // }
 
 ///|
-pub fn[K, V] T::iterator(self : T[K, V]) -> Iterator[(K, V)] {
+pub fn[K, V] T::iterator(self : T[K, V]) -> Iter[(K, V)] {
   let mut current_entry = self.entry
-  Iterator::new(fn() {
+  Iter::new(fn() {
     if current_entry is Some(entry) {
       current_entry = entry.prev
       return Some((entry.key, entry.value))
@@ -82,9 +82,9 @@ pub fn[K, V] T::iterator(self : T[K, V]) -> Iterator[(K, V)] {
 //   })
 // }
 
-pub fn[K, V] T::iterator2(self : T[K, V]) -> Iterator2[K, V] {
+pub fn[K, V] T::iterator2(self : T[K, V]) -> Iter2[K, V] {
   let mut current_entry = self.entry
-  Iterator2::new(fn() {
+  Iter2::new(fn() {
     if current_entry is Some(entry) {
       current_entry = entry.prev
       return Some((entry.key, entry.value))

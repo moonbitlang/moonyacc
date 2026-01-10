@@ -39,7 +39,7 @@ pub fn[K : Hash + Eq, V] T::get(self : T[K, V], key : K) -> Array[V] {
 
 ///|
 pub impl[K : Eq + Hash + Show, V : ToJson] ToJson for T[K, V] with to_json(self) {
-  Map::from_iterator(self.0.iterator()).to_json()
+  Map::from_iter(self.0.iterator()).to_json()
 }
 
 ///|

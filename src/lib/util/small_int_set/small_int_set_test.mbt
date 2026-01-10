@@ -94,7 +94,7 @@ test "@small_int_set.iterator/multi_word" {
 
 ///|
 test "@small_int_set.from_iterator/basic" {
-  let set = @small_int_set.from_iterator([1, 2, 3].iterator())
+  let set = @small_int_set.from_iterator([1, 2, 3].iter())
   inspect(set.contains(1), content="true")
   inspect(set.contains(2), content="true")
   inspect(set.contains(3), content="true")
@@ -103,14 +103,14 @@ test "@small_int_set.from_iterator/basic" {
 
 ///|
 test "@small_int_set.from_iterator/empty" {
-  let set = @small_int_set.from_iterator(Iterator::empty())
+  let set = @small_int_set.from_iterator(Iter::empty())
   inspect(set.is_empty(), content="true")
 }
 
 ///|
 test "@small_int_set.from_iterator/multi_word" {
   // Test with numbers that span multiple words (32-bit boundaries)
-  let set = @small_int_set.from_iterator([31, 32, 33, 64].iterator())
+  let set = @small_int_set.from_iterator([31, 32, 33, 64].iter())
   inspect(set.contains(31), content="true")
   inspect(set.contains(32), content="true")
   inspect(set.contains(33), content="true")
@@ -429,23 +429,23 @@ test "@small_int_set.disjoint" {
 test "@small_int_set.subset" {
   // Empty set is subset of any set
   let empty = @small_int_set.empty()
-  let set1 = @small_int_set.from_iterator([1, 2, 3].iterator())
+  let set1 = @small_int_set.from_iterator([1, 2, 3].iter())
   inspect(empty.subset(set1), content="true")
 
   // Set is subset of itself
   inspect(set1.subset(set1), content="true")
 
   // Proper subset testing
-  let set2 = @small_int_set.from_iterator([1, 2].iterator())
+  let set2 = @small_int_set.from_iterator([1, 2].iter())
   inspect(set2.subset(set1), content="true")
 
   // Not a subset testing
-  let set3 = @small_int_set.from_iterator([1, 4].iterator())
+  let set3 = @small_int_set.from_iterator([1, 4].iter())
   inspect(set3.subset(set1), content="false")
 
   // Testing with elements across word boundaries (> 32)
-  let large_set1 = @small_int_set.from_iterator([1, 33, 65].iterator())
-  let large_set2 = @small_int_set.from_iterator([1, 33, 65, 97].iterator())
+  let large_set1 = @small_int_set.from_iterator([1, 33, 65].iter())
+  let large_set2 = @small_int_set.from_iterator([1, 33, 65, 97].iter())
   inspect(large_set1.subset(large_set2), content="true")
   inspect(large_set2.subset(large_set1), content="false")
 }
@@ -453,8 +453,8 @@ test "@small_int_set.subset" {
 ///|
 test "@small_int_set.subset: bad case" {
   inspect(
-    @small_int_set.from_iterator([64].iterator()).subset(
-      @small_int_set.from_iterator([21, 48, 58, 61, 81].iterator()),
+    @small_int_set.from_iterator([64].iter()).subset(
+      @small_int_set.from_iterator([21, 48, 58, 61, 81].iter()),
     ),
     content="false",
   )

@@ -22,7 +22,7 @@ struct EncodedLR1ItemSet {
 fn EncodedLR1ItemSet::decode_item_groups(
   self : EncodedLR1ItemSet,
   grammar : @grm.Grammar,
-) -> Iterator[LR1ItemGroup] {
+) -> Iter[LR1ItemGroup] {
   let lookahead_set_array = self.core.closure_symbolic_lookahead_set.map(fn(
     symbolic_lookahead_set,
   ) {

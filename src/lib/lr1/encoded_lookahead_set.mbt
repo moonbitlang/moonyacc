@@ -57,7 +57,7 @@ fn EncodedLookaheadSet::singleton(input : Lookahead) -> EncodedLookaheadSet {
 fn EncodedLookaheadSet::decode_iter(
   self : EncodedLookaheadSet,
   grammar : @grm.Grammar,
-) -> Iterator[Lookahead] {
+) -> Iter[Lookahead] {
   self.0
   .iterator()
   .map(fn(t) {
