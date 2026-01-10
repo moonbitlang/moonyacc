@@ -371,7 +371,9 @@ fn codegen(
       for data_type in data_types {
         output.write_string(
           (
-            $|priv suberror YYObj_\{derive_type_ident(data_type)} \{data_type}
+            $|priv suberror YYObj_\{derive_type_ident(data_type)} {
+            $|  YYObj_\{derive_type_ident(data_type)}(\{data_type})
+            $|}
             $|
             $|
           ),

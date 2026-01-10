@@ -38,11 +38,17 @@ type YYObj = Error
 
 priv suberror YYObj_Void
 
-priv suberror YYObj_Char Char
+priv suberror YYObj_Char {
+  YYObj_Char(Char)
+}
 
-priv suberror YYObj_String String
+priv suberror YYObj_String {
+  YYObj_String(String)
+}
 
-priv suberror YYObj__list_List_Char_ @list.List[Char]
+priv suberror YYObj__list_List_Char_ {
+  YYObj__list_List_Char_(@list.List[Char])
+}
 
 type YYState = (YYSymbol) -> YYDecision
 

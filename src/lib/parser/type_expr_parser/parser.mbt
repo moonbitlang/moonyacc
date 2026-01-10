@@ -66,13 +66,21 @@ type YYObj = Error
 
 priv suberror YYObj_Void
 
-priv suberror YYObj_String String
+priv suberror YYObj_String {
+  YYObj_String(String)
+}
 
-priv suberror YYObj__ast_TypeExpr @ast.TypeExpr
+priv suberror YYObj__ast_TypeExpr {
+  YYObj__ast_TypeExpr(@ast.TypeExpr)
+}
 
-priv suberror YYObj__list_List__ast_TypeExpr_ @list.List[@ast.TypeExpr]
+priv suberror YYObj__list_List__ast_TypeExpr_ {
+  YYObj__list_List__ast_TypeExpr_(@list.List[@ast.TypeExpr])
+}
 
-priv suberror YYObj__String__String_ (String, String)
+priv suberror YYObj__String__String_ {
+  YYObj__String__String_((String, String))
+}
 
 type YYState = (YYSymbol) -> YYDecision
 

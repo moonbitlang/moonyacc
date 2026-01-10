@@ -34,7 +34,9 @@ type YYObj = Error
 
 priv suberror YYObj_Void
 
-priv suberror YYObj_String String
+priv suberror YYObj_String {
+  YYObj_String(String)
+}
 
 type YYState = (YYSymbol) -> YYDecision
 

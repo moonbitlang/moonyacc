@@ -785,12 +785,10 @@ fn codegen(
 
   // yy_state_xxx
   let state_table = []
-  fn iter_symbol() -> Iterator[CodegenSymbol] {
-    Iterator::singleton(CodegenSymbol::eoi())
-    .add(grammar.terminals.iterator().map(t => CodegenSymbol::terminal(t)))
-    .add(
-      grammar.nonterminals.iterator().map(nt => CodegenSymbol::nonterminal(nt)),
-    )
+  fn iter_symbol() -> Iter[CodegenSymbol] {
+    Iter::singleton(CodegenSymbol::eoi())
+    .add(grammar.terminals.iter().map(t => CodegenSymbol::terminal(t)))
+    .add(grammar.nonterminals.iter().map(nt => CodegenSymbol::nonterminal(nt)))
   }
 
   fn emit_state(state : @lr1.LR1State) {

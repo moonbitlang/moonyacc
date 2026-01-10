@@ -25,7 +25,7 @@
 ///|
 pub(all) struct LR1ItemGroup {
   core : LR0Item
-  lookahead_set : Iterator[Lookahead]
+  lookahead_set : Iter[Lookahead]
 }
 
 ///|
@@ -100,7 +100,7 @@ pub impl Hash for LR1State with hash_combine(self, hasher) {
 }
 
 ///|
-pub fn LR1State::iter_item_groups(self : LR1State) -> Iterator[LR1ItemGroup] {
+pub fn LR1State::iter_item_groups(self : LR1State) -> Iter[LR1ItemGroup] {
   self.items.decode_item_groups(self.grammar)
 }
 
