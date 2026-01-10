@@ -8,7 +8,9 @@ type YYObj = Error
 
 priv suberror YYObj_Void
 
-priv suberror YYObj_Int Int
+priv suberror YYObj_Int {
+  YYObj_Int(Int)
+}
 
 type YYState = (YYSymbol) -> YYDecision
 

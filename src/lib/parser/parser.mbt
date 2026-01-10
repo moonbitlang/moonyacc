@@ -145,65 +145,125 @@ type YYObj = Error
 
 priv suberror YYObj_Void
 
-priv suberror YYObj_Array_String_ Array[String]
+priv suberror YYObj_Array_String_ {
+  YYObj_Array_String_(Array[String])
+}
 
-priv suberror YYObj_Option_Unit_ Option[Unit]
+priv suberror YYObj_Option_Unit_ {
+  YYObj_Option_Unit_(Option[Unit])
+}
 
-priv suberror YYObj_String String
+priv suberror YYObj_String {
+  YYObj_String(String)
+}
 
-priv suberror YYObj__ast_Rule @ast.Rule
+priv suberror YYObj__ast_Rule {
+  YYObj__ast_Rule(@ast.Rule)
+}
 
-priv suberror YYObj__ast_Term @ast.Term
+priv suberror YYObj__ast_Term {
+  YYObj__ast_Term(@ast.Term)
+}
 
-priv suberror YYObj__ast_Symbol @ast.Symbol
+priv suberror YYObj__ast_Symbol {
+  YYObj__ast_Symbol(@ast.Symbol)
+}
 
-priv suberror YYObj__ast_TypeExpr @ast.TypeExpr
+priv suberror YYObj__ast_TypeExpr {
+  YYObj__ast_TypeExpr(@ast.TypeExpr)
+}
 
-priv suberror YYObj__ast_ClauseItem @ast.ClauseItem
+priv suberror YYObj__ast_ClauseItem {
+  YYObj__ast_ClauseItem(@ast.ClauseItem)
+}
 
-priv suberror YYObj__ast_ParserSpec @ast.ParserSpec
+priv suberror YYObj__ast_ParserSpec {
+  YYObj__ast_ParserSpec(@ast.ParserSpec)
+}
 
-priv suberror YYObj__ast_PrecSymbol @ast.PrecSymbol
+priv suberror YYObj__ast_PrecSymbol {
+  YYObj__ast_PrecSymbol(@ast.PrecSymbol)
+}
 
-priv suberror YYObj__ast_Declaration @ast.Declaration
+priv suberror YYObj__ast_Declaration {
+  YYObj__ast_Declaration(@ast.Declaration)
+}
 
-priv suberror YYObj__ast_ClauseAction @ast.ClauseAction
+priv suberror YYObj__ast_ClauseAction {
+  YYObj__ast_ClauseAction(@ast.ClauseAction)
+}
 
-priv suberror YYObj__ast_SymbolWithLoc @ast.SymbolWithLoc
+priv suberror YYObj__ast_SymbolWithLoc {
+  YYObj__ast_SymbolWithLoc(@ast.SymbolWithLoc)
+}
 
-priv suberror YYObj__ast_ClauseWithoutAction @ast.ClauseWithoutAction
+priv suberror YYObj__ast_ClauseWithoutAction {
+  YYObj__ast_ClauseWithoutAction(@ast.ClauseWithoutAction)
+}
 
-priv suberror YYObj__list_List_String_ @list.List[String]
+priv suberror YYObj__list_List_String_ {
+  YYObj__list_List_String_(@list.List[String])
+}
 
-priv suberror YYObj__list_List__ast_Rule_ @list.List[@ast.Rule]
+priv suberror YYObj__list_List__ast_Rule_ {
+  YYObj__list_List__ast_Rule_(@list.List[@ast.Rule])
+}
 
-priv suberror YYObj__list_List__ast_Term_ @list.List[@ast.Term]
+priv suberror YYObj__list_List__ast_Term_ {
+  YYObj__list_List__ast_Term_(@list.List[@ast.Term])
+}
 
-priv suberror YYObj__list_List__ast_TypeExpr_ @list.List[@ast.TypeExpr]
+priv suberror YYObj__list_List__ast_TypeExpr_ {
+  YYObj__list_List__ast_TypeExpr_(@list.List[@ast.TypeExpr])
+}
 
-priv suberror YYObj__list_List__ast_ClauseItem_ @list.List[@ast.ClauseItem]
+priv suberror YYObj__list_List__ast_ClauseItem_ {
+  YYObj__list_List__ast_ClauseItem_(@list.List[@ast.ClauseItem])
+}
 
-priv suberror YYObj__list_List__ast_PrecSymbol_ @list.List[@ast.PrecSymbol]
+priv suberror YYObj__list_List__ast_PrecSymbol_ {
+  YYObj__list_List__ast_PrecSymbol_(@list.List[@ast.PrecSymbol])
+}
 
-priv suberror YYObj__list_List__ast_Declaration_ @list.List[@ast.Declaration]
+priv suberror YYObj__list_List__ast_Declaration_ {
+  YYObj__list_List__ast_Declaration_(@list.List[@ast.Declaration])
+}
 
-priv suberror YYObj__list_List__ast_SymbolWithLoc_ @list.List[@ast.SymbolWithLoc]
+priv suberror YYObj__list_List__ast_SymbolWithLoc_ {
+  YYObj__list_List__ast_SymbolWithLoc_(@list.List[@ast.SymbolWithLoc])
+}
 
-priv suberror YYObj__list_List__String___ast_TypeExpr___ @list.List[(String, @ast.TypeExpr?)]
+priv suberror YYObj__list_List__String___ast_TypeExpr___ {
+  YYObj__list_List__String___ast_TypeExpr___(@list.List[(String, @ast.TypeExpr?)])
+}
 
-priv suberror YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__ @list.List[(@list.List[@ast.ClauseWithoutAction], @ast.ClauseAction)]
+priv suberror YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__ {
+  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(@list.List[(@list.List[@ast.ClauseWithoutAction], @ast.ClauseAction)])
+}
 
-priv suberror YYObj__ast_TypeExpr_ @ast.TypeExpr?
+priv suberror YYObj__ast_TypeExpr_ {
+  YYObj__ast_TypeExpr_(@ast.TypeExpr?)
+}
 
-priv suberror YYObj__ast_PrecSymbol_ @ast.PrecSymbol?
+priv suberror YYObj__ast_PrecSymbol_ {
+  YYObj__ast_PrecSymbol_(@ast.PrecSymbol?)
+}
 
-priv suberror YYObj___ast_Code__Int__Int__ (@ast.Code, Int, Int)?
+priv suberror YYObj___ast_Code__Int__Int__ {
+  YYObj___ast_Code__Int__Int__((@ast.Code, Int, Int)?)
+}
 
-priv suberror YYObj__String__String_ (String, String)
+priv suberror YYObj__String__String_ {
+  YYObj__String__String_((String, String))
+}
 
-priv suberror YYObj__String__Int__Int_ (String, Int, Int)
+priv suberror YYObj__String__Int__Int_ {
+  YYObj__String__Int__Int_((String, Int, Int))
+}
 
-priv suberror YYObj__String__Int__Array__ast_SubstItem__ (String, Int, Array[@ast.SubstItem])
+priv suberror YYObj__String__Int__Array__ast_SubstItem__ {
+  YYObj__String__Int__Array__ast_SubstItem__((String, Int, Array[@ast.SubstItem]))
+}
 
 type YYState = (YYSymbol) -> YYDecision
 

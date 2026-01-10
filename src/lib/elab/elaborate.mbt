@@ -42,18 +42,18 @@ fn build_rules_from_src(
 ) -> Map[String, Rule] {
   let lexer = @parser.new_lexer(src)
   fn token() {
-    (try? lexer.next_token()).unwrap()
+    try! lexer.next_token()
   }
 
-  let ast_spec = (try? @parser.spec(token, 0)).unwrap()
-  let spec = (try? elaborate(
+  let ast_spec = try! @parser.spec(token, 0)
+  let spec = try! elaborate(
     ast_spec,
     src,
     filename,
     json_cst~,
     token_payload_rewrite~,
     force_int_position~,
-  )).unwrap()
+  )
   spec.rules
 }
 
