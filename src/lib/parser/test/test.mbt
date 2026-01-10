@@ -36,7 +36,7 @@ test "lexer" (it : @test.Test) {
 test "parser_spec.json" (it : @test.Test) {
   let lexer = @parser.new_lexer(parser_spec_src)
   fn token() {
-    (try! lexer.next_token())
+    try! lexer.next_token()
   }
 
   let spec = @parser.spec(token, 0)
