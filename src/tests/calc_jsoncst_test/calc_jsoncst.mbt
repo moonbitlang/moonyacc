@@ -57,7 +57,9 @@ pub suberror ParseError {
 type YYObj = Error
 
 ///|
-priv suberror YYObj_Json Json
+priv suberror YYObj_Json {
+  YYObj_Json(Json)
+}
 
 ///|
 type YYState = (YYSymbol) -> YYDecision

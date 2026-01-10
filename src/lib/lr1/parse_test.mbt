@@ -80,10 +80,10 @@ pub fn parse(
 }
 
 ///|
-suberror ObjNumber Int
+suberror ObjNumber { ObjNumber(Int) }
 
 ///|
-suberror ObjUnit Unit
+suberror ObjUnit { ObjUnit(Unit) }
 
 ///|
 fn make_action_provider(

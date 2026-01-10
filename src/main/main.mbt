@@ -186,13 +186,13 @@ fn main {
   if output_file == "" {
     println(output)
     match output_map_file {
-      Some(file) => (try? write_map_file(file)).unwrap()
+      Some(file) => try! write_map_file(file)
       None => ()
     }
   } else {
-    (try? {
+    try! {
       @fs.write_string_to_file(output_file, output)
       write_map_file(output_map_file.unwrap_or("\{output_file}.map.json"))
-    }).unwrap()
+    }
   }
 }

@@ -98,15 +98,15 @@ pub impl Show for SmallIntSet with output(self, logger) {
 //   })
 // }
 
-pub fn SmallIntSet::iterator(self : SmallIntSet) -> Iterator[Int] {
+pub fn SmallIntSet::iter(self : SmallIntSet) -> Iter[Int] {
   let mut i = 0
   let mut bitmask = self.0[0]
   // handle empty input
   if bitmask == 0 {
-    return Iterator::empty()
+    return Iter::empty()
   }
   let mut word = self.0[1 + i]
-  Iterator::new(fn() {
+  Iter::new(fn() {
     if bitmask == 0 {
       return None
     }
@@ -143,8 +143,8 @@ pub fn SmallIntSet::iterator(self : SmallIntSet) -> Iterator[Int] {
 //   result
 // }
 
-pub fn from_iterator(iterator : Iterator[Int]) -> SmallIntSet {
-  let data = iterator.collect()
+pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
+  let data = iter.collect()
   let mut bitmask = 0
   for key in data {
     let word_index = key >> 5
