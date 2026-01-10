@@ -56,7 +56,7 @@ pub fn[K, V] T::size(self : T[K, V]) -> Int {
 // }
 
 ///|
-pub fn[K, V] T::iterator(self : T[K, V]) -> Iter[(K, V)] {
+pub fn[K, V] T::iter(self : T[K, V]) -> Iter[(K, V)] {
   let mut current_entry = self.entry
   Iter::new(fn() {
     if current_entry is Some(entry) {

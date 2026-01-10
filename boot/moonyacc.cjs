@@ -27035,7 +27035,7 @@ function moonbitlang$yacc$lib$util$hashmap2$$new$254$(capacity) {
   const bucket = $make_array_len_and_init(capacity, undefined);
   return { bucket: bucket, entry: undefined, bitmask: capacity - 1 | 0, size: 0 };
 }
-function moonbitlang$yacc$lib$util$hashmap2$$T$iterator$251$(self) {
+function moonbitlang$yacc$lib$util$hashmap2$$T$iter$251$(self) {
   const current_entry = { val: self.entry };
   const _p = () => {
     const _bind = current_entry.val;
@@ -27050,7 +27050,7 @@ function moonbitlang$yacc$lib$util$hashmap2$$T$iterator$251$(self) {
   };
   return _p;
 }
-function moonbitlang$yacc$lib$util$hashmap2$$T$iterator$250$(self) {
+function moonbitlang$yacc$lib$util$hashmap2$$T$iter$250$(self) {
   const current_entry = { val: self.entry };
   const _p = () => {
     const _bind = current_entry.val;
@@ -27065,7 +27065,7 @@ function moonbitlang$yacc$lib$util$hashmap2$$T$iterator$250$(self) {
   };
   return _p;
 }
-function moonbitlang$yacc$lib$util$hashmap2$$T$iterator$252$(self) {
+function moonbitlang$yacc$lib$util$hashmap2$$T$iter$252$(self) {
   const current_entry = { val: self.entry };
   const _p = () => {
     const _bind = current_entry.val;
@@ -29585,7 +29585,7 @@ function moonbitlang$yacc$lib$util$small_int_set$$singleton(key) {
 function moonbitlang$yacc$lib$util$small_int_set$$SmallIntSet$is_singleton(self, key) {
   return self.length === 2 && (moonbitlang$core$array$$Array$at$17$(self, 0) === 1 << (key >> 5) && moonbitlang$core$array$$Array$at$17$(self, 1) === 1 << (key & 31));
 }
-function moonbitlang$yacc$lib$util$small_int_set$$SmallIntSet$iterator(self) {
+function moonbitlang$yacc$lib$util$small_int_set$$SmallIntSet$iter(self) {
   const i = { val: 0 };
   const bitmask = { val: moonbitlang$core$array$$Array$at$17$(self, 0) };
   if (bitmask.val === 0) {
@@ -30163,7 +30163,7 @@ function moonbitlang$yacc$lib$lr1$$AbstractLookaheadSet$union$142$(self, other) 
   return { concrete_set: moonbitlang$yacc$lib$lr1$$EncodedLookaheadSet$union(self.concrete_set, other.concrete_set), vars: moonbitlang$yacc$lib$util$small_int_set$$SmallIntSet$union(self.vars, other.vars) };
 }
 function moonbitlang$yacc$lib$lr1$$EncodedSymbolicLookaheadSet$interpret(self, subst) {
-  const _p = moonbitlang$core$builtin$$Iter$map$181$(moonbitlang$yacc$lib$util$small_int_set$$SmallIntSet$iterator(self.vars), (var_) => moonbitlang$core$array$$Array$at$72$(subst, var_));
+  const _p = moonbitlang$core$builtin$$Iter$map$181$(moonbitlang$yacc$lib$util$small_int_set$$SmallIntSet$iter(self.vars), (var_) => moonbitlang$core$array$$Array$at$72$(subst, var_));
   const _p$2 = self.concrete_set;
   let _p$3 = _p$2;
   while (true) {
@@ -30188,7 +30188,7 @@ function moonbitlang$yacc$lib$lr1$$EncodedLR0ItemSet$decode_iter(self, grammar) 
   return moonbitlang$core$builtin$$Iter$mapi$223$(moonbitlang$core$array$$Array$iter$79$(self.items), (index, item) => ({ _0: index, _1: moonbitlang$yacc$lib$lr1$$EncodedLR0Item$decode(item, grammar) }));
 }
 function moonbitlang$yacc$lib$lr1$$EncodedLookaheadSet$decode_iter(self, grammar) {
-  return moonbitlang$core$builtin$$Iter$map$182$(moonbitlang$yacc$lib$util$small_int_set$$SmallIntSet$iterator(self), (t) => t === 0 ? $64$moonbitlang$47$yacc$47$lib$47$lr1$46$Lookahead$EndOfInput : new $64$moonbitlang$47$yacc$47$lib$47$lr1$46$Lookahead$Input(moonbitlang$core$array$$Array$at$55$(grammar.terminals, t - 1 | 0)));
+  return moonbitlang$core$builtin$$Iter$map$182$(moonbitlang$yacc$lib$util$small_int_set$$SmallIntSet$iter(self), (t) => t === 0 ? $64$moonbitlang$47$yacc$47$lib$47$lr1$46$Lookahead$EndOfInput : new $64$moonbitlang$47$yacc$47$lib$47$lr1$46$Lookahead$Input(moonbitlang$core$array$$Array$at$55$(grammar.terminals, t - 1 | 0)));
 }
 function moonbitlang$yacc$lib$lr1$$EncodedLR1ItemSet$decode_item_groups(self, grammar) {
   const _p = self.core.closure_symbolic_lookahead_set;
@@ -30510,7 +30510,7 @@ function moonbitlang$yacc$lib$lr1$$build_closure_fn$142$(grammar) {
       break;
     }
   }
-  const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iterator$250$(node_by_item);
+  const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iter$250$(node_by_item);
   while (true) {
     const _bind = moonbitlang$core$builtin$$Iter$next$167$(_it);
     if (_bind === undefined) {
@@ -30816,7 +30816,7 @@ function moonbitlang$yacc$lib$lr1$$build$46$explore$124$10(_env, kernel_items) {
         break;
       }
     }
-    const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iterator$252$(trans);
+    const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iter$252$(trans);
     while (true) {
       const _bind$2 = moonbitlang$core$builtin$$Iter$next$168$(_it);
       if (_bind$2 === undefined) {
@@ -30988,7 +30988,7 @@ function moonbitlang$yacc$lib$lr1$$Automaton$build(grammar, user_eoi) {
     if (!(queue.length === 0)) {
       const state = moonbitlang$core$array$$Array$unsafe_pop$23$(queue);
       const trans = moonbitlang$core$array$$Array$at$68$(node_transitions, state.items.core.num);
-      const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iterator$251$(trans);
+      const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iter$251$(trans);
       while (true) {
         const _bind = moonbitlang$core$builtin$$Iter$next$162$(_it);
         if (_bind === undefined) {
@@ -31077,7 +31077,7 @@ function moonbitlang$yacc$lib$lr1$$Automaton$build(grammar, user_eoi) {
       state.stamp = stamp;
       moonbitlang$core$array$$Array$push$134$(states, state);
       const trans = moonbitlang$core$array$$Array$at$68$(node_transitions, state.items.core.num);
-      const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iterator$251$(trans);
+      const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iter$251$(trans);
       while (true) {
         const _bind = moonbitlang$core$builtin$$Iter$next$162$(_it);
         if (_bind === undefined) {
@@ -31158,7 +31158,7 @@ function moonbitlang$yacc$lib$lr1$$Automaton$build(grammar, user_eoi) {
     if (_i < _len$5) {
       const state = states[_i];
       const core = state.items.core;
-      const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iterator$251$(moonbitlang$core$array$$Array$at$68$(node_transitions, core.num));
+      const _it = moonbitlang$yacc$lib$util$hashmap2$$T$iter$251$(moonbitlang$core$array$$Array$at$68$(node_transitions, core.num));
       while (true) {
         const _bind = moonbitlang$core$builtin$$Iter$next$162$(_it);
         if (_bind === undefined) {

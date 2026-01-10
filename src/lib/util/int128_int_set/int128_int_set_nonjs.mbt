@@ -81,7 +81,7 @@ pub impl Show for Int128IntSet with output(self, logger) {
 //   })
 // }
 
-pub fn Int128IntSet::iterator(self : Int128IntSet) -> Iter[Int] {
+pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
   let mut bitmask = self.a
   let mut has_rest = true
   let mut offset = 0
@@ -105,10 +105,10 @@ pub fn Int128IntSet::iterator(self : Int128IntSet) -> Iter[Int] {
 }
 
 ///|
-pub fn from_iterator(iterator : Iter[Int]) -> Int128IntSet {
+pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
   let mut a = 0L
   let mut b = 0L
-  for key in iterator {
+  for key in iter {
     if key < 64 {
       a = a | (1L << key)
     } else {

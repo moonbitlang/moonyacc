@@ -4,7 +4,7 @@ package "moonbitlang/yacc/lib/util/small_int_set"
 // Values
 pub fn empty() -> SmallIntSet
 
-pub fn from_iterator(Iter[Int]) -> SmallIntSet
+pub fn from_iter(Iter[Int]) -> SmallIntSet
 
 pub fn singleton(Int) -> SmallIntSet
 
@@ -20,7 +20,7 @@ pub fn SmallIntSet::disjoint(Self, Self) -> Bool
 pub fn SmallIntSet::intersection(Self, Self) -> Self
 pub fn SmallIntSet::is_empty(Self) -> Bool
 pub fn SmallIntSet::is_singleton(Self, Int) -> Bool
-pub fn SmallIntSet::iterator(Self) -> Iter[Int]
+pub fn SmallIntSet::iter(Self) -> Iter[Int]
 pub fn SmallIntSet::remove(Self, Int) -> Self
 pub fn SmallIntSet::subset(Self, Self) -> Bool
 pub fn SmallIntSet::union(Self, Self) -> Self

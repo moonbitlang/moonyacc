@@ -59,7 +59,7 @@ fn EncodedLookaheadSet::decode_iter(
   grammar : @grm.Grammar,
 ) -> Iter[Lookahead] {
   self.0
-  .iterator()
+  .iter()
   .map(fn(t) {
     if t == 0 {
       EndOfInput

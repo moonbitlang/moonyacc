@@ -38,10 +38,10 @@ test "@small_int_set.is_empty" {
 }
 
 ///|
-test "@small_int_set.iterator/empty" {
+test "@small_int_set.iter/empty" {
   // Test iterating over an empty set
   let empty_set = @small_int_set.empty()
-  let elements = empty_set.iterator().to_array()
+  let elements = empty_set.iter().to_array()
   inspect(elements, content="[]")
 }
 
@@ -64,37 +64,37 @@ test "@small_int_set.singleton/boundary" {
 }
 
 ///|
-test "@small_int_set.iterator/single_word" {
+test "@small_int_set.iter/single_word" {
   // Test iterating over elements in a single word (0-31)
   let mut set = @small_int_set.empty()
   set = set.add(0)
   set = set.add(1)
   set = set.add(31)
-  let elements = set.iterator().to_array()
+  let elements = set.iter().to_array()
   inspect(elements, content="[0, 1, 31]")
 }
 
 ///|
-test "@small_int_set.iterator/singleton" {
+test "@small_int_set.iter/singleton" {
   let set = @small_int_set.singleton(64)
-  let elements = set.iterator().to_array()
+  let elements = set.iter().to_array()
   inspect(elements, content="[64]")
 }
 
 ///|
-test "@small_int_set.iterator/multi_word" {
+test "@small_int_set.iter/multi_word" {
   // Test iterating over elements spanning multiple words (crossing 32-bit boundary)
   let mut set = @small_int_set.empty()
   set = set.add(31)
   set = set.add(32)
   set = set.add(63)
-  let elements = set.iterator().to_array()
+  let elements = set.iter().to_array()
   inspect(elements, content="[31, 32, 63]")
 }
 
 ///|
-test "@small_int_set.from_iterator/basic" {
-  let set = @small_int_set.from_iterator([1, 2, 3].iter())
+test "@small_int_set.from_iter/basic" {
+  let set = @small_int_set.from_iter([1, 2, 3].iter())
   inspect(set.contains(1), content="true")
   inspect(set.contains(2), content="true")
   inspect(set.contains(3), content="true")
@@ -102,15 +102,15 @@ test "@small_int_set.from_iterator/basic" {
 }
 
 ///|
-test "@small_int_set.from_iterator/empty" {
-  let set = @small_int_set.from_iterator(Iter::empty())
+test "@small_int_set.from_iter/empty" {
+  let set = @small_int_set.from_iter(Iter::empty())
   inspect(set.is_empty(), content="true")
 }
 
 ///|
-test "@small_int_set.from_iterator/multi_word" {
+test "@small_int_set.from_iter/multi_word" {
   // Test with numbers that span multiple words (32-bit boundaries)
-  let set = @small_int_set.from_iterator([31, 32, 33, 64].iter())
+  let set = @small_int_set.from_iter([31, 32, 33, 64].iter())
   inspect(set.contains(31), content="true")
   inspect(set.contains(32), content="true")
   inspect(set.contains(33), content="true")
@@ -429,23 +429,23 @@ test "@small_int_set.disjoint" {
 test "@small_int_set.subset" {
   // Empty set is subset of any set
   let empty = @small_int_set.empty()
-  let set1 = @small_int_set.from_iterator([1, 2, 3].iter())
+  let set1 = @small_int_set.from_iter([1, 2, 3].iter())
   inspect(empty.subset(set1), content="true")
 
   // Set is subset of itself
   inspect(set1.subset(set1), content="true")
 
   // Proper subset testing
-  let set2 = @small_int_set.from_iterator([1, 2].iter())
+  let set2 = @small_int_set.from_iter([1, 2].iter())
   inspect(set2.subset(set1), content="true")
 
   // Not a subset testing
-  let set3 = @small_int_set.from_iterator([1, 4].iter())
+  let set3 = @small_int_set.from_iter([1, 4].iter())
   inspect(set3.subset(set1), content="false")
 
   // Testing with elements across word boundaries (> 32)
-  let large_set1 = @small_int_set.from_iterator([1, 33, 65].iter())
-  let large_set2 = @small_int_set.from_iterator([1, 33, 65, 97].iter())
+  let large_set1 = @small_int_set.from_iter([1, 33, 65].iter())
+  let large_set2 = @small_int_set.from_iter([1, 33, 65, 97].iter())
   inspect(large_set1.subset(large_set2), content="true")
   inspect(large_set2.subset(large_set1), content="false")
 }
@@ -453,8 +453,8 @@ test "@small_int_set.subset" {
 ///|
 test "@small_int_set.subset: bad case" {
   inspect(
-    @small_int_set.from_iterator([64].iter()).subset(
-      @small_int_set.from_iterator([21, 48, 58, 61, 81].iter()),
+    @small_int_set.from_iter([64].iter()).subset(
+      @small_int_set.from_iter([21, 48, 58, 61, 81].iter()),
     ),
     content="false",
   )
