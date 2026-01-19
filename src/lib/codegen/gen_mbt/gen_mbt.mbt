@@ -392,8 +392,9 @@ fn codegen(
       }
       output.write_string(
         (
-          $|priv suberror YYObj_Json Json
-          $|
+          $|priv suberror YYObj_Json {
+          $| YYObj_Json(Json)
+          $|}
           $|
         ),
       )
