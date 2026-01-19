@@ -32015,7 +32015,7 @@ function moonbitlang$yacc$lib$codegen$gen_mbt$$codegen$46$inner(grammar, automat
     if (input_mode === 0) {
       moonbitlang$core$builtin$$Logger$write_string$5$(output, "priv suberror YYObj_Void\n\n");
     }
-    moonbitlang$core$builtin$$Logger$write_string$5$(output, "priv suberror YYObj_Json Json\n\n");
+    moonbitlang$core$builtin$$Logger$write_string$5$(output, "priv suberror YYObj_Json {\n YYObj_Json(Json)\n}\n");
   }
   moonbitlang$core$builtin$$Logger$write_string$5$(output, `type YYState = (YYSymbol) -> YYDecision\n\ntype YYAction = (${moonbitlang$core$builtin$$Show$to_string$122$(meta.position_data_type)}, ArrayView[(YYObj, ${moonbitlang$core$builtin$$Show$to_string$122$(meta.position_data_type)}, ${moonbitlang$core$builtin$$Show$to_string$122$(meta.position_data_type)})]) -> YYObj\n\npriv enum YYDecision {\n  Accept\n  Shift(YYState)\n  Reduce(Int, YYSymbol, YYAction)\n  ReduceNoLookahead(Int, YYSymbol, YYAction)\n  Error\n}\n\n`);
   moonbitlang$core$builtin$$Logger$write_string$5$(output, "priv enum YYSymbol {\n");
