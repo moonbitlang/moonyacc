@@ -6,5 +6,8 @@
       "output": "parser.mbt"
     }
   ],
-  "warn-list": "-6"
+  "warn-list": "-6",
+  "import": [
+    "moonbitlang/core/list"
+  ]
 }

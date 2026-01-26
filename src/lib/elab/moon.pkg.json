@@ -4,7 +4,14 @@
     "moonbitlang/yacc/lib/util/array_multimap",
     "moonbitlang/yacc/lib/util/stamp",
     "moonbitlang/yacc/lib/ast",
-    "moonbitlang/yacc/lib/parser/type_expr_parser"
+    "moonbitlang/yacc/lib/parser/type_expr_parser",
+    {
+      "path": "moonbitlang/core/immut/array",
+      "alias": "immut/array"
+    },
+    "moonbitlang/core/list",
+    "moonbitlang/core/sorted_map",
+    "moonbitlang/core/sorted_set"
   ],
   "pre-build": [
     {

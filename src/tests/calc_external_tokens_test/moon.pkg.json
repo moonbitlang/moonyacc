@@ -10,5 +10,8 @@
       "input": "calc.mbty",
       "output": "calc.mbt"
     }
+  ],
+  "import": [
+    "moonbitlang/core/list"
   ]
 }

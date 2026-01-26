@@ -8,7 +8,14 @@
     "moonbitlang/yacc/lib/elab",
     "moonbitlang/yacc/lib/util/stamp",
     "moonbitlang/yacc/lib/util/default_hashmap",
-    "moonbitlang/yacc/lib/util/hashmap2"
+    "moonbitlang/yacc/lib/util/hashmap2",
+    {
+      "path": "moonbitlang/core/immut/sorted_set",
+      "alias": "immut/sorted_set"
+    },
+    "moonbitlang/core/list",
+    "moonbitlang/core/sorted_map",
+    "moonbitlang/core/sorted_set"
   ],
   "warn-list": "-6"
 }

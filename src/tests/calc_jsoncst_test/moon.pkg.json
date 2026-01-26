@@ -5,5 +5,8 @@
       "input": "calc_jsoncst.mbty",
       "output": "calc_jsoncst.mbt"
     }
+  ],
+  "import": [
+    "moonbitlang/core/list"
   ]
 }

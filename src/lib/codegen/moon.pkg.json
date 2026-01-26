@@ -4,6 +4,10 @@
     "moonbitlang/yacc/lib/lr1",
     "moonbitlang/yacc/lib/util/logger_with_cursor",
     "moonbitlang/yacc/lib/util/array_multimap",
-    "moonbitlang/yacc/lib/elab"
+    "moonbitlang/yacc/lib/elab",
+    {
+      "path": "moonbitlang/core/immut/array",
+      "alias": "immut/array"
+    }
   ]
 }
