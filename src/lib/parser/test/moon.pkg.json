@@ -12,6 +12,8 @@
   ],
   "import": [
     "moonbitlang/yacc/lib/ast",
-    "moonbitlang/yacc/lib/parser"
+    "moonbitlang/yacc/lib/parser",
+    "moonbitlang/core/list",
+    "moonbitlang/core/test"
   ]
 }

@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/yacc/lib/desugar"
 
-import(
-  "moonbitlang/yacc/lib/elab"
-)
+import {
+  "moonbitlang/yacc/lib/elab",
+}
 
 // Values
 pub fn eliminate_inline(@elab.ParserSpec) -> @elab.ParserSpec

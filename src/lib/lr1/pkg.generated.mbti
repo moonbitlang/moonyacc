@@ -1,13 +1,13 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/yacc/lib/lr1"
 
-import(
-  "moonbitlang/core/list"
-  "moonbitlang/core/sorted_map"
-  "moonbitlang/yacc/lib/grm"
-  "moonbitlang/yacc/lib/util/hashmap2"
-  "moonbitlang/yacc/lib/util/stamp"
-)
+import {
+  "moonbitlang/core/list",
+  "moonbitlang/core/sorted_map",
+  "moonbitlang/yacc/lib/grm",
+  "moonbitlang/yacc/lib/util/hashmap2",
+  "moonbitlang/yacc/lib/util/stamp",
+}
 
 // Values
 pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(@grm.Grammar) -> (Iter[(EncodedLR0Item, LookaheadSet)]) -> Array[(EncodedLR0Item, LookaheadSet)]
