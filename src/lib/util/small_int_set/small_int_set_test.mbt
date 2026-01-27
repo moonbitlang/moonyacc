@@ -200,8 +200,8 @@ test "@small_int_set.union/empty_sets" {
 
 ///|
 test "@small_int_set.union/disjoint_sets" {
-  let set1 = @small_int_set.empty() |> _.add(1) |> _.add(3)
-  let set2 = @small_int_set.empty() |> _.add(2) |> _.add(4)
+  let set1 = @small_int_set.empty() |> y => { y.add(1) } |> y => { y.add(3) }
+  let set2 = @small_int_set.empty() |> y => { y.add(2) } |> y => { y.add(4) }
   let union = set1.union(set2)
   inspect(union.contains(1), content="true")
   inspect(union.contains(2), content="true")
@@ -212,8 +212,8 @@ test "@small_int_set.union/disjoint_sets" {
 
 ///|
 test "@small_int_set.union/overlapping_sets" {
-  let set1 = @small_int_set.empty() |> _.add(1) |> _.add(2)
-  let set2 = @small_int_set.empty() |> _.add(2) |> _.add(3)
+  let set1 = @small_int_set.empty() |> y => { y.add(1) } |> y => { y.add(2) }
+  let set2 = @small_int_set.empty() |> y => { y.add(2) } |> y => { y.add(3) }
   let union = set1.union(set2)
   inspect(union.contains(1), content="true")
   inspect(union.contains(2), content="true")
@@ -261,8 +261,13 @@ test "@small_int_set.intersection/empty_sets" {
 ///|
 test "@small_int_set.intersection/disjoint_sets" {
   // Create two sets with no common elements
-  let set1 = @small_int_set.empty().add(1) |> _.add(3) |> _.add(5)
-  let set2 = @small_int_set.empty() |> _.add(2) |> _.add(4) |> _.add(6)
+  let set1 = @small_int_set.empty().add(1)
+    |> y => { y.add(3) }
+    |> y => { y.add(5) }
+  let set2 = @small_int_set.empty()
+    |> y => { y.add(2) }
+    |> y => { y.add(4) }
+    |> y => { y.add(6) }
   let result = set1.intersection(set2)
   // Test that no elements from either set exist in the intersection
   let test_values = [1, 2, 3, 4, 5, 6]
@@ -274,8 +279,12 @@ test "@small_int_set.intersection/disjoint_sets" {
 ///|
 test "@small_int_set.intersection/overlapping_sets" {
   // Create two sets with some common elements
-  let set1 = @small_int_set.empty().add(1) |> _.add(2) |> _.add(3)
-  let set2 = @small_int_set.empty().add(2) |> _.add(3) |> _.add(4)
+  let set1 = @small_int_set.empty().add(1)
+    |> y => { y.add(2) }
+    |> y => { y.add(3) }
+  let set2 = @small_int_set.empty().add(2)
+    |> y => { y.add(3) }
+    |> y => { y.add(4) }
   let result = set1.intersection(set2)
   // Test common elements are present
   inspect(result.contains(2), content="true")

@@ -1,13 +1,13 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/yacc/lib/elab"
 
-import(
-  "moonbitlang/core/immut/array"
-  "moonbitlang/core/set"
-  "moonbitlang/yacc/lib/ast"
-  "moonbitlang/yacc/lib/util/array_multimap"
-  "moonbitlang/yacc/lib/util/stamp"
-)
+import {
+  "moonbitlang/core/immut/array",
+  "moonbitlang/core/set",
+  "moonbitlang/yacc/lib/ast",
+  "moonbitlang/yacc/lib/util/array_multimap",
+  "moonbitlang/yacc/lib/util/stamp",
+}
 
 // Values
 pub fn elaborate(@ast.ParserSpec, String, String, json_cst~ : JsonCst, stdlib_rules? : Map[String, Rule], token_payload_rewrite~ : TokenPayloadRewrite, force_int_position~ : Bool) -> ParserSpec raise ElabError

@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/yacc/lib/ast"
 
-import(
-  "moonbitlang/core/list"
-)
+import {
+  "moonbitlang/core/list",
+}
 
 // Values
 pub fn print_spec(ParserSpec, StringBuilder, actions? : Bool) -> Unit

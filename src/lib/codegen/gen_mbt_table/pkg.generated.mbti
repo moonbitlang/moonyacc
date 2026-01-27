@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/yacc/lib/codegen/gen_mbt_table"
 
-import(
-  "moonbitlang/yacc/lib/codegen"
-)
+import {
+  "moonbitlang/yacc/lib/codegen",
+}
 
 // Values
 pub let compress_generator : &@codegen.CodeGenerator

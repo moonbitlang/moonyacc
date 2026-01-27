@@ -34,7 +34,7 @@ test {
   }
 
   let result = start(read_token, 0)
-  @json.inspect(result, content={
+  json_inspect(result, content={
     "type": "NONTERMINAL",
     "name": "start",
     "rule_index": 0,

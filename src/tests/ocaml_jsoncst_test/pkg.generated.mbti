@@ -1,9 +1,9 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/yacc/tests/ocaml_jsoncst_test"
 
-import(
-  "moonbitlang/ulex-runtime/lexbuf"
-)
+import {
+  "moonbitlang/ulex-runtime/lexbuf",
+}
 
 // Values
 pub fn implementation(() -> (Token, Int, Int), Int) -> Json raise ParseError
