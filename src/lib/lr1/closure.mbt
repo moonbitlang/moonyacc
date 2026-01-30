@@ -42,7 +42,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
     capacity=16,
   )
   for production in grammar.productions {
-    for dot in 0..=production.rhs.length() {
+    for dot in 0..<=production.rhs.length() {
       let item = EncodedLR0Item::new(production, dot)
       let partial_lookahead_set = if dot < production.rhs.length() {
         first(production.rhs[dot + 1:])

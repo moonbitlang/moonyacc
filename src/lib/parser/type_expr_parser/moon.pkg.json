@@ -13,6 +13,8 @@
   ],
   "import": [
     "moonbitlang/yacc/lib/ast",
-    "moonbitlang/ulex-runtime/lexbuf"
+    "moonbitlang/ulex-runtime/lexbuf",
+    "moonbitlang/core/int",
+    "moonbitlang/core/list"
   ]
 }

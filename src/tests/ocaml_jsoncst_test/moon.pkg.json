@@ -28,9 +28,15 @@
   "warn-list": "-2-6",
   "test-import": [
     "moonbitlang/yacc/lib/parser",
-    "moonbitlang/yacc/lib/ast"
+    "moonbitlang/yacc/lib/ast",
+    "moonbitlang/core/test"
   ],
   "import": [
-    "moonbitlang/ulex-runtime/lexbuf"
+    "moonbitlang/ulex-runtime/lexbuf",
+    "moonbitlang/core/int",
+    "moonbitlang/core/list"
+  ],
+  "wbtest-import": [
+    "moonbitlang/core/test"
   ]
 }

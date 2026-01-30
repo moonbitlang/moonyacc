@@ -1,6 +1,14 @@
 {
   "import": [
     "moonbitlang/yacc/lib/elab",
-    "moonbitlang/yacc/lib/util/stamp"
+    "moonbitlang/yacc/lib/util/stamp",
+    {
+      "path": "moonbitlang/core/immut/array",
+      "alias": "immut/array"
+    },
+    {
+      "path": "moonbitlang/core/immut/sorted_map",
+      "alias": "immut/sorted_map"
+    }
   ]
 }
