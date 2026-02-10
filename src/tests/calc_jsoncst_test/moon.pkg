@@ -1,12 +1,13 @@
-{
+import {
+  "moonbitlang/core/list",
+}
+
+options(
   "pre-build": [
     {
       "command": "node $mod_dir/boot/moonyacc.cjs --mode json-cst --input-mode pull --force-token-no-payload $input | moonfmt > $output",
       "input": "calc_jsoncst.mbty",
-      "output": "calc_jsoncst.mbt"
-    }
+      "output": "calc_jsoncst.mbt",
+    },
   ],
-  "import": [
-    "moonbitlang/core/list"
-  ]
-}
+)

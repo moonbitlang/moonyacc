@@ -1,0 +1,21 @@
+import {
+  "moonbitlang/yacc/lib/parser",
+  "moonbitlang/yacc/lib/util/array_multimap",
+  "moonbitlang/yacc/lib/util/stamp",
+  "moonbitlang/yacc/lib/ast",
+  "moonbitlang/yacc/lib/parser/type_expr_parser",
+  "moonbitlang/core/immut/array" @immut/array,
+  "moonbitlang/core/list",
+  "moonbitlang/core/sorted_map",
+  "moonbitlang/core/sorted_set",
+}
+
+options(
+  "pre-build": [
+    {
+      "command": ":embed --name stdlib_src -i $input -o $output",
+      "input": [ "stdlib.mbty" ],
+      "output": [ "stdlib_src.mbt" ],
+    },
+  ],
+)
