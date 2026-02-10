@@ -1,0 +1,24 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "Yoorkin/trie"
+
+// Values
+#deprecated
+pub fn[A] empty() -> Trie[A]
+
+// Errors
+
+// Types and methods
+#alias(T)
+type Trie[A]
+pub fn[A] Trie::add(Self[A], String, A) -> Self[A]
+pub fn[A] Trie::empty() -> Self[A]
+pub fn[A] Trie::from_array(Array[(String, A)]) -> Self[A]
+#deprecated
+pub fn[A] Trie::insert(Self[A], String, A) -> Self[A]
+pub fn[A] Trie::lookup(Self[A], String) -> A?
+pub fn[A] Trie::of(FixedArray[(String, A)]) -> Self[A]
+
+// Type aliases
+
+// Traits
+

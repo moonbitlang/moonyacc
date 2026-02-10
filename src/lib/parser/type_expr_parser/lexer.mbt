@@ -201,10 +201,12 @@ fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
         }
     _ => panic()
   }
+
   guard _match_pattern <= 11 else {
     // No pattern matched
     panic()
   }
+
   lexbuf.reset(pos=_match_end)
   match _match_pattern {
     0 => {

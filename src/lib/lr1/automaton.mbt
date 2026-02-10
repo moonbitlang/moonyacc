@@ -293,7 +293,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
         }
         return fuse(family, new_state)
       }
-    } else {
+    } nobreak {
       family.push(candidate)
       queue.push(candidate)
     }

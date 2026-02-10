@@ -295,7 +295,7 @@ pub fn elaborate(
           Some(rule) =>
             RuleCall(
               symbol,
-              map_error(args, fn(arg) { map_term(arg, rule_param_map) }),
+              map_error(args, arg => { map_term(arg, rule_param_map) }),
               rule.type_,
             )
         }
@@ -314,7 +314,7 @@ pub fn elaborate(
     let mut clause_index = 0
     for ast_clause in ast_clause_iter {
       let (ast_clause, ast_clause_action) = ast_clause
-      let items = map_error(ast_clause.items, fn(ast_item) {
+      let items = map_error(ast_clause.items, ast_item => {
         Item::{
           binder: ast_item.binder,
           term: map_term(ast_item.term, rule_param_map),
