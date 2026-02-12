@@ -5,10 +5,7 @@
     "moonbitlang/x": "0.4.38",
     "Yoorkin/ArgParser": "0.2.0",
     "moonbitlang/ulex-runtime": "0.4.3",
-    "Yoorkin/trie": {
-      "path": "third_party/trie",
-      "version": "0.2.9"
-    }
+    "Yoorkin/trie": "0.2.10"
   },
   "readme": "README.md",
   "repository": "",
