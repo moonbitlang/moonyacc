@@ -689,10 +689,12 @@ fn token(
     }
     _ => panic()
   }
+
   guard _match_pattern <= 34 else {
     // No pattern matched
     panic()
   }
+
   lexbuf.reset(pos=_match_end)
   match _match_pattern {
     0 => {
@@ -705,6 +707,7 @@ fn token(
     }
     2 => {
       ()
+
       comment_star_rparen(lexbuf)
       token(phase, lexbuf)
     }
@@ -794,6 +797,7 @@ fn token(
       ()
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
+
       if phase.val <= 0 {
         phase.val += 1
         (PERCENT_PERCENT, _capture_0_start, _capture_0_end)
@@ -844,6 +848,7 @@ fn token(
       ()
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
+
       let sb = StringBuilder::new()
       code_percent_rbrace(sb, lexbuf)
       (
@@ -858,6 +863,7 @@ fn token(
       ()
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
+
       let sb = StringBuilder::new()
       code_rangle(sb, lexbuf)
       (LANGLE_CODE_RANGLE(sb.to_string()), _capture_0_start, lexbuf.pos)
@@ -902,6 +908,7 @@ fn token(
       ()
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
+
       let sb = StringBuilder::new()
       let subst = []
       let base = lexbuf.pos
@@ -991,14 +998,17 @@ fn comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError {
     }
     _ => panic()
   }
+
   guard _match_pattern <= 3 else {
     // No pattern matched
     panic()
   }
+
   lexbuf.reset(pos=_match_end)
   match _match_pattern {
     0 => {
       ()
+
       comment_star_rparen(lexbuf)
       comment_star_rparen(lexbuf)
     }
@@ -1049,10 +1059,12 @@ fn code_eof(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit {
     }
     _ => panic()
   }
+
   guard _match_pattern <= 1 else {
     // No pattern matched
     panic()
   }
+
   lexbuf.reset(pos=_match_end)
   match _match_pattern {
     0 => {
@@ -1110,10 +1122,12 @@ fn code_rangle(
     }
     _ => panic()
   }
+
   guard _match_pattern <= 2 else {
     // No pattern matched
     panic()
   }
+
   lexbuf.reset(pos=_match_end)
   match _match_pattern {
     0 => {
@@ -1123,6 +1137,7 @@ fn code_rangle(
     1 => {
       ()
       let t = lexbuf.get_char(_capture_0_start, _capture_0_end)
+
       sb.write_char(t)
       code_rangle(sb, lexbuf)
     }
@@ -1185,10 +1200,12 @@ fn code_percent_rbrace(
     }
     _ => panic()
   }
+
   guard _match_pattern <= 2 else {
     // No pattern matched
     panic()
   }
+
   lexbuf.reset(pos=_match_end)
   match _match_pattern {
     0 => {
@@ -1198,6 +1215,7 @@ fn code_percent_rbrace(
     1 => {
       ()
       let t = lexbuf.get_char(_capture_0_start, _capture_0_end)
+
       sb.write_char(t)
       code_percent_rbrace(sb, lexbuf)
     }
@@ -1779,14 +1797,17 @@ fn code_rbrace(
     }
     _ => panic()
   }
+
   guard _match_pattern <= 7 else {
     // No pattern matched
     panic()
   }
+
   lexbuf.reset(pos=_match_end)
   match _match_pattern {
     0 => {
       ()
+
       sb.write_string("{")
       code_rbrace(sb, subst, base, lexbuf)
       sb.write_string("}")
@@ -1801,6 +1822,7 @@ fn code_rbrace(
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
       let t1 = lexbuf.get_string(_capture_1_start, _capture_1_end)
+
       sb.write_string(t)
       let index = @strconv.parse_int(t1, base=10) catch {
         err => abort(Show::to_string(err))
@@ -1818,6 +1840,7 @@ fn code_rbrace(
       let _ = t
       let t1 = lexbuf.get_string(_capture_1_start, _capture_1_end)
       let t2 = lexbuf.get_string(_capture_2_start, _capture_2_end)
+
       sb.write_string(t)
       let arg : @ast.ClauseItemIdent = if t2.has_prefix("$") {
         let index = @strconv.parse_int(try! t2[1:].to_string(), base=10) catch {
@@ -1844,6 +1867,7 @@ fn code_rbrace(
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
       let t1 = lexbuf.get_string(_capture_1_start, _capture_1_end)
+
       sb.write_string(t)
       subst.push({
         start: _capture_0_start - base,
@@ -1862,12 +1886,14 @@ fn code_rbrace(
     5 => {
       ()
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
+
       sb.write_string(t)
       code_rbrace(sb, subst, base, lexbuf)
     }
     6 => {
       ()
       let t = lexbuf.get_char(_capture_0_start, _capture_0_end)
+
       sb.write_char(t)
       code_rbrace(sb, subst, base, lexbuf)
     }

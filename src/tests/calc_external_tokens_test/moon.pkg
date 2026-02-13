@@ -1,17 +1,18 @@
-{
+import {
+  "moonbitlang/core/list",
+}
+
+options(
   "pre-build": [
     {
       "command": "node $mod_dir/boot/moonyacc.cjs $input --mode only-tokens -o $output",
       "input": "calc.mbty",
-      "output": "calc_tokens.mbt"
+      "output": "calc_tokens.mbt",
     },
     {
       "command": "node $mod_dir/boot/moonyacc.cjs $input --external-tokens -o $output",
       "input": "calc.mbty",
-      "output": "calc.mbt"
-    }
+      "output": "calc.mbt",
+    },
   ],
-  "import": [
-    "moonbitlang/core/list"
-  ]
-}
+)

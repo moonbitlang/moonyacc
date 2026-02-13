@@ -63,7 +63,6 @@ pub fn parse(
         for i in 0..<production.rhs.length() {
           let _ = state_stack.pop()
           let _ = data_stack.pop()
-
         }
         data_stack.push(result)
         let next_state = state_stack.last().unwrap().goto.get(

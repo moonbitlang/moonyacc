@@ -1,0 +1,16 @@
+import {
+  "moonbitlang/yacc/lib/ast",
+  "moonbitlang/yacc/lib/parser",
+  "moonbitlang/core/list",
+  "moonbitlang/core/test",
+}
+
+options(
+  "pre-build": [
+    {
+      "command": ":embed --name parser_spec_src -i $input -o $output",
+      "input": [ "../parser.mbty" ],
+      "output": [ "parser_spec_src.mbt" ],
+    },
+  ],
+)
