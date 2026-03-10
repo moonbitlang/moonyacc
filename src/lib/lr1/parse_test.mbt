@@ -60,7 +60,7 @@ pub fn parse(
       Some(Reduce(production)) => {
         let args = data_stack[data_stack.length() - production.rhs.length():]
         let result = (action_provider.get_action)(production.num)(args)
-        for i in 0..<production.rhs.length() {
+        for _ in 0..<production.rhs.length() {
           let _ = state_stack.pop()
           let _ = data_stack.pop()
         }

@@ -1,5 +1,5 @@
 .PHONY: boot
 
 boot:
-	moon build --target js
-	cp target/js/release/build/main/main.js boot/moonyacc.cjs
+	moon build --target js --release
+	cp _build/js/release/build/main/main.js boot/moonyacc.cjs
