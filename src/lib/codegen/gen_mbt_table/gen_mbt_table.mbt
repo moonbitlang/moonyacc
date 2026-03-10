@@ -1033,7 +1033,7 @@ fn codegen(
           $|            } else {
           $|              (args[0].1, args[args.length() - 1].2)
           $|            }
-          $|            for i in 0..<count {
+          $|            for _ in 0..<count {
           $|              ignore(data_stack.unsafe_pop())
           $|              state_stack = state_stack.unsafe_tail()
           $|            }
@@ -1116,7 +1116,7 @@ fn codegen(
           $|            } else {
           $|              (args[0].1, args[args.length() - 1].2)
           $|            }
-          $|            for i in 0..<count {
+          $|            for _ in 0..<count {
           $|              ignore(data_stack.unsafe_pop())
           $|              state_stack = state_stack.unsafe_tail()
           $|            }
@@ -1252,7 +1252,7 @@ fn codegen(
   for start in automaton.starts {
     let (start_production, start_state) = start
     let name = start_production.lhs.name
-    let original_name = try! name[:name.length() - "_prime".length()].to_string()
+    let original_name = name[:name.length() - "_prime".length()].to_string()
     match input_mode {
       Array =>
         output.write_string(
