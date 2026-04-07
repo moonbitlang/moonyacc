@@ -226,6 +226,39 @@ fn codegen_tokens(
       $|
     ),
   )
+  // TokenKind::to_repr
+  output.write_string(
+    (
+      $|pub impl Debug for TokenKind with to_repr(self) {
+      $|    match self {
+      $|
+    ),
+  )
+  for term in terminals {
+    let name = match terminal_meta(term.name).image {
+      Some(image) =>
+        if image is ['\"', .. rest] && rest is [.. rest, '\"'] {
+          rest.escape()
+        } else {
+          image.escape()
+        }
+      None => term.name.escape()
+    }
+    output.write_string(
+      (
+        $|      TK_\{term.name} => to_repr(\{name})
+        $|
+      ),
+    )
+  }
+  output.write_string(
+    (
+      $|    }
+      $|}
+      $|
+      $|
+    ),
+  )
 }
 
 ///|
@@ -1024,32 +1057,31 @@ fn codegen(
           $|      }
           $|      Reduce(count, symbol, action)
           $|      | ReduceNoLookahead(count, symbol, action) => {
-          $|        loop (count, symbol, action) {
-          $|          _ => {
-          $|            let args = data_stack[data_stack.length() - count:]
-          $|            let data = action(last_pos, args)
-          $|            let (start_pos, end_pos) = if args.length() == 0 {
-          $|              (last_pos, last_pos)
-          $|            } else {
-          $|              (args[0].1, args[args.length() - 1].2)
-          $|            }
-          $|            for _ in 0..<count {
-          $|              ignore(data_stack.unsafe_pop())
-          $|              state_stack = state_stack.unsafe_tail()
-          $|            }
-          $|            state = state_stack.unsafe_head()
-          $|            data_stack.push((data, start_pos, end_pos))
-          $|            match yy_state(state, symbol) {
-          $|              Accept => return return_(data_stack.unsafe_pop().0)
-          $|              Shift(next_state) => {
-          $|                state_stack = @list.cons(next_state, state_stack)
-          $|                state = next_state
-          $|              }
-          $|              Reduce(count, symbol, action)
-          $|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
-          $|              _ => panic()
-          $|            }
+          $|        for count = count, symbol = symbol, action = action {
+          $|          let args = data_stack[data_stack.length() - count:]
+          $|          let data = action(last_pos, args)
+          $|          let (start_pos, end_pos) = if args.length() == 0 {
+          $|            (last_pos, last_pos)
+          $|          } else {
+          $|            (args[0].1, args[args.length() - 1].2)
           $|          }
+          $|          for _ in 0..<count {
+          $|            ignore(data_stack.unsafe_pop())
+          $|            state_stack = state_stack.unsafe_tail()
+          $|          }
+          $|          state = state_stack.unsafe_head()
+          $|          data_stack.push((data, start_pos, end_pos))
+          $|          match yy_state(state, symbol) {
+          $|            Accept => return return_(data_stack.unsafe_pop().0)
+          $|            Shift(next_state) => {
+          $|              state_stack = @list.cons(next_state, state_stack)
+          $|              state = next_state
+          $|              break ()
+          $|            }
+          $|            Reduce(count, symbol, action)
+          $|            | ReduceNoLookahead(count, symbol, action) => continue count, symbol, action
+          $|            _ => panic()
+          $|          } 
           $|        }
           $|      }
           $|      Error => {
@@ -1107,31 +1139,30 @@ fn codegen(
           $|      }
           $|      Reduce(count, symbol, action)
           $|      | ReduceNoLookahead(count, symbol, action) => {
-          $|        loop (count, symbol, action) {
-          $|          _ => {
-          $|            let args = data_stack[data_stack.length() - count:]
-          $|            let data = action(last_pos, args)
-          $|            let (start_pos, end_pos) = if args.length() == 0 {
-          $|              (last_pos, last_pos)
-          $|            } else {
-          $|              (args[0].1, args[args.length() - 1].2)
+          $|        for count = count, symbol = symbol, action = action {
+          $|          let args = data_stack[data_stack.length() - count:]
+          $|          let data = action(last_pos, args)
+          $|          let (start_pos, end_pos) = if args.length() == 0 {
+          $|            (last_pos, last_pos)
+          $|          } else {
+          $|            (args[0].1, args[args.length() - 1].2)
+          $|          }
+          $|          for _ in 0..<count {
+          $|            ignore(data_stack.unsafe_pop())
+          $|            state_stack = state_stack.unsafe_tail()
+          $|          }
+          $|          state = state_stack.unsafe_head()
+          $|          data_stack.push((data, start_pos, end_pos))
+          $|          match yy_state(state, symbol) {
+          $|            Accept => return return_(data_stack.unsafe_pop().0)
+          $|            Shift(next_state) => {
+          $|              state_stack = @list.cons(next_state, state_stack)
+          $|              state = next_state
+          $|              break ()
           $|            }
-          $|            for _ in 0..<count {
-          $|              ignore(data_stack.unsafe_pop())
-          $|              state_stack = state_stack.unsafe_tail()
-          $|            }
-          $|            state = state_stack.unsafe_head()
-          $|            data_stack.push((data, start_pos, end_pos))
-          $|            match yy_state(state, symbol) {
-          $|              Accept => return return_(data_stack.unsafe_pop().0)
-          $|              Shift(next_state) => {
-          $|                state_stack = @list.cons(next_state, state_stack)
-          $|                state = next_state
-          $|              }
-          $|              Reduce(count, symbol, action)
-          $|              | ReduceNoLookahead(count, symbol, action) => continue (count, symbol, action)
-          $|              _ => panic()
-          $|            }
+          $|            Reduce(count, symbol, action)
+          $|            | ReduceNoLookahead(count, symbol, action) => continue count, symbol, action
+          $|            _ => panic()
           $|          }
           $|        }
           $|      }
