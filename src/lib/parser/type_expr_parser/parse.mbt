@@ -16,7 +16,7 @@
 suberror ParseOrLexError {
   ParseError(ParseError)
   LexError(LexError)
-} derive(Show)
+} derive(Debug)
 
 ///|
 pub fn parse(str : String) -> @ast.TypeExpr raise ParseOrLexError {

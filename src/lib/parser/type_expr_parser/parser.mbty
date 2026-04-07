@@ -14,8 +14,8 @@
 
 %start parse_type_expr
 %position<Int>
-%derive<Show> ParseError
-%derive<Show> Token
+%derive<Debug> ParseError
+%derive<Debug> Token
 
 %token EOF
 

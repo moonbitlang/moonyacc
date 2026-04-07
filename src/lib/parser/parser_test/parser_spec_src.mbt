@@ -3,7 +3,7 @@
 ///|
 let parser_spec_src : String =
   #|%position<Int>
-  #|%derive<Show> Token
+  #|%derive<Debug> Token
   #|%start spec
   #|
   #|%token EOF

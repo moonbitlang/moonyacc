@@ -120,7 +120,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
       num
     },
     _set_prec: fn(term, assoc, level) {
-      guard not(production_added)
+      guard !production_added
       let term = get_terminal(term)
       term.prec = Some((level, assoc))
     },

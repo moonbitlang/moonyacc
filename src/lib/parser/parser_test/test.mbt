@@ -23,7 +23,7 @@ test "lexer" (it : @test.Test) {
 
   while true {
     let (tok, _, _) = token()
-    it.writeln(tok)
+    it.writeln(to_repr(tok))
     match tok {
       EOF => break
       _ => ()

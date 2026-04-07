@@ -134,7 +134,7 @@ pub fn eliminate_rule_args(
   while true {
     let queue = deferred_specialized_rules
       .values()
-      .filter(fn(it) { not(new_rules.contains(it.specialized_rule_name)) })
+      .filter(fn(it) { !new_rules.contains(it.specialized_rule_name) })
       .to_array()
     deferred_specialized_rules = {}
     if queue.is_empty() {

@@ -1,5 +1,5 @@
 %position<Int>
-%derive<Show> Token
+%derive<Debug> Token
 %start spec
 
 %token EOF

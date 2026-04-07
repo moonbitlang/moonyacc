@@ -66,8 +66,8 @@ pub impl Show for TypeExpr with output(self, logger) {
 
 ///|
 pub(all) struct ParserSpec {
-  header : @immut/array.T[CodeChunk]
-  trailer : @immut/array.T[CodeChunk]
+  header : @immut/vector.Vector[CodeChunk]
+  trailer : @immut/vector.Vector[CodeChunk]
   tokens : Array[Token]
   rules : Map[Symbol, Rule]
   start_rules : Array[Symbol]

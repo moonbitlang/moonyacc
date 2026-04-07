@@ -22,7 +22,7 @@ pub fn print_spec(
     match decl {
       Start(symbols, type_~) => {
         out.write_string("%start")
-        if not(actions) {
+        if !actions {
           out.write_string("<unit>")
         } else {
           out.write_string("<\{type_}>")
@@ -36,7 +36,7 @@ pub fn print_spec(
       _ => panic()
     }
   }
-  if not(start_decls.is_empty()) {
+  if !start_decls.is_empty() {
     out.write_string("\n")
   }
   for decl in normal_decls {
@@ -91,7 +91,7 @@ pub fn print_spec(
         }
     }
   }
-  if not(prec_decls.is_empty()) {
+  if !prec_decls.is_empty() {
     out.write_string("\n")
   }
   for decl in prec_decls {
@@ -126,7 +126,7 @@ pub fn print_spec(
       out.write_string("%inline ")
     }
     out.write_string(rule.nonterminal)
-    if actions && not(rule.generic_params.is_empty()) {
+    if actions && !rule.generic_params.is_empty() {
       out.write_string("[")
       for index, param in rule.generic_params {
         if index > 0 {
@@ -136,7 +136,7 @@ pub fn print_spec(
       }
       out.write_string("]")
     }
-    if not(rule.params.is_empty()) {
+    if !rule.params.is_empty() {
       out.write_string("(")
       for index, param in rule.params {
         if index > 0 {
@@ -144,13 +144,13 @@ pub fn print_spec(
         }
         out.write_string(param.0)
         if actions && param.1 is Some(type_) {
-          out.write_string(" : \{type_}")
+          out.write_string(" : \{to_repr(type_)}")
         }
       }
       out.write_string(")")
     }
     if actions && rule.type_ is Some(type_) {
-      out.write_string(" -> \{type_}")
+      out.write_string(" -> \{to_repr(type_)}")
     }
     fn term_to_string(term : Term) {
       match term {
@@ -189,7 +189,7 @@ pub fn print_spec(
             Image(image) => out.write_string(" %prec \{image}")
           }
         }
-        if not(actions) {
+        if !actions {
           out.write_string(" {}")
         }
       }

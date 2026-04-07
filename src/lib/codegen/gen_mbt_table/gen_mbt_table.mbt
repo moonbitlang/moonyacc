@@ -393,7 +393,7 @@ fn codegen(
             Shift(_) => ()
             Accept => ()
             Reduce(production) =>
-              if not(grammar.starts.contains(production)) {
+              if !grammar.starts.contains(production) {
                 let meta = production_meta(production.num)
                 add_action(meta.action)
               }
@@ -481,7 +481,7 @@ fn codegen(
   for state in automaton.states {
     for _, decision in state.action {
       if decision is Reduce(production) {
-        guard not(grammar.starts.contains(production)) else { continue }
+        guard !grammar.starts.contains(production) else { continue }
         let meta = production_meta(production.num)
         add_action(meta.action)
       }

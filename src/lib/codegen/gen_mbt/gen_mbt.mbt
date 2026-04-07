@@ -386,7 +386,7 @@ fn codegen(
             Shift(_) => ()
             Accept => ()
             Reduce(production) =>
-              if not(grammar.starts.contains(production)) {
+              if !grammar.starts.contains(production) {
                 let meta = production_meta(production.num)
                 add_action(meta.action)
               }
@@ -469,7 +469,7 @@ fn codegen(
     )
   }
   for nonterm in grammar.nonterminals {
-    guard not(grammar.starts.iter().map(fn(p) { p.lhs }).contains(nonterm)) else {
+    guard !grammar.starts.iter().map(fn(p) { p.lhs }).contains(nonterm) else {
       continue
     }
     output.write_string(
@@ -511,7 +511,7 @@ fn codegen(
   for state in automaton.states {
     for _, decision in state.action {
       if decision is Reduce(production) {
-        guard not(grammar.starts.contains(production)) else { continue }
+        guard !grammar.starts.contains(production) else { continue }
         let meta = production_meta(production.num)
         add_action(meta.action)
       }
@@ -753,7 +753,7 @@ fn codegen(
 
   // yy_state_xxx
   fn emit_state(state : @lr1.LR1State) {
-    if not(no_comments) {
+    if !no_comments {
       for item in state.iter_item_groups() {
         output.write_string(
           (
@@ -821,7 +821,7 @@ fn codegen(
       total += term.num
     }
     for nonterm in grammar.nonterminals {
-      guard not(grammar.starts.iter().map(fn(p) { p.lhs }).contains(nonterm)) else {
+      guard !grammar.starts.iter().map(fn(p) { p.lhs }).contains(nonterm) else {
         continue
       }
       total += grammar.terminals.length() + nonterm.num
@@ -878,7 +878,7 @@ fn codegen(
         )
       }
       let exhaustive = sum == total
-      if not(exhaustive) {
+      if !exhaustive {
         output.write_string(
           (
             $|    _ => Error
