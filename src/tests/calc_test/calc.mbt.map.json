@@ -2,86 +2,86 @@
   "mappings": [
     {
       "source": "calc.mbty",
-      "original_offset": 352,
-      "generated_offset": 1601,
+      "original_offset": 354,
+      "generated_offset": 1902,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 355,
-      "generated_offset": 1610,
+      "original_offset": 357,
+      "generated_offset": 1911,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 393,
-      "generated_offset": 1860,
+      "original_offset": 395,
+      "generated_offset": 2161,
       "length": 11
     },
     {
       "source": "calc.mbty",
-      "original_offset": 435,
-      "generated_offset": 2120,
+      "original_offset": 437,
+      "generated_offset": 2421,
       "length": 11
     },
     {
       "source": "calc.mbty",
-      "original_offset": 640,
-      "generated_offset": 2341,
+      "original_offset": 642,
+      "generated_offset": 2642,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 643,
-      "generated_offset": 2350,
+      "original_offset": 645,
+      "generated_offset": 2651,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 521,
-      "generated_offset": 2600,
+      "original_offset": 523,
+      "generated_offset": 2901,
       "length": 11
     },
     {
       "source": "calc.mbty",
-      "original_offset": 477,
-      "generated_offset": 2821,
+      "original_offset": 479,
+      "generated_offset": 3122,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 480,
-      "generated_offset": 2830,
+      "original_offset": 482,
+      "generated_offset": 3131,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 563,
-      "generated_offset": 3041,
+      "original_offset": 565,
+      "generated_offset": 3342,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 566,
-      "generated_offset": 3050,
+      "original_offset": 568,
+      "generated_offset": 3351,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 605,
-      "generated_offset": 3261,
+      "original_offset": 607,
+      "generated_offset": 3562,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 608,
-      "generated_offset": 3270,
+      "original_offset": 610,
+      "generated_offset": 3571,
       "length": 1
     },
     {
       "source": "calc.mbty",
-      "original_offset": 718,
-      "generated_offset": 13375,
+      "original_offset": 720,
+      "generated_offset": 13646,
       "length": 61
     }
   ]

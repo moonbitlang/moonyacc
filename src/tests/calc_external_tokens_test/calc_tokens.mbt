@@ -5,7 +5,7 @@ pub(all) enum Token {
   STAR
   LPAREN
   RPAREN
-} derive(Show)
+} derive(Debug)
 
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
@@ -38,5 +38,16 @@ pub impl Show for TokenKind with output(self, logger) {
       TK_RPAREN => "\")\""
     }
   )
+}
+
+pub impl Debug for TokenKind with to_repr(self) {
+    match self {
+      TK_NUMBER => to_repr("NUMBER")
+      TK_PLUS => to_repr("+")
+      TK_MINUS => to_repr("-")
+      TK_STAR => to_repr("*")
+      TK_LPAREN => to_repr("(")
+      TK_RPAREN => to_repr(")")
+    }
 }
 

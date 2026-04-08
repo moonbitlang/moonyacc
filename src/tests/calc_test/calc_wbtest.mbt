@@ -54,7 +54,7 @@ test {
   } noraise {
     _ => None
   }
-  inspect(
+  debug_inspect(
     err,
     content=(
       #|Some(UnexpectedToken(EOF, (6, 6), ["+", "-", "*", ")"]))

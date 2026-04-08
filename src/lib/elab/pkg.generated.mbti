@@ -2,7 +2,7 @@
 package "moonbitlang/yacc/lib/elab"
 
 import {
-  "moonbitlang/core/immut/array",
+  "moonbitlang/core/immut/vector",
   "moonbitlang/core/set",
   "moonbitlang/yacc/lib/ast",
   "moonbitlang/yacc/lib/util/array_multimap",
@@ -73,8 +73,8 @@ pub(all) struct OriginalClauseInfo {
 }
 
 pub(all) struct ParserSpec {
-  header : @array.T[(String, (Int, Int)?)]
-  trailer : @array.T[(String, (Int, Int)?)]
+  header : @vector.Vector[(String, (Int, Int)?)]
+  trailer : @vector.Vector[(String, (Int, Int)?)]
   tokens : Array[Token]
   rules : Map[String, Rule]
   start_rules : Array[String]
@@ -122,9 +122,7 @@ pub(all) enum TypeExpr {
   Option(TypeExpr)
   Tuple(Array[TypeExpr])
   Arrow(Array[TypeExpr], TypeExpr)
-}
-pub impl Compare for TypeExpr
-pub impl Eq for TypeExpr
+} derive(Compare, Eq)
 pub impl Show for TypeExpr
 
 // Type aliases

@@ -2,6 +2,7 @@
 package "moonbitlang/yacc/lib/parser/type_expr_parser"
 
 import {
+  "moonbitlang/core/debug",
   "moonbitlang/yacc/lib/ast",
 }
 
@@ -13,17 +14,14 @@ pub fn parse_type_expr(Array[(Token, Int, Int)], initial_pos? : Int) -> @ast.Typ
 // Errors
 pub suberror LexError {
   Unrecognized(Char, Int)
-}
-pub impl Show for LexError
+} derive(@debug.Debug)
 
 pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
   UnexpectedEndOfInput(Int, Array[TokenKind])
-}
-pub impl Show for ParseError
+} derive(@debug.Debug)
 
-type ParseOrLexError
-pub impl Show for ParseOrLexError
+type ParseOrLexError derive(@debug.Debug)
 
 // Types and methods
 pub(all) enum Token {
@@ -37,9 +35,8 @@ pub(all) enum Token {
   QUESTION
   IDENT(String)
   PKG_AND_IDENT((String, String))
-}
+} derive(@debug.Debug)
 pub fn Token::kind(Self) -> TokenKind
-pub impl Show for Token
 
 pub(all) enum TokenKind {
   TK_EOF
@@ -54,6 +51,7 @@ pub(all) enum TokenKind {
   TK_PKG_AND_IDENT
 }
 pub impl Show for TokenKind
+pub impl @debug.Debug for TokenKind
 
 // Type aliases
 

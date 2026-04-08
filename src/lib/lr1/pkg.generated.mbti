@@ -27,19 +27,16 @@ pub fn Automaton::build(@grm.Grammar, user_eoi~ : Bool) -> Self
 pub(all) struct ConflictLocation {
   state : LR1State
   input : Lookahead
-}
-pub impl Eq for ConflictLocation
-pub impl Hash for ConflictLocation
+} derive(Eq, Hash)
 
 pub(all) enum Decision {
   Shift(LR1State)
   Reduce(@grm.Production)
   Accept
   Conflict(@list.List[Decision])
-}
-pub impl Eq for Decision
+} derive(Eq)
 
-pub(all) struct EncodedLR0Item(Int)
+pub(all) struct EncodedLR0Item(Int) derive(Compare, Eq, Hash)
 pub fn EncodedLR0Item::decode(Self, @grm.Grammar) -> LR0Item
 pub fn EncodedLR0Item::decode_postdot(Self, @grm.Grammar) -> @grm.Symbol?
 pub fn EncodedLR0Item::decode_production(Self, @grm.Grammar) -> @grm.Production
@@ -47,9 +44,6 @@ pub fn EncodedLR0Item::decode_production(Self, @grm.Grammar) -> @grm.Production
 pub fn EncodedLR0Item::inner(Self) -> Int
 pub fn EncodedLR0Item::new(@grm.Production, Int) -> Self
 pub fn EncodedLR0Item::unsafe_shift(Self) -> Self
-pub impl Compare for EncodedLR0Item
-pub impl Eq for EncodedLR0Item
-pub impl Hash for EncodedLR0Item
 
 pub(all) struct EncodedLR0ItemSet {
   items : Array[EncodedLR0Item]
@@ -67,24 +61,19 @@ type EncodedLR1ItemSet
 pub(all) struct LR0Item {
   production : @grm.Production
   dot : Int
-}
+} derive(Compare, Eq, Hash)
 pub fn LR0Item::new(@grm.Production, Int) -> Self
 pub fn LR0Item::postdot(Self) -> @grm.Symbol?
 pub fn LR0Item::shift(Self) -> Self
-pub impl Compare for LR0Item
-pub impl Eq for LR0Item
-pub impl Hash for LR0Item
 
 pub(all) struct LR1Item {
   production : @grm.Production
   dot : Int
   lookahead : Lookahead
-}
+} derive(Compare, Eq)
 pub fn LR1Item::core(Self) -> LR0Item
 pub fn LR1Item::postdot(Self) -> @grm.Symbol?
 pub fn LR1Item::shift(Self) -> Self
-pub impl Compare for LR1Item
-pub impl Eq for LR1Item
 pub impl Show for LR1Item
 
 pub(all) struct LR1ItemGroup {
@@ -110,9 +99,7 @@ pub impl Hash for LR1State
 pub(all) enum Lookahead {
   EndOfInput
   Input(@grm.Terminal)
-}
-pub impl Compare for Lookahead
-pub impl Eq for Lookahead
+} derive(Compare, Eq)
 pub impl Hash for Lookahead
 pub impl Show for Lookahead
 

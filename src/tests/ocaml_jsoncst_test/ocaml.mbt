@@ -497,6 +497,131 @@ pub impl Show for TokenKind with output(self, logger) {
 }
 
 ///|
+pub impl Debug for TokenKind with to_repr(self) {
+  match self {
+    TK_AMPERAMPER => to_repr("AMPERAMPER")
+    TK_AMPERSAND => to_repr("AMPERSAND")
+    TK_AND => to_repr("AND")
+    TK_AS => to_repr("AS")
+    TK_ASSERT => to_repr("ASSERT")
+    TK_BACKQUOTE => to_repr("BACKQUOTE")
+    TK_BANG => to_repr("BANG")
+    TK_BAR => to_repr("BAR")
+    TK_BARBAR => to_repr("BARBAR")
+    TK_BARRBRACKET => to_repr("BARRBRACKET")
+    TK_BEGIN => to_repr("BEGIN")
+    TK_CHAR => to_repr("CHAR")
+    TK_CLASS => to_repr("CLASS")
+    TK_COLON => to_repr("COLON")
+    TK_COLONCOLON => to_repr("COLONCOLON")
+    TK_COLONEQUAL => to_repr("COLONEQUAL")
+    TK_COLONGREATER => to_repr("COLONGREATER")
+    TK_COMMA => to_repr("COMMA")
+    TK_CONSTRAINT => to_repr("CONSTRAINT")
+    TK_DO => to_repr("DO")
+    TK_DONE => to_repr("DONE")
+    TK_DOT => to_repr("DOT")
+    TK_DOTDOT => to_repr("DOTDOT")
+    TK_DOWNTO => to_repr("DOWNTO")
+    TK_ELSE => to_repr("ELSE")
+    TK_END => to_repr("END")
+    TK_EOF => to_repr("EOF")
+    TK_EQUAL => to_repr("EQUAL")
+    TK_EXCEPTION => to_repr("EXCEPTION")
+    TK_EXTERNAL => to_repr("EXTERNAL")
+    TK_FALSE => to_repr("FALSE")
+    TK_FLOAT => to_repr("FLOAT")
+    TK_FOR => to_repr("FOR")
+    TK_FUN => to_repr("FUN")
+    TK_FUNCTION => to_repr("FUNCTION")
+    TK_FUNCTOR => to_repr("FUNCTOR")
+    TK_GREATER => to_repr("GREATER")
+    TK_GREATERRBRACE => to_repr("GREATERRBRACE")
+    TK_GREATERRBRACKET => to_repr("GREATERRBRACKET")
+    TK_IF => to_repr("IF")
+    TK_IN => to_repr("IN")
+    TK_INCLUDE => to_repr("INCLUDE")
+    TK_INFIXOP0 => to_repr("INFIXOP0")
+    TK_INFIXOP1 => to_repr("INFIXOP1")
+    TK_INFIXOP2 => to_repr("INFIXOP2")
+    TK_INFIXOP3 => to_repr("INFIXOP3")
+    TK_INFIXOP4 => to_repr("INFIXOP4")
+    TK_DOTOP => to_repr("DOTOP")
+    TK_INHERIT => to_repr("INHERIT")
+    TK_INITIALIZER => to_repr("INITIALIZER")
+    TK_INT => to_repr("INT")
+    TK_LABEL => to_repr("LABEL")
+    TK_LAZY => to_repr("LAZY")
+    TK_LBRACE => to_repr("LBRACE")
+    TK_LBRACELESS => to_repr("LBRACELESS")
+    TK_LBRACKET => to_repr("LBRACKET")
+    TK_LBRACKETBAR => to_repr("LBRACKETBAR")
+    TK_LBRACKETLESS => to_repr("LBRACKETLESS")
+    TK_LBRACKETGREATER => to_repr("LBRACKETGREATER")
+    TK_LBRACKETPERCENT => to_repr("LBRACKETPERCENT")
+    TK_LBRACKETPERCENTPERCENT => to_repr("LBRACKETPERCENTPERCENT")
+    TK_LESS => to_repr("LESS")
+    TK_LESSMINUS => to_repr("LESSMINUS")
+    TK_LET => to_repr("LET")
+    TK_LIDENT => to_repr("LIDENT")
+    TK_LPAREN => to_repr("LPAREN")
+    TK_LBRACKETAT => to_repr("LBRACKETAT")
+    TK_LBRACKETATAT => to_repr("LBRACKETATAT")
+    TK_LBRACKETATATAT => to_repr("LBRACKETATATAT")
+    TK_MATCH => to_repr("MATCH")
+    TK_METHOD => to_repr("METHOD")
+    TK_MINUS => to_repr("MINUS")
+    TK_MINUSDOT => to_repr("MINUSDOT")
+    TK_MINUSGREATER => to_repr("MINUSGREATER")
+    TK_MODULE => to_repr("MODULE")
+    TK_MUTABLE => to_repr("MUTABLE")
+    TK_NEW => to_repr("NEW")
+    TK_NONREC => to_repr("NONREC")
+    TK_OBJECT => to_repr("OBJECT")
+    TK_OF => to_repr("OF")
+    TK_OPEN => to_repr("OPEN")
+    TK_OPTLABEL => to_repr("OPTLABEL")
+    TK_OR => to_repr("OR")
+    TK_PERCENT => to_repr("PERCENT")
+    TK_PLUS => to_repr("PLUS")
+    TK_PLUSDOT => to_repr("PLUSDOT")
+    TK_PLUSEQ => to_repr("PLUSEQ")
+    TK_PREFIXOP => to_repr("PREFIXOP")
+    TK_PRIVATE => to_repr("PRIVATE")
+    TK_QUESTION => to_repr("QUESTION")
+    TK_QUOTE => to_repr("QUOTE")
+    TK_RBRACE => to_repr("RBRACE")
+    TK_RBRACKET => to_repr("RBRACKET")
+    TK_REC => to_repr("REC")
+    TK_RPAREN => to_repr("RPAREN")
+    TK_SEMI => to_repr("SEMI")
+    TK_SEMISEMI => to_repr("SEMISEMI")
+    TK_HASH => to_repr("HASH")
+    TK_HASHOP => to_repr("HASHOP")
+    TK_SIG => to_repr("SIG")
+    TK_STAR => to_repr("STAR")
+    TK_STRING => to_repr("STRING")
+    TK_STRUCT => to_repr("STRUCT")
+    TK_THEN => to_repr("THEN")
+    TK_TILDE => to_repr("TILDE")
+    TK_TO => to_repr("TO")
+    TK_TRUE => to_repr("TRUE")
+    TK_TRY => to_repr("TRY")
+    TK_TYPE => to_repr("TYPE")
+    TK_UIDENT => to_repr("UIDENT")
+    TK_UNDERSCORE => to_repr("UNDERSCORE")
+    TK_VAL => to_repr("VAL")
+    TK_VIRTUAL => to_repr("VIRTUAL")
+    TK_WHEN => to_repr("WHEN")
+    TK_WHILE => to_repr("WHILE")
+    TK_WITH => to_repr("WITH")
+    TK_COMMENT => to_repr("COMMENT")
+    TK_DOCSTRING => to_repr("DOCSTRING")
+    TK_EOL => to_repr("EOL")
+  }
+}
+
+///|
 pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
 }
@@ -28481,32 +28606,31 @@ fn[T] yy_parse(
       }
       Reduce(count, symbol, action)
       | ReduceNoLookahead(count, symbol, action) =>
-        loop (count, symbol, action) {
-          _ => {
-            let args = data_stack[data_stack.length() - count:]
-            let data = action(last_pos, args)
-            let (start_pos, end_pos) = if args.length() == 0 {
-              (last_pos, last_pos)
-            } else {
-              (args[0].1, args[args.length() - 1].2)
+        for count = count, symbol = symbol, action = action {
+          let args = data_stack[data_stack.length() - count:]
+          let data = action(last_pos, args)
+          let (start_pos, end_pos) = if args.length() == 0 {
+            (last_pos, last_pos)
+          } else {
+            (args[0].1, args[args.length() - 1].2)
+          }
+          for _ in 0..<count {
+            ignore(data_stack.unsafe_pop())
+            state_stack = state_stack.unsafe_tail()
+          }
+          state = state_stack.unsafe_head()
+          data_stack.push((data, start_pos, end_pos))
+          match yy_state(state, symbol) {
+            Accept => return return_(data_stack.unsafe_pop().0)
+            Shift(next_state) => {
+              state_stack = @list.cons(next_state, state_stack)
+              state = next_state
+              break ()
             }
-            for _ in 0..<count {
-              ignore(data_stack.unsafe_pop())
-              state_stack = state_stack.unsafe_tail()
-            }
-            state = state_stack.unsafe_head()
-            data_stack.push((data, start_pos, end_pos))
-            match yy_state(state, symbol) {
-              Accept => return return_(data_stack.unsafe_pop().0)
-              Shift(next_state) => {
-                state_stack = @list.cons(next_state, state_stack)
-                state = next_state
-              }
-              Reduce(count, symbol, action)
-              | ReduceNoLookahead(count, symbol, action) =>
-                continue (count, symbol, action)
-              _ => panic()
-            }
+            Reduce(count, symbol, action)
+            | ReduceNoLookahead(count, symbol, action) =>
+              continue count, symbol, action
+            _ => panic()
           }
         }
       Error => {

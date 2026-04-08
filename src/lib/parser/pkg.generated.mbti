@@ -2,6 +2,7 @@
 package "moonbitlang/yacc/lib/parser"
 
 import {
+  "moonbitlang/core/debug",
   "moonbitlang/yacc/lib/ast",
 }
 
@@ -55,9 +56,8 @@ pub(all) enum Token {
   BAR
   EQ
   SEMI
-}
+} derive(@debug.Debug)
 pub fn Token::kind(Self) -> TokenKind
-pub impl Show for Token
 
 pub(all) enum TokenKind {
   TK_EOF
@@ -92,6 +92,7 @@ pub(all) enum TokenKind {
   TK_SEMI
 }
 pub impl Show for TokenKind
+pub impl @debug.Debug for TokenKind
 
 // Type aliases
 
