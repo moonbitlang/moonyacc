@@ -20,7 +20,7 @@ fn find_leaf_inline_rules(rules : Map[String, @elab.Rule]) -> Set[String] {
           match item.term {
             Token(_) => true
             RuleCall(rule_name, [], _type) =>
-              not(all_inline_rules.contains(rule_name))
+              !all_inline_rules.contains(rule_name)
             Param(_) | RuleCall(_, _, _) => panic()
           }
         })
@@ -51,9 +51,9 @@ fn eliminate_inline_rules(
 
   fn expand(clause : @elab.Clause, yield_ : (@elab.Clause) -> Unit) {
     fn cont(
-      cont_items : @immut/array.T[@elab.Item],
-      cont_bindings : @immut/array.T[(@elab.BindingSubject, @elab.Code)],
-      cont_subactions : @immut/array.T[@elab.SubAction],
+      cont_items : @immut/vector.Vector[@elab.Item],
+      cont_bindings : @immut/vector.Vector[(@elab.BindingSubject, @elab.Code)],
+      cont_subactions : @immut/vector.Vector[@elab.SubAction],
       index : Int,
     ) {
       if index >= clause.items.length() {
@@ -74,7 +74,7 @@ fn eliminate_inline_rules(
           let inline_rule = spec.rules.get(rule_name).unwrap()
           for inline_clause in inline_rule.clauses {
             let next_cont_items = cont_items +
-              @immut/array.from_array(inline_clause.items)
+              @immut/vector.from_array(inline_clause.items)
             let start_index = cont_items.length()
             let end_index = start_index + inline_clause.items.length()
             let subaction_index = cont_subactions.length()
@@ -113,15 +113,15 @@ fn eliminate_inline_rules(
     }
 
     cont(
-      @immut/array.new(),
-      @immut/array.from_array(clause.action.bindings),
-      @immut/array.from_array(clause.action.sub_actions),
+      @immut/vector.new(),
+      @immut/vector.from_array(clause.action.bindings),
+      @immut/vector.from_array(clause.action.sub_actions),
       0,
     )
   }
 
   for rule_name, rule in spec.rules {
-    guard not(inline_rules.contains(rule_name)) else { continue }
+    guard !inline_rules.contains(rule_name) else { continue }
     let new_clauses : Array[@elab.Clause] = []
     for clause in rule.clauses {
       if contains_inline_rule(clause.items) {

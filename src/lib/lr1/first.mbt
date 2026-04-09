@@ -35,7 +35,7 @@ fn[T : AbstractLookaheadSet] compute_first_fn(
   }
 
   let mut fixedpoint_reached = false
-  while not(fixedpoint_reached) {
+  while !fixedpoint_reached {
     fixedpoint_reached = true
     for nt in grammar.nonterminals {
       let old_set = nt_first_map[nt.num]
@@ -43,7 +43,7 @@ fn[T : AbstractLookaheadSet] compute_first_fn(
         init={ set: T::empty(), nullable: false },
         fn(acc, p) { acc.union(first(p.rhs[:])) },
       )
-      if not(old_set == new_set) {
+      if !(old_set == new_set) {
         fixedpoint_reached = false
         nt_first_map[nt.num] = new_set
       }

@@ -12,7 +12,7 @@ pub fn singleton(Int) -> SmallIntSet
 
 // Types and methods
 #alias(T)
-type SmallIntSet
+type SmallIntSet derive(Compare, Eq)
 pub fn SmallIntSet::add(Self, Int) -> Self
 pub fn SmallIntSet::contains(Self, Int) -> Bool
 pub fn SmallIntSet::difference(Self, Self) -> Self
@@ -24,8 +24,6 @@ pub fn SmallIntSet::iter(Self) -> Iter[Int]
 pub fn SmallIntSet::remove(Self, Int) -> Self
 pub fn SmallIntSet::subset(Self, Self) -> Bool
 pub fn SmallIntSet::union(Self, Self) -> Self
-pub impl Compare for SmallIntSet
-pub impl Eq for SmallIntSet
 pub impl Hash for SmallIntSet
 pub impl Show for SmallIntSet
 

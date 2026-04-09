@@ -27,7 +27,7 @@ pub fn[K : Hash + Eq, V : Eq] T::add(
   value : V,
 ) -> Unit {
   let arr = self.0.get_or_init(key, fn(_) { [] })
-  if not(arr.contains(value)) {
+  if !arr.contains(value) {
     arr.push(value)
   }
 }

@@ -3,7 +3,7 @@ import {
   "moonbitlang/ulex-runtime/lexbuf",
   "moonbitlang/core/int",
   "moonbitlang/core/list",
-  "moonbitlang/core/strconv",
+  "moonbitlang/core/string",
 }
 
 options(

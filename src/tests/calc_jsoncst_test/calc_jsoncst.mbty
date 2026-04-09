@@ -1,5 +1,5 @@
-%derive<Show> Token
-%derive<Show> ParseError
+%derive<Debug> Token
+%derive<Debug> ParseError
 %position<Int>
 %start start
 

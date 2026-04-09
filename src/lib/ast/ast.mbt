@@ -32,20 +32,20 @@ pub(all) enum SubstItemDesc {
   LocOf(ClauseItemIdent)
   SymbolStartPos
   Sloc
-} derive(Eq, Compare, Show, ToJson(style="legacy"))
+} derive(Eq, Compare, Debug, ToJson(style="legacy"))
 
 ///|
 pub(all) enum ClauseItemIdent {
   Dollar(Int)
   Name(Code)
-} derive(Eq, Compare, Show, ToJson(style="legacy"))
+} derive(Eq, Compare, Debug, ToJson(style="legacy"))
 
 ///|
 pub(all) struct SubstItem {
   start : Int
   end : Int
   desc : SubstItemDesc
-} derive(Show, ToJson)
+} derive(Debug, ToJson)
 
 ///|
 pub type Symbol = String
@@ -56,7 +56,7 @@ pub(all) enum TypeExpr {
   Option(TypeExpr)
   Tuple(Array[TypeExpr])
   Arrow(Array[TypeExpr], TypeExpr)
-} derive(Show, ToJson(style="legacy"))
+} derive(Debug, ToJson(style="legacy"))
 
 ///|
 pub type TypeString = String

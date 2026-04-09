@@ -15,7 +15,7 @@
 {
 pub type! LexError {
   Unrecognized(Char, Int)
-} derive(Show)
+} derive(Debug)
 }
 
 regex ident_start = ['A'-'Z' 'a'-'z' '_'];

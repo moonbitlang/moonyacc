@@ -182,12 +182,14 @@ fn[K, V] T::grow(self : T[K, V]) -> Unit {
   let bucket = FixedArray::make(capacity, None)
   self.bucket = bucket
   self.bitmask = bitmask
-  loop self.entry {
-    None => ()
-    Some(entry) => {
-      entry.psl = 0
-      self.put_entry(entry.hash & bitmask, bitmask, entry)
-      continue entry.prev
+  for entry = self.entry {
+    match entry {
+      None => break ()
+      Some(entry) => {
+        entry.psl = 0
+        self.put_entry(entry.hash & bitmask, bitmask, entry)
+        continue entry.prev
+      }
     }
   }
 }

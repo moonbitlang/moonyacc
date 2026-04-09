@@ -98,8 +98,8 @@ pub fn elaborate(
   token_payload_rewrite~ : TokenPayloadRewrite,
   force_int_position~ : Bool,
 ) -> ParserSpec raise ElabError {
-  let mut header = @immut/array.new()
-  let mut trailer = @immut/array.new()
+  let mut header = @immut/vector.new()
+  let mut trailer = @immut/vector.new()
   for decl in ast_spec.decls {
     match decl {
       Header(code, utf8_pos, utf8_len) =>
@@ -364,7 +364,7 @@ pub fn elaborate(
   for ast_decl in ast_spec.decls {
     match ast_decl {
       Position(type_~) =>
-        if not(force_int_position) {
+        if !force_int_position {
           position_type = parse_and_elaborate_type_expr(type_)
         }
       Derive(traits~, type_~) => {
@@ -383,8 +383,8 @@ pub fn elaborate(
   // JsonCst
 
   if json_cst is Yes {
-    header = @immut/array.new()
-    trailer = @immut/array.new()
+    header = @immut/vector.new()
+    trailer = @immut/vector.new()
   }
   ParserSpec::{
     header,
@@ -428,7 +428,7 @@ fn elaborate_action(
   let bindings : Array[(BindingSubject, Code)] = []
   let visited = @sorted_set.new()
   fn add_binding(desc : @ast.SubstItemDesc, loc : (Int, Int)) raise ElabError {
-    guard not(visited.contains(desc)) else { return }
+    guard !visited.contains(desc) else { return }
     visited.add(desc)
     match desc {
       Dollar(index) => {

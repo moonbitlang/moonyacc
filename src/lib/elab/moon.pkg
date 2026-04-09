@@ -4,7 +4,7 @@ import {
   "moonbitlang/yacc/lib/util/stamp",
   "moonbitlang/yacc/lib/ast",
   "moonbitlang/yacc/lib/parser/type_expr_parser",
-  "moonbitlang/core/immut/array" @immut/array,
+  "moonbitlang/core/immut/vector" @immut/vector,
   "moonbitlang/core/list",
   "moonbitlang/core/sorted_map",
   "moonbitlang/core/sorted_set",

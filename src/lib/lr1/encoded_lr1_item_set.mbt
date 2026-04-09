@@ -73,7 +73,7 @@ fn EncodedLR1ItemSet::subsume(
       self_table[1].subset(other_table[1])
     _ => {
       for i in 0..<len {
-        if not(self_table[i].subset(other_table[i])) {
+        if !self_table[i].subset(other_table[i]) {
           return false
         }
       }
@@ -97,9 +97,9 @@ fn EncodedLR1ItemSet::weak_compat(
       let la_set1j = self.kernel_lookahead_set_table[j]
       let la_set2j = other.kernel_lookahead_set_table[j]
       let compat = (la_set1i.disjoint(la_set2j) && la_set2i.disjoint(la_set1j)) ||
-        not(la_set1i.disjoint(la_set1j)) ||
-        not(la_set2i.disjoint(la_set2j))
-      if not(compat) {
+        !la_set1i.disjoint(la_set1j) ||
+        !la_set2i.disjoint(la_set2j)
+      if !compat {
         return false
       }
     }
@@ -118,11 +118,11 @@ fn EncodedLR1ItemSet::eoi_compact(
     let la_set1 = self.kernel_lookahead_set_table[i]
     let la_set2 = other.kernel_lookahead_set_table[i]
     if la_set1.is_singleton(EndOfInput) {
-      if not(la_set2.is_singleton(EndOfInput)) {
+      if !la_set2.is_singleton(EndOfInput) {
         return false
       }
     } else if la_set2.is_singleton(EndOfInput) {
-      if not(la_set1.is_singleton(EndOfInput)) {
+      if !la_set1.is_singleton(EndOfInput) {
         return false
       }
     }

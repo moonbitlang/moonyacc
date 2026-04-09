@@ -37,7 +37,7 @@ pub impl Show for LR1ItemGroup with output(self, logger) {
   logger.write_string(", ")
   let mut first = true
   for lookahead in self.lookahead_set {
-    if not(first) {
+    if !first {
       logger.write_string(" / ")
     }
     logger.write_object(lookahead)
@@ -112,7 +112,7 @@ pub fn LR1State::set_action(
 ) -> Unit {
   match self.action.get(input) {
     Some(Conflict(decisions)) =>
-      if not(decisions.contains(decision)) {
+      if !decisions.contains(decision) {
         self.action[input] = Conflict(@list.cons(decision, decisions))
       }
     Some(decision0) =>
@@ -299,7 +299,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
     }
   }
 
-  while not(queue.is_empty()) {
+  while !queue.is_empty() {
     let state = queue.unsafe_pop()
     let trans = node_transitions[state.items.core.num]
     for entry in trans {
@@ -342,7 +342,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
     queue.push(state_from_pre(pre_state))
   }
   let stamp = @stamp.new()
-  while not(queue.is_empty()) {
+  while !queue.is_empty() {
     let state = queue.unsafe_pop()
     if state.stamp == stamp {
       continue

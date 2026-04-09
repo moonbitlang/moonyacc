@@ -2,7 +2,7 @@
 package "moonbitlang/yacc/lib/codegen"
 
 import {
-  "moonbitlang/core/immut/array",
+  "moonbitlang/core/immut/vector",
   "moonbitlang/yacc/lib/elab",
   "moonbitlang/yacc/lib/grm",
   "moonbitlang/yacc/lib/lr1",
@@ -21,8 +21,8 @@ pub(all) enum InputMode {
 }
 
 pub(all) struct MetaProvider {
-  header : @array.T[(String, (Int, Int)?)]
-  footer : @array.T[(String, (Int, Int)?)]
+  header : @vector.Vector[(String, (Int, Int)?)]
+  footer : @vector.Vector[(String, (Int, Int)?)]
   position_data_type : @elab.TypeExpr
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
@@ -45,9 +45,8 @@ pub(all) struct ProductionMeta {
 
 pub(all) struct SourceMap {
   mappings : Array[SourceMapping]
-}
+} derive(ToJson)
 pub fn SourceMap::new() -> Self
-pub impl ToJson for SourceMap
 pub impl SourceMapBuilder for SourceMap
 
 pub(all) struct SourceMapping {
@@ -55,8 +54,7 @@ pub(all) struct SourceMapping {
   original_offset : Int
   generated_offset : Int
   length : Int
-}
-pub impl ToJson for SourceMapping
+} derive(ToJson)
 
 pub(all) struct TerminalMeta {
   data_type : @elab.TypeExpr
