@@ -1391,19 +1391,19 @@ priv struct GeneratorConfig {
 priv struct CodeGenerator(GeneratorConfig)
 
 ///|
-impl @codegen.CodeGenerator for CodeGenerator with void_type(self) {
+impl @codegen.CodeGenerator for CodeGenerator with fn void_type(self) {
   ignore(self)
   "Unit"
 }
 
 ///|
-impl @codegen.CodeGenerator for CodeGenerator with void_action_code(self) {
+impl @codegen.CodeGenerator for CodeGenerator with fn void_action_code(self) {
   ignore(self)
   "()"
 }
 
 ///|
-impl @codegen.CodeGenerator for CodeGenerator with codegen_tokens(
+impl @codegen.CodeGenerator for CodeGenerator with fn codegen_tokens(
   self,
   terminals,
   terminal_meta,
@@ -1416,7 +1416,7 @@ impl @codegen.CodeGenerator for CodeGenerator with codegen_tokens(
 }
 
 ///|
-impl @codegen.CodeGenerator for CodeGenerator with codegen(
+impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
   self,
   grammar,
   automaton,

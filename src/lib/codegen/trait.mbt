@@ -1,8 +1,8 @@
 ///|
 pub(open) trait CodeGenerator {
-  void_type(Self) -> CodeFragment
-  void_action_code(Self) -> CodeFragment
-  codegen_tokens(
+  fn void_type(Self) -> CodeFragment
+  fn void_action_code(Self) -> CodeFragment
+  fn codegen_tokens(
     Self,
     Array[@grm.Terminal],
     (String) -> TerminalMeta,
@@ -10,7 +10,7 @@ pub(open) trait CodeGenerator {
     no_comments~ : Bool,
     derive_map~ : @array_multimap.T[String, String],
   ) -> Unit
-  codegen(
+  fn codegen(
     Self,
     @grm.Grammar,
     @lr1.Automaton,

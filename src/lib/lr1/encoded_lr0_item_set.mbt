@@ -20,18 +20,18 @@ pub(all) struct EncodedLR0ItemSet {
 }
 
 ///|
-pub impl Eq for EncodedLR0ItemSet with equal(self, other) {
+pub impl Eq for EncodedLR0ItemSet with fn equal(self, other) {
   self.items == other.items
 }
 
 ///|
-pub impl Hash for EncodedLR0ItemSet with hash_combine(self, _hasher) {
+pub impl Hash for EncodedLR0ItemSet with fn hash_combine(self, _hasher) {
   panic()
   ignore(self)
 }
 
 ///|
-pub impl Hash for EncodedLR0ItemSet with hash(self) {
+pub impl Hash for EncodedLR0ItemSet with fn hash(self) {
   match self.hash {
     Some(hash) => hash
     None => {
@@ -52,7 +52,7 @@ pub fn EncodedLR0ItemSet::empty() -> EncodedLR0ItemSet {
 }
 
 ///|
-pub impl Default for EncodedLR0ItemSet with default() {
+pub impl Default for EncodedLR0ItemSet with fn default() {
   EncodedLR0ItemSet::empty()
 }
 

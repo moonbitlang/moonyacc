@@ -48,14 +48,14 @@ pub fn SmallIntSet::is_singleton(self : SmallIntSet, key : Int) -> Bool {
 }
 
 ///|
-pub impl Hash for SmallIntSet with hash_combine(self, hasher) {
+pub impl Hash for SmallIntSet with fn hash_combine(self, hasher) {
   for x in self.0 {
     hasher.combine_int(x)
   }
 }
 
 ///|
-pub impl Show for SmallIntSet with output(self, logger) {
+pub impl Show for SmallIntSet with fn output(self, logger) {
   logger.write_string("{")
   let mut first = true
   for key in self {

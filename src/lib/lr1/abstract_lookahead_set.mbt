@@ -14,7 +14,7 @@
 
 ///|
 trait AbstractLookaheadSet: Eq {
-  empty() -> Self
-  singleton(Lookahead) -> Self
-  union(Self, Self) -> Self
+  fn empty() -> Self
+  fn singleton(Lookahead) -> Self
+  fn union(Self, Self) -> Self
 }

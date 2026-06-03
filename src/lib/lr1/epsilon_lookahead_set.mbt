@@ -19,7 +19,7 @@ priv struct EpsilonLookaheadSet[T] {
 }
 
 ///|
-impl[T : Eq] Eq for EpsilonLookaheadSet[T] with equal(self, other) {
+impl[T : Eq] Eq for EpsilonLookaheadSet[T] with fn equal(self, other) {
   self.set == other.set && self.nullable == other.nullable
 }
 
@@ -33,7 +33,7 @@ fn[T : AbstractLookaheadSet] EpsilonLookaheadSet::union(
 
 ///|
 /// epsilon free first
-impl[T : AbstractLookaheadSet] Add for EpsilonLookaheadSet[T] with add(
+impl[T : AbstractLookaheadSet] Add for EpsilonLookaheadSet[T] with fn add(
   set1 : EpsilonLookaheadSet[T],
   set2 : EpsilonLookaheadSet[T],
 ) -> EpsilonLookaheadSet[T] {

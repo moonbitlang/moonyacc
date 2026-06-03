@@ -40,8 +40,6 @@ pub(all) struct EncodedLR0Item(Int) derive(Compare, Eq, Hash)
 pub fn EncodedLR0Item::decode(Self, @grm.Grammar) -> LR0Item
 pub fn EncodedLR0Item::decode_postdot(Self, @grm.Grammar) -> @grm.Symbol?
 pub fn EncodedLR0Item::decode_production(Self, @grm.Grammar) -> @grm.Production
-#deprecated
-pub fn EncodedLR0Item::inner(Self) -> Int
 pub fn EncodedLR0Item::new(@grm.Production, Int) -> Self
 pub fn EncodedLR0Item::unsafe_shift(Self) -> Self
 

@@ -15,19 +15,19 @@ pub fn LoggerWithCursor::cursor(self : LoggerWithCursor) -> Int {
 }
 
 ///|
-pub impl Logger for LoggerWithCursor with write_char(self, char) {
+pub impl Logger for LoggerWithCursor with fn write_char(self, char) {
   self.logger.write_char(char)
   self.cursor += 1
 }
 
 ///|
-pub impl Logger for LoggerWithCursor with write_string(self, str) {
+pub impl Logger for LoggerWithCursor with fn write_string(self, str) {
   self.logger.write_string(str)
   self.cursor += str.length()
 }
 
 ///|
-pub impl Logger for LoggerWithCursor with write_view(self, view) {
+pub impl Logger for LoggerWithCursor with fn write_view(self, view) {
   self.logger.write_view(view)
   self.cursor += view.length()
 }

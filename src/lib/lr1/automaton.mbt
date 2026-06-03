@@ -29,7 +29,7 @@ pub(all) struct LR1ItemGroup {
 }
 
 ///|
-pub impl Show for LR1ItemGroup with output(self, logger) {
+pub impl Show for LR1ItemGroup with fn output(self, logger) {
   logger.write_string("[")
   logger.write_object(self.core.production.num)
   logger.write_string(", ")
@@ -63,7 +63,7 @@ priv struct LR0Node {
 }
 
 ///|
-impl Eq for LR0Node with equal(self, other) {
+impl Eq for LR0Node with fn equal(self, other) {
   self.num == other.num
 }
 
@@ -85,17 +85,17 @@ pub(all) struct LR1State {
 }
 
 ///|
-pub impl Eq for LR1State with equal(self, other) {
+pub impl Eq for LR1State with fn equal(self, other) {
   self.num == other.num
 }
 
 ///|
-pub impl Compare for LR1State with compare(self, other) {
+pub impl Compare for LR1State with fn compare(self, other) {
   self.num.compare(other.num)
 }
 
 ///|
-pub impl Hash for LR1State with hash_combine(self, hasher) {
+pub impl Hash for LR1State with fn hash_combine(self, hasher) {
   hasher.combine_int(self.num)
 }
 

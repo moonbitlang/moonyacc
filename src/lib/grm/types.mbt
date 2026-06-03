@@ -47,22 +47,22 @@ pub(all) struct Terminal {
 }
 
 ///|
-pub impl Eq for Terminal with equal(self, other) {
+pub impl Eq for Terminal with fn equal(self, other) {
   self.num == other.num
 }
 
 ///|
-pub impl Compare for Terminal with compare(self, other) {
+pub impl Compare for Terminal with fn compare(self, other) {
   Int::compare(self.num, other.num)
 }
 
 ///|
-pub impl Hash for Terminal with hash_combine(self, hasher) {
+pub impl Hash for Terminal with fn hash_combine(self, hasher) {
   hasher.combine_int(self.num)
 }
 
 ///|
-pub impl Show for Terminal with output(self, logger) -> Unit {
+pub impl Show for Terminal with fn output(self, logger) -> Unit {
   logger.write_string(self.name)
 }
 
@@ -81,22 +81,22 @@ pub(all) struct Nonterminal {
 }
 
 ///|
-pub impl Eq for Nonterminal with equal(self, other) {
+pub impl Eq for Nonterminal with fn equal(self, other) {
   self.num == other.num
 }
 
 ///|
-pub impl Compare for Nonterminal with compare(self, other) {
+pub impl Compare for Nonterminal with fn compare(self, other) {
   Int::compare(self.num, other.num)
 }
 
 ///|
-pub impl Hash for Nonterminal with hash_combine(self, hasher) {
+pub impl Hash for Nonterminal with fn hash_combine(self, hasher) {
   hasher.combine_int(self.num)
 }
 
 ///|
-pub impl Show for Nonterminal with output(self, logger) {
+pub impl Show for Nonterminal with fn output(self, logger) {
   logger.write_string(self.name)
 }
 
@@ -107,7 +107,7 @@ pub(all) enum Symbol {
 } derive(Eq, Compare, Hash)
 
 ///|
-pub impl Show for Symbol with output(self, logger) -> Unit {
+pub impl Show for Symbol with fn output(self, logger) -> Unit {
   match self {
     Symbol::T(t) => logger.write_object(t)
     Symbol::NT(nt) => logger.write_object(nt)
@@ -123,17 +123,17 @@ pub(all) struct Production {
 }
 
 ///|
-pub impl Eq for Production with equal(self, other) {
+pub impl Eq for Production with fn equal(self, other) {
   self.num == other.num
 }
 
 ///|
-pub impl Compare for Production with compare(self, other) {
+pub impl Compare for Production with fn compare(self, other) {
   Int::compare(self.num, other.num)
 }
 
 ///|
-pub impl Hash for Production with hash_combine(self, hasher) {
+pub impl Hash for Production with fn hash_combine(self, hasher) {
   hasher.combine_int(self.num)
 }
 
@@ -160,7 +160,7 @@ pub fn[Logger : Logger] Production::output_with_opt_dot(
 }
 
 ///|
-pub impl Show for Production with output(self, logger) -> Unit {
+pub impl Show for Production with fn output(self, logger) -> Unit {
   self.output_with_opt_dot(logger)
 }
 

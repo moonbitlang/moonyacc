@@ -19,7 +19,7 @@ pub(all) enum Lookahead {
 } derive(Eq, Compare)
 
 ///|
-pub impl Hash for Lookahead with hash_combine(self, hasher) {
+pub impl Hash for Lookahead with fn hash_combine(self, hasher) {
   match self {
     EndOfInput => hasher.combine_int(-1)
     Input(t) => hasher.combine_int(t.num)
@@ -27,7 +27,7 @@ pub impl Hash for Lookahead with hash_combine(self, hasher) {
 }
 
 ///|
-pub impl Show for Lookahead with output(self, logger) {
+pub impl Show for Lookahead with fn output(self, logger) {
   match self {
     Input(t) => logger.write_object(t)
     EndOfInput => logger.write_string("$")
