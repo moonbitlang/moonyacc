@@ -36,7 +36,7 @@ pub fn Int128IntSet::is_singleton(self : Int128IntSet, key : Int) -> Bool {
 }
 
 ///|
-pub impl Show for Int128IntSet with output(self, logger) {
+pub impl Show for Int128IntSet with fn output(self, logger) {
   logger.write_string("{")
   let mut first = true
   for key in self {

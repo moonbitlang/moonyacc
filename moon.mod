@@ -1,0 +1,23 @@
+name = "moonbitlang/yacc"
+
+version = "0.7.13"
+
+import {
+  "moonbitlang/x@0.4.38",
+  "Yoorkin/ArgParser@0.2.1",
+  "moonbitlang/ulex-runtime@0.4.3",
+}
+
+readme = "README.md"
+
+repository = ""
+
+license = "GPL-2.0-only"
+
+keywords = [ ]
+
+description = "https://github.com/moonbitlang/moonyacc"
+
+options(
+  source: "src",
+)

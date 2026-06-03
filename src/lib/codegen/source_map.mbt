@@ -18,11 +18,11 @@ pub(all) struct SourceMapping {
 
 ///|
 pub trait SourceMapBuilder {
-  add_mapping(Self, String, Int, Int, Int) -> Unit
+  fn add_mapping(Self, String, Int, Int, Int) -> Unit
 }
 
 ///|
-pub impl SourceMapBuilder for SourceMap with add_mapping(
+pub impl SourceMapBuilder for SourceMap with fn add_mapping(
   self,
   source,
   original_offset_in_utf8,

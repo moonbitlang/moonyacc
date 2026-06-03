@@ -25,17 +25,17 @@ let _empty : EncodedSymbolicLookaheadSet = {
 }
 
 ///|
-impl Eq for EncodedSymbolicLookaheadSet with equal(self, other) {
+impl Eq for EncodedSymbolicLookaheadSet with fn equal(self, other) {
   self.concrete_set == other.concrete_set && self.vars == other.vars
 }
 
 ///|
-impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with empty() {
+impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with fn empty() {
   _empty
 }
 
 ///|
-impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with singleton(
+impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with fn singleton(
   lookahead,
 ) {
   {
@@ -55,7 +55,7 @@ fn EncodedSymbolicLookaheadSet::variable(
 }
 
 ///|
-impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with union(
+impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with fn union(
   self,
   other,
 ) {

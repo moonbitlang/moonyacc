@@ -40,7 +40,7 @@ pub fn LR1Item::shift(self : LR1Item) -> LR1Item {
 }
 
 ///|
-pub impl Show for LR1Item with output(self, logger) {
+pub impl Show for LR1Item with fn output(self, logger) {
   logger.write_char('[')
   self.production.output_with_opt_dot(logger, dot=self.dot)
   logger.write_string(", ")

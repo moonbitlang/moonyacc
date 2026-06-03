@@ -30,8 +30,6 @@ pub suberror ParseError {
 
 // Types and methods
 pub(all) struct Lexer(@lexbuf.StringLexbuf)
-#deprecated
-pub fn Lexer::inner(Self) -> @lexbuf.StringLexbuf
 pub fn Lexer::next_token(Self) -> (Token, Int, Int)
 
 pub(all) enum Token {

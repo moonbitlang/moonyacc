@@ -32,7 +32,7 @@ pub(all) enum TypeExpr {
 } derive(Eq, Compare)
 
 ///|
-pub impl Show for TypeExpr with output(self, logger) {
+pub impl Show for TypeExpr with fn output(self, logger) {
   logger.write_string(
     match self {
       Constr(pkg~, name, args) => {
