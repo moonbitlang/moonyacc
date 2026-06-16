@@ -325,8 +325,8 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
           grammar,
           num: next_state_num,
           items: pre_state.items,
-          goto: @sorted_map.new(),
-          action: @sorted_map.new(),
+          goto: SortedMap([]),
+          action: SortedMap([]),
           stamp: @stamp.initial(),
         }
         next_state_num += 1

@@ -15,9 +15,9 @@
 ///|
 test {
   debug_inspect(
-    try? parse("Int"),
+    parse("Int"),
     content=(
-      #|Ok(Constr(pkg=None, "Int", []))
+      #|Constr(pkg=None, "Int", [])
     ),
   )
 }
@@ -25,9 +25,9 @@ test {
 ///|
 test {
   debug_inspect(
-    try? parse("Array[Int]"),
+    parse("Array[Int]"),
     content=(
-      #|Ok(Constr(pkg=None, "Array", [Constr(pkg=None, "Int", [])]))
+      #|Constr(pkg=None, "Array", [Constr(pkg=None, "Int", [])])
     ),
   )
 }
@@ -35,14 +35,12 @@ test {
 ///|
 test {
   debug_inspect(
-    try? parse("Array[(Int, Int)]"),
+    parse("Array[(Int, Int)]"),
     content=(
-      #|Ok(
-      #|  Constr(
-      #|    pkg=None,
-      #|    "Array",
-      #|    [([Constr(pkg=None, "Int", []), Constr(pkg=None, "Int", [])])],
-      #|  ),
+      #|Constr(
+      #|  pkg=None,
+      #|  "Array",
+      #|  [([Constr(pkg=None, "Int", []), Constr(pkg=None, "Int", [])])],
       #|)
     ),
   )
@@ -51,31 +49,29 @@ test {
 ///|
 test {
   debug_inspect(
-    try? parse("Array[(Int, Map[String, (Int, Int) -> Int])]"),
+    parse("Array[(Int, Map[String, (Int, Int) -> Int])]"),
     content=(
-      #|Ok(
-      #|  Constr(
-      #|    pkg=None,
-      #|    "Array",
-      #|    [
-      #|      (
-      #|        [
-      #|          Constr(pkg=None, "Int", []),
-      #|          Constr(
-      #|            pkg=None,
-      #|            "Map",
-      #|            [
-      #|              Constr(pkg=None, "String", []),
-      #|              Arrow(
-      #|                [Constr(pkg=None, "Int", []), Constr(pkg=None, "Int", [])],
-      #|                Constr(pkg=None, "Int", []),
-      #|              ),
-      #|            ],
-      #|          ),
-      #|        ],
-      #|      ),
-      #|    ],
-      #|  ),
+      #|Constr(
+      #|  pkg=None,
+      #|  "Array",
+      #|  [
+      #|    (
+      #|      [
+      #|        Constr(pkg=None, "Int", []),
+      #|        Constr(
+      #|          pkg=None,
+      #|          "Map",
+      #|          [
+      #|            Constr(pkg=None, "String", []),
+      #|            Arrow(
+      #|              [Constr(pkg=None, "Int", []), Constr(pkg=None, "Int", [])],
+      #|              Constr(pkg=None, "Int", []),
+      #|            ),
+      #|          ],
+      #|        ),
+      #|      ],
+      #|    ),
+      #|  ],
       #|)
     ),
   )

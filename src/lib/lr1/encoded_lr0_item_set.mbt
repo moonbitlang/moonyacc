@@ -35,7 +35,7 @@ pub impl Hash for EncodedLR0ItemSet with fn hash(self) {
   match self.hash {
     Some(hash) => hash
     None => {
-      let hasher = Hasher::new()
+      let hasher = Hasher()
       for item in self.items {
         hasher.combine_int(item.0)
       }

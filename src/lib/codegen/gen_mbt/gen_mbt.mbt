@@ -268,7 +268,7 @@ fn codegen(
   mode? : @codegen.Mode = Default,
   input_mode? : @codegen.InputMode = Array,
 ) -> Unit {
-  let used_runtime_funcs = @sorted_set.new()
+  let used_runtime_funcs = @sorted_set.SortedSet([])
   let { terminal_meta, nonterminal_meta, production_meta, .. } = meta
   fn inject_derive(type_ : String) -> @codegen.CodeFragment {
     match meta.derive_map.get(type_) {
@@ -352,7 +352,7 @@ fn codegen(
   )
   match mode {
     Default => {
-      let data_types = @sorted_set.new()
+      let data_types = @sorted_set.SortedSet([])
       for term in grammar.terminals {
         let meta = terminal_meta(term.name)
         if meta.data_type is Constr(pkg=None, "Unit", []) {
@@ -361,7 +361,7 @@ fn codegen(
           data_types.add(meta.data_type)
         }
       }
-      let dedup : Set[@stamp.T] = Set::new()
+      let dedup : Set[@stamp.T] = Set([])
       fn add_action(action : @elab.Action) {
         if dedup.add_and_check(action.stamp) {
           for sub_action in action.sub_actions {
@@ -544,7 +544,7 @@ fn codegen(
           output.write_string(" ".repeat(clause_info.column))
         }
       }
-      output.write_string(line.to_string())
+      output.write_string(line.to_owned())
       output.write_char('\n')
     }
     output.write_string(
@@ -775,7 +775,7 @@ fn codegen(
     let decision_groups : @sorted_map.SortedMap[
       CodegenDecision,
       @immut/sorted_set.SortedSet[CodegenSymbol],
-    ] = @sorted_map.new()
+    ] = SortedMap([])
     fn add_symbol_decision(symbol, decision) {
       decision_groups[decision] = decision_groups
         .get(decision)
@@ -810,7 +810,7 @@ fn codegen(
       }
     }
     fn no_lookahead_needed() -> Bool {
-      match [..decision_groups.keys_as_iter()][0] {
+      match [..decision_groups.keys()][0] {
         Reduce(_) | Accept => true
         _ => false
       }
@@ -845,7 +845,7 @@ fn codegen(
     }
 
     if decision_groups.length() == 1 && no_lookahead_needed() {
-      let decision = [..decision_groups.keys_as_iter()][0]
+      let decision = [..decision_groups.keys()][0]
       let decision = match decision {
         Reduce(num_symbols, nonterm, prod_num) =>
           ReduceNoLookahead(num_symbols, nonterm, prod_num)
@@ -1182,7 +1182,7 @@ fn codegen(
   for start in automaton.starts {
     let (start_production, start_state) = start
     let name = start_production.lhs.name
-    let original_name = name[:name.length() - "_prime".length()].to_string()
+    let original_name = name[:name.length() - "_prime".length()].to_owned()
     match input_mode {
       Array =>
         output.write_string(
