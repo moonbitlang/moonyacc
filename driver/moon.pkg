@@ -1,0 +1,12 @@
+import {
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/parser",
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/lr1",
+  "moonbitlang/yacc/util/logger_with_cursor",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/util/array_multimap",
+  "moonbitlang/yacc/desugar",
+  "moonbitlang/yacc/driver/util",
+  "moonbitlang/yacc/ast",
+}

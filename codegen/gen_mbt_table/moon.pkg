@@ -1,0 +1,17 @@
+import {
+  "moonbitlang/yacc/lr1",
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/util/logger_with_cursor",
+  "moonbitlang/yacc/util/array_multimap",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/util/stamp",
+  "moonbitlang/yacc/util/default_hashmap",
+  "moonbitlang/yacc/util/hashmap2",
+  "moonbitlang/core/immut/sorted_set" @immut/sorted_set,
+  "moonbitlang/core/list",
+  "moonbitlang/core/sorted_map",
+  "moonbitlang/core/sorted_set",
+}
+
+warnings = "-6"

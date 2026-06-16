@@ -1,0 +1,13 @@
+import {
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/util/stamp",
+  "moonbitlang/yacc/util/small_int_set",
+  "moonbitlang/yacc/util/hashmap2",
+  "moonbitlang/core/list",
+  "moonbitlang/core/sorted_map",
+}
+
+import {
+  "moonbitlang/core/test",
+  "moonbitlang/core/sorted_map",
+} for "test"

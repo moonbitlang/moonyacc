@@ -1,0 +1,20 @@
+import {
+  "moonbitlang/x/fs",
+  "moonbitlang/x/sys",
+  "Yoorkin/ArgParser",
+  "moonbitlang/yacc/driver",
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/codegen/gen_mbt",
+  "moonbitlang/yacc/driver/util",
+  "moonbitlang/yacc/codegen/gen_mbt_table",
+}
+
+options(
+  "bin-name": "moonyacc",
+  "bin-target": "js",
+  "is-main": true,
+  link: {
+    "js": { "format": "cjs" },
+    "native": { "cc": "clang", "cc-flags": "-O2" },
+  },
+)
