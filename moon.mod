@@ -19,5 +19,5 @@ keywords = [ ]
 description = "https://github.com/moonbitlang/moonyacc"
 
 options(
-  source: "src",
+  exclude: [ "tests" ],
 )

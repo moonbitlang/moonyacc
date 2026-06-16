@@ -1,0 +1,6 @@
+import {
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/util/stamp",
+  "moonbitlang/core/immut/vector" @immut/vector,
+  "moonbitlang/core/immut/sorted_map" @immut/sorted_map,
+}

@@ -1,0 +1,20 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc/util/stamp"
+
+// Values
+pub fn initial() -> Stamp
+
+pub fn new() -> Stamp
+
+pub fn unsafe_from_int(Int) -> Stamp
+
+// Errors
+
+// Types and methods
+#alias(T)
+type Stamp derive(Eq, Hash)
+
+// Type aliases
+
+// Traits
+

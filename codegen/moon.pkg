@@ -1,0 +1,8 @@
+import {
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/lr1",
+  "moonbitlang/yacc/util/logger_with_cursor",
+  "moonbitlang/yacc/util/array_multimap",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/core/immut/vector" @immut/vector,
+}
