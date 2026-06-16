@@ -6,17 +6,17 @@ import {
   "moonbitlang/core/string",
 }
 
-options(
-  "pre-build": [
-    {
-      "command": "node $mod_dir/boot/moonlex.cjs $input | moonfmt > $output",
-      "input": "lexer.mbtx",
-      "output": "lexer.mbt",
-    },
-    {
-      "command": "node $mod_dir/boot/moonyacc.cjs --input-mode pull $input -o $output",
-      "input": "parser.mbty",
-      "output": "parser.mbt",
-    },
-  ],
-)
+// options(
+//   "pre-build": [
+//     {
+//       "command": "node $mod_dir/boot/moonlex.cjs $input | moonfmt > $output",
+//       "input": "lexer.mbtx",
+//       "output": "lexer.mbt",
+//     },
+//     {
+//       "command": "node $mod_dir/boot/moonyacc.cjs --input-mode pull $input -o $output",
+//       "input": "parser.mbty",
+//       "output": "parser.mbt",
+//     },
+//   ],
+// )
