@@ -51,8 +51,8 @@ pub fn BuilderContext::set_start(
 
 ///|
 pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
-  let terminal_by_name = @sorted_map.new()
-  let nonterminal_by_name = @sorted_map.new()
+  let terminal_by_name = @sorted_map.SortedMap([])
+  let nonterminal_by_name = @sorted_map.SortedMap([])
   let terminals = []
   let nonterminals = []
   let productions = []

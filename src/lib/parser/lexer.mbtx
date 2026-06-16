@@ -1,5 +1,5 @@
 {
-pub type! LexError {
+pub suberror LexError {
   UnexpectedEndOfFile
   Unrecognized(Char, Int)
 }
@@ -17,16 +17,16 @@ regex ident_start = ['A'-'Z' 'a'-'z' '_'];
 regex ident_char = ['A'-'Z' 'a'-'z' '0'-'9' '_'];
 regex ident = ident_start ident_char*;
 
-rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)!LexError {
+rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
   parse {
-    [' ' '\t' '\n' ]+ => { token!(phase, lexbuf) }
-    "(*)" => { token!(phase, lexbuf) }
+    [' ' '\t' '\n' ]+ => { token(phase, lexbuf) }
+    "(*)" => { token(phase, lexbuf) }
     "(*" => {
-      comment_star_rparen!(lexbuf)
-      token!(phase, lexbuf)
+      comment_star_rparen(lexbuf)
+      token(phase, lexbuf)
     }
-    "/*" ([^ '/'] | "/" [^ '*'])* "*/" => { token!(phase, lexbuf) }
-    "//" [^ '\n']* '\n'? => { token!(phase, lexbuf) }
+    "/*" ([^ '/'] | "/" [^ '*'])* "*/" => { token(phase, lexbuf) }
+    "//" [^ '\n']* '\n'? => { token(phase, lexbuf) }
     "@" (ident ("/" ident)* as pkg) "." (ident as id) as t => { (PKG_AND_IDENT((pkg, id)), $startpos(t), $endpos(t)) }
     ident as t => { (IDENT(t), $startpos(t), $endpos(t)) }
     "%start" as t => { (PERCENT_START, $startpos(t), $endpos(t)) }
@@ -57,12 +57,12 @@ rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)
     ";" as t => { (SEMI, $startpos(t), $endpos(t)) }
     "%{" as t => {
       let sb = StringBuilder::new()
-      code_percent_rbrace!(sb, lexbuf)
+      code_percent_rbrace(sb, lexbuf)
       (PERCENT_LBRACE_CODE_PERCENT_RBRACE((sb.to_string(), $endpos(t), lexbuf.pos - $endpos(t))), $startpos(t), lexbuf.pos)
     }
     "<" as t => {
       let sb = StringBuilder::new()
-      code_rangle!(sb, lexbuf)
+      code_rangle(sb, lexbuf)
       (LANGLE_CODE_RANGLE(sb.to_string()), $startpos(t), lexbuf.pos)
     }
     "[" as t => { (LBRACKET, $startpos(t), $endpos(t)) }
@@ -75,7 +75,7 @@ rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)
       let sb = StringBuilder::new()
       let subst = []
       let base = lexbuf.pos
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
       (LBRACE_CODE_RBRACE((sb.to_string(), base, subst)), $startpos(t), lexbuf.pos)
     }
     ('"' [^ '"']+ '"') as t => { (STRING(t), $startpos(t), $endpos(t)) }
@@ -87,11 +87,11 @@ rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)
 rule comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
   parse {
     "(*" => {
-      comment_star_rparen!(lexbuf)
-      comment_star_rparen!(lexbuf)
+      comment_star_rparen(lexbuf)
+      comment_star_rparen(lexbuf)
     }
     "*)" => { () }
-    _ => { comment_star_rparen!(lexbuf) }
+    _ => { comment_star_rparen(lexbuf) }
     eof => { raise(UnexpectedEndOfFile) }
   }
 }
@@ -108,7 +108,7 @@ rule code_rangle(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexE
     ">" => { () }
     _ as t => {
       sb.write_char(t)
-      code_rangle!(sb, lexbuf)
+      code_rangle(sb, lexbuf)
     }
     eof => { raise(UnexpectedEndOfFile) }
   }
@@ -119,7 +119,7 @@ rule code_percent_rbrace(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> U
     "%}" => { () }
     _ as t => {
       sb.write_char(t)
-      code_percent_rbrace!(sb, lexbuf)
+      code_percent_rbrace(sb, lexbuf)
     }
     eof => { raise(UnexpectedEndOfFile) }
   }
@@ -129,25 +129,25 @@ rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int, l
   parse {
     "{" => {
       sb.write_string("{")
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
       sb.write_string("}")
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     "}" => { () }
     ("$" ((['0'-'9']+) as t1)) as t => {
       sb.write_string(t)
-      let index = try @string.parse_int!(t1, base=10) catch { err => abort(Show::to_string(err)) }
+      let index = try @string.parse_int(t1, base=10) catch { err => abort(Show::to_string(err)) }
       subst.push({
         start: $startpos(t) - base,
         end: $endpos(t) - base,
         desc: Dollar(index)
       })
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     ("$" (("startpos" | "endpos" | "loc") as t1) "(" [' ' '\t']* (("$" ['0'-'9']+ | ['A'-'Z' 'a'-'z' '_'] ['A'-'Z' 'a'-'z' '0'-'9' '_']*) as t2) [' ' '\t']* ")") as t => {
       sb.write_string(t)
       let arg : @ast.ClauseItemIdent = if t2.has_prefix("$") {
-        let index = try @string.parse_int!(t2[1:].to_string(), base=10) catch { err => abort(Show::to_string(err)) }
+        let index = try @string.parse_int(t2[1:].to_owned(), base=10) catch { err => abort(Show::to_string(err)) }
         Dollar(index)
       } else {
         Name(t2)
@@ -162,7 +162,7 @@ rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int, l
           _ => panic()
         }
       })
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     ("$" (("startpos" | "endpos" | "loc" | "symbolstartpos" | "sloc") as t1)) as t => {
       sb.write_string(t)
@@ -178,15 +178,15 @@ rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int, l
           _ => panic()
         }
       })
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     ("$" ['A'-'Z' 'a'-'z' '_'] ['A'-'Z' 'a'-'z' '0'-'9' '_']*) as t => {
       sb.write_string(t)
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     _ as t => {
       sb.write_char(t)
-      code_rbrace!(sb, subst, base, lexbuf)
+      code_rbrace(sb, subst, base, lexbuf)
     }
     eof => { raise(UnexpectedEndOfFile) }
   }
@@ -197,7 +197,7 @@ pub fn new_lexer(input : String) -> Lexer {
   { buf : @lexbuf.StringLexbuf::from_string(input), phase: { val: 0 } }
 }
 
-pub fn next_token(self : Lexer) -> (Token, Int, Int)!LexError {
-  token!(self.phase, self.buf)
+pub fn next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
+  token(self.phase, self.buf)
 }
 }

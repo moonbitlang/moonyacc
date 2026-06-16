@@ -44,14 +44,14 @@ pub fn print(
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
     lexer.next_token() catch {
-      @parser.Unrecognized(x, pos) => {
+      Unrecognized(x, pos) => {
         let pos_str = pos_to_string(filename, parser_spec_str, pos)
         println_to_stderr(
           "SyntaxError: Unrecognized character \{([x] : String).escape()}, at \{pos_str}",
         )
         exit(1)
       }
-      @parser.UnexpectedEndOfFile => {
+      UnexpectedEndOfFile => {
         println_to_stderr("SyntaxError: Unexpected end of file")
         exit(1)
       }
@@ -59,7 +59,7 @@ pub fn print(
   }
 
   let spec = @parser.spec(token, 0) catch {
-    @parser.UnexpectedToken(token, loc, expected) => {
+    UnexpectedToken(token, loc, expected) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
       println_to_stderr(
@@ -89,14 +89,14 @@ pub fn compile(
   let lexer = @parser.new_lexer(parser_spec_str)
   fn token() {
     lexer.next_token() catch {
-      @parser.Unrecognized(x, pos) => {
+      Unrecognized(x, pos) => {
         let pos_str = pos_to_string(filename, parser_spec_str, pos)
         println_to_stderr(
           "SyntaxError: Unrecognized character \{([x] : String).escape()}, at \{pos_str}",
         )
         exit(1)
       }
-      @parser.UnexpectedEndOfFile => {
+      UnexpectedEndOfFile => {
         println_to_stderr("SyntaxError: Unexpected end of file")
         exit(1)
       }
@@ -104,7 +104,7 @@ pub fn compile(
   }
 
   let spec = @parser.spec(token, 0) catch {
-    @parser.UnexpectedToken(token, loc, expected) => {
+    UnexpectedToken(token, loc, expected) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       let expected_str = array_to_or_list(expected.map(Show::to_string)[:])
       println_to_stderr(
@@ -129,18 +129,18 @@ pub fn compile(
     },
     force_int_position~,
   ) catch {
-    @elab.UnresolvedSymbol(symbol, loc~) => {
+    UnresolvedSymbol(symbol, loc~) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       println_to_stderr("Unresolved symbol \{symbol}, at \{loc_str}")
       exit(1)
     }
     // TODO: Add location information
-    @elab.FailedToParseTypeExpr(type_expr) => {
+    FailedToParseTypeExpr(type_expr) => {
       let type_expr_str = type_expr.to_string()
       println_to_stderr("Failed to parse type expression \{type_expr_str}")
       exit(1)
     }
-    @elab.OutOfBoundsAccess(index, loc~) => {
+    OutOfBoundsAccess(index, loc~) => {
       let loc_str = loc_to_string(filename, parser_spec_str, loc)
       println_to_stderr("Out of bounds access \{index}, at \{loc_str}")
       exit(1)
@@ -164,9 +164,9 @@ pub fn compile(
       num: terminals.length(),
       prec: match token.prec {
         None => None
-        Some((prec, NonAssoc)) => Some((prec, @grm.NonAssoc))
-        Some((prec, LeftAssoc)) => Some((prec, @grm.LeftAssoc))
-        Some((prec, RightAssoc)) => Some((prec, @grm.RightAssoc))
+        Some((prec, NonAssoc)) => Some((prec, NonAssoc))
+        Some((prec, LeftAssoc)) => Some((prec, LeftAssoc))
+        Some((prec, RightAssoc)) => Some((prec, RightAssoc))
       },
     }
     terminal_by_name[token.name] = terminal

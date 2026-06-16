@@ -42,7 +42,7 @@ test "@small_int_set.iter/empty" {
   // Test iterating over an empty set
   let empty_set = @small_int_set.empty()
   let elements = empty_set.iter().to_array()
-  inspect(elements, content="[]")
+  debug_inspect(elements, content="[]")
 }
 
 ///|
@@ -71,14 +71,14 @@ test "@small_int_set.iter/single_word" {
   set = set.add(1)
   set = set.add(31)
   let elements = set.iter().to_array()
-  inspect(elements, content="[0, 1, 31]")
+  debug_inspect(elements, content="[0, 1, 31]")
 }
 
 ///|
 test "@small_int_set.iter/singleton" {
   let set = @small_int_set.singleton(64)
   let elements = set.iter().to_array()
-  inspect(elements, content="[64]")
+  debug_inspect(elements, content="[64]")
 }
 
 ///|
@@ -89,7 +89,7 @@ test "@small_int_set.iter/multi_word" {
   set = set.add(32)
   set = set.add(63)
   let elements = set.iter().to_array()
-  inspect(elements, content="[31, 32, 63]")
+  debug_inspect(elements, content="[31, 32, 63]")
 }
 
 ///|

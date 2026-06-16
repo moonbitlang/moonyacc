@@ -9,7 +9,7 @@ struct DefaultHashMap[K, V] {
 
 ///|
 pub fn[K, V] new(default_fn : (K) -> V) -> T[K, V] {
-  DefaultHashMap::{ map: @hashmap2.new(capacity=16), default_fn }
+  { map: @hashmap2.new(capacity=16), default_fn }
 }
 
 ///|

@@ -24,8 +24,10 @@ pub fn print_spec(
         out.write_string("%start")
         if !actions {
           out.write_string("<unit>")
-        } else {
+        } else if type_ is Some(type_) {
           out.write_string("<\{type_}>")
+        } else {
+          out.write_string("<unit>")
         }
         for symbol in symbols {
           out.write_string(" ")

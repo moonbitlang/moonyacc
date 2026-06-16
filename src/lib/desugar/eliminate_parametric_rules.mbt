@@ -100,7 +100,7 @@ pub fn eliminate_rule_args(
     {
       ..parametric_rule,
       name: specialized_rule_name,
-      generic_params: Set::new(),
+      generic_params: Set([]),
       params: [],
       clauses: parametric_rule.clauses.map(fn(clause) {
         let new_items = clause.items.map(fn(item) {

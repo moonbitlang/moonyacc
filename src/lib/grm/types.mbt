@@ -109,8 +109,8 @@ pub(all) enum Symbol {
 ///|
 pub impl Show for Symbol with fn output(self, logger) -> Unit {
   match self {
-    Symbol::T(t) => logger.write_object(t)
-    Symbol::NT(nt) => logger.write_object(nt)
+    T(t) => logger.write_object(t)
+    NT(nt) => logger.write_object(nt)
   }
 }
 

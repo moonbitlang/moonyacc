@@ -205,7 +205,7 @@ pub fn elaborate(
     rule_by_name[rule.name] = rule
   }
   let mut curr_prec = 0
-  let prec_map = @sorted_map.new()
+  let prec_map = @sorted_map.SortedMap([])
   let start_rules : Array[Symbol] = []
   for ast_decl in ast_spec.decls {
     match ast_decl {
@@ -368,9 +368,7 @@ pub fn elaborate(
           position_type = parse_and_elaborate_type_expr(type_)
         }
       Derive(traits~, type_~) => {
-        let traits = traits
-          .split(",")
-          .map(t => t.trim(char_set=" ").to_string())
+        let traits = traits.split(",").map(t => t.trim(char_set=" ").to_owned())
         for trait_ in traits {
           derive_map.add(type_, trait_)
         }
@@ -386,7 +384,7 @@ pub fn elaborate(
     header = @immut/vector.new()
     trailer = @immut/vector.new()
   }
-  ParserSpec::{
+  {
     header,
     trailer,
     tokens,
@@ -426,7 +424,7 @@ fn elaborate_action(
   }
 
   let bindings : Array[(BindingSubject, Code)] = []
-  let visited = @sorted_set.new()
+  let visited = @sorted_set.SortedSet([])
   fn add_binding(desc : @ast.SubstItemDesc, loc : (Int, Int)) raise ElabError {
     guard !visited.contains(desc) else { return }
     visited.add(desc)
@@ -483,7 +481,7 @@ fn elaborate_action(
               let len = item.start - last_index
               body.push(
                 (
-                  code.code[last_index:item.start].to_string(),
+                  code.code[last_index:item.start].to_owned(),
                   Some((code.utf8_pos + last_index, len)),
                 ),
               )
@@ -518,7 +516,7 @@ fn elaborate_action(
             let len = code.code.length() - last_index
             body.push(
               (
-                code.code[last_index:code.code.length()].to_string(),
+                code.code[last_index:code.code.length()].to_owned(),
                 Some((code.utf8_pos + last_index, len)),
               ),
             )
@@ -558,9 +556,9 @@ fn elaborate_action(
     line: line - 1, // to 0-based
     column: column - 1, // to 0-based
     code: parser_spec_str[ast_clause_without_action.loc.0:ast_clause_action.loc.0 +
-    ast_clause_action.loc.1].to_string(),
+    ast_clause_action.loc.1].to_owned(),
   }
-  Action::{
+  {
     stamp: @stamp.new(),
     arity,
     type_,
@@ -583,7 +581,7 @@ fn parse_and_elaborate_type_expr(
 
 ///|
 fn elaborate_type_expr(ast_type_expr : @ast.TypeExpr) -> TypeExpr {
-  elaborate_type_expr_with_generic_params(ast_type_expr, Set::new())
+  elaborate_type_expr_with_generic_params(ast_type_expr, Set([]))
 }
 
 ///|
