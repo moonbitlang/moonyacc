@@ -3,9 +3,8 @@ name = "moonbitlang/yacc"
 version = "0.7.13"
 
 import {
-  "moonbitlang/x@0.4.38",
-  "Yoorkin/ArgParser@0.2.1",
   "moonbitlang/ulex-runtime@0.4.3",
+  "moonbit-community/miniio@0.2.1",
 }
 
 readme = "README.md"

@@ -1,0 +1,14 @@
+import {
+  "moonbitlang/core/argparse",
+  "moonbit-community/miniio",
+  "moonbitlang/yacc/driver",
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/codegen/gen_mbt",
+  "moonbitlang/yacc/codegen/gen_mbt_table",
+}
+
+supported_targets = "wasm"
+
+options(
+  "is-main": true,
+)

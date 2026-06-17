@@ -12,29 +12,7 @@ MoonYacc is compatible with ocamlyacc's grammar syntax (see ocamlyacc's manual [
 
 ## How to use MoonYacc in a MoonBit project
 
-There is an example repository [moonyacc-example-arithmetic](https://github.com/moonbit-community/moonyacc-example-arithmetic).
-
-1. Add MoonYacc to the project's binary dependencies.
-
-```bash
-moon add --bin moonbitlang/yacc
-```
-
-2. Write the grammar file in the package directory where you want to generate the parser.
-
-3. Add a pre-build rule to `moon.pkg.json` to let the Moon build system know how to generate the parser from the grammar file.
-
-```json
-{
-  "pre-build": [
-    {
-      "command": "$mod_dir/.mooncakes/moonbitlang/yacc/moonyacc $input -o $output",
-      "input": "parser.mbty",
-      "output": "parser.mbt"
-    }
-  ]
-}
-```
+TODO
 
 ## Using the generated parser
 
