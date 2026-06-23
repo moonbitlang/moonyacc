@@ -9,13 +9,13 @@ import {
 
 readme = "README.md"
 
-repository = ""
+repository = "https://github.com/moonbitlang/moonyacc"
 
 license = "GPL-2.0-only"
 
-keywords = [ ]
+keywords = ["LR parser", "parser generator", "yacc"]
 
-description = "https://github.com/moonbitlang/moonyacc"
+description = "A LR(1) parser generator for MoonBit programming language."
 
 options(
   exclude: [ "tests" ],
