@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbitlang/yacc/tests/ocaml_jsoncst_test"
+package "moonbitlang/yacc_tests/ocaml_jsoncst_test"
 
 import {
   "moonbitlang/core/debug",
@@ -7,6 +7,8 @@ import {
 }
 
 // Values
+pub let binary_search_ml : String
+
 pub fn implementation(() -> (Token, Int, Int), Int) -> Json raise ParseError
 
 pub fn interface(() -> (Token, Int, Int), Int) -> Json raise ParseError

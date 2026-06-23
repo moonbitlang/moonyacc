@@ -1,10 +1,9 @@
-name = "moonbitlang/yacc"
+name = "moonbitlang/yacc_tests"
 
 version = "0.7.13"
 
 import {
   "moonbitlang/ulex-runtime@0.4.3",
-  "moonbit-community/miniio@0.2.1",
 }
 
 readme = "README.md"

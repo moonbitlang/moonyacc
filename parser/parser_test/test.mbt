@@ -14,7 +14,7 @@
 
 ///|
 test "lexer" (it : @test.Test) {
-  let lexer = @parser.new_lexer(parser_spec_src)
+  let lexer = @parser.new_lexer(_embed_parser_mbty)
   fn token() {
     lexer.next_token() catch {
       _ => panic()
@@ -34,7 +34,7 @@ test "lexer" (it : @test.Test) {
 
 ///|
 test "parser_spec.json" (it : @test.Test) {
-  let lexer = @parser.new_lexer(parser_spec_src)
+  let lexer = @parser.new_lexer(_embed_parser_mbty)
   fn token() {
     try! lexer.next_token()
   }
@@ -46,7 +46,7 @@ test "parser_spec.json" (it : @test.Test) {
 
 ///|
 test "parser_spec.mbty" (it : @test.Test) {
-  let lexer = @parser.new_lexer(parser_spec_src)
+  let lexer = @parser.new_lexer(_embed_parser_mbty)
   fn token() {
     try! lexer.next_token()
   }
@@ -56,4 +56,18 @@ test "parser_spec.mbty" (it : @test.Test) {
   @ast.print_spec(spec, buf)
   it.write(buf.to_string())
   it.snapshot(filename="parser_spec.mbty")
+}
+
+///|
+test "ocaml parser" (it : @test.Test) {
+  let lexer = @parser.new_lexer(_embed_ocaml_mly)
+  fn token() {
+    try! lexer.next_token()
+  }
+
+  let spec = @parser.spec(token, 0)
+  let buf = StringBuilder::new()
+  @ast.print_spec(spec, buf)
+  it.write(buf.to_string())
+  it.snapshot(filename="ocaml.mly")
 }
