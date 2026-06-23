@@ -2,6 +2,9 @@
 package "moonbitlang/yacc/parser/parser_test"
 
 // Values
+pub let ocaml_mly : String
+
+pub let parser_mbty : String
 
 // Errors
 
