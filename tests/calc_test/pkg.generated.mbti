@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbitlang/yacc/tests/calc_test"
+package "moonbitlang/yacc_tests/calc_test"
 
 import {
   "moonbitlang/core/debug",

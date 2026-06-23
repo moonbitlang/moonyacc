@@ -2,12 +2,9 @@ import {
   "moonbitlang/core/list",
 }
 
-options(
-  "pre-build": [
-    {
-      "command": "node $mod_dir/boot/moonyacc.cjs $input --input-mode pull -o $output",
-      "input": "calc.mbty",
-      "output": "calc.mbt",
-    },
-  ],
+rule(
+  name: "moonyacc",
+  command: "moon runwasm $mod_dir/.. -- --input-mode pull $input | moonfmt > $output",
 )
+
+dev_build(rule: "moonyacc", input: "calc.mbty", output: "calc.mbt")

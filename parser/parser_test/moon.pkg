@@ -5,12 +5,15 @@ import {
   "moonbitlang/core/test",
 }
 
-options(
-  "pre-build": [
-    {
-      "command": ":embed --name parser_spec_src -i $input -o $output",
-      "input": [ "../parser.mbty" ],
-      "output": [ "parser_spec_src.mbt" ],
-    },
-  ],
+rule(
+  name: "embed",
+  command: "moon runwasm moonbit-community/embed $input -o $output",
+)
+
+dev_build(rule: "embed", input: "../parser.mbty", output: "parser_spec_src.mbt")
+
+dev_build(
+  rule: "embed",
+  input: "../../tests/ocaml_jsoncst_test/ocaml.mly",
+  output: "ocaml_parser_spec_src.mbt",
 )

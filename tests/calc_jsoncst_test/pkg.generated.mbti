@@ -1,5 +1,5 @@
 // Generated using `moon info`, DON'T EDIT IT
-package "moonbitlang/yacc/tests/calc_jsoncst_test"
+package "moonbitlang/yacc_tests/calc_jsoncst_test"
 
 import {
   "moonbitlang/core/debug",
