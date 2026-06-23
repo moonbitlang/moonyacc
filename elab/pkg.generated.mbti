@@ -14,6 +14,8 @@ pub fn elaborate(@ast.ParserSpec, String, String, json_cst~ : JsonCst, stdlib_ru
 
 pub fn elaborate_with_stdlib_rules(@ast.ParserSpec, String, String, json_cst~ : JsonCst, no_std~ : Bool, token_payload_rewrite~ : TokenPayloadRewrite, force_int_position~ : Bool) -> ParserSpec raise ElabError
 
+pub let stdlib_mbty : String
+
 // Errors
 pub suberror ElabError {
   UnresolvedSymbol(String, loc~ : (Int, Int))

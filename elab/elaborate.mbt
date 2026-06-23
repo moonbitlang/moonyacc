@@ -76,7 +76,7 @@ pub fn elaborate_with_stdlib_rules(
       {}
     } else {
       build_rules_from_src(
-        stdlib_src,
+        stdlib_mbty,
         filename="stdlib.mbty",
         json_cst~,
         token_payload_rewrite~,

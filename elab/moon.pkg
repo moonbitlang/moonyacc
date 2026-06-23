@@ -10,12 +10,9 @@ import {
   "moonbitlang/core/sorted_set",
 }
 
-options(
-  "pre-build": [
-    {
-      "command": ":embed --name stdlib_src -i $input -o $output",
-      "input": [ "stdlib.mbty" ],
-      "output": [ "stdlib_src.mbt" ],
-    },
-  ],
+rule(
+  name: "embed",
+  command: "moon runwasm moonbit-community/embed $input -o $output",
 )
+
+dev_build(rule: "embed", input: "stdlib.mbty", output: "stdlib_src.mbt")
