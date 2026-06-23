@@ -14,7 +14,7 @@
 
 ///|
 test "lexer" (it : @test.Test) {
-  let lexer = @parser.new_lexer(_embed_parser_mbty)
+  let lexer = @parser.new_lexer(parser_mbty)
   fn token() {
     lexer.next_token() catch {
       _ => panic()
@@ -34,7 +34,7 @@ test "lexer" (it : @test.Test) {
 
 ///|
 test "parser_spec.json" (it : @test.Test) {
-  let lexer = @parser.new_lexer(_embed_parser_mbty)
+  let lexer = @parser.new_lexer(parser_mbty)
   fn token() {
     try! lexer.next_token()
   }
@@ -46,7 +46,7 @@ test "parser_spec.json" (it : @test.Test) {
 
 ///|
 test "parser_spec.mbty" (it : @test.Test) {
-  let lexer = @parser.new_lexer(_embed_parser_mbty)
+  let lexer = @parser.new_lexer(parser_mbty)
   fn token() {
     try! lexer.next_token()
   }
@@ -60,7 +60,7 @@ test "parser_spec.mbty" (it : @test.Test) {
 
 ///|
 test "ocaml parser" (it : @test.Test) {
-  let lexer = @parser.new_lexer(_embed_ocaml_mly)
+  let lexer = @parser.new_lexer(ocaml_mly)
   fn token() {
     try! lexer.next_token()
   }
