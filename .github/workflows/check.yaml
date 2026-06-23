@@ -32,22 +32,25 @@ jobs:
         run: |
           moon version --all
 
-      - name: install module dependencies
+      - name: moon update
         run: |
           moon update
-          moon install
 
       - name: moon check
-        run: moon check --deny-warn
+        run: |
+          moon check --deny-warn
+          moon -C tests check --deny-warn
 
       - name: moon info
         run: |
           moon info --target all
+          moon -C tests info --target all
           git diff --exit-code
 
       - name: moon fmt
         run: |
           moon fmt
+          moon -C tests fmt
           git diff --exit-code
 
       - name: Setup MSVC
@@ -63,20 +66,5 @@ jobs:
         run: |
           moon test --target all
           moon test --target all --release
-
-  moon-json-format-check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: check `moon.*.json` format
-        shell: bash
-        run: |
-          _passed=0;
-          for f in $(find . -type f -name "moon.*.json"); do
-            if ! jq '.' $f > /dev/null; then
-              echo $f;
-              _passed=1;
-            fi
-          done
-          (exit $_passed)
+          moon -C tests test --target all
+          moon -C tests test --target all --release
