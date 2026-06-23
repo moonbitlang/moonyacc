@@ -32,8 +32,8 @@ fn token(
   let mut _capture_3_end = -1
   let mut _tag_0 = -1
   let mut _tag_1 = -1
-  for start = 0 {
-    match start {
+  for _dfa_start_node = 0 {
+    match _dfa_start_node {
       0 =>
         continue match lexbuf.next_as_int() {
             -1 => 1
@@ -951,8 +951,8 @@ fn comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError {
   let mut _match_end = -1
   let mut _capture_0_start = -1
   let mut _capture_0_end = -1
-  for start = 0 {
-    match start {
+  for _dfa_start_node = 0 {
+    match _dfa_start_node {
       0 =>
         continue match lexbuf.next_as_int() {
             -1 => 1
@@ -1042,8 +1042,8 @@ fn code_eof(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit {
   let mut _capture_0_end = -1
   let mut _capture_1_start = -1
   let mut _capture_1_end = -1
-  for start = 0 {
-    match start {
+  for _dfa_start_node = 0 {
+    match _dfa_start_node {
       0 =>
         continue match lexbuf.next_as_int() {
             -1 => 1
@@ -1100,8 +1100,8 @@ fn code_rangle(
   let mut _capture_0_end = -1
   let mut _capture_1_start = -1
   let mut _capture_1_end = -1
-  for start = 0 {
-    match start {
+  for _dfa_start_node = 0 {
+    match _dfa_start_node {
       0 =>
         continue match lexbuf.next_as_int() {
             -1 => 1
@@ -1170,8 +1170,8 @@ fn code_percent_rbrace(
   let mut _capture_0_end = -1
   let mut _capture_1_start = -1
   let mut _capture_1_end = -1
-  for start = 0 {
-    match start {
+  for _dfa_start_node = 0 {
+    match _dfa_start_node {
       0 =>
         continue match lexbuf.next_as_int() {
             -1 => 1
@@ -1259,8 +1259,8 @@ fn code_rbrace(
   let mut _tag_0 = -1
   let mut _tag_1 = -1
   let mut _tag_2 = -1
-  for start = 0 {
-    match start {
+  for _dfa_start_node = 0 {
+    match _dfa_start_node {
       0 =>
         continue match lexbuf.next_as_int() {
             -1 => 1
