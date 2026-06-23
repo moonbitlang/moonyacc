@@ -530,8 +530,8 @@ fn elaborate_action(
       body.push(
         (
           (
-            #|{
-            #|  "type": "NONTERMINAL",
+            $|{
+            $|  "type": "NONTERMINAL",
             $|  "name": "\{nonterminal_name}",
             $|  "rule_index": \{rule_index},
             $|  "clause_index": \{clause_index},
