@@ -5,17 +5,24 @@ import {
   "moonbitlang/core/list",
 }
 
-options(
-  "pre-build": [
-    {
-      "command": "node $mod_dir/boot/moonlex.cjs $input | moonfmt > $output",
-      "input": "lexer.mbtx",
-      "output": "lexer.mbt",
-    },
-    {
-      "command": "node $mod_dir/boot/moonyacc.cjs --input-mode array $input -o $output",
-      "input": "parser.mbty",
-      "output": "parser.mbt",
-    },
-  ],
+rule(
+  name: "moonlex",
+  command: "moon runwasm moonbitlang/ulex@0.3.29 $input | moonfmt > $output",
 )
+
+dev_build(rule: "moonlex", input: "lexer.mbtx", output: "lexer.mbt")
+
+// options(
+//   "pre-build": [
+//     {
+//       "command": "node $mod_dir/boot/moonlex.cjs $input | moonfmt > $output",
+//       "input": "lexer.mbtx",
+//       "output": "lexer.mbt",
+//     },
+//     {
+//       "command": "node $mod_dir/boot/moonyacc.cjs --input-mode array $input -o $output",
+//       "input": "parser.mbty",
+//       "output": "parser.mbt",
+//     },
+//   ],
+// )

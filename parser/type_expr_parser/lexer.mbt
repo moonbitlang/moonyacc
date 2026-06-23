@@ -19,8 +19,8 @@ fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
   let mut _capture_3_end = -1
   let mut _tag_0 = -1
   let mut _tag_1 = -1
-  for start = 0 {
-    match start {
+  for _dfa_start_node = 0 {
+    match _dfa_start_node {
       0 =>
         continue match lexbuf.next_as_int() {
             -1 => 1
