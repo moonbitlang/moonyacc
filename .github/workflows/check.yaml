@@ -15,22 +15,27 @@ jobs:
         os:
           - ubuntu-latest
           - macos-latest
-          # - windows-latest
+          - windows-latest
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 1
-      
+
       - name: Setup Moon
         uses: moonbit-community/setup-moonbit@main
         with: 
           version: stable
 
+      - name: Setup MSVC
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
       - name: moon version
         run: |
           moon version --all
+          moonrun --version
 
       - name: moon update
         run: |
@@ -52,10 +57,6 @@ jobs:
           moon fmt
           moon -C tests fmt
           git diff --exit-code
-
-      - name: Setup MSVC
-        if: ${{ runner.os == 'Windows' }}
-        uses: ilammy/msvc-dev-cmd@v1
 
       - name: Set ulimit on unix
         if: ${{ runner.os != 'Windows' }}
