@@ -1,6 +1,6 @@
 name = "moonbitlang/yacc"
 
-version = "0.7.15"
+version = "0.7.16"
 
 import {
   "moonbitlang/ulex-runtime@0.4.3",
