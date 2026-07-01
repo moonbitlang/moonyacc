@@ -35,6 +35,16 @@ test {
 ///|
 test {
   debug_inspect(
+    parse("Array[\r\n  Int\r\n]"),
+    content=(
+      #|Constr(pkg=None, "Array", [Constr(pkg=None, "Int", [])])
+    ),
+  )
+}
+
+///|
+test {
+  debug_inspect(
     parse("Array[(Int, Int)]"),
     content=(
       #|Constr(
