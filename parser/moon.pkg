@@ -6,16 +6,18 @@ import {
   "moonbitlang/core/string",
 }
 
+formatter(ignore: ["lexer.mbt", "parser.mbt"])
+
 rule(
   name: "moonlex",
-  command: "moon runwasm moonbitlang/ulex@0.3.29 $input | moonfmt > $output",
+  command: "moon runwasm moonbitlang/ulex@0.3.29 $input -o $output",
 )
 
 dev_build(rule: "moonlex", input: "lexer.mbtx", output: "lexer.mbt")
 
 rule(
   name: "moonyacc",
-  command: "moon runwasm moonbitlang/yacc@0.7.14 --input-mode pull $input | moonfmt > $output",
+  command: "moon runwasm moonbitlang/yacc@0.7.14 --input-mode pull $input -o $output",
 )
 
 dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")

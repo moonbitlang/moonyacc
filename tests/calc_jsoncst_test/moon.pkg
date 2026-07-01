@@ -2,9 +2,11 @@ import {
   "moonbitlang/core/list",
 }
 
+formatter(ignore: ["calc_jsoncst.mbt"])
+
 rule(
   name: "moonyacc",
-  command: "moon runwasm $mod_dir/.. -- --mode json-cst --input-mode pull --force-token-no-payload $input | moonfmt > $output",
+  command: "moon runwasm $mod_dir/.. -- --mode json-cst --input-mode pull --force-token-no-payload $input -o $output",
 )
 
 dev_build(
