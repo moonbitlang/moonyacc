@@ -1,4 +1,3 @@
-///|
 pub(all) enum Token {
   NUMBER(Int)
   PLUS
@@ -8,7 +7,6 @@ pub(all) enum Token {
   RPAREN
 } derive(Debug)
 
-///|
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
     NUMBER(_) => TK_NUMBER
@@ -20,7 +18,6 @@ pub fn Token::kind(self : Token) -> TokenKind {
   }
 }
 
-///|
 pub(all) enum TokenKind {
   TK_NUMBER
   TK_PLUS
@@ -30,8 +27,7 @@ pub(all) enum TokenKind {
   TK_RPAREN
 }
 
-///|
-pub impl Show for TokenKind with fn output(self, logger) {
+pub impl Show for TokenKind with output(self, logger) {
   logger.write_string(
     match self {
       TK_NUMBER => "NUMBER"
@@ -40,18 +36,18 @@ pub impl Show for TokenKind with fn output(self, logger) {
       TK_STAR => "\"*\""
       TK_LPAREN => "\"(\""
       TK_RPAREN => "\")\""
-    },
+    }
   )
 }
 
-///|
-pub impl Debug for TokenKind with fn to_repr(self) {
-  match self {
-    TK_NUMBER => to_repr("NUMBER")
-    TK_PLUS => to_repr("+")
-    TK_MINUS => to_repr("-")
-    TK_STAR => to_repr("*")
-    TK_LPAREN => to_repr("(")
-    TK_RPAREN => to_repr(")")
-  }
+pub impl Debug for TokenKind with to_repr(self) {
+    match self {
+      TK_NUMBER => to_repr("NUMBER")
+      TK_PLUS => to_repr("+")
+      TK_MINUS => to_repr("-")
+      TK_STAR => to_repr("*")
+      TK_LPAREN => to_repr("(")
+      TK_RPAREN => to_repr(")")
+    }
 }
+
