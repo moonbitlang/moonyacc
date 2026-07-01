@@ -45,6 +45,49 @@ test "parser_spec.json" (it : @test.Test) {
 }
 
 ///|
+test "parser spec CRLF and lone CR match LF input" {
+  fn parse_spec(input : String) -> @ast.ParserSpec raise {
+    let lexer = @parser.new_lexer(input)
+    fn token() {
+      try! lexer.next_token()
+    }
+
+    @parser.spec(token, 0)
+  }
+
+  fn normalize_spec_json(json : Json) -> Json {
+    match json {
+      Object(obj) => {
+        let normalized : Map[String, Json] = {}
+        obj.each((key, value) => {
+          match key {
+            "loc" | "symbol_loc" | "utf8_pos" | "start" | "end" => ()
+            _ => normalized[key] = normalize_spec_json(value)
+          }
+        })
+        Json::object(normalized)
+      }
+      Array(items) => Json::array(items.map(normalize_spec_json))
+      String(str) =>
+        Json::string(
+          str.replace_all(old="\r\n", new="\n").replace_all(old="\r", new="\n"),
+        )
+      _ => json
+    }
+  }
+
+  let crlf_parser_mbty = parser_mbty.replace_all(old="\n", new="\r\n")
+  let cr_parser_mbty = parser_mbty.replace_all(old="\n", new="\r")
+  let spec_json = normalize_spec_json(parse_spec(parser_mbty).to_json())
+  let crlf_spec_json = normalize_spec_json(
+    parse_spec(crlf_parser_mbty).to_json(),
+  )
+  let cr_spec_json = normalize_spec_json(parse_spec(cr_parser_mbty).to_json())
+  @test.assert_eq(cr_spec_json, spec_json)
+  @test.assert_eq(crlf_spec_json, spec_json)
+}
+
+///|
 test "parser_spec.mbty" (it : @test.Test) {
   let lexer = @parser.new_lexer(parser_mbty)
   fn token() {
