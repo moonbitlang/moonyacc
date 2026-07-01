@@ -5,6 +5,8 @@ import {
   "moonbitlang/core/test",
 }
 
+formatter(ignore: ["parser_spec_src.mbt", "ocaml_parser_spec_src.mbt"])
+
 rule(
   name: "embed",
   command: "moon runwasm moonbit-community/embed $input -o $output",

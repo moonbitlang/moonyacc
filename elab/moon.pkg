@@ -10,6 +10,8 @@ import {
   "moonbitlang/core/sorted_set",
 }
 
+formatter(ignore: ["stdlib_src.mbt"])
+
 rule(
   name: "embed",
   command: "moon runwasm moonbit-community/embed $input -o $output",

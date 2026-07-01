@@ -2,9 +2,11 @@ import {
   "moonbitlang/core/list",
 }
 
+formatter(ignore: ["calc.mbt"])
+
 rule(
   name: "moonyacc",
-  command: "moon runwasm $mod_dir/.. -- $input --input-mode array | moonfmt > $output",
+  command: "moon runwasm $mod_dir/.. -- $input --input-mode array -o $output",
 )
 
 dev_build(rule: "moonyacc", input: "calc.mbty", output: "calc.mbt")

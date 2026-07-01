@@ -4,9 +4,11 @@ import {
 
 warnings = "-6"
 
+formatter(ignore: ["parser.mbt"])
+
 rule(
   name: "moonyacc",
-  command: "moon runwasm $mod_dir/.. -- $input | moonfmt > $output",
+  command: "moon runwasm $mod_dir/.. -- $input -o $output",
 )
 
 dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")

@@ -2,9 +2,11 @@ import {
   "moonbitlang/core/list",
 }
 
+formatter(ignore: ["calc_tokens.mbt", "calc.mbt"])
+
 rule(
   name: "moonyacc_tokens",
-  command: "moon runwasm $mod_dir/.. -- $input --mode only-tokens | moonfmt > $output",
+  command: "moon runwasm $mod_dir/.. -- $input --mode only-tokens -o $output",
 )
 
 dev_build(
@@ -15,7 +17,7 @@ dev_build(
 
 rule(
   name: "moonyacc",
-  command: "moon runwasm $mod_dir/.. -- $input --external-tokens | moonfmt > $output",
+  command: "moon runwasm $mod_dir/.. -- $input --external-tokens -o $output",
 )
 
 dev_build(rule: "moonyacc", input: "calc.mbty", output: "calc.mbt")
