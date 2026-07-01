@@ -39,7 +39,9 @@ fn token(
             -1 => 1
             0..=8 => 2
             9..=10 => 3
-            11..=31 => 2
+            11..=12 => 2
+            13 => 3
+            14..=31 => 2
             32 => 3
             33 => 2
             34 => 4
@@ -93,6 +95,7 @@ fn token(
         _match_end = lexbuf.curr_pos()
         continue match lexbuf.next_as_int() {
             9..=10 => 3
+            13 => 3
             32 => 3
             _ => break
           }
@@ -357,7 +360,9 @@ fn token(
         continue match lexbuf.next_as_int() {
             0..=9 => 36
             10 => 63
-            11..=1114111 => 36
+            11..=12 => 36
+            13 => 63
+            14..=1114111 => 36
             _ => break
           }
       }

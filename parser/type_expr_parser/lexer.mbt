@@ -26,7 +26,9 @@ fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
             -1 => 1
             0..=8 => 2
             9..=10 => 3
-            11..=31 => 2
+            11..=12 => 2
+            13 => 3
+            14..=31 => 2
             32 => 3
             33..=39 => 2
             40 => 4
@@ -67,6 +69,7 @@ fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
         _match_end = lexbuf.curr_pos()
         continue match lexbuf.next_as_int() {
             9..=10 => 3
+            13 => 3
             32 => 3
             _ => break
           }
