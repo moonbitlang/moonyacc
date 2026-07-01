@@ -1,10 +1,10 @@
 
-pub type! LexError {
+pub suberror LexError {
   Unrecognized(Char, Int)
 } derive(Debug)
 
 
-fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)!LexError  {
+fn token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError  {
   // The matched pattern id
   let mut _match_pattern = @int.MAX_VALUE
   let mut _match_start = lexbuf.curr_pos()
@@ -217,7 +217,7 @@ match _dfa_start_node {    0 => {
   match _match_pattern {
     0 => {
       ()
- token!(lexbuf) 
+ token(lexbuf) 
     }
     1 => {
       ()

@@ -982,7 +982,7 @@ match _dfa_start_node {    0 => {
 }
 
 
-fn comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError  {
+fn comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError  {
   // The matched pattern id
   let mut _match_pattern = @int.MAX_VALUE
   let mut _match_start = lexbuf.curr_pos()
@@ -1126,7 +1126,7 @@ match _dfa_start_node {    0 => {
 }
 
 
-fn code_rangle(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError  {
+fn code_rangle(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError  {
   // The matched pattern id
   let mut _match_pattern = @int.MAX_VALUE
   let mut _match_start = lexbuf.curr_pos()
@@ -1194,7 +1194,7 @@ match _dfa_start_node {    0 => {
 }
 
 
-fn code_percent_rbrace(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError  {
+fn code_percent_rbrace(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError  {
   // The matched pattern id
   let mut _match_pattern = @int.MAX_VALUE
   let mut _match_start = lexbuf.curr_pos()
@@ -1272,7 +1272,7 @@ match _dfa_start_node {    0 => {
 }
 
 
-fn code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError  {
+fn code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int, lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError  {
   // The matched pattern id
   let mut _match_pattern = @int.MAX_VALUE
   let mut _match_start = lexbuf.curr_pos()
@@ -1957,6 +1957,6 @@ pub fn new_lexer(input : String) -> Lexer {
   { buf : @lexbuf.StringLexbuf::from_string(input), phase: { val: 0 } }
 }
 
-pub fn next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
+pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
   token(self.phase, self.buf)
 }
