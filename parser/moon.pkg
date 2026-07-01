@@ -6,7 +6,7 @@ import {
   "moonbitlang/core/string",
 }
 
-formatter(ignore: ["lexer.mbt", "parser.mbt"])
+formatter(ignore: [ "lexer.mbt", "parser.mbt" ])
 
 rule(
   name: "moonlex",
