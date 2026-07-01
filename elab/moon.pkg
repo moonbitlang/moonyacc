@@ -10,7 +10,7 @@ import {
   "moonbitlang/core/sorted_set",
 }
 
-formatter(ignore: ["stdlib_src.mbt"])
+formatter(ignore: [ "stdlib_src.mbt" ])
 
 rule(
   name: "embed",

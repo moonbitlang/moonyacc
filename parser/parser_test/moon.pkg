@@ -5,7 +5,7 @@ import {
   "moonbitlang/core/test",
 }
 
-formatter(ignore: ["parser_spec_src.mbt", "ocaml_parser_spec_src.mbt"])
+formatter(ignore: [ "parser_spec_src.mbt", "ocaml_parser_spec_src.mbt" ])
 
 rule(
   name: "embed",
