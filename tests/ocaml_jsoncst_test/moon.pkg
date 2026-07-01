@@ -10,7 +10,7 @@ import {
 
 warnings = "-2-6-text_segment_excceed"
 
-formatter(ignore: ["binary_search.mbt", "lexer.mbt", "ocaml.mbt"])
+formatter(ignore: [ "binary_search.mbt", "lexer.mbt", "ocaml.mbt" ])
 
 rule(
   name: "embed",

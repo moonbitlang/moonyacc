@@ -2,7 +2,7 @@ import {
   "moonbitlang/core/list",
 }
 
-formatter(ignore: ["calc_tokens.mbt", "calc.mbt"])
+formatter(ignore: [ "calc_tokens.mbt", "calc.mbt" ])
 
 rule(
   name: "moonyacc_tokens",

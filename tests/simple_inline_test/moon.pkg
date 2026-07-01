@@ -4,11 +4,8 @@ import {
 
 warnings = "-6"
 
-formatter(ignore: ["inline.mbt"])
+formatter(ignore: [ "inline.mbt" ])
 
-rule(
-  name: "moonyacc",
-  command: "moon runwasm $mod_dir/.. -- $input -o $output",
-)
+rule(name: "moonyacc", command: "moon runwasm $mod_dir/.. -- $input -o $output")
 
 dev_build(rule: "moonyacc", input: "inline.mbty", output: "inline.mbt")
