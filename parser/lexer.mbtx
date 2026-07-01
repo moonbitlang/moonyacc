@@ -84,7 +84,7 @@ rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)
   }
 }
 
-rule comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
+rule comment_star_rparen(lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError {
   parse {
     "(*" => {
       comment_star_rparen(lexbuf)
@@ -103,7 +103,7 @@ rule code_eof(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit {
   }
 }
 
-rule code_rangle(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
+rule code_rangle(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError {
   parse {
     ">" => { () }
     _ as t => {
@@ -114,7 +114,7 @@ rule code_rangle(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexE
   }
 }
 
-rule code_percent_rbrace(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
+rule code_percent_rbrace(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError {
   parse {
     "%}" => { () }
     _ as t => {
@@ -125,7 +125,7 @@ rule code_percent_rbrace(sb : StringBuilder, lexbuf : @lexbuf.StringLexbuf) -> U
   }
 }
 
-rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int, lexbuf : @lexbuf.StringLexbuf) -> Unit!LexError {
+rule code_rbrace(sb : StringBuilder, subst: Array[@ast.SubstItem], base : Int, lexbuf : @lexbuf.StringLexbuf) -> Unit raise LexError {
   parse {
     "{" => {
       sb.write_string("{")
@@ -197,7 +197,7 @@ pub fn new_lexer(input : String) -> Lexer {
   { buf : @lexbuf.StringLexbuf::from_string(input), phase: { val: 0 } }
 }
 
-pub fn next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
+pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
   token(self.phase, self.buf)
 }
 }

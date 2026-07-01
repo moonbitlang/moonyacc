@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 {
-pub type! LexError {
+pub suberror LexError {
   Unrecognized(Char, Int)
 } derive(Debug)
 }
@@ -22,9 +22,9 @@ regex ident_start = ['A'-'Z' 'a'-'z' '_'];
 regex ident_char = ['A'-'Z' 'a'-'z' '0'-'9' '_'];
 regex ident = ident_start ident_char*;
 
-rule token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)!LexError {
+rule token(lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int) raise LexError {
   parse {
-    [' ' '\t' '\r' '\n' ]+ => { token!(lexbuf) }
+    [' ' '\t' '\r' '\n' ]+ => { token(lexbuf) }
     "@" (ident ("/" ident)* as pkg) "." (ident as id) as t => { (PKG_AND_IDENT((pkg, id)), $startpos(t), $endpos(t)) }
     ident as t => { (IDENT(t), $startpos(t), $endpos(t)) }
     "->" as t => { (ARROW, $startpos(t), $endpos(t)) }
