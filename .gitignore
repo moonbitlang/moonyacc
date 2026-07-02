@@ -5,3 +5,4 @@ target/
 
 _build/
 target
+*.mbt.map.json
