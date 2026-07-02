@@ -199,7 +199,7 @@ fn codegen_tokens(
   // TokenKind::to_string
   output.write_string(
     (
-      $|pub impl Show for TokenKind with output(self, logger) {
+      $|pub impl Show for TokenKind with fn output(self, logger) {
       $|  logger.write_string(
       $|    match self {
       $|
@@ -229,7 +229,7 @@ fn codegen_tokens(
   // TokenKind::to_repr
   output.write_string(
     (
-      $|pub impl Debug for TokenKind with to_repr(self) {
+      $|pub impl Debug for TokenKind with fn to_repr(self) {
       $|    match self {
       $|
     ),
