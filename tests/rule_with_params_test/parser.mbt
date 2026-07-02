@@ -19,7 +19,7 @@ pub(all) enum TokenKind {
   TK_RBRACE
 }
 
-pub impl Show for TokenKind with output(self, logger) {
+pub impl Show for TokenKind with fn output(self, logger) {
   logger.write_string(
     match self {
       TK_LETTER => "LETTER"
@@ -29,7 +29,7 @@ pub impl Show for TokenKind with output(self, logger) {
   )
 }
 
-pub impl Debug for TokenKind with to_repr(self) {
+pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
       TK_LETTER => to_repr("LETTER")
       TK_LBRACE => to_repr("{")
