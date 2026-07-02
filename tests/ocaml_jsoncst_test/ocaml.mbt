@@ -367,7 +367,7 @@ pub(all) enum TokenKind {
   TK_EOL
 }
 
-pub impl Show for TokenKind with output(self, logger) {
+pub impl Show for TokenKind with fn output(self, logger) {
   logger.write_string(
     match self {
       TK_AMPERAMPER => "AMPERAMPER"
@@ -493,7 +493,7 @@ pub impl Show for TokenKind with output(self, logger) {
   )
 }
 
-pub impl Debug for TokenKind with to_repr(self) {
+pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
       TK_AMPERAMPER => to_repr("AMPERAMPER")
       TK_AMPERSAND => to_repr("AMPERSAND")
