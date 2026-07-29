@@ -23,7 +23,7 @@ test "lexer" (it : @test.Test) {
 
   while true {
     let (tok, _, _) = token()
-    it.writeln(to_repr(tok))
+    it.writeln(Repr(tok))
     match tok {
       EOF => break
       _ => ()
@@ -58,7 +58,7 @@ test "parser spec CRLF and lone CR match LF input" {
   fn normalize_spec_json(json : Json) -> Json {
     match json {
       Object(obj) => {
-        let normalized : Map[String, Json] = {}
+        let normalized : Map[String, Json] = Map([])
         obj.each((key, value) => {
           match key {
             "loc" | "symbol_loc" | "utf8_pos" | "start" | "end" => ()

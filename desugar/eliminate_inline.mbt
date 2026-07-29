@@ -1,6 +1,6 @@
 ///|
 fn find_leaf_inline_rules(rules : Map[String, @elab.Rule]) -> Set[String] {
-  let all_inline_rules : Map[String, @elab.Rule] = {}
+  let all_inline_rules : Map[String, @elab.Rule] = Map([])
   for rule_name, rule in rules {
     if rule.inline {
       all_inline_rules[rule_name] = rule
@@ -36,7 +36,7 @@ fn eliminate_inline_rules(
   inline_rules : Set[String],
 ) -> @elab.ParserSpec {
   // assert not(inline_rules.is_empty())
-  let new_rules : Map[String, @elab.Rule] = {}
+  let new_rules : Map[String, @elab.Rule] = Map([])
   fn contains_inline_rule(items : Array[@elab.Item]) {
     items
     .iter()

@@ -96,7 +96,7 @@ pub fn[K, V] T::iterator2(self : T[K, V]) -> Iter2[K, V] {
 
 ///|
 pub fn[K : Hash + Eq, V] T::get(self : T[K, V], key : K) -> V? {
-  match self.get_entry_with_hash(key, key.hash()) {
+  match self.get_entry_with_hash(key, Hash::hash(key)) {
     Some(entry) => Some(entry.value)
     None => None
   }
@@ -104,7 +104,7 @@ pub fn[K : Hash + Eq, V] T::get(self : T[K, V], key : K) -> V? {
 
 ///|
 pub fn[K : Hash + Eq, V] T::contains(self : T[K, V], key : K) -> Bool {
-  match self.get_entry_with_hash(key, key.hash()) {
+  match self.get_entry_with_hash(key, Hash::hash(key)) {
     Some(_) => true
     None => false
   }
@@ -141,7 +141,7 @@ pub fn[K : Hash + Eq, V] T::get_or_init(
   key : K,
   init : (K) -> V,
 ) -> V {
-  let hash = key.hash()
+  let hash = Hash::hash(key)
   match self.get_entry_with_hash(key, hash) {
     Some(entry) => entry.value
     None => {
@@ -160,7 +160,7 @@ pub fn[K : Hash + Eq, V] T::get_or_init(
 
 ///|
 pub fn[K : Hash + Eq, V] T::set(self : T[K, V], key : K, value : V) -> Unit {
-  let hash = key.hash()
+  let hash = Hash::hash(key)
   match self.get_entry_with_hash(key, hash) {
     Some(entry) => entry.value = value
     None => {

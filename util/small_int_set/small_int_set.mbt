@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct SmallIntSet(Array[Int]) derive(Eq, Compare)
+struct SmallIntSet(Array[Int]) derive(Eq, Compare, Debug)
 
 ///|
 pub type T = SmallIntSet

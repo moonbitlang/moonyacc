@@ -156,8 +156,8 @@ pub fn compile(
   let spec = @desugar.eliminate_inline(spec)
   let terminals = []
   let nonterminals = []
-  let terminal_by_name : Map[String, @grm.Terminal] = {}
-  let nonterminal_by_name : Map[String, @grm.Nonterminal] = {}
+  let terminal_by_name : Map[String, @grm.Terminal] = Map([])
+  let nonterminal_by_name : Map[String, @grm.Nonterminal] = Map([])
   for token in spec.tokens {
     let terminal : @grm.Terminal = {
       name: token.name,
@@ -189,9 +189,9 @@ pub fn compile(
     nonterminal_by_name.get(name).unwrap()
   }
 
-  let production_meta_map : Map[Int, @codegen.ProductionMeta] = {}
-  let terminal_meta_map : Map[Int, @codegen.TerminalMeta] = {}
-  let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = {}
+  let production_meta_map : Map[Int, @codegen.ProductionMeta] = Map([])
+  let terminal_meta_map : Map[Int, @codegen.TerminalMeta] = Map([])
+  let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = Map([])
   let productions = []
   let starts : Array[String] = spec.start_rules
   let position_data_type = spec.position_type
