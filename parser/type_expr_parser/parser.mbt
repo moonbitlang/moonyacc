@@ -40,7 +40,7 @@ pub(all) enum TokenKind {
   TK_PKG_AND_IDENT
 }
 
-pub impl Show for TokenKind with output(self, logger) {
+pub impl Show for TokenKind with fn output(self, logger) {
   logger.write_string(
     match self {
       TK_EOF => "EOF"
@@ -57,18 +57,18 @@ pub impl Show for TokenKind with output(self, logger) {
   )
 }
 
-pub impl Debug for TokenKind with to_repr(self) {
+pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
-      TK_EOF => to_repr("EOF")
-      TK_LPAREN => to_repr("(")
-      TK_RPAREN => to_repr(")")
-      TK_LBRACKET => to_repr("[")
-      TK_RBRACKET => to_repr("]")
-      TK_COMMA => to_repr(",")
-      TK_ARROW => to_repr("->")
-      TK_QUESTION => to_repr("?")
-      TK_IDENT => to_repr("IDENT")
-      TK_PKG_AND_IDENT => to_repr("PKG_AND_IDENT")
+      TK_EOF => Repr("EOF")
+      TK_LPAREN => Repr("(")
+      TK_RPAREN => Repr(")")
+      TK_LBRACKET => Repr("[")
+      TK_RBRACKET => Repr("]")
+      TK_COMMA => Repr(",")
+      TK_ARROW => Repr("->")
+      TK_QUESTION => Repr("?")
+      TK_IDENT => Repr("IDENT")
+      TK_PKG_AND_IDENT => Repr("PKG_AND_IDENT")
     }
 }
 

@@ -100,7 +100,7 @@ pub(all) enum TokenKind {
   TK_SEMI
 }
 
-pub impl Show for TokenKind with output(self, logger) {
+pub impl Show for TokenKind with fn output(self, logger) {
   logger.write_string(
     match self {
       TK_EOF => "EOF"
@@ -137,38 +137,38 @@ pub impl Show for TokenKind with output(self, logger) {
   )
 }
 
-pub impl Debug for TokenKind with to_repr(self) {
+pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
-      TK_EOF => to_repr("EOF")
-      TK_IDENT => to_repr("IDENT")
-      TK_STRING => to_repr("STRING")
-      TK_LANGLE_CODE_RANGLE => to_repr("LANGLE_CODE_RANGLE")
-      TK_LBRACE_CODE_RBRACE => to_repr("LBRACE_CODE_RBRACE")
-      TK_PERCENT_LBRACE_CODE_PERCENT_RBRACE => to_repr("PERCENT_LBRACE_CODE_PERCENT_RBRACE")
-      TK_PERCENT_PERCENT_CODE_EOF => to_repr("PERCENT_PERCENT_CODE_EOF")
-      TK_PKG_AND_IDENT => to_repr("PKG_AND_IDENT")
-      TK_PERCENT_PERCENT => to_repr("%%")
-      TK_PERCENT_START => to_repr("%start")
-      TK_PERCENT_TOKEN => to_repr("%token")
-      TK_PERCENT_TYPE => to_repr("%type")
-      TK_PERCENT_POSITION => to_repr("%position")
-      TK_PERCENT_LEFT => to_repr("%left")
-      TK_PERCENT_RIGHT => to_repr("%right")
-      TK_PERCENT_NONASSOC => to_repr("%nonassoc")
-      TK_PERCENT_PREC => to_repr("%prec")
-      TK_PERCENT_DERIVE => to_repr("%derive")
-      TK_PERCENT_INLINE => to_repr("%inline")
-      TK_LBRACKET => to_repr("[")
-      TK_RBRACKET => to_repr("]")
-      TK_LPAREN => to_repr("(")
-      TK_RPAREN => to_repr(")")
-      TK_COMMA => to_repr(",")
-      TK_ARROW => to_repr("->")
-      TK_QUESTION => to_repr("?")
-      TK_COLON => to_repr(":")
-      TK_BAR => to_repr("|")
-      TK_EQ => to_repr("=")
-      TK_SEMI => to_repr(";")
+      TK_EOF => Repr("EOF")
+      TK_IDENT => Repr("IDENT")
+      TK_STRING => Repr("STRING")
+      TK_LANGLE_CODE_RANGLE => Repr("LANGLE_CODE_RANGLE")
+      TK_LBRACE_CODE_RBRACE => Repr("LBRACE_CODE_RBRACE")
+      TK_PERCENT_LBRACE_CODE_PERCENT_RBRACE => Repr("PERCENT_LBRACE_CODE_PERCENT_RBRACE")
+      TK_PERCENT_PERCENT_CODE_EOF => Repr("PERCENT_PERCENT_CODE_EOF")
+      TK_PKG_AND_IDENT => Repr("PKG_AND_IDENT")
+      TK_PERCENT_PERCENT => Repr("%%")
+      TK_PERCENT_START => Repr("%start")
+      TK_PERCENT_TOKEN => Repr("%token")
+      TK_PERCENT_TYPE => Repr("%type")
+      TK_PERCENT_POSITION => Repr("%position")
+      TK_PERCENT_LEFT => Repr("%left")
+      TK_PERCENT_RIGHT => Repr("%right")
+      TK_PERCENT_NONASSOC => Repr("%nonassoc")
+      TK_PERCENT_PREC => Repr("%prec")
+      TK_PERCENT_DERIVE => Repr("%derive")
+      TK_PERCENT_INLINE => Repr("%inline")
+      TK_LBRACKET => Repr("[")
+      TK_RBRACKET => Repr("]")
+      TK_LPAREN => Repr("(")
+      TK_RPAREN => Repr(")")
+      TK_COMMA => Repr(",")
+      TK_ARROW => Repr("->")
+      TK_QUESTION => Repr("?")
+      TK_COLON => Repr(":")
+      TK_BAR => Repr("|")
+      TK_EQ => Repr("=")
+      TK_SEMI => Repr(";")
     }
 }
 
