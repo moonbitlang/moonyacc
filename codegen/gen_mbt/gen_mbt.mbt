@@ -240,7 +240,7 @@ fn codegen_tokens(
     }
     output.write_string(
       (
-        $|      TK_\{term.name} => to_repr(\{name})
+        $|      TK_\{term.name} => Repr(\{name})
         $|
       ),
     )
