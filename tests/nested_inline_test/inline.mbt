@@ -27,8 +27,8 @@ pub impl Show for TokenKind with fn output(self, logger) {
 
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
-      TK_A => to_repr("A")
-      TK_B => to_repr("B")
+      TK_A => Repr("A")
+      TK_B => Repr("B")
     }
 }
 

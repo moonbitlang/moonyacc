@@ -43,12 +43,12 @@ pub impl Show for TokenKind with fn output(self, logger) {
 
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
-      TK_NUMBER => to_repr("NUMBER")
-      TK_PLUS => to_repr("+")
-      TK_MINUS => to_repr("-")
-      TK_STAR => to_repr("*")
-      TK_LPAREN => to_repr("(")
-      TK_RPAREN => to_repr(")")
+      TK_NUMBER => Repr("NUMBER")
+      TK_PLUS => Repr("+")
+      TK_MINUS => Repr("-")
+      TK_STAR => Repr("*")
+      TK_LPAREN => Repr("(")
+      TK_RPAREN => Repr(")")
     }
 }
 
