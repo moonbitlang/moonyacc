@@ -146,13 +146,13 @@ pub fn print_spec(
         }
         out.write_string(param.0)
         if actions && param.1 is Some(type_) {
-          out.write_string(" : \{to_repr(type_)}")
+          out.write_string(" : \{Repr(type_)}")
         }
       }
       out.write_string(")")
     }
     if actions && rule.type_ is Some(type_) {
-      out.write_string(" -> \{to_repr(type_)}")
+      out.write_string(" -> \{Repr(type_)}")
     }
     fn term_to_string(term : Term) {
       match term {

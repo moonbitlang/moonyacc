@@ -109,9 +109,9 @@ pub fn elaborate(
       _ => ()
     }
   }
-  let token_by_name : Map[String, Token] = {}
-  let rule_by_name : Map[String, Rule] = {}
-  let token_by_image : Map[String, Token] = {}
+  let token_by_name : Map[String, Token] = Map([])
+  let rule_by_name : Map[String, Rule] = Map([])
+  let token_by_image : Map[String, Token] = Map([])
   let tokens : Array[Token] = []
   match stdlib_rules {
     None => ()
@@ -409,7 +409,7 @@ fn elaborate_action(
   json_cst~ : JsonCst,
 ) -> Action raise ElabError {
   let arity = items.length()
-  let name_to_index : Map[String, Int] = {}
+  let name_to_index : Map[String, Int] = Map([])
   for index, item in items {
     match item.binder {
       None => ()

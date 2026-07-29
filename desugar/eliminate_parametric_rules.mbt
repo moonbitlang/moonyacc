@@ -13,9 +13,10 @@ pub fn eliminate_rule_args(
   spec : @elab.ParserSpec,
   json_cst~ : @elab.JsonCst,
 ) -> @elab.ParserSpec {
-  let mut deferred_specialized_rules : Map[String, DeferredSpecializedRule] = {}
-  let parametric_rules : Map[String, @elab.Rule] = {}
-  let new_rules : Map[String, @elab.Rule] = {}
+  let mut deferred_specialized_rules : Map[String, DeferredSpecializedRule] = Map([],
+  )
+  let parametric_rules : Map[String, @elab.Rule] = Map([])
+  let new_rules : Map[String, @elab.Rule] = Map([])
   fn map_term(
     term : @elab.Term,
     env : @immut/sorted_map.SortedMap[String, @elab.Term],
@@ -167,7 +168,7 @@ fn infer_return_type(
   if json_cst is Yes {
     return Constr(pkg=None, "Json", [])
   }
-  let generic_param_map : Map[String, @elab.TypeExpr] = {}
+  let generic_param_map : Map[String, @elab.TypeExpr] = Map([])
   fn unify(t1 : @elab.TypeExpr, t2 : @elab.TypeExpr) -> Unit {
     match (t1, t2) {
       (Param(name), t2) => generic_param_map[name] = t2

@@ -1,6 +1,10 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/yacc/util/small_int_set"
 
+import {
+  "moonbitlang/core/debug",
+}
+
 // Values
 pub fn empty() -> SmallIntSet
 
@@ -12,7 +16,7 @@ pub fn singleton(Int) -> SmallIntSet
 
 // Types and methods
 #alias(T)
-type SmallIntSet derive(Compare, Eq)
+type SmallIntSet derive(Compare, Eq, @debug.Debug)
 pub fn SmallIntSet::add(Self, Int) -> Self
 pub fn SmallIntSet::contains(Self, Int) -> Bool
 pub fn SmallIntSet::difference(Self, Self) -> Self

@@ -44,88 +44,81 @@ priv struct CliOptions {
 
 ///|
 fn cli_command() -> @argparse.Command {
-  @argparse.Command(
+  Command(
     "moonyacc",
     version="moonyacc 0.1.0",
     disable_version_flag=true,
     flags=[
-      @argparse.FlagArg(
+      FlagArg(
         "external-tokens",
         long="external-tokens",
         about="Use external tokens",
       ),
-      @argparse.FlagArg(
+      FlagArg(
         "no-comments",
         long="no-comments",
         about="Do not include comments in the output",
       ),
-      @argparse.FlagArg(
-        "no-std",
-        long="no-std",
-        about="Do not include standard library",
-      ),
-      @argparse.FlagArg("table", long="table", about="Use table engine"),
-      @argparse.FlagArg(
+      FlagArg("no-std", long="no-std", about="Do not include standard library"),
+      FlagArg("table", long="table", about="Use table engine"),
+      FlagArg(
         "compress-table",
         long="compress-table",
         about="Use table engine with compression",
       ),
-      @argparse.FlagArg(
+      FlagArg(
         "version",
         short='v',
         long="version",
         action=Version,
         about="Show version",
       ),
-      @argparse.FlagArg(
+      FlagArg(
         "print-as-mly-without-actions",
         long="print-as-mly-without-actions",
         about="Print as mly without actions",
       ),
-      @argparse.FlagArg(
+      FlagArg(
         "force-token-json-payload",
         long="force-token-json-payload",
         about="Force token to use JSON payload",
       ),
-      @argparse.FlagArg(
+      FlagArg(
         "force-token-no-payload",
         long="force-token-no-payload",
         about="Force token to not use payload",
       ),
-      @argparse.FlagArg(
+      FlagArg(
         "force-int-position",
         long="force-int-position",
         about="Overwrite the position type to int",
       ),
     ],
     options=[
-      @argparse.OptionArg(
+      OptionArg(
         "output-file",
         short='o',
         long="output-file",
         about="Output file",
       ),
-      @argparse.OptionArg(
+      OptionArg(
         "output-map-file",
         long="output-map-file",
         about="Output source map file, if not specified, it will be the output file with .map.json extension",
       ),
-      @argparse.OptionArg(
+      OptionArg(
         "mode",
         long="mode",
         about="Specify mode (default, json-cst, only-tokens)",
       ),
-      @argparse.OptionArg(
+      OptionArg(
         "input-mode",
         long="input-mode",
         about="Specify input mode (array, pull). Default is array",
       ),
     ],
     positionals=[
-      @argparse.PositionArg(
-        "input-file",
-        num_args=@argparse.ValueRange::single(),
-      ),
+      PositionArg("input-file", num_args=@argparse.ValueRange::single()),
     ],
   )
 }
