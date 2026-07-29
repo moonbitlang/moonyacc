@@ -21,3 +21,5 @@ rule(
 )
 
 dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")
+
+warnings = "-deprecated"
