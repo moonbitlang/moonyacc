@@ -31,9 +31,9 @@ pub impl Show for TokenKind with fn output(self, logger) {
 
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
-      TK_LETTER => to_repr("LETTER")
-      TK_LBRACE => to_repr("{")
-      TK_RBRACE => to_repr("}")
+      TK_LETTER => Repr("LETTER")
+      TK_LBRACE => Repr("{")
+      TK_RBRACE => Repr("}")
     }
 }
 
