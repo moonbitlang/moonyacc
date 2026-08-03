@@ -1,12 +1,15 @@
 import {
   "moonbitlang/core/argparse",
-  "moonbit-community/miniio",
+  "moonbitlang/core/env",
+  "moonbitlang/async",
+  "moonbitlang/async/fs",
+  "moonbitlang/async/stdio",
   "moonbitlang/yacc/driver",
   "moonbitlang/yacc/codegen",
   "moonbitlang/yacc/codegen/gen_mbt",
   "moonbitlang/yacc/codegen/gen_mbt_table",
 }
 
-supported_targets = "wasm"
+supported_targets = "wasm+native"
 
 pkgtype(kind: "executable")
