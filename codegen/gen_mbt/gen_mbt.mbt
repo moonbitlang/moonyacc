@@ -581,7 +581,7 @@ fn codegen(
           } else {
             output.write_string(
               (
-                $|  guard _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
+                $|  guard! _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
                 $|
               ),
             )
@@ -645,7 +645,7 @@ fn codegen(
           } else {
             output.write_string(
               (
-                $|  guard _sub_action_\{index}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
+                $|  guard! _sub_action_\{index}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
                 $|
               ),
             )
@@ -948,7 +948,7 @@ fn codegen(
           $|    match decision {
           $|      Accept => return return_(data_stack.unsafe_pop().0)
           $|      Shift(next_state) => {
-          $|        guard lookahead is Some(la)
+          $|        guard! lookahead is Some(la)
           $|        data_stack.push(la.1)
           $|        state_stack = @list.cons(next_state, state_stack)
           $|        last_shifted_state_stack = state_stack
@@ -1030,7 +1030,7 @@ fn codegen(
           $|    match decision {
           $|      Accept => return return_(data_stack.unsafe_pop().0)
           $|      Shift(next_state) => {
-          $|        guard lookahead is Some(la)
+          $|        guard! lookahead is Some(la)
           $|        data_stack.push(la.1)
           $|        state_stack = @list.cons(next_state, state_stack)
           $|        last_shifted_state_stack = state_stack
@@ -1109,7 +1109,7 @@ fn codegen(
       $|            Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
       $|              fn inner_go(stack : @list.List[YYState], count, symbol) {
       $|                let stack = stack.drop(count)
-      $|                guard stack is More(state, ..)
+      $|                guard! stack is More(state, ..)
       $|                match state(symbol) {
       $|                  Shift(state) => go(@list.cons(state, stack))
       $|                  Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
@@ -1192,7 +1192,7 @@ fn codegen(
             $|    tokens,
             $|    yy_state_\{start_state.num},
             $|    (it) => {
-            $|      guard it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
+            $|      guard! it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
             $|      result
             $|    },
             $|    initial_pos?,
@@ -1210,7 +1210,7 @@ fn codegen(
             $|    start_pos,
             $|    yy_state_\{start_state.num},
             $|    (it) => {
-            $|      guard it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
+            $|      guard! it is YYObj_\{derive_type_ident(nonterminal_meta(name).data_type)}(result)
             $|      result
             $|    },
             $|  )
@@ -1256,7 +1256,7 @@ fn codegen(
           $|
           $|fn args_to_json(args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> Json {
           $|  Json::array(args.iter().map((it) => {
-          $|    guard it.0 is YYObj_Json(json)
+          $|    guard! it.0 is YYObj_Json(json)
           $|    json
           $|  }).to_array())
           $|}
