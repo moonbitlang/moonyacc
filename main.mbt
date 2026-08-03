@@ -13,16 +13,34 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-fn println_to_stderr(msg : String) -> Unit {
-  @miniio.stderr.write_text(msg + "\n") catch {
+async fn println_to_stderr(msg : String) -> Unit noraise {
+  @stdio.stderr.write(msg + "\n") catch {
     _ => ()
   }
 }
 
+#cfg(target="wasm")
+fn runtime_exit(code : Int) -> Unit = "wasi_snapshot_preview1" "proc_exit"
+
+///|
+#cfg(target="native")
+extern "c" fn runtime_exit(code : Int) -> Unit = "exit"
+
 ///|
 fn[T] exit(code : Int) -> T {
-  @miniio.exit(code)
+  runtime_exit(code)
   panic()
+}
+
+///|
+async fn write_text_file(file : String, content : String) -> Unit {
+  @fs.write_file(file, content, create_mode=CreateOrTruncate)
+}
+
+///|
+priv suberror CliError {
+  UnsupportedMode(String)
+  UnsupportedInputMode(String)
 }
 
 ///|
@@ -149,27 +167,23 @@ fn flag_value(matches : @argparse.Matches, name : String) -> Bool {
 }
 
 ///|
-fn parse_mode(mode_sym : String) -> @driver.Mode {
+fn parse_mode(mode_sym : String) -> @driver.Mode raise CliError {
   match mode_sym {
     "default" => Default
     "json-cst" => JsonCst
     "only-tokens" => OnlyTokens
-    _ => {
-      println_to_stderr("Unsupported mode: \{mode_sym}")
-      exit(1)
-    }
+    _ => raise UnsupportedMode(mode_sym)
   }
 }
 
 ///|
-fn parse_input_mode(input_mode_sym : String) -> @driver.InputMode {
+fn parse_input_mode(
+  input_mode_sym : String,
+) -> @driver.InputMode raise CliError {
   match input_mode_sym {
     "array" => Array
     "pull" => Pull
-    _ => {
-      println_to_stderr("Unsupported input mode: \{input_mode_sym}")
-      exit(1)
-    }
+    _ => raise UnsupportedInputMode(input_mode_sym)
   }
 }
 
@@ -212,15 +226,23 @@ fn parse_cli_args(argv : ArrayView[String]) -> CliOptions raise {
 }
 
 ///|
-fn main {
-  let argv = @miniio.args_get() catch { err => abort(Show::to_string(err)) }
+async fn main {
+  let argv = @env.args()
   let options = parse_cli_args(if argv.length() > 1 { argv[1:] } else { [] }) catch {
+    CliError::UnsupportedMode(mode_sym) => {
+      println_to_stderr("Unsupported mode: \{mode_sym}")
+      exit(1)
+    }
+    CliError::UnsupportedInputMode(input_mode_sym) => {
+      println_to_stderr("Unsupported input mode: \{input_mode_sym}")
+      exit(1)
+    }
     err => {
       println_to_stderr(err.to_string())
       exit(1)
     }
   }
-  let parser_spec_src = @miniio.read_text_file(options.input_file) catch {
+  let parser_spec_src = @fs.read_file(options.input_file).text() catch {
     err => abort(Show::to_string(err))
   }
   if options.print_as_mly_without_actions {
@@ -250,21 +272,20 @@ fn main {
       @gen_mbt.generator
     },
   )
-  fn write_map_file(file : String) raise {
-    @miniio.write_text_file(file, source_map.to_json().stringify(indent=2))
-  }
 
   if options.output_file == "" {
-    println(output)
+    @stdio.stdout.write(output + "\n")
     match options.output_map_file {
-      Some(file) => try! write_map_file(file)
+      Some(file) =>
+        try! write_text_file(file, source_map.to_json().stringify(indent=2))
       None => ()
     }
   } else {
     try! ({
-      @miniio.write_text_file(options.output_file, output)
-      write_map_file(
+      write_text_file(options.output_file, output)
+      write_text_file(
         options.output_map_file.unwrap_or("\{options.output_file}.map.json"),
+        source_map.to_json().stringify(indent=2),
       )
     })
   }
