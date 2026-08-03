@@ -14878,7 +14878,7 @@ fn[T] yy_parse(
     match decision {
       Accept => return return_(data_stack.unsafe_pop().0)
       Shift(next_state) => {
-        guard lookahead is Some(la)
+        guard! lookahead is Some(la)
         data_stack.push(la.1)
         state_stack = @list.cons(next_state, state_stack)
         last_shifted_state_stack = state_stack
@@ -14936,7 +14936,7 @@ fn error(stack : @list.List[YYState], token : Token, loc : (Int, Int)) -> Unit r
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
               fn inner_go(stack : @list.List[YYState], count, symbol) {
                 let stack = stack.drop(count)
-                guard stack is More(state, ..)
+                guard! stack is More(state, ..)
                 match yy_state(state, symbol) {
                   Shift(state) => go(@list.cons(state, stack))
                   Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
@@ -14964,7 +14964,7 @@ pub fn implementation(read_token : () -> (Token, Int, Int), start_pos : Int) -> 
     start_pos,
     1595,
     (it) => {
-      guard it is YYObj_Json(result)
+      guard! it is YYObj_Json(result)
       result
     },
   )
@@ -14975,7 +14975,7 @@ pub fn interface(read_token : () -> (Token, Int, Int), start_pos : Int) -> Json 
     start_pos,
     1591,
     (it) => {
-      guard it is YYObj_Json(result)
+      guard! it is YYObj_Json(result)
       result
     },
   )
@@ -14986,7 +14986,7 @@ pub fn toplevel_phrase(read_token : () -> (Token, Int, Int), start_pos : Int) ->
     start_pos,
     1579,
     (it) => {
-      guard it is YYObj_Json(result)
+      guard! it is YYObj_Json(result)
       result
     },
   )
@@ -14997,7 +14997,7 @@ pub fn use_file(read_token : () -> (Token, Int, Int), start_pos : Int) -> Json r
     start_pos,
     1555,
     (it) => {
-      guard it is YYObj_Json(result)
+      guard! it is YYObj_Json(result)
       result
     },
   )
@@ -15008,7 +15008,7 @@ pub fn parse_core_type(read_token : () -> (Token, Int, Int), start_pos : Int) ->
     start_pos,
     1551,
     (it) => {
-      guard it is YYObj_Json(result)
+      guard! it is YYObj_Json(result)
       result
     },
   )
@@ -15019,7 +15019,7 @@ pub fn parse_expression(read_token : () -> (Token, Int, Int), start_pos : Int) -
     start_pos,
     1547,
     (it) => {
-      guard it is YYObj_Json(result)
+      guard! it is YYObj_Json(result)
       result
     },
   )
@@ -15030,7 +15030,7 @@ pub fn parse_pattern(read_token : () -> (Token, Int, Int), start_pos : Int) -> J
     start_pos,
     0,
     (it) => {
-      guard it is YYObj_Json(result)
+      guard! it is YYObj_Json(result)
       result
     },
   )
@@ -15038,7 +15038,7 @@ pub fn parse_pattern(read_token : () -> (Token, Int, Int), start_pos : Int) -> J
 
 fn args_to_json(args : ArrayView[(YYObj, Int, Int)]) -> Json {
   Json::array(args.iter().map((it) => {
-    guard it.0 is YYObj_Json(json)
+    guard! it.0 is YYObj_Json(json)
     json
   }).to_array())
 }

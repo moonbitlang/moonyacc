@@ -107,59 +107,59 @@ fn init {
 // file:///./calc.mbty
 // 24|    add EOF                 { $1 }
 fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(_dollar1)
+  guard! _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
 // 27|    lhs=add "+" rhs=factor  { lhs + rhs }
 fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(lhs)
-  guard _args[2].0 is YYObj_Int(rhs)
+  guard! _args[0].0 is YYObj_Int(lhs)
+  guard! _args[2].0 is YYObj_Int(rhs)
   YYObj_Int({();  lhs + rhs })
 }
 
 // file:///./calc.mbty
 // 28|    lhs=add "-" rhs=factor  { lhs - rhs }
 fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(lhs)
-  guard _args[2].0 is YYObj_Int(rhs)
+  guard! _args[0].0 is YYObj_Int(lhs)
+  guard! _args[2].0 is YYObj_Int(rhs)
   YYObj_Int({();  lhs - rhs })
 }
 
 // file:///./calc.mbty
 // 37|    "(" add ")"             { $2 }
 fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard _args[1].0 is YYObj_Int(_dollar2)
+  guard! _args[1].0 is YYObj_Int(_dollar2)
   YYObj_Int({();  _dollar2 })
 }
 
 // file:///./calc.mbty
 // 32|    lhs=factor "*" rhs=term { lhs * rhs }
 fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(lhs)
-  guard _args[2].0 is YYObj_Int(rhs)
+  guard! _args[0].0 is YYObj_Int(lhs)
+  guard! _args[2].0 is YYObj_Int(rhs)
   YYObj_Int({();  lhs * rhs })
 }
 
 // file:///./calc.mbty
 // 29|    factor                  { $1 }
 fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(_dollar1)
+  guard! _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
 // 33|    term                    { $1 }
 fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(_dollar1)
+  guard! _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
 // file:///./calc.mbty
 // 36|    NUMBER                  { $1 }
 fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard _args[0].0 is YYObj_Int(_dollar1)
+  guard! _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int({();  _dollar1 })
 }
 
@@ -371,7 +371,7 @@ fn[T] yy_parse(
     match decision {
       Accept => return return_(data_stack.unsafe_pop().0)
       Shift(next_state) => {
-        guard lookahead is Some(la)
+        guard! lookahead is Some(la)
         data_stack.push(la.1)
         state_stack = @list.cons(next_state, state_stack)
         last_shifted_state_stack = state_stack
@@ -429,7 +429,7 @@ fn error(stack : @list.List[YYState], token : Token, loc : (Int, Int)) -> Unit r
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
               fn inner_go(stack : @list.List[YYState], count, symbol) {
                 let stack = stack.drop(count)
-                guard stack is More(state, ..)
+                guard! stack is More(state, ..)
                 match state(symbol) {
                   Shift(state) => go(@list.cons(state, stack))
                   Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
@@ -457,7 +457,7 @@ pub fn start(read_token : () -> (Token, Int, Int), start_pos : Int) -> Int raise
     start_pos,
     yy_state_0,
     (it) => {
-      guard it is YYObj_Int(result)
+      guard! it is YYObj_Int(result)
       result
     },
   )

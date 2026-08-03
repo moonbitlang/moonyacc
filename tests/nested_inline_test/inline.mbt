@@ -76,7 +76,7 @@ fn init {
 // 13|    x { $1 }
 fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_1(_last_pos, _args[0:4])
-  guard _sub_action_0_result is YYObj_String(_dollar1)
+  guard! _sub_action_0_result is YYObj_String(_dollar1)
   YYObj_String({();  _dollar1 })
 }
 
@@ -84,7 +84,7 @@ fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 // 18|    A y B { "a" + $2 + "b" }
 fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_2(_args[0].2, _args[1:3])
-  guard _sub_action_0_result is YYObj_String(_dollar2)
+  guard! _sub_action_0_result is YYObj_String(_dollar2)
   YYObj_String({();  "a" + _dollar2 + "b" })
 }
 
@@ -98,7 +98,7 @@ fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 // 13|    x { $1 }
 fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_4(_last_pos, _args[0:4])
-  guard _sub_action_0_result is YYObj_String(_dollar1)
+  guard! _sub_action_0_result is YYObj_String(_dollar1)
   YYObj_String({();  _dollar1 })
 }
 
@@ -106,7 +106,7 @@ fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 // 18|    A y B { "a" + $2 + "b" }
 fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_5(_args[0].2, _args[1:3])
-  guard _sub_action_0_result is YYObj_String(_dollar2)
+  guard! _sub_action_0_result is YYObj_String(_dollar2)
   YYObj_String({();  "a" + _dollar2 + "b" })
 }
 
@@ -120,7 +120,7 @@ fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 // 13|    x { $1 }
 fn yy_action_6(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_7(_last_pos, _args[0:1])
-  guard _sub_action_0_result is YYObj_String(_dollar1)
+  guard! _sub_action_0_result is YYObj_String(_dollar1)
   YYObj_String({();  _dollar1 })
 }
 
@@ -245,7 +245,7 @@ fn[T] yy_parse(
     match decision {
       Accept => return return_(data_stack.unsafe_pop().0)
       Shift(next_state) => {
-        guard lookahead is Some(la)
+        guard! lookahead is Some(la)
         data_stack.push(la.1)
         state_stack = @list.cons(next_state, state_stack)
         last_shifted_state_stack = state_stack
@@ -303,7 +303,7 @@ fn error(stack : @list.List[YYState], token : Token?, loc : (Unit, Unit)) -> Uni
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
               fn inner_go(stack : @list.List[YYState], count, symbol) {
                 let stack = stack.drop(count)
-                guard stack is More(state, ..)
+                guard! stack is More(state, ..)
                 match state(symbol) {
                   Shift(state) => go(@list.cons(state, stack))
                   Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
@@ -333,7 +333,7 @@ pub fn start(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> String
     tokens,
     yy_state_0,
     (it) => {
-      guard it is YYObj_String(result)
+      guard! it is YYObj_String(result)
       result
     },
     initial_pos?,

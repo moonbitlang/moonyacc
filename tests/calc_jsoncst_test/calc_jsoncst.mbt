@@ -487,7 +487,7 @@ fn[T] yy_parse(
     match decision {
       Accept => return return_(data_stack.unsafe_pop().0)
       Shift(next_state) => {
-        guard lookahead is Some(la)
+        guard! lookahead is Some(la)
         data_stack.push(la.1)
         state_stack = @list.cons(next_state, state_stack)
         last_shifted_state_stack = state_stack
@@ -545,7 +545,7 @@ fn error(stack : @list.List[YYState], token : Token, loc : (Int, Int)) -> Unit r
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
               fn inner_go(stack : @list.List[YYState], count, symbol) {
                 let stack = stack.drop(count)
-                guard stack is More(state, ..)
+                guard! stack is More(state, ..)
                 match state(symbol) {
                   Shift(state) => go(@list.cons(state, stack))
                   Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
@@ -573,7 +573,7 @@ pub fn start(read_token : () -> (Token, Int, Int), start_pos : Int) -> Json rais
     start_pos,
     yy_state_0,
     (it) => {
-      guard it is YYObj_Json(result)
+      guard! it is YYObj_Json(result)
       result
     },
   )
@@ -581,7 +581,7 @@ pub fn start(read_token : () -> (Token, Int, Int), start_pos : Int) -> Json rais
 
 fn args_to_json(args : ArrayView[(YYObj, Int, Int)]) -> Json {
   Json::array(args.iter().map((it) => {
-    guard it.0 is YYObj_Json(json)
+    guard! it.0 is YYObj_Json(json)
     json
   }).to_array())
 }

@@ -91,15 +91,15 @@ fn init {
 // file:///./parser.mbty
 // 9|    loption(delimited("{", list(LETTER), "}")) { $1.iter().map(fn (it) { String::make(1, it) }).join("") }
 fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  guard _args[0].0 is YYObj__list_List_Char_(_dollar1)
+  guard! _args[0].0 is YYObj__list_List_Char_(_dollar1)
   YYObj_String({();  _dollar1.iter().map(fn (it) { String::make(1, it) }).join("") })
 }
 
 // file:///./stdlib.mbty
 // 45|    X list(X) { $2.add($1) }
 fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  guard _args[1].0 is YYObj__list_List_Char_(_dollar2)
-  guard _args[0].0 is YYObj_Char(_dollar1)
+  guard! _args[1].0 is YYObj__list_List_Char_(_dollar2)
+  guard! _args[0].0 is YYObj_Char(_dollar1)
   YYObj__list_List_Char_({();  _dollar2.add(_dollar1) })
 }
 
@@ -107,14 +107,14 @@ fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 // 15|    X { $1 }
 fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   let _sub_action_0_result = yy_action_3(_last_pos, _args[0:3])
-  guard _sub_action_0_result is YYObj__list_List_Char_(_dollar1)
+  guard! _sub_action_0_result is YYObj__list_List_Char_(_dollar1)
   YYObj__list_List_Char_({();  _dollar1 })
 }
 
 // file:///./parser.mbty
 // 13|    OPEN X CLOSE { $2 }
 fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
-  guard _args[1].0 is YYObj__list_List_Char_(_dollar2)
+  guard! _args[1].0 is YYObj__list_List_Char_(_dollar2)
   YYObj__list_List_Char_({();  _dollar2 })
 }
 
@@ -241,7 +241,7 @@ fn[T] yy_parse(
     match decision {
       Accept => return return_(data_stack.unsafe_pop().0)
       Shift(next_state) => {
-        guard lookahead is Some(la)
+        guard! lookahead is Some(la)
         data_stack.push(la.1)
         state_stack = @list.cons(next_state, state_stack)
         last_shifted_state_stack = state_stack
@@ -299,7 +299,7 @@ fn error(stack : @list.List[YYState], token : Token?, loc : (Unit, Unit)) -> Uni
             Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
               fn inner_go(stack : @list.List[YYState], count, symbol) {
                 let stack = stack.drop(count)
-                guard stack is More(state, ..)
+                guard! stack is More(state, ..)
                 match state(symbol) {
                   Shift(state) => go(@list.cons(state, stack))
                   Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => inner_go(stack, count, symbol)
@@ -329,7 +329,7 @@ pub fn start(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> String
     tokens,
     yy_state_0,
     (it) => {
-      guard it is YYObj_String(result)
+      guard! it is YYObj_String(result)
       result
     },
     initial_pos?,
