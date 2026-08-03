@@ -42,7 +42,7 @@ fn EncodedLR1ItemSet::merge(
   self : EncodedLR1ItemSet,
   other : EncodedLR1ItemSet,
 ) -> EncodedLR1ItemSet {
-  guard self.core == other.core
+  guard! self.core == other.core
   {
     core: self.core,
     kernel_lookahead_set_table: self.kernel_lookahead_set_table.mapi(fn(
@@ -59,7 +59,7 @@ fn EncodedLR1ItemSet::subsume(
   self : EncodedLR1ItemSet,
   other : EncodedLR1ItemSet,
 ) -> Bool {
-  guard self.core == other.core
+  guard! self.core == other.core
   let len = self.kernel_lookahead_set_table.length()
   let self_table = self.kernel_lookahead_set_table
   let other_table = other.kernel_lookahead_set_table
@@ -84,7 +84,7 @@ fn EncodedLR1ItemSet::weak_compat(
   self : EncodedLR1ItemSet,
   other : EncodedLR1ItemSet,
 ) -> Bool {
-  guard self.core == other.core
+  guard! self.core == other.core
   let len = self.kernel_lookahead_set_table.length()
   for i in 0..<len {
     let la_set1i = self.kernel_lookahead_set_table[i]
@@ -109,7 +109,7 @@ fn EncodedLR1ItemSet::eoi_compact(
   self : EncodedLR1ItemSet,
   other : EncodedLR1ItemSet,
 ) -> Bool {
-  guard self.core == other.core
+  guard! self.core == other.core
   let len = self.kernel_lookahead_set_table.length()
   for i in 0..<len {
     let la_set1 = self.kernel_lookahead_set_table[i]

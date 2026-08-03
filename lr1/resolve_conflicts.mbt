@@ -52,8 +52,8 @@ pub fn resolve_conflicts(
         Conflict(_) => panic()
       }
     }
-    guard shift.length() <= 1
-    guard reduce.length() >= 1
+    guard! shift.length() <= 1
+    guard! reduce.length() >= 1
     reduce.sort_by_key(fn(prod) {
       // production presentation order in grammar
       prod.num
