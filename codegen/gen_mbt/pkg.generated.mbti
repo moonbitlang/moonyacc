@@ -15,4 +15,3 @@ pub let generator : &@codegen.CodeGenerator
 // Type aliases
 
 // Traits
-

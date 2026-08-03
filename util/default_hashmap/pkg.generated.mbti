@@ -14,4 +14,3 @@ pub fn[K : Eq + Hash, V] DefaultHashMap::get(Self[K, V], K) -> V
 // Type aliases
 
 // Traits
-

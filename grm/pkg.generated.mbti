@@ -75,4 +75,3 @@ pub impl Show for Terminal
 pub type BuilderSymbol = String
 
 // Traits
-

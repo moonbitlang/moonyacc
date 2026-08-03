@@ -80,4 +80,3 @@ pub(open) trait CodeGenerator {
 pub trait SourceMapBuilder {
   fn add_mapping(Self, String, Int, Int, Int) -> Unit
 }
-

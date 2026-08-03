@@ -17,4 +17,3 @@ type Stamp derive(Eq, Hash)
 // Type aliases
 
 // Traits
-

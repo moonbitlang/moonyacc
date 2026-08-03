@@ -14,4 +14,3 @@ pub impl Logger for LoggerWithCursor
 // Type aliases
 
 // Traits
-
