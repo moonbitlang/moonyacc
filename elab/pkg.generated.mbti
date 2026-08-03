@@ -135,4 +135,3 @@ pub type CodeChunk = (String, (Int, Int)?)
 pub type Symbol = String
 
 // Traits
-

@@ -17,4 +17,3 @@ pub fn eliminate_rule_args(@elab.ParserSpec, json_cst~ : @elab.JsonCst) -> @elab
 // Type aliases
 
 // Traits
-

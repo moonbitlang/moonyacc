@@ -33,4 +33,3 @@ pub(all) enum TokenPayloadRewrite {
 // Type aliases
 
 // Traits
-

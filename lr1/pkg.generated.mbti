@@ -111,4 +111,3 @@ pub(all) enum ResolveConflictError {
 
 // Traits
 trait AbstractLookaheadSet : Eq
-
