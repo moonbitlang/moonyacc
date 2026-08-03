@@ -35,7 +35,7 @@ pub fn LR1Item::postdot(self : LR1Item) -> @grm.Symbol? {
 
 ///|
 pub fn LR1Item::shift(self : LR1Item) -> LR1Item {
-  guard self.dot < self.production.rhs.length()
+  guard! self.dot < self.production.rhs.length()
   { ..self, dot: self.dot + 1 }
 }
 

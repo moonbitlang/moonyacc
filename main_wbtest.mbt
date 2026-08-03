@@ -23,7 +23,7 @@ test "parse cli args keeps moonyacc options" {
 
   assert_eq(options.input_file, "parser.mbty")
   assert_eq(options.output_file, "parser.mbt")
-  guard options.output_map_file is Some(output_map_file)
+  guard! options.output_map_file is Some(output_map_file)
   assert_eq(output_map_file, "parser.mbt.map.json")
   assert_true(options.mode is JsonCst)
   assert_true(options.input_mode is Pull)

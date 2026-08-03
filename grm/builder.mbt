@@ -120,7 +120,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
       num
     },
     _set_prec: fn(term, assoc, level) {
-      guard !production_added
+      guard! !production_added
       let term = get_terminal(term)
       term.prec = Some((level, assoc))
     },
@@ -132,7 +132,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
   }
   let starts = starts.map(fn(name) {
     let start_nt = get_nonterminal(name)
-    guard start_nt.productions.length() == 1 &&
+    guard! start_nt.productions.length() == 1 &&
       start_nt.productions[0].rhs.length() == 1
     start_nt.productions[0]
   })
