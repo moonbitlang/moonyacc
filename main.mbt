@@ -19,6 +19,7 @@ async fn println_to_stderr(msg : String) -> Unit noraise {
   }
 }
 
+///|
 #cfg(target="wasm")
 fn runtime_exit(code : Int) -> Unit = "wasi_snapshot_preview1" "proc_exit"
 
