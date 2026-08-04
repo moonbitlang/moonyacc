@@ -734,7 +734,7 @@ EQ
 IDENT("nonempty_clause_list")
 LBRACE_CODE_RBRACE(
   (
-    "\n    guard clause_list is More((clause_woa_list, action), tail=tail_clause_list)\n    @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)\n  ",
+    "\n    guard! clause_list is More((clause_woa_list, action), tail=tail_clause_list)\n    @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)\n  ",
     6118,
     [],
   ),
@@ -746,10 +746,10 @@ ARROW
 PKG_AND_IDENT(("ast", "ClauseWithoutAction"))
 COLON
 IDENT("empty_clause_without_action")
-LBRACE_CODE_RBRACE((" $1 ", 6383, [{ start: 1, end: 3, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" $1 ", 6384, [{ start: 1, end: 3, desc: Dollar(1) }]))
 BAR
 IDENT("nonempty_clause_without_action")
-LBRACE_CODE_RBRACE((" $1 ", 6425, [{ start: 1, end: 3, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" $1 ", 6426, [{ start: 1, end: 3, desc: Dollar(1) }]))
 SEMI
 IDENT("empty_clause_without_action")
 ARROW
@@ -761,7 +761,7 @@ IDENT("rule_prec")
 LBRACE_CODE_RBRACE(
   (
     " { items: [], prec, loc: ($startpos, $endpos - $startpos) } ",
-    6512,
+    6513,
     [
       { start: 26, end: 35, desc: StartPos },
       { start: 37, end: 44, desc: EndPos },
@@ -783,7 +783,7 @@ IDENT("rule_prec")
 LBRACE_CODE_RBRACE(
   (
     " { items: item_list.to_array(), prec, loc: ($startpos, $endpos - $startpos) } ",
-    6687,
+    6688,
     [
       { start: 44, end: 53, desc: StartPos },
       { start: 55, end: 62, desc: EndPos },
@@ -802,7 +802,7 @@ IDENT("LBRACE_CODE_RBRACE")
 LBRACE_CODE_RBRACE(
   (
     "\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), loc: ($startpos, $endpos - $startpos) }\n  ",
-    6836,
+    6837,
     [
       { start: 95, end: 104, desc: StartPos },
       { start: 106, end: 113, desc: EndPos },
@@ -820,9 +820,9 @@ STRING("\"%prec\"")
 IDENT("symbol")
 EQ
 IDENT("prec_symbol")
-LBRACE_CODE_RBRACE((" Some(symbol) ", 7036, []))
+LBRACE_CODE_RBRACE((" Some(symbol) ", 7037, []))
 BAR
-LBRACE_CODE_RBRACE((" None ", 7057, []))
+LBRACE_CODE_RBRACE((" None ", 7058, []))
 SEMI
 IDENT("nonempty_item_list")
 ARROW
@@ -834,7 +834,7 @@ COLON
 IDENT("item")
 EQ
 IDENT("item")
-LBRACE_CODE_RBRACE((" @list.cons(item, @list.empty()) ", 7135, []))
+LBRACE_CODE_RBRACE((" @list.cons(item, @list.empty()) ", 7136, []))
 BAR
 IDENT("item")
 EQ
@@ -842,7 +842,7 @@ IDENT("item")
 IDENT("item_list")
 EQ
 IDENT("nonempty_item_list")
-LBRACE_CODE_RBRACE((" @list.cons(item, item_list) ", 7214, []))
+LBRACE_CODE_RBRACE((" @list.cons(item, item_list) ", 7215, []))
 SEMI
 IDENT("item")
 ARROW
@@ -851,7 +851,7 @@ COLON
 IDENT("term")
 EQ
 IDENT("term")
-LBRACE_CODE_RBRACE((" { binder: None, term: term } ", 7289, []))
+LBRACE_CODE_RBRACE((" { binder: None, term: term } ", 7290, []))
 BAR
 IDENT("binder")
 EQ
@@ -860,7 +860,7 @@ STRING("\"=\"")
 IDENT("term")
 EQ
 IDENT("term")
-LBRACE_CODE_RBRACE((" { binder: Some(binder), term: term } ", 7353, []))
+LBRACE_CODE_RBRACE((" { binder: Some(binder), term: term } ", 7354, []))
 SEMI
 IDENT("term")
 ARROW
@@ -872,7 +872,7 @@ IDENT("symbol")
 LBRACE_CODE_RBRACE(
   (
     " Symbol(symbol, loc=($startpos, $endpos)) ",
-    7435,
+    7436,
     [
       { start: 21, end: 30, desc: StartPos },
       { start: 32, end: 39, desc: EndPos },
@@ -889,7 +889,7 @@ STRING("\")\"")
 LBRACE_CODE_RBRACE(
   (
     " RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) ",
-    7531,
+    7532,
     [
       { start: 30, end: 47, desc: StartPosOf(Name("symbol")) },
       { start: 49, end: 64, desc: EndPosOf(Name("symbol")) },
@@ -904,7 +904,7 @@ IDENT("STRING")
 LBRACE_CODE_RBRACE(
   (
     " Image(image, loc=($startpos, $endpos)) ",
-    7633,
+    7634,
     [
       { start: 19, end: 28, desc: StartPos },
       { start: 30, end: 37, desc: EndPos },
@@ -922,7 +922,7 @@ COLON
 IDENT("term")
 EQ
 IDENT("term")
-LBRACE_CODE_RBRACE((" @list.cons(term, @list.empty()) ", 7745, []))
+LBRACE_CODE_RBRACE((" @list.cons(term, @list.empty()) ", 7746, []))
 BAR
 IDENT("term")
 EQ
@@ -931,7 +931,7 @@ STRING("\",\"")
 IDENT("term_list")
 EQ
 IDENT("nonempty_comma_term_list")
-LBRACE_CODE_RBRACE((" @list.cons(term, term_list) ", 7834, []))
+LBRACE_CODE_RBRACE((" @list.cons(term, term_list) ", 7835, []))
 SEMI
 IDENT("nonempty_symbol_with_loc_list")
 ARROW
@@ -943,7 +943,7 @@ COLON
 IDENT("symbol")
 EQ
 IDENT("symbol_with_loc")
-LBRACE_CODE_RBRACE((" @list.cons(symbol, @list.empty()) ", 7962, []))
+LBRACE_CODE_RBRACE((" @list.cons(symbol, @list.empty()) ", 7963, []))
 BAR
 IDENT("symbol")
 EQ
@@ -951,7 +951,7 @@ IDENT("symbol_with_loc")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_symbol_with_loc_list")
-LBRACE_CODE_RBRACE((" @list.cons(symbol, symbol_list) ", 8069, []))
+LBRACE_CODE_RBRACE((" @list.cons(symbol, symbol_list) ", 8070, []))
 SEMI
 IDENT("nonempty_prec_symbol_list")
 ARROW
@@ -963,7 +963,7 @@ COLON
 IDENT("symbol")
 EQ
 IDENT("prec_symbol")
-LBRACE_CODE_RBRACE((" @list.cons(symbol, @list.empty()) ", 8190, []))
+LBRACE_CODE_RBRACE((" @list.cons(symbol, @list.empty()) ", 8191, []))
 BAR
 IDENT("symbol")
 EQ
@@ -971,7 +971,7 @@ IDENT("prec_symbol")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_prec_symbol_list")
-LBRACE_CODE_RBRACE((" @list.cons(symbol, symbol_list) ", 8289, []))
+LBRACE_CODE_RBRACE((" @list.cons(symbol, symbol_list) ", 8290, []))
 SEMI
 IDENT("prec_symbol")
 ARROW
@@ -980,12 +980,12 @@ COLON
 IDENT("symbol")
 EQ
 IDENT("symbol")
-LBRACE_CODE_RBRACE((" Symbol(symbol) ", 8379, []))
+LBRACE_CODE_RBRACE((" Symbol(symbol) ", 8380, []))
 BAR
 IDENT("image")
 EQ
 IDENT("STRING")
-LBRACE_CODE_RBRACE((" Image(image) ", 8415, []))
+LBRACE_CODE_RBRACE((" Image(image) ", 8416, []))
 SEMI
 IDENT("symbol_with_loc")
 ARROW
@@ -997,7 +997,7 @@ IDENT("symbol")
 LBRACE_CODE_RBRACE(
   (
     " { symbol, loc: ($startpos, $endpos) } ",
-    8493,
+    8494,
     [
       { start: 17, end: 26, desc: StartPos },
       { start: 28, end: 35, desc: EndPos },
@@ -1012,6 +1012,6 @@ COLON
 IDENT("ident")
 EQ
 IDENT("IDENT")
-LBRACE_CODE_RBRACE((" ident ", 8578, []))
+LBRACE_CODE_RBRACE((" ident ", 8579, []))
 SEMI
 EOF

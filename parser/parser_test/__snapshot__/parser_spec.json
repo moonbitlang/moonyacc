@@ -3819,13 +3819,13 @@
           ],
           {
             "code": {
-              "code": "\n    guard clause_list is More((clause_woa_list, action), tail=tail_clause_list)\n    @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)\n  ",
+              "code": "\n    guard! clause_list is More((clause_woa_list, action), tail=tail_clause_list)\n    @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)\n  ",
               "utf8_pos": 6118,
               "subst": []
             },
             "loc": [
               6117,
-              169
+              170
             ]
           }
         ]
@@ -3852,14 +3852,14 @@
                     "$tag": "Symbol",
                     "0": "empty_clause_without_action",
                     "loc": [
-                      6354,
-                      6381
+                      6355,
+                      6382
                     ]
                   }
                 }
               ],
               "loc": [
-                6354,
+                6355,
                 27
               ]
             }
@@ -3867,7 +3867,7 @@
           {
             "code": {
               "code": " $1 ",
-              "utf8_pos": 6383,
+              "utf8_pos": 6384,
               "subst": [
                 {
                   "start": 1,
@@ -3880,7 +3880,7 @@
               ]
             },
             "loc": [
-              6382,
+              6383,
               6
             ]
           }
@@ -3894,14 +3894,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_clause_without_action",
                     "loc": [
-                      6393,
-                      6423
+                      6394,
+                      6424
                     ]
                   }
                 }
               ],
               "loc": [
-                6393,
+                6394,
                 30
               ]
             }
@@ -3909,7 +3909,7 @@
           {
             "code": {
               "code": " $1 ",
-              "utf8_pos": 6425,
+              "utf8_pos": 6426,
               "subst": [
                 {
                   "start": 1,
@@ -3922,7 +3922,7 @@
               ]
             },
             "loc": [
-              6424,
+              6425,
               6
             ]
           }
@@ -3951,14 +3951,14 @@
                     "$tag": "Symbol",
                     "0": "rule_prec",
                     "loc": [
-                      6501,
-                      6510
+                      6502,
+                      6511
                     ]
                   }
                 }
               ],
               "loc": [
-                6496,
+                6497,
                 14
               ]
             }
@@ -3966,7 +3966,7 @@
           {
             "code": {
               "code": " { items: [], prec, loc: ($startpos, $endpos - $startpos) } ",
-              "utf8_pos": 6512,
+              "utf8_pos": 6513,
               "subst": [
                 {
                   "start": 26,
@@ -3992,7 +3992,7 @@
               ]
             },
             "loc": [
-              6511,
+              6512,
               62
             ]
           }
@@ -4021,8 +4021,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_item_list",
                     "loc": [
-                      6652,
-                      6670
+                      6653,
+                      6671
                     ]
                   }
                 },
@@ -4032,14 +4032,14 @@
                     "$tag": "Symbol",
                     "0": "rule_prec",
                     "loc": [
-                      6676,
-                      6685
+                      6677,
+                      6686
                     ]
                   }
                 }
               ],
               "loc": [
-                6642,
+                6643,
                 43
               ]
             }
@@ -4047,7 +4047,7 @@
           {
             "code": {
               "code": " { items: item_list.to_array(), prec, loc: ($startpos, $endpos - $startpos) } ",
-              "utf8_pos": 6687,
+              "utf8_pos": 6688,
               "subst": [
                 {
                   "start": 44,
@@ -4073,7 +4073,7 @@
               ]
             },
             "loc": [
-              6686,
+              6687,
               80
             ]
           }
@@ -4102,14 +4102,14 @@
                     "$tag": "Symbol",
                     "0": "LBRACE_CODE_RBRACE",
                     "loc": [
-                      6816,
-                      6834
+                      6817,
+                      6835
                     ]
                   }
                 }
               ],
               "loc": [
-                6811,
+                6812,
                 23
               ]
             }
@@ -4117,7 +4117,7 @@
           {
             "code": {
               "code": "\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), loc: ($startpos, $endpos - $startpos) }\n  ",
-              "utf8_pos": 6836,
+              "utf8_pos": 6837,
               "subst": [
                 {
                   "start": 95,
@@ -4143,7 +4143,7 @@
               ]
             },
             "loc": [
-              6835,
+              6836,
               133
             ]
           }
@@ -4174,8 +4174,8 @@
                     "$tag": "Image",
                     "0": "\"%prec\"",
                     "loc": [
-                      7008,
-                      7015
+                      7009,
+                      7016
                     ]
                   }
                 },
@@ -4185,14 +4185,14 @@
                     "$tag": "Symbol",
                     "0": "prec_symbol",
                     "loc": [
-                      7023,
-                      7034
+                      7024,
+                      7035
                     ]
                   }
                 }
               ],
               "loc": [
-                7008,
+                7009,
                 26
               ]
             }
@@ -4200,11 +4200,11 @@
           {
             "code": {
               "code": " Some(symbol) ",
-              "utf8_pos": 7036,
+              "utf8_pos": 7037,
               "subst": []
             },
             "loc": [
-              7035,
+              7036,
               16
             ]
           }
@@ -4214,7 +4214,7 @@
             {
               "items": [],
               "loc": [
-                7055,
+                7056,
                 0
               ]
             }
@@ -4222,11 +4222,11 @@
           {
             "code": {
               "code": " None ",
-              "utf8_pos": 7057,
+              "utf8_pos": 7058,
               "subst": []
             },
             "loc": [
-              7056,
+              7057,
               8
             ]
           }
@@ -4262,14 +4262,14 @@
                     "$tag": "Symbol",
                     "0": "item",
                     "loc": [
-                      7129,
-                      7133
+                      7130,
+                      7134
                     ]
                   }
                 }
               ],
               "loc": [
-                7124,
+                7125,
                 9
               ]
             }
@@ -4277,11 +4277,11 @@
           {
             "code": {
               "code": " @list.cons(item, @list.empty()) ",
-              "utf8_pos": 7135,
+              "utf8_pos": 7136,
               "subst": []
             },
             "loc": [
-              7134,
+              7135,
               35
             ]
           }
@@ -4296,8 +4296,8 @@
                     "$tag": "Symbol",
                     "0": "item",
                     "loc": [
-                      7179,
-                      7183
+                      7180,
+                      7184
                     ]
                   }
                 },
@@ -4307,14 +4307,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_item_list",
                     "loc": [
-                      7194,
-                      7212
+                      7195,
+                      7213
                     ]
                   }
                 }
               ],
               "loc": [
-                7174,
+                7175,
                 38
               ]
             }
@@ -4322,11 +4322,11 @@
           {
             "code": {
               "code": " @list.cons(item, item_list) ",
-              "utf8_pos": 7214,
+              "utf8_pos": 7215,
               "subst": []
             },
             "loc": [
-              7213,
+              7214,
               31
             ]
           }
@@ -4355,14 +4355,14 @@
                     "$tag": "Symbol",
                     "0": "term",
                     "loc": [
-                      7283,
-                      7287
+                      7284,
+                      7288
                     ]
                   }
                 }
               ],
               "loc": [
-                7278,
+                7279,
                 9
               ]
             }
@@ -4370,11 +4370,11 @@
           {
             "code": {
               "code": " { binder: None, term: term } ",
-              "utf8_pos": 7289,
+              "utf8_pos": 7290,
               "subst": []
             },
             "loc": [
-              7288,
+              7289,
               32
             ]
           }
@@ -4389,8 +4389,8 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      7332,
-                      7337
+                      7333,
+                      7338
                     ]
                   }
                 },
@@ -4399,8 +4399,8 @@
                     "$tag": "Image",
                     "0": "\"=\"",
                     "loc": [
-                      7338,
-                      7341
+                      7339,
+                      7342
                     ]
                   }
                 },
@@ -4410,14 +4410,14 @@
                     "$tag": "Symbol",
                     "0": "term",
                     "loc": [
-                      7347,
-                      7351
+                      7348,
+                      7352
                     ]
                   }
                 }
               ],
               "loc": [
-                7325,
+                7326,
                 26
               ]
             }
@@ -4425,11 +4425,11 @@
           {
             "code": {
               "code": " { binder: Some(binder), term: term } ",
-              "utf8_pos": 7353,
+              "utf8_pos": 7354,
               "subst": []
             },
             "loc": [
-              7352,
+              7353,
               40
             ]
           }
@@ -4458,14 +4458,14 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      7427,
-                      7433
+                      7428,
+                      7434
                     ]
                   }
                 }
               ],
               "loc": [
-                7420,
+                7421,
                 13
               ]
             }
@@ -4473,7 +4473,7 @@
           {
             "code": {
               "code": " Symbol(symbol, loc=($startpos, $endpos)) ",
-              "utf8_pos": 7435,
+              "utf8_pos": 7436,
               "subst": [
                 {
                   "start": 21,
@@ -4492,7 +4492,7 @@
               ]
             },
             "loc": [
-              7434,
+              7435,
               44
             ]
           }
@@ -4507,8 +4507,8 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      7490,
-                      7496
+                      7491,
+                      7497
                     ]
                   }
                 },
@@ -4517,8 +4517,8 @@
                     "$tag": "Image",
                     "0": "\"(\"",
                     "loc": [
-                      7497,
-                      7500
+                      7498,
+                      7501
                     ]
                   }
                 },
@@ -4527,8 +4527,8 @@
                     "$tag": "Symbol",
                     "0": "nonempty_comma_term_list",
                     "loc": [
-                      7501,
-                      7525
+                      7502,
+                      7526
                     ]
                   }
                 },
@@ -4537,14 +4537,14 @@
                     "$tag": "Image",
                     "0": "\")\"",
                     "loc": [
-                      7526,
-                      7529
+                      7527,
+                      7530
                     ]
                   }
                 }
               ],
               "loc": [
-                7483,
+                7484,
                 46
               ]
             }
@@ -4552,7 +4552,7 @@
           {
             "code": {
               "code": " RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) ",
-              "utf8_pos": 7531,
+              "utf8_pos": 7532,
               "subst": [
                 {
                   "start": 30,
@@ -4587,7 +4587,7 @@
               ]
             },
             "loc": [
-              7530,
+              7531,
               84
             ]
           }
@@ -4602,14 +4602,14 @@
                     "$tag": "Symbol",
                     "0": "STRING",
                     "loc": [
-                      7625,
-                      7631
+                      7626,
+                      7632
                     ]
                   }
                 }
               ],
               "loc": [
-                7619,
+                7620,
                 12
               ]
             }
@@ -4617,7 +4617,7 @@
           {
             "code": {
               "code": " Image(image, loc=($startpos, $endpos)) ",
-              "utf8_pos": 7633,
+              "utf8_pos": 7634,
               "subst": [
                 {
                   "start": 19,
@@ -4636,7 +4636,7 @@
               ]
             },
             "loc": [
-              7632,
+              7633,
               42
             ]
           }
@@ -4672,14 +4672,14 @@
                     "$tag": "Symbol",
                     "0": "term",
                     "loc": [
-                      7739,
-                      7743
+                      7740,
+                      7744
                     ]
                   }
                 }
               ],
               "loc": [
-                7734,
+                7735,
                 9
               ]
             }
@@ -4687,11 +4687,11 @@
           {
             "code": {
               "code": " @list.cons(term, @list.empty()) ",
-              "utf8_pos": 7745,
+              "utf8_pos": 7746,
               "subst": []
             },
             "loc": [
-              7744,
+              7745,
               35
             ]
           }
@@ -4706,8 +4706,8 @@
                     "$tag": "Symbol",
                     "0": "term",
                     "loc": [
-                      7789,
-                      7793
+                      7790,
+                      7794
                     ]
                   }
                 },
@@ -4716,8 +4716,8 @@
                     "$tag": "Image",
                     "0": "\",\"",
                     "loc": [
-                      7794,
-                      7797
+                      7795,
+                      7798
                     ]
                   }
                 },
@@ -4727,14 +4727,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_comma_term_list",
                     "loc": [
-                      7808,
-                      7832
+                      7809,
+                      7833
                     ]
                   }
                 }
               ],
               "loc": [
-                7784,
+                7785,
                 48
               ]
             }
@@ -4742,11 +4742,11 @@
           {
             "code": {
               "code": " @list.cons(term, term_list) ",
-              "utf8_pos": 7834,
+              "utf8_pos": 7835,
               "subst": []
             },
             "loc": [
-              7833,
+              7834,
               31
             ]
           }
@@ -4782,14 +4782,14 @@
                     "$tag": "Symbol",
                     "0": "symbol_with_loc",
                     "loc": [
-                      7945,
-                      7960
+                      7946,
+                      7961
                     ]
                   }
                 }
               ],
               "loc": [
-                7938,
+                7939,
                 22
               ]
             }
@@ -4797,11 +4797,11 @@
           {
             "code": {
               "code": " @list.cons(symbol, @list.empty()) ",
-              "utf8_pos": 7962,
+              "utf8_pos": 7963,
               "subst": []
             },
             "loc": [
-              7961,
+              7962,
               37
             ]
           }
@@ -4816,8 +4816,8 @@
                     "$tag": "Symbol",
                     "0": "symbol_with_loc",
                     "loc": [
-                      8010,
-                      8025
+                      8011,
+                      8026
                     ]
                   }
                 },
@@ -4827,14 +4827,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_symbol_with_loc_list",
                     "loc": [
-                      8038,
-                      8067
+                      8039,
+                      8068
                     ]
                   }
                 }
               ],
               "loc": [
-                8003,
+                8004,
                 64
               ]
             }
@@ -4842,11 +4842,11 @@
           {
             "code": {
               "code": " @list.cons(symbol, symbol_list) ",
-              "utf8_pos": 8069,
+              "utf8_pos": 8070,
               "subst": []
             },
             "loc": [
-              8068,
+              8069,
               35
             ]
           }
@@ -4882,14 +4882,14 @@
                     "$tag": "Symbol",
                     "0": "prec_symbol",
                     "loc": [
-                      8177,
-                      8188
+                      8178,
+                      8189
                     ]
                   }
                 }
               ],
               "loc": [
-                8170,
+                8171,
                 18
               ]
             }
@@ -4897,11 +4897,11 @@
           {
             "code": {
               "code": " @list.cons(symbol, @list.empty()) ",
-              "utf8_pos": 8190,
+              "utf8_pos": 8191,
               "subst": []
             },
             "loc": [
-              8189,
+              8190,
               37
             ]
           }
@@ -4916,8 +4916,8 @@
                     "$tag": "Symbol",
                     "0": "prec_symbol",
                     "loc": [
-                      8238,
-                      8249
+                      8239,
+                      8250
                     ]
                   }
                 },
@@ -4927,14 +4927,14 @@
                     "$tag": "Symbol",
                     "0": "nonempty_prec_symbol_list",
                     "loc": [
-                      8262,
-                      8287
+                      8263,
+                      8288
                     ]
                   }
                 }
               ],
               "loc": [
-                8231,
+                8232,
                 56
               ]
             }
@@ -4942,11 +4942,11 @@
           {
             "code": {
               "code": " @list.cons(symbol, symbol_list) ",
-              "utf8_pos": 8289,
+              "utf8_pos": 8290,
               "subst": []
             },
             "loc": [
-              8288,
+              8289,
               35
             ]
           }
@@ -4975,14 +4975,14 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      8371,
-                      8377
+                      8372,
+                      8378
                     ]
                   }
                 }
               ],
               "loc": [
-                8364,
+                8365,
                 13
               ]
             }
@@ -4990,11 +4990,11 @@
           {
             "code": {
               "code": " Symbol(symbol) ",
-              "utf8_pos": 8379,
+              "utf8_pos": 8380,
               "subst": []
             },
             "loc": [
-              8378,
+              8379,
               18
             ]
           }
@@ -5009,14 +5009,14 @@
                     "$tag": "Symbol",
                     "0": "STRING",
                     "loc": [
-                      8407,
-                      8413
+                      8408,
+                      8414
                     ]
                   }
                 }
               ],
               "loc": [
-                8401,
+                8402,
                 12
               ]
             }
@@ -5024,11 +5024,11 @@
           {
             "code": {
               "code": " Image(image) ",
-              "utf8_pos": 8415,
+              "utf8_pos": 8416,
               "subst": []
             },
             "loc": [
-              8414,
+              8415,
               16
             ]
           }
@@ -5057,14 +5057,14 @@
                     "$tag": "Symbol",
                     "0": "symbol",
                     "loc": [
-                      8485,
-                      8491
+                      8486,
+                      8492
                     ]
                   }
                 }
               ],
               "loc": [
-                8478,
+                8479,
                 13
               ]
             }
@@ -5072,7 +5072,7 @@
           {
             "code": {
               "code": " { symbol, loc: ($startpos, $endpos) } ",
-              "utf8_pos": 8493,
+              "utf8_pos": 8494,
               "subst": [
                 {
                   "start": 17,
@@ -5091,7 +5091,7 @@
               ]
             },
             "loc": [
-              8492,
+              8493,
               41
             ]
           }
@@ -5120,14 +5120,14 @@
                     "$tag": "Symbol",
                     "0": "IDENT",
                     "loc": [
-                      8571,
-                      8576
+                      8572,
+                      8577
                     ]
                   }
                 }
               ],
               "loc": [
-                8565,
+                8566,
                 11
               ]
             }
@@ -5135,11 +5135,11 @@
           {
             "code": {
               "code": " ident ",
-              "utf8_pos": 8578,
+              "utf8_pos": 8579,
               "subst": []
             },
             "loc": [
-              8577,
+              8578,
               9
             ]
           }

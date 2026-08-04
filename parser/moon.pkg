@@ -17,9 +17,7 @@ dev_build(rule: "moonlex", input: "lexer.mbtx", output: "lexer.mbt")
 
 rule(
   name: "moonyacc",
-  command: "moon runwasm moonbitlang/yacc@0.7.18 --input-mode pull $input -o $output",
+  command: "moon runwasm moonbitlang/yacc@0.7.19 --input-mode pull $input -o $output",
 )
 
 dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")
-
-warnings = "-guard_inexhaustive"
