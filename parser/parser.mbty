@@ -152,7 +152,7 @@ nonempty_clause_list -> @list.List[(@list.List[@ast.ClauseWithoutAction], @ast.C
   : clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, @list.empty()), action), @list.empty()) }
   | clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, @list.empty()), action), clause_list) }
   | clause_woa=nonempty_clause_without_action "|" clause_list=nonempty_clause_list {
-    guard clause_list is More((clause_woa_list, action), tail=tail_clause_list)
+    guard! clause_list is More((clause_woa_list, action), tail=tail_clause_list)
     @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)
   }
   ;
