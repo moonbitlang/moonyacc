@@ -95,7 +95,7 @@ test "parser_spec.mbty" (it : @test.Test) {
   }
 
   let spec = @parser.spec(token, 0)
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   @ast.print_spec(spec, buf)
   it.write(buf.to_string())
   it.snapshot(filename="parser_spec.mbty")
@@ -109,7 +109,7 @@ test "ocaml parser" (it : @test.Test) {
   }
 
   let spec = @parser.spec(token, 0)
-  let buf = StringBuilder::new()
+  let buf = StringBuilder()
   @ast.print_spec(spec, buf)
   it.write(buf.to_string())
   it.snapshot(filename="ocaml.mly")

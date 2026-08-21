@@ -43,23 +43,22 @@ pub impl Show for TypeExpr with fn output(self, logger) {
         if args.length() == 0 {
           primary
         } else {
-          primary + "[" + args.iter().map(TypeExpr::to_string).join(", ") + "]"
+          primary + "[" + args.iter().map(Show::to_string).join(", ") + "]"
         }
       }
       Param(_) => panic()
       Option(type_) =>
         if type_ is Arrow(_, _) {
-          "(" + TypeExpr::to_string(type_) + ")?"
+          "(" + Show::to_string(type_) + ")?"
         } else {
-          TypeExpr::to_string(type_) + "?"
+          Show::to_string(type_) + "?"
         }
-      Tuple(types) =>
-        "(" + types.iter().map(TypeExpr::to_string).join(", ") + ")"
+      Tuple(types) => "(" + types.iter().map(Show::to_string).join(", ") + ")"
       Arrow(args, ret) =>
         "(" +
-        args.iter().map(TypeExpr::to_string).join(", ") +
+        args.iter().map(Show::to_string).join(", ") +
         ") -> " +
-        TypeExpr::to_string(ret)
+        Show::to_string(ret)
     },
   )
 }

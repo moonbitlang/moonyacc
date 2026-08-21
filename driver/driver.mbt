@@ -205,7 +205,7 @@ pub fn compile(
   }
   match mode {
     OnlyTokens => {
-      let output = StringBuilder::new()
+      let output = StringBuilder()
       generator.codegen_tokens(
         terminals,
         fn(name) {
@@ -321,7 +321,7 @@ pub fn compile(
     production_meta: fn(num) { production_meta_map.get(num).unwrap() },
     derive_map,
   }
-  let output_buffer = StringBuilder::new()
+  let output_buffer = StringBuilder()
   let output = @logger_with_cursor.new(output_buffer)
   generator.codegen(
     grammar,

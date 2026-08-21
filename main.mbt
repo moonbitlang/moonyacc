@@ -247,7 +247,7 @@ async fn main {
     err => abort(Show::to_string(err))
   }
   if options.print_as_mly_without_actions {
-    let out = StringBuilder::new()
+    let out = StringBuilder()
     @driver.print(parser_spec_src, filename=options.input_file, out~)
     exit(0)
   }

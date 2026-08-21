@@ -45,7 +45,7 @@ rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)
         (PERCENT_PERCENT, $startpos(t), $endpos(t))
       } else {
         phase.val += 1
-        let sb = StringBuilder::new()
+        let sb = StringBuilder()
         code_eof(sb, lexbuf)
         (PERCENT_PERCENT_CODE_EOF((sb.to_string(), $endpos(t), lexbuf.pos - $endpos(t))), $startpos(t), lexbuf.pos)
       }
@@ -56,12 +56,12 @@ rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)
     "=" as t => { (EQ, $startpos(t), $endpos(t)) }
     ";" as t => { (SEMI, $startpos(t), $endpos(t)) }
     "%{" as t => {
-      let sb = StringBuilder::new()
+      let sb = StringBuilder()
       code_percent_rbrace(sb, lexbuf)
       (PERCENT_LBRACE_CODE_PERCENT_RBRACE((sb.to_string(), $endpos(t), lexbuf.pos - $endpos(t))), $startpos(t), lexbuf.pos)
     }
     "<" as t => {
-      let sb = StringBuilder::new()
+      let sb = StringBuilder()
       code_rangle(sb, lexbuf)
       (LANGLE_CODE_RANGLE(sb.to_string()), $startpos(t), lexbuf.pos)
     }
@@ -72,7 +72,7 @@ rule token(phase : Ref[Int], lexbuf : @lexbuf.StringLexbuf) -> (Token, Int, Int)
     "," as t => { (COMMA, $startpos(t), $endpos(t)) }
     "?" as t => { (QUESTION, $startpos(t), $endpos(t)) }
     "{" as t => {
-      let sb = StringBuilder::new()
+      let sb = StringBuilder()
       let subst = []
       let base = lexbuf.pos
       code_rbrace(sb, subst, base, lexbuf)
