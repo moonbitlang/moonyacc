@@ -855,7 +855,7 @@ match _dfa_start_node {    0 => {
         (PERCENT_PERCENT, _capture_0_start, _capture_0_end)
       } else {
         phase.val += 1
-        let sb = StringBuilder::new()
+        let sb = StringBuilder()
         code_eof(sb, lexbuf)
         (PERCENT_PERCENT_CODE_EOF((sb.to_string(), _capture_0_end, lexbuf.pos - _capture_0_end)), _capture_0_start, lexbuf.pos)
       }
@@ -896,7 +896,7 @@ match _dfa_start_node {    0 => {
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
 
-      let sb = StringBuilder::new()
+      let sb = StringBuilder()
       code_percent_rbrace(sb, lexbuf)
       (PERCENT_LBRACE_CODE_PERCENT_RBRACE((sb.to_string(), _capture_0_end, lexbuf.pos - _capture_0_end)), _capture_0_start, lexbuf.pos)
     
@@ -906,7 +906,7 @@ match _dfa_start_node {    0 => {
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
 
-      let sb = StringBuilder::new()
+      let sb = StringBuilder()
       code_rangle(sb, lexbuf)
       (LANGLE_CODE_RANGLE(sb.to_string()), _capture_0_start, lexbuf.pos)
     
@@ -952,7 +952,7 @@ match _dfa_start_node {    0 => {
       let t = lexbuf.get_string(_capture_0_start, _capture_0_end)
       let _ = t
 
-      let sb = StringBuilder::new()
+      let sb = StringBuilder()
       let subst = []
       let base = lexbuf.pos
       code_rbrace(sb, subst, base, lexbuf)
