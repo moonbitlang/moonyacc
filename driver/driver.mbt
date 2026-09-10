@@ -136,7 +136,7 @@ pub fn compile(
     }
     // TODO: Add location information
     FailedToParseTypeExpr(type_expr) => {
-      let type_expr_str = type_expr.to_string()
+      let type_expr_str = Show::to_string(type_expr)
       println_to_stderr("Failed to parse type expression \{type_expr_str}")
       exit(1)
     }
@@ -210,7 +210,7 @@ pub fn compile(
         terminals,
         fn(name) {
           terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {
-            { data_type: Constr(pkg=None, "Unit", []), image: None }
+            { data_type: Constr(pkg=None, "Unit", []), image: None, }
           })
         },
         output,
@@ -223,7 +223,7 @@ pub fn compile(
   }
   for rule_name, rule in spec.rules {
     let lhs = get_nonterminal_by_name(rule_name)
-    nonterminal_meta_map[lhs.num] = { data_type: rule.type_ }
+    nonterminal_meta_map[lhs.num] = { data_type: rule.type_, }
     for clause in rule.clauses {
       let production_num = productions.length()
       let production : @grm.Production = {
@@ -241,7 +241,7 @@ pub fn compile(
       }
       productions.push(production)
       lhs.productions.push(production)
-      production_meta_map[production_num] = { action: clause.action }
+      production_meta_map[production_num] = { action: clause.action, }
     }
   }
   let starts = starts.map(fn(name) {
@@ -290,7 +290,7 @@ pub fn compile(
   // for prod in productions {
   //   println(prod)
   // }
-  let grammar : @grm.Grammar = { terminals, nonterminals, productions, starts }
+  let grammar : @grm.Grammar = { terminals, nonterminals, productions, starts, }
   let automaton = @lr1.Automaton::build(grammar, user_eoi=input_mode is Pull)
   let errors = @lr1.resolve_conflicts(automaton.conflicts)
   for error in errors {
@@ -312,7 +312,7 @@ pub fn compile(
     position_data_type,
     terminal_meta: fn(name) {
       terminal_meta_map.get_or_init(get_terminal_by_name(name).num, fn() {
-        { data_type: Constr(pkg=None, "Unit", []), image: None }
+        { data_type: Constr(pkg=None, "Unit", []), image: None, }
       })
     },
     nonterminal_meta: fn(name) {

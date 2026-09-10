@@ -41,7 +41,7 @@ pub fn resolve_conflicts(
 ) -> Array[ResolveConflictError] {
   let errors = []
   for location, decisions in conflicts {
-    let { state, input } = location
+    let { state, input, } = location
     let shift = []
     let reduce = []
     for decision in decisions {

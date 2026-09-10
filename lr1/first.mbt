@@ -20,14 +20,14 @@ fn[T : AbstractLookaheadSet] compute_first_fn(
 ) -> (ArrayView[@grm.Symbol]) -> EpsilonLookaheadSet[T] {
   let nt_first_map : Array[EpsilonLookaheadSet[T]] = Array::make(
     grammar.nonterminals.length(),
-    { set: T::empty(), nullable: false },
+    { set: T::empty(), nullable: false, },
   )
   fn first(symbols : ArrayView[@grm.Symbol]) {
     match symbols {
-      [] => { set: T::empty(), nullable: true }
+      [] => { set: T::empty(), nullable: true, }
       [symbol, .. rest] =>
         (match symbol {
-          T(t) => { set: T::singleton(Input(t)), nullable: false }
+          T(t) => { set: T::singleton(Input(t)), nullable: false, }
           NT(nt) => nt_first_map[nt.num]
         }) +
         first(rest)
@@ -40,7 +40,7 @@ fn[T : AbstractLookaheadSet] compute_first_fn(
     for nt in grammar.nonterminals {
       let old_set = nt_first_map[nt.num]
       let new_set = nt.productions.fold(
-        init={ set: T::empty(), nullable: false },
+        init={ set: T::empty(), nullable: false, },
         fn(acc, p) { acc.union(first(p.rhs[:])) },
       )
       if !(old_set == new_set) {

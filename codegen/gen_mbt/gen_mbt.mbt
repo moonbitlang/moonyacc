@@ -98,16 +98,11 @@ fn codegen_tokens(
 ) -> Unit {
   ignore(no_comments)
   fn inject_derive(type_ : String) -> @codegen.CodeFragment {
-    match derive_map.get(type_) {
-      [] => ""
-      traits => {
-        let joined = traits.iter().join(", ")
-        " derive(\{joined})"
-      }
-    }
+    @codegen.derive_code(type_, derive_map.get(type_))
   }
 
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|pub(all) enum Token {
       $|
@@ -116,14 +111,16 @@ fn codegen_tokens(
   for term in terminals {
     let meta = terminal_meta(term.name)
     if meta.data_type is Constr(pkg=None, "Unit", []) {
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  \{term.name}
           $|
         ),
       )
     } else {
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  \{term.name}(\{meta.data_type})
           $|
@@ -131,7 +128,8 @@ fn codegen_tokens(
       )
     }
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|}\{inject_derive(PUB_TYPE_TOKEN)}
       $|
@@ -143,14 +141,16 @@ fn codegen_tokens(
   for term in terminals {
     let meta = terminal_meta(term.name)
     if meta.data_type is Constr(pkg=None, "Unit", []) {
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|    \{term.name} => TK_\{term.name}
           $|
         ),
       )
     } else {
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|    \{term.name}(_) => TK_\{term.name}
           $|
@@ -158,7 +158,8 @@ fn codegen_tokens(
       )
     }
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|  }
       $|}
@@ -168,21 +169,24 @@ fn codegen_tokens(
   )
 
   // TokenKind
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|pub(all) enum TokenKind {
       $|
     ),
   )
   for term in terminals {
-    output.write_string(
+    Logger::write_string(
+      output,
       (
         $|  TK_\{term.name}
         $|
       ),
     )
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|}\{inject_derive(PUB_TYPE_TOKEN_KIND)}
       $|
@@ -191,10 +195,15 @@ fn codegen_tokens(
   )
 
   // TokenKind::to_string
-  output.write_string(
+  Logger::write_string(
+    output,
     (
+      $|#deprecated("Use Show::to_string or Show::output instead")
+      $|#doc(hidden)
+      $|pub extend TokenKind with Show::{output, to_string}
+      $|
       $|pub impl Show for TokenKind with fn output(self, logger) {
-      $|  logger.write_string(
+      $|  Logger::write_string(logger,
       $|    match self {
       $|
     ),
@@ -204,14 +213,16 @@ fn codegen_tokens(
       Some(image) => image
       None => term.name
     }
-    output.write_string(
+    Logger::write_string(
+      output,
       (
         $|      TK_\{term.name} => \{name.escape()}
         $|
       ),
     )
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|    }
       $|  )
@@ -221,8 +232,13 @@ fn codegen_tokens(
     ),
   )
   // TokenKind::to_repr
-  output.write_string(
+  Logger::write_string(
+    output,
     (
+      $|#deprecated("Use Debug::to_repr instead")
+      $|#doc(hidden)
+      $|pub extend TokenKind with Debug::{to_repr}
+      $|
       $|pub impl Debug for TokenKind with fn to_repr(self) {
       $|    match self {
       $|
@@ -238,14 +254,16 @@ fn codegen_tokens(
         }
       None => term.name.escape()
     }
-    output.write_string(
+    Logger::write_string(
+      output,
       (
         $|      TK_\{term.name} => Repr(\{name})
         $|
       ),
     )
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|    }
       $|}
@@ -271,13 +289,7 @@ fn codegen(
   let used_runtime_funcs = @sorted_set.SortedSet([])
   let { terminal_meta, nonterminal_meta, production_meta, .. } = meta
   fn inject_derive(type_ : String) -> @codegen.CodeFragment {
-    match meta.derive_map.get(type_) {
-      [] => ""
-      traits => {
-        let joined = traits.iter().join(", ")
-        " derive(\{joined})"
-      }
-    }
+    @codegen.derive_code(type_, meta.derive_map.get(type_))
   }
 
   // Header
@@ -287,16 +299,18 @@ fn codegen(
       (None, _) | (_, None) => ()
       (Some(source_map_builder), Some((original_utf8_pos, utf8_len))) => {
         let generated_utf8_pos = output.cursor()
-        source_map_builder.add_mapping(
-          grammar_filename, original_utf8_pos, generated_utf8_pos, utf8_len,
+        @codegen.SourceMapBuilder::add_mapping(
+          source_map_builder, grammar_filename, original_utf8_pos, generated_utf8_pos,
+          utf8_len,
         )
       }
     }
-    output.write_string(code)
+    Logger::write_string(output, code)
   }
 
   // Position
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|
       $|
@@ -317,7 +331,8 @@ fn codegen(
   }
 
   // ParseError
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|pub suberror ParseError {
       $|  UnexpectedToken(Token, (\{meta.position_data_type}, \{meta.position_data_type}), Array[TokenKind])
@@ -326,7 +341,8 @@ fn codegen(
   )
   match input_mode {
     Array =>
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  UnexpectedEndOfInput(\{meta.position_data_type}, Array[TokenKind])
           $|
@@ -334,7 +350,8 @@ fn codegen(
       )
     Pull => ()
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|}\{inject_derive(PUB_TYPE_PARSE_ERROR)}
       $|
@@ -343,7 +360,8 @@ fn codegen(
   )
 
   // YYObj_xxx
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|type YYObj = Error
       $|
@@ -394,7 +412,8 @@ fn codegen(
           }
         }
       }
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|priv suberror YYObj_Void
           $|
@@ -402,7 +421,8 @@ fn codegen(
         ),
       )
       for data_type in data_types {
-        output.write_string(
+        Logger::write_string(
+          output,
           (
             $|priv suberror YYObj_\{derive_type_ident(data_type)} {
             $|  YYObj_\{derive_type_ident(data_type)}(\{data_type})
@@ -415,7 +435,8 @@ fn codegen(
     }
     JsonCst(_) => {
       if input_mode is Array {
-        output.write_string(
+        Logger::write_string(
+          output,
           (
             $|priv suberror YYObj_Void
             $|
@@ -423,7 +444,8 @@ fn codegen(
           ),
         )
       }
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|priv suberror YYObj_Json {
           $| YYObj_Json(Json)
@@ -435,7 +457,8 @@ fn codegen(
   }
 
   // YYState, YYAction, YYDecision
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|type YYState = (YYSymbol) -> YYDecision
       $|
@@ -454,14 +477,16 @@ fn codegen(
   )
 
   // YYSymbol
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|priv enum YYSymbol {
       $|
     ),
   )
   for term in grammar.terminals {
-    output.write_string(
+    Logger::write_string(
+      output,
       (
         $|  T_\{term.name}
         $|
@@ -472,14 +497,16 @@ fn codegen(
     guard !grammar.starts.iter().map(fn(p) { p.lhs }).contains(nonterm) else {
       continue
     }
-    output.write_string(
+    Logger::write_string(
+      output,
       (
         $|  NT_\{derive_nonterminal_ident(nonterm)}
         $|
       ),
     )
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|  EOI
       $|}
@@ -529,38 +556,42 @@ fn codegen(
 
   for _, action in actions {
     let clause_info = action.original_clause_info
-    output.write_string("// file:///./\{clause_info.file}\n")
+    Logger::write_string(output, "// file:///./\{clause_info.file}\n")
     let clause_lines = clause_info.code.split("\n").to_array()
     let max_line_number = clause_info.line + 1 + (clause_lines.length() - 1)
-    let num_digits = max_line_number.to_string().length()
+    let num_digits = Show::to_string(max_line_number).length()
     for index, line in clause_lines {
-      output.write_string("// ")
+      Logger::write_string(output, "// ")
       let line_number = clause_info.line + 1 + index
-      let line_number_str = line_number.to_string().pad_start(num_digits, ' ')
-      output.write_string("\{line_number_str}")
-      output.write_char('|')
+      let line_number_str = Show::to_string(line_number).pad_start(
+        num_digits, ' ',
+      )
+      Logger::write_string(output, "\{line_number_str}")
+      Logger::write_char(output, '|')
       if index == 0 {
         if clause_info.column > 0 {
-          output.write_string(" ".repeat(clause_info.column))
+          Logger::write_string(output, " ".repeat(clause_info.column))
         }
       }
-      output.write_string(line.to_owned())
-      output.write_char('\n')
+      Logger::write_string(output, line.to_owned())
+      Logger::write_char(output, '\n')
     }
-    output.write_string(
+    Logger::write_string(
+      output,
       (
         $|fn yy_action_\{get_action_id(action)}(_last_pos : \{meta.position_data_type}, _args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> YYObj {
         $|
       ),
     )
     for index, sub_action in action.sub_actions {
-      let { start, end, action: action2 } = sub_action
+      let { start, end, action: action2, } = sub_action
       let last_pos_code = if start == 0 {
         "_last_pos"
       } else {
         "_args[\{start - 1}].2"
       }
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  let _sub_action_\{index}_result = yy_action_\{get_action_id(action2)}(\{last_pos_code}, _args[\{start}:\{end}])
           $|
@@ -572,14 +603,16 @@ fn codegen(
         Data(index, type_~) => {
           let data_type = type_
           if data_type is Constr(pkg=None, "Unit", []) {
-            output.write_string(
+            Logger::write_string(
+              output,
               (
                 $|  let \{binding.1} = ()
                 $|
               ),
             )
           } else {
-            output.write_string(
+            Logger::write_string(
+              output,
               (
                 $|  guard! _args[\{index}].0 is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
                 $|
@@ -589,7 +622,8 @@ fn codegen(
         }
         StartPos =>
           // action.arity possibly wrong here because of inline actions
-          output.write_string(
+          Logger::write_string(
+            output,
             (
               $|  let \{binding.1} = if _args.length() == 0 { _last_pos } else { _args[0].1 }
               $|
@@ -597,7 +631,8 @@ fn codegen(
           )
         EndPos =>
           // action.arity possibly wrong here because of inline actions
-          output.write_string(
+          Logger::write_string(
+            output,
             (
               $|  let \{binding.1} = if _args.length() == 0 { _last_pos } else { _args[_args.length() - 1].2 }
               $|
@@ -605,7 +640,8 @@ fn codegen(
           )
         StartPosOf(index) | EndPosOf(index) =>
           if action.arity == 0 {
-            output.write_string(
+            Logger::write_string(
+              output,
               (
                 $|  let \{binding.1} = _last_pos
                 $|
@@ -617,7 +653,8 @@ fn codegen(
               EndPosOf(_) => 2
               _ => panic()
             }
-            output.write_string(
+            Logger::write_string(
+              output,
               (
                 $|  let \{binding.1} = _args[\{index}].\{field}
                 $|
@@ -626,7 +663,8 @@ fn codegen(
           }
         SymbolStartPos => {
           used_runtime_funcs.add("_get_symbol_start_pos")
-          output.write_string(
+          Logger::write_string(
+            output,
             (
               $|  let \{binding.1} = _get_symbol_start_pos(_args, _last_pos)
               $|
@@ -636,14 +674,16 @@ fn codegen(
         SubAction(index~, type_~) => {
           let data_type = type_
           if data_type is Constr(pkg=None, "Unit", []) {
-            output.write_string(
+            Logger::write_string(
+              output,
               (
                 $|  let \{binding.1} = ()
                 $|
               ),
             )
           } else {
-            output.write_string(
+            Logger::write_string(
+              output,
               (
                 $|  guard! _sub_action_\{index}_result is YYObj_\{derive_type_ident(data_type)}(\{binding.1})
                 $|
@@ -654,7 +694,10 @@ fn codegen(
       }
     }
     let result_data_type = action.type_
-    output.write_string("  YYObj_\{derive_type_ident(result_data_type)}({(); ")
+    Logger::write_string(
+      output,
+      "  YYObj_\{derive_type_ident(result_data_type)}({(); ",
+    )
     for part in action.body {
       let (code, original_range) = part
       match original_range {
@@ -665,7 +708,8 @@ fn codegen(
             None => ()
             Some(source_map_builder) =>
               if code.length() == original_utf8_len {
-                source_map_builder.add_mapping(
+                @codegen.SourceMapBuilder::add_mapping(
+                  source_map_builder,
                   grammar_filename,
                   original_utf8_pos,
                   generated_utf8_pos,
@@ -677,10 +721,11 @@ fn codegen(
           }
         }
       }
-      output.write_string(code)
+      Logger::write_string(output, code)
     }
-    output.write_string("})\n")
-    output.write_string(
+    Logger::write_string(output, "})\n")
+    Logger::write_string(
+      output,
       (
         $|}
         $|
@@ -690,7 +735,8 @@ fn codegen(
   }
 
   // yy_input
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|fn yy_input(token : Token, _start_pos : \{meta.position_data_type}, _end_pos : \{meta.position_data_type}) -> (YYSymbol, YYObj) {
       $|  match token {
@@ -702,14 +748,16 @@ fn codegen(
     match mode {
       Default =>
         if meta.data_type is Constr(pkg=None, "Unit", []) {
-          output.write_string(
+          Logger::write_string(
+            output,
             (
               $|    \{term.name} => (T_\{term.name}, YYObj_Void)
               $|
             ),
           )
         } else {
-          output.write_string(
+          Logger::write_string(
+            output,
             (
               $|    \{term.name}(data) => (T_\{term.name}, YYObj_\{derive_type_ident(meta.data_type)}(data))
               $|
@@ -725,16 +773,17 @@ fn codegen(
         let data_code = if meta.data_type is Constr(pkg=None, "Unit", []) {
           "Json::null()"
         } else {
-          "data.to_json()"
+          "ToJson::to_json(data)"
         }
-        output.write_string(
+        Logger::write_string(
+          output,
           (
             $|    \{term.name}\{payload_code} => (T_\{term.name}, YYObj_Json({
             $|      "type": "TERMINAL",
             $|      "name": "\{term.name}",
             $|      "data": \{data_code},
-            $|      "start": _start_pos.to_json(),
-            $|      "end": _end_pos.to_json()
+            $|      "start": ToJson::to_json(_start_pos),
+            $|      "end": ToJson::to_json(_end_pos)
             $|    }))
             $|
           ),
@@ -742,7 +791,8 @@ fn codegen(
       }
     }
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|  }
       $|}
@@ -755,7 +805,8 @@ fn codegen(
   fn emit_state(state : @lr1.LR1State) {
     if !no_comments {
       for item in state.iter_item_groups() {
-        output.write_string(
+        Logger::write_string(
+          output,
           (
             $|// \{item}
             $|
@@ -763,7 +814,8 @@ fn codegen(
         )
       }
     }
-    output.write_string(
+    Logger::write_string(
+      output,
       (
         $|fn yy_state_\{state.num}(_lookahead : YYSymbol) -> YYDecision {
         $|
@@ -851,14 +903,16 @@ fn codegen(
           ReduceNoLookahead(num_symbols, nonterm, prod_num)
         key => key
       }
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  \{gen_decision(decision)}
           $|
         ),
       )
     } else {
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  match _lookahead {
           $|
@@ -870,7 +924,8 @@ fn codegen(
           .map(CodegenSymbol::to_string)
           .to_array()
           .join(" | ")
-        output.write_string(
+        Logger::write_string(
+          output,
           (
             $|    \{pattern} => \{gen_decision(decision)}
             $|
@@ -879,21 +934,24 @@ fn codegen(
       }
       let exhaustive = sum == total
       if !exhaustive {
-        output.write_string(
+        Logger::write_string(
+          output,
           (
             $|    _ => Error
             $|
           ),
         )
       }
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  }
           $|
         ),
       )
     }
-    output.write_string(
+    Logger::write_string(
+      output,
       (
         $|}
         $|
@@ -909,7 +967,8 @@ fn codegen(
   // yy_parse
   match input_mode {
     Array =>
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|fn[T] yy_parse(
           $|  tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})],
@@ -998,7 +1057,8 @@ fn codegen(
         ),
       )
     Pull =>
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|fn[T] yy_parse(
           $|  read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}),
@@ -1082,21 +1142,24 @@ fn codegen(
   }
   match input_mode {
     Array =>
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|fn error(stack : @list.List[YYState], token : Token?, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit raise ParseError {
           $|
         ),
       )
     Pull =>
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|fn error(stack : @list.List[YYState], token : Token, loc : (\{meta.position_data_type}, \{meta.position_data_type})) -> Unit raise ParseError {
           $|
         ),
       )
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|  let expected = []
       $|  fn try_add(symbol : YYSymbol, kind : TokenKind) {
@@ -1131,22 +1194,23 @@ fn codegen(
   // Note: this is a workaround since moonc will stack overflow if the code is too long like this
   // ```
   // for term in grammar.terminals {
-  //   output.write_string(
+  //   Logger::write_string(output,
   //     $|  try_add(T_\{term.name}, TK_\{term.name})
   //     $|
   //     ,
   //   )
   // }
   // ```
-  output.write_string("  for term in ([")
+  Logger::write_string(output, "  for term in ([")
   for i, term in grammar.terminals {
     if i > 0 {
-      output.write_string(", ")
+      Logger::write_string(output, ", ")
     }
-    output.write_string("(T_\{term.name}, TK_\{term.name})")
+    Logger::write_string(output, "(T_\{term.name}, TK_\{term.name})")
   }
-  output.write_string("] : Array[(YYSymbol, TokenKind)]) {\n")
-  output.write_string(
+  Logger::write_string(output, "] : Array[(YYSymbol, TokenKind)]) {\n")
+  Logger::write_string(
+    output,
     (
       $|    try_add(term.0, term.1)
       $|  }
@@ -1155,7 +1219,8 @@ fn codegen(
   )
   match input_mode {
     Array =>
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  match token {
           $|    None => raise UnexpectedEndOfInput(loc.1, expected)
@@ -1165,14 +1230,16 @@ fn codegen(
         ),
       )
     Pull =>
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|  raise UnexpectedToken(token, loc, expected)
           $|
         ),
       )
   }
-  output.write_string(
+  Logger::write_string(
+    output,
     (
       $|}
       $|
@@ -1185,9 +1252,10 @@ fn codegen(
     let original_name = name[:name.length() - "_prime".length()].to_owned()
     match input_mode {
       Array =>
-        output.write_string(
+        Logger::write_string(
+          output,
           (
-            $|pub fn \{original_name}(tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})], initial_pos? : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())} raise ParseError {
+            $|pub fn \{original_name}(tokens : Array[(Token, \{meta.position_data_type}, \{meta.position_data_type})], initial_pos? : \{meta.position_data_type}) -> \{fix_result_type(Show::to_string(nonterminal_meta(name).data_type))} raise ParseError {
             $|  yy_parse(
             $|    tokens,
             $|    yy_state_\{start_state.num},
@@ -1202,9 +1270,10 @@ fn codegen(
           ),
         )
       Pull =>
-        output.write_string(
+        Logger::write_string(
+          output,
           (
-            $|pub fn \{original_name}(read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}), start_pos : \{meta.position_data_type}) -> \{fix_result_type(nonterminal_meta(name).data_type.to_string())} raise ParseError {
+            $|pub fn \{original_name}(read_token : () -> (Token, \{meta.position_data_type}, \{meta.position_data_type}), start_pos : \{meta.position_data_type}) -> \{fix_result_type(Show::to_string(nonterminal_meta(name).data_type))} raise ParseError {
             $|  yy_parse(
             $|    read_token,
             $|    start_pos,
@@ -1225,7 +1294,8 @@ fn codegen(
   for func in used_runtime_funcs {
     match func {
       "_get_symbol_start_pos" =>
-        output.write_string(
+        Logger::write_string(
+          output,
           (
             $|
             $|fn _get_symbol_start_pos(args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})], last_pos : \{meta.position_data_type}) -> \{meta.position_data_type} {
@@ -1251,7 +1321,8 @@ fn codegen(
   match mode {
     Default => ()
     JsonCst(_) =>
-      output.write_string(
+      Logger::write_string(
+        output,
         (
           $|
           $|fn args_to_json(args : ArrayView[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})]) -> Json {
@@ -1272,12 +1343,13 @@ fn codegen(
       (None, _) | (_, None) => ()
       (Some(source_map_builder), Some((original_utf8_pos, utf8_len))) => {
         let generated_utf8_pos = output.cursor()
-        source_map_builder.add_mapping(
-          grammar_filename, original_utf8_pos, generated_utf8_pos, utf8_len,
+        @codegen.SourceMapBuilder::add_mapping(
+          source_map_builder, grammar_filename, original_utf8_pos, generated_utf8_pos,
+          utf8_len,
         )
       }
     }
-    output.write_string(code)
+    Logger::write_string(output, code)
   }
 }
 

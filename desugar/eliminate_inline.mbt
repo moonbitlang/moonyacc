@@ -130,10 +130,10 @@ fn eliminate_inline_rules(
         new_clauses.push(clause)
       }
     }
-    let new_rule = { ..rule, clauses: new_clauses }
+    let new_rule = { ..rule, clauses: new_clauses, }
     new_rules[rule_name] = new_rule
   }
-  { ..spec, rules: new_rules }
+  { ..spec, rules: new_rules, }
 }
 
 ///|

@@ -40,7 +40,7 @@ test "parser_spec.json" (it : @test.Test) {
   }
 
   let spec = @parser.spec(token, 0)
-  it.writeln(spec.to_json().stringify(indent=2))
+  it.writeln(ToJson::to_json(spec).stringify(indent=2))
   it.snapshot(filename="parser_spec.json")
 }
 
@@ -78,11 +78,13 @@ test "parser spec CRLF and lone CR match LF input" {
 
   let crlf_parser_mbty = parser_mbty.replace_all(old="\n", new="\r\n")
   let cr_parser_mbty = parser_mbty.replace_all(old="\n", new="\r")
-  let spec_json = normalize_spec_json(parse_spec(parser_mbty).to_json())
+  let spec_json = normalize_spec_json(ToJson::to_json(parse_spec(parser_mbty)))
   let crlf_spec_json = normalize_spec_json(
-    parse_spec(crlf_parser_mbty).to_json(),
+    ToJson::to_json(parse_spec(crlf_parser_mbty)),
   )
-  let cr_spec_json = normalize_spec_json(parse_spec(cr_parser_mbty).to_json())
+  let cr_spec_json = normalize_spec_json(
+    ToJson::to_json(parse_spec(cr_parser_mbty)),
+  )
   @test.assert_eq(cr_spec_json, spec_json)
   @test.assert_eq(crlf_spec_json, spec_json)
 }

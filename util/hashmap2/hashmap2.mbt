@@ -33,7 +33,7 @@ priv struct Entry[K, V] {
 /// Capacity must be a power of 2.
 pub fn[K, V] new(capacity~ : Int) -> T[K, V] {
   let bucket = FixedArray::make(capacity, None)
-  { bucket, entry: None, bitmask: capacity - 1, size: 0 }
+  { bucket, entry: None, bitmask: capacity - 1, size: 0, }
 }
 
 ///|
@@ -149,7 +149,7 @@ pub fn[K : Hash + Eq, V] T::get_or_init(
         self.grow()
       }
       let value = init(key)
-      let entry = { value, psl: 0, key, hash, prev: self.entry }
+      let entry = { value, psl: 0, key, hash, prev: self.entry, }
       self.entry = Some(entry)
       self.size += 1
       self.put_entry(hash & self.bitmask, self.bitmask, entry)
@@ -167,7 +167,7 @@ pub fn[K : Hash + Eq, V] T::set(self : T[K, V], key : K, value : V) -> Unit {
       if self.size > self.bitmask / 2 {
         self.grow()
       }
-      let entry = { value, psl: 0, key, hash, prev: self.entry }
+      let entry = { value, psl: 0, key, hash, prev: self.entry, }
       self.entry = Some(entry)
       self.size += 1
       self.put_entry(hash & self.bitmask, self.bitmask, entry)

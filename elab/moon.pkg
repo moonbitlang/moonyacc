@@ -5,7 +5,6 @@ import {
   "moonbitlang/yacc/ast",
   "moonbitlang/yacc/parser/type_expr_parser",
   "moonbitlang/core/immut/vector" @immut/vector,
-  "moonbitlang/core/list",
   "moonbitlang/core/sorted_map",
   "moonbitlang/core/sorted_set",
 }
@@ -14,7 +13,7 @@ formatter(ignore: [ "stdlib_src.mbt" ])
 
 rule(
   name: "embed",
-  command: "moon runwasm moonbit-community/embed@0.1.1 $input -o $output",
+  command: "moonx moonbit-community/embed@0.1.1 -- $input -o $output",
 )
 
 dev_build(rule: "embed", input: "stdlib.mbty", output: "stdlib_src.mbt")

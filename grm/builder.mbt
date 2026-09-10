@@ -60,7 +60,7 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
     match terminal_by_name.get(name) {
       Some(t) => t
       None => {
-        let t = Terminal::{ num: terminal_by_name.length(), name, prec: None }
+        let t = Terminal::{ num: terminal_by_name.length(), name, prec: None, }
         terminal_by_name[name] = t
         terminals.push(t)
         t
@@ -136,5 +136,5 @@ pub fn build(f : (BuilderContext) -> Unit) -> Grammar {
       start_nt.productions[0].rhs.length() == 1
     start_nt.productions[0]
   })
-  { starts, terminals, nonterminals, productions }
+  { starts, terminals, nonterminals, productions, }
 }

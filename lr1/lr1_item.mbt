@@ -21,7 +21,7 @@ pub(all) struct LR1Item {
 
 ///|
 pub fn LR1Item::core(self : LR1Item) -> LR0Item {
-  { production: self.production, dot: self.dot }
+  { production: self.production, dot: self.dot, }
 }
 
 ///|
@@ -36,14 +36,14 @@ pub fn LR1Item::postdot(self : LR1Item) -> @grm.Symbol? {
 ///|
 pub fn LR1Item::shift(self : LR1Item) -> LR1Item {
   guard! self.dot < self.production.rhs.length()
-  { ..self, dot: self.dot + 1 }
+  { ..self, dot: self.dot + 1, }
 }
 
 ///|
 pub impl Show for LR1Item with fn output(self, logger) {
-  logger.write_char('[')
+  logger <+ "["
   self.production.output_with_opt_dot(logger, dot=self.dot)
-  logger.write_string(", ")
+  logger <+ ", "
   logger.write_object(self.lookahead)
-  logger.write_char(']')
+  logger <+ "]"
 }

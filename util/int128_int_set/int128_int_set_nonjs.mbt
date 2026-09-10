@@ -23,7 +23,7 @@ pub type T = Int128IntSet
 
 ///|
 pub fn empty() -> Int128IntSet {
-  { a: 0, b: 0 }
+  { a: 0, b: 0, }
 }
 
 ///|
@@ -37,17 +37,17 @@ pub fn Int128IntSet::is_singleton(self : Int128IntSet, key : Int) -> Bool {
 
 ///|
 pub impl Show for Int128IntSet with fn output(self, logger) {
-  logger.write_string("{")
+  logger <+ "{"
   let mut first = true
   for key in self {
     if first {
       first = false
     } else {
-      logger.write_string(", ")
+      logger <+ ", "
     }
     logger.write_object(key)
   }
-  logger.write_string("}")
+  logger <+ "}"
 }
 
 ///|
@@ -115,15 +115,15 @@ pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
       b = b | (1L << (key - 64))
     }
   }
-  { a, b }
+  { a, b, }
 }
 
 ///|
 pub fn singleton(key : Int) -> Int128IntSet {
   if key < 64 {
-    { a: 1L << key, b: 0 }
+    { a: 1L << key, b: 0, }
   } else {
-    { a: 0, b: 1L << (key - 64) }
+    { a: 0, b: 1L << (key - 64), }
   }
 }
 
@@ -144,18 +144,18 @@ pub fn Int128IntSet::contains(self : Int128IntSet, key : Int) -> Bool {
 ///|
 pub fn Int128IntSet::add(self : Int128IntSet, key : Int) -> Int128IntSet {
   if key < 64 {
-    { a: self.a | (1L << key), b: self.b }
+    { a: self.a | (1L << key), b: self.b, }
   } else {
-    { a: self.a, b: self.b | (1L << (key - 64)) }
+    { a: self.a, b: self.b | (1L << (key - 64)), }
   }
 }
 
 ///|
 pub fn Int128IntSet::remove(self : Int128IntSet, key : Int) -> Int128IntSet {
   if key < 64 {
-    { a: self.a & (1L << key).lnot(), b: self.b }
+    { a: self.a & (1L << key).lnot(), b: self.b, }
   } else {
-    { a: self.a, b: self.b & (1L << (key - 64)).lnot() }
+    { a: self.a, b: self.b & (1L << (key - 64)).lnot(), }
   }
 }
 
@@ -164,7 +164,7 @@ pub fn Int128IntSet::union(
   self : Int128IntSet,
   other : Int128IntSet,
 ) -> Int128IntSet {
-  { a: self.a | other.a, b: self.b | other.b }
+  { a: self.a | other.a, b: self.b | other.b, }
 }
 
 ///|
@@ -172,7 +172,7 @@ pub fn Int128IntSet::intersection(
   self : Int128IntSet,
   other : Int128IntSet,
 ) -> Int128IntSet {
-  { a: self.a & other.a, b: self.b & other.b }
+  { a: self.a & other.a, b: self.b & other.b, }
 }
 
 ///|
@@ -180,7 +180,7 @@ pub fn Int128IntSet::difference(
   self : Int128IntSet,
   other : Int128IntSet,
 ) -> Int128IntSet {
-  { a: self.a & other.a.lnot(), b: self.b & other.b.lnot() }
+  { a: self.a & other.a.lnot(), b: self.b & other.b.lnot(), }
 }
 
 ///|

@@ -6,6 +6,9 @@ warnings = "-6"
 
 formatter(ignore: [ "parser.mbt" ])
 
-rule(name: "moonyacc", command: "moon runwasm $mod_dir/.. -- $input -o $output")
+rule(
+  name: "moonyacc",
+  command: "moon run --target wasm $mod_dir/.. -- $input -o $output",
+)
 
 dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")

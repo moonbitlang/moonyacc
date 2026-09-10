@@ -48,7 +48,7 @@ pub impl Hash for EncodedLR0ItemSet with fn hash(self) {
 
 ///|
 pub fn EncodedLR0ItemSet::empty() -> EncodedLR0ItemSet {
-  { items: [], hash: None }
+  { items: [], hash: None, }
 }
 
 ///|
@@ -60,7 +60,7 @@ pub impl Default for EncodedLR0ItemSet with fn default() {
 pub fn EncodedLR0ItemSet::from_sorted_array(
   items : Array[EncodedLR0Item],
 ) -> EncodedLR0ItemSet {
-  { items, hash: None }
+  { items, hash: None, }
 }
 
 ///|

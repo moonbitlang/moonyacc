@@ -4,6 +4,10 @@ pub suberror ParseError {
   UnexpectedEndOfInput(Int, Array[TokenKind])
 } derive(Debug)
 
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend ParseError with Debug::{to_repr}
+
 type YYObj = Error
 
 priv suberror YYObj_Void

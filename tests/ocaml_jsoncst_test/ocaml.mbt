@@ -367,8 +367,12 @@ pub(all) enum TokenKind {
   TK_EOL
 }
 
+#deprecated("Use Show::to_string or Show::output instead")
+#doc(hidden)
+pub extend TokenKind with Show::{output, to_string}
+
 pub impl Show for TokenKind with fn output(self, logger) {
-  logger.write_string(
+  Logger::write_string(logger,
     match self {
       TK_AMPERAMPER => "AMPERAMPER"
       TK_AMPERSAND => "AMPERSAND"
@@ -492,6 +496,10 @@ pub impl Show for TokenKind with fn output(self, logger) {
     }
   )
 }
+
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend TokenKind with Debug::{to_repr}
 
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
@@ -651,8 +659,8 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 0,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -668,8 +676,8 @@ fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 1,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -685,8 +693,8 @@ fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 2,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -702,8 +710,8 @@ fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 2,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -719,8 +727,8 @@ fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 2,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -737,8 +745,8 @@ fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 3,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -755,8 +763,8 @@ fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 3,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -772,8 +780,8 @@ fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 4,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -790,8 +798,8 @@ fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 4,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -807,8 +815,8 @@ fn yy_action_9(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 5,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -824,8 +832,8 @@ fn yy_action_10(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 6,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -842,8 +850,8 @@ fn yy_action_11(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 6,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -860,8 +868,8 @@ fn yy_action_12(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 7,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -878,8 +886,8 @@ fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 7,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -897,8 +905,8 @@ fn yy_action_14(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 7,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -914,8 +922,8 @@ fn yy_action_15(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 189,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -932,8 +940,8 @@ fn yy_action_16(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 188,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -950,8 +958,8 @@ fn yy_action_17(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 189,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -968,8 +976,8 @@ fn yy_action_18(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 189,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -985,8 +993,8 @@ fn yy_action_19(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 189,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1002,8 +1010,8 @@ fn yy_action_20(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 189,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1019,8 +1027,8 @@ fn yy_action_21(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 189,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1037,8 +1045,8 @@ fn yy_action_22(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 188,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1056,8 +1064,8 @@ fn yy_action_23(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 7,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1073,8 +1081,8 @@ fn yy_action_24(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 8,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1090,8 +1098,8 @@ fn yy_action_25(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 9,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1107,8 +1115,8 @@ fn yy_action_26(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 10,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1124,8 +1132,8 @@ fn yy_action_27(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 211,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1141,8 +1149,8 @@ fn yy_action_28(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 213,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1158,8 +1166,8 @@ fn yy_action_29(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 213,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1176,8 +1184,8 @@ fn yy_action_30(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 105,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1193,8 +1201,8 @@ fn yy_action_31(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 108,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1211,8 +1219,8 @@ fn yy_action_32(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 105,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1228,8 +1236,8 @@ fn yy_action_33(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 109,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1246,8 +1254,8 @@ fn yy_action_34(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 109,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1263,8 +1271,8 @@ fn yy_action_35(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 109,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1280,8 +1288,8 @@ fn yy_action_36(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 109,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1298,8 +1306,8 @@ fn yy_action_37(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 110,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1316,8 +1324,8 @@ fn yy_action_38(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 110,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1333,8 +1341,8 @@ fn yy_action_39(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 111,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1351,8 +1359,8 @@ fn yy_action_40(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 157,
   "clause_index": 15,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1369,8 +1377,8 @@ fn yy_action_41(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 157,
   "clause_index": 16,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1386,8 +1394,8 @@ fn yy_action_42(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 164,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1403,8 +1411,8 @@ fn yy_action_43(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 164,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1423,8 +1431,8 @@ fn yy_action_44(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 161,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1440,8 +1448,8 @@ fn yy_action_45(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 163,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1457,8 +1465,8 @@ fn yy_action_46(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 163,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1474,8 +1482,8 @@ fn yy_action_47(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 162,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1491,8 +1499,8 @@ fn yy_action_48(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 162,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1511,8 +1519,8 @@ fn yy_action_49(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 161,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1528,8 +1536,8 @@ fn yy_action_50(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 205,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1545,8 +1553,8 @@ fn yy_action_51(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 213,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1568,8 +1576,8 @@ fn yy_action_52(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 131,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1586,8 +1594,8 @@ fn yy_action_53(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 134,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1604,8 +1612,8 @@ fn yy_action_54(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 134,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1622,8 +1630,8 @@ fn yy_action_55(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 157,
   "clause_index": 13,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1640,8 +1648,8 @@ fn yy_action_56(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 157,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1658,8 +1666,8 @@ fn yy_action_57(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 157,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1676,8 +1684,8 @@ fn yy_action_58(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 168,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1693,8 +1701,8 @@ fn yy_action_59(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 168,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1711,8 +1719,8 @@ fn yy_action_60(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 168,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1728,8 +1736,8 @@ fn yy_action_61(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 168,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1745,8 +1753,8 @@ fn yy_action_62(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 168,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1762,8 +1770,8 @@ fn yy_action_63(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 171,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1780,8 +1788,8 @@ fn yy_action_64(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 168,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1797,8 +1805,8 @@ fn yy_action_65(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 168,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1815,8 +1823,8 @@ fn yy_action_66(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 25,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1833,8 +1841,8 @@ fn yy_action_67(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 25,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1851,8 +1859,8 @@ fn yy_action_68(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 15,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1872,8 +1880,8 @@ fn yy_action_69(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 15,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1894,8 +1902,8 @@ fn yy_action_70(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 15,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1915,8 +1923,8 @@ fn yy_action_71(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 15,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1933,8 +1941,8 @@ fn yy_action_72(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 32,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1951,8 +1959,8 @@ fn yy_action_73(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 33,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1969,8 +1977,8 @@ fn yy_action_74(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 96,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -1987,8 +1995,8 @@ fn yy_action_75(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 26,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2004,8 +2012,8 @@ fn yy_action_76(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 97,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2022,8 +2030,8 @@ fn yy_action_77(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 20,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2040,8 +2048,8 @@ fn yy_action_78(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 94,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2057,8 +2065,8 @@ fn yy_action_79(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 92,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2075,8 +2083,8 @@ fn yy_action_80(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2095,8 +2103,8 @@ fn yy_action_81(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2116,8 +2124,8 @@ fn yy_action_82(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 40,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2136,8 +2144,8 @@ fn yy_action_83(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 21,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2153,8 +2161,8 @@ fn yy_action_84(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 92,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2170,8 +2178,8 @@ fn yy_action_85(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 93,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2187,8 +2195,8 @@ fn yy_action_86(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 93,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2204,8 +2212,8 @@ fn yy_action_87(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 93,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2222,8 +2230,8 @@ fn yy_action_88(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 24,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2240,8 +2248,8 @@ fn yy_action_89(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 25,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2257,8 +2265,8 @@ fn yy_action_90(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 97,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2275,8 +2283,8 @@ fn yy_action_91(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2293,8 +2301,8 @@ fn yy_action_92(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2311,8 +2319,8 @@ fn yy_action_93(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 29,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2329,8 +2337,8 @@ fn yy_action_94(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 30,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2347,8 +2355,8 @@ fn yy_action_95(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 76,
   "clause_index": 38,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2365,8 +2373,8 @@ fn yy_action_96(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 25,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2382,8 +2390,8 @@ fn yy_action_97(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 26,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2399,8 +2407,8 @@ fn yy_action_98(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 26,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2417,8 +2425,8 @@ fn yy_action_99(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
   "rule_index": 27,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2435,8 +2443,8 @@ fn yy_action_100(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2453,8 +2461,8 @@ fn yy_action_101(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2471,8 +2479,8 @@ fn yy_action_102(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2489,8 +2497,8 @@ fn yy_action_103(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2507,8 +2515,8 @@ fn yy_action_104(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2525,8 +2533,8 @@ fn yy_action_105(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2543,8 +2551,8 @@ fn yy_action_106(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 33,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2562,8 +2570,8 @@ fn yy_action_107(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 35,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2580,8 +2588,8 @@ fn yy_action_108(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2598,8 +2606,8 @@ fn yy_action_109(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2616,8 +2624,8 @@ fn yy_action_110(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2634,8 +2642,8 @@ fn yy_action_111(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2652,8 +2660,8 @@ fn yy_action_112(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 62,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2673,8 +2681,8 @@ fn yy_action_113(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 64,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2691,8 +2699,8 @@ fn yy_action_114(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 11,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2709,8 +2717,8 @@ fn yy_action_115(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 12,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2727,8 +2735,8 @@ fn yy_action_116(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 13,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2745,8 +2753,8 @@ fn yy_action_117(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 27,
   "clause_index": 14,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2766,8 +2774,8 @@ fn yy_action_118(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 29,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2784,8 +2792,8 @@ fn yy_action_119(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 30,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2803,8 +2811,8 @@ fn yy_action_120(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 30,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2824,8 +2832,8 @@ fn yy_action_121(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 31,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2846,8 +2854,8 @@ fn yy_action_122(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 32,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2867,8 +2875,8 @@ fn yy_action_123(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 34,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2885,8 +2893,8 @@ fn yy_action_124(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 33,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2903,8 +2911,8 @@ fn yy_action_125(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 62,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2925,8 +2933,8 @@ fn yy_action_126(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 63,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2948,8 +2956,8 @@ fn yy_action_127(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 140,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2966,8 +2974,8 @@ fn yy_action_128(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 142,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -2983,8 +2991,8 @@ fn yy_action_129(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 142,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3000,8 +3008,8 @@ fn yy_action_130(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 142,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3024,8 +3032,8 @@ fn yy_action_131(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 132,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3042,8 +3050,8 @@ fn yy_action_132(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 48,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3061,8 +3069,8 @@ fn yy_action_133(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 49,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3079,8 +3087,8 @@ fn yy_action_134(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 50,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3097,8 +3105,8 @@ fn yy_action_135(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 50,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3116,8 +3124,8 @@ fn yy_action_136(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 49,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3135,8 +3143,8 @@ fn yy_action_137(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 51,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3154,8 +3162,8 @@ fn yy_action_138(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 51,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3172,8 +3180,8 @@ fn yy_action_139(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 51,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3193,8 +3201,8 @@ fn yy_action_140(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 51,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3212,8 +3220,8 @@ fn yy_action_141(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 49,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3231,8 +3239,8 @@ fn yy_action_142(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 52,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3250,8 +3258,8 @@ fn yy_action_143(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 52,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3270,8 +3278,8 @@ fn yy_action_144(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 52,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3290,8 +3298,8 @@ fn yy_action_145(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 52,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3312,8 +3320,8 @@ fn yy_action_146(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 52,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3330,8 +3338,8 @@ fn yy_action_147(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 49,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3348,8 +3356,8 @@ fn yy_action_148(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 49,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3366,8 +3374,8 @@ fn yy_action_149(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 51,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3384,8 +3392,8 @@ fn yy_action_150(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 40,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3402,8 +3410,8 @@ fn yy_action_151(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3420,8 +3428,8 @@ fn yy_action_152(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 89,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3438,8 +3446,8 @@ fn yy_action_153(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 89,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3457,8 +3465,8 @@ fn yy_action_154(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3475,8 +3483,8 @@ fn yy_action_155(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3493,8 +3501,8 @@ fn yy_action_156(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 90,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3511,8 +3519,8 @@ fn yy_action_157(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 13,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3529,8 +3537,8 @@ fn yy_action_158(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 14,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3548,8 +3556,8 @@ fn yy_action_159(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 16,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3565,8 +3573,8 @@ fn yy_action_160(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 16,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3582,8 +3590,8 @@ fn yy_action_161(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 17,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3599,8 +3607,8 @@ fn yy_action_162(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 17,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3617,8 +3625,8 @@ fn yy_action_163(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3635,8 +3643,8 @@ fn yy_action_164(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3653,8 +3661,8 @@ fn yy_action_165(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3671,8 +3679,8 @@ fn yy_action_166(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 115,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3693,8 +3701,8 @@ fn yy_action_167(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 117,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3711,8 +3719,8 @@ fn yy_action_168(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3729,8 +3737,8 @@ fn yy_action_169(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3747,8 +3755,8 @@ fn yy_action_170(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3765,8 +3773,8 @@ fn yy_action_171(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3783,8 +3791,8 @@ fn yy_action_172(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 22,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3802,8 +3810,8 @@ fn yy_action_173(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 24,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3820,8 +3828,8 @@ fn yy_action_174(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3838,8 +3846,8 @@ fn yy_action_175(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3856,8 +3864,8 @@ fn yy_action_176(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3874,8 +3882,8 @@ fn yy_action_177(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 38,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3895,8 +3903,8 @@ fn yy_action_178(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 40,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3913,8 +3921,8 @@ fn yy_action_179(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3931,8 +3939,8 @@ fn yy_action_180(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 65,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3952,8 +3960,8 @@ fn yy_action_181(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 67,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3970,8 +3978,8 @@ fn yy_action_182(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 11,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -3988,8 +3996,8 @@ fn yy_action_183(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 12,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4006,8 +4014,8 @@ fn yy_action_184(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 13,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4024,8 +4032,8 @@ fn yy_action_185(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 18,
   "clause_index": 14,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4045,8 +4053,8 @@ fn yy_action_186(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 19,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4066,8 +4074,8 @@ fn yy_action_187(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 21,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4084,8 +4092,8 @@ fn yy_action_188(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 11,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4102,8 +4110,8 @@ fn yy_action_189(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 11,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4119,8 +4127,8 @@ fn yy_action_190(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 12,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4136,8 +4144,8 @@ fn yy_action_191(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 12,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4154,8 +4162,8 @@ fn yy_action_192(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 14,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4172,8 +4180,8 @@ fn yy_action_193(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 20,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4193,8 +4201,8 @@ fn yy_action_194(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 23,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4210,8 +4218,8 @@ fn yy_action_195(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 36,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4232,8 +4240,8 @@ fn yy_action_196(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 37,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4250,8 +4258,8 @@ fn yy_action_197(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 36,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4267,8 +4275,8 @@ fn yy_action_198(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 22,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4288,8 +4296,8 @@ fn yy_action_199(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 28,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4306,8 +4314,8 @@ fn yy_action_200(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 38,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4328,8 +4336,8 @@ fn yy_action_201(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 39,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4346,8 +4354,8 @@ fn yy_action_202(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 41,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4364,8 +4372,8 @@ fn yy_action_203(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 41,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4382,8 +4390,8 @@ fn yy_action_204(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 43,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4400,8 +4408,8 @@ fn yy_action_205(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 44,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4418,8 +4426,8 @@ fn yy_action_206(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 44,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4436,8 +4444,8 @@ fn yy_action_207(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 43,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4454,8 +4462,8 @@ fn yy_action_208(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 44,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4472,8 +4480,8 @@ fn yy_action_209(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 44,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4490,8 +4498,8 @@ fn yy_action_210(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 44,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4508,8 +4516,8 @@ fn yy_action_211(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 44,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4526,8 +4534,8 @@ fn yy_action_212(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 45,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4544,8 +4552,8 @@ fn yy_action_213(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 45,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4562,8 +4570,8 @@ fn yy_action_214(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 44,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4580,8 +4588,8 @@ fn yy_action_215(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 45,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4598,8 +4606,8 @@ fn yy_action_216(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 45,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4616,8 +4624,8 @@ fn yy_action_217(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 45,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4634,8 +4642,8 @@ fn yy_action_218(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 53,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4653,8 +4661,8 @@ fn yy_action_219(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 53,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4671,8 +4679,8 @@ fn yy_action_220(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 53,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4689,8 +4697,8 @@ fn yy_action_221(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 53,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4707,8 +4715,8 @@ fn yy_action_222(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 53,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4725,8 +4733,8 @@ fn yy_action_223(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 41,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4742,8 +4750,8 @@ fn yy_action_224(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 42,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4759,8 +4767,8 @@ fn yy_action_225(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 127,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4776,8 +4784,8 @@ fn yy_action_226(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 124,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4793,8 +4801,8 @@ fn yy_action_227(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 126,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4810,8 +4818,8 @@ fn yy_action_228(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 127,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4832,8 +4840,8 @@ fn yy_action_229(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 66,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4850,8 +4858,8 @@ fn yy_action_230(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 54,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4867,8 +4875,8 @@ fn yy_action_231(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 57,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4885,8 +4893,8 @@ fn yy_action_232(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 54,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4903,8 +4911,8 @@ fn yy_action_233(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 54,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4921,8 +4929,8 @@ fn yy_action_234(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 58,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4939,8 +4947,8 @@ fn yy_action_235(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 58,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4957,8 +4965,8 @@ fn yy_action_236(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 59,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4975,8 +4983,8 @@ fn yy_action_237(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 59,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -4993,8 +5001,8 @@ fn yy_action_238(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 59,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5016,8 +5024,8 @@ fn yy_action_239(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 58,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5034,8 +5042,8 @@ fn yy_action_240(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 151,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5052,8 +5060,8 @@ fn yy_action_241(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 151,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5069,8 +5077,8 @@ fn yy_action_242(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 197,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5086,8 +5094,8 @@ fn yy_action_243(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 197,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5103,8 +5111,8 @@ fn yy_action_244(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 197,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5120,8 +5128,8 @@ fn yy_action_245(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 197,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5138,8 +5146,8 @@ fn yy_action_246(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 197,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5156,8 +5164,8 @@ fn yy_action_247(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 58,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5173,8 +5181,8 @@ fn yy_action_248(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 61,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5191,8 +5199,8 @@ fn yy_action_249(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 58,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5209,8 +5217,8 @@ fn yy_action_250(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 58,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5227,8 +5235,8 @@ fn yy_action_251(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 55,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5245,8 +5253,8 @@ fn yy_action_252(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 57,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5263,8 +5271,8 @@ fn yy_action_253(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 56,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5281,8 +5289,8 @@ fn yy_action_254(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 56,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5299,8 +5307,8 @@ fn yy_action_255(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 54,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5317,8 +5325,8 @@ fn yy_action_256(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 54,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5335,8 +5343,8 @@ fn yy_action_257(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 54,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5352,8 +5360,8 @@ fn yy_action_258(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 186,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5369,8 +5377,8 @@ fn yy_action_259(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 186,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5387,8 +5395,8 @@ fn yy_action_260(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 42,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5404,8 +5412,8 @@ fn yy_action_261(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 196,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5422,8 +5430,8 @@ fn yy_action_262(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 196,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5440,8 +5448,8 @@ fn yy_action_263(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 65,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5462,8 +5470,8 @@ fn yy_action_264(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 14,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5480,8 +5488,8 @@ fn yy_action_265(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 14,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5498,8 +5506,8 @@ fn yy_action_266(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 15,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5516,8 +5524,8 @@ fn yy_action_267(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 15,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5534,8 +5542,8 @@ fn yy_action_268(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 14,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5552,8 +5560,8 @@ fn yy_action_269(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 14,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5570,8 +5578,8 @@ fn yy_action_270(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 20,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5588,8 +5596,8 @@ fn yy_action_271(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 20,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5606,8 +5614,8 @@ fn yy_action_272(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5624,8 +5632,8 @@ fn yy_action_273(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5643,8 +5651,8 @@ fn yy_action_274(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 133,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5661,8 +5669,8 @@ fn yy_action_275(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5678,8 +5686,8 @@ fn yy_action_276(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 198,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5696,8 +5704,8 @@ fn yy_action_277(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 198,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5714,8 +5722,8 @@ fn yy_action_278(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5731,8 +5739,8 @@ fn yy_action_279(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 83,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5749,8 +5757,8 @@ fn yy_action_280(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 82,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5777,8 +5785,8 @@ fn yy_action_281(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 82,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5800,8 +5808,8 @@ fn yy_action_282(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 82,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5820,8 +5828,8 @@ fn yy_action_283(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 82,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5838,8 +5846,8 @@ fn yy_action_284(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 69,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5856,8 +5864,8 @@ fn yy_action_285(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 69,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5874,8 +5882,8 @@ fn yy_action_286(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 69,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5891,8 +5899,8 @@ fn yy_action_287(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 71,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5909,8 +5917,8 @@ fn yy_action_288(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 71,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5927,8 +5935,8 @@ fn yy_action_289(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 74,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5945,8 +5953,8 @@ fn yy_action_290(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 74,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5963,8 +5971,8 @@ fn yy_action_291(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 69,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5980,8 +5988,8 @@ fn yy_action_292(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 70,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -5997,8 +6005,8 @@ fn yy_action_293(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 70,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6015,8 +6023,8 @@ fn yy_action_294(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 69,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6033,8 +6041,8 @@ fn yy_action_295(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 72,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6051,8 +6059,8 @@ fn yy_action_296(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 72,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6069,8 +6077,8 @@ fn yy_action_297(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 69,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6086,8 +6094,8 @@ fn yy_action_298(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 73,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6104,8 +6112,8 @@ fn yy_action_299(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 69,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6122,8 +6130,8 @@ fn yy_action_300(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 69,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6140,8 +6148,8 @@ fn yy_action_301(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 86,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6158,8 +6166,8 @@ fn yy_action_302(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 86,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6176,8 +6184,8 @@ fn yy_action_303(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 87,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6194,8 +6202,8 @@ fn yy_action_304(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 87,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6212,8 +6220,8 @@ fn yy_action_305(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 87,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6230,8 +6238,8 @@ fn yy_action_306(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 77,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6248,8 +6256,8 @@ fn yy_action_307(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6266,8 +6274,8 @@ fn yy_action_308(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 41,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6284,8 +6292,8 @@ fn yy_action_309(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6303,8 +6311,8 @@ fn yy_action_310(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 42,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6322,8 +6330,8 @@ fn yy_action_311(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 11,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6339,8 +6347,8 @@ fn yy_action_312(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 68,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6359,8 +6367,8 @@ fn yy_action_313(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 68,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6376,8 +6384,8 @@ fn yy_action_314(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 68,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6393,8 +6401,8 @@ fn yy_action_315(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 68,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6412,8 +6420,8 @@ fn yy_action_316(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 43,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6431,8 +6439,8 @@ fn yy_action_317(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 12,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6449,8 +6457,8 @@ fn yy_action_318(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 44,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6467,8 +6475,8 @@ fn yy_action_319(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 19,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6486,8 +6494,8 @@ fn yy_action_320(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 48,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6505,8 +6513,8 @@ fn yy_action_321(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 16,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6524,8 +6532,8 @@ fn yy_action_322(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 49,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6543,8 +6551,8 @@ fn yy_action_323(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 17,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6562,8 +6570,8 @@ fn yy_action_324(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 50,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6581,8 +6589,8 @@ fn yy_action_325(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 18,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6600,8 +6608,8 @@ fn yy_action_326(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 45,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6619,8 +6627,8 @@ fn yy_action_327(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 13,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6638,8 +6646,8 @@ fn yy_action_328(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 46,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6657,8 +6665,8 @@ fn yy_action_329(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 14,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6676,8 +6684,8 @@ fn yy_action_330(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 47,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6695,8 +6703,8 @@ fn yy_action_331(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 15,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6713,8 +6721,8 @@ fn yy_action_332(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 78,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6731,8 +6739,8 @@ fn yy_action_333(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 77,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6749,8 +6757,8 @@ fn yy_action_334(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 78,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6767,8 +6775,8 @@ fn yy_action_335(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 79,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6785,8 +6793,8 @@ fn yy_action_336(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 79,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6803,8 +6811,8 @@ fn yy_action_337(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 79,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6820,8 +6828,8 @@ fn yy_action_338(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 80,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6838,8 +6846,8 @@ fn yy_action_339(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 79,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6856,8 +6864,8 @@ fn yy_action_340(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6874,8 +6882,8 @@ fn yy_action_341(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 82,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6892,8 +6900,8 @@ fn yy_action_342(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 101,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6910,8 +6918,8 @@ fn yy_action_343(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 101,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6928,8 +6936,8 @@ fn yy_action_344(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 101,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6946,8 +6954,8 @@ fn yy_action_345(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 101,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6963,8 +6971,8 @@ fn yy_action_346(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 107,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -6981,8 +6989,8 @@ fn yy_action_347(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 85,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7000,8 +7008,8 @@ fn yy_action_348(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 82,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7019,8 +7027,8 @@ fn yy_action_349(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 84,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7036,8 +7044,8 @@ fn yy_action_350(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 107,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7054,8 +7062,8 @@ fn yy_action_351(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 101,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7071,8 +7079,8 @@ fn yy_action_352(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 101,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7088,8 +7096,8 @@ fn yy_action_353(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 191,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7106,8 +7114,8 @@ fn yy_action_354(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 191,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7124,8 +7132,8 @@ fn yy_action_355(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7142,8 +7150,8 @@ fn yy_action_356(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 90,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7163,8 +7171,8 @@ fn yy_action_357(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 90,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7181,8 +7189,8 @@ fn yy_action_358(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 90,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7198,8 +7206,8 @@ fn yy_action_359(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 81,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7215,8 +7223,8 @@ fn yy_action_360(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 81,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7232,8 +7240,8 @@ fn yy_action_361(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 88,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7250,8 +7258,8 @@ fn yy_action_362(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7267,8 +7275,8 @@ fn yy_action_363(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 88,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7285,8 +7293,8 @@ fn yy_action_364(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 89,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7302,8 +7310,8 @@ fn yy_action_365(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 91,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7320,8 +7328,8 @@ fn yy_action_366(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 11,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7338,8 +7346,8 @@ fn yy_action_367(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 12,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7356,8 +7364,8 @@ fn yy_action_368(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 13,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7374,8 +7382,8 @@ fn yy_action_369(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 14,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7392,8 +7400,8 @@ fn yy_action_370(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 15,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7410,8 +7418,8 @@ fn yy_action_371(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 16,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7429,8 +7437,8 @@ fn yy_action_372(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 17,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7446,8 +7454,8 @@ fn yy_action_373(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 193,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7463,8 +7471,8 @@ fn yy_action_374(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 193,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7481,8 +7489,8 @@ fn yy_action_375(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 18,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7499,8 +7507,8 @@ fn yy_action_376(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 19,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7517,8 +7525,8 @@ fn yy_action_377(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 20,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7535,8 +7543,8 @@ fn yy_action_378(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 21,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7553,8 +7561,8 @@ fn yy_action_379(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 22,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7571,8 +7579,8 @@ fn yy_action_380(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 23,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7589,8 +7597,8 @@ fn yy_action_381(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 24,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7607,8 +7615,8 @@ fn yy_action_382(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 25,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7625,8 +7633,8 @@ fn yy_action_383(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 26,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7643,8 +7651,8 @@ fn yy_action_384(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 27,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7661,8 +7669,8 @@ fn yy_action_385(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 28,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7679,8 +7687,8 @@ fn yy_action_386(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 29,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7697,8 +7705,8 @@ fn yy_action_387(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 30,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7715,8 +7723,8 @@ fn yy_action_388(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 31,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7733,8 +7741,8 @@ fn yy_action_389(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 32,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7751,8 +7759,8 @@ fn yy_action_390(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 33,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7769,8 +7777,8 @@ fn yy_action_391(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 34,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7787,8 +7795,8 @@ fn yy_action_392(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 35,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7805,8 +7813,8 @@ fn yy_action_393(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 36,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7823,8 +7831,8 @@ fn yy_action_394(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 37,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7841,8 +7849,8 @@ fn yy_action_395(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 38,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7859,8 +7867,8 @@ fn yy_action_396(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 55,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7876,8 +7884,8 @@ fn yy_action_397(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 91,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7894,8 +7902,8 @@ fn yy_action_398(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 39,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7912,8 +7920,8 @@ fn yy_action_399(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 52,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7930,8 +7938,8 @@ fn yy_action_400(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 36,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7948,8 +7956,8 @@ fn yy_action_401(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 37,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7966,8 +7974,8 @@ fn yy_action_402(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 53,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -7984,8 +7992,8 @@ fn yy_action_403(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8002,8 +8010,8 @@ fn yy_action_404(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8020,8 +8028,8 @@ fn yy_action_405(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 49,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8038,8 +8046,8 @@ fn yy_action_406(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 49,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8056,8 +8064,8 @@ fn yy_action_407(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 46,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8075,8 +8083,8 @@ fn yy_action_408(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 48,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8093,8 +8101,8 @@ fn yy_action_409(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 47,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8111,8 +8119,8 @@ fn yy_action_410(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 47,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8129,8 +8137,8 @@ fn yy_action_411(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 11,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8147,8 +8155,8 @@ fn yy_action_412(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 12,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8165,8 +8173,8 @@ fn yy_action_413(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8182,8 +8190,8 @@ fn yy_action_414(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 108,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8201,8 +8209,8 @@ fn yy_action_415(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8219,8 +8227,8 @@ fn yy_action_416(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8237,8 +8245,8 @@ fn yy_action_417(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 102,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8255,8 +8263,8 @@ fn yy_action_418(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 102,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8273,8 +8281,8 @@ fn yy_action_419(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 100,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8291,8 +8299,8 @@ fn yy_action_420(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 100,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8309,8 +8317,8 @@ fn yy_action_421(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 100,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8327,8 +8335,8 @@ fn yy_action_422(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 100,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8345,8 +8353,8 @@ fn yy_action_423(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 100,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8362,8 +8370,8 @@ fn yy_action_424(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 106,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8379,8 +8387,8 @@ fn yy_action_425(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 106,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8397,8 +8405,8 @@ fn yy_action_426(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 100,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8414,8 +8422,8 @@ fn yy_action_427(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 100,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8432,8 +8440,8 @@ fn yy_action_428(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 102,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8450,8 +8458,8 @@ fn yy_action_429(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 102,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8468,8 +8476,8 @@ fn yy_action_430(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8486,8 +8494,8 @@ fn yy_action_431(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8504,8 +8512,8 @@ fn yy_action_432(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 103,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8521,8 +8529,8 @@ fn yy_action_433(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 103,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8539,8 +8547,8 @@ fn yy_action_434(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8557,8 +8565,8 @@ fn yy_action_435(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8575,8 +8583,8 @@ fn yy_action_436(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8593,8 +8601,8 @@ fn yy_action_437(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8611,8 +8619,8 @@ fn yy_action_438(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8630,8 +8638,8 @@ fn yy_action_439(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8648,8 +8656,8 @@ fn yy_action_440(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 13,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8666,8 +8674,8 @@ fn yy_action_441(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 25,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8686,8 +8694,8 @@ fn yy_action_442(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 14,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8704,8 +8712,8 @@ fn yy_action_443(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 104,
   "clause_index": 15,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8722,8 +8730,8 @@ fn yy_action_444(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 54,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8740,8 +8748,8 @@ fn yy_action_445(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 47,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8758,8 +8766,8 @@ fn yy_action_446(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 75,
   "clause_index": 56,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8776,8 +8784,8 @@ fn yy_action_447(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8794,8 +8802,8 @@ fn yy_action_448(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8815,8 +8823,8 @@ fn yy_action_449(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 112,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8832,8 +8840,8 @@ fn yy_action_450(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 113,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8849,8 +8857,8 @@ fn yy_action_451(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 113,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8871,8 +8879,8 @@ fn yy_action_452(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 114,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8888,8 +8896,8 @@ fn yy_action_453(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8905,8 +8913,8 @@ fn yy_action_454(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 13,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8923,8 +8931,8 @@ fn yy_action_455(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 115,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8949,8 +8957,8 @@ fn yy_action_456(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 116,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8967,8 +8975,8 @@ fn yy_action_457(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -8985,8 +8993,8 @@ fn yy_action_458(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9003,8 +9011,8 @@ fn yy_action_459(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9021,8 +9029,8 @@ fn yy_action_460(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9039,8 +9047,8 @@ fn yy_action_461(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9057,8 +9065,8 @@ fn yy_action_462(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9075,8 +9083,8 @@ fn yy_action_463(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9092,8 +9100,8 @@ fn yy_action_464(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 128,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9110,8 +9118,8 @@ fn yy_action_465(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9128,8 +9136,8 @@ fn yy_action_466(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9146,8 +9154,8 @@ fn yy_action_467(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9168,8 +9176,8 @@ fn yy_action_468(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 130,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9185,8 +9193,8 @@ fn yy_action_469(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 128,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9202,8 +9210,8 @@ fn yy_action_470(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 128,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9219,8 +9227,8 @@ fn yy_action_471(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 128,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9241,8 +9249,8 @@ fn yy_action_472(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 129,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9258,8 +9266,8 @@ fn yy_action_473(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 166,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9276,8 +9284,8 @@ fn yy_action_474(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9294,8 +9302,8 @@ fn yy_action_475(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9312,8 +9320,8 @@ fn yy_action_476(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 156,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9329,8 +9337,8 @@ fn yy_action_477(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 166,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9347,8 +9355,8 @@ fn yy_action_478(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9365,8 +9373,8 @@ fn yy_action_479(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 11,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9384,8 +9392,8 @@ fn yy_action_480(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 119,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9407,8 +9415,8 @@ fn yy_action_481(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 139,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9425,8 +9433,8 @@ fn yy_action_482(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 141,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9443,8 +9451,8 @@ fn yy_action_483(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 141,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9460,8 +9468,8 @@ fn yy_action_484(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 141,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9477,8 +9485,8 @@ fn yy_action_485(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 141,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9494,8 +9502,8 @@ fn yy_action_486(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 141,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9511,8 +9519,8 @@ fn yy_action_487(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 141,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9531,8 +9539,8 @@ fn yy_action_488(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 143,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9550,8 +9558,8 @@ fn yy_action_489(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 145,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9570,8 +9578,8 @@ fn yy_action_490(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 144,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9589,8 +9597,8 @@ fn yy_action_491(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 146,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9606,8 +9614,8 @@ fn yy_action_492(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 180,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9623,8 +9631,8 @@ fn yy_action_493(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 194,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9641,8 +9649,8 @@ fn yy_action_494(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 194,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9658,8 +9666,8 @@ fn yy_action_495(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 192,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9676,8 +9684,8 @@ fn yy_action_496(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 192,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9693,8 +9701,8 @@ fn yy_action_497(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 131,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9710,8 +9718,8 @@ fn yy_action_498(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 206,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9727,8 +9735,8 @@ fn yy_action_499(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 208,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9745,8 +9753,8 @@ fn yy_action_500(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 208,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9762,8 +9770,8 @@ fn yy_action_501(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 134,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9779,8 +9787,8 @@ fn yy_action_502(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 135,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9796,8 +9804,8 @@ fn yy_action_503(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 135,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9813,8 +9821,8 @@ fn yy_action_504(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 136,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9830,8 +9838,8 @@ fn yy_action_505(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 136,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9847,8 +9855,8 @@ fn yy_action_506(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 136,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9873,8 +9881,8 @@ fn yy_action_507(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 138,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9894,8 +9902,8 @@ fn yy_action_508(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 137,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9911,8 +9919,8 @@ fn yy_action_509(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 150,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9928,8 +9936,8 @@ fn yy_action_510(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 150,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9946,8 +9954,8 @@ fn yy_action_511(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 152,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9964,8 +9972,8 @@ fn yy_action_512(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 152,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9981,8 +9989,8 @@ fn yy_action_513(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 195,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -9999,8 +10007,8 @@ fn yy_action_514(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 195,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10022,8 +10030,8 @@ fn yy_action_515(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 25,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10040,8 +10048,8 @@ fn yy_action_516(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 13,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10059,8 +10067,8 @@ fn yy_action_517(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 25,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10076,8 +10084,8 @@ fn yy_action_518(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 147,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10094,8 +10102,8 @@ fn yy_action_519(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 25,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10111,8 +10119,8 @@ fn yy_action_520(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 147,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10128,8 +10136,8 @@ fn yy_action_521(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 120,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10145,8 +10153,8 @@ fn yy_action_522(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 120,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10162,8 +10170,8 @@ fn yy_action_523(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 122,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10179,8 +10187,8 @@ fn yy_action_524(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 122,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10196,8 +10204,8 @@ fn yy_action_525(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 121,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10213,8 +10221,8 @@ fn yy_action_526(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 123,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10230,8 +10238,8 @@ fn yy_action_527(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 123,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10247,8 +10255,8 @@ fn yy_action_528(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 125,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10264,8 +10272,8 @@ fn yy_action_529(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 125,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10281,8 +10289,8 @@ fn yy_action_530(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 60,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10298,8 +10306,8 @@ fn yy_action_531(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 118,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10324,8 +10332,8 @@ fn yy_action_532(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 148,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10341,8 +10349,8 @@ fn yy_action_533(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 118,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10364,8 +10372,8 @@ fn yy_action_534(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 148,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10381,8 +10389,8 @@ fn yy_action_535(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 149,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10398,8 +10406,8 @@ fn yy_action_536(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 149,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10416,8 +10424,8 @@ fn yy_action_537(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 125,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10434,8 +10442,8 @@ fn yy_action_538(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 120,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10452,8 +10460,8 @@ fn yy_action_539(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 148,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10470,8 +10478,8 @@ fn yy_action_540(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 148,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10488,8 +10496,8 @@ fn yy_action_541(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 25,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10505,8 +10513,8 @@ fn yy_action_542(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 158,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10524,8 +10532,8 @@ fn yy_action_543(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 39,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10542,8 +10550,8 @@ fn yy_action_544(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 14,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10560,8 +10568,8 @@ fn yy_action_545(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 14,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10577,8 +10585,8 @@ fn yy_action_546(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 176,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10594,8 +10602,8 @@ fn yy_action_547(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10611,8 +10619,8 @@ fn yy_action_548(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10628,8 +10636,8 @@ fn yy_action_549(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10645,8 +10653,8 @@ fn yy_action_550(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10662,8 +10670,8 @@ fn yy_action_551(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10679,8 +10687,8 @@ fn yy_action_552(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10696,8 +10704,8 @@ fn yy_action_553(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10713,8 +10721,8 @@ fn yy_action_554(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10730,8 +10738,8 @@ fn yy_action_555(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10747,8 +10755,8 @@ fn yy_action_556(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 11,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10764,8 +10772,8 @@ fn yy_action_557(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10781,8 +10789,8 @@ fn yy_action_558(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 12,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10798,8 +10806,8 @@ fn yy_action_559(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 14,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10815,8 +10823,8 @@ fn yy_action_560(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 15,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10832,8 +10840,8 @@ fn yy_action_561(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 16,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10849,8 +10857,8 @@ fn yy_action_562(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 17,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10866,8 +10874,8 @@ fn yy_action_563(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 18,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10883,8 +10891,8 @@ fn yy_action_564(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 19,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10900,8 +10908,8 @@ fn yy_action_565(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 20,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10917,8 +10925,8 @@ fn yy_action_566(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 21,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10934,8 +10942,8 @@ fn yy_action_567(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 22,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10951,8 +10959,8 @@ fn yy_action_568(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 23,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10968,8 +10976,8 @@ fn yy_action_569(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 24,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -10985,8 +10993,8 @@ fn yy_action_570(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 25,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11002,8 +11010,8 @@ fn yy_action_571(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 26,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11019,8 +11027,8 @@ fn yy_action_572(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 27,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11036,8 +11044,8 @@ fn yy_action_573(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 177,
   "clause_index": 28,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11053,8 +11061,8 @@ fn yy_action_574(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 180,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11070,8 +11078,8 @@ fn yy_action_575(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 180,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11088,8 +11096,8 @@ fn yy_action_576(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11107,8 +11115,8 @@ fn yy_action_577(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11126,8 +11134,8 @@ fn yy_action_578(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 27,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11146,8 +11154,8 @@ fn yy_action_579(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 28,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11164,8 +11172,8 @@ fn yy_action_580(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 34,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11182,8 +11190,8 @@ fn yy_action_581(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 35,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11199,8 +11207,8 @@ fn yy_action_582(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 95,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11216,8 +11224,8 @@ fn yy_action_583(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 95,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11233,8 +11241,8 @@ fn yy_action_584(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 179,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11250,8 +11258,8 @@ fn yy_action_585(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 180,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11268,8 +11276,8 @@ fn yy_action_586(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 94,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11285,8 +11293,8 @@ fn yy_action_587(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 98,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11302,8 +11310,8 @@ fn yy_action_588(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 98,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11320,8 +11328,8 @@ fn yy_action_589(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 153,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11337,8 +11345,8 @@ fn yy_action_590(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 98,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11355,8 +11363,8 @@ fn yy_action_591(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 153,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11373,8 +11381,8 @@ fn yy_action_592(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 154,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11391,8 +11399,8 @@ fn yy_action_593(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 154,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11409,8 +11417,8 @@ fn yy_action_594(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 155,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11428,8 +11436,8 @@ fn yy_action_595(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 155,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11448,8 +11456,8 @@ fn yy_action_596(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 155,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11467,8 +11475,8 @@ fn yy_action_597(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 155,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11486,8 +11494,8 @@ fn yy_action_598(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 155,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11504,8 +11512,8 @@ fn yy_action_599(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11522,8 +11530,8 @@ fn yy_action_600(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11540,8 +11548,8 @@ fn yy_action_601(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 156,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11558,8 +11566,8 @@ fn yy_action_602(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11575,8 +11583,8 @@ fn yy_action_603(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 99,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11592,8 +11600,8 @@ fn yy_action_604(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 99,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11610,8 +11618,8 @@ fn yy_action_605(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 22,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11628,8 +11636,8 @@ fn yy_action_606(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 23,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11646,8 +11654,8 @@ fn yy_action_607(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 31,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11664,8 +11672,8 @@ fn yy_action_608(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 96,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11682,8 +11690,8 @@ fn yy_action_609(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 76,
   "clause_index": 41,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11699,8 +11707,8 @@ fn yy_action_610(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 83,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11717,8 +11725,8 @@ fn yy_action_611(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 25,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11735,8 +11743,8 @@ fn yy_action_612(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 17,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11752,8 +11760,8 @@ fn yy_action_613(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 185,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11769,8 +11777,8 @@ fn yy_action_614(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 185,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11787,8 +11795,8 @@ fn yy_action_615(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11805,8 +11813,8 @@ fn yy_action_616(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11830,8 +11838,8 @@ fn yy_action_617(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 170,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11850,8 +11858,8 @@ fn yy_action_618(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 169,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11868,8 +11876,8 @@ fn yy_action_619(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11885,8 +11893,8 @@ fn yy_action_620(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 187,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11902,8 +11910,8 @@ fn yy_action_621(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 187,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11920,8 +11928,8 @@ fn yy_action_622(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 12,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11937,8 +11945,8 @@ fn yy_action_623(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 159,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11954,8 +11962,8 @@ fn yy_action_624(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 159,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11971,8 +11979,8 @@ fn yy_action_625(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 160,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -11988,8 +11996,8 @@ fn yy_action_626(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 160,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12006,8 +12014,8 @@ fn yy_action_627(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 14,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12024,8 +12032,8 @@ fn yy_action_628(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 134,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12041,8 +12049,8 @@ fn yy_action_629(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 178,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12058,8 +12066,8 @@ fn yy_action_630(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 178,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12075,8 +12083,8 @@ fn yy_action_631(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 178,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12092,8 +12100,8 @@ fn yy_action_632(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 178,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12109,8 +12117,8 @@ fn yy_action_633(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 178,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12126,8 +12134,8 @@ fn yy_action_634(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 178,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12143,8 +12151,8 @@ fn yy_action_635(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 210,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12160,8 +12168,8 @@ fn yy_action_636(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12177,8 +12185,8 @@ fn yy_action_637(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12194,8 +12202,8 @@ fn yy_action_638(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12211,8 +12219,8 @@ fn yy_action_639(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12228,8 +12236,8 @@ fn yy_action_640(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12245,8 +12253,8 @@ fn yy_action_641(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12262,8 +12270,8 @@ fn yy_action_642(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12279,8 +12287,8 @@ fn yy_action_643(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 7,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12296,8 +12304,8 @@ fn yy_action_644(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 8,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12313,8 +12321,8 @@ fn yy_action_645(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 9,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12330,8 +12338,8 @@ fn yy_action_646(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 10,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12347,8 +12355,8 @@ fn yy_action_647(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 11,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12364,8 +12372,8 @@ fn yy_action_648(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 12,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12381,8 +12389,8 @@ fn yy_action_649(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 13,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12398,8 +12406,8 @@ fn yy_action_650(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 14,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12415,8 +12423,8 @@ fn yy_action_651(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 15,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12432,8 +12440,8 @@ fn yy_action_652(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 16,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12449,8 +12457,8 @@ fn yy_action_653(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 17,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12466,8 +12474,8 @@ fn yy_action_654(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 18,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12483,8 +12491,8 @@ fn yy_action_655(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 19,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12500,8 +12508,8 @@ fn yy_action_656(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 20,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12517,8 +12525,8 @@ fn yy_action_657(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 21,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12534,8 +12542,8 @@ fn yy_action_658(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 22,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12551,8 +12559,8 @@ fn yy_action_659(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 23,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12568,8 +12576,8 @@ fn yy_action_660(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 24,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12585,8 +12593,8 @@ fn yy_action_661(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 25,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12602,8 +12610,8 @@ fn yy_action_662(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 26,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12619,8 +12627,8 @@ fn yy_action_663(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 27,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12636,8 +12644,8 @@ fn yy_action_664(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 28,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12653,8 +12661,8 @@ fn yy_action_665(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 29,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12670,8 +12678,8 @@ fn yy_action_666(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 30,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12687,8 +12695,8 @@ fn yy_action_667(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 31,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12704,8 +12712,8 @@ fn yy_action_668(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 32,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12721,8 +12729,8 @@ fn yy_action_669(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 33,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12738,8 +12746,8 @@ fn yy_action_670(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 34,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12755,8 +12763,8 @@ fn yy_action_671(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 35,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12772,8 +12780,8 @@ fn yy_action_672(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 36,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12789,8 +12797,8 @@ fn yy_action_673(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 37,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12806,8 +12814,8 @@ fn yy_action_674(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 38,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12823,8 +12831,8 @@ fn yy_action_675(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 39,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12840,8 +12848,8 @@ fn yy_action_676(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 40,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12857,8 +12865,8 @@ fn yy_action_677(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 41,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12874,8 +12882,8 @@ fn yy_action_678(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 42,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12891,8 +12899,8 @@ fn yy_action_679(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 43,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12908,8 +12916,8 @@ fn yy_action_680(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 44,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12925,8 +12933,8 @@ fn yy_action_681(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 45,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12942,8 +12950,8 @@ fn yy_action_682(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 46,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12959,8 +12967,8 @@ fn yy_action_683(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 47,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12976,8 +12984,8 @@ fn yy_action_684(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 48,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -12993,8 +13001,8 @@ fn yy_action_685(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 49,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13010,8 +13018,8 @@ fn yy_action_686(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 203,
   "clause_index": 50,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13027,8 +13035,8 @@ fn yy_action_687(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 204,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13044,8 +13052,8 @@ fn yy_action_688(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 204,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13061,8 +13069,8 @@ fn yy_action_689(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 210,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13079,8 +13087,8 @@ fn yy_action_690(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 210,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13096,8 +13104,8 @@ fn yy_action_691(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 172,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13113,8 +13121,8 @@ fn yy_action_692(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 179,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13130,8 +13138,8 @@ fn yy_action_693(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 201,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13147,8 +13155,8 @@ fn yy_action_694(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 201,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13164,8 +13172,8 @@ fn yy_action_695(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 202,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13181,8 +13189,8 @@ fn yy_action_696(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 202,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13200,8 +13208,8 @@ fn yy_action_697(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 207,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13217,8 +13225,8 @@ fn yy_action_698(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 212,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13234,8 +13242,8 @@ fn yy_action_699(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 213,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13251,8 +13259,8 @@ fn yy_action_700(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 213,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13269,8 +13277,8 @@ fn yy_action_701(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 26,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13286,8 +13294,8 @@ fn yy_action_702(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 209,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13304,8 +13312,8 @@ fn yy_action_703(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 209,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13321,8 +13329,8 @@ fn yy_action_704(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 199,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13339,8 +13347,8 @@ fn yy_action_705(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 199,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13357,8 +13365,8 @@ fn yy_action_706(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 157,
   "clause_index": 18,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13374,8 +13382,8 @@ fn yy_action_707(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 167,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13392,8 +13400,8 @@ fn yy_action_708(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 165,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13409,8 +13417,8 @@ fn yy_action_709(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 167,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13426,8 +13434,8 @@ fn yy_action_710(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 182,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13443,8 +13451,8 @@ fn yy_action_711(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 165,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13460,8 +13468,8 @@ fn yy_action_712(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 182,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13477,8 +13485,8 @@ fn yy_action_713(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 184,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13494,8 +13502,8 @@ fn yy_action_714(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 184,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13511,8 +13519,8 @@ fn yy_action_715(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 184,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13528,8 +13536,8 @@ fn yy_action_716(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 111,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13545,8 +13553,8 @@ fn yy_action_717(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 181,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13562,8 +13570,8 @@ fn yy_action_718(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 181,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13579,8 +13587,8 @@ fn yy_action_719(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 183,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13597,8 +13605,8 @@ fn yy_action_720(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 105,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13614,8 +13622,8 @@ fn yy_action_721(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 180,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13631,8 +13639,8 @@ fn yy_action_722(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 200,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13649,8 +13657,8 @@ fn yy_action_723(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 200,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13667,8 +13675,8 @@ fn yy_action_724(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 105,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13684,8 +13692,8 @@ fn yy_action_725(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 173,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13701,8 +13709,8 @@ fn yy_action_726(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 173,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13718,8 +13726,8 @@ fn yy_action_727(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 173,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13735,8 +13743,8 @@ fn yy_action_728(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 173,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13752,8 +13760,8 @@ fn yy_action_729(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 174,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13769,8 +13777,8 @@ fn yy_action_730(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 174,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13786,8 +13794,8 @@ fn yy_action_731(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 174,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13803,8 +13811,8 @@ fn yy_action_732(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 174,
   "clause_index": 3,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13820,8 +13828,8 @@ fn yy_action_733(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 174,
   "clause_index": 4,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13837,8 +13845,8 @@ fn yy_action_734(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 176,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13854,8 +13862,8 @@ fn yy_action_735(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 180,
   "clause_index": 5,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13871,8 +13879,8 @@ fn yy_action_736(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 180,
   "clause_index": 6,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13888,8 +13896,8 @@ fn yy_action_737(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 183,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13905,8 +13913,8 @@ fn yy_action_738(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 175,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13922,8 +13930,8 @@ fn yy_action_739(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 175,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13939,8 +13947,8 @@ fn yy_action_740(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 190,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13957,8 +13965,8 @@ fn yy_action_741(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
   "rule_index": 17,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -13969,834 +13977,834 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (YYSymbol, YYObj
       "type": "TERMINAL",
       "name": "AMPERAMPER",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     AMPERSAND => (2, YYObj_Json({
       "type": "TERMINAL",
       "name": "AMPERSAND",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     AND => (3, YYObj_Json({
       "type": "TERMINAL",
       "name": "AND",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     AS => (4, YYObj_Json({
       "type": "TERMINAL",
       "name": "AS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     ASSERT => (5, YYObj_Json({
       "type": "TERMINAL",
       "name": "ASSERT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     BACKQUOTE => (6, YYObj_Json({
       "type": "TERMINAL",
       "name": "BACKQUOTE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     BANG => (7, YYObj_Json({
       "type": "TERMINAL",
       "name": "BANG",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     BAR => (8, YYObj_Json({
       "type": "TERMINAL",
       "name": "BAR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     BARBAR => (9, YYObj_Json({
       "type": "TERMINAL",
       "name": "BARBAR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     BARRBRACKET => (10, YYObj_Json({
       "type": "TERMINAL",
       "name": "BARRBRACKET",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     BEGIN => (11, YYObj_Json({
       "type": "TERMINAL",
       "name": "BEGIN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     CHAR => (12, YYObj_Json({
       "type": "TERMINAL",
       "name": "CHAR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     CLASS => (13, YYObj_Json({
       "type": "TERMINAL",
       "name": "CLASS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     COLON => (14, YYObj_Json({
       "type": "TERMINAL",
       "name": "COLON",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     COLONCOLON => (15, YYObj_Json({
       "type": "TERMINAL",
       "name": "COLONCOLON",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     COLONEQUAL => (16, YYObj_Json({
       "type": "TERMINAL",
       "name": "COLONEQUAL",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     COLONGREATER => (17, YYObj_Json({
       "type": "TERMINAL",
       "name": "COLONGREATER",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     COMMA => (18, YYObj_Json({
       "type": "TERMINAL",
       "name": "COMMA",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     CONSTRAINT => (19, YYObj_Json({
       "type": "TERMINAL",
       "name": "CONSTRAINT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     DO => (20, YYObj_Json({
       "type": "TERMINAL",
       "name": "DO",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     DONE => (21, YYObj_Json({
       "type": "TERMINAL",
       "name": "DONE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     DOT => (22, YYObj_Json({
       "type": "TERMINAL",
       "name": "DOT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     DOTDOT => (23, YYObj_Json({
       "type": "TERMINAL",
       "name": "DOTDOT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     DOWNTO => (24, YYObj_Json({
       "type": "TERMINAL",
       "name": "DOWNTO",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     ELSE => (25, YYObj_Json({
       "type": "TERMINAL",
       "name": "ELSE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     END => (26, YYObj_Json({
       "type": "TERMINAL",
       "name": "END",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     EOF => (27, YYObj_Json({
       "type": "TERMINAL",
       "name": "EOF",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     EQUAL => (28, YYObj_Json({
       "type": "TERMINAL",
       "name": "EQUAL",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     EXCEPTION => (29, YYObj_Json({
       "type": "TERMINAL",
       "name": "EXCEPTION",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     EXTERNAL => (30, YYObj_Json({
       "type": "TERMINAL",
       "name": "EXTERNAL",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     FALSE => (31, YYObj_Json({
       "type": "TERMINAL",
       "name": "FALSE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     FLOAT => (32, YYObj_Json({
       "type": "TERMINAL",
       "name": "FLOAT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     FOR => (33, YYObj_Json({
       "type": "TERMINAL",
       "name": "FOR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     FUN => (34, YYObj_Json({
       "type": "TERMINAL",
       "name": "FUN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     FUNCTION => (35, YYObj_Json({
       "type": "TERMINAL",
       "name": "FUNCTION",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     FUNCTOR => (36, YYObj_Json({
       "type": "TERMINAL",
       "name": "FUNCTOR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     GREATER => (37, YYObj_Json({
       "type": "TERMINAL",
       "name": "GREATER",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     GREATERRBRACE => (38, YYObj_Json({
       "type": "TERMINAL",
       "name": "GREATERRBRACE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     GREATERRBRACKET => (39, YYObj_Json({
       "type": "TERMINAL",
       "name": "GREATERRBRACKET",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     IF => (40, YYObj_Json({
       "type": "TERMINAL",
       "name": "IF",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     IN => (41, YYObj_Json({
       "type": "TERMINAL",
       "name": "IN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INCLUDE => (42, YYObj_Json({
       "type": "TERMINAL",
       "name": "INCLUDE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INFIXOP0 => (43, YYObj_Json({
       "type": "TERMINAL",
       "name": "INFIXOP0",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INFIXOP1 => (44, YYObj_Json({
       "type": "TERMINAL",
       "name": "INFIXOP1",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INFIXOP2 => (45, YYObj_Json({
       "type": "TERMINAL",
       "name": "INFIXOP2",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INFIXOP3 => (46, YYObj_Json({
       "type": "TERMINAL",
       "name": "INFIXOP3",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INFIXOP4 => (47, YYObj_Json({
       "type": "TERMINAL",
       "name": "INFIXOP4",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     DOTOP => (48, YYObj_Json({
       "type": "TERMINAL",
       "name": "DOTOP",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INHERIT => (49, YYObj_Json({
       "type": "TERMINAL",
       "name": "INHERIT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INITIALIZER => (50, YYObj_Json({
       "type": "TERMINAL",
       "name": "INITIALIZER",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     INT => (51, YYObj_Json({
       "type": "TERMINAL",
       "name": "INT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LABEL => (52, YYObj_Json({
       "type": "TERMINAL",
       "name": "LABEL",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LAZY => (53, YYObj_Json({
       "type": "TERMINAL",
       "name": "LAZY",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACE => (54, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACELESS => (55, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACELESS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKET => (56, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKET",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKETBAR => (57, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKETBAR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKETLESS => (58, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKETLESS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKETGREATER => (59, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKETGREATER",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKETPERCENT => (60, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKETPERCENT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKETPERCENTPERCENT => (61, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKETPERCENTPERCENT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LESS => (62, YYObj_Json({
       "type": "TERMINAL",
       "name": "LESS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LESSMINUS => (63, YYObj_Json({
       "type": "TERMINAL",
       "name": "LESSMINUS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LET => (64, YYObj_Json({
       "type": "TERMINAL",
       "name": "LET",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LIDENT => (65, YYObj_Json({
       "type": "TERMINAL",
       "name": "LIDENT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LPAREN => (66, YYObj_Json({
       "type": "TERMINAL",
       "name": "LPAREN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKETAT => (67, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKETAT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKETATAT => (68, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKETATAT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LBRACKETATATAT => (69, YYObj_Json({
       "type": "TERMINAL",
       "name": "LBRACKETATATAT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     MATCH => (70, YYObj_Json({
       "type": "TERMINAL",
       "name": "MATCH",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     METHOD => (71, YYObj_Json({
       "type": "TERMINAL",
       "name": "METHOD",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     MINUS => (72, YYObj_Json({
       "type": "TERMINAL",
       "name": "MINUS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     MINUSDOT => (73, YYObj_Json({
       "type": "TERMINAL",
       "name": "MINUSDOT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     MINUSGREATER => (74, YYObj_Json({
       "type": "TERMINAL",
       "name": "MINUSGREATER",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     MODULE => (75, YYObj_Json({
       "type": "TERMINAL",
       "name": "MODULE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     MUTABLE => (76, YYObj_Json({
       "type": "TERMINAL",
       "name": "MUTABLE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     NEW => (77, YYObj_Json({
       "type": "TERMINAL",
       "name": "NEW",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     NONREC => (78, YYObj_Json({
       "type": "TERMINAL",
       "name": "NONREC",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     OBJECT => (79, YYObj_Json({
       "type": "TERMINAL",
       "name": "OBJECT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     OF => (80, YYObj_Json({
       "type": "TERMINAL",
       "name": "OF",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     OPEN => (81, YYObj_Json({
       "type": "TERMINAL",
       "name": "OPEN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     OPTLABEL => (82, YYObj_Json({
       "type": "TERMINAL",
       "name": "OPTLABEL",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     OR => (83, YYObj_Json({
       "type": "TERMINAL",
       "name": "OR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     PERCENT => (84, YYObj_Json({
       "type": "TERMINAL",
       "name": "PERCENT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     PLUS => (85, YYObj_Json({
       "type": "TERMINAL",
       "name": "PLUS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     PLUSDOT => (86, YYObj_Json({
       "type": "TERMINAL",
       "name": "PLUSDOT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     PLUSEQ => (87, YYObj_Json({
       "type": "TERMINAL",
       "name": "PLUSEQ",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     PREFIXOP => (88, YYObj_Json({
       "type": "TERMINAL",
       "name": "PREFIXOP",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     PRIVATE => (89, YYObj_Json({
       "type": "TERMINAL",
       "name": "PRIVATE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     QUESTION => (90, YYObj_Json({
       "type": "TERMINAL",
       "name": "QUESTION",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     QUOTE => (91, YYObj_Json({
       "type": "TERMINAL",
       "name": "QUOTE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     RBRACE => (92, YYObj_Json({
       "type": "TERMINAL",
       "name": "RBRACE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     RBRACKET => (93, YYObj_Json({
       "type": "TERMINAL",
       "name": "RBRACKET",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     REC => (94, YYObj_Json({
       "type": "TERMINAL",
       "name": "REC",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     RPAREN => (95, YYObj_Json({
       "type": "TERMINAL",
       "name": "RPAREN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     SEMI => (96, YYObj_Json({
       "type": "TERMINAL",
       "name": "SEMI",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     SEMISEMI => (97, YYObj_Json({
       "type": "TERMINAL",
       "name": "SEMISEMI",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     HASH => (98, YYObj_Json({
       "type": "TERMINAL",
       "name": "HASH",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     HASHOP => (99, YYObj_Json({
       "type": "TERMINAL",
       "name": "HASHOP",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     SIG => (100, YYObj_Json({
       "type": "TERMINAL",
       "name": "SIG",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     STAR => (101, YYObj_Json({
       "type": "TERMINAL",
       "name": "STAR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     STRING => (102, YYObj_Json({
       "type": "TERMINAL",
       "name": "STRING",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     STRUCT => (103, YYObj_Json({
       "type": "TERMINAL",
       "name": "STRUCT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     THEN => (104, YYObj_Json({
       "type": "TERMINAL",
       "name": "THEN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     TILDE => (105, YYObj_Json({
       "type": "TERMINAL",
       "name": "TILDE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     TO => (106, YYObj_Json({
       "type": "TERMINAL",
       "name": "TO",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     TRUE => (107, YYObj_Json({
       "type": "TERMINAL",
       "name": "TRUE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     TRY => (108, YYObj_Json({
       "type": "TERMINAL",
       "name": "TRY",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     TYPE => (109, YYObj_Json({
       "type": "TERMINAL",
       "name": "TYPE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     UIDENT => (110, YYObj_Json({
       "type": "TERMINAL",
       "name": "UIDENT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     UNDERSCORE => (111, YYObj_Json({
       "type": "TERMINAL",
       "name": "UNDERSCORE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     VAL => (112, YYObj_Json({
       "type": "TERMINAL",
       "name": "VAL",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     VIRTUAL => (113, YYObj_Json({
       "type": "TERMINAL",
       "name": "VIRTUAL",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     WHEN => (114, YYObj_Json({
       "type": "TERMINAL",
       "name": "WHEN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     WHILE => (115, YYObj_Json({
       "type": "TERMINAL",
       "name": "WHILE",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     WITH => (116, YYObj_Json({
       "type": "TERMINAL",
       "name": "WITH",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     COMMENT => (117, YYObj_Json({
       "type": "TERMINAL",
       "name": "COMMENT",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     DOCSTRING => (118, YYObj_Json({
       "type": "TERMINAL",
       "name": "DOCSTRING",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     EOL => (119, YYObj_Json({
       "type": "TERMINAL",
       "name": "EOL",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
   }
 }

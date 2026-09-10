@@ -47,7 +47,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
       let partial_lookahead_set = if dot < production.rhs.length() {
         first(production.rhs[dot + 1:])
       } else {
-        { set: LookaheadSet::empty(), nullable: false }
+        { set: LookaheadSet::empty(), nullable: false, }
       }
       let node = {
         item,

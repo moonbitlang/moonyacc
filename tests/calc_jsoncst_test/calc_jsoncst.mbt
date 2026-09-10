@@ -9,6 +9,10 @@ pub(all) enum Token {
   RPAREN
 } derive(Debug)
 
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend Token with Debug::{to_repr}
+
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
     EOF => TK_EOF
@@ -31,8 +35,12 @@ pub(all) enum TokenKind {
   TK_RPAREN
 }
 
+#deprecated("Use Show::to_string or Show::output instead")
+#doc(hidden)
+pub extend TokenKind with Show::{output, to_string}
+
 pub impl Show for TokenKind with fn output(self, logger) {
-  logger.write_string(
+  Logger::write_string(logger,
     match self {
       TK_EOF => "EOF"
       TK_NUMBER => "NUMBER"
@@ -44,6 +52,10 @@ pub impl Show for TokenKind with fn output(self, logger) {
     }
   )
 }
+
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend TokenKind with Debug::{to_repr}
 
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
@@ -60,6 +72,10 @@ pub impl Debug for TokenKind with fn to_repr(self) {
 pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
 } derive(Debug)
+
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend ParseError with Debug::{to_repr}
 
 type YYObj = Error
 
@@ -112,8 +128,8 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 0,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -129,8 +145,8 @@ fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 1,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -146,8 +162,8 @@ fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 1,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -163,8 +179,8 @@ fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 3,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -180,8 +196,8 @@ fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 2,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -197,8 +213,8 @@ fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 1,
   "clause_index": 2,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -214,8 +230,8 @@ fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 2,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -231,8 +247,8 @@ fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 3,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -243,50 +259,50 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (YYSymbol, YYObj
       "type": "TERMINAL",
       "name": "EOF",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     NUMBER => (T_NUMBER, YYObj_Json({
       "type": "TERMINAL",
       "name": "NUMBER",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     PLUS => (T_PLUS, YYObj_Json({
       "type": "TERMINAL",
       "name": "PLUS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     MINUS => (T_MINUS, YYObj_Json({
       "type": "TERMINAL",
       "name": "MINUS",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     STAR => (T_STAR, YYObj_Json({
       "type": "TERMINAL",
       "name": "STAR",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LPAREN => (T_LPAREN, YYObj_Json({
       "type": "TERMINAL",
       "name": "LPAREN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     RPAREN => (T_RPAREN, YYObj_Json({
       "type": "TERMINAL",
       "name": "RPAREN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
   }
 }

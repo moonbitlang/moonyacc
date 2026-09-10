@@ -15,7 +15,3 @@ license = "GPL-2.0-only"
 keywords = [ "LR parser", "parser generator", "yacc" ]
 
 description = "A LR(1) parser generator for MoonBit programming language."
-
-options(
-  exclude: [ "tests" ],
-)
