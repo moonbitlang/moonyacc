@@ -525,7 +525,7 @@ fn codegen(
       ),
     )
     for index, sub_action in action.sub_actions {
-      let { start, end, action: action2 } = sub_action
+      let { start, end, action: action2, } = sub_action
       let last_pos_code = if start == 0 {
         "_last_pos"
       } else {
@@ -914,6 +914,10 @@ fn codegen(
         count = 1
       }
     }
+    output.push(last)
+    if count > 1 {
+      output.push(-count)
+    }
     output
   }
 
@@ -1082,7 +1086,7 @@ fn codegen(
           $|            Reduce(count, symbol, action)
           $|            | ReduceNoLookahead(count, symbol, action) => continue count, symbol, action
           $|            _ => panic()
-          $|          } 
+          $|          }
           $|        }
           $|      }
           $|      Error => {
@@ -1452,7 +1456,7 @@ pub let compress_generator : &@codegen.CodeGenerator = CodeGenerator({
 })
 
 ///|
-pub let generator : &@codegen.CodeGenerator = CodeGenerator({ compress: false })
+pub let generator : &@codegen.CodeGenerator = CodeGenerator({ compress: false, })
 
 ///|
 fn fix_result_type(str : String) -> String {
