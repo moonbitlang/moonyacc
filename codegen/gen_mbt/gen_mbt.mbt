@@ -979,7 +979,7 @@ fn codegen(
           $|  let mut cursor = 0
           $|  let mut state_stack : @list.List[YYState] = @list.cons(start, @list.empty())
           $|  let data_stack : Array[(YYObj, \{meta.position_data_type}, \{meta.position_data_type})] = []
-          $|  let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
+          $|  let mut last_pos = initial_pos.unwrap_or_else(fn() { tokens[0].1 })
           $|  let mut state = start
           $|  let mut lookahead : Option[(YYSymbol, (YYObj, \{meta.position_data_type}, \{meta.position_data_type}), Token?)] = None
           $|  let mut last_shifted_state_stack = state_stack
