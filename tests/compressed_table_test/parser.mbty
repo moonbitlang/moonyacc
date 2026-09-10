@@ -1,0 +1,12 @@
+%position<Int>
+%token<Int> NUMBER
+// The unused EOF token exercises the final table run during error reporting.
+%token LPAREN RPAREN EOF
+%start start
+%type<Int> start
+
+%%
+
+start:
+  | NUMBER                { $1 }
+  | LPAREN start RPAREN   { $2 }
