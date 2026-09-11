@@ -971,6 +971,10 @@ fn codegen(
         count = 1
       }
     }
+    output.push(last)
+    if count > 1 {
+      output.push(-count)
+    }
     output
   }
 
@@ -1145,7 +1149,7 @@ fn codegen(
           $|            Reduce(count, symbol, action)
           $|            | ReduceNoLookahead(count, symbol, action) => continue count, symbol, action
           $|            _ => panic()
-          $|          } 
+          $|          }
           $|        }
           $|      }
           $|      Error => {
