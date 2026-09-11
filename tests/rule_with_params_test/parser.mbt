@@ -19,8 +19,12 @@ pub(all) enum TokenKind {
   TK_RBRACE
 }
 
+#deprecated("Use Show::to_string or Show::output instead")
+#doc(hidden)
+pub extend TokenKind with Show::{output, to_string}
+
 pub impl Show for TokenKind with fn output(self, logger) {
-  logger.write_string(
+  Logger::write_string(logger,
     match self {
       TK_LETTER => "LETTER"
       TK_LBRACE => "\"{\""
@@ -28,6 +32,10 @@ pub impl Show for TokenKind with fn output(self, logger) {
     }
   )
 }
+
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend TokenKind with Debug::{to_repr}
 
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {

@@ -14,21 +14,21 @@ formatter(ignore: [ "binary_search.mbt", "lexer.mbt", "ocaml.mbt" ])
 
 rule(
   name: "embed",
-  command: "moon runwasm moonbit-community/embed@0.1.1 $input -o $output",
+  command: "moonx moonbit-community/embed@0.1.1 -- $input -o $output",
 )
 
 dev_build(rule: "embed", input: "binary_search.ml", output: "binary_search.mbt")
 
 rule(
   name: "moonlex",
-  command: "moon runwasm moonbitlang/ulex@0.3.29 $input -o $output",
+  command: "moonx moonbitlang/ulex@0.3.29 -- $input -o $output",
 )
 
 dev_build(rule: "moonlex", input: "lexer.mbtx", output: "lexer.mbt")
 
 rule(
   name: "moonyacc",
-  command: "moon runwasm $mod_dir/.. -- --compress-table --mode json-cst --input-mode pull --force-token-no-payload --force-int-position $input -o $output",
+  command: "moon run --target wasm $mod_dir/.. -- --compress-table --mode json-cst --input-mode pull --force-token-no-payload --force-int-position $input -o $output",
 )
 
 dev_build(rule: "moonyacc", input: "ocaml.mly", output: "ocaml.mbt")

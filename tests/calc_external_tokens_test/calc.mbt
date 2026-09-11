@@ -4,6 +4,10 @@ pub suberror ParseError {
   UnexpectedEndOfInput(Int, Array[TokenKind])
 } derive(Debug)
 
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend ParseError with Debug::{to_repr}
+
 type YYObj = Error
 
 priv suberror YYObj_Void
@@ -286,7 +290,7 @@ fn[T] yy_parse(
   let mut cursor = 0
   let mut state_stack : @list.List[YYState] = @list.cons(start, @list.empty())
   let data_stack : Array[(YYObj, Int, Int)] = []
-  let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
+  let mut last_pos = initial_pos.unwrap_or_else(fn() { tokens[0].1 })
   let mut state = start
   let mut lookahead : Option[(YYSymbol, (YYObj, Int, Int), Token?)] = None
   let mut last_shifted_state_stack = state_stack

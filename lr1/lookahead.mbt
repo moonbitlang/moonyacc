@@ -30,6 +30,6 @@ pub impl Hash for Lookahead with fn hash_combine(self, hasher) {
 pub impl Show for Lookahead with fn output(self, logger) {
   match self {
     Input(t) => logger.write_object(t)
-    EndOfInput => logger.write_string("$")
+    EndOfInput => logger <+ "$"
   }
 }

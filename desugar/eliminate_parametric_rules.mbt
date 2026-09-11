@@ -59,12 +59,12 @@ pub fn eliminate_rule_args(
       ..rule,
       clauses: rule.clauses.map(fn(clause) {
         let items = clause.items.map(fn(item) {
-          { ..item, term: map_term(item.term, @immut/sorted_map.new()) }
+          { ..item, term: map_term(item.term, @immut/sorted_map.new()), }
         })
         {
           ..clause,
           items: clause.items.map(fn(item) {
-            { ..item, term: map_term(item.term, @immut/sorted_map.new()) }
+            { ..item, term: map_term(item.term, @immut/sorted_map.new()), }
           }),
           action: {
             ..clause.action,
@@ -91,7 +91,7 @@ pub fn eliminate_rule_args(
     }
   }
   fn specialize_rule(dsr : DeferredSpecializedRule) -> @elab.Rule {
-    let { parametric_rule_name, specialized_rule_name, args, env } = dsr
+    let { parametric_rule_name, specialized_rule_name, args, env, } = dsr
     let parametric_rule = parametric_rules.get(parametric_rule_name).unwrap()
     let mut env : @immut/sorted_map.SortedMap[String, @elab.Term] = env
     for index, param in parametric_rule.params {
@@ -105,7 +105,7 @@ pub fn eliminate_rule_args(
       params: [],
       clauses: parametric_rule.clauses.map(fn(clause) {
         let new_items = clause.items.map(fn(item) {
-          { ..item, term: map_term(item.term, env) }
+          { ..item, term: map_term(item.term, env), }
         })
         {
           ..clause,
@@ -145,7 +145,7 @@ pub fn eliminate_rule_args(
       new_rules[it.specialized_rule_name] = specialize_rule(it)
     }
   }
-  { ..spec, rules: new_rules }
+  { ..spec, rules: new_rules, }
 }
 
 ///|

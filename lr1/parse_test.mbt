@@ -92,7 +92,7 @@ suberror ObjUnit {
 fn make_action_provider(
   actions : Map[Int, (ArrayView[Obj]) -> Obj],
 ) -> ProductionActionProvider {
-  { get_action: fn(num) { actions.get(num).unwrap() } }
+  { get_action: fn(num) { actions.get(num).unwrap() }, }
 }
 
 ///|

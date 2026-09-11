@@ -56,17 +56,17 @@ pub impl Hash for SmallIntSet with fn hash_combine(self, hasher) {
 
 ///|
 pub impl Show for SmallIntSet with fn output(self, logger) {
-  logger.write_string("{")
+  logger <+ "{"
   let mut first = true
   for key in self {
     if first {
       first = false
     } else {
-      logger.write_string(", ")
+      logger <+ ", "
     }
     logger.write_object(key)
   }
-  logger.write_string("}")
+  logger <+ "}"
 }
 
 ///|

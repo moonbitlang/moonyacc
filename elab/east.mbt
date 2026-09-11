@@ -33,7 +33,8 @@ pub(all) enum TypeExpr {
 
 ///|
 pub impl Show for TypeExpr with fn output(self, logger) {
-  logger.write_string(
+  Logger::write_string(
+    logger,
     match self {
       Constr(pkg~, name, args) => {
         let primary = match pkg {

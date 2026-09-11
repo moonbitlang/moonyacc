@@ -5,7 +5,7 @@ pub(all) struct SourceMap {
 
 ///|
 pub fn SourceMap::new() -> SourceMap {
-  { mappings: [] }
+  { mappings: [], }
 }
 
 ///|

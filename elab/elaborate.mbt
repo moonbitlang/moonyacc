@@ -536,8 +536,8 @@ fn elaborate_action(
             $|  "rule_index": \{rule_index},
             $|  "clause_index": \{clause_index},
             $|  "children": args_to_json(_args),
-            $|  "start": _start_pos.to_json(),
-            $|  "end": _end_pos.to_json(),
+            $|  "start": ToJson::to_json(_start_pos),
+            $|  "end": ToJson::to_json(_end_pos),
             $|}
             $|
           ),
