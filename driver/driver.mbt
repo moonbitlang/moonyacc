@@ -323,12 +323,13 @@ pub fn compile(
   }
   let output_buffer = StringBuilder()
   let output = @logger_with_cursor.new(output_buffer)
+  let source_map = @codegen.SourceMap::new()
   generator.codegen(
     grammar,
     automaton,
     meta,
     output,
-    source_map_builder~,
+    source_map_builder=source_map_builder.map(_ => source_map),
     grammar_filename=path_basename(filename),
     mode=match mode {
       OnlyTokens => panic()
@@ -342,5 +343,9 @@ pub fn compile(
     external_tokens~,
     no_comments~,
   )
-  output_buffer.to_string()
+  let generated = output_buffer.to_string()
+  if source_map_builder is Some(builder) {
+    write_source_map(source_map, parser_spec_str, generated, builder)
+  }
+  generated
 }
