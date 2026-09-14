@@ -10,6 +10,8 @@ pub(open) trait CodeGenerator {
     no_comments~ : Bool,
     derive_map~ : @array_multimap.T[String, String],
   ) -> Unit
+  // Logger cursors and source map ranges use UTF-16 code units here.
+  // The driver converts mappings to Unicode scalar offsets after generation.
   fn codegen(
     Self,
     @grm.Grammar,
