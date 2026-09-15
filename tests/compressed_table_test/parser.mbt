@@ -22,8 +22,12 @@ pub(all) enum TokenKind {
   TK_EOF
 }
 
+#deprecated("Use Show::to_string or Show::output instead")
+#doc(hidden)
+pub extend TokenKind with Show::{output, to_string}
+
 pub impl Show for TokenKind with fn output(self, logger) {
-  logger.write_string(
+  Logger::write_string(logger,
     match self {
       TK_NUMBER => "NUMBER"
       TK_LPAREN => "LPAREN"
@@ -32,6 +36,10 @@ pub impl Show for TokenKind with fn output(self, logger) {
     }
   )
 }
+
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend TokenKind with Debug::{to_repr}
 
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
@@ -79,8 +87,8 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 0,
   "clause_index": 0,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -96,8 +104,8 @@ fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   "rule_index": 0,
   "clause_index": 1,
   "children": args_to_json(_args),
-  "start": _start_pos.to_json(),
-  "end": _end_pos.to_json(),
+  "start": ToJson::to_json(_start_pos),
+  "end": ToJson::to_json(_end_pos),
 }
 })
 }
@@ -107,30 +115,30 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (YYSymbol, YYObj
     NUMBER(data) => (1, YYObj_Json({
       "type": "TERMINAL",
       "name": "NUMBER",
-      "data": data.to_json(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "data": ToJson::to_json(data),
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     LPAREN => (2, YYObj_Json({
       "type": "TERMINAL",
       "name": "LPAREN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     RPAREN => (3, YYObj_Json({
       "type": "TERMINAL",
       "name": "RPAREN",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
     EOF => (4, YYObj_Json({
       "type": "TERMINAL",
       "name": "EOF",
       "data": Json::null(),
-      "start": _start_pos.to_json(),
-      "end": _end_pos.to_json()
+      "start": ToJson::to_json(_start_pos),
+      "end": ToJson::to_json(_end_pos)
     }))
   }
 }
@@ -191,7 +199,7 @@ fn[T] yy_parse(
   let mut cursor = 0
   let mut state_stack : @list.List[YYState] = @list.cons(start, @list.empty())
   let data_stack : Array[(YYObj, Int, Int)] = []
-  let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
+  let mut last_pos = initial_pos.unwrap_or_else(fn() { tokens[0].1 })
   let mut state = start
   let mut lookahead : Option[(YYSymbol, (YYObj, Int, Int), Token?)] = None
   let mut last_shifted_state_stack = state_stack
