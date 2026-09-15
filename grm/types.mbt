@@ -63,7 +63,7 @@ pub impl Hash for Terminal with fn hash_combine(self, hasher) {
 
 ///|
 pub impl Show for Terminal with fn output(self, logger) -> Unit {
-  logger.write_string(self.name)
+  Logger::write_string(logger, self.name)
 }
 
 ///|
@@ -97,7 +97,7 @@ pub impl Hash for Nonterminal with fn hash_combine(self, hasher) {
 
 ///|
 pub impl Show for Nonterminal with fn output(self, logger) {
-  logger.write_string(self.name)
+  Logger::write_string(logger, self.name)
 }
 
 ///|
@@ -144,17 +144,20 @@ pub fn[Logger : Logger] Production::output_with_opt_dot(
   dot? : Int,
 ) -> Unit {
   (logger : &Logger).write_object(self.lhs)
-  logger.write_string(" →")
+  Logger::write_string(logger, " →")
   for i, symbol in self.rhs {
     match dot {
-      Some(d) => if i == d { logger.write_string(" •") }
+      Some(d) => if i == d { Logger::write_string(logger, " •") }
       None => ()
     }
-    logger.write_string(" ")
+    Logger::write_string(logger, " ")
     (logger : &Logger).write_object(symbol)
   }
   match dot {
-    Some(d) => if d == self.rhs.length() { logger.write_string(" •") }
+    Some(d) =>
+      if d == self.rhs.length() {
+        Logger::write_string(logger, " •")
+      }
     None => ()
   }
 }

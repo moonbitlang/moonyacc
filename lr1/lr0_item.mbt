@@ -20,7 +20,7 @@ pub(all) struct LR0Item {
 
 ///|
 pub fn LR0Item::new(production : @grm.Production, dot : Int) -> LR0Item {
-  { production, dot }
+  { production, dot, }
 }
 
 ///|
@@ -35,5 +35,5 @@ pub fn LR0Item::postdot(self : LR0Item) -> @grm.Symbol? {
 ///|
 pub fn LR0Item::shift(self : LR0Item) -> LR0Item {
   guard! self.dot < self.production.rhs.length()
-  { ..self, dot: self.dot + 1 }
+  { ..self, dot: self.dot + 1, }
 }

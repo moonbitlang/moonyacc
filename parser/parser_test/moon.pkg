@@ -1,7 +1,6 @@
 import {
   "moonbitlang/yacc/ast",
   "moonbitlang/yacc/parser",
-  "moonbitlang/core/list",
   "moonbitlang/core/test",
 }
 
@@ -9,7 +8,7 @@ formatter(ignore: [ "parser_spec_src.mbt", "ocaml_parser_spec_src.mbt" ])
 
 rule(
   name: "embed",
-  command: "moon runwasm moonbit-community/embed@0.1.1 $input -o $output",
+  command: "moonx moonbit-community/embed@0.1.1 -- $input -o $output",
 )
 
 dev_build(rule: "embed", input: "../parser.mbty", output: "parser_spec_src.mbt")

@@ -24,3 +24,8 @@ test {
   let result = start(tokens, initial_pos=())
   assert_eq(result, "abc")
 }
+
+///|
+test "empty input with initial position" {
+  assert_eq(start([], initial_pos=()), "")
+}

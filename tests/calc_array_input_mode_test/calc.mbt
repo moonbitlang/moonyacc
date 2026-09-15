@@ -8,6 +8,10 @@ pub(all) enum Token {
   RPAREN
 } derive(Debug)
 
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend Token with Debug::{to_repr}
+
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
     NUMBER(_) => TK_NUMBER
@@ -28,8 +32,12 @@ pub(all) enum TokenKind {
   TK_RPAREN
 }
 
+#deprecated("Use Show::to_string or Show::output instead")
+#doc(hidden)
+pub extend TokenKind with Show::{output, to_string}
+
 pub impl Show for TokenKind with fn output(self, logger) {
-  logger.write_string(
+  Logger::write_string(logger,
     match self {
       TK_NUMBER => "NUMBER"
       TK_PLUS => "\"+\""
@@ -40,6 +48,10 @@ pub impl Show for TokenKind with fn output(self, logger) {
     }
   )
 }
+
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend TokenKind with Debug::{to_repr}
 
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
@@ -56,6 +68,10 @@ pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
   UnexpectedEndOfInput(Int, Array[TokenKind])
 } derive(Debug)
+
+#deprecated("Use Debug::to_repr instead")
+#doc(hidden)
+pub extend ParseError with Debug::{to_repr}
 
 type YYObj = Error
 
@@ -339,7 +355,7 @@ fn[T] yy_parse(
   let mut cursor = 0
   let mut state_stack : @list.List[YYState] = @list.cons(start, @list.empty())
   let data_stack : Array[(YYObj, Int, Int)] = []
-  let mut last_pos = initial_pos.unwrap_or(tokens[0].1)
+  let mut last_pos = initial_pos.unwrap_or_else(fn() { tokens[0].1 })
   let mut state = start
   let mut lookahead : Option[(YYSymbol, (YYObj, Int, Int), Token?)] = None
   let mut last_shifted_state_stack = state_stack

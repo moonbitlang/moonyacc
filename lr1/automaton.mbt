@@ -30,20 +30,20 @@ pub(all) struct LR1ItemGroup {
 
 ///|
 pub impl Show for LR1ItemGroup with fn output(self, logger) {
-  logger.write_string("[")
+  logger <+ "["
   logger.write_object(self.core.production.num)
-  logger.write_string(", ")
+  logger <+ ", "
   self.core.production.output_with_opt_dot(logger, dot=self.core.dot)
-  logger.write_string(", ")
+  logger <+ ", "
   let mut first = true
   for lookahead in self.lookahead_set {
     if !first {
-      logger.write_string(" / ")
+      logger <+ " / "
     }
     logger.write_object(lookahead)
     first = false
   }
-  logger.write_string("]")
+  logger <+ "]"
 }
 
 ///|
@@ -91,7 +91,7 @@ pub impl Eq for LR1State with fn equal(self, other) {
 
 ///|
 pub impl Compare for LR1State with fn compare(self, other) {
-  self.num.compare(other.num)
+  Compare::compare(self.num, other.num)
 }
 
 ///|
@@ -310,7 +310,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
         symbolic_lookahead_set.interpret(state.items.kernel_lookahead_set_table)
       })
       let target_state = LR1PreState::{
-        items: { core: target_node, kernel_lookahead_set_table },
+        items: { core: target_node, kernel_lookahead_set_table, },
         state: None,
       }
       examine(target_state)
@@ -364,7 +364,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
               state.items.kernel_lookahead_set_table,
             )
           })
-          let next_items = { core: target_node, kernel_lookahead_set_table }
+          let next_items = { core: target_node, kernel_lookahead_set_table, }
           family
           .iter()
           .find_first(fn(state) { next_items.subsume(state.items) })
@@ -386,7 +386,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
   let conflicts = @hashmap2.new(capacity=16)
   fn check_add_conflict(state : LR1State, input : Lookahead) {
     match state.action.get(input) {
-      Some(Conflict(decisions)) => conflicts.set({ state, input }, decisions)
+      Some(Conflict(decisions)) => conflicts.set({ state, input, }, decisions)
       Some(_) | None => ()
     }
   }
@@ -426,5 +426,5 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
     let (production, pre_state) = entry
     (production, state_from_pre(pre_state))
   })
-  { states, starts, conflicts }
+  { states, starts, conflicts, }
 }

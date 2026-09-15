@@ -5,7 +5,7 @@ pub(all) struct SourceMap {
 
 ///|
 pub fn SourceMap::new() -> SourceMap {
-  { mappings: [] }
+  { mappings: [], }
 }
 
 ///|
@@ -25,14 +25,9 @@ pub trait SourceMapBuilder {
 pub impl SourceMapBuilder for SourceMap with fn add_mapping(
   self,
   source,
-  original_offset_in_utf8,
-  generated_offset_in_utf8,
-  length_in_utf8,
+  original_offset,
+  generated_offset,
+  length,
 ) {
-  self.mappings.push({
-    source,
-    original_offset: original_offset_in_utf8,
-    generated_offset: generated_offset_in_utf8,
-    length: length_in_utf8,
-  })
+  self.mappings.push({ source, original_offset, generated_offset, length, })
 }

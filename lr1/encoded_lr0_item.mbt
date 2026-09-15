@@ -30,7 +30,7 @@ pub fn EncodedLR0Item::decode(
 ) -> LR0Item {
   let production = grammar.productions[self.0 >> 10]
   let dot = self.0 & 0x3FF
-  { production, dot }
+  { production, dot, }
 }
 
 ///|

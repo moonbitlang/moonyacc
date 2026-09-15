@@ -9,14 +9,14 @@ formatter(ignore: [ "lexer.mbt", "parser.mbt" ])
 
 rule(
   name: "moonlex",
-  command: "moon runwasm moonbitlang/ulex@0.3.29 $input -o $output",
+  command: "moonx moonbitlang/ulex@0.3.29 -- $input -o $output",
 )
 
 dev_build(rule: "moonlex", input: "lexer.mbtx", output: "lexer.mbt")
 
 rule(
   name: "moonyacc",
-  command: "moon runwasm moonbitlang/yacc@0.7.19 --input-mode array $input -o $output",
+  command: "moonx moonbitlang/yacc@0.7.19 -- --input-mode array $input -o $output",
 )
 
 dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")

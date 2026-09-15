@@ -239,7 +239,7 @@ async fn main {
       exit(1)
     }
     err => {
-      println_to_stderr(err.to_string())
+      println_to_stderr(Show::to_string(err))
       exit(1)
     }
   }
@@ -278,7 +278,10 @@ async fn main {
     @stdio.stdout.write(output + "\n")
     match options.output_map_file {
       Some(file) =>
-        try! write_text_file(file, source_map.to_json().stringify(indent=2))
+        try! write_text_file(
+          file,
+          ToJson::to_json(source_map).stringify(indent=2),
+        )
       None => ()
     }
   } else {
@@ -286,7 +289,7 @@ async fn main {
       write_text_file(options.output_file, output)
       write_text_file(
         options.output_map_file.unwrap_or("\{options.output_file}.map.json"),
-        source_map.to_json().stringify(indent=2),
+        ToJson::to_json(source_map).stringify(indent=2),
       )
     })
   }

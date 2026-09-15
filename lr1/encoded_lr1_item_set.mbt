@@ -33,7 +33,7 @@ fn EncodedLR1ItemSet::decode_item_groups(
   .map(item => {
     let (index, item) = item
     let lookahead_set = lookahead_set_array[index]
-    { core: item, lookahead_set: lookahead_set.decode_iter(grammar) }
+    { core: item, lookahead_set: lookahead_set.decode_iter(grammar), }
   })
 }
 

@@ -6,28 +6,29 @@ struct LoggerWithCursor {
 
 ///|
 pub fn new(logger : &Logger, cursor? : Int = 0) -> LoggerWithCursor {
-  { logger, cursor }
+  { logger, cursor, }
 }
 
 ///|
+/// Return the output offset in UTF-16 code units.
 pub fn LoggerWithCursor::cursor(self : LoggerWithCursor) -> Int {
   self.cursor
 }
 
 ///|
 pub impl Logger for LoggerWithCursor with fn write_char(self, char) {
-  self.logger.write_char(char)
-  self.cursor += 1
+  Logger::write_char(self.logger, char)
+  self.cursor += char.utf16_len()
 }
 
 ///|
 pub impl Logger for LoggerWithCursor with fn write_string(self, str) {
-  self.logger.write_string(str)
+  Logger::write_string(self.logger, str)
   self.cursor += str.length()
 }
 
 ///|
 pub impl Logger for LoggerWithCursor with fn write_view(self, view) {
-  self.logger.write_view(view)
+  Logger::write_view(self.logger, view)
   self.cursor += view.length()
 }

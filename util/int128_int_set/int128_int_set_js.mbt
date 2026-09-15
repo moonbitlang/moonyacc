@@ -23,7 +23,7 @@ struct Int128IntSet {
 
 ///|
 pub fn empty() -> Int128IntSet {
-  { a: 0, b: 0, c: 0, d: 0 }
+  { a: 0, b: 0, c: 0, d: 0, }
 }
 
 ///|
@@ -43,17 +43,17 @@ pub fn Int128IntSet::is_singleton(self : Int128IntSet, key : Int) -> Bool {
 
 ///|
 pub impl Show for Int128IntSet with fn output(self, logger) {
-  logger.write_string("{")
+  Logger::write_string(logger, "{")
   let mut first = true
   for key in self {
     if first {
       first = false
     } else {
-      logger.write_string(", ")
+      Logger::write_string(logger, ", ")
     }
     logger.write_object(key)
   }
-  logger.write_string("}")
+  Logger::write_string(logger, "}")
 }
 
 ///|
@@ -149,21 +149,21 @@ pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
       d = d | (1 << (key - 96))
     }
   }
-  { a, b, c, d }
+  { a, b, c, d, }
 }
 
 ///|
 pub fn singleton(key : Int) -> Int128IntSet {
   if key < 64 {
     if key < 32 {
-      { a: 1 << key, b: 0, c: 0, d: 0 }
+      { a: 1 << key, b: 0, c: 0, d: 0, }
     } else {
-      { a: 0, b: 1 << (key - 32), c: 0, d: 0 }
+      { a: 0, b: 1 << (key - 32), c: 0, d: 0, }
     }
   } else if key < 96 {
-    { a: 0, b: 0, c: 1 << (key - 64), d: 0 }
+    { a: 0, b: 0, c: 1 << (key - 64), d: 0, }
   } else {
-    { a: 0, b: 0, c: 0, d: 1 << (key - 96) }
+    { a: 0, b: 0, c: 0, d: 1 << (key - 96), }
   }
 }
 
@@ -191,14 +191,14 @@ pub fn Int128IntSet::contains(self : Int128IntSet, key : Int) -> Bool {
 pub fn Int128IntSet::add(self : Int128IntSet, key : Int) -> Int128IntSet {
   if key < 64 {
     if key < 32 {
-      { a: self.a | (1 << key), b: self.b, c: self.c, d: self.d }
+      { a: self.a | (1 << key), b: self.b, c: self.c, d: self.d, }
     } else {
-      { a: self.a, b: self.b | (1 << (key - 32)), c: self.c, d: self.d }
+      { a: self.a, b: self.b | (1 << (key - 32)), c: self.c, d: self.d, }
     }
   } else if key < 96 {
-    { a: self.a, b: self.b, c: self.c | (1 << (key - 64)), d: self.d }
+    { a: self.a, b: self.b, c: self.c | (1 << (key - 64)), d: self.d, }
   } else {
-    { a: self.a, b: self.b, c: self.c, d: self.d | (1 << (key - 96)) }
+    { a: self.a, b: self.b, c: self.c, d: self.d | (1 << (key - 96)), }
   }
 }
 
@@ -206,14 +206,14 @@ pub fn Int128IntSet::add(self : Int128IntSet, key : Int) -> Int128IntSet {
 pub fn Int128IntSet::remove(self : Int128IntSet, key : Int) -> Int128IntSet {
   if key < 64 {
     if key < 32 {
-      { a: self.a & (1 << key).lnot(), b: self.b, c: self.c, d: self.d }
+      { a: self.a & (1 << key).lnot(), b: self.b, c: self.c, d: self.d, }
     } else {
-      { a: self.a, b: self.b & (1 << (key - 32)).lnot(), c: self.c, d: self.d }
+      { a: self.a, b: self.b & (1 << (key - 32)).lnot(), c: self.c, d: self.d, }
     }
   } else if key < 96 {
-    { a: self.a, b: self.b, c: self.c & (1 << (key - 64)).lnot(), d: self.d }
+    { a: self.a, b: self.b, c: self.c & (1 << (key - 64)).lnot(), d: self.d, }
   } else {
-    { a: self.a, b: self.b, c: self.c, d: self.d & (1 << (key - 96)).lnot() }
+    { a: self.a, b: self.b, c: self.c, d: self.d & (1 << (key - 96)).lnot(), }
   }
 }
 
