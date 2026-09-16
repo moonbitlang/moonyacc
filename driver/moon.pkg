@@ -9,3 +9,8 @@ import {
   "moonbitlang/yacc/driver/util",
   "moonbitlang/yacc/ast",
 }
+
+import {
+  "moonbitlang/yacc/codegen/gen_mbt",
+  "moonbitlang/yacc/codegen/gen_mbt_table",
+} for "test"

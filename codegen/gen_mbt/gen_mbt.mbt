@@ -766,7 +766,23 @@ fn codegen(
                   code.length(),
                 )
               } else {
-                // TODO: make source-map support this case
+                // Rewrites have no linear character correspondence. Anchor
+                // interior positions to the original start, including errors
+                // inside expressions such as $loc, and preserve the end.
+                for offset in 0..<=code.length() {
+                  let original_offset = if offset == code.length() {
+                    original_utf8_pos + original_utf8_len
+                  } else {
+                    original_utf8_pos
+                  }
+                  @codegen.SourceMapBuilder::add_mapping(
+                    source_map_builder,
+                    grammar_filename,
+                    original_offset,
+                    generated_utf8_pos + offset,
+                    0,
+                  )
+                }
               }
           }
         }

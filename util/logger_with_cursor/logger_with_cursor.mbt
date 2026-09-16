@@ -10,6 +10,7 @@ pub fn new(logger : &Logger, cursor? : Int = 0) -> LoggerWithCursor {
 }
 
 ///|
+/// Return the output offset in UTF-16 code units.
 pub fn LoggerWithCursor::cursor(self : LoggerWithCursor) -> Int {
   self.cursor
 }
@@ -17,7 +18,7 @@ pub fn LoggerWithCursor::cursor(self : LoggerWithCursor) -> Int {
 ///|
 pub impl Logger for LoggerWithCursor with fn write_char(self, char) {
   Logger::write_char(self.logger, char)
-  self.cursor += 1
+  self.cursor += char.utf16_len()
 }
 
 ///|
