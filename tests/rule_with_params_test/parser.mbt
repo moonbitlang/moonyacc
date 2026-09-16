@@ -1,10 +1,11 @@
 
+///|
 pub(all) enum Token {
   LETTER(Char)
   LBRACE
   RBRACE
 }
-
+///|
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
     LETTER(_) => TK_LETTER
@@ -13,16 +14,18 @@ pub fn Token::kind(self : Token) -> TokenKind {
   }
 }
 
+///|
 pub(all) enum TokenKind {
   TK_LETTER
   TK_LBRACE
   TK_RBRACE
 }
 
+///|
 #deprecated("Use Show::to_string or Show::output instead")
 #doc(hidden)
 pub extend TokenKind with Show::{output, to_string}
-
+///|
 pub impl Show for TokenKind with fn output(self, logger) {
   Logger::write_string(logger,
     match self {
@@ -33,10 +36,11 @@ pub impl Show for TokenKind with fn output(self, logger) {
   )
 }
 
+///|
 #deprecated("Use Debug::to_repr instead")
 #doc(hidden)
 pub extend TokenKind with Debug::{to_repr}
-
+///|
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
       TK_LETTER => Repr("LETTER")
@@ -45,31 +49,38 @@ pub impl Debug for TokenKind with fn to_repr(self) {
     }
 }
 
+///|
 pub suberror ParseError {
   UnexpectedToken(Token, (Unit, Unit), Array[TokenKind])
   UnexpectedEndOfInput(Unit, Array[TokenKind])
 }
 
+///|
 type YYObj = Error
 
+///|
 priv suberror YYObj_Void
 
+///|
 priv suberror YYObj_Char {
   YYObj_Char(Char)
 }
 
+///|
 priv suberror YYObj_String {
   YYObj_String(String)
 }
 
+///|
 priv suberror YYObj__list_List_Char_ {
   YYObj__list_List_Char_(@list.List[Char])
 }
 
+///|
 type YYState = (YYSymbol) -> YYDecision
-
+///|
 type YYAction = (Unit, ArrayView[(YYObj, Unit, Unit)]) -> YYObj
-
+///|
 priv enum YYDecision {
   Accept
   Shift(YYState)
@@ -78,6 +89,7 @@ priv enum YYDecision {
   Error
 }
 
+///|
 priv enum YYSymbol {
   T_LETTER
   T_LBRACE
@@ -87,7 +99,7 @@ priv enum YYSymbol {
   NT_loption_delimited_LBRACE_list_LETTER__RBRACE__
   EOI
 }
-
+///|
 // Workaround for EOI unused warning
 fn init {
   match (EOI : YYSymbol) {
@@ -96,6 +108,7 @@ fn init {
   }
 }
 
+///|
 // file:///./parser.mbty
 // 9|    loption(delimited("{", list(LETTER), "}")) { $1.iter().map(fn (it) { String::make(1, it) }).join("") }
 fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -103,6 +116,7 @@ fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj_String({();  _dollar1.iter().map(fn (it) { String::make(1, it) }).join("") })
 }
 
+///|
 // file:///./stdlib.mbty
 // 45|    X list(X) { $2.add($1) }
 fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -111,6 +125,7 @@ fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj__list_List_Char_({();  _dollar2.add(_dollar1) })
 }
 
+///|
 // file:///./stdlib.mbty
 // 15|    X { $1 }
 fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -119,6 +134,7 @@ fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj__list_List_Char_({();  _dollar1 })
 }
 
+///|
 // file:///./parser.mbty
 // 13|    OPEN X CLOSE { $2 }
 fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -126,18 +142,21 @@ fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj__list_List_Char_({();  _dollar2 })
 }
 
+///|
 // file:///./stdlib.mbty
 // 44|    { @list.empty() }
 fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj__list_List_Char_({();  @list.empty() })
 }
 
+///|
 // file:///./stdlib.mbty
 // 14|    { @list.empty() }
 fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj__list_List_Char_({();  @list.empty() })
 }
 
+///|
 fn yy_input(token : Token, _start_pos : Unit, _end_pos : Unit) -> (YYSymbol, YYObj) {
   match token {
     LETTER(data) => (T_LETTER, YYObj_Char(data))
@@ -146,6 +165,7 @@ fn yy_input(token : Token, _start_pos : Unit, _end_pos : Unit) -> (YYSymbol, YYO
   }
 }
 
+///|
 // [0, start → • loption(delimited(LBRACE,list(LETTER),RBRACE)), $]
 // [3, loption(delimited(LBRACE,list(LETTER),RBRACE)) → •, $]
 // [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → • LBRACE list(LETTER) RBRACE, $]
@@ -160,11 +180,13 @@ fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [5, start_prime → start •, $]
 fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
   Accept
 }
 
+///|
 // [1, list(LETTER) → •, RBRACE]
 // [2, list(LETTER) → • LETTER list(LETTER), RBRACE]
 // [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → LBRACE • list(LETTER) RBRACE, $]
@@ -177,6 +199,7 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → LBRACE list(LETTER) • RBRACE, $]
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -185,11 +208,13 @@ fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [4, loption(delimited(LBRACE,list(LETTER),RBRACE)) → LBRACE list(LETTER) RBRACE •, $]
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(3, NT_loption_delimited_LBRACE_list_LETTER__RBRACE__, yy_action_2)
 }
 
+///|
 // [1, list(LETTER) → •, RBRACE]
 // [2, list(LETTER) → • LETTER list(LETTER), RBRACE]
 // [2, list(LETTER) → LETTER • list(LETTER), RBRACE]
@@ -202,16 +227,19 @@ fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [2, list(LETTER) → LETTER list(LETTER) •, RBRACE]
 fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(2, NT_list_LETTER_, yy_action_1)
 }
 
+///|
 // [0, start → loption(delimited(LBRACE,list(LETTER),RBRACE)) •, $]
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(1, NT_start, yy_action_0)
 }
 
+///|
 fn[T] yy_parse(
   tokens : Array[(Token, Unit, Unit)],
   start : YYState,
@@ -295,6 +323,7 @@ fn[T] yy_parse(
   panic()
 }
 
+///|
 fn error(stack : @list.List[YYState], token : Token?, loc : (Unit, Unit)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
@@ -332,6 +361,7 @@ fn error(stack : @list.List[YYState], token : Token?, loc : (Unit, Unit)) -> Uni
   }
 }
 
+///|
 pub fn start(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> String raise ParseError {
   yy_parse(
     tokens,
