@@ -1,9 +1,10 @@
 
+///|
 pub(all) enum Token {
   A
   B
 }
-
+///|
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
     A => TK_A
@@ -11,15 +12,17 @@ pub fn Token::kind(self : Token) -> TokenKind {
   }
 }
 
+///|
 pub(all) enum TokenKind {
   TK_A
   TK_B
 }
 
+///|
 #deprecated("Use Show::to_string or Show::output instead")
 #doc(hidden)
 pub extend TokenKind with Show::{output, to_string}
-
+///|
 pub impl Show for TokenKind with fn output(self, logger) {
   Logger::write_string(logger,
     match self {
@@ -29,10 +32,11 @@ pub impl Show for TokenKind with fn output(self, logger) {
   )
 }
 
+///|
 #deprecated("Use Debug::to_repr instead")
 #doc(hidden)
 pub extend TokenKind with Debug::{to_repr}
-
+///|
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
       TK_A => Repr("A")
@@ -40,23 +44,28 @@ pub impl Debug for TokenKind with fn to_repr(self) {
     }
 }
 
+///|
 pub suberror ParseError {
   UnexpectedToken(Token, (Unit, Unit), Array[TokenKind])
   UnexpectedEndOfInput(Unit, Array[TokenKind])
 }
 
+///|
 type YYObj = Error
 
+///|
 priv suberror YYObj_Void
 
+///|
 priv suberror YYObj_String {
   YYObj_String(String)
 }
 
+///|
 type YYState = (YYSymbol) -> YYDecision
-
+///|
 type YYAction = (Unit, ArrayView[(YYObj, Unit, Unit)]) -> YYObj
-
+///|
 priv enum YYDecision {
   Accept
   Shift(YYState)
@@ -65,13 +74,14 @@ priv enum YYDecision {
   Error
 }
 
+///|
 priv enum YYSymbol {
   T_A
   T_B
   NT_start
   EOI
 }
-
+///|
 // Workaround for EOI unused warning
 fn init {
   match (EOI : YYSymbol) {
@@ -80,6 +90,7 @@ fn init {
   }
 }
 
+///|
 // file:///./inline.mbty
 // 13|    x { $1 }
 fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -88,6 +99,7 @@ fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj_String({();  _dollar1 })
 }
 
+///|
 // file:///./inline.mbty
 // 18|    A y B { "a" + $2 + "b" }
 fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -96,12 +108,14 @@ fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj_String({();  "a" + _dollar2 + "b" })
 }
 
+///|
 // file:///./inline.mbty
 // 22|    A A { "ya" }
 fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj_String({();  "ya" })
 }
 
+///|
 // file:///./inline.mbty
 // 13|    x { $1 }
 fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -110,6 +124,7 @@ fn yy_action_3(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj_String({();  _dollar1 })
 }
 
+///|
 // file:///./inline.mbty
 // 18|    A y B { "a" + $2 + "b" }
 fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -118,12 +133,14 @@ fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj_String({();  "a" + _dollar2 + "b" })
 }
 
+///|
 // file:///./inline.mbty
 // 23|    B B { "yb" }
 fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj_String({();  "yb" })
 }
 
+///|
 // file:///./inline.mbty
 // 13|    x { $1 }
 fn yy_action_6(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
@@ -132,12 +149,14 @@ fn yy_action_6(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
   YYObj_String({();  _dollar1 })
 }
 
+///|
 // file:///./inline.mbty
 // 17|    A { "a" }
 fn yy_action_7(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj_String({();  "a" })
 }
 
+///|
 fn yy_input(token : Token, _start_pos : Unit, _end_pos : Unit) -> (YYSymbol, YYObj) {
   match token {
     A => (T_A, YYObj_Void)
@@ -145,6 +164,7 @@ fn yy_input(token : Token, _start_pos : Unit, _end_pos : Unit) -> (YYSymbol, YYO
   }
 }
 
+///|
 // [0, start → • A, $]
 // [1, start → • A A A B, $]
 // [2, start → • A B B B, $]
@@ -157,11 +177,13 @@ fn yy_state_0(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [3, start_prime → start •, $]
 fn yy_state_1(_lookahead : YYSymbol) -> YYDecision {
   Accept
 }
 
+///|
 // [0, start → A •, $]
 // [1, start → A • A A B, $]
 // [2, start → A • B B B, $]
@@ -174,6 +196,7 @@ fn yy_state_2(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [2, start → A B • B B, $]
 fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -182,6 +205,7 @@ fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [2, start → A B B • B, $]
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -190,11 +214,13 @@ fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [2, start → A B B B •, $]
 fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(4, NT_start, yy_action_3)
 }
 
+///|
 // [1, start → A A • A B, $]
 fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -203,6 +229,7 @@ fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [1, start → A A A • B, $]
 fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
@@ -211,11 +238,13 @@ fn yy_state_7(_lookahead : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 // [1, start → A A A B •, $]
 fn yy_state_8(_lookahead : YYSymbol) -> YYDecision {
   ReduceNoLookahead(4, NT_start, yy_action_0)
 }
 
+///|
 fn[T] yy_parse(
   tokens : Array[(Token, Unit, Unit)],
   start : YYState,
@@ -299,6 +328,7 @@ fn[T] yy_parse(
   panic()
 }
 
+///|
 fn error(stack : @list.List[YYState], token : Token?, loc : (Unit, Unit)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
@@ -336,6 +366,7 @@ fn error(stack : @list.List[YYState], token : Token?, loc : (Unit, Unit)) -> Uni
   }
 }
 
+///|
 pub fn start(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> String raise ParseError {
   yy_parse(
     tokens,

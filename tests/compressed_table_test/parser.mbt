@@ -1,11 +1,12 @@
 
+///|
 pub(all) enum Token {
   NUMBER(Int)
   LPAREN
   RPAREN
   EOF
 }
-
+///|
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
     NUMBER(_) => TK_NUMBER
@@ -15,6 +16,7 @@ pub fn Token::kind(self : Token) -> TokenKind {
   }
 }
 
+///|
 pub(all) enum TokenKind {
   TK_NUMBER
   TK_LPAREN
@@ -22,10 +24,11 @@ pub(all) enum TokenKind {
   TK_EOF
 }
 
+///|
 #deprecated("Use Show::to_string or Show::output instead")
 #doc(hidden)
 pub extend TokenKind with Show::{output, to_string}
-
+///|
 pub impl Show for TokenKind with fn output(self, logger) {
   Logger::write_string(logger,
     match self {
@@ -37,10 +40,11 @@ pub impl Show for TokenKind with fn output(self, logger) {
   )
 }
 
+///|
 #deprecated("Use Debug::to_repr instead")
 #doc(hidden)
 pub extend TokenKind with Debug::{to_repr}
-
+///|
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
       TK_NUMBER => Repr("NUMBER")
@@ -50,22 +54,27 @@ pub impl Debug for TokenKind with fn to_repr(self) {
     }
 }
 
+///|
 pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
   UnexpectedEndOfInput(Int, Array[TokenKind])
 }
 
+///|
 type YYObj = Error
 
+///|
 priv suberror YYObj_Void
 
+///|
 priv suberror YYObj_Json {
  YYObj_Json(Json)
 }
+///|
 type YYState = Int
-
+///|
 type YYAction = (Int, ArrayView[(YYObj, Int, Int)]) -> YYObj
-
+///|
 priv enum YYDecision {
   Accept
   Shift(YYState)
@@ -74,8 +83,10 @@ priv enum YYDecision {
   Error
 }
 
+///|
 type YYSymbol = Int
 
+///|
 // file:///./parser.mbty
 // 11|    NUMBER                { $1 }
 fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
@@ -93,6 +104,7 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 })
 }
 
+///|
 // file:///./parser.mbty
 // 12|    LPAREN start RPAREN   { $2 }
 fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
@@ -110,6 +122,7 @@ fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 })
 }
 
+///|
 fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (YYSymbol, YYObj) {
   match token {
     NUMBER(data) => (1, YYObj_Json({
@@ -143,12 +156,16 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (YYSymbol, YYObj
   }
 }
 
+///|
 let yy_prod_lhs_table : FixedArray[Int] = [5, 5]
 
+///|
 let yy_prod_len_table : FixedArray[Int] = [1, 3]
 
+///|
 let yy_prod_act_table : FixedArray[YYAction] = [yy_action_0, yy_action_1]
 
+///|
 fn yy_decompress(input : FixedArray[Int]) -> FixedArray[Int] {
   let output = []
   let mut last = 0
@@ -165,9 +182,10 @@ fn yy_decompress(input : FixedArray[Int]) -> FixedArray[Int] {
   }
   FixedArray::from_array(output)
 }
-
+///|
 let yy_state_table : FixedArray[Int] = yy_decompress([0, 7, 4, 0, -2, 3, 0, 1, 0, -7, 7, 4, 0, -2, 5, 0, -4, 6, 0, -3, 11, 0, -2, 11, 0, -3, 10, 0, -2, 10, 0, -3])
 
+///|
 fn yy_state(state : YYState, symbol : YYSymbol) -> YYDecision {
   let encoded = yy_state_table[state * 7 + symbol]
   match encoded {
@@ -190,6 +208,7 @@ fn yy_state(state : YYState, symbol : YYSymbol) -> YYDecision {
   }
 }
 
+///|
 fn[T] yy_parse(
   tokens : Array[(Token, Int, Int)],
   start : YYState,
@@ -273,6 +292,7 @@ fn[T] yy_parse(
   panic()
 }
 
+///|
 fn error(stack : @list.List[YYState], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
@@ -310,6 +330,7 @@ fn error(stack : @list.List[YYState], token : Token?, loc : (Int, Int)) -> Unit 
   }
 }
 
+///|
 pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Json raise ParseError {
   yy_parse(
     tokens,
@@ -321,7 +342,7 @@ pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Json rais
     initial_pos?,
   )
 }
-
+///|
 fn args_to_json(args : ArrayView[(YYObj, Int, Int)]) -> Json {
   Json::array(args.iter().map((it) => {
     guard! it.0 is YYObj_Json(json)

@@ -1,3 +1,4 @@
+///|
 pub(all) enum Token {
   NUMBER(Int)
   PLUS
@@ -7,10 +8,11 @@ pub(all) enum Token {
   RPAREN
 } derive(Debug)
 
+///|
 #deprecated("Use Debug::to_repr instead")
 #doc(hidden)
 pub extend Token with Debug::{to_repr}
-
+///|
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
     NUMBER(_) => TK_NUMBER
@@ -22,6 +24,7 @@ pub fn Token::kind(self : Token) -> TokenKind {
   }
 }
 
+///|
 pub(all) enum TokenKind {
   TK_NUMBER
   TK_PLUS
@@ -31,10 +34,11 @@ pub(all) enum TokenKind {
   TK_RPAREN
 }
 
+///|
 #deprecated("Use Show::to_string or Show::output instead")
 #doc(hidden)
 pub extend TokenKind with Show::{output, to_string}
-
+///|
 pub impl Show for TokenKind with fn output(self, logger) {
   Logger::write_string(logger,
     match self {
@@ -48,10 +52,11 @@ pub impl Show for TokenKind with fn output(self, logger) {
   )
 }
 
+///|
 #deprecated("Use Debug::to_repr instead")
 #doc(hidden)
 pub extend TokenKind with Debug::{to_repr}
-
+///|
 pub impl Debug for TokenKind with fn to_repr(self) {
     match self {
       TK_NUMBER => Repr("NUMBER")

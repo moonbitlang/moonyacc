@@ -24,7 +24,7 @@ pub fn derive_code(type_name : String, traits : Array[String]) -> CodeFragment {
     let message = "Use \{qualified} instead".escape()
     Logger::write_string(
       output,
-      "\n\n#deprecated(\{message})\n#doc(hidden)\npub extend \{type_name} with \{trait_}::{\{methods}}",
+      "\n\n///|\n#deprecated(\{message})\n#doc(hidden)\npub extend \{type_name} with \{trait_}::{\{methods}}",
     )
   }
   output.to_string()
