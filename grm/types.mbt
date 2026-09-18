@@ -23,8 +23,8 @@
 // precedence, then the associativity of the terminal is used to resolve the
 // conflict. If the terminal is left associative, the reduction is chosen. If
 // the terminal is right associative, the shift is chosen. Terminals may be
-// declared to be nonassociative, also, in which case an error message is
-// produced if the associativity is need to resolve the parsing conflict.
+// declared nonassociative, in which case an equal-precedence conflict is
+// resolved by making the parser reject that lookahead with a syntax error.
 //
 // If a terminal or a rule in a shift/reduce conflict does not have a
 // precedence, then an error message is produced and the shift is chosen.

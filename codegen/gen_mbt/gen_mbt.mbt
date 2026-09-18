@@ -930,8 +930,8 @@ fn codegen(
       }
     }
     fn no_lookahead_needed() -> Bool {
-      match [..decision_groups.keys()][0] {
-        Reduce(_) | Accept => true
+      match [..decision_groups.keys()] {
+        [Reduce(_)] | [Accept] => !state.forbid_default_reduction
         _ => false
       }
     }
@@ -1193,7 +1193,7 @@ fn codegen(
           $|            Reduce(count, symbol, action)
           $|            | ReduceNoLookahead(count, symbol, action) => continue count, symbol, action
           $|            _ => panic()
-          $|          } 
+          $|          }
           $|        }
           $|      }
           $|      Error => {

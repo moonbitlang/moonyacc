@@ -1,0 +1,12 @@
+import {
+  "moonbitlang/core/list",
+}
+
+formatter(ignore: [ "parser.mbt" ])
+
+rule(
+  name: "moonyacc",
+  command: "moon run --target wasm $mod_dir/.. -- --input-mode array $input -o $output",
+)
+
+dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")

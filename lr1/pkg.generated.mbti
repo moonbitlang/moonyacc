@@ -86,6 +86,7 @@ pub(all) struct LR1State {
   items : EncodedLR1ItemSet
   goto : @sorted_map.SortedMap[@grm.Symbol, LR1State]
   action : @sorted_map.SortedMap[Lookahead, Decision]
+  mut forbid_default_reduction : Bool
   mut stamp : @stamp.Stamp
 }
 pub fn LR1State::iter_item_groups(Self) -> Iter[LR1ItemGroup]
@@ -104,7 +105,6 @@ pub impl Show for Lookahead
 pub(all) enum ResolveConflictError {
   Reduce_conflict_resolved_by_presentation_order(LR1State, Lookahead, Array[@grm.Production], @grm.Production)
   Shift_reduce_conflict_resolved_without_precedence(LR1State, Lookahead, LR1State, @grm.Production)
-  Shift_reduce_conflict_not_resolved_because_of_non_assoc(LR1State, Lookahead, LR1State, @grm.Production)
 }
 
 // Type aliases

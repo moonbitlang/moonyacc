@@ -982,8 +982,8 @@ fn codegen(
         _ => ()
       }
     }
-    let no_lookahead_needed = match [..decision_groups.keys()][0] {
-      Reduce(_) | Accept => true
+    let no_lookahead_needed = match [..decision_groups.keys()] {
+      [Reduce(_)] | [Accept] => !state.forbid_default_reduction
       _ => false
     }
     fn to_codegen_decision(decision : @lr1.Decision?) -> CodegenDecision {

@@ -459,7 +459,7 @@ fn[T] yy_parse(
             Reduce(count, symbol, action)
             | ReduceNoLookahead(count, symbol, action) => continue count, symbol, action
             _ => panic()
-          } 
+          }
         }
       }
       Error => {
