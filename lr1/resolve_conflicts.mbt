@@ -26,12 +26,6 @@ pub(all) enum ResolveConflictError {
     LR1State,
     @grm.Production
   )
-  Shift_reduce_conflict_not_resolved_because_of_non_assoc(
-    LR1State,
-    Lookahead,
-    LR1State,
-    @grm.Production
-  )
 }
 
 ///|
@@ -60,7 +54,7 @@ pub fn resolve_conflicts(
     })
     let best_reduce = reduce[0]
     let decision = match shift {
-      [] => Ok(Reduce(best_reduce))
+      [] => Some(Reduce(best_reduce))
       [(input, shift_state)] => {
         let term_prec = match input {
           Input(term) => term.prec
@@ -73,25 +67,20 @@ pub fn resolve_conflicts(
                 state, input, shift_state, best_reduce,
               ),
             )
-            Ok(Shift(shift_state))
+            Some(Shift(shift_state))
           }
-          (None, Some(_)) => Ok(Reduce(best_reduce))
-          (Some(_), None) => Ok(Shift(shift_state))
+          (None, Some(_)) => Some(Reduce(best_reduce))
+          (Some(_), None) => Some(Shift(shift_state))
           (Some((prec1, assoc1)), Some(prec2)) =>
             if prec1 > prec2 {
-              Ok(Shift(shift_state))
+              Some(Shift(shift_state))
             } else if prec2 > prec1 {
-              Ok(Reduce(best_reduce))
+              Some(Reduce(best_reduce))
             } else {
               match assoc1 {
-                LeftAssoc => Ok(Reduce(best_reduce))
-                RightAssoc => Ok(Shift(shift_state))
-                NonAssoc =>
-                  Err(
-                    Shift_reduce_conflict_not_resolved_because_of_non_assoc(
-                      state, input, shift_state, best_reduce,
-                    ),
-                  )
+                LeftAssoc => Some(Reduce(best_reduce))
+                RightAssoc => Some(Shift(shift_state))
+                NonAssoc => None
               }
             }
         }
@@ -99,7 +88,7 @@ pub fn resolve_conflicts(
       _ => panic()
     }
     if reduce.length() >= 2 &&
-      decision is Ok(Reduce(prod)) &&
+      decision is Some(Reduce(prod)) &&
       prod.num == best_reduce.num {
       errors.push(
         Reduce_conflict_resolved_by_presentation_order(
@@ -108,8 +97,12 @@ pub fn resolve_conflicts(
       )
     }
     match decision {
-      Ok(decision) => state.action[input] = decision
-      Err(error) => errors.push(error)
+      Some(decision) => state.action[input] = decision
+      None => {
+        // Resolve %nonassoc by rejecting this lookahead at parse time.
+        state.action.remove(input)
+        state.forbid_default_reduction = true
+      }
     }
   }
   errors

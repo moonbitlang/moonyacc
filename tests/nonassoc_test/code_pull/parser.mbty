@@ -1,0 +1,14 @@
+%position<Int>
+%token<Int> NUMBER
+%token EQ EOF
+%nonassoc EQ
+%start<Int> start
+%type<Int> expr
+
+%%
+
+start: expr EOF { $1 };
+
+expr:
+  | NUMBER { $1 }
+  | expr EQ expr { $1 + $3 };

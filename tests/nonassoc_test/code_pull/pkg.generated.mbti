@@ -1,0 +1,34 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc_tests/nonassoc_test/code_pull"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn start(() -> (Token, Int, Int), Int) -> Int raise ParseError
+
+// Errors
+pub suberror ParseError {
+  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
+}
+
+// Types and methods
+pub(all) enum Token {
+  NUMBER(Int)
+  EQ
+  EOF
+}
+pub fn Token::kind(Self) -> TokenKind
+
+pub(all) enum TokenKind {
+  TK_NUMBER
+  TK_EQ
+  TK_EOF
+}
+pub impl Show for TokenKind
+pub impl @debug.Debug for TokenKind
+
+// Type aliases
+
+// Traits

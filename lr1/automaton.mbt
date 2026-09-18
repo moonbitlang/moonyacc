@@ -81,6 +81,8 @@ pub(all) struct LR1State {
   items : EncodedLR1ItemSet
   goto : @sorted_map.SortedMap[@grm.Symbol, LR1State]
   action : @sorted_map.SortedMap[Lookahead, Decision]
+  // A %nonassoc error must not be replaced by a reduction without lookahead.
+  mut forbid_default_reduction : Bool
   mut stamp : @stamp.T
 }
 
@@ -327,6 +329,7 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
           items: pre_state.items,
           goto: SortedMap([]),
           action: SortedMap([]),
+          forbid_default_reduction: false,
           stamp: @stamp.initial(),
         }
         next_state_num += 1

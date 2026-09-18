@@ -300,10 +300,6 @@ pub fn compile(
         println_to_stderr("Reduce conflict resolved by presentation order")
       Shift_reduce_conflict_resolved_without_precedence(_) =>
         println_to_stderr("Shift-reduce conflict resolved without precedence")
-      Shift_reduce_conflict_not_resolved_because_of_non_assoc(_) =>
-        println_to_stderr(
-          "Shift-reduce conflict not resolved because of non-associativity",
-        )
     }
   }
   let meta : @codegen.MetaProvider = {
