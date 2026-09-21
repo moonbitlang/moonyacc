@@ -1,19 +1,10 @@
 import {
   "moonbitlang/yacc/ast",
-  "moonbitlang/ulex-runtime/lexbuf",
-  "moonbitlang/core/int",
   "moonbitlang/core/list",
   "moonbitlang/core/string",
 }
 
-formatter(ignore: [ "lexer.mbt", "parser.mbt" ])
-
-rule(
-  name: "moonlex",
-  command: "moonx moonbitlang/ulex@0.3.29 -- $input -o $output",
-)
-
-dev_build(rule: "moonlex", input: "lexer.mbtx", output: "lexer.mbt")
+formatter(ignore: [ "parser.mbt" ])
 
 rule(
   name: "moonyacc",
