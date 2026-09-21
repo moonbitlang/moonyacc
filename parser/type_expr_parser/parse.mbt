@@ -20,10 +20,10 @@ suberror ParseOrLexError {
 
 ///|
 pub fn parse(str : String) -> @ast.TypeExpr raise ParseOrLexError {
-  let lexbuf = @lexbuf.StringLexbuf::from_string(str)
+  let lexer = new_lexer(str)
   let tokens = []
   while true {
-    let triple = token(lexbuf) catch { err => raise LexError(err) }
+    let triple = lexer.next_token() catch { err => raise LexError(err) }
     tokens.push(triple)
     if triple.0 is EOF {
       break

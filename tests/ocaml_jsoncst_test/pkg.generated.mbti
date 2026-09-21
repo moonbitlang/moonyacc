@@ -3,7 +3,6 @@ package "moonbitlang/yacc_tests/ocaml_jsoncst_test"
 
 import {
   "moonbitlang/core/debug",
-  "moonbitlang/ulex-runtime/lexbuf",
 }
 
 // Values
@@ -31,7 +30,10 @@ pub suberror ParseError {
 }
 
 // Types and methods
-pub(all) struct Lexer(@lexbuf.StringLexbuf)
+pub(all) struct Lexer {
+  base : StringView
+  mut rest : StringView
+}
 pub fn Lexer::next_token(Self) -> (Token, Int, Int)
 
 pub(all) enum Token {
