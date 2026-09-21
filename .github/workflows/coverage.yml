@@ -1,0 +1,113 @@
+name: coverage
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+env:
+  MOON_COLLECT_REF_CYCLE: "1"
+  MOON_WASM_NEW_ALLOCATOR: "1"
+  MOON_COVE_REPORT_ENABLED: "1"
+
+jobs:
+  coverage:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+          - windows-latest
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - name: Disable auto CRLF
+        if: ${{ runner.os == 'Windows' }}
+        run: git config --global core.autocrlf false
+
+      - uses: actions/checkout@v6
+
+      - name: Setup Moon
+        uses: moonbit-community/setup-moonbit@main
+        with:
+          version: stable
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '>=22.4.0'
+
+      - name: Setup MSVC
+        if: ${{ runner.os == 'Windows' }}
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: moon version
+        run: |
+          moon version --all
+          moonrun --version
+
+      - name: moon update
+        run: moon update
+
+      - name: moon test with coverage
+        run: |
+          moon test --enable-coverage --target all
+          moon -C tests test --enable-coverage --target all
+
+      - uses: actions/upload-artifact@v6
+        with:
+          name: coverage-data-${{ matrix.os }}
+          path: |
+            _build/moonbit_coverage_*
+            tests/_build/moonbit_coverage_*
+          if-no-files-found: error
+
+  report:
+    needs: coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Moon
+        uses: moonbit-community/setup-moonbit@main
+        with:
+          version: stable
+
+      - name: moon update
+        run: moon update
+
+      - name: Generate source traces
+        run: |
+          moon test --enable-coverage --target all --build-only
+          moon -C tests test --enable-coverage --target all --build-only
+
+      - uses: actions/download-artifact@v7
+        with:
+          pattern: coverage-data-*
+          merge-multiple: true
+
+      - name: Normalize Windows coverage data
+        run: |
+          find _build tests/_build -type f -name 'moonbit_coverage_*' -exec sed -i 's/\r//g' {} +
+
+      - name: Coverage summary
+        run: moon coverage report -f summary
+
+      - name: Upload coverage to Coveralls
+        run: |
+          moon coverage report \
+            -f coveralls \
+            -o _build/coveralls.json \
+            --service-name github \
+            --service-job-id "$GITHUB_RUN_NUMBER" \
+            --service-pull-request "$PULL_REQUEST_NUMBER" \
+            --send-to coveralls
+        env:
+          COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PULL_REQUEST_NUMBER: ${{ github.event.number }}
