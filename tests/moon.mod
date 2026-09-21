@@ -2,10 +2,6 @@ name = "moonbitlang/yacc_tests"
 
 version = "0.7.13"
 
-import {
-  "moonbitlang/ulex-runtime@0.4.3",
-}
-
 readme = "README.md"
 
 repository = "https://github.com/moonbitlang/moonyacc"
