@@ -51,6 +51,9 @@ jobs:
           moon version --all
           moonrun --version
 
+      - name: moon update
+        run: moon update
+
       - name: moon test with coverage
         run: |
           moon test --enable-coverage --target all
@@ -75,6 +78,9 @@ jobs:
         uses: moonbit-community/setup-moonbit@main
         with:
           version: stable
+
+      - name: moon update
+        run: moon update
 
       - name: Generate source traces
         run: |
