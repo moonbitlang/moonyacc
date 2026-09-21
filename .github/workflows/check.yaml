@@ -8,6 +8,11 @@ on:
       - main
   pull_request:
 
+env:
+  MOON_COLLECT_REF_CYCLE: "1"
+  MOON_WASM_NEW_ALLOCATOR: "1"
+  MOON_COVE_REPORT_ENABLED: "1"
+
 jobs:
   check:
     strategy:
