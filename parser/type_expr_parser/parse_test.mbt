@@ -13,6 +13,9 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+using @type_expr_parser {parse}
+
+///|
 test {
   debug_inspect(
     parse("Int"),
