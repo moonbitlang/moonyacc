@@ -20,7 +20,10 @@ fn source_offset(base : StringView, view : StringView) -> Int {
 }
 
 ///|
-fn skip_nested_comment(input : StringView) -> StringView raise LexError {
+fn Lexer::skip_nested_comment(
+  self : Lexer,
+  input : StringView,
+) -> StringView raise LexError {
   for input = input, depth = 1 {
     lexmatch input with longest {
       (re"^[(][*]", after=rest) => continue rest, depth + 1
@@ -31,13 +34,19 @@ fn skip_nested_comment(input : StringView) -> StringView raise LexError {
           continue rest, depth - 1
         }
       (re"^.", after=rest) => continue rest, depth
-      re"^$" => raise UnexpectedEndOfFile
+      re"^$" => {
+        self.rest = input
+        raise UnexpectedEndOfFile
+      }
     }
   }
 }
 
 ///|
-fn scan_angle_code(input : StringView) -> (StringView, String) raise LexError {
+fn Lexer::scan_angle_code(
+  self : Lexer,
+  input : StringView,
+) -> (StringView, String) raise LexError {
   let buf = StringBuilder()
   for input = input {
     lexmatch input with longest {
@@ -46,13 +55,19 @@ fn scan_angle_code(input : StringView) -> (StringView, String) raise LexError {
         buf.write_char(ch)
         continue rest
       }
-      re"^$" => raise UnexpectedEndOfFile
+      re"^$" => {
+        self.rest = input
+        raise UnexpectedEndOfFile
+      }
     }
   }
 }
 
 ///|
-fn scan_percent_code(input : StringView) -> (StringView, String) raise LexError {
+fn Lexer::scan_percent_code(
+  self : Lexer,
+  input : StringView,
+) -> (StringView, String) raise LexError {
   let buf = StringBuilder()
   for input = input {
     lexmatch input with longest {
@@ -61,15 +76,18 @@ fn scan_percent_code(input : StringView) -> (StringView, String) raise LexError 
         buf.write_char(ch)
         continue rest
       }
-      re"^$" => raise UnexpectedEndOfFile
+      re"^$" => {
+        self.rest = input
+        raise UnexpectedEndOfFile
+      }
     }
   }
 }
 
 ///|
-fn scan_action_code(
+fn Lexer::scan_action_code(
+  self : Lexer,
   input : StringView,
-  base : StringView,
   code_base : Int,
 ) -> (StringView, String, Array[@ast.SubstItem]) raise LexError {
   let buf = StringBuilder()
@@ -93,8 +111,8 @@ fn scan_action_code(
           err => abort(Show::to_string(err))
         }
         subst.push({
-          start: source_offset(base, input) - code_base,
-          end: source_offset(base, rest) - code_base,
+          start: source_offset(self.base, input) - code_base,
+          end: source_offset(self.base, rest) - code_base,
           desc: Dollar(index),
         })
         continue rest, depth
@@ -119,8 +137,8 @@ fn scan_action_code(
           Name(argument.to_owned())
         }
         subst.push({
-          start: source_offset(base, input) - code_base,
-          end: source_offset(base, rest) - code_base,
+          start: source_offset(self.base, input) - code_base,
+          end: source_offset(self.base, rest) - code_base,
           desc: match kind {
             "startpos" => StartPosOf(arg)
             "endpos" => EndPosOf(arg)
@@ -136,8 +154,8 @@ fn scan_action_code(
       ) => {
         buf.write_string(raw.to_owned())
         subst.push({
-          start: source_offset(base, input) - code_base,
-          end: source_offset(base, rest) - code_base,
+          start: source_offset(self.base, input) - code_base,
+          end: source_offset(self.base, rest) - code_base,
           desc: match kind {
             "startpos" => StartPos
             "endpos" => EndPos
@@ -157,7 +175,10 @@ fn scan_action_code(
         buf.write_char(ch)
         continue rest, depth
       }
-      re"^$" => raise UnexpectedEndOfFile
+      re"^$" => {
+        self.rest = input
+        raise UnexpectedEndOfFile
+      }
     }
   }
 }
@@ -175,7 +196,7 @@ pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
     lexmatch input with longest {
       (re"^[ \t\r\n]+", after=rest) => continue rest
       (re"^[(][*][)]", after=rest) => continue rest
-      (re"^[(][*]", after=rest) => continue skip_nested_comment(rest)
+      (re"^[(][*]", after=rest) => continue self.skip_nested_comment(rest)
       (re"^/[*]([^/]|/[^*])*[*]/", after=rest) => continue rest
       (re"^//[^\r\n]*(?:\r|\n)?", after=rest) => continue rest
       (
@@ -276,7 +297,7 @@ pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
       }
       (re"^%[{]", after=rest) => {
         let code_start = source_offset(self.base, rest)
-        let (rest, code) = scan_percent_code(rest)
+        let (rest, code) = self.scan_percent_code(rest)
         let end = source_offset(self.base, rest)
         self.rest = rest
         break (
@@ -288,7 +309,7 @@ pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
         )
       }
       (re"^<", after=rest) => {
-        let (rest, code) = scan_angle_code(rest)
+        let (rest, code) = self.scan_angle_code(rest)
         self.rest = rest
         break (LANGLE_CODE_RANGLE(code), start, source_offset(self.base, rest))
       }
@@ -318,7 +339,7 @@ pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
       }
       (re"^[{]", after=rest) => {
         let code_base = source_offset(self.base, rest)
-        let (rest, code, subst) = scan_action_code(rest, self.base, code_base)
+        let (rest, code, subst) = self.scan_action_code(rest, code_base)
         self.rest = rest
         break (
           LBRACE_CODE_RBRACE((code, code_base, subst)),
