@@ -169,14 +169,36 @@ test "lexer handles nested comments without recursion" {
 }
 
 ///|
-test "lexer reports unterminated nested comments" {
-  let lexer = @parser.new_lexer("(* outer (* nested *)")
+fn assert_unterminated_lexer_reaches_eof(input : String) -> Unit raise {
+  let lexer = @parser.new_lexer(input)
   try lexer.next_token() catch {
     UnexpectedEndOfFile => ()
     _ => @test.fail("expected UnexpectedEndOfFile")
   } noraise {
-    _ => @test.fail("expected an unterminated-comment error")
+    _ => @test.fail("expected an unterminated-structure error")
   }
+  match (try! lexer.next_token()) {
+    (EOF, start, end) => {
+      @test.assert_eq(start, input.length())
+      @test.assert_eq(end, input.length())
+    }
+    _ => @test.fail("expected EOF after the unterminated-structure error")
+  }
+}
+
+///|
+test "lexer commits EOF after an unterminated nested comment" {
+  assert_unterminated_lexer_reaches_eof("(* 😀 outer (* nested *)")
+}
+
+///|
+test "lexer commits EOF after unterminated angle code" {
+  assert_unterminated_lexer_reaches_eof("<type expression")
+}
+
+///|
+test "lexer commits EOF after unterminated percent code" {
+  assert_unterminated_lexer_reaches_eof("%{header code")
 }
 
 ///|
@@ -207,14 +229,8 @@ test "lexer scans nested actions and substitution offsets" {
 }
 
 ///|
-test "lexer reports unterminated actions" {
-  let lexer = @parser.new_lexer("{ outer { nested }")
-  try lexer.next_token() catch {
-    UnexpectedEndOfFile => ()
-    _ => @test.fail("expected UnexpectedEndOfFile")
-  } noraise {
-    _ => @test.fail("expected an unterminated-action error")
-  }
+test "lexer commits EOF after an unterminated nested action" {
+  assert_unterminated_lexer_reaches_eof("{ outer { nested }")
 }
 
 ///|
