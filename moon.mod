@@ -3,7 +3,7 @@ name = "moonbitlang/yacc"
 version = "0.7.22"
 
 import {
-  "moonbitlang/async@0.20.3",
+  "moonbitlang/async@0.22.4",
 }
 
 readme = "README.md"
