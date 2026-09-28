@@ -98,7 +98,12 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
       }
     }
     let clause = action.original_clause_info
-    let lines = clause.code.split("\n").to_array()
+    // Normalize preview line endings before splitting; otherwise a trailing
+    // CR becomes an extra line when the comment renderer processes it.
+    let lines = clause.code
+      .replace_all(old="\r\n", new="\n")
+      .split("\n")
+      .to_array()
     let digits = Show::to_string(clause.line + lines.length()).length()
     let comments = ["file:///./" + clause.file]
     for i, line in lines {
