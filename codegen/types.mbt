@@ -31,9 +31,6 @@ pub(all) enum InputMode {
 }
 
 ///|
-pub type CodeFragment = String
-
-///|
 pub(all) struct ProductionMeta {
   action : @elab.Action
 }
@@ -51,8 +48,8 @@ pub(all) struct NonTerminalMeta {
 
 ///|
 pub(all) struct MetaProvider {
-  header : @immut/vector.Vector[(CodeFragment, (Int, Int)?)]
-  footer : @immut/vector.Vector[(CodeFragment, (Int, Int)?)]
+  header : @immut/vector.Vector[@elab.CodeChunk]
+  footer : @immut/vector.Vector[@elab.CodeChunk]
   position_data_type : @elab.TypeExpr
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta

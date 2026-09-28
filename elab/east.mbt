@@ -103,10 +103,32 @@ pub(all) struct Clause {
   action : Action
 }
 
-// (code, (utf8_pos, utf8_len)?)
+// (code, (UTF-16 offset, UTF-16 length)?)
 
 ///|
 pub type CodeChunk = (String, (Int, Int)?)
+
+///|
+/// Resolved names stay stable when inlining changes their binding subjects.
+pub(all) enum ActionReference {
+  Binding(String)
+  Location(String, String)
+}
+
+///|
+/// User text and substitution origins use UTF-16 code-unit offsets.
+pub(all) enum ActionPiece {
+  Text(String, offset~ : Int)
+  Reference(ActionReference, offset~ : Int, length~ : Int)
+}
+
+///|
+/// Generated actions retain their meaning until the backend chooses syntax.
+pub(all) enum ActionBody {
+  Default
+  User(Array[ActionPiece])
+  JsonCst(name~ : String, rule_index~ : Int, clause_index~ : Int)
+}
 
 ///|
 pub(all) struct Action {
@@ -115,7 +137,7 @@ pub(all) struct Action {
   type_ : TypeExpr
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, Code)]
-  body : Array[CodeChunk]
+  body : ActionBody
   original_clause_info : OriginalClauseInfo
 }
 

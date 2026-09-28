@@ -30,8 +30,24 @@ pub(all) struct Action {
   type_ : TypeExpr
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, String)]
-  body : Array[(String, (Int, Int)?)]
+  body : ActionBody
   original_clause_info : OriginalClauseInfo
+}
+
+pub(all) enum ActionBody {
+  Default
+  User(Array[ActionPiece])
+  JsonCst(name~ : String, rule_index~ : Int, clause_index~ : Int)
+}
+
+pub(all) enum ActionPiece {
+  Text(String, offset~ : Int)
+  Reference(ActionReference, offset~ : Int, length~ : Int)
+}
+
+pub(all) enum ActionReference {
+  Binding(String)
+  Location(String, String)
 }
 
 pub(all) enum Associativity {

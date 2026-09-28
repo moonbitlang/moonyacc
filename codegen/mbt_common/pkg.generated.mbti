@@ -1,0 +1,49 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc/codegen/mbt_common"
+
+import {
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/codegen/mbt_ast",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/lr1",
+  "moonbitlang/yacc/util/array_multimap",
+}
+
+// Values
+pub fn call(String, Array[@mbt_ast.Expr]) -> @mbt_ast.Expr
+
+pub fn entry_point(name~ : String, result~ : @elab.TypeExpr, position~ : @elab.TypeExpr, state~ : @mbt_ast.Expr, unbox~ : String, input_mode~ : @codegen.InputMode) -> @mbt_ast.Item
+
+pub fn named_type(String, Array[@elab.TypeExpr]) -> @elab.TypeExpr
+
+pub fn token_items(Array[@grm.Terminal], (String) -> @codegen.TerminalMeta, derive_map~ : @array_multimap.T[String, String]) -> Array[@mbt_ast.Item]
+
+pub fn type_ident(@elab.TypeExpr) -> String
+
+pub fn value_block(@mbt_ast.Expr) -> @mbt_ast.Block
+
+// Errors
+
+// Types and methods
+pub struct Context {
+  // private fields
+}
+pub fn Context::action_id(Self, @elab.Action) -> Int
+pub fn Context::action_items(Self) -> Array[@mbt_ast.Item]
+pub fn Context::action_runtime(Self) -> Array[@mbt_ast.Item]
+pub fn Context::footer(Self) -> Array[@mbt_ast.Item]
+pub fn Context::input_function(Self, Engine) -> @mbt_ast.Item
+pub fn Context::new(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, filename~ : String, mode~ : @codegen.Mode, input_mode~ : @codegen.InputMode) -> Self
+pub fn Context::parser_runtime(Self, Engine) -> Array[@mbt_ast.Item]
+pub fn Context::prelude(Self, external_tokens~ : Bool) -> Array[@mbt_ast.Item]
+pub fn Context::runtime_types(Self, Engine) -> Array[@mbt_ast.Item]
+
+pub(all) enum Engine {
+  Code
+  Table
+}
+
+// Type aliases
+
+// Traits

@@ -1,0 +1,12 @@
+import {
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/codegen/mbt_ast",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/lr1",
+  "moonbitlang/yacc/util/stamp",
+  "moonbitlang/yacc/util/hashmap2",
+  "moonbitlang/yacc/util/default_hashmap",
+  "moonbitlang/yacc/util/array_multimap",
+  "moonbitlang/core/sorted_set",
+}
