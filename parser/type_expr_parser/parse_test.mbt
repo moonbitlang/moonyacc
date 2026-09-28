@@ -15,7 +15,7 @@
 ///|
 test {
   debug_inspect(
-    parse("Int"),
+    @type_expr_parser.parse("Int"),
     content=(
       #|Constr(pkg=None, "Int", [])
     ),
@@ -25,7 +25,7 @@ test {
 ///|
 test {
   debug_inspect(
-    parse("Array[Int]"),
+    @type_expr_parser.parse("Array[Int]"),
     content=(
       #|Constr(pkg=None, "Array", [Constr(pkg=None, "Int", [])])
     ),
@@ -35,7 +35,7 @@ test {
 ///|
 test {
   debug_inspect(
-    parse("Array[\r\n  Int\r\n]"),
+    @type_expr_parser.parse("Array[\r\n  Int\r\n]"),
     content=(
       #|Constr(pkg=None, "Array", [Constr(pkg=None, "Int", [])])
     ),
@@ -45,7 +45,7 @@ test {
 ///|
 test {
   debug_inspect(
-    parse("Array[(Int, Int)]"),
+    @type_expr_parser.parse("Array[(Int, Int)]"),
     content=(
       #|Constr(
       #|  pkg=None,
@@ -59,7 +59,7 @@ test {
 ///|
 test {
   debug_inspect(
-    parse("Array[(Int, Map[String, (Int, Int) -> Int])]"),
+    @type_expr_parser.parse("Array[(Int, Map[String, (Int, Int) -> Int])]"),
     content=(
       #|Constr(
       #|  pkg=None,
