@@ -1,0 +1,6 @@
+import {
+  "moonbitlang/yacc/codegen/mbt_ast",
+  "moonbitlang/yacc/elab",
+}
+
+pkgtype(kind: "executable")

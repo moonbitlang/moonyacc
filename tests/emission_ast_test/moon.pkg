@@ -1,0 +1,12 @@
+formatter(ignore: [ "generated.mbt" ])
+
+rule(
+  name: "emission_ast",
+  command: "moon run --target wasm $mod_dir/../internal/emit_ast_fixture > $output",
+)
+
+dev_build(
+  rule: "emission_ast",
+  input: "../../internal/emit_ast_fixture/main.mbt",
+  output: "generated.mbt",
+)

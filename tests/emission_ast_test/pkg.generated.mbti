@@ -1,0 +1,57 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc_tests/emission_ast_test"
+
+// Values
+pub fn bit_precedence() -> Bool
+
+pub fn bump(Env) -> Int
+
+pub fn char_literal() -> Char
+
+pub fn from_field(Env) -> Int
+
+pub fn from_method(Env) -> Int
+
+pub fn grouping() -> Int
+
+pub fn[T] identity(T) -> T
+
+pub fn identity_reader() -> (Int) -> Int
+
+pub fn literal() -> String
+
+pub fn loop_result(Int) -> Int
+
+pub fn make_env(Int) -> Env
+
+pub fn make_reader() -> (Int) -> Int
+
+pub fn positive(Int) -> Int raise Failure
+
+pub fn show_ready() -> String
+
+pub fn sum_squares(Int) -> Int
+
+pub fn sum_tail(Array[Int]) -> Int
+
+pub fn table_value() -> Int
+
+pub fn user_code() -> Int
+
+pub fn walk(Int) -> Int
+
+// Errors
+pub suberror Failure {
+  Failed(Int)
+}
+
+// Types and methods
+pub(all) struct Env {
+  read : (Int) -> Int
+  mut value : Int
+}
+
+// Type aliases
+pub type Reader = (Int) -> Int
+
+// Traits

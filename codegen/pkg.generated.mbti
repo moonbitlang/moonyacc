@@ -11,7 +11,6 @@ import {
 }
 
 // Values
-pub fn derive_code(String, Array[String]) -> String
 
 // Errors
 
@@ -68,12 +67,9 @@ pub(all) enum TokenPayloadRewrite {
 }
 
 // Type aliases
-pub type CodeFragment = String
 
 // Traits
 pub(open) trait CodeGenerator {
-  fn void_type(Self) -> String
-  fn void_action_code(Self) -> String
   fn codegen_tokens(Self, Array[@grm.Terminal], (String) -> TerminalMeta, &Logger, no_comments~ : Bool, derive_map~ : @array_multimap.T[String, String]) -> Unit
   fn codegen(Self, @grm.Grammar, @lr1.Automaton, MetaProvider, @logger_with_cursor.LoggerWithCursor, source_map_builder~ : &SourceMapBuilder?, grammar_filename~ : String, external_tokens~ : Bool, no_comments~ : Bool, mode~ : Mode, input_mode~ : InputMode) -> Unit
 }

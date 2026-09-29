@@ -25,23 +25,25 @@ test "source maps preserve rewritten references and their interior positions" {
     ("$sloc", "(_symbol_start_pos, _end_pos)"),
     ("$startpos(" + binder + ")", "_start_pos_of_item0"),
   ]
+  let marker = "let _source_map_marker = ();"
   for generator in [@gen_mbt.generator, @gen_mbt_table.generator] {
     for rewrite in rewrites {
       let (reference, replacement) = rewrite
       for padding in ["", " "] {
         let source_map = @codegen.SourceMap::new()
         let generated = @driver.compile(
-          prefix + padding + reference + padding + "};\n",
+          prefix + marker + padding + reference + padding + "};\n",
           filename="parser.mbty",
           source_map_builder=source_map,
           generator~,
         )
-        let body_prefix = "({(); " + padding
+        // Locate source-owned text, independent of the renderer's wrappers.
+        let body_prefix = marker + padding
         let generated_start = generated
-          .find(body_prefix + replacement + padding + "})")
+          .find(body_prefix + replacement + padding)
           .unwrap() +
           body_prefix.length()
-        let original_start = prefix.length() + padding.length()
+        let original_start = prefix.length() + body_prefix.length()
         let original_end = original_start + reference.length()
         assert_eq(original_offset(source_map, generated_start), original_start)
         assert_eq(

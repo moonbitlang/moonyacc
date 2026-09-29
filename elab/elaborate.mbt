@@ -462,8 +462,7 @@ fn elaborate_action(
     }
   }
 
-  let body : Array[(Code, (Int, Int)?)] = []
-  match json_cst {
+  let body : ActionBody = match json_cst {
     No => {
       for index, item in items {
         match item {
@@ -473,16 +472,16 @@ fn elaborate_action(
         }
       }
       match ast_action.code {
-        None => body.push(("()", None))
+        None => Default
         Some(code) => {
+          let pieces : Array[ActionPiece] = []
           let mut last_index = 0
           for item in code.subst {
             if item.start > last_index {
-              let len = item.start - last_index
-              body.push(
-                (
+              pieces.push(
+                Text(
                   code.code[last_index:item.start].to_owned(),
-                  Some((code.utf8_pos + last_index, len)),
+                  offset=code.utf8_pos + last_index,
                 ),
               )
             }
@@ -490,60 +489,49 @@ fn elaborate_action(
               item.desc,
               (code.utf8_pos + item.start, code.utf8_pos + item.end),
             )
-            body.push(
-              (
+            pieces.push(
+              Reference(
                 match item.desc {
-                  Dollar(index) => "_dollar\{index}"
-                  StartPos => "_start_pos"
-                  EndPos => "_end_pos"
-                  Loc => "(_start_pos, _end_pos)"
+                  Dollar(index) => Binding("_dollar\{index}")
+                  StartPos => Binding("_start_pos")
+                  EndPos => Binding("_end_pos")
+                  Loc => Location("_start_pos", "_end_pos")
                   StartPosOf(arg) =>
-                    "_start_pos_of_item\{item_ident_to_index(arg)}"
-                  EndPosOf(arg) => "_end_pos_of_item\{item_ident_to_index(arg)}"
+                    Binding("_start_pos_of_item\{item_ident_to_index(arg)}")
+                  EndPosOf(arg) =>
+                    Binding("_end_pos_of_item\{item_ident_to_index(arg)}")
                   LocOf(arg) => {
                     let index = item_ident_to_index(arg)
-                    "(_start_pos_of_item\{index}, _end_pos_of_item\{index})"
+                    Location(
+                      "_start_pos_of_item\{index}",
+                      "_end_pos_of_item\{index}",
+                    )
                   }
-                  SymbolStartPos => "_symbol_start_pos"
-                  Sloc => "(_symbol_start_pos, _end_pos)"
+                  SymbolStartPos => Binding("_symbol_start_pos")
+                  Sloc => Location("_symbol_start_pos", "_end_pos")
                 },
-                Some((code.utf8_pos + item.start, item.end - item.start)),
+                offset=code.utf8_pos + item.start,
+                length=item.end - item.start,
               ),
             )
             last_index = item.end
           }
           if last_index < code.code.length() {
-            let len = code.code.length() - last_index
-            body.push(
-              (
+            pieces.push(
+              Text(
                 code.code[last_index:code.code.length()].to_owned(),
-                Some((code.utf8_pos + last_index, len)),
+                offset=code.utf8_pos + last_index,
               ),
             )
           }
+          User(pieces)
         }
       }
     }
     Yes(_) => {
       add_binding(StartPos, (0, 0)) // TODO: correct loc
       add_binding(EndPos, (0, 0)) // TODO: correct loc
-      body.push(
-        (
-          (
-            $|{
-            $|  "type": "NONTERMINAL",
-            $|  "name": "\{nonterminal_name}",
-            $|  "rule_index": \{rule_index},
-            $|  "clause_index": \{clause_index},
-            $|  "children": args_to_json(_args),
-            $|  "start": ToJson::to_json(_start_pos),
-            $|  "end": ToJson::to_json(_end_pos),
-            $|}
-            $|
-          ),
-          None,
-        ),
-      )
+      JsonCst(name=nonterminal_name, rule_index~, clause_index~)
     }
   }
   let (ast_clause_without_action, ast_clause_action) = ast_clause
