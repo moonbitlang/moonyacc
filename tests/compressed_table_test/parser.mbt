@@ -191,16 +191,16 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (
 }
 
 ///|
-let yy_prod_lhs_table : FixedArray[Int] = [5, 5]
+let yy_prod_lhs_table : ReadOnlyArray[Int] = [5, 5]
 
 ///|
-let yy_prod_len_table : FixedArray[Int] = [1, 3]
+let yy_prod_len_table : ReadOnlyArray[Int] = [1, 3]
 
 ///|
 let yy_prod_act_table : FixedArray[YYAction] = [yy_action_0, yy_action_1]
 
 ///|
-fn yy_decompress(input : FixedArray[Int]) -> FixedArray[Int] {
+fn yy_decompress(input : ReadOnlyArray[Int]) -> ReadOnlyArray[Int] {
   let output = []
   let mut last = 0
   for val in input {
@@ -214,11 +214,11 @@ fn yy_decompress(input : FixedArray[Int]) -> FixedArray[Int] {
       last = val
     }
   }
-  FixedArray::from_array(output)
+  ReadOnlyArray::from_array(output)
 }
 
 ///|
-let yy_state_table : FixedArray[Int] = yy_decompress(
+let yy_state_table : ReadOnlyArray[Int] = yy_decompress(
   [
     0, 7, 4, 0, -2, 3, 0, 1, 0, -7, 7, 4, 0, -2, 5, 0, -4, 6, 0, -3, 11, 0, -2,
     11, 0, -3, 10, 0, -2, 10, 0, -3
