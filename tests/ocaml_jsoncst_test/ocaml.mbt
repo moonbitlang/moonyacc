@@ -667,115 +667,35 @@ type YYSymbol = Int
 // file:///./ocaml.mly
 // 653|    structure EOF                        { extra_str 1 $1 }
 fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "implementation", "rule_index": 0,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("implementation", 0, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 656|    signature EOF                        { extra_sig 1 $1 }
 fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "interface", "rule_index": 1,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("interface", 1, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 659|    top_structure SEMISEMI               { Ptop_def (extra_str 1 $1) }
 fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_phrase", "rule_index": 2,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_phrase", 2, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 660|    toplevel_directive SEMISEMI          { $1 }
 fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_phrase", "rule_index": 2,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_phrase", 2, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 661|    EOF                                  { raise End_of_file }
 fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_phrase", "rule_index": 2,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_phrase", 2, 2, _last_pos, _args)
 }
 
 ///|
@@ -783,23 +703,7 @@ fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 // 664|    seq_expr post_item_attributes
 // 665|      { (text_str 1) @ [mkstrexp $1 $2] }
 fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "top_structure", "rule_index": 3,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("top_structure", 3, 0, _last_pos, _args)
 }
 
 ///|
@@ -807,46 +711,14 @@ fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 // 666|    top_structure_tail
 // 667|      { $1 }
 fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "top_structure", "rule_index": 3,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("top_structure", 3, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 671|    structure_item top_structure_tail    { (text_str 1) @ $1 :: $2 }
 fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "top_structure_tail", "rule_index": 4,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("top_structure_tail", 4, 1, _last_pos, _args)
 }
 
 ///|
@@ -854,69 +726,21 @@ fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 // 669|                   
 // 670|    /* empty */                          { [] }
 fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "top_structure_tail", "rule_index": 4,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("top_structure_tail", 4, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 674|    use_file_body EOF                    { extra_def 1 $1 }
 fn yy_action_9(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "use_file", "rule_index": 5,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("use_file", 5, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 677|    use_file_tail                        { $1 }
 fn yy_action_10(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "use_file_body", "rule_index": 6,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("use_file_body", 6, 0, _last_pos, _args)
 }
 
 ///|
@@ -924,23 +748,7 @@ fn yy_action_10(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 678|    seq_expr post_item_attributes use_file_tail
 // 679|      { (text_def 1) @ Ptop_def[mkstrexp $1 $2] :: $3 }
 fn yy_action_11(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "use_file_body", "rule_index": 6,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("use_file_body", 6, 1, _last_pos, _args)
 }
 
 ///|
@@ -948,23 +756,7 @@ fn yy_action_11(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 684|    SEMISEMI use_file_body
 // 685|      { $2 }
 fn yy_action_12(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "use_file_tail", "rule_index": 7,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("use_file_tail", 7, 1, _last_pos, _args)
 }
 
 ///|
@@ -972,23 +764,7 @@ fn yy_action_12(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 686|    structure_item use_file_tail
 // 687|      { (text_def 1) @ Ptop_def[$1] :: $2 }
 fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "use_file_tail", "rule_index": 7,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("use_file_tail", 7, 2, _last_pos, _args)
 }
 
 ///|
@@ -997,46 +773,14 @@ fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 689|      { mark_rhs_docs 1 1;
 // 690|        (text_def 1) @ $1 :: $2 }
 fn yy_action_14(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "use_file_tail", "rule_index": 7,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("use_file_tail", 7, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2429|    mod_longident { mk_directive_arg (Pdir_ident $1) }
 fn yy_action_15(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_directive_argument",
-      "rule_index": 189, "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_directive_argument", 189, 3, _last_pos, _args)
 }
 
 ///|
@@ -1044,23 +788,7 @@ fn yy_action_15(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2419|    HASH ident toplevel_directive_argument
 // 2420|    { mk_directive (mkrhs $2 2) (Some $3) }
 fn yy_action_16(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_directive", "rule_index": 188,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_directive", 188, 1, _last_pos, _args)
 }
 
 ///|
@@ -1068,23 +796,7 @@ fn yy_action_16(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2424|    STRING        { let (s, _) = $1 in
 // 2425|                    mk_directive_arg (Pdir_string s) }
 fn yy_action_17(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_directive_argument",
-      "rule_index": 189, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_directive_argument", 189, 0, _last_pos, _args)
 }
 
 ///|
@@ -1092,92 +804,28 @@ fn yy_action_17(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2426|    INT           { let (n, m) = $1 in
 // 2427|                    mk_directive_arg (Pdir_int (n ,m)) }
 fn yy_action_18(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_directive_argument",
-      "rule_index": 189, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_directive_argument", 189, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2428|    val_longident { mk_directive_arg (Pdir_ident $1) }
 fn yy_action_19(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_directive_argument",
-      "rule_index": 189, "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_directive_argument", 189, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2430|    FALSE         { mk_directive_arg (Pdir_bool false) }
 fn yy_action_20(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_directive_argument",
-      "rule_index": 189, "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_directive_argument", 189, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2431|    TRUE          { mk_directive_arg (Pdir_bool true) }
 fn yy_action_21(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_directive_argument",
-      "rule_index": 189, "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_directive_argument", 189, 5, _last_pos, _args)
 }
 
 ///|
@@ -1185,23 +833,7 @@ fn yy_action_21(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2417|    HASH ident
 // 2418|    { mk_directive (mkrhs $2 2) None }
 fn yy_action_22(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "toplevel_directive", "rule_index": 188,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("toplevel_directive", 188, 0, _last_pos, _args)
 }
 
 ///|
@@ -1210,161 +842,49 @@ fn yy_action_22(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 682|    /* empty */
 // 683|      { [] }
 fn yy_action_23(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "use_file_tail", "rule_index": 7,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("use_file_tail", 7, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 693|    core_type EOF { $1 }
 fn yy_action_24(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "parse_core_type", "rule_index": 8,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("parse_core_type", 8, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 696|    seq_expr EOF { $1 }
 fn yy_action_25(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "parse_expression", "rule_index": 9,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("parse_expression", 9, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 699|    pattern EOF { $1 }
 fn yy_action_26(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "parse_pattern", "rule_index": 10,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("parse_pattern", 10, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2577|  LBRACKETPERCENT attr_id payload RBRACKET { ($2, $3) }
 fn yy_action_27(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "extension", "rule_index": 211,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("extension", 211, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2587|    QUESTION pattern WHEN seq_expr { PPat ($2, Some $4) }
 fn yy_action_28(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "payload", "rule_index": 213,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("payload", 213, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2586|    QUESTION pattern { PPat ($2, None) }
 fn yy_action_29(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "payload", "rule_index": 213,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("payload", 213, 3, _last_pos, _args)
 }
 
 ///|
@@ -1372,46 +892,14 @@ fn yy_action_29(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1788|    LBRACKETBAR pattern_semi_list opt_semi BARRBRACKET
 // 1789|    { mkpat(Ppat_array(List.rev $2)) }
 fn yy_action_30(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_delimited_pattern",
-      "rule_index": 105, "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_delimited_pattern", 105, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1804|    pattern_semi_list SEMI pattern              { $3 :: $1 }
 fn yy_action_31(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_semi_list", "rule_index": 108,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_semi_list", 108, 1, _last_pos, _args)
 }
 
 ///|
@@ -1419,46 +907,14 @@ fn yy_action_31(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1784|    LBRACE lbl_pattern_list RBRACE
 // 1785|    { let (fields, closed) = $2 in mkpat(Ppat_record(fields, closed)) }
 fn yy_action_32(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_delimited_pattern",
-      "rule_index": 105, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_delimited_pattern", 105, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1809|    lbl_pattern SEMI UNDERSCORE opt_semi { [$1], Open }
 fn yy_action_33(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_pattern_list", "rule_index": 109,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_pattern_list", 109, 2, _last_pos, _args)
 }
 
 ///|
@@ -1466,69 +922,21 @@ fn yy_action_33(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1810|    lbl_pattern SEMI lbl_pattern_list
 // 1811|      { let (fields, closed) = $3 in $1 :: fields, closed }
 fn yy_action_34(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_pattern_list", "rule_index": 109,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_pattern_list", 109, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1808|    lbl_pattern SEMI { [$1], Closed }
 fn yy_action_35(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_pattern_list", "rule_index": 109,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_pattern_list", 109, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1807|    lbl_pattern { [$1], Closed }
 fn yy_action_36(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_pattern_list", "rule_index": 109,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_pattern_list", 109, 0, _last_pos, _args)
 }
 
 ///|
@@ -1536,23 +944,7 @@ fn yy_action_36(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1814|    label_longident opt_pattern_type_constraint EQUAL pattern
 // 1815|     { (mkrhs $1 1, mkpat_opt_constraint $4 $2) }
 fn yy_action_37(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_pattern", "rule_index": 110,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_pattern", 110, 0, _last_pos, _args)
 }
 
 ///|
@@ -1560,46 +952,14 @@ fn yy_action_37(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1816|    label_longident opt_pattern_type_constraint
 // 1817|     { (mkrhs $1 1, mkpat_opt_constraint (pat_of_label $1 1) $2) }
 fn yy_action_38(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_pattern", "rule_index": 110,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_pattern", 110, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1820|    COLON core_type { Some $2 }
 fn yy_action_39(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_pattern_type_constraint",
-      "rule_index": 111, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_pattern_type_constraint", 111, 0, _last_pos, _args)
 }
 
 ///|
@@ -1607,23 +967,7 @@ fn yy_action_39(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2212|    LBRACKETLESS opt_bar row_field_list RBRACKET
 // 2213|      { mktyp(Ptyp_variant(List.rev $3, Closed, Some [])) }
 fn yy_action_40(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 15, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 15, _last_pos, _args)
 }
 
 ///|
@@ -1631,69 +975,21 @@ fn yy_action_40(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2214|    LBRACKETLESS opt_bar row_field_list GREATER name_tag_list RBRACKET
 // 2215|      { mktyp(Ptyp_variant(List.rev $3, Closed, Some (List.rev $5))) }
 fn yy_action_41(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 16, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 16, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2252|    name_tag_list name_tag                      { $2 :: $1 }
 fn yy_action_42(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "name_tag_list", "rule_index": 164,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("name_tag_list", 164, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2251|    name_tag                                    { [$1] }
 fn yy_action_43(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "name_tag_list", "rule_index": 164,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("name_tag_list", 164, 0, _last_pos, _args)
 }
 
 ///|
@@ -1703,115 +999,35 @@ fn yy_action_43(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2235|        let attrs = add_info_attrs (symbol_info ()) $5 in
 // 2236|        Rf.tag ~loc ~attrs (mkrhs $1 1) $3 (List.rev $4) }
 fn yy_action_44(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "tag_field", "rule_index": 161,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("tag_field", 161, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2248|    amper_type_list AMPERSAND core_type_no_attr { $3 :: $1 }
 fn yy_action_45(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "amper_type_list", "rule_index": 163,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("amper_type_list", 163, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2247|    core_type_no_attr                           { [$1] }
 fn yy_action_46(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "amper_type_list", "rule_index": 163,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("amper_type_list", 163, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2243|    AMPERSAND                                   { true }
 fn yy_action_47(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_ampersand", "rule_index": 162,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_ampersand", 162, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2244|    /* empty */                                 { false }
 fn yy_action_48(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_ampersand", "rule_index": 162,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_ampersand", 162, 1, _last_pos, _args)
 }
 
 ///|
@@ -1821,69 +1037,21 @@ fn yy_action_48(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2239|        let attrs = add_info_attrs (symbol_info ()) $2 in
 // 2240|        Rf.tag ~loc ~attrs (mkrhs $1 1) true [] }
 fn yy_action_49(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "tag_field", "rule_index": 161,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("tag_field", 161, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2553|  LBRACKETAT attr_id payload RBRACKET { Attr.mk ~loc:(symbol_rloc ()) $2 $3 }
 fn yy_action_50(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "attribute", "rule_index": 205,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("attribute", 205, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2585|    COLON core_type { PTyp $2 }
 fn yy_action_51(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "payload", "rule_index": 213,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("payload", 213, 2, _last_pos, _args)
 }
 
 ///|
@@ -1896,23 +1064,7 @@ fn yy_action_51(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1968|           ~loc:(symbol_rloc()) ~docs:(symbol_docs ()))
 // 1969|    , ext }
 fn yy_action_52(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_exception_declaration",
-      "rule_index": 131, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_exception_declaration", 131, 1, _last_pos, _args)
 }
 
 ///|
@@ -1920,22 +1072,8 @@ fn yy_action_52(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1989|    COLON constructor_arguments MINUSGREATER simple_core_type
 // 1990|                                  { ($2,Some $4) }
 fn yy_action_53(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "generalized_constructor_arguments",
-      "rule_index": 134, "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
+  yy_json_cst_action(
+    "generalized_constructor_arguments", 134, 2, _last_pos, _args
   )
 }
 
@@ -1944,22 +1082,8 @@ fn yy_action_53(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1991|    COLON simple_core_type
 // 1992|                                  { (Pcstr_tuple [],Some $2) }
 fn yy_action_54(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "generalized_constructor_arguments",
-      "rule_index": 134, "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
+  yy_json_cst_action(
+    "generalized_constructor_arguments", 134, 3, _last_pos, _args
   )
 }
 
@@ -1968,23 +1092,7 @@ fn yy_action_54(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2208|    LBRACKETGREATER opt_bar row_field_list RBRACKET
 // 2209|      { mktyp(Ptyp_variant(List.rev $3, Open, None)) }
 fn yy_action_55(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 13, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 13, _last_pos, _args)
 }
 
 ///|
@@ -1992,23 +1100,7 @@ fn yy_action_55(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2188|    LESS meth_list GREATER
 // 2189|      { let (f, c) = $2 in mktyp(Ptyp_object (f, c)) }
 fn yy_action_56(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 5, _last_pos, _args)
 }
 
 ///|
@@ -2016,23 +1108,7 @@ fn yy_action_56(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2190|    LESS GREATER
 // 2191|      { mktyp(Ptyp_object ([], Closed)) }
 fn yy_action_57(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 6, _last_pos, _args)
 }
 
 ///|
@@ -2040,46 +1116,14 @@ fn yy_action_57(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2268|    field_semi meth_list
 // 2269|      { let (f, c) = $2 in ($1 :: f, c) }
 fn yy_action_58(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "meth_list", "rule_index": 168,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("meth_list", 168, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2272|    field_semi                             { [$1], Closed }
 fn yy_action_59(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "meth_list", "rule_index": 168,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("meth_list", 168, 2, _last_pos, _args)
 }
 
 ///|
@@ -2087,92 +1131,28 @@ fn yy_action_59(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2270|    inherit_field_semi meth_list
 // 2271|      { let (f, c) = $2 in ($1 :: f, c) }
 fn yy_action_60(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "meth_list", "rule_index": 168,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("meth_list", 168, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2274|    inherit_field_semi                     { [$1], Closed }
 fn yy_action_61(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "meth_list", "rule_index": 168,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("meth_list", 168, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2273|    field                                  { [$1], Closed }
 fn yy_action_62(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "meth_list", "rule_index": 168,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("meth_list", 168, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2299|  simple_core_type SEMI { Of.inherit_ ~loc:(symbol_rloc ()) $1 }
 fn yy_action_63(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "inherit_field_semi", "rule_index": 171,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("inherit_field_semi", 171, 0, _last_pos, _args)
 }
 
 ///|
@@ -2180,46 +1160,14 @@ fn yy_action_63(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 2275|    simple_core_type                       {
 // 2276|        let loc = symbol_rloc () in          [Of.inherit_ ~loc $1], Closed }
 fn yy_action_64(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "meth_list", "rule_index": 168,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("meth_list", 168, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2277|    DOTDOT                                 { [], Open }
 fn yy_action_65(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "meth_list", "rule_index": 168,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("meth_list", 168, 6, _last_pos, _args)
 }
 
 ///|
@@ -2227,23 +1175,7 @@ fn yy_action_65(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 877|    LPAREN module_type RPAREN
 // 878|      { $2 }
 fn yy_action_66(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 6, _last_pos, _args)
 }
 
 ///|
@@ -2251,23 +1183,7 @@ fn yy_action_66(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 873|    MODULE TYPE OF attributes module_expr %prec below_LBRACKETAT
 // 874|      { mkmty ~attrs:$4 (Pmty_typeof $5) }
 fn yy_action_67(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 5, _last_pos, _args)
 }
 
 ///|
@@ -2275,23 +1191,7 @@ fn yy_action_67(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 751|    LPAREN VAL attributes expr RPAREN
 // 752|      { mkmod ~attrs:$3 (Pmod_unpack $4)}
 fn yy_action_68(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "paren_module_expr", "rule_index": 15,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("paren_module_expr", 15, 2, _last_pos, _args)
 }
 
 ///|
@@ -2302,23 +1202,7 @@ fn yy_action_68(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 756|          (Pmod_unpack(
 // 757|               ghexp ~loc:constr_loc (Pexp_constraint($4, $6)))) }
 fn yy_action_69(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "paren_module_expr", "rule_index": 15,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("paren_module_expr", 15, 3, _last_pos, _args)
 }
 
 ///|
@@ -2330,23 +1214,7 @@ fn yy_action_69(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 762|          (Pmod_unpack(
 // 763|               ghexp ~loc:constr_loc (Pexp_coerce($4, Some $6, $8)))) }
 fn yy_action_70(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "paren_module_expr", "rule_index": 15,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("paren_module_expr", 15, 4, _last_pos, _args)
 }
 
 ///|
@@ -2357,23 +1225,7 @@ fn yy_action_70(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 767|          (Pmod_unpack(
 // 768|               ghexp ~loc:constr_loc (Pexp_coerce($4, None, $6)))) }
 fn yy_action_71(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "paren_module_expr", "rule_index": 15,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("paren_module_expr", 15, 5, _last_pos, _args)
 }
 
 ///|
@@ -2381,23 +1233,7 @@ fn yy_action_71(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1517|    LBRACELESS field_expr_list GREATERRBRACE
 // 1518|      { mkexp (Pexp_override $2) }
 fn yy_action_72(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 32, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 32, _last_pos, _args)
 }
 
 ///|
@@ -2405,23 +1241,7 @@ fn yy_action_72(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1519|    LBRACELESS GREATERRBRACE
 // 1520|      { mkexp (Pexp_override [])}
 fn yy_action_73(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 33, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 33, _last_pos, _args)
 }
 
 ///|
@@ -2429,23 +1249,7 @@ fn yy_action_73(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1680|    label EQUAL expr
 // 1681|      { (mkrhs $1 1, $3) }
 fn yy_action_74(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "field_expr", "rule_index": 96,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("field_expr", 96, 0, _last_pos, _args)
 }
 
 ///|
@@ -2453,46 +1257,14 @@ fn yy_action_74(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1502|    LBRACKET expr_semi_list opt_semi RBRACKET
 // 1503|      { reloc_exp (mktailexp (rhs_loc 4) (List.rev $2)) }
 fn yy_action_75(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 26, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 26, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1687|    expr_semi_list SEMI expr                    { $3 :: $1 }
 fn yy_action_76(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr_semi_list", "rule_index": 97,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr_semi_list", 97, 1, _last_pos, _args)
 }
 
 ///|
@@ -2500,23 +1272,7 @@ fn yy_action_76(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1488|    LBRACE record_expr RBRACE
 // 1489|      { let (exten, fields) = $2 in mkexp (Pexp_record(fields, exten)) }
 fn yy_action_77(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 20, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 20, _last_pos, _args)
 }
 
 ///|
@@ -2524,46 +1280,14 @@ fn yy_action_77(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1670|    label_longident opt_type_constraint EQUAL expr
 // 1671|      { (mkrhs $1 1, mkexp_opt_constraint $4 $2) }
 fn yy_action_78(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_expr", "rule_index": 94,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_expr", 94, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1661|    simple_expr WITH lbl_expr_list              { (Some $1, $3) }
 fn yy_action_79(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "record_expr", "rule_index": 92,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("record_expr", 92, 0, _last_pos, _args)
 }
 
 ///|
@@ -2571,23 +1295,7 @@ fn yy_action_79(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1456|    mod_longident DOT LPAREN seq_expr RPAREN
 // 1457|      { mkexp(Pexp_open(Fresh, mkrhs $1 1, $4)) }
 fn yy_action_80(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 9, _last_pos, _args)
 }
 
 ///|
@@ -2597,23 +1305,7 @@ fn yy_action_80(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1460|                        mkexp(Pexp_construct(mkrhs2 (Lident "()") 3 4,
 // 1461|                                                     None)))) }
 fn yy_action_81(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 10, _last_pos, _args)
 }
 
 ///|
@@ -2624,23 +1316,7 @@ fn yy_action_81(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1537|        mkexp_attrs (Pexp_constraint (ghexp (Pexp_pack $6), $8))
 // 1538|                    $5 )) }
 fn yy_action_82(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 40, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 40, _last_pos, _args)
 }
 
 ///|
@@ -2650,115 +1326,35 @@ fn yy_action_82(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1492|        let rec_exp = mkexp(Pexp_record(fields, exten)) in
 // 1493|        mkexp(Pexp_open(Fresh, mkrhs $1 1, rec_exp)) }
 fn yy_action_83(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 21, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 21, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1662|    lbl_expr_list                               { (None, $1) }
 fn yy_action_84(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "record_expr", "rule_index": 92,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("record_expr", 92, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1666|     lbl_expr SEMI lbl_expr_list { $1 :: $3 }
 fn yy_action_85(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_expr_list", "rule_index": 93,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_expr_list", 93, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1667|     lbl_expr SEMI { [$1] }
 fn yy_action_86(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_expr_list", "rule_index": 93,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_expr_list", 93, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1665|     lbl_expr { [$1] }
 fn yy_action_87(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_expr_list", "rule_index": 93,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_expr_list", 93, 0, _last_pos, _args)
 }
 
 ///|
@@ -2766,23 +1362,7 @@ fn yy_action_87(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1498|    mod_longident DOT LBRACKETBAR expr_semi_list opt_semi BARRBRACKET
 // 1499|      { mkexp(Pexp_open(Fresh, mkrhs $1 1, mkexp(Pexp_array(List.rev $4)))) }
 fn yy_action_88(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 24, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 24, _last_pos, _args)
 }
 
 ///|
@@ -2790,46 +1370,14 @@ fn yy_action_88(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1500|    mod_longident DOT LBRACKETBAR BARRBRACKET
 // 1501|      { mkexp(Pexp_open(Fresh, mkrhs $1 1, mkexp(Pexp_array []))) }
 fn yy_action_89(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 25, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 25, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1686|    expr                                        { [$1] }
 fn yy_action_90(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr_semi_list", "rule_index": 97,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr_semi_list", 97, 0, _last_pos, _args)
 }
 
 ///|
@@ -2837,23 +1385,7 @@ fn yy_action_90(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1445|    LPAREN seq_expr RPAREN
 // 1446|      { reloc_exp $2 }
 fn yy_action_91(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 4, _last_pos, _args)
 }
 
 ///|
@@ -2861,23 +1393,7 @@ fn yy_action_91(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1452|    LPAREN seq_expr type_constraint RPAREN
 // 1453|      { mkexp_constraint $2 $3 }
 fn yy_action_92(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 7, _last_pos, _args)
 }
 
 ///|
@@ -2885,23 +1401,7 @@ fn yy_action_92(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1511|    PREFIXOP simple_expr
 // 1512|      { mkexp(Pexp_apply(mkoperator $1 1, [Nolabel,$2])) }
 fn yy_action_93(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 29, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 29, _last_pos, _args)
 }
 
 ///|
@@ -2909,23 +1409,7 @@ fn yy_action_93(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1513|    BANG simple_expr
 // 1514|      { mkexp(Pexp_apply(mkoperator "!" 1, [Nolabel,$2])) }
 fn yy_action_94(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 30, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 30, _last_pos, _args)
 }
 
 ///|
@@ -2933,23 +1417,7 @@ fn yy_action_94(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 1529|    LPAREN MODULE ext_attributes module_expr RPAREN
 // 1530|      { mkexp_attrs (Pexp_pack $4) $3 }
 fn yy_action_95(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 38, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 38, _last_pos, _args)
 }
 
 ///|
@@ -2957,69 +1425,21 @@ fn yy_action_95(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 859|    SIG attributes signature END
 // 860|      { mkmty ~attrs:$2 (Pmty_signature (extra_sig 3 $3)) }
 fn yy_action_96(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 886|    SEMISEMI signature   { (text_sig 1) @ $2 }
 fn yy_action_97(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature", "rule_index": 26,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature", 26, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 887|    signature_item signature { (text_sig 1) @ $1 :: $2 }
 fn yy_action_98(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature", "rule_index": 26,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature", 26, 2, _last_pos, _args)
 }
 
 ///|
@@ -3027,23 +1447,7 @@ fn yy_action_98(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 890|    value_description
 // 891|      { let (body, ext) = $1 in mksig_ext (Psig_value body) ext }
 fn yy_action_99(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 0, _last_pos, _args)
 }
 
 ///|
@@ -3051,23 +1455,7 @@ fn yy_action_99(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 892|    primitive_declaration
 // 893|      { let (body, ext) = $1 in mksig_ext (Psig_value body) ext}
 fn yy_action_100(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 1, _last_pos, _args)
 }
 
 ///|
@@ -3075,23 +1463,7 @@ fn yy_action_100(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 894|    type_declarations
 // 895|      { let (nr, l, ext) = $1 in mksig_ext (Psig_type (nr, List.rev l)) ext }
 fn yy_action_101(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 2, _last_pos, _args)
 }
 
 ///|
@@ -3099,23 +1471,7 @@ fn yy_action_101(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 896|    sig_type_extension
 // 897|      { let (l, ext) = $1 in mksig_ext (Psig_typext l) ext }
 fn yy_action_102(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 3, _last_pos, _args)
 }
 
 ///|
@@ -3123,23 +1479,7 @@ fn yy_action_102(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 898|    sig_exception_declaration
 // 899|      { let (l, ext) = $1 in mksig_ext (Psig_exception l) ext }
 fn yy_action_103(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 4, _last_pos, _args)
 }
 
 ///|
@@ -3147,23 +1487,7 @@ fn yy_action_103(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 900|    module_declaration
 // 901|      { let (body, ext) = $1 in mksig_ext (Psig_module body) ext }
 fn yy_action_104(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 5, _last_pos, _args)
 }
 
 ///|
@@ -3171,23 +1495,7 @@ fn yy_action_104(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 902|    module_alias
 // 903|      { let (body, ext) = $1 in mksig_ext (Psig_module body) ext }
 fn yy_action_105(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 6, _last_pos, _args)
 }
 
 ///|
@@ -3195,23 +1503,7 @@ fn yy_action_105(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 960|    rec_module_declarations and_module_declaration
 // 961|      { let (l, ext) = $1 in ($2 :: l, ext) }
 fn yy_action_106(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "rec_module_declarations",
-      "rule_index": 33, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("rec_module_declarations", 33, 1, _last_pos, _args)
 }
 
 ///|
@@ -3220,23 +1512,7 @@ fn yy_action_106(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 972|      { Md.mk (mkrhs $3 3) $5 ~attrs:($2@$6) ~loc:(symbol_rloc())
 // 973|              ~text:(symbol_text()) ~docs:(symbol_docs()) }
 fn yy_action_107(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "and_module_declaration", "rule_index": 35,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("and_module_declaration", 35, 0, _last_pos, _args)
 }
 
 ///|
@@ -3244,23 +1520,7 @@ fn yy_action_107(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 904|    rec_module_declarations
 // 905|      { let (l, ext) = $1 in mksig_ext (Psig_recmodule (List.rev l)) ext }
 fn yy_action_108(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 7, _last_pos, _args)
 }
 
 ///|
@@ -3268,23 +1528,7 @@ fn yy_action_108(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 906|    module_type_declaration
 // 907|      { let (body, ext) = $1 in mksig_ext (Psig_modtype body) ext }
 fn yy_action_109(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 8, _last_pos, _args)
 }
 
 ///|
@@ -3292,23 +1536,7 @@ fn yy_action_109(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 908|    open_statement
 // 909|      { let (body, ext) = $1 in mksig_ext (Psig_open body) ext }
 fn yy_action_110(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 9, _last_pos, _args)
 }
 
 ///|
@@ -3316,23 +1544,7 @@ fn yy_action_110(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 910|    sig_include_statement
 // 911|      { let (body, ext) = $1 in mksig_ext (Psig_include body) ext }
 fn yy_action_111(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 10, _last_pos, _args)
 }
 
 ///|
@@ -3340,23 +1552,7 @@ fn yy_action_111(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1218|    class_descriptions and_class_description
 // 1219|      { let (l, ext) = $1 in ($2 :: l, ext) }
 fn yy_action_112(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_descriptions", "rule_index": 62,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_descriptions", 62, 1, _last_pos, _args)
 }
 
 ///|
@@ -3367,23 +1563,7 @@ fn yy_action_112(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1233|              ~attrs:($2@$8) ~loc:(symbol_rloc ())
 // 1234|              ~text:(symbol_text ()) ~docs:(symbol_docs ()) }
 fn yy_action_113(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "and_class_description", "rule_index": 64,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("and_class_description", 64, 0, _last_pos, _args)
 }
 
 ///|
@@ -3391,23 +1571,7 @@ fn yy_action_113(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 912|    class_descriptions
 // 913|      { let (l, ext) = $1 in mksig_ext (Psig_class (List.rev l)) ext }
 fn yy_action_114(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 11, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 11, _last_pos, _args)
 }
 
 ///|
@@ -3415,23 +1579,7 @@ fn yy_action_114(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 914|    class_type_declarations
 // 915|      { let (l, ext) = $1 in mksig_ext (Psig_class_type (List.rev l)) ext }
 fn yy_action_115(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 12, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 12, _last_pos, _args)
 }
 
 ///|
@@ -3439,23 +1587,7 @@ fn yy_action_115(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 916|    item_extension post_item_attributes
 // 917|      { mksig(Psig_extension ($1, (add_docs_attrs (symbol_docs ()) $2))) }
 fn yy_action_116(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 13, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 13, _last_pos, _args)
 }
 
 ///|
@@ -3463,23 +1595,7 @@ fn yy_action_116(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 918|    floating_attribute
 // 919|      { mksig(Psig_attribute $1) }
 fn yy_action_117(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature_item", "rule_index": 27,
-      "clause_index": 14, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature_item", 27, 14, _last_pos, _args)
 }
 
 ///|
@@ -3490,23 +1606,7 @@ fn yy_action_117(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 932|            ~loc:(symbol_rloc()) ~docs:(symbol_docs ())
 // 933|      , ext}
 fn yy_action_118(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "sig_include_statement", "rule_index": 29,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("sig_include_statement", 29, 0, _last_pos, _args)
 }
 
 ///|
@@ -3514,23 +1614,7 @@ fn yy_action_118(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 936|    COLON module_type
 // 937|      { $2 }
 fn yy_action_119(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_declaration_body",
-      "rule_index": 30, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_declaration_body", 30, 0, _last_pos, _args)
 }
 
 ///|
@@ -3539,23 +1623,7 @@ fn yy_action_119(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 939|      { let (name,typ) = $1 in
 // 940|        mkmty(Pmty_functor(name, typ, $2)) }
 fn yy_action_120(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_declaration_body",
-      "rule_index": 30, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_declaration_body", 30, 1, _last_pos, _args)
 }
 
 ///|
@@ -3566,23 +1634,7 @@ fn yy_action_120(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 946|          ~loc:(symbol_rloc()) ~docs:(symbol_docs ())
 // 947|      , ext }
 fn yy_action_121(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_declaration", "rule_index": 31,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_declaration", 31, 0, _last_pos, _args)
 }
 
 ///|
@@ -3594,23 +1646,7 @@ fn yy_action_121(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 954|             ~loc:(symbol_rloc()) ~docs:(symbol_docs ())
 // 955|      , ext }
 fn yy_action_122(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_alias", "rule_index": 32,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_alias", 32, 0, _last_pos, _args)
 }
 
 ///|
@@ -3621,23 +1657,7 @@ fn yy_action_122(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 967|            ~loc:(symbol_rloc()) ~docs:(symbol_docs ())
 // 968|      , ext}
 fn yy_action_123(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "rec_module_declaration", "rule_index": 34,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("rec_module_declaration", 34, 0, _last_pos, _args)
 }
 
 ///|
@@ -3645,23 +1665,7 @@ fn yy_action_123(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 958|    rec_module_declaration
 // 959|      { let (body, ext) = $1 in ([body], ext) }
 fn yy_action_124(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "rec_module_declarations",
-      "rule_index": 33, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("rec_module_declarations", 33, 0, _last_pos, _args)
 }
 
 ///|
@@ -3669,23 +1673,7 @@ fn yy_action_124(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1216|    class_description
 // 1217|      { let (body, ext) = $1 in ([body],ext) }
 fn yy_action_125(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_descriptions", "rule_index": 62,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_descriptions", 62, 0, _last_pos, _args)
 }
 
 ///|
@@ -3697,23 +1685,7 @@ fn yy_action_125(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1226|            ~loc:(symbol_rloc ()) ~docs:(symbol_docs ())
 // 1227|      , ext }
 fn yy_action_126(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_description", "rule_index": 63,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_description", 63, 0, _last_pos, _args)
 }
 
 ///|
@@ -3726,23 +1698,7 @@ fn yy_action_126(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2041|          ~attrs:(attrs @ $9) ~docs:(symbol_docs ())
 // 2042|        , ext }
 fn yy_action_127(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "sig_type_extension", "rule_index": 140,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("sig_type_extension", 140, 0, _last_pos, _args)
 }
 
 ///|
@@ -3750,69 +1706,21 @@ fn yy_action_127(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2057|    sig_extension_constructors bar_extension_constructor_declaration
 // 2058|      { $2 :: $1 }
 fn yy_action_128(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "sig_extension_constructors",
-      "rule_index": 142, "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("sig_extension_constructors", 142, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2055|    extension_constructor_declaration                     { [$1] }
 fn yy_action_129(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "sig_extension_constructors",
-      "rule_index": 142, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("sig_extension_constructors", 142, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2056|    bar_extension_constructor_declaration                 { [$1] }
 fn yy_action_130(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "sig_extension_constructors",
-      "rule_index": 142, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("sig_extension_constructors", 142, 1, _last_pos, _args)
 }
 
 ///|
@@ -3826,23 +1734,7 @@ fn yy_action_130(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1978|             ~loc:(symbol_rloc()) ~docs:(symbol_docs ()))
 // 1979|        , ext }
 fn yy_action_131(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "sig_exception_declaration",
-      "rule_index": 132, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("sig_exception_declaration", 132, 0, _last_pos, _args)
 }
 
 ///|
@@ -3850,23 +1742,7 @@ fn yy_action_131(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1071|    class_fields class_field
 // 1072|      { $2 :: (List.rev (text_cstr 2)) @ $1 }
 fn yy_action_132(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_fields", "rule_index": 48,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_fields", 48, 1, _last_pos, _args)
 }
 
 ///|
@@ -3875,23 +1751,7 @@ fn yy_action_132(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1076|    post_item_attributes
 // 1077|      { mkcf (Pcf_inherit ($2, $4, $5)) ~attrs:($3@$6) ~docs:(symbol_docs ()) }
 fn yy_action_133(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_field", "rule_index": 49,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_field", 49, 0, _last_pos, _args)
 }
 
 ///|
@@ -3899,23 +1759,7 @@ fn yy_action_133(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1094|    AS LIDENT
 // 1095|          { Some (mkrhs $2 2) }
 fn yy_action_134(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "parent_binder", "rule_index": 50,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("parent_binder", 50, 0, _last_pos, _args)
 }
 
 ///|
@@ -3923,23 +1767,7 @@ fn yy_action_134(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1096|    /* empty */
 // 1097|          { None }
 fn yy_action_135(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "parent_binder", "rule_index": 50,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("parent_binder", 50, 1, _last_pos, _args)
 }
 
 ///|
@@ -3948,23 +1776,7 @@ fn yy_action_135(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1079|      { let v, attrs = $2 in
 // 1080|        mkcf (Pcf_val v) ~attrs:(attrs@$3) ~docs:(symbol_docs ()) }
 fn yy_action_136(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_field", "rule_index": 49,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_field", 49, 1, _last_pos, _args)
 }
 
 ///|
@@ -3973,23 +1785,7 @@ fn yy_action_136(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1102|      { if $1 = Override then syntax_error ();
 // 1103|        (mkrhs $5 5, Mutable, Cfk_virtual $7), $2 }
 fn yy_action_137(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "value", "rule_index": 51,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("value", 51, 0, _last_pos, _args)
 }
 
 ///|
@@ -3998,23 +1794,7 @@ fn yy_action_137(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1105|      { if $1 = Override then syntax_error ();
 // 1106|        (mkrhs $5 5, $4, Cfk_virtual $7), $2 }
 fn yy_action_138(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "value", "rule_index": 51,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("value", 51, 1, _last_pos, _args)
 }
 
 ///|
@@ -4022,23 +1802,7 @@ fn yy_action_138(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1107|    override_flag attributes mutable_flag label EQUAL seq_expr
 // 1108|      { (mkrhs $4 4, $3, Cfk_concrete ($1, $6)), $2 }
 fn yy_action_139(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "value", "rule_index": 51,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("value", 51, 2, _last_pos, _args)
 }
 
 ///|
@@ -4049,23 +1813,7 @@ fn yy_action_139(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1112|       (mkrhs $4 4, $3, Cfk_concrete ($1, e)), $2
 // 1113|      }
 fn yy_action_140(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "value", "rule_index": 51,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("value", 51, 3, _last_pos, _args)
 }
 
 ///|
@@ -4074,23 +1822,7 @@ fn yy_action_140(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1082|      { let meth, attrs = $2 in
 // 1083|        mkcf (Pcf_method meth) ~attrs:(attrs@$3) ~docs:(symbol_docs ()) }
 fn yy_action_141(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_field", "rule_index": 49,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_field", 49, 2, _last_pos, _args)
 }
 
 ///|
@@ -4099,23 +1831,7 @@ fn yy_action_141(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1118|      { if $1 = Override then syntax_error ();
 // 1119|        (mkrhs $5 5, Private, Cfk_virtual $7), $2 }
 fn yy_action_142(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "method_", "rule_index": 52,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("method_", 52, 0, _last_pos, _args)
 }
 
 ///|
@@ -4124,23 +1840,7 @@ fn yy_action_142(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1121|      { if $1 = Override then syntax_error ();
 // 1122|        (mkrhs $5 5, $4, Cfk_virtual $7), $2 }
 fn yy_action_143(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "method_", "rule_index": 52,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("method_", 52, 1, _last_pos, _args)
 }
 
 ///|
@@ -4150,23 +1850,7 @@ fn yy_action_143(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1125|        (mkrhs $4 4, $3,
 // 1126|        Cfk_concrete ($1, ghexp ~loc:e.pexp_loc (Pexp_poly (e, None)))), $2 }
 fn yy_action_144(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "method_", "rule_index": 52,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("method_", 52, 2, _last_pos, _args)
 }
 
 ///|
@@ -4176,23 +1860,7 @@ fn yy_action_144(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1129|        (mkrhs $4 4, $3,
 // 1130|        Cfk_concrete ($1, ghexp ~loc (Pexp_poly($8, Some $6)))), $2 }
 fn yy_action_145(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "method_", "rule_index": 52,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("method_", 52, 3, _last_pos, _args)
 }
 
 ///|
@@ -4204,23 +1872,7 @@ fn yy_action_145(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1135|        (mkrhs $4 4, $3,
 // 1136|        Cfk_concrete ($1, ghexp ~loc (Pexp_poly(exp, Some poly)))), $2 }
 fn yy_action_146(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "method_", "rule_index": 52,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("method_", 52, 4, _last_pos, _args)
 }
 
 ///|
@@ -4228,23 +1880,7 @@ fn yy_action_146(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1084|    CONSTRAINT attributes constrain_field post_item_attributes
 // 1085|      { mkcf (Pcf_constraint $3) ~attrs:($2@$4) ~docs:(symbol_docs ()) }
 fn yy_action_147(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_field", "rule_index": 49,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_field", 49, 3, _last_pos, _args)
 }
 
 ///|
@@ -4252,23 +1888,7 @@ fn yy_action_147(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1086|    INITIALIZER attributes seq_expr post_item_attributes
 // 1087|      { mkcf (Pcf_initializer $3) ~attrs:($2@$4) ~docs:(symbol_docs ()) }
 fn yy_action_148(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_field", "rule_index": 49,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_field", 49, 4, _last_pos, _args)
 }
 
 ///|
@@ -4276,23 +1896,7 @@ fn yy_action_148(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1423|    label LESSMINUS expr
 // 1424|      { mkexp(Pexp_setinstvar(mkrhs $1 1, $3)) }
 fn yy_action_149(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 51, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 51, _last_pos, _args)
 }
 
 ///|
@@ -4300,23 +1904,7 @@ fn yy_action_149(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1393|    additive expr %prec prec_unary_plus
 // 1394|      { mkuplus $1 $2 }
 fn yy_action_150(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 40, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 40, _last_pos, _args)
 }
 
 ///|
@@ -4324,23 +1912,7 @@ fn yy_action_150(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1332|    TRY ext_attributes seq_expr WITH opt_bar match_cases
 // 1333|      { mkexp_attrs (Pexp_try($3, List.rev $6)) $2 }
 fn yy_action_151(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 10, _last_pos, _args)
 }
 
 ///|
@@ -4348,23 +1920,7 @@ fn yy_action_151(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1635|    pattern MINUSGREATER seq_expr
 // 1636|      { Exp.case $1 $3 }
 fn yy_action_152(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "match_case", "rule_index": 89,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("match_case", 89, 0, _last_pos, _args)
 }
 
 ///|
@@ -4372,23 +1928,7 @@ fn yy_action_152(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1639|    pattern MINUSGREATER DOT
 // 1640|      { Exp.case $1 (Exp.unreachable ~loc:(rhs_loc 3) ())}
 fn yy_action_153(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "match_case", "rule_index": 89,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("match_case", 89, 2, _last_pos, _args)
 }
 
 ///|
@@ -4397,23 +1937,7 @@ fn yy_action_153(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1326|      { let (l,o,p) = $3 in
 // 1327|        mkexp_attrs (Pexp_fun(l, o, p, $4)) $2 }
 fn yy_action_154(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 7, _last_pos, _args)
 }
 
 ///|
@@ -4421,23 +1945,7 @@ fn yy_action_154(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1328|    FUN ext_attributes LPAREN TYPE lident_list RPAREN fun_def
 // 1329|      { mkexp_attrs (mk_newtypes $5 $7).pexp_desc $2 }
 fn yy_action_155(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 8, _last_pos, _args)
 }
 
 ///|
@@ -4445,23 +1953,7 @@ fn yy_action_155(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1643|    MINUSGREATER seq_expr
 // 1644|      { $2 }
 fn yy_action_156(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "fun_def", "rule_index": 90,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("fun_def", 90, 0, _last_pos, _args)
 }
 
 ///|
@@ -4469,23 +1961,7 @@ fn yy_action_156(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 717|    functor_args functor_arg
 // 718|      { $2 :: $1 }
 fn yy_action_157(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "functor_args", "rule_index": 13,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("functor_args", 13, 0, _last_pos, _args)
 }
 
 ///|
@@ -4493,23 +1969,7 @@ fn yy_action_157(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 726|    STRUCT attributes structure END
 // 727|      { mkmod ~attrs:$2 (Pmod_structure(extra_str 3 $3)) }
 fn yy_action_158(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_expr", "rule_index": 14,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_expr", 14, 1, _last_pos, _args)
 }
 
 ///|
@@ -4518,92 +1978,28 @@ fn yy_action_158(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 773|      { mark_rhs_docs 1 2;
 // 774|        (text_str 1) @ mkstrexp $1 $2 :: $3 }
 fn yy_action_159(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure", "rule_index": 16,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure", 16, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 775|    structure_tail { $1 }
 fn yy_action_160(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure", "rule_index": 16,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure", 16, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 779|    SEMISEMI structure   { (text_str 1) @ $2 }
 fn yy_action_161(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_tail", "rule_index": 17,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_tail", 17, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 780|    structure_item structure_tail { (text_str 1) @ $1 :: $2 }
 fn yy_action_162(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_tail", "rule_index": 17,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_tail", 17, 2, _last_pos, _args)
 }
 
 ///|
@@ -4611,23 +2007,7 @@ fn yy_action_162(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 783|    let_bindings
 // 784|      { val_of_let_bindings $1 }
 fn yy_action_163(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 0, _last_pos, _args)
 }
 
 ///|
@@ -4635,23 +2015,7 @@ fn yy_action_163(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 785|    primitive_declaration
 // 786|      { let (body, ext) = $1 in mkstr_ext (Pstr_primitive body) ext }
 fn yy_action_164(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 1, _last_pos, _args)
 }
 
 ///|
@@ -4659,23 +2023,7 @@ fn yy_action_164(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 787|    value_description
 // 788|      { let (body, ext) = $1 in mkstr_ext (Pstr_primitive body) ext }
 fn yy_action_165(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 2, _last_pos, _args)
 }
 
 ///|
@@ -4683,23 +2031,7 @@ fn yy_action_165(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1854|    type_declarations and_type_declaration
 // 1855|      { let (nonrec_flag, tys, ext) = $1 in (nonrec_flag, $2 :: tys, ext) }
 fn yy_action_166(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_declarations", "rule_index": 115,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_declarations", 115, 1, _last_pos, _args)
 }
 
 ///|
@@ -4711,23 +2043,7 @@ fn yy_action_166(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1875|            ~kind ~priv ?manifest ~attrs:($2@$7) ~loc:(symbol_rloc ())
 // 1876|            ~text:(symbol_text ()) ~docs:(symbol_docs ()) }
 fn yy_action_167(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "and_type_declaration", "rule_index": 117,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("and_type_declaration", 117, 0, _last_pos, _args)
 }
 
 ///|
@@ -4735,23 +2051,7 @@ fn yy_action_167(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 789|    type_declarations
 // 790|      { let (nr, l, ext ) = $1 in mkstr_ext (Pstr_type (nr, List.rev l)) ext }
 fn yy_action_168(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 3, _last_pos, _args)
 }
 
 ///|
@@ -4759,23 +2059,7 @@ fn yy_action_168(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 791|    str_type_extension
 // 792|      { let (l, ext) = $1 in mkstr_ext (Pstr_typext l) ext }
 fn yy_action_169(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 4, _last_pos, _args)
 }
 
 ///|
@@ -4783,23 +2067,7 @@ fn yy_action_169(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 793|    str_exception_declaration
 // 794|      { let (l, ext) = $1 in mkstr_ext (Pstr_exception l) ext }
 fn yy_action_170(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 5, _last_pos, _args)
 }
 
 ///|
@@ -4807,23 +2075,7 @@ fn yy_action_170(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 795|    module_binding
 // 796|      { let (body, ext) = $1 in mkstr_ext (Pstr_module body) ext }
 fn yy_action_171(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 6, _last_pos, _args)
 }
 
 ///|
@@ -4831,23 +2083,7 @@ fn yy_action_171(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 838|    rec_module_bindings and_module_binding
 // 839|      { let (l, ext) = $1 in ($2 :: l, ext) }
 fn yy_action_172(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "rec_module_bindings", "rule_index": 22,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("rec_module_bindings", 22, 1, _last_pos, _args)
 }
 
 ///|
@@ -4856,23 +2092,7 @@ fn yy_action_172(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 850|      { Mb.mk (mkrhs $3 3) $4 ~attrs:($2@$5) ~loc:(symbol_rloc ())
 // 851|               ~text:(symbol_text ()) ~docs:(symbol_docs ()) }
 fn yy_action_173(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "and_module_binding", "rule_index": 24,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("and_module_binding", 24, 0, _last_pos, _args)
 }
 
 ///|
@@ -4880,23 +2100,7 @@ fn yy_action_173(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 797|    rec_module_bindings
 // 798|      { let (l, ext) = $1 in mkstr_ext (Pstr_recmodule(List.rev l)) ext }
 fn yy_action_174(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 7, _last_pos, _args)
 }
 
 ///|
@@ -4904,23 +2108,7 @@ fn yy_action_174(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 799|    module_type_declaration
 // 800|      { let (body, ext) = $1 in mkstr_ext (Pstr_modtype body) ext }
 fn yy_action_175(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 8, _last_pos, _args)
 }
 
 ///|
@@ -4928,23 +2116,7 @@ fn yy_action_175(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 801|    open_statement
 // 802|      { let (body, ext) = $1 in mkstr_ext (Pstr_open body) ext }
 fn yy_action_176(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 9, _last_pos, _args)
 }
 
 ///|
@@ -4952,23 +2124,7 @@ fn yy_action_176(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 992|    class_declarations and_class_declaration
 // 993|      { let (l, ext) = $1 in ($2 :: l, ext) }
 fn yy_action_177(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_declarations", "rule_index": 38,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_declarations", 38, 1, _last_pos, _args)
 }
 
 ///|
@@ -4979,23 +2135,7 @@ fn yy_action_177(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1007|         ~attrs:($2@$7) ~loc:(symbol_rloc ())
 // 1008|         ~text:(symbol_text ()) ~docs:(symbol_docs ()) }
 fn yy_action_178(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "and_class_declaration", "rule_index": 40,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("and_class_declaration", 40, 0, _last_pos, _args)
 }
 
 ///|
@@ -5003,23 +2143,7 @@ fn yy_action_178(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 803|    class_declarations
 // 804|      { let (l, ext) = $1 in mkstr_ext (Pstr_class (List.rev l)) ext }
 fn yy_action_179(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 10, _last_pos, _args)
 }
 
 ///|
@@ -5027,23 +2151,7 @@ fn yy_action_179(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1239|    class_type_declarations and_class_type_declaration
 // 1240|      { let (l, ext) = $1 in ($2 :: l, ext) }
 fn yy_action_180(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type_declarations",
-      "rule_index": 65, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type_declarations", 65, 1, _last_pos, _args)
 }
 
 ///|
@@ -5054,23 +2162,7 @@ fn yy_action_180(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1254|         ~attrs:($2@$8) ~loc:(symbol_rloc ())
 // 1255|         ~text:(symbol_text ()) ~docs:(symbol_docs ()) }
 fn yy_action_181(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "and_class_type_declaration",
-      "rule_index": 67, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("and_class_type_declaration", 67, 0, _last_pos, _args)
 }
 
 ///|
@@ -5078,23 +2170,7 @@ fn yy_action_181(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 805|    class_type_declarations
 // 806|      { let (l, ext) = $1 in mkstr_ext (Pstr_class_type (List.rev l)) ext }
 fn yy_action_182(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 11, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 11, _last_pos, _args)
 }
 
 ///|
@@ -5102,23 +2178,7 @@ fn yy_action_182(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 807|    str_include_statement
 // 808|      { let (body, ext) = $1 in mkstr_ext (Pstr_include body) ext }
 fn yy_action_183(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 12, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 12, _last_pos, _args)
 }
 
 ///|
@@ -5126,23 +2186,7 @@ fn yy_action_183(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 809|    item_extension post_item_attributes
 // 810|      { mkstr(Pstr_extension ($1, (add_docs_attrs (symbol_docs ()) $2))) }
 fn yy_action_184(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 13, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 13, _last_pos, _args)
 }
 
 ///|
@@ -5150,23 +2194,7 @@ fn yy_action_184(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 811|    floating_attribute
 // 812|      { mkstr(Pstr_attribute $1) }
 fn yy_action_185(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_item", "rule_index": 18,
-      "clause_index": 14, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_item", 18, 14, _last_pos, _args)
 }
 
 ///|
@@ -5177,23 +2205,7 @@ fn yy_action_185(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 818|            ~loc:(symbol_rloc()) ~docs:(symbol_docs ())
 // 819|      , ext }
 fn yy_action_186(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_include_statement", "rule_index": 19,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_include_statement", 19, 0, _last_pos, _args)
 }
 
 ///|
@@ -5204,23 +2216,7 @@ fn yy_action_186(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 833|            ~loc:(symbol_rloc ()) ~docs:(symbol_docs ())
 // 834|      , ext }
 fn yy_action_187(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_binding", "rule_index": 21,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_binding", 21, 0, _last_pos, _args)
 }
 
 ///|
@@ -5228,23 +2224,7 @@ fn yy_action_187(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 705|    LPAREN RPAREN
 // 706|      { mkrhs2 "*" 1 2, None }
 fn yy_action_188(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "functor_arg", "rule_index": 11,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("functor_arg", 11, 0, _last_pos, _args)
 }
 
 ///|
@@ -5252,69 +2232,21 @@ fn yy_action_188(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 707|    LPAREN functor_arg_name COLON module_type RPAREN
 // 708|      { mkrhs $2 2, Some $4 }
 fn yy_action_189(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "functor_arg", "rule_index": 11,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("functor_arg", 11, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 712|    UIDENT     { $1 }
 fn yy_action_190(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "functor_arg_name", "rule_index": 12,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("functor_arg_name", 12, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 713|    UNDERSCORE { "_" }
 fn yy_action_191(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "functor_arg_name", "rule_index": 12,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("functor_arg_name", 12, 1, _last_pos, _args)
 }
 
 ///|
@@ -5322,23 +2254,7 @@ fn yy_action_191(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 724|    mod_longident
 // 725|      { mkmod(Pmod_ident (mkrhs $1 1)) }
 fn yy_action_192(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_expr", "rule_index": 14,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_expr", 14, 0, _last_pos, _args)
 }
 
 ///|
@@ -5346,23 +2262,7 @@ fn yy_action_192(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 822|    EQUAL module_expr
 // 823|      { $2 }
 fn yy_action_193(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_binding_body", "rule_index": 20,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_binding_body", 20, 0, _last_pos, _args)
 }
 
 ///|
@@ -5373,46 +2273,14 @@ fn yy_action_193(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 845|            ~loc:(symbol_rloc ()) ~docs:(symbol_docs ())
 // 846|      , ext }
 fn yy_action_194(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "rec_module_binding", "rule_index": 23,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("rec_module_binding", 23, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 977|    EQUAL module_type         { Some $2 }
 fn yy_action_195(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type_declaration_body",
-      "rule_index": 36, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type_declaration_body", 36, 1, _last_pos, _args)
 }
 
 ///|
@@ -5424,23 +2292,7 @@ fn yy_action_195(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 984|          ~loc:(symbol_rloc()) ~docs:(symbol_docs ())
 // 985|      , ext }
 fn yy_action_196(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type_declaration",
-      "rule_index": 37, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type_declaration", 37, 0, _last_pos, _args)
 }
 
 ///|
@@ -5448,46 +2300,14 @@ fn yy_action_196(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 975|                             
 // 976|    /* empty */               { None }
 fn yy_action_197(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type_declaration_body",
-      "rule_index": 36, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type_declaration_body", 36, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 837|    rec_module_binding                     { let (b, ext) = $1 in ([b], ext) }
 fn yy_action_198(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "rec_module_bindings", "rule_index": 22,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("rec_module_bindings", 22, 0, _last_pos, _args)
 }
 
 ///|
@@ -5498,23 +2318,7 @@ fn yy_action_198(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 925|          ~loc:(symbol_rloc()) ~docs:(symbol_docs ())
 // 926|      , ext}
 fn yy_action_199(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "open_statement", "rule_index": 28,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("open_statement", 28, 0, _last_pos, _args)
 }
 
 ///|
@@ -5522,23 +2326,7 @@ fn yy_action_199(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 990|    class_declaration
 // 991|      { let (body, ext) = $1 in ([body], ext) }
 fn yy_action_200(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_declarations", "rule_index": 38,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_declarations", 38, 0, _last_pos, _args)
 }
 
 ///|
@@ -5550,23 +2338,7 @@ fn yy_action_200(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1000|            ~loc:(symbol_rloc ()) ~docs:(symbol_docs ())
 // 1001|      , ext }
 fn yy_action_201(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_declaration", "rule_index": 39,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_declaration", 39, 0, _last_pos, _args)
 }
 
 ///|
@@ -5574,23 +2346,7 @@ fn yy_action_201(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1011|    EQUAL class_expr
 // 1012|      { $2 }
 fn yy_action_202(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_fun_binding", "rule_index": 41,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_fun_binding", 41, 0, _last_pos, _args)
 }
 
 ///|
@@ -5598,23 +2354,7 @@ fn yy_action_202(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1013|    COLON class_type EQUAL class_expr
 // 1014|      { mkclass(Pcl_constraint($4, $2)) }
 fn yy_action_203(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_fun_binding", "rule_index": 41,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_fun_binding", 41, 1, _last_pos, _args)
 }
 
 ///|
@@ -5622,23 +2362,7 @@ fn yy_action_203(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1023|    labeled_simple_pattern MINUSGREATER class_expr
 // 1024|      { let (l,o,p) = $1 in mkclass(Pcl_fun(l, o, p, $3)) }
 fn yy_action_204(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_fun_def", "rule_index": 43,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_fun_def", 43, 0, _last_pos, _args)
 }
 
 ///|
@@ -5646,23 +2370,7 @@ fn yy_action_204(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1033|    class_simple_expr simple_labeled_expr_list
 // 1034|      { mkclass(Pcl_apply($1, List.rev $2)) }
 fn yy_action_205(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_expr", "rule_index": 44,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_expr", 44, 2, _last_pos, _args)
 }
 
 ///|
@@ -5670,23 +2378,7 @@ fn yy_action_205(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1029|    class_simple_expr
 // 1030|      { $1 }
 fn yy_action_206(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_expr", "rule_index": 44,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_expr", 44, 0, _last_pos, _args)
 }
 
 ///|
@@ -5694,23 +2386,7 @@ fn yy_action_206(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1025|    labeled_simple_pattern class_fun_def
 // 1026|      { let (l,o,p) = $1 in mkclass(Pcl_fun(l, o, p, $2)) }
 fn yy_action_207(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_fun_def", "rule_index": 43,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_fun_def", 43, 1, _last_pos, _args)
 }
 
 ///|
@@ -5718,23 +2394,7 @@ fn yy_action_207(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1031|    FUN attributes class_fun_def
 // 1032|      { wrap_class_attrs $3 $2 }
 fn yy_action_208(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_expr", "rule_index": 44,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_expr", 44, 1, _last_pos, _args)
 }
 
 ///|
@@ -5742,23 +2402,7 @@ fn yy_action_208(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1035|    let_bindings IN class_expr
 // 1036|      { class_of_let_bindings $1 $3 }
 fn yy_action_209(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_expr", "rule_index": 44,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_expr", 44, 3, _last_pos, _args)
 }
 
 ///|
@@ -5766,23 +2410,7 @@ fn yy_action_209(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1037|    LET OPEN override_flag attributes mod_longident IN class_expr
 // 1038|      { wrap_class_attrs (mkclass(Pcl_open($3, mkrhs $5 5, $7))) $4 }
 fn yy_action_210(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_expr", "rule_index": 44,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_expr", 44, 4, _last_pos, _args)
 }
 
 ///|
@@ -5790,23 +2418,7 @@ fn yy_action_210(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1039|    class_expr attribute
 // 1040|      { Cl.attr $1 $2 }
 fn yy_action_211(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_expr", "rule_index": 44,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_expr", 44, 5, _last_pos, _args)
 }
 
 ///|
@@ -5814,23 +2426,7 @@ fn yy_action_211(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1051|    LPAREN class_expr COLON class_type RPAREN
 // 1052|      { mkclass(Pcl_constraint($2, $4)) }
 fn yy_action_212(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_simple_expr", "rule_index": 45,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_simple_expr", 45, 3, _last_pos, _args)
 }
 
 ///|
@@ -5838,23 +2434,7 @@ fn yy_action_212(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1053|    LPAREN class_expr RPAREN
 // 1054|      { $2 }
 fn yy_action_213(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_simple_expr", "rule_index": 45,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_simple_expr", 45, 4, _last_pos, _args)
 }
 
 ///|
@@ -5862,23 +2442,7 @@ fn yy_action_213(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1041|    extension
 // 1042|      { mkclass(Pcl_extension $1) }
 fn yy_action_214(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_expr", "rule_index": 44,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_expr", 44, 6, _last_pos, _args)
 }
 
 ///|
@@ -5886,23 +2450,7 @@ fn yy_action_214(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1045|    LBRACKET core_type_comma_list RBRACKET class_longident
 // 1046|      { mkclass(Pcl_constr(mkrhs $4 4, List.rev $2)) }
 fn yy_action_215(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_simple_expr", "rule_index": 45,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_simple_expr", 45, 0, _last_pos, _args)
 }
 
 ///|
@@ -5910,23 +2458,7 @@ fn yy_action_215(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1047|    class_longident
 // 1048|      { mkclass(Pcl_constr(mkrhs $1 1, [])) }
 fn yy_action_216(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_simple_expr", "rule_index": 45,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_simple_expr", 45, 1, _last_pos, _args)
 }
 
 ///|
@@ -5934,23 +2466,7 @@ fn yy_action_216(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1049|    OBJECT attributes class_structure END
 // 1050|      { mkclass ~attrs:$2 (Pcl_structure $3) }
 fn yy_action_217(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_simple_expr", "rule_index": 45,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_simple_expr", 45, 2, _last_pos, _args)
 }
 
 ///|
@@ -5958,23 +2474,7 @@ fn yy_action_217(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1142|    class_signature
 // 1143|      { $1 }
 fn yy_action_218(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type", "rule_index": 53,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type", 53, 0, _last_pos, _args)
 }
 
 ///|
@@ -5983,23 +2483,7 @@ fn yy_action_218(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1145|    class_type
 // 1146|      { mkcty(Pcty_arrow(Optional $2 , $4, $6)) }
 fn yy_action_219(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type", "rule_index": 53,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type", 53, 1, _last_pos, _args)
 }
 
 ///|
@@ -6007,23 +2491,7 @@ fn yy_action_219(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1147|    OPTLABEL simple_core_type_or_tuple MINUSGREATER class_type
 // 1148|      { mkcty(Pcty_arrow(Optional $1, $2, $4)) }
 fn yy_action_220(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type", "rule_index": 53,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type", 53, 2, _last_pos, _args)
 }
 
 ///|
@@ -6031,23 +2499,7 @@ fn yy_action_220(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1149|    LIDENT COLON simple_core_type_or_tuple MINUSGREATER class_type
 // 1150|      { mkcty(Pcty_arrow(Labelled $1, $3, $5)) }
 fn yy_action_221(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type", "rule_index": 53,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type", 53, 3, _last_pos, _args)
 }
 
 ///|
@@ -6055,23 +2507,7 @@ fn yy_action_221(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1151|    simple_core_type_or_tuple MINUSGREATER class_type
 // 1152|      { mkcty(Pcty_arrow(Nolabel, $1, $3)) }
 fn yy_action_222(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type", "rule_index": 53,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type", 53, 4, _last_pos, _args)
 }
 
 ///|
@@ -6079,138 +2515,42 @@ fn yy_action_222(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1015|    labeled_simple_pattern class_fun_binding
 // 1016|      { let (l,o,p) = $1 in mkclass(Pcl_fun(l, o, p, $2)) }
 fn yy_action_223(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_fun_binding", "rule_index": 41,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_fun_binding", 41, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1020|    LBRACKET type_parameter_list RBRACKET       { List.rev $2 }
 fn yy_action_224(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type_parameters", "rule_index": 42,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type_parameters", 42, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1937|    type_parameter_list COMMA type_parameter    { $3 :: $1 }
 fn yy_action_225(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_parameter_list", "rule_index": 127,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_parameter_list", 127, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1925|    type_variance type_variable                   { $2, $1 }
 fn yy_action_226(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_parameter", "rule_index": 124,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_parameter", 124, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1933|    QUOTE ident                                 { mktyp(Ptyp_var $2) }
 fn yy_action_227(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_variable", "rule_index": 126,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_variable", 126, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1936|    type_parameter                              { [$1] }
 fn yy_action_228(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_parameter_list", "rule_index": 127,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_parameter_list", 127, 0, _last_pos, _args)
 }
 
 ///|
@@ -6222,23 +2562,7 @@ fn yy_action_228(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1247|            ~loc:(symbol_rloc ()) ~docs:(symbol_docs ())
 // 1248|      , ext}
 fn yy_action_229(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type_declaration", "rule_index": 66,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type_declaration", 66, 0, _last_pos, _args)
 }
 
 ///|
@@ -6246,46 +2570,14 @@ fn yy_action_229(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1159|    OBJECT attributes class_sig_body END
 // 1160|      { mkcty ~attrs:$2 (Pcty_signature $3) }
 fn yy_action_230(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_signature", "rule_index": 54,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_signature", 54, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1180|  class_sig_fields class_sig_field  { $2 :: (List.rev (text_csig 2)) @ $1 }
 fn yy_action_231(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_fields", "rule_index": 57,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_fields", 57, 1, _last_pos, _args)
 }
 
 ///|
@@ -6293,23 +2585,7 @@ fn yy_action_231(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1155|    LBRACKET core_type_comma_list RBRACKET clty_longident
 // 1156|      { mkcty(Pcty_constr (mkrhs $4 4, List.rev $2)) }
 fn yy_action_232(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_signature", "rule_index": 54,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_signature", 54, 0, _last_pos, _args)
 }
 
 ///|
@@ -6317,23 +2593,7 @@ fn yy_action_232(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1157|    clty_longident
 // 1158|      { mkcty(Pcty_constr (mkrhs $1 1, [])) }
 fn yy_action_233(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_signature", "rule_index": 54,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_signature", 54, 1, _last_pos, _args)
 }
 
 ///|
@@ -6341,23 +2601,7 @@ fn yy_action_233(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1183|    INHERIT attributes class_signature post_item_attributes
 // 1184|      { mkctf (Pctf_inherit $3) ~attrs:($2@$4) ~docs:(symbol_docs ()) }
 fn yy_action_234(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_field", "rule_index": 58,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_field", 58, 0, _last_pos, _args)
 }
 
 ///|
@@ -6365,23 +2609,7 @@ fn yy_action_234(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1185|    VAL attributes value_type post_item_attributes
 // 1186|      { mkctf (Pctf_val $3) ~attrs:($2@$4) ~docs:(symbol_docs ()) }
 fn yy_action_235(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_field", "rule_index": 58,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_field", 58, 1, _last_pos, _args)
 }
 
 ///|
@@ -6389,23 +2617,7 @@ fn yy_action_235(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1202|    VIRTUAL mutable_flag label COLON core_type
 // 1203|      { mkrhs $3 3, $2, Virtual, $5 }
 fn yy_action_236(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "value_type", "rule_index": 59,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("value_type", 59, 0, _last_pos, _args)
 }
 
 ///|
@@ -6413,23 +2625,7 @@ fn yy_action_236(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1204|    MUTABLE virtual_flag label COLON core_type
 // 1205|      { mkrhs $3 3, Mutable, $2, $5 }
 fn yy_action_237(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "value_type", "rule_index": 59,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("value_type", 59, 1, _last_pos, _args)
 }
 
 ///|
@@ -6437,23 +2633,7 @@ fn yy_action_237(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1206|    label COLON core_type
 // 1207|      { mkrhs $1 1, Immutable, Concrete, $3 }
 fn yy_action_238(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "value_type", "rule_index": 59,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("value_type", 59, 2, _last_pos, _args)
 }
 
 ///|
@@ -6466,23 +2646,7 @@ fn yy_action_238(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1192|             ~attrs:($2@$7) ~docs:(symbol_docs ())
 // 1193|      }
 fn yy_action_239(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_field", "rule_index": 58,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_field", 58, 2, _last_pos, _args)
 }
 
 ///|
@@ -6490,23 +2654,7 @@ fn yy_action_239(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2128|        typevar_list DOT core_type
 // 2129|          { mktyp(Ptyp_poly(List.rev $1, $3)) }
 fn yy_action_240(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "poly_type", "rule_index": 151,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("poly_type", 151, 1, _last_pos, _args)
 }
 
 ///|
@@ -6514,115 +2662,35 @@ fn yy_action_240(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2126|        core_type
 // 2127|          { $1 }
 fn yy_action_241(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "poly_type", "rule_index": 151,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("poly_type", 151, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2467|    PRIVATE VIRTUAL { Private, Virtual }
 fn yy_action_242(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "private_virtual_flags", "rule_index": 197,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("private_virtual_flags", 197, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2465|    PRIVATE { Private, Concrete }
 fn yy_action_243(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "private_virtual_flags", "rule_index": 197,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("private_virtual_flags", 197, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2468|    VIRTUAL PRIVATE { Private, Virtual }
 fn yy_action_244(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "private_virtual_flags", "rule_index": 197,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("private_virtual_flags", 197, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2466|    VIRTUAL { Public, Virtual }
 fn yy_action_245(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "private_virtual_flags", "rule_index": 197,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("private_virtual_flags", 197, 2, _last_pos, _args)
 }
 
 ///|
@@ -6630,23 +2698,7 @@ fn yy_action_245(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2463|                      
 // 2464|    /* empty */  { Public, Concrete }
 fn yy_action_246(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "private_virtual_flags", "rule_index": 197,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("private_virtual_flags", 197, 0, _last_pos, _args)
 }
 
 ///|
@@ -6654,46 +2706,14 @@ fn yy_action_246(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1194|    CONSTRAINT attributes constrain_field post_item_attributes
 // 1195|      { mkctf (Pctf_constraint $3) ~attrs:($2@$4) ~docs:(symbol_docs ()) }
 fn yy_action_247(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_field", "rule_index": 58,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_field", 58, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1213|        core_type EQUAL core_type          { $1, $3 }
 fn yy_action_248(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constrain_field", "rule_index": 61,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constrain_field", 61, 0, _last_pos, _args)
 }
 
 ///|
@@ -6701,23 +2721,7 @@ fn yy_action_248(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1196|    item_extension post_item_attributes
 // 1197|      { mkctf (Pctf_extension $1) ~attrs:$2 ~docs:(symbol_docs ()) }
 fn yy_action_249(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_field", "rule_index": 58,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_field", 58, 4, _last_pos, _args)
 }
 
 ///|
@@ -6725,23 +2729,7 @@ fn yy_action_249(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1198|    floating_attribute
 // 1199|      { mkctf(Pctf_attribute $1) }
 fn yy_action_250(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_field", "rule_index": 58,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_field", 58, 5, _last_pos, _args)
 }
 
 ///|
@@ -6749,23 +2737,7 @@ fn yy_action_250(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1169|    class_self_type class_sig_fields
 // 1170|      { Csig.mk $1 (extra_csig 2 (List.rev $2)) }
 fn yy_action_251(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_body", "rule_index": 55,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_body", 55, 0, _last_pos, _args)
 }
 
 ///|
@@ -6773,23 +2745,7 @@ fn yy_action_251(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1178|                 
 // 1179|    /* empty */                     { [] }
 fn yy_action_252(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_sig_fields", "rule_index": 57,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_sig_fields", 57, 0, _last_pos, _args)
 }
 
 ///|
@@ -6797,23 +2753,7 @@ fn yy_action_252(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1173|    LPAREN core_type RPAREN
 // 1174|      { $2 }
 fn yy_action_253(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_self_type", "rule_index": 56,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_self_type", 56, 0, _last_pos, _args)
 }
 
 ///|
@@ -6821,23 +2761,7 @@ fn yy_action_253(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1175|    /* empty */
 // 1176|      { mktyp(Ptyp_any) }
 fn yy_action_254(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_self_type", "rule_index": 56,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_self_type", 56, 1, _last_pos, _args)
 }
 
 ///|
@@ -6845,23 +2769,7 @@ fn yy_action_254(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1161|    class_signature attribute
 // 1162|      { Cty.attr $1 $2 }
 fn yy_action_255(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_signature", "rule_index": 54,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_signature", 54, 3, _last_pos, _args)
 }
 
 ///|
@@ -6869,23 +2777,7 @@ fn yy_action_255(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1165|    LET OPEN override_flag attributes mod_longident IN class_signature
 // 1166|      { wrap_class_type_attrs (mkcty(Pcty_open($3, mkrhs $5 5, $7))) $4 }
 fn yy_action_256(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_signature", "rule_index": 54,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_signature", 54, 5, _last_pos, _args)
 }
 
 ///|
@@ -6893,69 +2785,21 @@ fn yy_action_256(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1163|    extension
 // 1164|      { mkcty(Pcty_extension $1) }
 fn yy_action_257(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_signature", "rule_index": 54,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_signature", 54, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2407|    mod_ext_longident DOT LIDENT                { Ldot($1, $3) }
 fn yy_action_258(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "clty_longident", "rule_index": 186,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("clty_longident", 186, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2406|    LIDENT                                      { Lident $1 }
 fn yy_action_259(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "clty_longident", "rule_index": 186,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("clty_longident", 186, 0, _last_pos, _args)
 }
 
 ///|
@@ -6963,46 +2807,14 @@ fn yy_action_259(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1018|                      
 // 1019|    /*empty*/                                   { [] }
 fn yy_action_260(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type_parameters", "rule_index": 42,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type_parameters", 42, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2461|    VIRTUAL                                     { Virtual }
 fn yy_action_261(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "virtual_flag", "rule_index": 196,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("virtual_flag", 196, 1, _last_pos, _args)
 }
 
 ///|
@@ -7010,23 +2822,7 @@ fn yy_action_261(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2459|             
 // 2460|    /* empty */                                 { Concrete }
 fn yy_action_262(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "virtual_flag", "rule_index": 196,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("virtual_flag", 196, 0, _last_pos, _args)
 }
 
 ///|
@@ -7034,23 +2830,7 @@ fn yy_action_262(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1237|    class_type_declaration
 // 1238|      { let (body, ext) = $1 in ([body],ext) }
 fn yy_action_263(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_type_declarations",
-      "rule_index": 65, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_type_declarations", 65, 0, _last_pos, _args)
 }
 
 ///|
@@ -7062,23 +2842,7 @@ fn yy_action_263(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 732|            $5 $3
 // 733|        in wrap_mod_attrs modexp $2 }
 fn yy_action_264(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_expr", "rule_index": 14,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_expr", 14, 2, _last_pos, _args)
 }
 
 ///|
@@ -7086,23 +2850,7 @@ fn yy_action_264(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 734|    module_expr paren_module_expr
 // 735|      { mkmod(Pmod_apply($1, $2)) }
 fn yy_action_265(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_expr", "rule_index": 14,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_expr", 14, 3, _last_pos, _args)
 }
 
 ///|
@@ -7110,23 +2858,7 @@ fn yy_action_265(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 747|    LPAREN module_expr COLON module_type RPAREN
 // 748|      { mkmod(Pmod_constraint($2, $4)) }
 fn yy_action_266(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "paren_module_expr", "rule_index": 15,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("paren_module_expr", 15, 0, _last_pos, _args)
 }
 
 ///|
@@ -7134,23 +2866,7 @@ fn yy_action_266(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 749|    LPAREN module_expr RPAREN
 // 750|      { $2 }
 fn yy_action_267(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "paren_module_expr", "rule_index": 15,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("paren_module_expr", 15, 1, _last_pos, _args)
 }
 
 ///|
@@ -7158,23 +2874,7 @@ fn yy_action_267(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 736|    module_expr LPAREN RPAREN
 // 737|      { mkmod(Pmod_apply($1, mkmod (Pmod_structure []))) }
 fn yy_action_268(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_expr", "rule_index": 14,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_expr", 14, 4, _last_pos, _args)
 }
 
 ///|
@@ -7182,23 +2882,7 @@ fn yy_action_268(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 740|    module_expr attribute
 // 741|      { Mod.attr $1 $2 }
 fn yy_action_269(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_expr", "rule_index": 14,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_expr", 14, 6, _last_pos, _args)
 }
 
 ///|
@@ -7206,23 +2890,7 @@ fn yy_action_269(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 824|    COLON module_type EQUAL module_expr
 // 825|      { mkmod(Pmod_constraint($4, $2)) }
 fn yy_action_270(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_binding_body", "rule_index": 20,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_binding_body", 20, 1, _last_pos, _args)
 }
 
 ///|
@@ -7230,23 +2898,7 @@ fn yy_action_270(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 826|    functor_arg module_binding_body
 // 827|      { mkmod(Pmod_functor(fst $1, snd $1, $2)) }
 fn yy_action_271(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_binding_body", "rule_index": 20,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_binding_body", 20, 2, _last_pos, _args)
 }
 
 ///|
@@ -7254,23 +2906,7 @@ fn yy_action_271(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1317|    LET MODULE ext_attributes UIDENT module_binding_body IN seq_expr
 // 1318|      { mkexp_attrs (Pexp_letmodule(mkrhs $4 4, $5, $7)) $3 }
 fn yy_action_272(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 3, _last_pos, _args)
 }
 
 ///|
@@ -7278,23 +2914,7 @@ fn yy_action_272(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1319|    LET EXCEPTION ext_attributes let_exception_declaration IN seq_expr
 // 1320|      { mkexp_attrs (Pexp_letexception($4, $6)) $3 }
 fn yy_action_273(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 4, _last_pos, _args)
 }
 
 ///|
@@ -7303,23 +2923,7 @@ fn yy_action_273(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1983|      { let args, res = $2 in
 // 1984|        Te.decl (mkrhs $1 1) ~args ?res ~attrs:$3 ~loc:(symbol_rloc()) }
 fn yy_action_274(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_exception_declaration",
-      "rule_index": 133, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_exception_declaration", 133, 0, _last_pos, _args)
 }
 
 ///|
@@ -7327,46 +2931,14 @@ fn yy_action_274(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1321|    LET OPEN override_flag ext_attributes mod_longident IN seq_expr
 // 1322|      { mkexp_attrs (Pexp_open($3, mkrhs $5 5, $7)) $4 }
 fn yy_action_275(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2472|    BANG                                        { Override }
 fn yy_action_276(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "override_flag", "rule_index": 198,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("override_flag", 198, 1, _last_pos, _args)
 }
 
 ///|
@@ -7374,23 +2946,7 @@ fn yy_action_276(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2470|              
 // 2471|    /* empty */                                 { Fresh }
 fn yy_action_277(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "override_flag", "rule_index": 198,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("override_flag", 198, 0, _last_pos, _args)
 }
 
 ///|
@@ -7398,46 +2954,14 @@ fn yy_action_277(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1315|    let_bindings IN seq_expr
 // 1316|      { expr_of_let_bindings $1 $3 }
 fn yy_action_278(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1605|    let_bindings and_let_binding                { addlb $1 $2 }
 fn yy_action_279(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_bindings", "rule_index": 83,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_bindings", 83, 1, _last_pos, _args)
 }
 
 ///|
@@ -7445,23 +2969,7 @@ fn yy_action_279(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1572|    val_ident strict_binding
 // 1573|      { (mkpatvar $1 1, $2) }
 fn yy_action_280(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_binding_body", "rule_index": 82,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_binding_body", 82, 0, _last_pos, _args)
 }
 
 ///|
@@ -7479,23 +2987,7 @@ fn yy_action_280(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1584|        (ghpat ~loc:patloc (Ppat_constraint(v, typ)),
 // 1585|         mkexp_constraint $4 $2) }
 fn yy_action_281(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_binding_body", "rule_index": 82,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_binding_body", 82, 1, _last_pos, _args)
 }
 
 ///|
@@ -7508,23 +3000,7 @@ fn yy_action_281(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1591|                            ghtyp ~loc:typloc (Ptyp_poly(List.rev $3,$5)))),
 // 1592|         $7) }
 fn yy_action_282(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_binding_body", "rule_index": 82,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_binding_body", 82, 2, _last_pos, _args)
 }
 
 ///|
@@ -7534,23 +3010,7 @@ fn yy_action_282(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1595|        let loc = rhs_interval 1 6 in
 // 1596|        (ghpat ~loc (Ppat_constraint(mkpatvar $1 1, poly)), exp) }
 fn yy_action_283(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_binding_body", "rule_index": 82,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_binding_body", 82, 3, _last_pos, _args)
 }
 
 ///|
@@ -7558,23 +3018,7 @@ fn yy_action_283(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1270|    QUESTION LPAREN label_let_pattern opt_default RPAREN
 // 1271|      { (Optional (fst $3), $4, snd $3) }
 fn yy_action_284(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_pattern", "rule_index": 69,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_pattern", 69, 0, _last_pos, _args)
 }
 
 ///|
@@ -7582,23 +3026,7 @@ fn yy_action_284(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1272|    QUESTION label_var
 // 1273|      { (Optional (fst $2), None, snd $2) }
 fn yy_action_285(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_pattern", "rule_index": 69,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_pattern", 69, 1, _last_pos, _args)
 }
 
 ///|
@@ -7606,46 +3034,14 @@ fn yy_action_285(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1274|    OPTLABEL LPAREN let_pattern opt_default RPAREN
 // 1275|      { (Optional $1, $4, $3) }
 fn yy_action_286(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_pattern", "rule_index": 69,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_pattern", 69, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1293|    EQUAL seq_expr                      { Some $2 }
 fn yy_action_287(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_default", "rule_index": 71,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_default", 71, 1, _last_pos, _args)
 }
 
 ///|
@@ -7653,23 +3049,7 @@ fn yy_action_287(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1291|            
 // 1292|    /* empty */                         { None }
 fn yy_action_288(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_default", "rule_index": 71,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_default", 71, 0, _last_pos, _args)
 }
 
 ///|
@@ -7677,23 +3057,7 @@ fn yy_action_288(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1307|    pattern COLON core_type
 // 1308|      { mkpat(Ppat_constraint($1, $3)) }
 fn yy_action_289(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_pattern", "rule_index": 74,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_pattern", 74, 1, _last_pos, _args)
 }
 
 ///|
@@ -7701,23 +3065,7 @@ fn yy_action_289(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1305|    pattern
 // 1306|      { $1 }
 fn yy_action_290(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_pattern", "rule_index": 74,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_pattern", 74, 0, _last_pos, _args)
 }
 
 ///|
@@ -7725,69 +3073,21 @@ fn yy_action_290(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1276|    OPTLABEL pattern_var
 // 1277|      { (Optional $1, None, $2) }
 fn yy_action_291(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_pattern", "rule_index": 69,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_pattern", 69, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1288|    LIDENT            { mkpat(Ppat_var (mkrhs $1 1)) }
 fn yy_action_292(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_var", "rule_index": 70,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_var", 70, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1289|    UNDERSCORE        { mkpat Ppat_any }
 fn yy_action_293(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_var", "rule_index": 70,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_var", 70, 1, _last_pos, _args)
 }
 
 ///|
@@ -7795,23 +3095,7 @@ fn yy_action_293(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1278|    TILDE LPAREN label_let_pattern RPAREN
 // 1279|      { (Labelled (fst $3), None, snd $3) }
 fn yy_action_294(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_pattern", "rule_index": 69,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_pattern", 69, 4, _last_pos, _args)
 }
 
 ///|
@@ -7819,23 +3103,7 @@ fn yy_action_294(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1298|    label_var COLON core_type
 // 1299|      { let (lab, pat) = $1 in (lab, mkpat(Ppat_constraint(pat, $3))) }
 fn yy_action_295(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_let_pattern", "rule_index": 72,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_let_pattern", 72, 1, _last_pos, _args)
 }
 
 ///|
@@ -7843,23 +3111,7 @@ fn yy_action_295(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1296|    label_var
 // 1297|      { $1 }
 fn yy_action_296(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_let_pattern", "rule_index": 72,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_let_pattern", 72, 0, _last_pos, _args)
 }
 
 ///|
@@ -7867,46 +3119,14 @@ fn yy_action_296(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1280|    TILDE label_var
 // 1281|      { (Labelled (fst $2), None, snd $2) }
 fn yy_action_297(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_pattern", "rule_index": 69,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_pattern", 69, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1302|    LIDENT    { ($1, mkpat(Ppat_var (mkrhs $1 1))) }
 fn yy_action_298(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_var", "rule_index": 73,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_var", 73, 0, _last_pos, _args)
 }
 
 ///|
@@ -7914,23 +3134,7 @@ fn yy_action_298(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1282|    LABEL simple_pattern
 // 1283|      { (Labelled $1, None, $2) }
 fn yy_action_299(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_pattern", "rule_index": 69,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_pattern", 69, 6, _last_pos, _args)
 }
 
 ///|
@@ -7938,23 +3142,7 @@ fn yy_action_299(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1284|    simple_pattern
 // 1285|      { (Nolabel, None, $1) }
 fn yy_action_300(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_pattern", "rule_index": 69,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_pattern", 69, 7, _last_pos, _args)
 }
 
 ///|
@@ -7962,23 +3150,7 @@ fn yy_action_300(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1617|    strict_binding
 // 1618|      { $1 }
 fn yy_action_301(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "fun_binding", "rule_index": 86,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("fun_binding", 86, 0, _last_pos, _args)
 }
 
 ///|
@@ -7986,23 +3158,7 @@ fn yy_action_301(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1619|    type_constraint EQUAL seq_expr
 // 1620|      { mkexp_constraint $3 $1 }
 fn yy_action_302(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "fun_binding", "rule_index": 86,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("fun_binding", 86, 1, _last_pos, _args)
 }
 
 ///|
@@ -8010,23 +3166,7 @@ fn yy_action_302(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1623|    EQUAL seq_expr
 // 1624|      { $2 }
 fn yy_action_303(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "strict_binding", "rule_index": 87,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("strict_binding", 87, 0, _last_pos, _args)
 }
 
 ///|
@@ -8034,23 +3174,7 @@ fn yy_action_303(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1625|    labeled_simple_pattern fun_binding
 // 1626|      { let (l, o, p) = $1 in ghexp(Pexp_fun(l, o, p, $2)) }
 fn yy_action_304(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "strict_binding", "rule_index": 87,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("strict_binding", 87, 1, _last_pos, _args)
 }
 
 ///|
@@ -8058,23 +3182,7 @@ fn yy_action_304(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1627|    LPAREN TYPE lident_list RPAREN fun_binding
 // 1628|      { mk_newtypes $3 $5 }
 fn yy_action_305(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "strict_binding", "rule_index": 87,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("strict_binding", 87, 2, _last_pos, _args)
 }
 
 ///|
@@ -8082,23 +3190,7 @@ fn yy_action_305(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1545|    simple_labeled_expr_list labeled_simple_expr
 // 1546|      { $2 :: $1 }
 fn yy_action_306(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_labeled_expr_list",
-      "rule_index": 77, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_labeled_expr_list", 77, 1, _last_pos, _args)
 }
 
 ///|
@@ -8106,23 +3198,7 @@ fn yy_action_306(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1313|    simple_expr simple_labeled_expr_list
 // 1314|      { mkexp(Pexp_apply($1, List.rev $2)) }
 fn yy_action_307(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 1, _last_pos, _args)
 }
 
 ///|
@@ -8130,23 +3206,7 @@ fn yy_action_307(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1395|    simple_expr DOT label_longident LESSMINUS expr
 // 1396|      { mkexp(Pexp_setfield($1, mkrhs $3 3, $5)) }
 fn yy_action_308(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 41, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 41, _last_pos, _args)
 }
 
 ///|
@@ -8154,23 +3214,7 @@ fn yy_action_308(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1454|    simple_expr DOT label_longident
 // 1455|      { mkexp(Pexp_field($1, mkrhs $3 3)) }
 fn yy_action_309(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 8, _last_pos, _args)
 }
 
 ///|
@@ -8179,23 +3223,7 @@ fn yy_action_309(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1398|      { mkexp(Pexp_apply(ghexp(Pexp_ident(array_function "Array" "set")),
 // 1399|                         [Nolabel,$1; Nolabel,$4; Nolabel,$7])) }
 fn yy_action_310(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 42, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 42, _last_pos, _args)
 }
 
 ///|
@@ -8204,46 +3232,14 @@ fn yy_action_310(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1463|      { mkexp(Pexp_apply(ghexp(Pexp_ident(array_function "Array" "get")),
 // 1464|                         [Nolabel,$1; Nolabel,$4])) }
 fn yy_action_311(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 11, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 11, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1263|    expr SEMI seq_expr            { mkexp(Pexp_sequence($1, $3)) }
 fn yy_action_312(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "seq_expr", "rule_index": 68,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("seq_expr", 68, 2, _last_pos, _args)
 }
 
 ///|
@@ -8253,69 +3249,21 @@ fn yy_action_312(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1266|        let payload = PStr [mkstrexp seq []] in
 // 1267|        mkexp (Pexp_extension ($4, payload)) }
 fn yy_action_313(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "seq_expr", "rule_index": 68,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("seq_expr", 68, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1262|    expr SEMI                     { $1 }
 fn yy_action_314(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "seq_expr", "rule_index": 68,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("seq_expr", 68, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1261|    expr        %prec below_SEMI  { $1 }
 fn yy_action_315(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "seq_expr", "rule_index": 68,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("seq_expr", 68, 0, _last_pos, _args)
 }
 
 ///|
@@ -8324,23 +3272,7 @@ fn yy_action_315(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1401|      { mkexp(Pexp_apply(ghexp(Pexp_ident(array_function "String" "set")),
 // 1402|                         [Nolabel,$1; Nolabel,$4; Nolabel,$7])) }
 fn yy_action_316(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 43, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 43, _last_pos, _args)
 }
 
 ///|
@@ -8349,23 +3281,7 @@ fn yy_action_316(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1466|      { mkexp(Pexp_apply(ghexp(Pexp_ident(array_function "String" "get")),
 // 1467|                         [Nolabel,$1; Nolabel,$4])) }
 fn yy_action_317(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 12, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 12, _last_pos, _args)
 }
 
 ///|
@@ -8373,23 +3289,7 @@ fn yy_action_317(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1403|    simple_expr DOT LBRACE expr RBRACE LESSMINUS expr
 // 1404|      { bigarray_set $1 $4 $7 }
 fn yy_action_318(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 44, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 44, _last_pos, _args)
 }
 
 ///|
@@ -8397,23 +3297,7 @@ fn yy_action_318(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1486|    simple_expr DOT LBRACE expr RBRACE
 // 1487|      { bigarray_get $1 $4 }
 fn yy_action_319(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 19, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 19, _last_pos, _args)
 }
 
 ///|
@@ -8422,23 +3306,7 @@ fn yy_action_319(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1415|      { let id = mkexp @@ Pexp_ident( ghloc @@ Ldot($3,"." ^ $4 ^ "[]<-")) in
 // 1416|        mkexp @@ Pexp_apply(id , [Nolabel, $1; Nolabel, $6; Nolabel, $9]) }
 fn yy_action_320(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 48, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 48, _last_pos, _args)
 }
 
 ///|
@@ -8447,23 +3315,7 @@ fn yy_action_320(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1478|      { let id = mkexp @@ Pexp_ident( ghloc @@ Ldot($3, "." ^ $4 ^ "[]")) in
 // 1479|        mkexp @@ Pexp_apply(id, [Nolabel, $1; Nolabel, $6]) }
 fn yy_action_321(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 16, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 16, _last_pos, _args)
 }
 
 ///|
@@ -8472,23 +3324,7 @@ fn yy_action_321(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1418|      { let id = mkexp @@ Pexp_ident( ghloc @@ Ldot($3, "." ^ $4 ^ "()<-")) in
 // 1419|        mkexp @@ Pexp_apply(id , [Nolabel, $1; Nolabel, $6; Nolabel, $9]) }
 fn yy_action_322(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 49, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 49, _last_pos, _args)
 }
 
 ///|
@@ -8497,23 +3333,7 @@ fn yy_action_322(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1481|      { let id = mkexp @@ Pexp_ident( ghloc @@ Ldot($3, "." ^ $4 ^ "()")) in
 // 1482|        mkexp @@ Pexp_apply(id, [Nolabel, $1; Nolabel, $6]) }
 fn yy_action_323(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 17, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 17, _last_pos, _args)
 }
 
 ///|
@@ -8522,23 +3342,7 @@ fn yy_action_323(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1421|      { let id = mkexp @@ Pexp_ident( ghloc @@ Ldot($3, "." ^ $4 ^ "{}<-")) in
 // 1422|        mkexp @@ Pexp_apply(id , [Nolabel, $1; Nolabel, $6; Nolabel, $9]) }
 fn yy_action_324(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 50, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 50, _last_pos, _args)
 }
 
 ///|
@@ -8547,23 +3351,7 @@ fn yy_action_324(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1484|      { let id = mkexp @@ Pexp_ident( ghloc @@ Ldot($3, "." ^ $4 ^ "{}")) in
 // 1485|        mkexp @@ Pexp_apply(id, [Nolabel, $1; Nolabel, $6]) }
 fn yy_action_325(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 18, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 18, _last_pos, _args)
 }
 
 ///|
@@ -8572,23 +3360,7 @@ fn yy_action_325(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1406|      { let id = mkexp @@ Pexp_ident( ghloc @@ Lident ("." ^ $2 ^ "[]<-")) in
 // 1407|        mkexp @@ Pexp_apply(id , [Nolabel, $1; Nolabel, $4; Nolabel, $7]) }
 fn yy_action_326(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 45, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 45, _last_pos, _args)
 }
 
 ///|
@@ -8597,23 +3369,7 @@ fn yy_action_326(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1469|      { let id = mkexp @@ Pexp_ident( ghloc @@ Lident ("." ^ $2 ^ "[]")) in
 // 1470|        mkexp @@ Pexp_apply(id, [Nolabel, $1; Nolabel, $4]) }
 fn yy_action_327(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 13, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 13, _last_pos, _args)
 }
 
 ///|
@@ -8622,23 +3378,7 @@ fn yy_action_327(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1409|      { let id = mkexp @@ Pexp_ident( ghloc @@ Lident ("." ^ $2 ^ "()<-")) in
 // 1410|        mkexp @@ Pexp_apply(id , [Nolabel, $1; Nolabel, $4; Nolabel, $7]) }
 fn yy_action_328(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 46, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 46, _last_pos, _args)
 }
 
 ///|
@@ -8647,23 +3387,7 @@ fn yy_action_328(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1472|      { let id = mkexp @@ Pexp_ident( ghloc @@ Lident ("." ^ $2 ^ "()")) in
 // 1473|        mkexp @@ Pexp_apply(id, [Nolabel, $1; Nolabel, $4]) }
 fn yy_action_329(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 14, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 14, _last_pos, _args)
 }
 
 ///|
@@ -8672,23 +3396,7 @@ fn yy_action_329(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1412|      { let id = mkexp @@ Pexp_ident( ghloc @@ Lident ("." ^ $2 ^ "{}<-")) in
 // 1413|        mkexp @@ Pexp_apply(id , [Nolabel, $1; Nolabel, $4; Nolabel, $7]) }
 fn yy_action_330(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 47, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 47, _last_pos, _args)
 }
 
 ///|
@@ -8697,23 +3405,7 @@ fn yy_action_330(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1475|      { let id = mkexp @@ Pexp_ident( ghloc @@ Lident ("." ^ $2 ^ "{}")) in
 // 1476|        mkexp @@ Pexp_apply(id, [Nolabel, $1; Nolabel, $4]) }
 fn yy_action_331(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 15, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 15, _last_pos, _args)
 }
 
 ///|
@@ -8721,23 +3413,7 @@ fn yy_action_331(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1549|    simple_expr %prec below_HASH
 // 1550|      { (Nolabel, $1) }
 fn yy_action_332(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_expr", "rule_index": 78,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_expr", 78, 0, _last_pos, _args)
 }
 
 ///|
@@ -8745,23 +3421,7 @@ fn yy_action_332(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1543|    labeled_simple_expr
 // 1544|      { [$1] }
 fn yy_action_333(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_labeled_expr_list",
-      "rule_index": 77, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_labeled_expr_list", 77, 0, _last_pos, _args)
 }
 
 ///|
@@ -8769,23 +3429,7 @@ fn yy_action_333(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1551|    label_expr
 // 1552|      { $1 }
 fn yy_action_334(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "labeled_simple_expr", "rule_index": 78,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("labeled_simple_expr", 78, 1, _last_pos, _args)
 }
 
 ///|
@@ -8793,23 +3437,7 @@ fn yy_action_334(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1555|    LABEL simple_expr %prec below_HASH
 // 1556|      { (Labelled $1, $2) }
 fn yy_action_335(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_expr", "rule_index": 79,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_expr", 79, 0, _last_pos, _args)
 }
 
 ///|
@@ -8817,23 +3445,7 @@ fn yy_action_335(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1557|    TILDE label_ident
 // 1558|      { (Labelled (fst $2), snd $2) }
 fn yy_action_336(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_expr", "rule_index": 79,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_expr", 79, 1, _last_pos, _args)
 }
 
 ///|
@@ -8841,46 +3453,14 @@ fn yy_action_336(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1559|    QUESTION label_ident
 // 1560|      { (Optional (fst $2), snd $2) }
 fn yy_action_337(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_expr", "rule_index": 79,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_expr", 79, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1565|    LIDENT   { ($1, mkexp(Pexp_ident(mkrhs (Lident $1) 1))) }
 fn yy_action_338(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_ident", "rule_index": 80,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_ident", 80, 0, _last_pos, _args)
 }
 
 ///|
@@ -8888,23 +3468,7 @@ fn yy_action_338(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1561|    OPTLABEL simple_expr %prec below_HASH
 // 1562|      { (Optional $1, $2) }
 fn yy_action_339(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_expr", "rule_index": 79,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_expr", 79, 3, _last_pos, _args)
 }
 
 ///|
@@ -8912,23 +3476,7 @@ fn yy_action_339(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1311|    simple_expr %prec below_HASH
 // 1312|      { $1 }
 fn yy_action_340(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 0, _last_pos, _args)
 }
 
 ///|
@@ -8936,23 +3484,7 @@ fn yy_action_340(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1597|    pattern_no_exn EQUAL seq_expr
 // 1598|      { ($1, $3) }
 fn yy_action_341(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_binding_body", "rule_index": 82,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_binding_body", 82, 4, _last_pos, _args)
 }
 
 ///|
@@ -8960,23 +3492,7 @@ fn yy_action_341(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1717|    pattern_no_exn AS val_ident
 // 1718|      { mkpat(Ppat_alias($1, mkrhs $3 3)) }
 fn yy_action_342(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_no_exn", "rule_index": 101,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_no_exn", 101, 0, _last_pos, _args)
 }
 
 ///|
@@ -8984,23 +3500,7 @@ fn yy_action_342(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1721|    pattern_no_exn COLONCOLON pattern
 // 1722|      { mkpat_cons (rhs_loc 2) (ghpat(Ppat_tuple[$1;$3])) (symbol_rloc()) }
 fn yy_action_343(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_no_exn", "rule_index": 101,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_no_exn", 101, 2, _last_pos, _args)
 }
 
 ///|
@@ -9008,23 +3508,7 @@ fn yy_action_343(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1723|    pattern_no_exn BAR pattern
 // 1724|      { mkpat(Ppat_or($1, $3)) }
 fn yy_action_344(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_no_exn", "rule_index": 101,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_no_exn", 101, 3, _last_pos, _args)
 }
 
 ///|
@@ -9032,46 +3516,14 @@ fn yy_action_344(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1725|    pattern_no_exn attribute
 // 1726|      { Pat.attr $1 $2 }
 fn yy_action_345(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_no_exn", "rule_index": 101,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_no_exn", 101, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1800|    pattern_no_exn COMMA pattern                { [$3; $1] }
 fn yy_action_346(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_no_exn_comma_list",
-      "rule_index": 107, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_no_exn_comma_list", 107, 1, _last_pos, _args)
 }
 
 ///|
@@ -9079,23 +3531,7 @@ fn yy_action_346(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1613|    AND attributes let_binding_body post_item_attributes
 // 1614|      { mklb false $3 ($2@$4) }
 fn yy_action_347(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "and_let_binding", "rule_index": 85,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("and_let_binding", 85, 0, _last_pos, _args)
 }
 
 ///|
@@ -9104,23 +3540,7 @@ fn yy_action_347(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1600|      { let loc = rhs_interval 1 3 in
 // 1601|        (ghpat ~loc (Ppat_constraint($1, $3)), $5) }
 fn yy_action_348(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_binding_body", "rule_index": 82,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_binding_body", 82, 5, _last_pos, _args)
 }
 
 ///|
@@ -9129,46 +3549,14 @@ fn yy_action_348(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1609|      { let (ext, attr) = $2 in
 // 1610|        mklbs ext $3 (mklb true $4 (attr@$5)) }
 fn yy_action_349(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_binding", "rule_index": 84,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_binding", 84, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1799|    pattern_no_exn_comma_list COMMA pattern     { $3 :: $1 }
 fn yy_action_350(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_no_exn_comma_list",
-      "rule_index": 107, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_no_exn_comma_list", 107, 0, _last_pos, _args)
 }
 
 ///|
@@ -9176,69 +3564,21 @@ fn yy_action_350(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1719|    pattern_no_exn_comma_list  %prec below_COMMA
 // 1720|      { mkpat(Ppat_tuple(List.rev $1)) }
 fn yy_action_351(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_no_exn", "rule_index": 101,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_no_exn", 101, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1727|    pattern_gen { $1 }
 fn yy_action_352(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_no_exn", "rule_index": 101,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_no_exn", 101, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2441|    REC                                         { Recursive }
 fn yy_action_353(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "rec_flag", "rule_index": 191,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("rec_flag", 191, 1, _last_pos, _args)
 }
 
 ///|
@@ -9246,23 +3586,7 @@ fn yy_action_353(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2439|         
 // 2440|    /* empty */                                 { Nonrecursive }
 fn yy_action_354(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "rec_flag", "rule_index": 191,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("rec_flag", 191, 0, _last_pos, _args)
 }
 
 ///|
@@ -9270,23 +3594,7 @@ fn yy_action_354(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1323|    FUNCTION ext_attributes opt_bar match_cases
 // 1324|      { mkexp_attrs (Pexp_function(List.rev $4)) $2 }
 fn yy_action_355(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 6, _last_pos, _args)
 }
 
 ///|
@@ -9294,23 +3602,7 @@ fn yy_action_355(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1645|    COLON simple_core_type MINUSGREATER seq_expr
 // 1646|      { mkexp (Pexp_constraint ($4, $2)) }
 fn yy_action_356(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "fun_def", "rule_index": 90,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("fun_def", 90, 1, _last_pos, _args)
 }
 
 ///|
@@ -9321,23 +3613,7 @@ fn yy_action_356(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1651|       ghexp(Pexp_fun(l, o, p, $2))
 // 1652|      }
 fn yy_action_357(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "fun_def", "rule_index": 90,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("fun_def", 90, 2, _last_pos, _args)
 }
 
 ///|
@@ -9345,92 +3621,28 @@ fn yy_action_357(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1653|    LPAREN TYPE lident_list RPAREN fun_def
 // 1654|      { mk_newtypes $3 $5 }
 fn yy_action_358(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "fun_def", "rule_index": 90,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("fun_def", 90, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1569|    LIDENT lident_list                { mkrhs $1 1 :: $2 }
 fn yy_action_359(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lident_list", "rule_index": 81,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lident_list", 81, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1568|    LIDENT                            { [mkrhs $1 1] }
 fn yy_action_360(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lident_list", "rule_index": 81,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lident_list", 81, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1632|    match_cases BAR match_case { $3 :: $1 }
 fn yy_action_361(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "match_cases", "rule_index": 88,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("match_cases", 88, 1, _last_pos, _args)
 }
 
 ///|
@@ -9438,46 +3650,14 @@ fn yy_action_361(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1330|    MATCH ext_attributes seq_expr WITH opt_bar match_cases
 // 1331|      { mkexp_attrs (Pexp_match($3, List.rev $6)) $2 }
 fn yy_action_362(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 9, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1631|    match_case { [$1] }
 fn yy_action_363(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "match_cases", "rule_index": 88,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("match_cases", 88, 0, _last_pos, _args)
 }
 
 ///|
@@ -9485,46 +3665,14 @@ fn yy_action_363(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1637|    pattern WHEN seq_expr MINUSGREATER seq_expr
 // 1638|      { Exp.case $1 ~guard:$3 $5 }
 fn yy_action_364(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "match_case", "rule_index": 89,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("match_case", 89, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1657|    expr_comma_list COMMA expr                  { $3 :: $1 }
 fn yy_action_365(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr_comma_list", "rule_index": 91,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr_comma_list", 91, 0, _last_pos, _args)
 }
 
 ///|
@@ -9532,23 +3680,7 @@ fn yy_action_365(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1334|    expr_comma_list %prec below_COMMA
 // 1335|      { mkexp(Pexp_tuple(List.rev $1)) }
 fn yy_action_366(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 11, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 11, _last_pos, _args)
 }
 
 ///|
@@ -9556,23 +3688,7 @@ fn yy_action_366(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1336|    constr_longident simple_expr %prec below_HASH
 // 1337|      { mkexp(Pexp_construct(mkrhs $1 1, Some $2)) }
 fn yy_action_367(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 12, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 12, _last_pos, _args)
 }
 
 ///|
@@ -9580,23 +3696,7 @@ fn yy_action_367(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1338|    name_tag simple_expr %prec below_HASH
 // 1339|      { mkexp(Pexp_variant($1, Some $2)) }
 fn yy_action_368(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 13, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 13, _last_pos, _args)
 }
 
 ///|
@@ -9604,23 +3704,7 @@ fn yy_action_368(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1340|    IF ext_attributes seq_expr THEN expr ELSE expr
 // 1341|      { mkexp_attrs(Pexp_ifthenelse($3, $5, Some $7)) $2 }
 fn yy_action_369(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 14, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 14, _last_pos, _args)
 }
 
 ///|
@@ -9628,23 +3712,7 @@ fn yy_action_369(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1342|    IF ext_attributes seq_expr THEN expr
 // 1343|      { mkexp_attrs (Pexp_ifthenelse($3, $5, None)) $2 }
 fn yy_action_370(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 15, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 15, _last_pos, _args)
 }
 
 ///|
@@ -9652,23 +3720,7 @@ fn yy_action_370(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1344|    WHILE ext_attributes seq_expr DO seq_expr DONE
 // 1345|      { mkexp_attrs (Pexp_while($3, $5)) $2 }
 fn yy_action_371(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 16, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 16, _last_pos, _args)
 }
 
 ///|
@@ -9677,69 +3729,21 @@ fn yy_action_371(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1347|    seq_expr DONE
 // 1348|      { mkexp_attrs(Pexp_for($3, $5, $7, $6, $9)) $2 }
 fn yy_action_372(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 17, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 17, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2448|    TO                                          { Upto }
 fn yy_action_373(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "direction_flag", "rule_index": 193,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("direction_flag", 193, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2449|    DOWNTO                                      { Downto }
 fn yy_action_374(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "direction_flag", "rule_index": 193,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("direction_flag", 193, 1, _last_pos, _args)
 }
 
 ///|
@@ -9747,23 +3751,7 @@ fn yy_action_374(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1349|    expr COLONCOLON expr
 // 1350|      { mkexp_cons (rhs_loc 2) (ghexp(Pexp_tuple[$1;$3])) (symbol_rloc()) }
 fn yy_action_375(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 18, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 18, _last_pos, _args)
 }
 
 ///|
@@ -9771,23 +3759,7 @@ fn yy_action_375(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1351|    expr INFIXOP0 expr
 // 1352|      { mkinfix $1 $2 $3 }
 fn yy_action_376(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 19, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 19, _last_pos, _args)
 }
 
 ///|
@@ -9795,23 +3767,7 @@ fn yy_action_376(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1353|    expr INFIXOP1 expr
 // 1354|      { mkinfix $1 $2 $3 }
 fn yy_action_377(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 20, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 20, _last_pos, _args)
 }
 
 ///|
@@ -9819,23 +3775,7 @@ fn yy_action_377(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1355|    expr INFIXOP2 expr
 // 1356|      { mkinfix $1 $2 $3 }
 fn yy_action_378(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 21, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 21, _last_pos, _args)
 }
 
 ///|
@@ -9843,23 +3783,7 @@ fn yy_action_378(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1357|    expr INFIXOP3 expr
 // 1358|      { mkinfix $1 $2 $3 }
 fn yy_action_379(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 22, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 22, _last_pos, _args)
 }
 
 ///|
@@ -9867,23 +3791,7 @@ fn yy_action_379(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1359|    expr INFIXOP4 expr
 // 1360|      { mkinfix $1 $2 $3 }
 fn yy_action_380(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 23, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 23, _last_pos, _args)
 }
 
 ///|
@@ -9891,23 +3799,7 @@ fn yy_action_380(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1361|    expr PLUS expr
 // 1362|      { mkinfix $1 "+" $3 }
 fn yy_action_381(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 24, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 24, _last_pos, _args)
 }
 
 ///|
@@ -9915,23 +3807,7 @@ fn yy_action_381(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1363|    expr PLUSDOT expr
 // 1364|      { mkinfix $1 "+." $3 }
 fn yy_action_382(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 25, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 25, _last_pos, _args)
 }
 
 ///|
@@ -9939,23 +3815,7 @@ fn yy_action_382(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1365|    expr PLUSEQ expr
 // 1366|      { mkinfix $1 "+=" $3 }
 fn yy_action_383(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 26, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 26, _last_pos, _args)
 }
 
 ///|
@@ -9963,23 +3823,7 @@ fn yy_action_383(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1367|    expr MINUS expr
 // 1368|      { mkinfix $1 "-" $3 }
 fn yy_action_384(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 27, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 27, _last_pos, _args)
 }
 
 ///|
@@ -9987,23 +3831,7 @@ fn yy_action_384(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1369|    expr MINUSDOT expr
 // 1370|      { mkinfix $1 "-." $3 }
 fn yy_action_385(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 28, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 28, _last_pos, _args)
 }
 
 ///|
@@ -10011,23 +3839,7 @@ fn yy_action_385(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1371|    expr STAR expr
 // 1372|      { mkinfix $1 "*" $3 }
 fn yy_action_386(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 29, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 29, _last_pos, _args)
 }
 
 ///|
@@ -10035,23 +3847,7 @@ fn yy_action_386(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1373|    expr PERCENT expr
 // 1374|      { mkinfix $1 "%" $3 }
 fn yy_action_387(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 30, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 30, _last_pos, _args)
 }
 
 ///|
@@ -10059,23 +3855,7 @@ fn yy_action_387(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1375|    expr EQUAL expr
 // 1376|      { mkinfix $1 "=" $3 }
 fn yy_action_388(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 31, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 31, _last_pos, _args)
 }
 
 ///|
@@ -10083,23 +3863,7 @@ fn yy_action_388(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1377|    expr LESS expr
 // 1378|    { mkinfix $1 "<" $3 }
 fn yy_action_389(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 32, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 32, _last_pos, _args)
 }
 
 ///|
@@ -10107,23 +3871,7 @@ fn yy_action_389(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1379|    expr GREATER expr
 // 1380|      { mkinfix $1 ">" $3 }
 fn yy_action_390(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 33, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 33, _last_pos, _args)
 }
 
 ///|
@@ -10131,23 +3879,7 @@ fn yy_action_390(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1381|    expr OR expr
 // 1382|      { mkinfix $1 "or" $3 }
 fn yy_action_391(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 34, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 34, _last_pos, _args)
 }
 
 ///|
@@ -10155,23 +3887,7 @@ fn yy_action_391(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1383|    expr BARBAR expr
 // 1384|      { mkinfix $1 "||" $3 }
 fn yy_action_392(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 35, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 35, _last_pos, _args)
 }
 
 ///|
@@ -10179,23 +3895,7 @@ fn yy_action_392(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1385|    expr AMPERSAND expr
 // 1386|      { mkinfix $1 "&" $3 }
 fn yy_action_393(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 36, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 36, _last_pos, _args)
 }
 
 ///|
@@ -10203,23 +3903,7 @@ fn yy_action_393(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1387|    expr AMPERAMPER expr
 // 1388|      { mkinfix $1 "&&" $3 }
 fn yy_action_394(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 37, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 37, _last_pos, _args)
 }
 
 ///|
@@ -10227,23 +3911,7 @@ fn yy_action_394(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1389|    expr COLONEQUAL expr
 // 1390|      { mkinfix $1 ":=" $3 }
 fn yy_action_395(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 38, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 38, _last_pos, _args)
 }
 
 ///|
@@ -10251,46 +3919,14 @@ fn yy_action_395(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1431|    expr attribute
 // 1432|      { Exp.attr $1 $2 }
 fn yy_action_396(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 55, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 55, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1658|    expr COMMA expr                             { [$3; $1] }
 fn yy_action_397(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr_comma_list", "rule_index": 91,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr_comma_list", 91, 1, _last_pos, _args)
 }
 
 ///|
@@ -10298,23 +3934,7 @@ fn yy_action_397(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1391|    subtractive expr %prec prec_unary_minus
 // 1392|      { mkuminus $1 $2 }
 fn yy_action_398(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 39, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 39, _last_pos, _args)
 }
 
 ///|
@@ -10322,23 +3942,7 @@ fn yy_action_398(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1425|    ASSERT ext_attributes simple_expr %prec below_HASH
 // 1426|      { mkexp_attrs (Pexp_assert $3) $2 }
 fn yy_action_399(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 52, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 52, _last_pos, _args)
 }
 
 ///|
@@ -10346,23 +3950,7 @@ fn yy_action_399(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1525|    simple_expr HASH label
 // 1526|      { mkexp(Pexp_send($1, mkrhs $3 3)) }
 fn yy_action_400(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 36, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 36, _last_pos, _args)
 }
 
 ///|
@@ -10370,23 +3958,7 @@ fn yy_action_400(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1527|    simple_expr HASHOP simple_expr
 // 1528|      { mkinfix $1 $2 $3 }
 fn yy_action_401(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 37, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 37, _last_pos, _args)
 }
 
 ///|
@@ -10394,23 +3966,7 @@ fn yy_action_401(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1427|    LAZY ext_attributes simple_expr %prec below_HASH
 // 1428|      { mkexp_attrs (Pexp_lazy $3) $2 }
 fn yy_action_402(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 53, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 53, _last_pos, _args)
 }
 
 ///|
@@ -10418,23 +3974,7 @@ fn yy_action_402(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1441|    constr_longident %prec prec_constant_constructor
 // 1442|      { mkexp(Pexp_construct(mkrhs $1 1, None)) }
 fn yy_action_403(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 2, _last_pos, _args)
 }
 
 ///|
@@ -10442,23 +3982,7 @@ fn yy_action_403(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1443|    name_tag %prec prec_constant_constructor
 // 1444|      { mkexp(Pexp_variant($1, None)) }
 fn yy_action_404(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 3, _last_pos, _args)
 }
 
 ///|
@@ -10466,23 +3990,7 @@ fn yy_action_404(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1088|    item_extension post_item_attributes
 // 1089|      { mkcf (Pcf_extension $1) ~attrs:$2 ~docs:(symbol_docs ()) }
 fn yy_action_405(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_field", "rule_index": 49,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_field", 49, 5, _last_pos, _args)
 }
 
 ///|
@@ -10490,23 +3998,7 @@ fn yy_action_405(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1090|    floating_attribute
 // 1091|      { mkcf (Pcf_attribute $1) }
 fn yy_action_406(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_field", "rule_index": 49,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_field", 49, 6, _last_pos, _args)
 }
 
 ///|
@@ -10514,23 +4006,7 @@ fn yy_action_406(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1057|     class_self_pattern class_fields
 // 1058|       { Cstr.mk $1 (extra_cstr 2 (List.rev $2)) }
 fn yy_action_407(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_structure", "rule_index": 46,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_structure", 46, 0, _last_pos, _args)
 }
 
 ///|
@@ -10539,23 +4015,7 @@ fn yy_action_407(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1069|    /* empty */
 // 1070|      { [] }
 fn yy_action_408(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_fields", "rule_index": 48,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_fields", 48, 0, _last_pos, _args)
 }
 
 ///|
@@ -10563,23 +4023,7 @@ fn yy_action_408(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1061|    LPAREN pattern RPAREN
 // 1062|      { reloc_pat $2 }
 fn yy_action_409(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_self_pattern", "rule_index": 47,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_self_pattern", 47, 0, _last_pos, _args)
 }
 
 ///|
@@ -10587,23 +4031,7 @@ fn yy_action_409(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1063|    LPAREN pattern COLON core_type RPAREN
 // 1064|      { mkpat(Ppat_constraint($2, $4)) }
 fn yy_action_410(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_self_pattern", "rule_index": 47,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_self_pattern", 47, 1, _last_pos, _args)
 }
 
 ///|
@@ -10611,23 +4039,7 @@ fn yy_action_410(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1769|    LPAREN pattern RPAREN
 // 1770|      { reloc_pat $2 }
 fn yy_action_411(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 11, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 11, _last_pos, _args)
 }
 
 ///|
@@ -10635,23 +4047,7 @@ fn yy_action_411(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1771|    LPAREN pattern COLON core_type RPAREN
 // 1772|      { mkpat(Ppat_constraint($2, $4)) }
 fn yy_action_412(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 12, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 12, _last_pos, _args)
 }
 
 ///|
@@ -10659,46 +4055,14 @@ fn yy_action_412(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1759|    mod_longident DOT simple_delimited_pattern
 // 1760|      { mkpat @@ Ppat_open(mkrhs $1 1, $3) }
 fn yy_action_413(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 7, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1803|    pattern                                     { [$1] }
 fn yy_action_414(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_semi_list", "rule_index": 108,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_semi_list", 108, 0, _last_pos, _args)
 }
 
 ///|
@@ -10707,23 +4071,7 @@ fn yy_action_414(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1762|    { mkpat @@ Ppat_open(mkrhs $1 1, mkpat @@
 // 1763|               Ppat_construct ( mkrhs2 (Lident "[]") 3 4, None)) }
 fn yy_action_415(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 8, _last_pos, _args)
 }
 
 ///|
@@ -10731,23 +4079,7 @@ fn yy_action_415(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1767|    mod_longident DOT LPAREN pattern RPAREN
 // 1768|      { mkpat @@ Ppat_open (mkrhs $1 1, $4)}
 fn yy_action_416(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 10, _last_pos, _args)
 }
 
 ///|
@@ -10755,23 +4087,7 @@ fn yy_action_416(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1734|    name_tag pattern %prec prec_constr_appl
 // 1735|      { mkpat(Ppat_variant($1, Some $2)) }
 fn yy_action_417(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_gen", "rule_index": 102,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_gen", 102, 2, _last_pos, _args)
 }
 
 ///|
@@ -10779,23 +4095,7 @@ fn yy_action_417(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1732|    constr_longident pattern %prec prec_constr_appl
 // 1733|      { mkpat(Ppat_construct(mkrhs $1 1, Some $2)) }
 fn yy_action_418(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_gen", "rule_index": 102,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_gen", 102, 1, _last_pos, _args)
 }
 
 ///|
@@ -10803,23 +4103,7 @@ fn yy_action_418(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1710|    EXCEPTION ext_attributes pattern %prec prec_constr_appl
 // 1711|      { mkpat_attrs (Ppat_exception $3) $2}
 fn yy_action_419(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern", "rule_index": 100,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern", 100, 4, _last_pos, _args)
 }
 
 ///|
@@ -10827,23 +4111,7 @@ fn yy_action_419(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1702|    pattern AS val_ident
 // 1703|      { mkpat(Ppat_alias($1, mkrhs $3 3)) }
 fn yy_action_420(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern", "rule_index": 100,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern", 100, 0, _last_pos, _args)
 }
 
 ///|
@@ -10851,23 +4119,7 @@ fn yy_action_420(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1706|    pattern COLONCOLON pattern
 // 1707|      { mkpat_cons (rhs_loc 2) (ghpat(Ppat_tuple[$1;$3])) (symbol_rloc()) }
 fn yy_action_421(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern", "rule_index": 100,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern", 100, 2, _last_pos, _args)
 }
 
 ///|
@@ -10875,23 +4127,7 @@ fn yy_action_421(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1708|    pattern BAR pattern
 // 1709|      { mkpat(Ppat_or($1, $3)) }
 fn yy_action_422(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern", "rule_index": 100,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern", 100, 3, _last_pos, _args)
 }
 
 ///|
@@ -10899,69 +4135,21 @@ fn yy_action_422(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1712|    pattern attribute
 // 1713|      { Pat.attr $1 $2 }
 fn yy_action_423(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern", "rule_index": 100,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern", 100, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1796|    pattern COMMA pattern                       { [$3; $1] }
 fn yy_action_424(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_comma_list", "rule_index": 106,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_comma_list", 106, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1795|    pattern_comma_list COMMA pattern            { $3 :: $1 }
 fn yy_action_425(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_comma_list", "rule_index": 106,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_comma_list", 106, 0, _last_pos, _args)
 }
 
 ///|
@@ -10969,46 +4157,14 @@ fn yy_action_425(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1704|    pattern_comma_list  %prec below_COMMA
 // 1705|      { mkpat(Ppat_tuple(List.rev $1)) }
 fn yy_action_426(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern", "rule_index": 100,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern", 100, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1714|    pattern_gen { $1 }
 fn yy_action_427(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern", "rule_index": 100,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern", 100, 6, _last_pos, _args)
 }
 
 ///|
@@ -11016,23 +4172,7 @@ fn yy_action_427(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1730|    simple_pattern
 // 1731|      { $1 }
 fn yy_action_428(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_gen", "rule_index": 102,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_gen", 102, 0, _last_pos, _args)
 }
 
 ///|
@@ -11040,23 +4180,7 @@ fn yy_action_428(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1736|    LAZY ext_attributes simple_pattern
 // 1737|      { mkpat_attrs (Ppat_lazy $3) $2}
 fn yy_action_429(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "pattern_gen", "rule_index": 102,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("pattern_gen", 102, 3, _last_pos, _args)
 }
 
 ///|
@@ -11064,23 +4188,7 @@ fn yy_action_429(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1751|    constr_longident
 // 1752|      { mkpat(Ppat_construct(mkrhs $1 1, None)) }
 fn yy_action_430(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 3, _last_pos, _args)
 }
 
 ///|
@@ -11088,23 +4196,7 @@ fn yy_action_430(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1753|    name_tag
 // 1754|      { mkpat(Ppat_variant($1, None)) }
 fn yy_action_431(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 4, _last_pos, _args)
 }
 
 ///|
@@ -11112,46 +4204,14 @@ fn yy_action_431(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1740|    val_ident %prec below_EQUAL
 // 1741|      { mkpat(Ppat_var (mkrhs $1 1)) }
 fn yy_action_432(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern", "rule_index": 103,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern", 103, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1742|    simple_pattern_not_ident { $1 }
 fn yy_action_433(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern", "rule_index": 103,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern", 103, 1, _last_pos, _args)
 }
 
 ///|
@@ -11159,23 +4219,7 @@ fn yy_action_433(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1745|    UNDERSCORE
 // 1746|      { mkpat(Ppat_any) }
 fn yy_action_434(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 0, _last_pos, _args)
 }
 
 ///|
@@ -11183,23 +4227,7 @@ fn yy_action_434(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1749|    signed_constant DOTDOT signed_constant
 // 1750|      { mkpat(Ppat_interval ($1, $3)) }
 fn yy_action_435(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 2, _last_pos, _args)
 }
 
 ///|
@@ -11207,23 +4235,7 @@ fn yy_action_435(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1747|    signed_constant
 // 1748|      { mkpat(Ppat_constant $1) }
 fn yy_action_436(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 1, _last_pos, _args)
 }
 
 ///|
@@ -11231,23 +4243,7 @@ fn yy_action_436(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1755|    HASH type_longident
 // 1756|      { mkpat(Ppat_type (mkrhs $2 2)) }
 fn yy_action_437(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 5, _last_pos, _args)
 }
 
 ///|
@@ -11255,23 +4251,7 @@ fn yy_action_437(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1757|    simple_delimited_pattern
 // 1758|      { $1 }
 fn yy_action_438(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 6, _last_pos, _args)
 }
 
 ///|
@@ -11280,23 +4260,7 @@ fn yy_action_438(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1765|      { mkpat @@ Ppat_open( mkrhs $1 1, mkpat @@
 // 1766|                 Ppat_construct ( mkrhs2 (Lident "()") 3 4, None) ) }
 fn yy_action_439(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 9, _last_pos, _args)
 }
 
 ///|
@@ -11304,23 +4268,7 @@ fn yy_action_439(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1773|    LPAREN MODULE ext_attributes UIDENT RPAREN
 // 1774|      { mkpat_attrs (Ppat_unpack (mkrhs $4 4)) $3 }
 fn yy_action_440(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 13, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 13, _last_pos, _args)
 }
 
 ///|
@@ -11328,23 +4276,7 @@ fn yy_action_440(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 857|    mty_longident
 // 858|      { mkmty(Pmty_ident (mkrhs $1 1)) }
 fn yy_action_441(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 0, _last_pos, _args)
 }
 
 ///|
@@ -11354,23 +4286,7 @@ fn yy_action_441(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1777|          (Ppat_constraint(mkpat(Ppat_unpack (mkrhs $4 4)), $6))
 // 1778|          $3 }
 fn yy_action_442(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 14, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 14, _last_pos, _args)
 }
 
 ///|
@@ -11378,23 +4294,7 @@ fn yy_action_442(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1779|    extension
 // 1780|      { mkpat(Ppat_extension $1) }
 fn yy_action_443(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_pattern_not_ident",
-      "rule_index": 104, "clause_index": 15, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_pattern_not_ident", 104, 15, _last_pos, _args)
 }
 
 ///|
@@ -11402,23 +4302,7 @@ fn yy_action_443(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1429|    OBJECT ext_attributes class_structure END
 // 1430|      { mkexp_attrs (Pexp_object $3) $2 }
 fn yy_action_444(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 54, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 54, _last_pos, _args)
 }
 
 ///|
@@ -11426,23 +4310,7 @@ fn yy_action_444(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1065|    /* empty */
 // 1066|      { ghpat(Ppat_any) }
 fn yy_action_445(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_self_pattern", "rule_index": 47,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_self_pattern", 47, 2, _last_pos, _args)
 }
 
 ///|
@@ -11450,23 +4318,7 @@ fn yy_action_445(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1433|    UNDERSCORE
 // 1434|     { not_expecting 1 "wildcard \"_\"" }
 fn yy_action_446(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "expr", "rule_index": 75,
-      "clause_index": 56, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("expr", 75, 56, _last_pos, _args)
 }
 
 ///|
@@ -11474,23 +4326,7 @@ fn yy_action_446(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1437|    val_longident
 // 1438|      { mkexp(Pexp_ident (mkrhs $1 1)) }
 fn yy_action_447(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 0, _last_pos, _args)
 }
 
 ///|
@@ -11498,23 +4334,7 @@ fn yy_action_447(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1439|    constant
 // 1440|      { mkexp(Pexp_constant $1) }
 fn yy_action_448(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 1, _last_pos, _args)
 }
 
 ///|
@@ -11525,69 +4345,21 @@ fn yy_action_448(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1830|              ~loc:(symbol_rloc()) ~docs:(symbol_docs ())
 // 1831|      , ext }
 fn yy_action_449(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "value_description", "rule_index": 112,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("value_description", 112, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1838|    STRING primitive_declaration_body           { fst $1 :: $2 }
 fn yy_action_450(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "primitive_declaration_body",
-      "rule_index": 113, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("primitive_declaration_body", 113, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1837|    STRING                                      { [fst $1] }
 fn yy_action_451(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "primitive_declaration_body",
-      "rule_index": 113, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("primitive_declaration_body", 113, 0, _last_pos, _args)
 }
 
 ///|
@@ -11599,69 +4371,21 @@ fn yy_action_451(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1845|              ~loc:(symbol_rloc ()) ~docs:(symbol_docs ())
 // 1846|      , ext }
 fn yy_action_452(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "primitive_declaration", "rule_index": 114,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("primitive_declaration", 114, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2332|    PREFIXOP                                    { $1 }
 fn yy_action_453(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2345|    BANG                                        { "!" }
 fn yy_action_454(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 13, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 13, _last_pos, _args)
 }
 
 ///|
@@ -11669,23 +4393,7 @@ fn yy_action_454(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1852|    type_declaration
 // 1853|      { let (nonrec_flag, ty, ext) = $1 in (nonrec_flag, [ty], ext) }
 fn yy_action_455(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_declarations", "rule_index": 115,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_declarations", 115, 0, _last_pos, _args)
 }
 
 ///|
@@ -11701,23 +4409,7 @@ fn yy_action_455(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1867|        in
 // 1868|          ($3, ty, ext) }
 fn yy_action_456(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_declaration", "rule_index": 116,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_declaration", 116, 0, _last_pos, _args)
 }
 
 ///|
@@ -11725,23 +4417,7 @@ fn yy_action_456(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1899|    EQUAL core_type EQUAL private_flag constructor_declarations
 // 1900|      { (Ptype_variant(List.rev $5), $4, Some $2) }
 fn yy_action_457(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 8, _last_pos, _args)
 }
 
 ///|
@@ -11749,23 +4425,7 @@ fn yy_action_457(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1901|    EQUAL core_type EQUAL private_flag DOTDOT
 // 1902|      { (Ptype_open, $4, Some $2) }
 fn yy_action_458(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 9, _last_pos, _args)
 }
 
 ///|
@@ -11773,23 +4433,7 @@ fn yy_action_458(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1903|    EQUAL core_type EQUAL private_flag LBRACE label_declarations RBRACE
 // 1904|      { (Ptype_record $6, $4, Some $2) }
 fn yy_action_459(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 10, _last_pos, _args)
 }
 
 ///|
@@ -11797,23 +4441,7 @@ fn yy_action_459(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1885|    EQUAL core_type
 // 1886|      { (Ptype_abstract, Public, Some $2) }
 fn yy_action_460(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 1, _last_pos, _args)
 }
 
 ///|
@@ -11821,23 +4449,7 @@ fn yy_action_460(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1887|    EQUAL PRIVATE core_type
 // 1888|      { (Ptype_abstract, Private, Some $3) }
 fn yy_action_461(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 2, _last_pos, _args)
 }
 
 ///|
@@ -11845,23 +4457,7 @@ fn yy_action_461(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1891|    EQUAL PRIVATE constructor_declarations
 // 1892|      { (Ptype_variant(List.rev $3), Private, None) }
 fn yy_action_462(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 4, _last_pos, _args)
 }
 
 ///|
@@ -11869,46 +4465,14 @@ fn yy_action_462(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1895|    EQUAL PRIVATE DOTDOT
 // 1896|      { (Ptype_open, Private, None) }
 fn yy_action_463(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 6, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1943|    constructor_declarations bar_constructor_declaration { $2 :: $1 }
 fn yy_action_464(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constructor_declarations",
-      "rule_index": 128, "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constructor_declarations", 128, 3, _last_pos, _args)
 }
 
 ///|
@@ -11916,23 +4480,7 @@ fn yy_action_464(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1889|    EQUAL constructor_declarations
 // 1890|      { (Ptype_variant(List.rev $2), Public, None) }
 fn yy_action_465(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 3, _last_pos, _args)
 }
 
 ///|
@@ -11940,23 +4488,7 @@ fn yy_action_465(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1893|    EQUAL DOTDOT
 // 1894|      { (Ptype_open, Public, None) }
 fn yy_action_466(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 5, _last_pos, _args)
 }
 
 ///|
@@ -11964,23 +4496,7 @@ fn yy_action_466(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1897|    EQUAL private_flag LBRACE label_declarations RBRACE
 // 1898|      { (Ptype_record $4, $2, None) }
 fn yy_action_467(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 7, _last_pos, _args)
 }
 
 ///|
@@ -11992,92 +4508,28 @@ fn yy_action_467(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1958|         ~loc:(symbol_rloc()) ~info:(symbol_info ())
 // 1959|      }
 fn yy_action_468(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "bar_constructor_declaration",
-      "rule_index": 130, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("bar_constructor_declaration", 130, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1940|    BAR                                                  { [  ] }
 fn yy_action_469(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constructor_declarations",
-      "rule_index": 128, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constructor_declarations", 128, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1941|    constructor_declaration                              { [$1] }
 fn yy_action_470(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constructor_declarations",
-      "rule_index": 128, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constructor_declarations", 128, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1942|    bar_constructor_declaration                          { [$1] }
 fn yy_action_471(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constructor_declarations",
-      "rule_index": 128, "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constructor_declarations", 128, 2, _last_pos, _args)
 }
 
 ///|
@@ -12089,46 +4541,14 @@ fn yy_action_471(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1950|         ~loc:(symbol_rloc()) ~info:(symbol_info ())
 // 1951|      }
 fn yy_action_472(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constructor_declaration",
-      "rule_index": 129, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constructor_declaration", 129, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2260|    core_type                              { [$1] }
 fn yy_action_473(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type_comma_list", "rule_index": 166,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type_comma_list", 166, 0, _last_pos, _args)
 }
 
 ///|
@@ -12136,23 +4556,7 @@ fn yy_action_473(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2186|    LPAREN core_type_comma_list RPAREN type_longident
 // 2187|      { mktyp(Ptyp_constr(mkrhs $4 4, List.rev $2)) }
 fn yy_action_474(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 4, _last_pos, _args)
 }
 
 ///|
@@ -12160,23 +4564,7 @@ fn yy_action_474(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2196|    LPAREN core_type_comma_list RPAREN HASH class_longident
 // 2197|      { mktyp(Ptyp_class(mkrhs $5 5, List.rev $2)) }
 fn yy_action_475(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 9, _last_pos, _args)
 }
 
 ///|
@@ -12184,46 +4572,14 @@ fn yy_action_475(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2173|    LPAREN core_type_comma_list RPAREN %prec below_HASH
 // 2174|      { match $2 with [sty] -> sty | _ -> raise Parse_error }
 fn yy_action_476(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type", "rule_index": 156,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type", 156, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2261|    core_type_comma_list COMMA core_type   { $3 :: $1 }
 fn yy_action_477(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type_comma_list", "rule_index": 166,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type_comma_list", 166, 1, _last_pos, _args)
 }
 
 ///|
@@ -12231,23 +4587,7 @@ fn yy_action_477(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2198|    LBRACKET tag_field RBRACKET
 // 2199|      { mktyp(Ptyp_variant([$2], Closed, None)) }
 fn yy_action_478(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 10, _last_pos, _args)
 }
 
 ///|
@@ -12255,23 +4595,7 @@ fn yy_action_478(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2204|    LBRACKET BAR row_field_list RBRACKET
 // 2205|      { mktyp(Ptyp_variant(List.rev $3, Closed, None)) }
 fn yy_action_479(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 11, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 11, _last_pos, _args)
 }
 
 ///|
@@ -12280,23 +4604,7 @@ fn yy_action_479(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1883|    /*empty*/
 // 1884|      { (Ptype_abstract, Public, None) }
 fn yy_action_480(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_kind", "rule_index": 119,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_kind", 119, 0, _last_pos, _args)
 }
 
 ///|
@@ -12309,23 +4617,7 @@ fn yy_action_480(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2032|          ~attrs:(attrs@$9) ~docs:(symbol_docs ())
 // 2033|        , ext }
 fn yy_action_481(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_type_extension", "rule_index": 139,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_type_extension", 139, 0, _last_pos, _args)
 }
 
 ///|
@@ -12333,23 +4625,7 @@ fn yy_action_481(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2049|    str_extension_constructors bar_extension_constructor_declaration
 // 2050|      { $2 :: $1 }
 fn yy_action_482(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_extension_constructors",
-      "rule_index": 141, "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_extension_constructors", 141, 4, _last_pos, _args)
 }
 
 ///|
@@ -12357,115 +4633,35 @@ fn yy_action_482(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2051|    str_extension_constructors bar_extension_constructor_rebind
 // 2052|      { $2 :: $1 }
 fn yy_action_483(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_extension_constructors",
-      "rule_index": 141, "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_extension_constructors", 141, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2045|    extension_constructor_declaration                     { [$1] }
 fn yy_action_484(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_extension_constructors",
-      "rule_index": 141, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_extension_constructors", 141, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2046|    bar_extension_constructor_declaration                 { [$1] }
 fn yy_action_485(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_extension_constructors",
-      "rule_index": 141, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_extension_constructors", 141, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2047|    extension_constructor_rebind                          { [$1] }
 fn yy_action_486(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_extension_constructors",
-      "rule_index": 141, "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_extension_constructors", 141, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2048|    bar_extension_constructor_rebind                      { [$1] }
 fn yy_action_487(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_extension_constructors",
-      "rule_index": 141, "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_extension_constructors", 141, 3, _last_pos, _args)
 }
 
 ///|
@@ -12475,22 +4671,8 @@ fn yy_action_487(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2063|        Te.decl (mkrhs $1 1) ~args ?res ~attrs:$3
 // 2064|          ~loc:(symbol_rloc()) ~info:(symbol_info ()) }
 fn yy_action_488(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "extension_constructor_declaration",
-      "rule_index": 143, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
+  yy_json_cst_action(
+    "extension_constructor_declaration", 143, 0, _last_pos, _args
   )
 }
 
@@ -12500,23 +4682,7 @@ fn yy_action_488(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2074|      { Te.rebind (mkrhs $1 1) (mkrhs $3 3) ~attrs:$4
 // 2075|          ~loc:(symbol_rloc()) ~info:(symbol_info ()) }
 fn yy_action_489(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "extension_constructor_rebind",
-      "rule_index": 145, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("extension_constructor_rebind", 145, 0, _last_pos, _args)
 }
 
 ///|
@@ -12526,22 +4692,8 @@ fn yy_action_489(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2069|        Te.decl (mkrhs $2 2) ~args ?res ~attrs:$4
 // 2070|           ~loc:(symbol_rloc()) ~info:(symbol_info ()) }
 fn yy_action_490(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "bar_extension_constructor_declaration",
-      "rule_index": 144, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
+  yy_json_cst_action(
+    "bar_extension_constructor_declaration", 144, 0, _last_pos, _args
   )
 }
 
@@ -12551,22 +4703,8 @@ fn yy_action_490(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2079|      { Te.rebind (mkrhs $2 2) (mkrhs $4 4) ~attrs:$5
 // 2080|          ~loc:(symbol_rloc()) ~info:(symbol_info ()) }
 fn yy_action_491(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "bar_extension_constructor_rebind",
-      "rule_index": 146, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
+  yy_json_cst_action(
+    "bar_extension_constructor_rebind", 146, 0, _last_pos, _args
   )
 }
 
@@ -12574,46 +4712,14 @@ fn yy_action_491(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // file:///./ocaml.mly
 // 2377|    mod_longident DOT LPAREN COLONCOLON RPAREN  { Ldot($1,"::") }
 fn yy_action_492(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_longident", "rule_index": 180,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_longident", 180, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2453|    PRIVATE                                     { Private }
 fn yy_action_493(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "private_flag", "rule_index": 194,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("private_flag", 194, 1, _last_pos, _args)
 }
 
 ///|
@@ -12621,46 +4727,14 @@ fn yy_action_493(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2451|             
 // 2452|    /* empty */                                 { Public }
 fn yy_action_494(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "private_flag", "rule_index": 194,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("private_flag", 194, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2445|    NONREC                                      { Nonrecursive }
 fn yy_action_495(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "nonrec_flag", "rule_index": 192,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("nonrec_flag", 192, 1, _last_pos, _args)
 }
 
 ///|
@@ -12668,92 +4742,28 @@ fn yy_action_495(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2443|            
 // 2444|    /* empty */                                 { Recursive }
 fn yy_action_496(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "nonrec_flag", "rule_index": 192,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("nonrec_flag", 192, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1962|    sig_exception_declaration                    { $1 }
 fn yy_action_497(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "str_exception_declaration",
-      "rule_index": 131, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("str_exception_declaration", 131, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2556|  LBRACKETATAT attr_id payload RBRACKET { Attr.mk ~loc:(symbol_rloc ()) $2 $3 }
 fn yy_action_498(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "post_item_attribute", "rule_index": 206,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("post_item_attribute", 206, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2565|    post_item_attribute post_item_attributes { $1 :: $2 }
 fn yy_action_499(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "post_item_attributes", "rule_index": 208,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("post_item_attributes", 208, 1, _last_pos, _args)
 }
 
 ///|
@@ -12761,45 +4771,15 @@ fn yy_action_499(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2563|                     
 // 2564|    /* empty */  { [] }
 fn yy_action_500(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "post_item_attributes", "rule_index": 208,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("post_item_attributes", 208, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1988|    OF constructor_arguments      { ($2,None) }
 fn yy_action_501(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "generalized_constructor_arguments",
-      "rule_index": 134, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
+  yy_json_cst_action(
+    "generalized_constructor_arguments", 134, 1, _last_pos, _args
   )
 }
 
@@ -12807,115 +4787,35 @@ fn yy_action_501(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // file:///./ocaml.mly
 // 1996|    core_type_list                   { Pcstr_tuple (List.rev $1) }
 fn yy_action_502(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constructor_arguments", "rule_index": 135,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constructor_arguments", 135, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1997|    LBRACE label_declarations RBRACE { Pcstr_record $2 }
 fn yy_action_503(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constructor_arguments", "rule_index": 135,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constructor_arguments", 135, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2000|    label_declaration                           { [$1] }
 fn yy_action_504(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_declarations", "rule_index": 136,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_declarations", 136, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2002|    label_declaration_semi label_declarations   { $1 :: $2 }
 fn yy_action_505(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_declarations", "rule_index": 136,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_declarations", 136, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2001|    label_declaration_semi                      { [$1] }
 fn yy_action_506(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_declarations", "rule_index": 136,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_declarations", 136, 1, _last_pos, _args)
 }
 
 ///|
@@ -12931,23 +4831,7 @@ fn yy_action_506(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2020|         ~loc:(symbol_rloc()) ~info
 // 2021|      }
 fn yy_action_507(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_declaration_semi",
-      "rule_index": 138, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_declaration_semi", 138, 0, _last_pos, _args)
 }
 
 ///|
@@ -12958,69 +4842,21 @@ fn yy_action_507(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2008|         ~loc:(symbol_rloc()) ~info:(symbol_info ())
 // 2009|      }
 fn yy_action_508(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_declaration", "rule_index": 137,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_declaration", 137, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2122|        QUOTE ident                             { [mkrhs $2 2] }
 fn yy_action_509(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "typevar_list", "rule_index": 150,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("typevar_list", 150, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2123|        typevar_list QUOTE ident                { mkrhs $3 3 :: $1 }
 fn yy_action_510(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "typevar_list", "rule_index": 150,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("typevar_list", 150, 1, _last_pos, _args)
 }
 
 ///|
@@ -13028,23 +4864,7 @@ fn yy_action_510(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2134|        typevar_list DOT core_type_no_attr
 // 2135|          { mktyp(Ptyp_poly(List.rev $1, $3)) }
 fn yy_action_511(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "poly_type_no_attr", "rule_index": 152,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("poly_type_no_attr", 152, 1, _last_pos, _args)
 }
 
 ///|
@@ -13052,46 +4872,14 @@ fn yy_action_511(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2132|        core_type_no_attr
 // 2133|          { $1 }
 fn yy_action_512(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "poly_type_no_attr", "rule_index": 152,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("poly_type_no_attr", 152, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2457|    MUTABLE                                     { Mutable }
 fn yy_action_513(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mutable_flag", "rule_index": 195,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mutable_flag", 195, 1, _last_pos, _args)
 }
 
 ///|
@@ -13099,23 +4887,7 @@ fn yy_action_513(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2455|             
 // 2456|    /* empty */                                 { Immutable }
 fn yy_action_514(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mutable_flag", "rule_index": 195,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mutable_flag", 195, 0, _last_pos, _args)
 }
 
 ///|
@@ -13128,23 +4900,7 @@ fn yy_action_514(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 866|            $5 $3
 // 867|        in wrap_mty_attrs mty $2 }
 fn yy_action_515(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 2, _last_pos, _args)
 }
 
 ///|
@@ -13152,23 +4908,7 @@ fn yy_action_515(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 719|    functor_arg
 // 720|      { [ $1 ] }
 fn yy_action_516(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "functor_args", "rule_index": 13,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("functor_args", 13, 1, _last_pos, _args)
 }
 
 ///|
@@ -13177,46 +4917,14 @@ fn yy_action_516(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 869|      %prec below_WITH
 // 870|      { mkmty(Pmty_functor(mknoloc "_", Some $1, $3)) }
 fn yy_action_517(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2087|    with_constraints AND with_constraint        { $3 :: $1 }
 fn yy_action_518(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "with_constraints", "rule_index": 147,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("with_constraints", 147, 1, _last_pos, _args)
 }
 
 ///|
@@ -13224,299 +4932,91 @@ fn yy_action_518(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 871|    module_type WITH with_constraints
 // 872|      { mkmty(Pmty_with($1, List.rev $3)) }
 fn yy_action_519(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2086|    with_constraint                             { [$1] }
 fn yy_action_520(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "with_constraints", "rule_index": 147,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("with_constraints", 147, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1908|    optional_type_parameter                     { [$1] }
 fn yy_action_521(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "optional_type_parameters",
-      "rule_index": 120, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("optional_type_parameters", 120, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1909|    LPAREN optional_type_parameter_list RPAREN  { List.rev $2 }
 fn yy_action_522(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "optional_type_parameters",
-      "rule_index": 120, "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("optional_type_parameters", 120, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1916|    optional_type_parameter_list COMMA optional_type_parameter    { $3 :: $1 }
 fn yy_action_523(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "optional_type_parameter_list",
-      "rule_index": 122, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("optional_type_parameter_list", 122, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1915|    optional_type_parameter                              { [$1] }
 fn yy_action_524(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "optional_type_parameter_list",
-      "rule_index": 122, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("optional_type_parameter_list", 122, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1912|    type_variance optional_type_variable        { $2, $1 }
 fn yy_action_525(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "optional_type_parameter",
-      "rule_index": 121, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("optional_type_parameter", 121, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1919|    QUOTE ident                                 { mktyp(Ptyp_var $2) }
 fn yy_action_526(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "optional_type_variable",
-      "rule_index": 123, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("optional_type_variable", 123, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1920|    UNDERSCORE                                  { mktyp(Ptyp_any) }
 fn yy_action_527(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "optional_type_variable",
-      "rule_index": 123, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("optional_type_variable", 123, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1929|    PLUS                                        { Covariant }
 fn yy_action_528(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_variance", "rule_index": 125,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_variance", 125, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1930|    MINUS                                       { Contravariant }
 fn yy_action_529(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_variance", "rule_index": 125,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_variance", 125, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1210|        core_type EQUAL core_type          { $1, $3, symbol_rloc() }
 fn yy_action_530(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constrain", "rule_index": 60,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constrain", 60, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1879|        constraints CONSTRAINT constrain        { $3 :: $1 }
 fn yy_action_531(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constraints", "rule_index": 118,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constraints", 118, 0, _last_pos, _args)
 }
 
 ///|
@@ -13532,46 +5032,14 @@ fn yy_action_531(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2098|              ~priv:$4
 // 2099|              ~loc:(symbol_rloc()))) }
 fn yy_action_532(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "with_constraint", "rule_index": 148,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("with_constraint", 148, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1880|        /* empty */                             { [] }
 fn yy_action_533(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constraints", "rule_index": 118,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constraints", 118, 1, _last_pos, _args)
 }
 
 ///|
@@ -13584,69 +5052,21 @@ fn yy_action_533(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2107|             ~manifest:$5
 // 2108|             ~loc:(symbol_rloc()))) }
 fn yy_action_534(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "with_constraint", "rule_index": 148,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("with_constraint", 148, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2116|    EQUAL PRIVATE  { Private }
 fn yy_action_535(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "with_type_binder", "rule_index": 149,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("with_type_binder", 149, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2115|    EQUAL          { Public }
 fn yy_action_536(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "with_type_binder", "rule_index": 149,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("with_type_binder", 149, 0, _last_pos, _args)
 }
 
 ///|
@@ -13654,23 +5074,7 @@ fn yy_action_536(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1927|              
 // 1928|    /* empty */                                 { Invariant }
 fn yy_action_537(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_variance", "rule_index": 125,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_variance", 125, 0, _last_pos, _args)
 }
 
 ///|
@@ -13678,23 +5082,7 @@ fn yy_action_537(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1906|                         
 // 1907|    /*empty*/                                   { [] }
 fn yy_action_538(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "optional_type_parameters",
-      "rule_index": 120, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("optional_type_parameters", 120, 0, _last_pos, _args)
 }
 
 ///|
@@ -13702,23 +5090,7 @@ fn yy_action_538(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2109|    MODULE mod_longident EQUAL mod_ext_longident
 // 2110|      { Pwith_module (mkrhs $2 2, mkrhs $4 4) }
 fn yy_action_539(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "with_constraint", "rule_index": 148,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("with_constraint", 148, 2, _last_pos, _args)
 }
 
 ///|
@@ -13726,23 +5098,7 @@ fn yy_action_539(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2111|    MODULE mod_longident COLONEQUAL mod_ext_longident
 // 2112|      { Pwith_modsubst (mkrhs $2 2, mkrhs $4 4) }
 fn yy_action_540(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "with_constraint", "rule_index": 148,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("with_constraint", 148, 3, _last_pos, _args)
 }
 
 ///|
@@ -13750,46 +5106,14 @@ fn yy_action_540(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 881|    module_type attribute
 // 882|      { Mty.attr $1 $2 }
 fn yy_action_541(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 8, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2222|    module_type { mktyp (Ptyp_package (package_type_of_module_type $1)) }
 fn yy_action_542(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "package_type", "rule_index": 158,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("package_type", 158, 0, _last_pos, _args)
 }
 
 ///|
@@ -13798,23 +5122,7 @@ fn yy_action_542(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1532|      { mkexp_attrs (Pexp_constraint (ghexp (Pexp_pack $4), $6))
 // 1533|                    $3 }
 fn yy_action_543(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 39, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 39, _last_pos, _args)
 }
 
 ///|
@@ -13822,23 +5130,7 @@ fn yy_action_543(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 738|    paren_module_expr
 // 739|      { $1 }
 fn yy_action_544(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_expr", "rule_index": 14,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_expr", 14, 5, _last_pos, _args)
 }
 
 ///|
@@ -13846,713 +5138,217 @@ fn yy_action_544(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 742|    extension
 // 743|      { mkmod(Pmod_extension $1) }
 fn yy_action_545(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_expr", "rule_index": 14,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_expr", 14, 7, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2329|    LPAREN operator RPAREN                      { $2 }
 fn yy_action_546(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "val_ident", "rule_index": 176,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("val_ident", 176, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2333|    INFIXOP0                                    { $1 }
 fn yy_action_547(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2334|    INFIXOP1                                    { $1 }
 fn yy_action_548(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2335|    INFIXOP2                                    { $1 }
 fn yy_action_549(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2336|    INFIXOP3                                    { $1 }
 fn yy_action_550(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2337|    INFIXOP4                                    { $1 }
 fn yy_action_551(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2339|    DOTOP LPAREN RPAREN LESSMINUS               { "."^ $1 ^ "()<-" }
 fn yy_action_552(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 7, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2338|    DOTOP LPAREN RPAREN                         { "."^ $1 ^"()" }
 fn yy_action_553(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 6, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2341|    DOTOP LBRACKET RBRACKET LESSMINUS           { "."^ $1 ^ "[]<-" }
 fn yy_action_554(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 9, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2340|    DOTOP LBRACKET RBRACKET                     { "."^ $1 ^"[]" }
 fn yy_action_555(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 8, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2343|    DOTOP LBRACE RBRACE LESSMINUS               { "."^ $1 ^ "{}<-" }
 fn yy_action_556(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 11, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 11, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2342|    DOTOP LBRACE RBRACE                         { "."^ $1 ^"{}" }
 fn yy_action_557(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 10, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2344|    HASHOP                                      { $1 }
 fn yy_action_558(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 12, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 12, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2346|    PLUS                                        { "+" }
 fn yy_action_559(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 14, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 14, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2347|    PLUSDOT                                     { "+." }
 fn yy_action_560(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 15, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 15, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2348|    MINUS                                       { "-" }
 fn yy_action_561(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 16, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 16, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2349|    MINUSDOT                                    { "-." }
 fn yy_action_562(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 17, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 17, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2350|    STAR                                        { "*" }
 fn yy_action_563(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 18, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 18, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2351|    EQUAL                                       { "=" }
 fn yy_action_564(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 19, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 19, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2352|    LESS                                        { "<" }
 fn yy_action_565(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 20, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 20, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2353|    GREATER                                     { ">" }
 fn yy_action_566(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 21, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 21, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2354|    OR                                          { "or" }
 fn yy_action_567(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 22, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 22, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2355|    BARBAR                                      { "||" }
 fn yy_action_568(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 23, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 23, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2356|    AMPERSAND                                   { "&" }
 fn yy_action_569(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 24, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 24, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2357|    AMPERAMPER                                  { "&&" }
 fn yy_action_570(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 25, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 25, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2358|    COLONEQUAL                                  { ":=" }
 fn yy_action_571(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 26, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 26, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2359|    PLUSEQ                                      { "+=" }
 fn yy_action_572(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 27, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 27, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2360|    PERCENT                                     { "%" }
 fn yy_action_573(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "operator", "rule_index": 177,
-      "clause_index": 28, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("operator", 177, 28, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2379|    LPAREN RPAREN                               { Lident "()" }
 fn yy_action_574(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_longident", "rule_index": 180,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_longident", 180, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2380|    LPAREN COLONCOLON RPAREN                    { Lident "::" }
 fn yy_action_575(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_longident", "rule_index": 180,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_longident", 180, 4, _last_pos, _args)
 }
 
 ///|
@@ -14560,23 +5356,7 @@ fn yy_action_575(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1447|    BEGIN ext_attributes seq_expr END
 // 1448|      { wrap_exp_attrs (reloc_exp $3) $2 (* check location *) }
 fn yy_action_576(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 5, _last_pos, _args)
 }
 
 ///|
@@ -14585,23 +5365,7 @@ fn yy_action_576(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1450|      { mkexp_attrs (Pexp_construct (mkloc (Lident "()") (symbol_rloc ()),
 // 1451|                               None)) $2 }
 fn yy_action_577(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 6, _last_pos, _args)
 }
 
 ///|
@@ -14610,23 +5374,7 @@ fn yy_action_577(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1505|      { let list_exp = reloc_exp (mktailexp (rhs_loc 6) (List.rev $4)) in
 // 1506|        mkexp(Pexp_open(Fresh, mkrhs $1 1, list_exp)) }
 fn yy_action_578(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 27, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 27, _last_pos, _args)
 }
 
 ///|
@@ -14636,23 +5384,7 @@ fn yy_action_578(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1509|                        mkexp(Pexp_construct(mkrhs2 (Lident "[]") 3 4,
 // 1510|                                             None)))) }
 fn yy_action_579(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 28, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 28, _last_pos, _args)
 }
 
 ///|
@@ -14660,23 +5392,7 @@ fn yy_action_579(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1521|    mod_longident DOT LBRACELESS field_expr_list GREATERRBRACE
 // 1522|      { mkexp(Pexp_open(Fresh, mkrhs $1 1, mkexp (Pexp_override $4)))}
 fn yy_action_580(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 34, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 34, _last_pos, _args)
 }
 
 ///|
@@ -14684,115 +5400,35 @@ fn yy_action_580(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1523|    mod_longident DOT LBRACELESS GREATERRBRACE
 // 1524|      { mkexp(Pexp_open(Fresh, mkrhs $1 1, mkexp (Pexp_override [])))}
 fn yy_action_581(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 35, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 35, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1676|    field_expr opt_semi { [$1] }
 fn yy_action_582(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "field_expr_list", "rule_index": 95,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("field_expr_list", 95, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1677|    field_expr SEMI field_expr_list { $1 :: $3 }
 fn yy_action_583(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "field_expr_list", "rule_index": 95,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("field_expr_list", 95, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2373|    mod_longident DOT val_ident                 { Ldot($1, $3) }
 fn yy_action_584(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "val_longident", "rule_index": 179,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("val_longident", 179, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2376|    mod_longident       %prec below_DOT         { $1 }
 fn yy_action_585(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_longident", "rule_index": 180,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_longident", 180, 0, _last_pos, _args)
 }
 
 ///|
@@ -14800,69 +5436,21 @@ fn yy_action_585(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1672|    label_longident opt_type_constraint
 // 1673|      { (mkrhs $1 1, mkexp_opt_constraint (exp_of_label $1 1) $2) }
 fn yy_action_586(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "lbl_expr", "rule_index": 94,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("lbl_expr", 94, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1691|    COLON core_type COLONGREATER core_type      { (Some $2, Some $4) }
 fn yy_action_587(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_constraint", "rule_index": 98,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_constraint", 98, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1690|    COLON core_type                             { (Some $2, None) }
 fn yy_action_588(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_constraint", "rule_index": 98,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_constraint", 98, 0, _last_pos, _args)
 }
 
 ///|
@@ -14870,46 +5458,14 @@ fn yy_action_588(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2143|    core_type attribute
 // 2144|      { Typ.attr $1 $2 }
 fn yy_action_589(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type", "rule_index": 153,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type", 153, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1692|    COLONGREATER core_type                      { (None, Some $2) }
 fn yy_action_590(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_constraint", "rule_index": 98,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_constraint", 98, 2, _last_pos, _args)
 }
 
 ///|
@@ -14917,23 +5473,7 @@ fn yy_action_590(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2141|    core_type_no_attr
 // 2142|      { $1 }
 fn yy_action_591(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type", "rule_index": 153,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type", 153, 0, _last_pos, _args)
 }
 
 ///|
@@ -14941,23 +5481,7 @@ fn yy_action_591(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2149|    core_type2 AS QUOTE ident
 // 2150|      { mktyp(Ptyp_alias($1, $4)) }
 fn yy_action_592(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type_no_attr", "rule_index": 154,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type_no_attr", 154, 1, _last_pos, _args)
 }
 
 ///|
@@ -14965,23 +5489,7 @@ fn yy_action_592(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2147|    core_type2 %prec MINUSGREATER
 // 2148|      { $1 }
 fn yy_action_593(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type_no_attr", "rule_index": 154,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type_no_attr", 154, 0, _last_pos, _args)
 }
 
 ///|
@@ -14989,23 +5497,7 @@ fn yy_action_593(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2153|    simple_core_type_or_tuple
 // 2154|      { $1 }
 fn yy_action_594(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type2", "rule_index": 155,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type2", 155, 0, _last_pos, _args)
 }
 
 ///|
@@ -15014,23 +5506,7 @@ fn yy_action_594(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2156|      { let param = extra_rhs_core_type $4 ~pos:4 in
 // 2157|        mktyp (Ptyp_arrow(Optional $2 , param, $6)) }
 fn yy_action_595(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type2", "rule_index": 155,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type2", 155, 1, _last_pos, _args)
 }
 
 ///|
@@ -15040,23 +5516,7 @@ fn yy_action_595(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2160|        mktyp(Ptyp_arrow(Optional $1 , param, $4))
 // 2161|      }
 fn yy_action_596(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type2", "rule_index": 155,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type2", 155, 2, _last_pos, _args)
 }
 
 ///|
@@ -15065,23 +5525,7 @@ fn yy_action_596(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2166|      { let param = extra_rhs_core_type $1 ~pos:1 in
 // 2167|        mktyp(Ptyp_arrow(Nolabel, param, $3)) }
 fn yy_action_597(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type2", "rule_index": 155,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type2", 155, 4, _last_pos, _args)
 }
 
 ///|
@@ -15090,23 +5534,7 @@ fn yy_action_597(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2163|      { let param = extra_rhs_core_type $3 ~pos:3 in
 // 2164|        mktyp(Ptyp_arrow(Labelled $1, param, $5)) }
 fn yy_action_598(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type2", "rule_index": 155,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type2", 155, 3, _last_pos, _args)
 }
 
 ///|
@@ -15114,23 +5542,7 @@ fn yy_action_598(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2184|    simple_core_type2 type_longident
 // 2185|      { mktyp(Ptyp_constr(mkrhs $2 2, [$1])) }
 fn yy_action_599(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 3, _last_pos, _args)
 }
 
 ///|
@@ -15138,23 +5550,7 @@ fn yy_action_599(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2194|    simple_core_type2 HASH class_longident
 // 2195|      { mktyp(Ptyp_class(mkrhs $3 3, [$1])) }
 fn yy_action_600(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 8, _last_pos, _args)
 }
 
 ///|
@@ -15162,23 +5558,7 @@ fn yy_action_600(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2171|    simple_core_type2  %prec below_HASH
 // 2172|      { $1 }
 fn yy_action_601(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type", "rule_index": 156,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type", 156, 0, _last_pos, _args)
 }
 
 ///|
@@ -15186,69 +5566,21 @@ fn yy_action_601(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2178|    QUOTE ident
 // 2179|      { mktyp(Ptyp_var $2) }
 fn yy_action_602(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1695|    type_constraint { Some $1 }
 fn yy_action_603(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_type_constraint", "rule_index": 99,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_type_constraint", 99, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1696|    /* empty */ { None }
 fn yy_action_604(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_type_constraint", "rule_index": 99,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_type_constraint", 99, 1, _last_pos, _args)
 }
 
 ///|
@@ -15256,23 +5588,7 @@ fn yy_action_604(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1494|    LBRACKETBAR expr_semi_list opt_semi BARRBRACKET
 // 1495|      { mkexp (Pexp_array(List.rev $2)) }
 fn yy_action_605(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 22, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 22, _last_pos, _args)
 }
 
 ///|
@@ -15280,23 +5596,7 @@ fn yy_action_605(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1496|    LBRACKETBAR BARRBRACKET
 // 1497|      { mkexp (Pexp_array []) }
 fn yy_action_606(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 23, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 23, _last_pos, _args)
 }
 
 ///|
@@ -15304,23 +5604,7 @@ fn yy_action_606(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1515|    NEW ext_attributes class_longident
 // 1516|      { mkexp_attrs (Pexp_new(mkrhs $3 3)) $2 }
 fn yy_action_607(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 31, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 31, _last_pos, _args)
 }
 
 ///|
@@ -15328,23 +5612,7 @@ fn yy_action_607(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1682|    label
 // 1683|      { (mkrhs $1 1, exp_of_label (Lident $1) 1) }
 fn yy_action_608(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "field_expr", "rule_index": 96,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("field_expr", 96, 1, _last_pos, _args)
 }
 
 ///|
@@ -15352,46 +5620,14 @@ fn yy_action_608(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1539|    extension
 // 1540|      { mkexp (Pexp_extension $1) }
 fn yy_action_609(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_expr", "rule_index": 76,
-      "clause_index": 41, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_expr", 76, 41, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1604|    let_binding                                 { $1 }
 fn yy_action_610(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "let_bindings", "rule_index": 83,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("let_bindings", 83, 0, _last_pos, _args)
 }
 
 ///|
@@ -15399,23 +5635,7 @@ fn yy_action_610(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 879|    extension
 // 880|      { mkmty(Pmty_extension $1) }
 fn yy_action_611(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "module_type", "rule_index": 25,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("module_type", 25, 7, _last_pos, _args)
 }
 
 ///|
@@ -15423,69 +5643,21 @@ fn yy_action_611(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2216|    LPAREN MODULE ext_attributes package_type RPAREN
 // 2217|      { wrap_typ_attrs (reloc_typ $4) $3 }
 fn yy_action_612(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 17, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 17, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2403|    mod_ext_longident DOT ident                 { Ldot($1, $3) }
 fn yy_action_613(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mty_longident", "rule_index": 185,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mty_longident", 185, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2402|    ident                                       { Lident $1 }
 fn yy_action_614(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mty_longident", "rule_index": 185,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mty_longident", 185, 0, _last_pos, _args)
 }
 
 ///|
@@ -15493,23 +5665,7 @@ fn yy_action_614(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2180|    UNDERSCORE
 // 2181|      { mktyp(Ptyp_any) }
 fn yy_action_615(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 1, _last_pos, _args)
 }
 
 ///|
@@ -15517,23 +5673,7 @@ fn yy_action_615(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2182|    type_longident
 // 2183|      { mktyp(Ptyp_constr(mkrhs $1 1, [])) }
 fn yy_action_616(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 2, _last_pos, _args)
 }
 
 ///|
@@ -15548,23 +5688,7 @@ fn yy_action_616(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2294|      let attrs = add_info_attrs info ($4 @ $6) in
 // 2295|      Of.tag ~loc ~attrs (mkrhs $1 1) $3 }
 fn yy_action_617(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "field_semi", "rule_index": 170,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("field_semi", 170, 0, _last_pos, _args)
 }
 
 ///|
@@ -15574,23 +5698,7 @@ fn yy_action_617(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2282|      let attrs = add_info_attrs (symbol_info ()) $4 in
 // 2283|      Of.tag ~loc ~attrs (mkrhs $1 1) $3 }
 fn yy_action_618(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "field", "rule_index": 169,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("field", 169, 0, _last_pos, _args)
 }
 
 ///|
@@ -15598,69 +5706,21 @@ fn yy_action_618(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2192|    HASH class_longident
 // 2193|      { mktyp(Ptyp_class(mkrhs $2 2, [])) }
 fn yy_action_619(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 7, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2411|    mod_longident DOT LIDENT                    { Ldot($1, $3) }
 fn yy_action_620(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_longident", "rule_index": 187,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_longident", 187, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2410|    LIDENT                                      { Lident $1 }
 fn yy_action_621(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "class_longident", "rule_index": 187,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("class_longident", 187, 0, _last_pos, _args)
 }
 
 ///|
@@ -15668,115 +5728,35 @@ fn yy_action_621(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2206|    LBRACKET row_field BAR row_field_list RBRACKET
 // 2207|      { mktyp(Ptyp_variant($2 :: List.rev $4, Closed, None)) }
 fn yy_action_622(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 12, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 12, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2226|    row_field_list BAR row_field                { $3 :: $1 }
 fn yy_action_623(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "row_field_list", "rule_index": 159,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("row_field_list", 159, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2225|    row_field                                   { [$1] }
 fn yy_action_624(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "row_field_list", "rule_index": 159,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("row_field_list", 159, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2229|    tag_field                          { $1 }
 fn yy_action_625(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "row_field", "rule_index": 160,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("row_field", 160, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2230|    simple_core_type                   { Rf.inherit_ ~loc:(symbol_rloc ()) $1 }
 fn yy_action_626(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "row_field", "rule_index": 160,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("row_field", 160, 1, _last_pos, _args)
 }
 
 ///|
@@ -15784,23 +5764,7 @@ fn yy_action_626(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2210|    LBRACKETGREATER RBRACKET
 // 2211|      { mktyp(Ptyp_variant([], Open, None)) }
 fn yy_action_627(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 14, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 14, _last_pos, _args)
 }
 
 ///|
@@ -15808,22 +5772,8 @@ fn yy_action_627(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1986|                                  
 // 1987|    /*empty*/                     { (Pcstr_tuple [],None) }
 fn yy_action_628(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "generalized_constructor_arguments",
-      "rule_index": 134, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
+  yy_json_cst_action(
+    "generalized_constructor_arguments", 134, 0, _last_pos, _args
   )
 }
 
@@ -15831,1403 +5781,427 @@ fn yy_action_628(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // file:///./ocaml.mly
 // 2363|    UIDENT                                      { $1 }
 fn yy_action_629(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_ident", "rule_index": 178,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_ident", 178, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2364|    LBRACKET RBRACKET                           { "[]" }
 fn yy_action_630(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_ident", "rule_index": 178,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_ident", 178, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2365|    LPAREN RPAREN                               { "()" }
 fn yy_action_631(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_ident", "rule_index": 178,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_ident", 178, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2366|    LPAREN COLONCOLON RPAREN                    { "::" }
 fn yy_action_632(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_ident", "rule_index": 178,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_ident", 178, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2367|    FALSE                                       { "false" }
 fn yy_action_633(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_ident", "rule_index": 178,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_ident", 178, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2368|    TRUE                                        { "true" }
 fn yy_action_634(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_ident", "rule_index": 178,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_ident", 178, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2573|    attribute attributes { None, $1 :: $2 }
 fn yy_action_635(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "ext_attributes", "rule_index": 210,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("ext_attributes", 210, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2494|    LIDENT { $1 }
 fn yy_action_636(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2495|    UIDENT { $1 }
 fn yy_action_637(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2496|    AND { "and" }
 fn yy_action_638(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2497|    AS { "as" }
 fn yy_action_639(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2498|    ASSERT { "assert" }
 fn yy_action_640(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2499|    BEGIN { "begin" }
 fn yy_action_641(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2500|    CLASS { "class" }
 fn yy_action_642(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 6, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2501|    CONSTRAINT { "constraint" }
 fn yy_action_643(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 7, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 7, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2502|    DO { "do" }
 fn yy_action_644(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 8, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 8, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2503|    DONE { "done" }
 fn yy_action_645(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 9, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 9, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2504|    DOWNTO { "downto" }
 fn yy_action_646(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 10, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 10, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2505|    ELSE { "else" }
 fn yy_action_647(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 11, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 11, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2506|    END { "end" }
 fn yy_action_648(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 12, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 12, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2507|    EXCEPTION { "exception" }
 fn yy_action_649(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 13, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 13, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2508|    EXTERNAL { "external" }
 fn yy_action_650(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 14, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 14, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2509|    FALSE { "false" }
 fn yy_action_651(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 15, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 15, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2510|    FOR { "for" }
 fn yy_action_652(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 16, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 16, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2511|    FUN { "fun" }
 fn yy_action_653(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 17, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 17, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2512|    FUNCTION { "function" }
 fn yy_action_654(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 18, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 18, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2513|    FUNCTOR { "functor" }
 fn yy_action_655(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 19, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 19, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2514|    IF { "if" }
 fn yy_action_656(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 20, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 20, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2515|    IN { "in" }
 fn yy_action_657(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 21, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 21, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2516|    INCLUDE { "include" }
 fn yy_action_658(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 22, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 22, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2517|    INHERIT { "inherit" }
 fn yy_action_659(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 23, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 23, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2518|    INITIALIZER { "initializer" }
 fn yy_action_660(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 24, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 24, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2519|    LAZY { "lazy" }
 fn yy_action_661(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 25, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 25, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2520|    LET { "let" }
 fn yy_action_662(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 26, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 26, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2521|    MATCH { "match" }
 fn yy_action_663(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 27, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 27, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2522|    METHOD { "method" }
 fn yy_action_664(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 28, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 28, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2523|    MODULE { "module" }
 fn yy_action_665(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 29, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 29, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2524|    MUTABLE { "mutable" }
 fn yy_action_666(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 30, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 30, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2525|    NEW { "new" }
 fn yy_action_667(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 31, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 31, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2526|    NONREC { "nonrec" }
 fn yy_action_668(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 32, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 32, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2527|    OBJECT { "object" }
 fn yy_action_669(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 33, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 33, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2528|    OF { "of" }
 fn yy_action_670(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 34, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 34, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2529|    OPEN { "open" }
 fn yy_action_671(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 35, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 35, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2530|    OR { "or" }
 fn yy_action_672(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 36, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 36, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2531|    PRIVATE { "private" }
 fn yy_action_673(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 37, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 37, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2532|    REC { "rec" }
 fn yy_action_674(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 38, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 38, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2533|    SIG { "sig" }
 fn yy_action_675(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 39, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 39, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2534|    STRUCT { "struct" }
 fn yy_action_676(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 40, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 40, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2535|    THEN { "then" }
 fn yy_action_677(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 41, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 41, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2536|    TO { "to" }
 fn yy_action_678(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 42, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 42, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2537|    TRUE { "true" }
 fn yy_action_679(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 43, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 43, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2538|    TRY { "try" }
 fn yy_action_680(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 44, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 44, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2539|    TYPE { "type" }
 fn yy_action_681(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 45, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 45, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2540|    VAL { "val" }
 fn yy_action_682(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 46, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 46, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2541|    VIRTUAL { "virtual" }
 fn yy_action_683(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 47, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 47, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2542|    WHEN { "when" }
 fn yy_action_684(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 48, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 48, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2543|    WHILE { "while" }
 fn yy_action_685(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 49, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 49, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2544|    WITH { "with" }
 fn yy_action_686(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "single_attr_id", "rule_index": 203,
-      "clause_index": 50, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("single_attr_id", 203, 50, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2550|    single_attr_id DOT attr_id { mkloc ($1 ^ "." ^ $3.txt) (symbol_rloc())}
 fn yy_action_687(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "attr_id", "rule_index": 204,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("attr_id", 204, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2549|    single_attr_id { mkloc $1 (symbol_rloc()) }
 fn yy_action_688(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "attr_id", "rule_index": 204,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("attr_id", 204, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2574|    PERCENT attr_id attributes { Some $2, $3 }
 fn yy_action_689(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "ext_attributes", "rule_index": 210,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("ext_attributes", 210, 2, _last_pos, _args)
 }
 
 ///|
@@ -17235,161 +6209,49 @@ fn yy_action_689(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2571|               
 // 2572|    /* empty */  { None, [] }
 fn yy_action_690(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "ext_attributes", "rule_index": 210,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("ext_attributes", 210, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2302|    LIDENT                                      { $1 }
 fn yy_action_691(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label", "rule_index": 172,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label", 172, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2372|    val_ident                                   { Lident $1 }
 fn yy_action_692(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "val_longident", "rule_index": 179,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("val_longident", 179, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2483|    MINUS                                       { "-" }
 fn yy_action_693(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "subtractive", "rule_index": 201,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("subtractive", 201, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2484|    MINUSDOT                                    { "-." }
 fn yy_action_694(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "subtractive", "rule_index": 201,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("subtractive", 201, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2487|    PLUS                                        { "+" }
 fn yy_action_695(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "additive", "rule_index": 202,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("additive", 202, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2488|    PLUSDOT                                     { "+." }
 fn yy_action_696(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "additive", "rule_index": 202,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("additive", 202, 1, _last_pos, _args)
 }
 
 ///|
@@ -17398,92 +6260,28 @@ fn yy_action_696(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2560|      { mark_symbol_docs ();
 // 2561|        Attr.mk ~loc:(symbol_rloc ()) $2 $3 }
 fn yy_action_697(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "floating_attribute", "rule_index": 207,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("floating_attribute", 207, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2580|  LBRACKETPERCENTPERCENT attr_id payload RBRACKET { ($2, $3) }
 fn yy_action_698(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "item_extension", "rule_index": 212,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("item_extension", 212, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2583|    structure { PStr $1 }
 fn yy_action_699(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "payload", "rule_index": 213,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("payload", 213, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2584|    COLON signature { PSig $2 }
 fn yy_action_700(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "payload", "rule_index": 213,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("payload", 213, 1, _last_pos, _args)
 }
 
 ///|
@@ -17491,46 +6289,14 @@ fn yy_action_700(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 884|          
 // 885|    /* empty */          { [] }
 fn yy_action_701(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signature", "rule_index": 26,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signature", 26, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2569|    attribute attributes { $1 :: $2 }
 fn yy_action_702(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "attributes", "rule_index": 209,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("attributes", 209, 1, _last_pos, _args)
 }
 
 ///|
@@ -17538,46 +6304,14 @@ fn yy_action_702(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2567|           
 // 2568|    /* empty */{ [] }
 fn yy_action_703(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "attributes", "rule_index": 209,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("attributes", 209, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2476|    BAR                                         { () }
 fn yy_action_704(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_bar", "rule_index": 199,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_bar", 199, 1, _last_pos, _args)
 }
 
 ///|
@@ -17585,23 +6319,7 @@ fn yy_action_704(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2474|        
 // 2475|    /* empty */                                 { () }
 fn yy_action_705(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_bar", "rule_index": 199,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_bar", 199, 0, _last_pos, _args)
 }
 
 ///|
@@ -17609,46 +6327,14 @@ fn yy_action_705(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2218|    extension
 // 2219|      { mktyp (Ptyp_extension $1) }
 fn yy_action_706(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type2", "rule_index": 157,
-      "clause_index": 18, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type2", 157, 18, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2265|    core_type_list STAR simple_core_type   { $3 :: $1 }
 fn yy_action_707(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type_list", "rule_index": 167,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type_list", 167, 1, _last_pos, _args)
 }
 
 ///|
@@ -17656,276 +6342,84 @@ fn yy_action_707(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2256|    simple_core_type STAR core_type_list
 // 2257|      { mktyp(Ptyp_tuple($1 :: List.rev $3)) }
 fn yy_action_708(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type_or_tuple",
-      "rule_index": 165, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type_or_tuple", 165, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2264|    simple_core_type                       { [$1] }
 fn yy_action_709(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "core_type_list", "rule_index": 167,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("core_type_list", 167, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2389|    LIDENT                                      { Lident $1 }
 fn yy_action_710(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_longident", "rule_index": 182,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_longident", 182, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2255|    simple_core_type { $1 }
 fn yy_action_711(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_core_type_or_tuple",
-      "rule_index": 165, "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_core_type_or_tuple", 165, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2390|    mod_ext_longident DOT LIDENT                { Ldot($1, $3) }
 fn yy_action_712(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "type_longident", "rule_index": 182,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("type_longident", 182, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2398|    mod_ext_longident DOT UIDENT                { Ldot($1, $3) }
 fn yy_action_713(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mod_ext_longident", "rule_index": 184,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mod_ext_longident", 184, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2399|    mod_ext_longident LPAREN mod_ext_longident RPAREN { lapply $1 $3 }
 fn yy_action_714(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mod_ext_longident", "rule_index": 184,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mod_ext_longident", 184, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2397|    UIDENT                                      { Lident $1 }
 fn yy_action_715(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mod_ext_longident", "rule_index": 184,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mod_ext_longident", 184, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 1821|    /* empty */ { None }
 fn yy_action_716(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_pattern_type_constraint",
-      "rule_index": 111, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_pattern_type_constraint", 111, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2385|    LIDENT                                      { Lident $1 }
 fn yy_action_717(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_longident", "rule_index": 181,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_longident", 181, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2386|    mod_longident DOT LIDENT                    { Ldot($1, $3) }
 fn yy_action_718(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "label_longident", "rule_index": 181,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("label_longident", 181, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2394|    mod_longident DOT UIDENT                    { Ldot($1, $3) }
 fn yy_action_719(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mod_longident", "rule_index": 183,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mod_longident", 183, 1, _last_pos, _args)
 }
 
 ///|
@@ -17933,69 +6427,21 @@ fn yy_action_719(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1786|    LBRACKET pattern_semi_list opt_semi RBRACKET
 // 1787|    { reloc_pat (mktailpat (rhs_loc 4) (List.rev $2)) }
 fn yy_action_720(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_delimited_pattern",
-      "rule_index": 105, "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_delimited_pattern", 105, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2378|    LBRACKET RBRACKET                           { Lident "[]" }
 fn yy_action_721(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_longident", "rule_index": 180,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_longident", 180, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2480|    SEMI                                        { () }
 fn yy_action_722(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_semi", "rule_index": 200,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_semi", 200, 1, _last_pos, _args)
 }
 
 ///|
@@ -18003,23 +6449,7 @@ fn yy_action_722(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 2478|         
 // 2479|    /* empty */                                 { () }
 fn yy_action_723(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "opt_semi", "rule_index": 200,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("opt_semi", 200, 0, _last_pos, _args)
 }
 
 ///|
@@ -18027,391 +6457,119 @@ fn yy_action_723(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 1790|    LBRACKETBAR BARRBRACKET
 // 1791|    { mkpat(Ppat_array []) }
 fn yy_action_724(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "simple_delimited_pattern",
-      "rule_index": 105, "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("simple_delimited_pattern", 105, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2308|    INT          { let (n, m) = $1 in Pconst_integer (n, m) }
 fn yy_action_725(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constant", "rule_index": 173,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constant", 173, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2309|    CHAR         { Pconst_char $1 }
 fn yy_action_726(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constant", "rule_index": 173,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constant", 173, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2310|    STRING       { let (s, d) = $1 in Pconst_string (s, d) }
 fn yy_action_727(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constant", "rule_index": 173,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constant", 173, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2311|    FLOAT        { let (f, m) = $1 in Pconst_float (f, m) }
 fn yy_action_728(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constant", "rule_index": 173,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constant", 173, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2314|    constant     { $1 }
 fn yy_action_729(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signed_constant", "rule_index": 174,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signed_constant", 174, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2315|    MINUS INT    { let (n, m) = $2 in Pconst_integer("-" ^ n, m) }
 fn yy_action_730(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signed_constant", "rule_index": 174,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signed_constant", 174, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2316|    MINUS FLOAT  { let (f, m) = $2 in Pconst_float("-" ^ f, m) }
 fn yy_action_731(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signed_constant", "rule_index": 174,
-      "clause_index": 2, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signed_constant", 174, 2, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2317|    PLUS INT     { let (n, m) = $2 in Pconst_integer (n, m) }
 fn yy_action_732(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signed_constant", "rule_index": 174,
-      "clause_index": 3, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signed_constant", 174, 3, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2318|    PLUS FLOAT   { let (f, m) = $2 in Pconst_float(f, m) }
 fn yy_action_733(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "signed_constant", "rule_index": 174,
-      "clause_index": 4, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("signed_constant", 174, 4, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2328|    LIDENT                                      { $1 }
 fn yy_action_734(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "val_ident", "rule_index": 176,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("val_ident", 176, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2381|    FALSE                                       { Lident "false" }
 fn yy_action_735(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_longident", "rule_index": 180,
-      "clause_index": 5, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_longident", 180, 5, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2382|    TRUE                                        { Lident "true" }
 fn yy_action_736(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "constr_longident", "rule_index": 180,
-      "clause_index": 6, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("constr_longident", 180, 6, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2393|    UIDENT                                      { Lident $1 }
 fn yy_action_737(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "mod_longident", "rule_index": 183,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("mod_longident", 183, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2324|    UIDENT                                      { $1 }
 fn yy_action_738(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "ident", "rule_index": 175,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("ident", 175, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2325|    LIDENT                                      { $1 }
 fn yy_action_739(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "ident", "rule_index": 175,
-      "clause_index": 1, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("ident", 175, 1, _last_pos, _args)
 }
 
 ///|
 // file:///./ocaml.mly
 // 2437|    BACKQUOTE ident                             { $2 }
 fn yy_action_740(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "name_tag", "rule_index": 190,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("name_tag", 190, 0, _last_pos, _args)
 }
 
 ///|
@@ -18419,23 +6577,7 @@ fn yy_action_740(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj
 // 777|               
 // 778|    /* empty */          { [] }
 fn yy_action_741(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
-  YYObj_Json(
-    {
-      "type": "NONTERMINAL", "name": "structure_tail", "rule_index": 17,
-      "clause_index": 0, "children": args_to_json(_args),
-      "start": ToJson::to_json(_start_pos), "end": ToJson::to_json(_end_pos)
-    }
-  )
+  yy_json_cst_action("structure_tail", 17, 0, _last_pos, _args)
 }
 
 ///|
@@ -24249,6 +12391,26 @@ pub fn parse_pattern(read_token : (() -> (Token, Int, Int)), start_pos : Int) ->
         guard! it is YYObj_Json(result)
         result
       })
+  )
+}
+
+///|
+#inline(never)
+fn yy_json_cst_action(
+  name : Json, rule_index : Json, clause_index : Json, _last_pos : Int,
+  _args : ArrayView[(YYObj, Int, Int)]
+) -> YYObj {
+  let (start_pos, end_pos) = if _args.length() == 0 {
+    (_last_pos, _last_pos)
+  } else {
+    (_args[0].1, _args[_args.length() - 1].2)
+  }
+  YYObj_Json(
+    {
+      "type": "NONTERMINAL", "name": name, "rule_index": rule_index,
+      "clause_index": clause_index, "children": args_to_json(_args),
+      "start": ToJson::to_json(start_pos), "end": ToJson::to_json(end_pos)
+    }
   )
 }
 
