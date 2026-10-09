@@ -38,7 +38,10 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
       dot_call(Ident("_args"), "length", []),
       Int(1),
     )
-    for (subject, name) in action.bindings {
+    // JSON CST positions are computed by the shared helper. Subactions above
+    // still run in their original order before the enclosing action.
+    let bindings = if action.body is JsonCst(_) { [] } else { action.bindings }
+    for (subject, name) in bindings {
       match subject {
         Data(index, type_~) =>
           unbox(name, component(Index(Ident("_args"), Int(index)), 0), type_)
@@ -123,12 +126,7 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
               typed("_last_pos", self.meta.position_data_type),
               typed("_args", named_type("ArrayView", [self.data_type()])),
             ],
-            statements(
-              body,
-              result=call("YYObj_" + type_ident(action.type_), [
-                self.action_body(action.body),
-              ]),
-            ),
+            statements(body, result=self.action_body(action)),
             result=named_type("YYObj", []),
           ),
         ),
@@ -140,11 +138,8 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
 }
 
 ///|
-fn Context::action_body(
-  self : Context,
-  body : @elab.ActionBody,
-) -> @mbt_ast.Expr {
-  match body {
+fn Context::action_body(self : Context, action : @elab.Action) -> @mbt_ast.Expr {
+  let value : @mbt_ast.Expr = match action.body {
     Default => Unit
     User(pieces) => {
       let pieces = pieces.map(piece => {
@@ -169,16 +164,69 @@ fn Context::action_body(
       Verbatim(@mbt_ast.Fragment(pieces))
     }
     JsonCst(name~, rule_index~, clause_index~) =>
-      Map([
-        (String("type"), String("NONTERMINAL")),
-        (String("name"), String(name)),
-        (String("rule_index"), Int(rule_index)),
-        (String("clause_index"), Int(clause_index)),
-        (String("children"), call("args_to_json", [Ident("_args")])),
-        (String("start"), call("ToJson::to_json", [Ident("_start_pos")])),
-        (String("end"), call("ToJson::to_json", [Ident("_end_pos")])),
+      return call("yy_json_cst_action", [
+        String(name),
+        Int(rule_index),
+        Int(clause_index),
+        Ident("_last_pos"),
+        Ident("_args"),
       ])
   }
+  call("YYObj_" + type_ident(action.type_), [value])
+}
+
+///|
+fn Context::json_cst_action(self : Context) -> @mbt_ast.Item {
+  let positions : @mbt_ast.Expr = If(
+    Binary(Equal, dot_call(Ident("_args"), "length", []), Int(0)),
+    value_block(Tuple([Ident("_last_pos"), Ident("_last_pos")])),
+    Some(
+      value_block(
+        Tuple([
+          component(Index(Ident("_args"), Int(0)), 1),
+          component(
+            Index(
+              Ident("_args"),
+              Binary(Subtract, dot_call(Ident("_args"), "length", []), Int(1)),
+            ),
+            2,
+          ),
+        ]),
+      ),
+    ),
+  )
+  @mbt_ast.item(
+    Function(
+      @mbt_ast.function(
+        "yy_json_cst_action",
+        [
+          // Accept JSON literals so each wrapper can pass constant metadata.
+          typed("name", named_type("Json", [])),
+          typed("rule_index", named_type("Json", [])),
+          typed("clause_index", named_type("Json", [])),
+          typed("_last_pos", self.meta.position_data_type),
+          typed("_args", named_type("ArrayView", [self.data_type()])),
+        ],
+        statements(
+          [Let(Tuple([Bind("start_pos"), Bind("end_pos")]), None, positions)],
+          result=call("YYObj_Json", [
+            Map([
+              (String("type"), String("NONTERMINAL")),
+              (String("name"), Ident("name")),
+              (String("rule_index"), Ident("rule_index")),
+              (String("clause_index"), Ident("clause_index")),
+              (String("children"), call("args_to_json", [Ident("_args")])),
+              (String("start"), call("ToJson::to_json", [Ident("start_pos")])),
+              (String("end"), call("ToJson::to_json", [Ident("end_pos")])),
+            ]),
+          ]),
+        ),
+        result=named_type("YYObj", []),
+      ),
+    ),
+    // Keep the shared construction code from being copied into every wrapper.
+    attributes=[{ name: "inline", arguments: [Positional(Ident("never"))], }],
+  )
 }
 
 ///|
@@ -240,6 +288,7 @@ pub fn Context::action_runtime(self : Context) -> Array[@mbt_ast.Item] {
     )
   }
   if self.mode is JsonCst {
+    items.push(self.json_cst_action())
     let decode : @mbt_ast.Expr = Lambda(
       [Positional("it", None)],
       statements(

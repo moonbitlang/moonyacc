@@ -1,8 +1,7 @@
 ///|
 pub(all) enum Token {
   NUMBER(Int)
-  LPAREN
-  RPAREN
+  MARK
   EOF
 }
 
@@ -10,8 +9,7 @@ pub(all) enum Token {
 pub fn Token::kind(self : Token) -> TokenKind {
   match self {
     NUMBER(_) => TK_NUMBER
-    LPAREN => TK_LPAREN
-    RPAREN => TK_RPAREN
+    MARK => TK_MARK
     EOF => TK_EOF
   }
 }
@@ -19,8 +17,7 @@ pub fn Token::kind(self : Token) -> TokenKind {
 ///|
 pub(all) enum TokenKind {
   TK_NUMBER
-  TK_LPAREN
-  TK_RPAREN
+  TK_MARK
   TK_EOF
 }
 
@@ -35,8 +32,7 @@ pub impl Show for TokenKind with fn output(self, logger) {
     logger,
     match self {
       TK_NUMBER => "NUMBER"
-      TK_LPAREN => "LPAREN"
-      TK_RPAREN => "RPAREN"
+      TK_MARK => "MARK"
       TK_EOF => "EOF"
     }
   )
@@ -51,16 +47,15 @@ pub extend TokenKind with Debug::{to_repr}
 pub impl Debug for TokenKind with fn to_repr(self) {
   match self {
     TK_NUMBER => Repr("NUMBER")
-    TK_LPAREN => Repr("LPAREN")
-    TK_RPAREN => Repr("RPAREN")
+    TK_MARK => Repr("MARK")
     TK_EOF => Repr("EOF")
   }
 }
 
 ///|
 pub suberror ParseError {
-  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
-  UnexpectedEndOfInput(Int, Array[TokenKind])
+  UnexpectedToken(Token, ((Int, Int), (Int, Int)), Array[TokenKind])
+  UnexpectedEndOfInput((Int, Int), Array[TokenKind])
 }
 
 ///|
@@ -78,7 +73,7 @@ priv suberror YYObj_Json {
 type YYState = Int
 
 ///|
-type YYAction = ((Int, ArrayView[(YYObj, Int, Int)]) -> YYObj)
+type YYAction = (((Int, Int), ArrayView[(YYObj, (Int, Int), (Int, Int))]) -> YYObj)
 
 ///|
 priv enum YYDecision {
@@ -94,20 +89,43 @@ type YYSymbol = Int
 
 ///|
 // file:///./parser.mbty
-// 11|    NUMBER                { $1 }
-fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+// 8|       prefix atom EOF { () }
+fn yy_action_1(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  let _sub_action_0_result = yy_action_0(_args[0].2, _args[1:2])
   yy_json_cst_action("start", 0, 0, _last_pos, _args)
 }
 
 ///|
 // file:///./parser.mbty
-// 12|    LPAREN start RPAREN   { $2 }
-fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  yy_json_cst_action("start", 0, 1, _last_pos, _args)
+// 10|              NUMBER { () }
+fn yy_action_0(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  yy_json_cst_action("atom", 2, 0, _last_pos, _args)
 }
 
 ///|
-fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (
+// file:///./parser.mbty
+// 9|                 MARK { () }
+fn yy_action_2(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  yy_json_cst_action("prefix", 1, 1, _last_pos, _args)
+}
+
+///|
+// file:///./parser.mbty
+// 9|        { () }
+fn yy_action_3(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  yy_json_cst_action("prefix", 1, 0, _last_pos, _args)
+}
+
+///|
+fn yy_input(token : Token, _start_pos : (Int, Int), _end_pos : (Int, Int)) -> (
   YYSymbol, YYObj
 ) {
   match token {
@@ -122,23 +140,12 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (
           }
         )
       )
-    LPAREN =>
+    MARK =>
       (
         2,
         YYObj_Json(
           {
-            "type": "TERMINAL", "name": "LPAREN", "data": Json::null(),
-            "start": ToJson::to_json(_start_pos),
-            "end": ToJson::to_json(_end_pos)
-          }
-        )
-      )
-    RPAREN =>
-      (
-        3,
-        YYObj_Json(
-          {
-            "type": "TERMINAL", "name": "RPAREN", "data": Json::null(),
+            "type": "TERMINAL", "name": "MARK", "data": Json::null(),
             "start": ToJson::to_json(_start_pos),
             "end": ToJson::to_json(_end_pos)
           }
@@ -146,7 +153,7 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (
       )
     EOF =>
       (
-        4,
+        3,
         YYObj_Json(
           {
             "type": "TERMINAL", "name": "EOF", "data": Json::null(),
@@ -159,39 +166,21 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (
 }
 
 ///|
-let yy_prod_lhs_table : FixedArray[Int] = [5, 5]
+let yy_prod_lhs_table : FixedArray[Int] = [4, 5, 5]
 
 ///|
-let yy_prod_len_table : FixedArray[Int] = [1, 3]
+let yy_prod_len_table : FixedArray[Int] = [3, 0, 1]
 
 ///|
-let yy_prod_act_table : FixedArray[YYAction] = [yy_action_0, yy_action_1]
+let yy_prod_act_table : FixedArray[YYAction] = [
+  yy_action_1, yy_action_3, yy_action_2
+]
 
 ///|
-fn yy_decompress(input : FixedArray[Int]) -> FixedArray[Int] {
-  let output = []
-  let mut last = 0
-  for val in input {
-    if val < 0 {
-      let count = -val - 1
-      for _ in 0..<count {
-        output.push(last)
-      }
-    } else {
-      output.push(val)
-      last = val
-    }
-  }
-  FixedArray::from_array(output)
-}
-
-///|
-let yy_state_table : FixedArray[Int] = yy_decompress(
-  [
-    0, 7, 4, 0, -2, 3, 0, 1, 0, -7, 7, 4, 0, -2, 5, 0, -4, 6, 0, -3, 11, 0, -2,
-    11, 0, -3, 10, 0, -2, 10, 0, -3
-  ]
-)
+let yy_state_table : FixedArray[Int] = [
+  0, 9, 4, 0, 3, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
+  0, 0, 0, 0, 0, 7, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0
+]
 
 ///|
 fn yy_state(state : YYState, symbol : YYSymbol) -> YYDecision {
@@ -200,15 +189,15 @@ fn yy_state(state : YYState, symbol : YYSymbol) -> YYDecision {
     0 => Error
     1 => Accept
     2..=7 => Shift(encoded - 2)
-    8..=9 =>
+    8..=10 =>
       Reduce(
         yy_prod_len_table[encoded - 8], yy_prod_lhs_table[encoded - 8],
         yy_prod_act_table[encoded - 8]
       )
-    10..<_ =>
+    11..<_ =>
       ReduceNoLookahead(
-        yy_prod_len_table[encoded - 10], yy_prod_lhs_table[encoded - 10],
-        yy_prod_act_table[encoded - 10]
+        yy_prod_len_table[encoded - 11], yy_prod_lhs_table[encoded - 11],
+        yy_prod_act_table[encoded - 11]
       )
     _ => panic()
   }
@@ -216,15 +205,15 @@ fn yy_state(state : YYState, symbol : YYSymbol) -> YYDecision {
 
 ///|
 fn[T] yy_parse(
-  tokens : Array[(Token, Int, Int)], start : YYState, return_ : ((YYObj) -> T),
-  initial_pos? : Int
+  tokens : Array[(Token, (Int, Int), (Int, Int))], start : YYState,
+  return_ : ((YYObj) -> T), initial_pos? : (Int, Int)
 ) -> T raise ParseError {
   let mut cursor = 0
   let mut state_stack : @list.List[YYState] = @list.cons(start, @list.empty())
-  let data_stack : Array[(YYObj, Int, Int)] = []
+  let data_stack : Array[(YYObj, (Int, Int), (Int, Int))] = []
   let mut last_pos = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut state = start
-  let mut lookahead : (YYSymbol, (YYObj, Int, Int), Token?)? = None
+  let mut lookahead : (YYSymbol, (YYObj, (Int, Int), (Int, Int)), Token?)? = None
   let mut last_shifted_state_stack = state_stack
   while true {
     let decision = match yy_state(state, 0) {
@@ -317,7 +306,9 @@ fn[T] yy_parse(
 }
 
 ///|
-fn error(stack : @list.List[YYState], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
+fn error(
+  stack : @list.List[YYState], token : Token?, loc : ((Int, Int), (Int, Int))
+) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @list.List[YYState]) {
@@ -349,7 +340,7 @@ fn error(stack : @list.List[YYState], token : Token?, loc : (Int, Int)) -> Unit 
     }
     go(stack)
   }
-  for term in ([(1, TK_NUMBER), (2, TK_LPAREN), (3, TK_RPAREN), (4, TK_EOF)] : Array[
+  for term in ([(1, TK_NUMBER), (2, TK_MARK), (3, TK_EOF)] : Array[
     (YYSymbol, TokenKind)
   ]) {
     try_add(term.0, term.1)
@@ -369,7 +360,9 @@ fn error(stack : @list.List[YYState], token : Token?, loc : (Int, Int)) -> Unit 
 }
 
 ///|
-pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Json raise ParseError {
+pub fn start(
+  tokens : Array[(Token, (Int, Int), (Int, Int))], initial_pos? : (Int, Int)
+) -> Json raise ParseError {
   yy_parse(
     tokens, 0,
     (it) =>
@@ -384,8 +377,8 @@ pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Json rais
 ///|
 #inline(never)
 fn yy_json_cst_action(
-  name : Json, rule_index : Json, clause_index : Json, _last_pos : Int,
-  _args : ArrayView[(YYObj, Int, Int)]
+  name : Json, rule_index : Json, clause_index : Json, _last_pos : (Int, Int),
+  _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
 ) -> YYObj {
   let (start_pos, end_pos) = if _args.length() == 0 {
     (_last_pos, _last_pos)
@@ -402,7 +395,7 @@ fn yy_json_cst_action(
 }
 
 ///|
-fn args_to_json(args : ArrayView[(YYObj, Int, Int)]) -> Json {
+fn args_to_json(args : ArrayView[(YYObj, (Int, Int), (Int, Int))]) -> Json {
   Json::array(
     args.iter().map(
       (it) =>
