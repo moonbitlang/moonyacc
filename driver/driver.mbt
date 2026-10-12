@@ -75,14 +75,14 @@ pub fn print(
 ///|
 pub fn compile(
   parser_spec_str : String,
-  mode? : Mode = Default,
-  input_mode? : InputMode = Array,
+  mode~ : Mode = Default,
+  input_mode~ : InputMode = Array,
   filename~ : String,
-  external_tokens? : Bool = false,
-  no_comments? : Bool = false,
-  no_std? : Bool = false,
-  token_payload_rewrite? : TokenPayloadRewrite = NoRewrite,
-  force_int_position? : Bool = false,
+  external_tokens~ : Bool = false,
+  no_comments~ : Bool = false,
+  no_std~ : Bool = false,
+  token_payload_rewrite~ : TokenPayloadRewrite = NoRewrite,
+  force_int_position~ : Bool = false,
   source_map_builder? : &@codegen.SourceMapBuilder,
   generator~ : &@codegen.CodeGenerator,
 ) -> String {

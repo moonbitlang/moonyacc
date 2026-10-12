@@ -59,6 +59,6 @@ basic_type_expr -> @ast.TypeExpr
   ;
 
 nonempty_type_expr_list -> @list.List[@ast.TypeExpr]
-  : type_expr=type_expr { @list.cons(type_expr, @list.empty()) }
+  : type_expr=type_expr { @list.cons(type_expr, @list.List([])) }
   | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.cons(type_expr, type_expr_list) }
   ;
