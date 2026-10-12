@@ -82,7 +82,7 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
     LetMut(
       "state_stack",
       Some(named_type("@list.List", [named_type("YYState", [])])),
-      call("@list.cons", [Ident("start"), call("@list.empty", [])]),
+      call("@list.List", [Array([Ident("start")])]),
     ),
     binding(
       "data_stack",

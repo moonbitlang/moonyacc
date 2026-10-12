@@ -216,9 +216,9 @@ pub(all) struct Item {
 ///|
 pub fn item(
   declaration : Declaration,
-  visibility? : Visibility = Default,
-  attributes? : Array[Attribute] = [],
-  comments? : Array[String] = [],
+  visibility~ : Visibility = Default,
+  attributes~ : Array[Attribute] = [],
+  comments~ : Array[String] = [],
 ) -> Item {
   { declaration, visibility, attributes, comments, }
 }
@@ -229,8 +229,8 @@ pub fn function(
   parameters : Array[Parameter],
   body : Block,
   result? : @elab.TypeExpr,
-  effect? : Effect = Default,
-  type_parameters? : Array[TypeParameter] = [],
+  effect~ : Effect = Default,
+  type_parameters~ : Array[TypeParameter] = [],
 ) -> Function {
   { name, parameters, body, result, effect, type_parameters, }
 }

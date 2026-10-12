@@ -133,7 +133,7 @@ EQ
 IDENT("decl_list")
 LBRACE_CODE_RBRACE((" @list.cons(decl, decl_list) ", 1294, []))
 BAR
-LBRACE_CODE_RBRACE((" @list.empty() ", 1330, []))
+LBRACE_CODE_RBRACE((" @list.List([]) ", 1330, []))
 SEMI
 IDENT("decl")
 ARROW
@@ -143,7 +143,7 @@ IDENT("PERCENT_LBRACE_CODE_PERCENT_RBRACE")
 LBRACE_CODE_RBRACE(
   (
     " Header($1.0, $1.1, $1.2) ",
-    1417,
+    1418,
     [
       { start: 8, end: 10, desc: Dollar(1) },
       { start: 14, end: 16, desc: Dollar(1) },
@@ -156,7 +156,7 @@ STRING("\"%start\"")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_symbol_with_loc_list")
-LBRACE_CODE_RBRACE((" Start(symbol_list.to_array(), type_=None) ", 1501, []))
+LBRACE_CODE_RBRACE((" Start(symbol_list.to_array(), type_=None) ", 1502, []))
 BAR
 STRING("\"%start\"")
 IDENT("type_")
@@ -165,13 +165,13 @@ IDENT("LANGLE_CODE_RANGLE")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_symbol_with_loc_list")
-LBRACE_CODE_RBRACE((" Start(symbol_list.to_array(), type_=Some(type_)) ", 1627, []))
+LBRACE_CODE_RBRACE((" Start(symbol_list.to_array(), type_=Some(type_)) ", 1628, []))
 BAR
 STRING("\"%token\"")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_symbol_with_loc_list")
-LBRACE_CODE_RBRACE((" Token(symbol_list.to_array(), type_=None) ", 1735, []))
+LBRACE_CODE_RBRACE((" Token(symbol_list.to_array(), type_=None) ", 1736, []))
 BAR
 STRING("\"%token\"")
 IDENT("type_")
@@ -180,7 +180,7 @@ IDENT("LANGLE_CODE_RANGLE")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_symbol_with_loc_list")
-LBRACE_CODE_RBRACE((" Token(symbol_list.to_array(), type_=Some(type_)) ", 1861, []))
+LBRACE_CODE_RBRACE((" Token(symbol_list.to_array(), type_=Some(type_)) ", 1862, []))
 BAR
 STRING("\"%token\"")
 IDENT("symbol")
@@ -189,7 +189,7 @@ IDENT("symbol_with_loc")
 IDENT("image")
 EQ
 IDENT("STRING")
-LBRACE_CODE_RBRACE((" Token1(symbol, type_=None, image=image) ", 1963, []))
+LBRACE_CODE_RBRACE((" Token1(symbol, type_=None, image=image) ", 1964, []))
 BAR
 STRING("\"%token\"")
 IDENT("type_")
@@ -201,7 +201,7 @@ IDENT("symbol_with_loc")
 IDENT("image")
 EQ
 IDENT("STRING")
-LBRACE_CODE_RBRACE((" Token1(symbol, type_=Some(type_), image=image) ", 2081, []))
+LBRACE_CODE_RBRACE((" Token1(symbol, type_=Some(type_), image=image) ", 2082, []))
 BAR
 STRING("\"%type\"")
 IDENT("type_")
@@ -210,31 +210,31 @@ IDENT("LANGLE_CODE_RANGLE")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_symbol_with_loc_list")
-LBRACE_CODE_RBRACE((" Type(symbol_list.to_array(), type_=type_) ", 2211, []))
+LBRACE_CODE_RBRACE((" Type(symbol_list.to_array(), type_=type_) ", 2212, []))
 BAR
 STRING("\"%position\"")
 IDENT("type_")
 EQ
 IDENT("LANGLE_CODE_RANGLE")
-LBRACE_CODE_RBRACE((" Position(type_=type_) ", 2298, []))
+LBRACE_CODE_RBRACE((" Position(type_=type_) ", 2299, []))
 BAR
 STRING("\"%left\"")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_prec_symbol_list")
-LBRACE_CODE_RBRACE((" Left(symbol_list.to_array()) ", 2374, []))
+LBRACE_CODE_RBRACE((" Left(symbol_list.to_array()) ", 2375, []))
 BAR
 STRING("\"%right\"")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_prec_symbol_list")
-LBRACE_CODE_RBRACE((" Right(symbol_list.to_array()) ", 2458, []))
+LBRACE_CODE_RBRACE((" Right(symbol_list.to_array()) ", 2459, []))
 BAR
 STRING("\"%nonassoc\"")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_prec_symbol_list")
-LBRACE_CODE_RBRACE((" Nonassoc(symbol_list.to_array()) ", 2546, []))
+LBRACE_CODE_RBRACE((" Nonassoc(symbol_list.to_array()) ", 2547, []))
 BAR
 STRING("\"%derive\"")
 IDENT("traits")
@@ -243,7 +243,7 @@ IDENT("LANGLE_CODE_RANGLE")
 IDENT("type_")
 EQ
 IDENT("IDENT")
-LBRACE_CODE_RBRACE((" Derive(traits=traits, type_=type_) ", 2635, []))
+LBRACE_CODE_RBRACE((" Derive(traits=traits, type_=type_) ", 2636, []))
 SEMI
 IDENT("rule_list")
 ARROW
@@ -255,7 +255,7 @@ COLON
 IDENT("rule")
 EQ
 IDENT("rule")
-LBRACE_CODE_RBRACE((" @list.cons(rule, @list.empty()) ", 2728, []))
+LBRACE_CODE_RBRACE((" @list.cons(rule, @list.List([])) ", 2729, []))
 BAR
 IDENT("rule")
 EQ
@@ -263,7 +263,7 @@ IDENT("rule")
 IDENT("rule_list")
 EQ
 IDENT("rule_list")
-LBRACE_CODE_RBRACE((" @list.cons(rule, rule_list) ", 2798, []))
+LBRACE_CODE_RBRACE((" @list.cons(rule, rule_list) ", 2800, []))
 SEMI
 IDENT("trailer")
 ARROW
@@ -279,28 +279,28 @@ COLON
 IDENT("code")
 EQ
 IDENT("PERCENT_LBRACE_CODE_PERCENT_RBRACE")
-LBRACE_CODE_RBRACE((" Some(code) ", 2913, []))
+LBRACE_CODE_RBRACE((" Some(code) ", 2915, []))
 BAR
 IDENT("code")
 EQ
 IDENT("PERCENT_PERCENT_CODE_EOF")
-LBRACE_CODE_RBRACE((" Some(code) ", 2962, []))
+LBRACE_CODE_RBRACE((" Some(code) ", 2964, []))
 BAR
-LBRACE_CODE_RBRACE((" None ", 2981, []))
+LBRACE_CODE_RBRACE((" None ", 2983, []))
 SEMI
 IDENT("rule")
 ARROW
 PKG_AND_IDENT(("ast", "Rule"))
 COLON
 IDENT("rule_no_modifiers")
-LBRACE_CODE_RBRACE((" $1 ", 3035, [{ start: 1, end: 3, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" $1 ", 3037, [{ start: 1, end: 3, desc: Dollar(1) }]))
 BAR
 STRING("\"%inline\"")
 IDENT("rule_no_modifiers")
 LBRACE_CODE_RBRACE(
   (
     " { ..$2, inline: true } ",
-    3074,
+    3076,
     [{ start: 5, end: 7, desc: Dollar(2) }],
   ),
 )
@@ -326,7 +326,7 @@ RPAREN
 LBRACE_CODE_RBRACE(
   (
     "\n    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }\n  ",
-    3227,
+    3229,
     [],
   ),
 )
@@ -356,7 +356,7 @@ RPAREN
 LBRACE_CODE_RBRACE(
   (
     "\n    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }\n  ",
-    3513,
+    3515,
     [],
   ),
 )
@@ -370,9 +370,9 @@ STRING("\"->\"")
 IDENT("type_")
 EQ
 IDENT("type_expr")
-LBRACE_CODE_RBRACE((" Some(type_) ", 3711, []))
+LBRACE_CODE_RBRACE((" Some(type_) ", 3713, []))
 BAR
-LBRACE_CODE_RBRACE((" None ", 3731, []))
+LBRACE_CODE_RBRACE((" None ", 3733, []))
 SEMI
 IDENT("nonempty_rule_param_list")
 ARROW
@@ -389,8 +389,8 @@ COLON
 IDENT("IDENT")
 LBRACE_CODE_RBRACE(
   (
-    " @list.cons(($1, None), @list.empty()) ",
-    3820,
+    " @list.cons(($1, None), @list.List([])) ",
+    3822,
     [{ start: 13, end: 15, desc: Dollar(1) }],
   ),
 )
@@ -400,8 +400,8 @@ STRING("\":\"")
 IDENT("type_expr")
 LBRACE_CODE_RBRACE(
   (
-    " @list.cons(($1, Some($3)), @list.empty()) ",
-    3886,
+    " @list.cons(($1, Some($3)), @list.List([])) ",
+    3889,
     [
       { start: 13, end: 15, desc: Dollar(1) },
       { start: 22, end: 24, desc: Dollar(3) },
@@ -415,7 +415,7 @@ IDENT("nonempty_rule_param_list")
 LBRACE_CODE_RBRACE(
   (
     " @list.cons(($1, None), $3) ",
-    3971,
+    3975,
     [
       { start: 13, end: 15, desc: Dollar(1) },
       { start: 24, end: 26, desc: Dollar(3) },
@@ -431,7 +431,7 @@ IDENT("nonempty_rule_param_list")
 LBRACE_CODE_RBRACE(
   (
     " @list.cons(($1, Some($3)), $5) ",
-    4055,
+    4059,
     [
       { start: 13, end: 15, desc: Dollar(1) },
       { start: 22, end: 24, desc: Dollar(3) },
@@ -447,12 +447,12 @@ LBRACKET
 IDENT("String")
 RBRACKET
 COLON
-LBRACE_CODE_RBRACE((" [] ", 4140, []))
+LBRACE_CODE_RBRACE((" [] ", 4144, []))
 BAR
 STRING("\"[\"")
 IDENT("nonempty_comma_ident_list")
 STRING("\"]\"")
-LBRACE_CODE_RBRACE((" $2.to_array() ", 4185, [{ start: 1, end: 3, desc: Dollar(2) }]))
+LBRACE_CODE_RBRACE((" $2.to_array() ", 4189, [{ start: 1, end: 3, desc: Dollar(2) }]))
 SEMI
 IDENT("nonempty_comma_ident_list")
 ARROW
@@ -464,8 +464,8 @@ COLON
 IDENT("IDENT")
 LBRACE_CODE_RBRACE(
   (
-    " @list.cons($1, @list.empty()) ",
-    4266,
+    " @list.cons($1, @list.List([])) ",
+    4270,
     [{ start: 12, end: 14, desc: Dollar(1) }],
   ),
 )
@@ -476,7 +476,7 @@ IDENT("nonempty_comma_ident_list")
 LBRACE_CODE_RBRACE(
   (
     " @list.cons($1, $3) ",
-    4340,
+    4345,
     [
       { start: 12, end: 14, desc: Dollar(1) },
       { start: 16, end: 18, desc: Dollar(3) },
@@ -489,13 +489,13 @@ ARROW
 PKG_AND_IDENT(("ast", "TypeExpr"))
 COLON
 IDENT("postfix_type_expr")
-LBRACE_CODE_RBRACE((" $1 ", 4417, [{ start: 1, end: 3, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" $1 ", 4422, [{ start: 1, end: 3, desc: Dollar(1) }]))
 BAR
 STRING("\"(\"")
 STRING("\")\"")
 STRING("\"->\"")
 IDENT("type_expr")
-LBRACE_CODE_RBRACE((" Arrow([], $4) ", 4451, [{ start: 11, end: 13, desc: Dollar(4) }]))
+LBRACE_CODE_RBRACE((" Arrow([], $4) ", 4456, [{ start: 11, end: 13, desc: Dollar(4) }]))
 BAR
 STRING("\"(\"")
 IDENT("type_expr")
@@ -505,7 +505,7 @@ IDENT("type_expr")
 LBRACE_CODE_RBRACE(
   (
     " Arrow([$2], $5) ",
-    4506,
+    4511,
     [
       { start: 8, end: 10, desc: Dollar(2) },
       { start: 13, end: 15, desc: Dollar(5) },
@@ -522,7 +522,7 @@ IDENT("type_expr")
 LBRACE_CODE_RBRACE(
   (
     " Arrow([$2], $6) ",
-    4567,
+    4572,
     [
       { start: 8, end: 10, desc: Dollar(2) },
       { start: 13, end: 15, desc: Dollar(6) },
@@ -540,7 +540,7 @@ IDENT("type_expr")
 LBRACE_CODE_RBRACE(
   (
     " Arrow(@list.cons($2, $4).to_array(), $7) ",
-    4652,
+    4657,
     [
       { start: 18, end: 20, desc: Dollar(2) },
       { start: 22, end: 24, desc: Dollar(4) },
@@ -554,11 +554,11 @@ ARROW
 PKG_AND_IDENT(("ast", "TypeExpr"))
 COLON
 IDENT("basic_type_expr")
-LBRACE_CODE_RBRACE((" $1 ", 4757, [{ start: 1, end: 3, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" $1 ", 4762, [{ start: 1, end: 3, desc: Dollar(1) }]))
 BAR
 IDENT("postfix_type_expr")
 STRING("\"?\"")
-LBRACE_CODE_RBRACE((" Option($1) ", 4790, [{ start: 8, end: 10, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" Option($1) ", 4795, [{ start: 8, end: 10, desc: Dollar(1) }]))
 SEMI
 IDENT("basic_type_expr")
 ARROW
@@ -568,7 +568,7 @@ IDENT("IDENT")
 LBRACE_CODE_RBRACE(
   (
     " Constr(pkg=None, $1, []) ",
-    4853,
+    4858,
     [{ start: 18, end: 20, desc: Dollar(1) }],
   ),
 )
@@ -577,7 +577,7 @@ IDENT("PKG_AND_IDENT")
 LBRACE_CODE_RBRACE(
   (
     " Constr(pkg=Some($1.0), $1.1, []) ",
-    4900,
+    4905,
     [
       { start: 17, end: 19, desc: Dollar(1) },
       { start: 24, end: 26, desc: Dollar(1) },
@@ -592,7 +592,7 @@ STRING("\"]\"")
 LBRACE_CODE_RBRACE(
   (
     " Constr(pkg=None, $1, $3.to_array()) ",
-    4979,
+    4984,
     [
       { start: 18, end: 20, desc: Dollar(1) },
       { start: 22, end: 24, desc: Dollar(3) },
@@ -607,7 +607,7 @@ STRING("\"]\"")
 LBRACE_CODE_RBRACE(
   (
     " Constr(pkg=Some($1.0), $1.1, $3.to_array()) ",
-    5069,
+    5074,
     [
       { start: 17, end: 19, desc: Dollar(1) },
       { start: 24, end: 26, desc: Dollar(1) },
@@ -624,7 +624,7 @@ STRING("\")\"")
 LBRACE_CODE_RBRACE(
   (
     " Tuple(@list.cons($2, $4).to_array()) ",
-    5167,
+    5172,
     [
       { start: 18, end: 20, desc: Dollar(2) },
       { start: 22, end: 24, desc: Dollar(4) },
@@ -635,7 +635,7 @@ BAR
 STRING("\"(\"")
 IDENT("type_expr")
 STRING("\")\"")
-LBRACE_CODE_RBRACE((" $2 ", 5230, [{ start: 1, end: 3, desc: Dollar(2) }]))
+LBRACE_CODE_RBRACE((" $2 ", 5235, [{ start: 1, end: 3, desc: Dollar(2) }]))
 SEMI
 IDENT("nonempty_type_expr_list")
 ARROW
@@ -647,7 +647,7 @@ COLON
 IDENT("type_expr")
 EQ
 IDENT("type_expr")
-LBRACE_CODE_RBRACE((" @list.cons(type_expr, @list.empty()) ", 5319, []))
+LBRACE_CODE_RBRACE((" @list.cons(type_expr, @list.List([])) ", 5324, []))
 BAR
 IDENT("type_expr")
 EQ
@@ -656,7 +656,7 @@ STRING("\",\"")
 IDENT("type_expr_list")
 EQ
 IDENT("nonempty_type_expr_list")
-LBRACE_CODE_RBRACE((" @list.cons(type_expr, type_expr_list) ", 5427, []))
+LBRACE_CODE_RBRACE((" @list.cons(type_expr, type_expr_list) ", 5433, []))
 SEMI
 IDENT("clause_list")
 ARROW
@@ -674,10 +674,10 @@ RBRACKET
 COLON
 STRING("\"|\"")
 IDENT("nonempty_clause_list")
-LBRACE_CODE_RBRACE((" $2 ", 5588, [{ start: 1, end: 3, desc: Dollar(2) }]))
+LBRACE_CODE_RBRACE((" $2 ", 5594, [{ start: 1, end: 3, desc: Dollar(2) }]))
 BAR
 IDENT("nonempty_clause_list")
-LBRACE_CODE_RBRACE((" $1 ", 5620, [{ start: 1, end: 3, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" $1 ", 5626, [{ start: 1, end: 3, desc: Dollar(1) }]))
 SEMI
 IDENT("nonempty_clause_list")
 ARROW
@@ -701,8 +701,8 @@ EQ
 IDENT("clause_action")
 LBRACE_CODE_RBRACE(
   (
-    " @list.cons((@list.cons(clause_woa, @list.empty()), action), @list.empty()) ",
-    5784,
+    " @list.cons((@list.cons(clause_woa, @list.List([])), action), @list.List([])) ",
+    5790,
     [],
   ),
 )
@@ -719,8 +719,8 @@ EQ
 IDENT("nonempty_clause_list")
 LBRACE_CODE_RBRACE(
   (
-    " @list.cons((@list.cons(clause_woa, @list.empty()), action), clause_list) ",
-    5958,
+    " @list.cons((@list.cons(clause_woa, @list.List([])), action), clause_list) ",
+    5966,
     [],
   ),
 )
@@ -735,7 +735,7 @@ IDENT("nonempty_clause_list")
 LBRACE_CODE_RBRACE(
   (
     "\n    guard! clause_list is More((clause_woa_list, action), tail=tail_clause_list)\n    @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)\n  ",
-    6118,
+    6127,
     [],
   ),
 )
@@ -746,10 +746,10 @@ ARROW
 PKG_AND_IDENT(("ast", "ClauseWithoutAction"))
 COLON
 IDENT("empty_clause_without_action")
-LBRACE_CODE_RBRACE((" $1 ", 6384, [{ start: 1, end: 3, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" $1 ", 6393, [{ start: 1, end: 3, desc: Dollar(1) }]))
 BAR
 IDENT("nonempty_clause_without_action")
-LBRACE_CODE_RBRACE((" $1 ", 6426, [{ start: 1, end: 3, desc: Dollar(1) }]))
+LBRACE_CODE_RBRACE((" $1 ", 6435, [{ start: 1, end: 3, desc: Dollar(1) }]))
 SEMI
 IDENT("empty_clause_without_action")
 ARROW
@@ -761,7 +761,7 @@ IDENT("rule_prec")
 LBRACE_CODE_RBRACE(
   (
     " { items: [], prec, loc: ($startpos, $endpos - $startpos) } ",
-    6513,
+    6522,
     [
       { start: 26, end: 35, desc: StartPos },
       { start: 37, end: 44, desc: EndPos },
@@ -783,7 +783,7 @@ IDENT("rule_prec")
 LBRACE_CODE_RBRACE(
   (
     " { items: item_list.to_array(), prec, loc: ($startpos, $endpos - $startpos) } ",
-    6688,
+    6697,
     [
       { start: 44, end: 53, desc: StartPos },
       { start: 55, end: 62, desc: EndPos },
@@ -802,7 +802,7 @@ IDENT("LBRACE_CODE_RBRACE")
 LBRACE_CODE_RBRACE(
   (
     "\n      let (code, utf8_pos, subst) = code\n      { code: Some({ code, utf8_pos, subst }), loc: ($startpos, $endpos - $startpos) }\n  ",
-    6837,
+    6846,
     [
       { start: 95, end: 104, desc: StartPos },
       { start: 106, end: 113, desc: EndPos },
@@ -820,9 +820,9 @@ STRING("\"%prec\"")
 IDENT("symbol")
 EQ
 IDENT("prec_symbol")
-LBRACE_CODE_RBRACE((" Some(symbol) ", 7037, []))
+LBRACE_CODE_RBRACE((" Some(symbol) ", 7046, []))
 BAR
-LBRACE_CODE_RBRACE((" None ", 7058, []))
+LBRACE_CODE_RBRACE((" None ", 7067, []))
 SEMI
 IDENT("nonempty_item_list")
 ARROW
@@ -834,7 +834,7 @@ COLON
 IDENT("item")
 EQ
 IDENT("item")
-LBRACE_CODE_RBRACE((" @list.cons(item, @list.empty()) ", 7136, []))
+LBRACE_CODE_RBRACE((" @list.cons(item, @list.List([])) ", 7145, []))
 BAR
 IDENT("item")
 EQ
@@ -842,7 +842,7 @@ IDENT("item")
 IDENT("item_list")
 EQ
 IDENT("nonempty_item_list")
-LBRACE_CODE_RBRACE((" @list.cons(item, item_list) ", 7215, []))
+LBRACE_CODE_RBRACE((" @list.cons(item, item_list) ", 7225, []))
 SEMI
 IDENT("item")
 ARROW
@@ -851,7 +851,7 @@ COLON
 IDENT("term")
 EQ
 IDENT("term")
-LBRACE_CODE_RBRACE((" { binder: None, term: term } ", 7290, []))
+LBRACE_CODE_RBRACE((" { binder: None, term: term } ", 7300, []))
 BAR
 IDENT("binder")
 EQ
@@ -860,7 +860,7 @@ STRING("\"=\"")
 IDENT("term")
 EQ
 IDENT("term")
-LBRACE_CODE_RBRACE((" { binder: Some(binder), term: term } ", 7354, []))
+LBRACE_CODE_RBRACE((" { binder: Some(binder), term: term } ", 7364, []))
 SEMI
 IDENT("term")
 ARROW
@@ -872,7 +872,7 @@ IDENT("symbol")
 LBRACE_CODE_RBRACE(
   (
     " Symbol(symbol, loc=($startpos, $endpos)) ",
-    7436,
+    7446,
     [
       { start: 21, end: 30, desc: StartPos },
       { start: 32, end: 39, desc: EndPos },
@@ -889,7 +889,7 @@ STRING("\")\"")
 LBRACE_CODE_RBRACE(
   (
     " RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) ",
-    7532,
+    7542,
     [
       { start: 30, end: 47, desc: StartPosOf(Name("symbol")) },
       { start: 49, end: 64, desc: EndPosOf(Name("symbol")) },
@@ -904,7 +904,7 @@ IDENT("STRING")
 LBRACE_CODE_RBRACE(
   (
     " Image(image, loc=($startpos, $endpos)) ",
-    7634,
+    7644,
     [
       { start: 19, end: 28, desc: StartPos },
       { start: 30, end: 37, desc: EndPos },
@@ -922,7 +922,7 @@ COLON
 IDENT("term")
 EQ
 IDENT("term")
-LBRACE_CODE_RBRACE((" @list.cons(term, @list.empty()) ", 7746, []))
+LBRACE_CODE_RBRACE((" @list.cons(term, @list.List([])) ", 7756, []))
 BAR
 IDENT("term")
 EQ
@@ -931,7 +931,7 @@ STRING("\",\"")
 IDENT("term_list")
 EQ
 IDENT("nonempty_comma_term_list")
-LBRACE_CODE_RBRACE((" @list.cons(term, term_list) ", 7835, []))
+LBRACE_CODE_RBRACE((" @list.cons(term, term_list) ", 7846, []))
 SEMI
 IDENT("nonempty_symbol_with_loc_list")
 ARROW
@@ -943,7 +943,7 @@ COLON
 IDENT("symbol")
 EQ
 IDENT("symbol_with_loc")
-LBRACE_CODE_RBRACE((" @list.cons(symbol, @list.empty()) ", 7963, []))
+LBRACE_CODE_RBRACE((" @list.cons(symbol, @list.List([])) ", 7974, []))
 BAR
 IDENT("symbol")
 EQ
@@ -951,7 +951,7 @@ IDENT("symbol_with_loc")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_symbol_with_loc_list")
-LBRACE_CODE_RBRACE((" @list.cons(symbol, symbol_list) ", 8070, []))
+LBRACE_CODE_RBRACE((" @list.cons(symbol, symbol_list) ", 8082, []))
 SEMI
 IDENT("nonempty_prec_symbol_list")
 ARROW
@@ -963,7 +963,7 @@ COLON
 IDENT("symbol")
 EQ
 IDENT("prec_symbol")
-LBRACE_CODE_RBRACE((" @list.cons(symbol, @list.empty()) ", 8191, []))
+LBRACE_CODE_RBRACE((" @list.cons(symbol, @list.List([])) ", 8203, []))
 BAR
 IDENT("symbol")
 EQ
@@ -971,7 +971,7 @@ IDENT("prec_symbol")
 IDENT("symbol_list")
 EQ
 IDENT("nonempty_prec_symbol_list")
-LBRACE_CODE_RBRACE((" @list.cons(symbol, symbol_list) ", 8290, []))
+LBRACE_CODE_RBRACE((" @list.cons(symbol, symbol_list) ", 8303, []))
 SEMI
 IDENT("prec_symbol")
 ARROW
@@ -980,12 +980,12 @@ COLON
 IDENT("symbol")
 EQ
 IDENT("symbol")
-LBRACE_CODE_RBRACE((" Symbol(symbol) ", 8380, []))
+LBRACE_CODE_RBRACE((" Symbol(symbol) ", 8393, []))
 BAR
 IDENT("image")
 EQ
 IDENT("STRING")
-LBRACE_CODE_RBRACE((" Image(image) ", 8416, []))
+LBRACE_CODE_RBRACE((" Image(image) ", 8429, []))
 SEMI
 IDENT("symbol_with_loc")
 ARROW
@@ -997,7 +997,7 @@ IDENT("symbol")
 LBRACE_CODE_RBRACE(
   (
     " { symbol, loc: ($startpos, $endpos) } ",
-    8494,
+    8507,
     [
       { start: 17, end: 26, desc: StartPos },
       { start: 28, end: 35, desc: EndPos },
@@ -1012,6 +1012,6 @@ COLON
 IDENT("ident")
 EQ
 IDENT("IDENT")
-LBRACE_CODE_RBRACE((" ident ", 8579, []))
+LBRACE_CODE_RBRACE((" ident ", 8592, []))
 SEMI
 EOF

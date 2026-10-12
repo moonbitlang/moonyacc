@@ -92,7 +92,7 @@ fn argument_doc(argument : Argument) -> Doc {
 }
 
 ///|
-fn pattern_doc(pattern : Pattern, nested? : Bool = false) -> Doc {
+fn pattern_doc(pattern : Pattern, nested~ : Bool = false) -> Doc {
   match pattern {
     Any => text("_")
     Bind(name) => text(name)
@@ -177,7 +177,7 @@ fn accessor(field : Accessor) -> String {
 }
 
 ///|
-fn expr_doc(expr : Expr, minimum? : Int = 0) -> Doc {
+fn expr_doc(expr : Expr, minimum~ : Int = 0) -> Doc {
   let (doc, precedence) : (Doc, Int) = match expr {
     Ident(name) => (text(name), 140)
     Int(value) =>

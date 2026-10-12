@@ -1,6 +1,6 @@
 ///|
 /// Render source and mappings in one pass. Offsets in Output are UTF-16 units.
-pub fn render(items : Array[Item], width? : Int = 80) -> Output {
+pub fn render(items : Array[Item], width~ : Int = 80) -> Output {
   let buffer = StringBuilder()
   let output = @logger_with_cursor.new(buffer)
   let source_map = @codegen.SourceMap::new()
@@ -15,7 +15,7 @@ pub fn emit(
   items : Array[Item],
   output : @logger_with_cursor.LoggerWithCursor,
   source_map_builder? : &@codegen.SourceMapBuilder,
-  width? : Int = 80,
+  width~ : Int = 80,
 ) -> Unit {
   guard! width > 0
   for i, item in items {

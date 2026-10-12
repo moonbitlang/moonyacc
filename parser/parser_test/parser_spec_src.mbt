@@ -54,7 +54,7 @@ let _embed_parser_mbty : String =
   #|
   #|decl_list -> @list.List[@ast.Declaration]
   #|  : decl=decl decl_list=decl_list { @list.cons(decl, decl_list) }
-  #|  | { @list.empty() }
+  #|  | { @list.List([]) }
   #|  ;
   #|
   #|decl -> @ast.Declaration
@@ -74,7 +74,7 @@ let _embed_parser_mbty : String =
   #|  ;
   #|
   #|rule_list -> @list.List[@ast.Rule]
-  #|  : rule=rule { @list.cons(rule, @list.empty()) }
+  #|  : rule=rule { @list.cons(rule, @list.List([])) }
   #|  | rule=rule rule_list=rule_list { @list.cons(rule, rule_list) }
   #|  ;
   #|
@@ -104,8 +104,8 @@ let _embed_parser_mbty : String =
   #|  ;
   #|
   #|nonempty_rule_param_list -> @list.List[(String, @ast.TypeExpr?)]
-  #|  : IDENT { @list.cons(($1, None), @list.empty()) }
-  #|  | IDENT ":" type_expr { @list.cons(($1, Some($3)), @list.empty()) }
+  #|  : IDENT { @list.cons(($1, None), @list.List([])) }
+  #|  | IDENT ":" type_expr { @list.cons(($1, Some($3)), @list.List([])) }
   #|  | IDENT "," nonempty_rule_param_list { @list.cons(($1, None), $3) }
   #|  | IDENT ":" type_expr "," nonempty_rule_param_list { @list.cons(($1, Some($3)), $5) }
   #|  ;
@@ -116,7 +116,7 @@ let _embed_parser_mbty : String =
   #|  ;
   #|
   #|nonempty_comma_ident_list -> @list.List[String]
-  #|  : IDENT { @list.cons($1, @list.empty()) }
+  #|  : IDENT { @list.cons($1, @list.List([])) }
   #|  | IDENT "," nonempty_comma_ident_list { @list.cons($1, $3) }
   #|  ;
   #|
@@ -143,7 +143,7 @@ let _embed_parser_mbty : String =
   #|  ;
   #|
   #|nonempty_type_expr_list -> @list.List[@ast.TypeExpr]
-  #|  : type_expr=type_expr { @list.cons(type_expr, @list.empty()) }
+  #|  : type_expr=type_expr { @list.cons(type_expr, @list.List([])) }
   #|  | type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.cons(type_expr, type_expr_list) }
   #|  ;
   #|
@@ -153,8 +153,8 @@ let _embed_parser_mbty : String =
   #|  ;
   #|
   #|nonempty_clause_list -> @list.List[(@list.List[@ast.ClauseWithoutAction], @ast.ClauseAction)]
-  #|  : clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, @list.empty()), action), @list.empty()) }
-  #|  | clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, @list.empty()), action), clause_list) }
+  #|  : clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, @list.List([])), action), @list.List([])) }
+  #|  | clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, @list.List([])), action), clause_list) }
   #|  | clause_woa=nonempty_clause_without_action "|" clause_list=nonempty_clause_list {
   #|    guard! clause_list is More((clause_woa_list, action), tail=tail_clause_list)
   #|    @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)
@@ -187,7 +187,7 @@ let _embed_parser_mbty : String =
   #|  ;
   #|
   #|nonempty_item_list -> @list.List[@ast.ClauseItem]
-  #|  : item=item { @list.cons(item, @list.empty()) }
+  #|  : item=item { @list.cons(item, @list.List([])) }
   #|  | item=item item_list=nonempty_item_list { @list.cons(item, item_list) }
   #|  ;
   #|
@@ -203,17 +203,17 @@ let _embed_parser_mbty : String =
   #|  ;
   #|
   #|nonempty_comma_term_list -> @list.List[@ast.Term]
-  #|  : term=term { @list.cons(term, @list.empty()) }
+  #|  : term=term { @list.cons(term, @list.List([])) }
   #|  | term=term "," term_list=nonempty_comma_term_list { @list.cons(term, term_list) }
   #|  ;
   #|
   #|nonempty_symbol_with_loc_list -> @list.List[@ast.SymbolWithLoc]
-  #|  : symbol=symbol_with_loc { @list.cons(symbol, @list.empty()) }
+  #|  : symbol=symbol_with_loc { @list.cons(symbol, @list.List([])) }
   #|  | symbol=symbol_with_loc symbol_list=nonempty_symbol_with_loc_list { @list.cons(symbol, symbol_list) }
   #|  ;
   #|
   #|nonempty_prec_symbol_list -> @list.List[@ast.PrecSymbol]
-  #|  : symbol=prec_symbol { @list.cons(symbol, @list.empty()) }
+  #|  : symbol=prec_symbol { @list.cons(symbol, @list.List([])) }
   #|  | symbol=prec_symbol symbol_list=nonempty_prec_symbol_list { @list.cons(symbol, symbol_list) }
   #|  ;
   #|

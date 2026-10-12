@@ -127,12 +127,12 @@ fn yy_action_0(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 
 ///|
 // file:///./stdlib.mbty
-// 45|    X list(X) { $2.add($1) }
+// 45|    X list(X) { $2.prepend($1) }
 fn yy_action_1(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   guard! _args[1].0 is YYObj__list_List_Char_(_dollar2)
   guard! _args[0].0 is YYObj_Char(_dollar1)
   YYObj__list_List_Char_(
-    ({();  _dollar2.add(_dollar1) 
+    ({();  _dollar2.prepend(_dollar1) 
     })
   )
 }
@@ -162,20 +162,20 @@ fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 
 ///|
 // file:///./stdlib.mbty
-// 44|    { @list.empty() }
+// 44|    { @list.List([]) }
 fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj__list_List_Char_(
-    ({();  @list.empty() 
+    ({();  @list.List([]) 
     })
   )
 }
 
 ///|
 // file:///./stdlib.mbty
-// 14|    { @list.empty() }
+// 14|    { @list.List([]) }
 fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj__list_List_Char_(
-    ({();  @list.empty() 
+    ({();  @list.List([]) 
     })
   )
 }
@@ -274,7 +274,7 @@ fn[T] yy_parse(
   return_ : ((YYObj) -> T), initial_pos? : Unit
 ) -> T raise ParseError {
   let mut cursor = 0
-  let mut state_stack : @list.List[YYState] = @list.cons(start, @list.empty())
+  let mut state_stack : @list.List[YYState] = @list.List([start])
   let data_stack : Array[(YYObj, Unit, Unit)] = []
   let mut last_pos = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut state = start
