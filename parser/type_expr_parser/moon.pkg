@@ -3,6 +3,8 @@ import {
   "moonbitlang/core/list",
 }
 
+warnings = "-20"
+
 formatter(ignore: [ "parser.mbt" ])
 
 rule(

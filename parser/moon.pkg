@@ -4,6 +4,8 @@ import {
   "moonbitlang/core/string",
 }
 
+warnings = "-20"
+
 formatter(ignore: [ "parser.mbt" ])
 
 rule(
