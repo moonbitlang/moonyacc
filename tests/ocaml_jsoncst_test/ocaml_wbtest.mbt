@@ -9,7 +9,7 @@ test (it : @test.Test) {
 ///|
 test "OCaml lexer preserves longest-match rule priority" {
   let lexer = new_lexer("&& <- :: [%% [@@@ ;; let do Foo 123")
-  let tokens : Array[(TokenKind, Int, Int)] = []
+  let tokens : Array[(TokenKind, Int32, Int32)] = []
   while true {
     let (token, start, end) = lexer.next_token()
     tokens.push((token.kind(), start, end))

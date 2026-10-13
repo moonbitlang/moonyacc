@@ -15,7 +15,7 @@
 ///|
 pub(all) struct LR1Item {
   production : @grm.Production
-  dot : Int
+  dot : Int32
   lookahead : Lookahead
 } derive(Eq, Compare)
 

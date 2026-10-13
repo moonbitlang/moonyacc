@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-fn clear_nth_set_bit(x : Int, n : Int) -> Int {
+fn clear_nth_set_bit(x : Int32, n : Int32) -> Int32 {
   let mut count = 0
   let mut temp = x
   while temp != 0 {

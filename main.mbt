@@ -21,14 +21,14 @@ async fn println_to_stderr(msg : String) -> Unit noraise {
 
 ///|
 #cfg(target="wasm")
-fn runtime_exit(code : Int) -> Unit = "wasi_snapshot_preview1" "proc_exit"
+fn runtime_exit(code : Int32) -> Unit = "wasi_snapshot_preview1" "proc_exit"
 
 ///|
 #cfg(target="native")
-extern "c" fn runtime_exit(code : Int) -> Unit = "exit"
+extern "c" fn runtime_exit(code : Int32) -> Unit = "exit"
 
 ///|
-fn[T] exit(code : Int) -> T {
+fn[T] exit(code : Int32) -> T {
   runtime_exit(code)
   panic()
 }

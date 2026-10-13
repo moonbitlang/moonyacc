@@ -13,12 +13,12 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-pub(all) struct EncodedLR0Item(Int) derive(Eq, Compare, Hash)
+pub(all) struct EncodedLR0Item(Int32) derive(Eq, Compare, Hash)
 
 ///|
 pub fn EncodedLR0Item::new(
   production : @grm.Production,
-  dot : Int,
+  dot : Int32,
 ) -> EncodedLR0Item {
   (production.num << 10) | dot
 }

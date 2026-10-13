@@ -15,11 +15,11 @@
 ///|
 pub(all) struct LR0Item {
   production : @grm.Production
-  dot : Int
+  dot : Int32
 } derive(Eq, Compare, Hash)
 
 ///|
-pub fn LR0Item::new(production : @grm.Production, dot : Int) -> LR0Item {
+pub fn LR0Item::new(production : @grm.Production, dot : Int32) -> LR0Item {
   { production, dot, }
 }
 

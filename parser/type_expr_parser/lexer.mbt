@@ -14,7 +14,7 @@
 
 ///|
 pub suberror LexError {
-  Unrecognized(Char, Int)
+  Unrecognized(Char, Int32)
 } derive(Debug)
 
 ///|
@@ -30,7 +30,7 @@ fn new_lexer(input : String) -> Lexer {
 }
 
 ///|
-fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
+fn Lexer::next_token(self : Lexer) -> (Token, Int32, Int32) raise LexError {
   for input = self.rest {
     let start = input.start_offset() - self.base.start_offset()
     lexmatch input with longest {

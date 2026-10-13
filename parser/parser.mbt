@@ -441,10 +441,10 @@ fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 }
 
 // file:///./parser.mbty
-// 73|    rule=rule { @list.cons(rule, @list.empty()) }
+// 73|    rule=rule { @list.cons(rule, List([])) }
 fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Rule(rule)
-  YYObj__list_List__ast_Rule_({();  @list.cons(rule, @list.empty()) })
+  YYObj__list_List__ast_Rule_({();  @list.cons(rule, List([])) })
 }
 
 // file:///./parser.mbty
@@ -517,22 +517,22 @@ fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 153|    clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, @list.empty()), action), clause_list) }
+// 153|    clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, List([])), action), clause_list) }
 fn yy_action_14(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   let _sub_action_0_result = yy_action_15(_last_pos, _args[0:1])
   guard! _sub_action_0_result is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
   guard! _args[3].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(clause_list)
-  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__({();  @list.cons((@list.cons(clause_woa, @list.empty()), action), clause_list) })
+  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__({();  @list.cons((@list.cons(clause_woa, List([])), action), clause_list) })
 }
 
 // file:///./parser.mbty
-// 152|    clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, @list.empty()), action), @list.empty()) }
+// 152|    clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, List([])), action), List([])) }
 fn yy_action_16(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   let _sub_action_0_result = yy_action_15(_last_pos, _args[0:1])
   guard! _sub_action_0_result is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
-  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__({();  @list.cons((@list.cons(clause_woa, @list.empty()), action), @list.empty()) })
+  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__({();  @list.cons((@list.cons(clause_woa, List([])), action), List([])) })
 }
 
 // file:///./parser.mbty
@@ -543,22 +543,22 @@ fn yy_action_15(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 153|    clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, @list.empty()), action), clause_list) }
+// 153|    clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, List([])), action), clause_list) }
 fn yy_action_17(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   let _sub_action_0_result = yy_action_18(_last_pos, _args[0:1])
   guard! _sub_action_0_result is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
   guard! _args[3].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(clause_list)
-  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__({();  @list.cons((@list.cons(clause_woa, @list.empty()), action), clause_list) })
+  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__({();  @list.cons((@list.cons(clause_woa, List([])), action), clause_list) })
 }
 
 // file:///./parser.mbty
-// 152|    clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, @list.empty()), action), @list.empty()) }
+// 152|    clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, List([])), action), List([])) }
 fn yy_action_19(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   let _sub_action_0_result = yy_action_18(_last_pos, _args[0:1])
   guard! _sub_action_0_result is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
-  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__({();  @list.cons((@list.cons(clause_woa, @list.empty()), action), @list.empty()) })
+  YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__({();  @list.cons((@list.cons(clause_woa, List([])), action), List([])) })
 }
 
 // file:///./parser.mbty
@@ -632,10 +632,10 @@ fn yy_action_25(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 186|    item=item { @list.cons(item, @list.empty()) }
+// 186|    item=item { @list.cons(item, List([])) }
 fn yy_action_26(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj__ast_ClauseItem(item)
-  YYObj__list_List__ast_ClauseItem_({();  @list.cons(item, @list.empty()) })
+  YYObj__list_List__ast_ClauseItem_({();  @list.cons(item, List([])) })
 }
 
 // file:///./parser.mbty
@@ -672,10 +672,10 @@ fn yy_action_30(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 202|    term=term { @list.cons(term, @list.empty()) }
+// 202|    term=term { @list.cons(term, List([])) }
 fn yy_action_31(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Term(term)
-  YYObj__list_List__ast_Term_({();  @list.cons(term, @list.empty()) })
+  YYObj__list_List__ast_Term_({();  @list.cons(term, List([])) })
 }
 
 // file:///./parser.mbty
@@ -712,11 +712,11 @@ fn yy_action_35(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 104|    IDENT ":" type_expr { @list.cons(($1, Some($3)), @list.empty()) }
+// 104|    IDENT ":" type_expr { @list.cons(($1, Some($3)), List([])) }
 fn yy_action_36(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   guard! _args[2].0 is YYObj__ast_TypeExpr(_dollar3)
-  YYObj__list_List__String___ast_TypeExpr___({();  @list.cons((_dollar1, Some(_dollar3)), @list.empty()) })
+  YYObj__list_List__String___ast_TypeExpr___({();  @list.cons((_dollar1, Some(_dollar3)), List([])) })
 }
 
 // file:///./parser.mbty
@@ -728,10 +728,10 @@ fn yy_action_37(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 103|    IDENT { @list.cons(($1, None), @list.empty()) }
+// 103|    IDENT { @list.cons(($1, None), List([])) }
 fn yy_action_38(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
-  YYObj__list_List__String___ast_TypeExpr___({();  @list.cons((_dollar1, None), @list.empty()) })
+  YYObj__list_List__String___ast_TypeExpr___({();  @list.cons((_dollar1, None), List([])) })
 }
 
 // file:///./parser.mbty
@@ -841,10 +841,10 @@ fn yy_action_52(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 142|    type_expr=type_expr { @list.cons(type_expr, @list.empty()) }
+// 142|    type_expr=type_expr { @list.cons(type_expr, List([])) }
 fn yy_action_53(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj__ast_TypeExpr(type_expr)
-  YYObj__list_List__ast_TypeExpr_({();  @list.cons(type_expr, @list.empty()) })
+  YYObj__list_List__ast_TypeExpr_({();  @list.cons(type_expr, List([])) })
 }
 
 // file:///./parser.mbty
@@ -870,10 +870,10 @@ fn yy_action_56(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 115|    IDENT { @list.cons($1, @list.empty()) }
+// 115|    IDENT { @list.cons($1, List([])) }
 fn yy_action_57(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
-  YYObj__list_List_String_({();  @list.cons(_dollar1, @list.empty()) })
+  YYObj__list_List_String_({();  @list.cons(_dollar1, List([])) })
 }
 
 // file:///./parser.mbty
@@ -967,10 +967,10 @@ fn yy_action_69(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 207|    symbol=symbol_with_loc { @list.cons(symbol, @list.empty()) }
+// 207|    symbol=symbol_with_loc { @list.cons(symbol, List([])) }
 fn yy_action_70(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj__ast_SymbolWithLoc(symbol)
-  YYObj__list_List__ast_SymbolWithLoc_({();  @list.cons(symbol, @list.empty()) })
+  YYObj__list_List__ast_SymbolWithLoc_({();  @list.cons(symbol, List([])) })
 }
 
 // file:///./parser.mbty
@@ -1019,10 +1019,10 @@ fn yy_action_76(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 212|    symbol=prec_symbol { @list.cons(symbol, @list.empty()) }
+// 212|    symbol=prec_symbol { @list.cons(symbol, List([])) }
 fn yy_action_77(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj__ast_PrecSymbol(symbol)
-  YYObj__list_List__ast_PrecSymbol_({();  @list.cons(symbol, @list.empty()) })
+  YYObj__list_List__ast_PrecSymbol_({();  @list.cons(symbol, List([])) })
 }
 
 // file:///./parser.mbty
@@ -1055,9 +1055,9 @@ fn yy_action_81(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 53|    { @list.empty() }
+// 53|    { List([]) }
 fn yy_action_82(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  YYObj__list_List__ast_Declaration_({();  @list.empty() })
+  YYObj__list_List__ast_Declaration_({();  List([]) })
 }
 
 fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (YYSymbol, YYObj) {

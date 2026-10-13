@@ -16,7 +16,7 @@
 /// Always sorted
 pub(all) struct EncodedLR0ItemSet {
   items : Array[EncodedLR0Item]
-  mut hash : Int?
+  mut hash : Int32?
 }
 
 ///|
@@ -67,6 +67,6 @@ pub fn EncodedLR0ItemSet::from_sorted_array(
 pub fn EncodedLR0ItemSet::decode_iter(
   self : EncodedLR0ItemSet,
   grammar : @grm.Grammar,
-) -> Iter[(Int, LR0Item)] {
+) -> Iter[(Int32, LR0Item)] {
   self.items.iter().mapi((index, item) => (index, item.decode(grammar)))
 }

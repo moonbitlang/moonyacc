@@ -41,7 +41,7 @@ fn dot_call(
 }
 
 ///|
-fn component(value : @mbt_ast.Expr, index : Int) -> @mbt_ast.Expr {
+fn component(value : @mbt_ast.Expr, index : Int32) -> @mbt_ast.Expr {
   Field(value, Tuple(index))
 }
 

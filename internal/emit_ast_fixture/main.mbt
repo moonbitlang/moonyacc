@@ -349,7 +349,7 @@ fn main {
       "user_code",
       int,
       Verbatim(
-        @mbt_ast.Fragment([
+        Fragment([
           Text("let x = 2\r\nx * ", None),
           Splice(Binary(Add, Int(20), Int(1)), None),
           Text(" // keep this comment", None),

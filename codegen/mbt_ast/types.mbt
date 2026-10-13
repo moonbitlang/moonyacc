@@ -3,8 +3,8 @@
 /// converts the completed file's source map to Unicode scalar offsets.
 pub(all) struct Origin {
   source : String
-  offset : Int
-  length : Int
+  offset : Int32
+  length : Int32
 }
 
 ///|
@@ -64,7 +64,7 @@ pub(all) enum UnaryOp {
 ///|
 pub(all) enum Accessor {
   Named(String)
-  Tuple(Int)
+  Tuple(Int32)
 }
 
 ///|
@@ -85,7 +85,7 @@ pub(all) enum Parameter {
 pub(all) enum Pattern {
   Any
   Bind(String)
-  Int(Int)
+  Int(Int32)
   Bool(Bool)
   String(String)
   Tuple(Array[Pattern])
@@ -93,13 +93,13 @@ pub(all) enum Pattern {
   Or(Array[Pattern])
   As(Pattern, String)
   Rest
-  Range(Int, Int?, Bool)
+  Range(Int32, Int32?, Bool)
 }
 
 ///|
 pub(all) enum Expr {
   Ident(String)
-  Int(Int)
+  Int(Int32)
   Bool(Bool)
   String(String)
   Char(Char)
@@ -216,9 +216,9 @@ pub(all) struct Item {
 ///|
 pub fn item(
   declaration : Declaration,
-  visibility? : Visibility = Default,
-  attributes? : Array[Attribute] = [],
-  comments? : Array[String] = [],
+  visibility~ : Visibility = Default,
+  attributes~ : Array[Attribute] = [],
+  comments~ : Array[String] = [],
 ) -> Item {
   { declaration, visibility, attributes, comments, }
 }
@@ -229,8 +229,8 @@ pub fn function(
   parameters : Array[Parameter],
   body : Block,
   result? : @elab.TypeExpr,
-  effect? : Effect = Default,
-  type_parameters? : Array[TypeParameter] = [],
+  effect~ : Effect = Default,
+  type_parameters~ : Array[TypeParameter] = [],
 ) -> Function {
   { name, parameters, body, result, effect, type_parameters, }
 }

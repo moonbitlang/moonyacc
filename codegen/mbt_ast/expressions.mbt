@@ -92,7 +92,7 @@ fn argument_doc(argument : Argument) -> Doc {
 }
 
 ///|
-fn pattern_doc(pattern : Pattern, nested? : Bool = false) -> Doc {
+fn pattern_doc(pattern : Pattern, nested~ : Bool = false) -> Doc {
   match pattern {
     Any => text("_")
     Bind(name) => text(name)
@@ -142,7 +142,7 @@ fn pattern_doc(pattern : Pattern, nested? : Bool = false) -> Doc {
 
 ///|
 /// Binding powers follow MoonBit's operator classes. && and || associate right.
-fn binary_info(op : BinaryOp) -> (String, Int, Bool) {
+fn binary_info(op : BinaryOp) -> (String, Int32, Bool) {
   match op {
     Or => ("||", 10, true)
     And => ("&&", 20, true)
@@ -177,8 +177,8 @@ fn accessor(field : Accessor) -> String {
 }
 
 ///|
-fn expr_doc(expr : Expr, minimum? : Int = 0) -> Doc {
-  let (doc, precedence) : (Doc, Int) = match expr {
+fn expr_doc(expr : Expr, minimum~ : Int32 = 0) -> Doc {
+  let (doc, precedence) : (Doc, Int32) = match expr {
     Ident(name) => (text(name), 140)
     Int(value) =>
       (text(Show::to_string(value)), if value < 0 { 120 } else { 140 })

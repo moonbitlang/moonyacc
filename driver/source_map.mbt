@@ -1,7 +1,7 @@
 ///|
 /// Index completed surrogate pairs once, so converting each offset does not
 /// rescan the entire prefix. Offsets are at Unicode character boundaries.
-fn scalar_offset_converter(content : String) -> (Int) -> Int {
+fn scalar_offset_converter(content : String) -> (Int32) -> Int32 {
   let surrogate_ends = []
   let mut utf16_offset = 0
   for char in content {

@@ -1,5 +1,5 @@
 ///|
-fn offset_to_line_column(content : String, offset : Int) -> (Int, Int) {
+fn offset_to_line_column(content : String, offset : Int32) -> (Int32, Int32) {
   let mut line = 1
   let mut column = 1
   let mut i = 0

@@ -1,5 +1,5 @@
 ///|
-fn parse_tokens(tokens : Array[Token]) -> Int raise ParseError {
+fn parse_tokens(tokens : Array[Token]) -> Int32 raise ParseError {
   start(tokens.mapi((index, token) => (token, index, index + 1)), initial_pos=0)
 }
 

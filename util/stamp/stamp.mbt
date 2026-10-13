@@ -13,13 +13,13 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct Stamp(Int) derive(Eq, Hash)
+struct Stamp(Int32) derive(Eq, Hash)
 
 ///|
 pub type T = Stamp
 
 ///|
-let next_stamp : Ref[Int] = { val: 0, }
+let next_stamp : Ref[Int32] = { val: 0, }
 
 ///|
 let initial_stamp : Stamp = new()
@@ -37,6 +37,6 @@ pub fn new() -> Stamp {
 }
 
 ///|
-pub fn unsafe_from_int(stamp : Int) -> Stamp {
+pub fn unsafe_from_int(stamp : Int32) -> Stamp {
   stamp
 }

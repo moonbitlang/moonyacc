@@ -61,9 +61,9 @@ let all_keywords : Map[String, Token] = {
 fn Lexer::emit(
   self : Lexer,
   token : Token,
-  start : Int,
+  start : Int32,
   rest : StringView,
-) -> (Token, Int, Int) {
+) -> (Token, Int32, Int32) {
   self.rest = rest
   (token, start, rest.start_offset() - self.base.start_offset())
 }
@@ -75,7 +75,7 @@ pub fn new_lexer(input : String) -> Lexer {
 }
 
 ///|
-pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) {
+pub fn Lexer::next_token(self : Lexer) -> (Token, Int32, Int32) {
   for input = self.rest {
     let start = input.start_offset() - self.base.start_offset()
     lexmatch input with longest {

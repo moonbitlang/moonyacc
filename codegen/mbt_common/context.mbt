@@ -12,7 +12,7 @@ pub struct Context {
   priv mode : @codegen.Mode
   priv input_mode : @codegen.InputMode
   priv actions : @hashmap2.T[@stamp.Stamp, @elab.Action]
-  priv get_action_id : (@elab.Action) -> Int
+  priv get_action_id : (@elab.Action) -> Int32
   priv mut needs_symbol_start : Bool
 }
 
@@ -63,7 +63,7 @@ pub fn Context::new(
 }
 
 ///|
-pub fn Context::action_id(self : Context, action : @elab.Action) -> Int {
+pub fn Context::action_id(self : Context, action : @elab.Action) -> Int32 {
   (self.get_action_id)(action)
 }
 

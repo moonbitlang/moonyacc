@@ -1,5 +1,5 @@
 ///|
-fn mapped_offset(map : @codegen.SourceMap, offset : Int) -> Int raise {
+fn mapped_offset(map : @codegen.SourceMap, offset : Int32) -> Int32 raise {
   for mapping in map.mappings {
     if offset >= mapping.generated_offset &&
       offset <= mapping.generated_offset + mapping.length {

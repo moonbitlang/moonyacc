@@ -35,7 +35,7 @@ fn CodegenSymbol::nonterminal(nont : @grm.Nonterminal) -> CodegenSymbol {
 }
 
 ///|
-fn CodegenSymbol::encode(self : CodegenSymbol, grammar : @grm.Grammar) -> Int {
+fn CodegenSymbol::encode(self : CodegenSymbol, grammar : @grm.Grammar) -> Int32 {
   match self {
     EOI => 0
     T(t) => 1 + t.num
@@ -57,8 +57,8 @@ fn codegen_tokens(
   terminals : Array[@grm.Terminal],
   terminal_meta : (String) -> @codegen.TerminalMeta,
   output : &Logger,
-  no_comments? : Bool = false,
-  derive_map? : @array_multimap.T[String, String] = @array_multimap.new(),
+  no_comments~ : Bool = false,
+  derive_map~ : @array_multimap.T[String, String] = @array_multimap.new(),
 ) -> Unit {
   ignore(no_comments)
   @mbt_ast.emit(
@@ -124,13 +124,13 @@ fn decompressor() -> @mbt_ast.Item {
 
 ///|
 fn decoder(
-  symbol_count : Int,
-  state_count : Int,
-  production_count : Int,
+  symbol_count : Int32,
+  state_count : Int32,
+  production_count : Int32,
 ) -> @mbt_ast.Item {
   let reduce_base = 2 + state_count
   let default_base = reduce_base + production_count
-  fn reduction(name : String, base : Int) -> @mbt_ast.Block {
+  fn reduction(name : String, base : Int32) -> @mbt_ast.Block {
     let index : @mbt_ast.Expr = Binary(Subtract, Ident("encoded"), Int(base))
     @mbt_common.value_block(
       @mbt_common.call(name, [
@@ -201,11 +201,11 @@ fn codegen(
   output : @logger_with_cursor.LoggerWithCursor,
   source_map_builder? : &@codegen.SourceMapBuilder,
   grammar_filename~ : String,
-  external_tokens? : Bool = false,
-  no_comments? : Bool = false,
-  mode? : @codegen.Mode = Default,
-  input_mode? : @codegen.InputMode = Array,
-  compress? : Bool = false,
+  external_tokens~ : Bool = false,
+  no_comments~ : Bool = false,
+  mode~ : @codegen.Mode = Default,
+  input_mode~ : @codegen.InputMode = Array,
+  compress~ : Bool = false,
 ) -> Unit {
   ignore(no_comments)
   let context = @mbt_common.Context::new(
@@ -229,11 +229,11 @@ fn codegen(
     }
   }
   let used_productions = used_productions.to_array()
-  fn get_used_production_num(prod : @grm.Production) -> Int {
+  fn get_used_production_num(prod : @grm.Production) -> Int32 {
     used_productions.search(prod).unwrap()
   }
 
-  fn encode_decision(decision : CodegenDecision) -> Int {
+  fn encode_decision(decision : CodegenDecision) -> Int32 {
     match decision {
       Error => 0
       Accept => 1
@@ -371,7 +371,7 @@ fn codegen(
   }
 
   // Assume input elements are unsigned
-  fn compress_array(input : Array[Int]) -> Array[Int] {
+  fn compress_array(input : Array[Int32]) -> Array[Int32] {
     if input.length() == 0 {
       return []
     }

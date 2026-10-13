@@ -1,7 +1,7 @@
 ///|
 pub suberror LexError {
   UnexpectedEndOfFile
-  Unrecognized(Char, Int)
+  Unrecognized(Char, Int32)
 }
 
 ///|
@@ -11,11 +11,11 @@ struct Lexer {
   // 0 %%
   // %% 1
   // %% %% 2
-  mut phase : Int
+  mut phase : Int32
 }
 
 ///|
-fn source_offset(base : StringView, view : StringView) -> Int {
+fn source_offset(base : StringView, view : StringView) -> Int32 {
   view.start_offset() - base.start_offset()
 }
 
@@ -88,7 +88,7 @@ fn Lexer::scan_percent_code(
 fn Lexer::scan_action_code(
   self : Lexer,
   input : StringView,
-  code_base : Int,
+  code_base : Int32,
 ) -> (StringView, String, Array[@ast.SubstItem]) raise LexError {
   let buf = StringBuilder()
   let subst : Array[@ast.SubstItem] = []
@@ -190,7 +190,7 @@ pub fn new_lexer(input : String) -> Lexer {
 }
 
 ///|
-pub fn Lexer::next_token(self : Lexer) -> (Token, Int, Int) raise LexError {
+pub fn Lexer::next_token(self : Lexer) -> (Token, Int32, Int32) raise LexError {
   for input = self.rest {
     let start = source_offset(self.base, input)
     lexmatch input with longest {

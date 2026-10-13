@@ -1,7 +1,7 @@
 ///|
 /// Adapt existing elaborated source pieces without losing their provenance.
 pub fn fragment(
-  parts : ArrayView[(String, (Int, Int)?)],
+  parts : ArrayView[(String, (Int32, Int32)?)],
   source~ : String,
 ) -> Fragment {
   Fragment(
@@ -44,8 +44,8 @@ fn fragment_doc(fragment : Fragment) -> Doc {
 fn record_origin(
   builder : &@codegen.SourceMapBuilder,
   origin : Origin,
-  generated : Int,
-  length : Int,
+  generated : Int32,
+  length : Int32,
 ) -> Unit {
   guard! origin.offset >= 0 && origin.length >= 0
   if length == origin.length {

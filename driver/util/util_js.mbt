@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-extern "js" fn ffi_exit(code : Int) -> Unit =
+extern "js" fn ffi_exit(code : Int32) -> Unit =
   #|(code) => { process.exit(code); }
 
 ///|
@@ -21,7 +21,7 @@ pub extern "js" fn println_to_stderr(msg : String) -> Unit =
   #|(msg) => { console.error("%s", msg); }
 
 ///|
-pub fn[T] exit(code : Int) -> T {
+pub fn[T] exit(code : Int32) -> T {
   ffi_exit(code)
   panic()
 }

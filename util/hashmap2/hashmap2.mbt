@@ -16,28 +16,28 @@
 struct T[K, V] {
   mut bucket : FixedArray[Entry[K, V]?]
   mut entry : Entry[K, V]?
-  mut bitmask : Int
-  mut size : Int
+  mut bitmask : Int32
+  mut size : Int32
 }
 
 ///|
 priv struct Entry[K, V] {
   mut value : V
-  mut psl : Int
+  mut psl : Int32
   key : K
-  hash : Int
+  hash : Int32
   prev : Entry[K, V]?
 }
 
 ///|
 /// Capacity must be a power of 2.
-pub fn[K, V] new(capacity~ : Int) -> T[K, V] {
+pub fn[K, V] new(capacity~ : Int32) -> T[K, V] {
   let bucket = FixedArray::make(capacity, None)
   { bucket, entry: None, bitmask: capacity - 1, size: 0, }
 }
 
 ///|
-pub fn[K, V] T::size(self : T[K, V]) -> Int {
+pub fn[K, V] T::size(self : T[K, V]) -> Int32 {
   self.size
 }
 
@@ -114,7 +114,7 @@ pub fn[K : Hash + Eq, V] T::contains(self : T[K, V], key : K) -> Bool {
 fn[K : Eq, V] T::get_entry_with_hash(
   self : T[K, V],
   key : K,
-  hash : Int,
+  hash : Int32,
 ) -> Entry[K, V]? {
   let bucket = self.bucket
   let bitmask = self.bitmask
@@ -197,8 +197,8 @@ fn[K, V] T::grow(self : T[K, V]) -> Unit {
 ///|
 fn[K, V] T::put_entry(
   self : T[K, V],
-  index : Int,
-  bitmask : Int,
+  index : Int32,
+  bitmask : Int32,
   entry : Entry[K, V],
 ) -> Unit {
   let bucket = self.bucket

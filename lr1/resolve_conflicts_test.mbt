@@ -21,7 +21,7 @@ test "nonassoc resolves equal precedence by rejecting the lookahead" {
 
 ///|
 test "nonassoc leaves different precedence and left/right associativity intact" {
-  let cases : Array[(@grm.Associativity, Int, String)] = [
+  let cases : Array[(@grm.Associativity, Int32, String)] = [
     (NonAssoc, 0, "shift"),
     (NonAssoc, 2, "reduce"),
     (LeftAssoc, 1, "reduce"),

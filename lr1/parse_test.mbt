@@ -22,7 +22,7 @@ struct InputProvider {
 
 ///|
 struct ProductionActionProvider {
-  get_action : (Int) -> (ArrayView[Obj]) -> Obj
+  get_action : (Int32) -> (ArrayView[Obj]) -> Obj
 }
 
 ///|
@@ -80,7 +80,7 @@ pub fn parse(
 
 ///|
 suberror ObjNumber {
-  ObjNumber(Int)
+  ObjNumber(Int32)
 }
 
 ///|
@@ -90,7 +90,7 @@ suberror ObjUnit {
 
 ///|
 fn make_action_provider(
-  actions : Map[Int, (ArrayView[Obj]) -> Obj],
+  actions : Map[Int32, (ArrayView[Obj]) -> Obj],
 ) -> ProductionActionProvider {
   { get_action: fn(num) { actions.get(num).unwrap() }, }
 }
@@ -116,7 +116,7 @@ fn make_input_provider(
 
 ///|
 test "parse" {
-  let actions : Map[Int, (ArrayView[Obj]) -> Obj] = Map([])
+  let actions : Map[Int32, (ArrayView[Obj]) -> Obj] = Map([])
   let grammar = @grm.build(fn(ctx) {
     let prod1 = ctx.add_production("Start", ["Add"])
     actions[prod1] = fn(args) {

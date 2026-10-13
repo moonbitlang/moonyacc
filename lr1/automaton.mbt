@@ -57,7 +57,7 @@ pub(all) enum Decision {
 
 ///|
 priv struct LR0Node {
-  num : Int
+  num : Int32
   closure_items : EncodedLR0ItemSet
   closure_symbolic_lookahead_set : Array[EncodedSymbolicLookaheadSet]
 }
@@ -77,7 +77,7 @@ priv struct LR1PreState {
 pub(all) struct LR1State {
   // Used for decoding the LR1ItemSet
   grammar : @grm.Grammar
-  mut num : Int
+  mut num : Int32
   items : EncodedLR1ItemSet
   goto : @sorted_map.SortedMap[@grm.Symbol, LR1State]
   action : @sorted_map.SortedMap[Lookahead, Decision]
@@ -120,7 +120,7 @@ pub fn LR1State::set_action(
     Some(decision0) =>
       if decision0 != decision {
         self.action[input] = Conflict(
-          @list.cons(decision, @list.cons(decision0, @list.empty())),
+          @list.cons(decision, @list.cons(decision0, List([]))),
         )
       }
     None => self.action[input] = decision

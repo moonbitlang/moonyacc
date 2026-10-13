@@ -11,14 +11,14 @@ pub fn SourceMap::new() -> SourceMap {
 ///|
 pub(all) struct SourceMapping {
   source : String
-  original_offset : Int
-  generated_offset : Int
-  length : Int
+  original_offset : Int32
+  generated_offset : Int32
+  length : Int32
 } derive(ToJson)
 
 ///|
 pub trait SourceMapBuilder {
-  fn add_mapping(Self, String, Int, Int, Int) -> Unit
+  fn add_mapping(Self, String, Int32, Int32, Int32) -> Unit
 }
 
 ///|
