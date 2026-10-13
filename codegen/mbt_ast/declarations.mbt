@@ -41,12 +41,16 @@ fn item_doc(item : Item) -> Doc {
   let prefix = visibility(item.visibility)
   let attrs = item.attributes.map(a => {
     cat([
-      text("#" + a.name),
-      if a.arguments.is_empty() {
-        text("")
-      } else {
-        delimited("(", ")", a.arguments.map(argument_doc))
-      },
+      single_line(
+        cat([
+          text("#" + a.name),
+          if a.arguments.is_empty() {
+            text("")
+          } else {
+            delimited("(", ")", a.arguments.map(argument_doc))
+          },
+        ]),
+      ),
       HardLine,
     ])
   })
