@@ -13,13 +13,13 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct SmallIntSet(Array[Int]) derive(Eq, Compare, Debug)
+struct SmallIntSet(Array[Int32]) derive(Eq, Compare, Debug)
 
 ///|
 pub type T = SmallIntSet
 
 ///|
-let _empty : Array[Int] = [0]
+let _empty : Array[Int32] = [0]
 
 ///|
 pub fn empty() -> SmallIntSet {
@@ -27,7 +27,7 @@ pub fn empty() -> SmallIntSet {
 }
 
 ///|
-pub fn singleton(key : Int) -> SmallIntSet {
+pub fn singleton(key : Int32) -> SmallIntSet {
   let word_index = key >> 5
   let result = Array::make(2, 0)
   result[0] = 1 << word_index
@@ -41,7 +41,7 @@ pub fn SmallIntSet::is_empty(self : SmallIntSet) -> Bool {
 }
 
 ///|
-pub fn SmallIntSet::is_singleton(self : SmallIntSet, key : Int) -> Bool {
+pub fn SmallIntSet::is_singleton(self : SmallIntSet, key : Int32) -> Bool {
   self.0.length() == 2 &&
   self.0[0] == 1 << (key >> 5) &&
   self.0[1] == 1 << (key & 31)
@@ -98,7 +98,7 @@ pub impl Show for SmallIntSet with fn output(self, logger) {
 //   })
 // }
 
-pub fn SmallIntSet::iter(self : SmallIntSet) -> Iter[Int] {
+pub fn SmallIntSet::iter(self : SmallIntSet) -> Iter[Int32] {
   let mut i = 0
   let mut bitmask = self.0[0]
   // handle empty input
@@ -143,7 +143,7 @@ pub fn SmallIntSet::iter(self : SmallIntSet) -> Iter[Int] {
 //   result
 // }
 
-pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
+pub fn from_iter(iter : Iter[Int32]) -> SmallIntSet {
   let data = iter.collect()
   let mut bitmask = 0
   for key in data {
@@ -161,7 +161,7 @@ pub fn from_iter(iter : Iter[Int]) -> SmallIntSet {
 }
 
 ///|
-pub fn SmallIntSet::contains(self : SmallIntSet, key : Int) -> Bool {
+pub fn SmallIntSet::contains(self : SmallIntSet, key : Int32) -> Bool {
   let word_index = key >> 5
   let bitmask = self.0[0]
   if (bitmask & (1 << word_index)) == 0 {
@@ -172,7 +172,7 @@ pub fn SmallIntSet::contains(self : SmallIntSet, key : Int) -> Bool {
 }
 
 ///|
-pub fn SmallIntSet::add(self : SmallIntSet, key : Int) -> SmallIntSet {
+pub fn SmallIntSet::add(self : SmallIntSet, key : Int32) -> SmallIntSet {
   let word_index = key >> 5
   let bitmask0 = self.0[0]
   let bitmask = bitmask0 | (1 << word_index)
@@ -195,7 +195,7 @@ pub fn SmallIntSet::add(self : SmallIntSet, key : Int) -> SmallIntSet {
 }
 
 ///|
-pub fn SmallIntSet::remove(self : SmallIntSet, key : Int) -> SmallIntSet {
+pub fn SmallIntSet::remove(self : SmallIntSet, key : Int32) -> SmallIntSet {
   let word_index = key >> 5
   let bitmask = self.0[0]
   if (bitmask & (1 << word_index)) == 0 {

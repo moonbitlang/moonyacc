@@ -46,7 +46,7 @@ impl AbstractLookaheadSet for EncodedSymbolicLookaheadSet with fn singleton(
 
 ///|
 fn EncodedSymbolicLookaheadSet::variable(
-  var_ : Int,
+  var_ : Int32,
 ) -> EncodedSymbolicLookaheadSet {
   {
     concrete_set: EncodedLookaheadSet::empty(),

@@ -13,7 +13,7 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-fn offset_to_line_column(content : String, offset : Int) -> (Int, Int) {
+fn offset_to_line_column(content : String, offset : Int32) -> (Int32, Int32) {
   let mut line = 1
   let mut column = 1
   let mut i = 0
@@ -60,7 +60,7 @@ fn array_to_or_list(arr : ArrayView[String]) -> String {
 fn loc_to_string(
   filename : String,
   content : String,
-  loc : (Int, Int),
+  loc : (Int32, Int32),
 ) -> String {
   let (start_line, start_column) = offset_to_line_column(content, loc.0)
   let (end_line, end_column) = offset_to_line_column(content, loc.1)
@@ -72,7 +72,7 @@ fn loc_to_string(
 }
 
 ///|
-fn pos_to_string(filename : String, content : String, pos : Int) -> String {
+fn pos_to_string(filename : String, content : String, pos : Int32) -> String {
   let (line, column) = offset_to_line_column(content, pos)
   "\{filename}:\{line}:\{column}0"
 }

@@ -23,7 +23,7 @@ pub type Code = String
 
 ///|
 pub(all) enum SubstItemDesc {
-  Dollar(Int)
+  Dollar(Int32)
   StartPos
   EndPos
   Loc
@@ -36,14 +36,14 @@ pub(all) enum SubstItemDesc {
 
 ///|
 pub(all) enum ClauseItemIdent {
-  Dollar(Int)
+  Dollar(Int32)
   Name(Code)
 } derive(Eq, Compare, Debug, ToJson(style="legacy"))
 
 ///|
 pub(all) struct SubstItem {
-  start : Int
-  end : Int
+  start : Int32
+  end : Int32
   desc : SubstItemDesc
 } derive(Debug, ToJson)
 
@@ -63,8 +63,8 @@ pub type TypeString = String
 
 ///|
 pub(all) enum Declaration {
-  Header(Code, Int, Int) // (code, utf8_pos, utf8_len)
-  Trailer(Code, Int, Int) // (code, utf8_pos, utf8_len)
+  Header(Code, Int32, Int32) // (code, utf8_pos, utf8_len)
+  Trailer(Code, Int32, Int32) // (code, utf8_pos, utf8_len)
   Start(Array[SymbolWithLoc], type_~ : TypeString?)
   Token(Array[SymbolWithLoc], type_~ : TypeString?)
   Token1(SymbolWithLoc, type_~ : TypeString?, image~ : String)
@@ -79,7 +79,7 @@ pub(all) enum Declaration {
 ///|
 pub(all) struct SymbolWithLoc {
   symbol : Symbol
-  loc : (Int, Int) // (utf8_pos, utf8_pos)
+  loc : (Int32, Int32) // (utf8_pos, utf8_pos)
 } derive(ToJson)
 
 ///|
@@ -96,19 +96,19 @@ pub(all) struct Rule {
 pub(all) struct ClauseWithoutAction {
   items : Array[ClauseItem]
   prec : PrecSymbol?
-  loc : (Int, Int) // (utf8_pos, utf8_len)
+  loc : (Int32, Int32) // (utf8_pos, utf8_len)
 } derive(ToJson)
 
 ///|
 pub(all) struct ClauseAction {
   code : CodeWithSubst?
-  loc : (Int, Int) // (utf8_pos, utf8_len)
+  loc : (Int32, Int32) // (utf8_pos, utf8_len)
 } derive(ToJson)
 
 ///|
 pub(all) struct CodeWithSubst {
   code : Code
-  utf8_pos : Int
+  utf8_pos : Int32
   subst : Array[SubstItem]
 } derive(ToJson)
 
@@ -120,9 +120,9 @@ pub(all) struct ClauseItem {
 
 ///|
 pub(all) enum Term {
-  Symbol(Symbol, loc~ : (Int, Int))
-  Image(String, loc~ : (Int, Int))
-  RuleCall(Symbol, symbol_loc~ : (Int, Int), Array[Term])
+  Symbol(Symbol, loc~ : (Int32, Int32))
+  Image(String, loc~ : (Int32, Int32))
+  RuleCall(Symbol, symbol_loc~ : (Int32, Int32), Array[Term])
 } derive(ToJson(style="legacy"))
 
 ///|

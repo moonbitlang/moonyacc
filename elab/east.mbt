@@ -78,7 +78,7 @@ pub(all) struct ParserSpec {
 ///|
 pub(all) struct Token {
   name : String
-  mut prec : (Int, Associativity)?
+  mut prec : (Int32, Associativity)?
   mut type_ : TypeExpr
   mut image : String?
 }
@@ -99,14 +99,14 @@ pub(all) struct Rule {
 ///|
 pub(all) struct Clause {
   items : Array[Item]
-  prec : Int?
+  prec : Int32?
   action : Action
 }
 
 // (code, (UTF-16 offset, UTF-16 length)?)
 
 ///|
-pub type CodeChunk = (String, (Int, Int)?)
+pub type CodeChunk = (String, (Int32, Int32)?)
 
 ///|
 /// Resolved names stay stable when inlining changes their binding subjects.
@@ -118,8 +118,8 @@ pub(all) enum ActionReference {
 ///|
 /// User text and substitution origins use UTF-16 code-unit offsets.
 pub(all) enum ActionPiece {
-  Text(String, offset~ : Int)
-  Reference(ActionReference, offset~ : Int, length~ : Int)
+  Text(String, offset~ : Int32)
+  Reference(ActionReference, offset~ : Int32, length~ : Int32)
 }
 
 ///|
@@ -127,13 +127,13 @@ pub(all) enum ActionPiece {
 pub(all) enum ActionBody {
   Default
   User(Array[ActionPiece])
-  JsonCst(name~ : String, rule_index~ : Int, clause_index~ : Int)
+  JsonCst(name~ : String, rule_index~ : Int32, clause_index~ : Int32)
 }
 
 ///|
 pub(all) struct Action {
   stamp : @stamp.Stamp
-  arity : Int
+  arity : Int32
   type_ : TypeExpr
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, Code)]
@@ -144,27 +144,27 @@ pub(all) struct Action {
 ///|
 pub(all) struct OriginalClauseInfo {
   file : String
-  line : Int
-  column : Int
+  line : Int32
+  column : Int32
   code : String
 }
 
 ///|
 pub(all) struct SubAction {
-  start : Int
-  end : Int
+  start : Int32
+  end : Int32
   action : Action
 }
 
 ///|
 pub(all) enum BindingSubject {
-  Data(Int, type_~ : TypeExpr)
-  StartPosOf(Int)
-  EndPosOf(Int)
+  Data(Int32, type_~ : TypeExpr)
+  StartPosOf(Int32)
+  EndPosOf(Int32)
   StartPos
   EndPos
   SymbolStartPos
-  SubAction(index~ : Int, type_~ : TypeExpr)
+  SubAction(index~ : Int32, type_~ : TypeExpr)
 }
 
 ///|

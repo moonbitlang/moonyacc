@@ -1,17 +1,17 @@
 ///|
 struct LoggerWithCursor {
   logger : &Logger
-  mut cursor : Int
+  mut cursor : Int32
 }
 
 ///|
-pub fn new(logger : &Logger, cursor? : Int = 0) -> LoggerWithCursor {
+pub fn new(logger : &Logger, cursor~ : Int32 = 0) -> LoggerWithCursor {
   { logger, cursor, }
 }
 
 ///|
 /// Return the output offset in UTF-16 code units.
-pub fn LoggerWithCursor::cursor(self : LoggerWithCursor) -> Int {
+pub fn LoggerWithCursor::cursor(self : LoggerWithCursor) -> Int32 {
   self.cursor
 }
 

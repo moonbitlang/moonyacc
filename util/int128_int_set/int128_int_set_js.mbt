@@ -15,10 +15,10 @@
 ///|
 #alias(T)
 struct Int128IntSet {
-  a : Int
-  b : Int
-  c : Int
-  d : Int
+  a : Int32
+  b : Int32
+  c : Int32
+  d : Int32
 } derive(Eq, Compare, Hash)
 
 ///|
@@ -27,7 +27,7 @@ pub fn empty() -> Int128IntSet {
 }
 
 ///|
-pub fn Int128IntSet::is_singleton(self : Int128IntSet, key : Int) -> Bool {
+pub fn Int128IntSet::is_singleton(self : Int128IntSet, key : Int32) -> Bool {
   if key < 64 {
     if key < 32 {
       self.a == 1 << key && self.b == 0 && self.c == 0 && self.d == 0
@@ -111,7 +111,7 @@ pub impl Show for Int128IntSet with fn output(self, logger) {
 //   })
 // }
 
-pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
+pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int32] {
   let mut bitmask = self.a
   let mut offset = 0
   let int128intset_rest = [(self.d, 96), (self.c, 64), (self.b, 32)]
@@ -131,7 +131,7 @@ pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
 }
 
 ///|
-pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
+pub fn from_iter(iter : Iter[Int32]) -> Int128IntSet {
   let mut a = 0
   let mut b = 0
   let mut c = 0
@@ -153,7 +153,7 @@ pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
 }
 
 ///|
-pub fn singleton(key : Int) -> Int128IntSet {
+pub fn singleton(key : Int32) -> Int128IntSet {
   if key < 64 {
     if key < 32 {
       { a: 1 << key, b: 0, c: 0, d: 0, }
@@ -173,7 +173,7 @@ pub fn Int128IntSet::is_empty(self : Int128IntSet) -> Bool {
 }
 
 ///|
-pub fn Int128IntSet::contains(self : Int128IntSet, key : Int) -> Bool {
+pub fn Int128IntSet::contains(self : Int128IntSet, key : Int32) -> Bool {
   if key < 64 {
     if key < 32 {
       (self.a & (1 << key)) != 0
@@ -188,7 +188,7 @@ pub fn Int128IntSet::contains(self : Int128IntSet, key : Int) -> Bool {
 }
 
 ///|
-pub fn Int128IntSet::add(self : Int128IntSet, key : Int) -> Int128IntSet {
+pub fn Int128IntSet::add(self : Int128IntSet, key : Int32) -> Int128IntSet {
   if key < 64 {
     if key < 32 {
       { a: self.a | (1 << key), b: self.b, c: self.c, d: self.d, }
@@ -203,7 +203,7 @@ pub fn Int128IntSet::add(self : Int128IntSet, key : Int) -> Int128IntSet {
 }
 
 ///|
-pub fn Int128IntSet::remove(self : Int128IntSet, key : Int) -> Int128IntSet {
+pub fn Int128IntSet::remove(self : Int128IntSet, key : Int32) -> Int128IntSet {
   if key < 64 {
     if key < 32 {
       { a: self.a & (1 << key).lnot(), b: self.b, c: self.c, d: self.d, }

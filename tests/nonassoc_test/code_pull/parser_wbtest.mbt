@@ -2,7 +2,7 @@
 test "nonassoc stops the token reader at the second operator" {
   let tokens = [NUMBER(1), EQ, NUMBER(2), EQ, NUMBER(3)]
   let mut cursor = 0
-  fn read_token() -> (Token, Int, Int) {
+  fn read_token() -> (Token, Int32, Int32) {
     guard cursor < tokens.length() else { (EOF, cursor, cursor) }
     let token = tokens[cursor]
     cursor += 1

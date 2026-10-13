@@ -41,9 +41,9 @@ pub(all) enum Associativity {
 
 ///|
 pub(all) struct Terminal {
-  mut num : Int
+  mut num : Int32
   name : String
-  mut prec : (Int, Associativity)?
+  mut prec : (Int32, Associativity)?
 }
 
 ///|
@@ -53,7 +53,7 @@ pub impl Eq for Terminal with fn equal(self, other) {
 
 ///|
 pub impl Compare for Terminal with fn compare(self, other) {
-  Int::compare(self.num, other.num)
+  Int32::compare(self.num, other.num)
 }
 
 ///|
@@ -75,7 +75,7 @@ pub(all) enum Nullability {
 
 ///|
 pub(all) struct Nonterminal {
-  mut num : Int
+  mut num : Int32
   name : String
   productions : Array[Production]
 }
@@ -87,7 +87,7 @@ pub impl Eq for Nonterminal with fn equal(self, other) {
 
 ///|
 pub impl Compare for Nonterminal with fn compare(self, other) {
-  Int::compare(self.num, other.num)
+  Int32::compare(self.num, other.num)
 }
 
 ///|
@@ -116,10 +116,10 @@ pub impl Show for Symbol with fn output(self, logger) -> Unit {
 
 ///|
 pub(all) struct Production {
-  mut num : Int
+  mut num : Int32
   lhs : Nonterminal
   rhs : Array[Symbol]
-  mut prec : Int?
+  mut prec : Int32?
 }
 
 ///|
@@ -129,7 +129,7 @@ pub impl Eq for Production with fn equal(self, other) {
 
 ///|
 pub impl Compare for Production with fn compare(self, other) {
-  Int::compare(self.num, other.num)
+  Int32::compare(self.num, other.num)
 }
 
 ///|
@@ -141,7 +141,7 @@ pub impl Hash for Production with fn hash_combine(self, hasher) {
 pub fn[Logger : Logger] Production::output_with_opt_dot(
   self : Production,
   logger : Logger,
-  dot? : Int,
+  dot? : Int32,
 ) -> Unit {
   (logger : &Logger).write_object(self.lhs)
   Logger::write_string(logger, " →")

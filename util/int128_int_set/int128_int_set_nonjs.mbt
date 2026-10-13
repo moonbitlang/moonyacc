@@ -27,7 +27,7 @@ pub fn empty() -> Int128IntSet {
 }
 
 ///|
-pub fn Int128IntSet::is_singleton(self : Int128IntSet, key : Int) -> Bool {
+pub fn Int128IntSet::is_singleton(self : Int128IntSet, key : Int32) -> Bool {
   if key < 64 {
     self.a == 1L << key && self.b == 0
   } else {
@@ -81,7 +81,7 @@ pub impl Show for Int128IntSet with fn output(self, logger) {
 //   })
 // }
 
-pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
+pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int32] {
   let mut bitmask = self.a
   let mut has_rest = true
   let mut offset = 0
@@ -105,7 +105,7 @@ pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int] {
 }
 
 ///|
-pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
+pub fn from_iter(iter : Iter[Int32]) -> Int128IntSet {
   let mut a = 0L
   let mut b = 0L
   for key in iter {
@@ -119,7 +119,7 @@ pub fn from_iter(iter : Iter[Int]) -> Int128IntSet {
 }
 
 ///|
-pub fn singleton(key : Int) -> Int128IntSet {
+pub fn singleton(key : Int32) -> Int128IntSet {
   if key < 64 {
     { a: 1L << key, b: 0, }
   } else {
@@ -133,7 +133,7 @@ pub fn Int128IntSet::is_empty(self : Int128IntSet) -> Bool {
 }
 
 ///|
-pub fn Int128IntSet::contains(self : Int128IntSet, key : Int) -> Bool {
+pub fn Int128IntSet::contains(self : Int128IntSet, key : Int32) -> Bool {
   if key < 64 {
     (self.a & (1L << key)) != 0
   } else {
@@ -142,7 +142,7 @@ pub fn Int128IntSet::contains(self : Int128IntSet, key : Int) -> Bool {
 }
 
 ///|
-pub fn Int128IntSet::add(self : Int128IntSet, key : Int) -> Int128IntSet {
+pub fn Int128IntSet::add(self : Int128IntSet, key : Int32) -> Int128IntSet {
   if key < 64 {
     { a: self.a | (1L << key), b: self.b, }
   } else {
@@ -151,7 +151,7 @@ pub fn Int128IntSet::add(self : Int128IntSet, key : Int) -> Int128IntSet {
 }
 
 ///|
-pub fn Int128IntSet::remove(self : Int128IntSet, key : Int) -> Int128IntSet {
+pub fn Int128IntSet::remove(self : Int128IntSet, key : Int32) -> Int128IntSet {
   if key < 64 {
     { a: self.a & (1L << key).lnot(), b: self.b, }
   } else {

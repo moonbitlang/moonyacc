@@ -75,14 +75,14 @@ pub fn print(
 ///|
 pub fn compile(
   parser_spec_str : String,
-  mode? : Mode = Default,
-  input_mode? : InputMode = Array,
+  mode~ : Mode = Default,
+  input_mode~ : InputMode = Array,
   filename~ : String,
-  external_tokens? : Bool = false,
-  no_comments? : Bool = false,
-  no_std? : Bool = false,
-  token_payload_rewrite? : TokenPayloadRewrite = NoRewrite,
-  force_int_position? : Bool = false,
+  external_tokens~ : Bool = false,
+  no_comments~ : Bool = false,
+  no_std~ : Bool = false,
+  token_payload_rewrite~ : TokenPayloadRewrite = NoRewrite,
+  force_int_position~ : Bool = false,
   source_map_builder? : &@codegen.SourceMapBuilder,
   generator~ : &@codegen.CodeGenerator,
 ) -> String {
@@ -189,9 +189,9 @@ pub fn compile(
     nonterminal_by_name.get(name).unwrap()
   }
 
-  let production_meta_map : Map[Int, @codegen.ProductionMeta] = Map([])
-  let terminal_meta_map : Map[Int, @codegen.TerminalMeta] = Map([])
-  let nonterminal_meta_map : Map[Int, @codegen.NonTerminalMeta] = Map([])
+  let production_meta_map : Map[Int32, @codegen.ProductionMeta] = Map([])
+  let terminal_meta_map : Map[Int32, @codegen.TerminalMeta] = Map([])
+  let nonterminal_meta_map : Map[Int32, @codegen.NonTerminalMeta] = Map([])
   let productions = []
   let starts : Array[String] = spec.start_rules
   let position_data_type = spec.position_type

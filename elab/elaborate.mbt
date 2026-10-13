@@ -14,9 +14,9 @@
 
 ///|
 pub suberror ElabError {
-  UnresolvedSymbol(String, loc~ : (Int, Int))
+  UnresolvedSymbol(String, loc~ : (Int32, Int32))
   FailedToParseTypeExpr(String)
-  OutOfBoundsAccess(Int, loc~ : (Int, Int))
+  OutOfBoundsAccess(Int32, loc~ : (Int32, Int32))
 }
 
 ///|
@@ -401,22 +401,22 @@ fn elaborate_action(
   ast_action : @ast.ClauseAction,
   parser_spec_str~ : String,
   filename~ : String,
-  rule_index~ : Int,
-  clause_index~ : Int,
+  rule_index~ : Int32,
+  clause_index~ : Int32,
   ast_clause~ : (@ast.ClauseWithoutAction, @ast.ClauseAction),
   nonterminal_name~ : String,
   type_~ : TypeExpr,
   json_cst~ : JsonCst,
 ) -> Action raise ElabError {
   let arity = items.length()
-  let name_to_index : Map[String, Int] = Map([])
+  let name_to_index : Map[String, Int32] = Map([])
   for index, item in items {
     match item.binder {
       None => ()
       Some(name) => name_to_index[name] = index
     }
   }
-  fn item_ident_to_index(ident : @ast.ClauseItemIdent) -> Int {
+  fn item_ident_to_index(ident : @ast.ClauseItemIdent) -> Int32 {
     match ident {
       Dollar(index) => index - 1
       Name(name) => name_to_index.get(name).unwrap()
@@ -425,7 +425,10 @@ fn elaborate_action(
 
   let bindings : Array[(BindingSubject, Code)] = []
   let visited = @sorted_set.SortedSet([])
-  fn add_binding(desc : @ast.SubstItemDesc, loc : (Int, Int)) raise ElabError {
+  fn add_binding(
+    desc : @ast.SubstItemDesc,
+    loc : (Int32, Int32),
+  ) raise ElabError {
     guard !visited.contains(desc) else { return }
     visited.add(desc)
     match desc {

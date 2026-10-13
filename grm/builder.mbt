@@ -17,8 +17,8 @@ pub type BuilderSymbol = String
 
 ///|
 pub struct BuilderContext {
-  priv _set_prec : (BuilderSymbol, Associativity, Int) -> Unit
-  priv _add_production : (BuilderSymbol, Array[BuilderSymbol]) -> Int
+  priv _set_prec : (BuilderSymbol, Associativity, Int32) -> Unit
+  priv _add_production : (BuilderSymbol, Array[BuilderSymbol]) -> Int32
   priv _set_start : (BuilderSymbol) -> Unit
 }
 
@@ -27,7 +27,7 @@ pub fn BuilderContext::set_prec(
   self : BuilderContext,
   term : BuilderSymbol,
   assoc : Associativity,
-  level : Int,
+  level : Int32,
 ) -> Unit {
   (self._set_prec)(term, assoc, level)
 }
@@ -37,7 +37,7 @@ pub fn BuilderContext::add_production(
   self : BuilderContext,
   lhs : BuilderSymbol,
   rhs : Array[BuilderSymbol],
-) -> Int {
+) -> Int32 {
   (self._add_production)(lhs, rhs)
 }
 

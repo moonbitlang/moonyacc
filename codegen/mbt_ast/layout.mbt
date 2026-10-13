@@ -59,7 +59,7 @@ fn delimited(left : String, right : String, parts : Array[Doc]) -> Doc {
 }
 
 ///|
-fn fits(doc : Doc, remaining : Int) -> Bool {
+fn fits(doc : Doc, remaining : Int32) -> Bool {
   let pending = [doc]
   let mut remaining = remaining
   while pending.pop() is Some(doc) {
@@ -86,8 +86,8 @@ fn fits(doc : Doc, remaining : Int) -> Bool {
 
 ///|
 priv enum WriteStep {
-  Write(Int, Bool, Bool, Doc)
-  EndOrigin(Origin, Int)
+  Write(Int32, Bool, Bool, Doc)
+  EndOrigin(Origin, Int32)
 }
 
 ///|
@@ -95,13 +95,13 @@ fn write_doc(
   doc : Doc,
   output : @logger_with_cursor.LoggerWithCursor,
   source_map_builder : &@codegen.SourceMapBuilder?,
-  width : Int,
+  width : Int32,
 ) -> Bool {
   let pending = [WriteStep::Write(0, false, false, doc)]
   let mut column = 0
   let mut line_start = false
   let mut mapping_open = false
-  fn indentation(indent : Int) {
+  fn indentation(indent : Int32) {
     if line_start {
       Logger::write_string(output, " ".repeat(indent))
       column = indent

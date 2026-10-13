@@ -1,6 +1,9 @@
 ///|
 /// Resolve offsets with the same inclusive range lookup as Moon's renderer.
-fn original_offset(source_map : @codegen.SourceMap, offset : Int) -> Int raise {
+fn original_offset(
+  source_map : @codegen.SourceMap,
+  offset : Int32,
+) -> Int32 raise {
   guard source_map.mappings.binary_search_by(mapping => {
       guard offset >= mapping.generated_offset else { 1 }
       guard offset <= mapping.generated_offset + mapping.length else { -1 }

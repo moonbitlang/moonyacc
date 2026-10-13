@@ -54,7 +54,7 @@ fn eliminate_inline_rules(
       cont_items : @immut/vector.Vector[@elab.Item],
       cont_bindings : @immut/vector.Vector[(@elab.BindingSubject, @elab.Code)],
       cont_subactions : @immut/vector.Vector[@elab.SubAction],
-      index : Int,
+      index : Int32,
     ) {
       if index >= clause.items.length() {
         yield_({

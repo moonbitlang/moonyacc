@@ -31,9 +31,9 @@ fn CodegenSymbol::to_string(self : CodegenSymbol) -> String {
 ///|
 priv enum CodegenDecision {
   Accept
-  Shift(Int)
-  Reduce(Int, @grm.Nonterminal, Int)
-  ReduceNoLookahead(Int, @grm.Nonterminal, Int)
+  Shift(Int32)
+  Reduce(Int32, @grm.Nonterminal, Int32)
+  ReduceNoLookahead(Int32, @grm.Nonterminal, Int32)
 } derive(Eq, Compare)
 
 ///|
@@ -51,8 +51,8 @@ fn codegen_tokens(
   terminals : Array[@grm.Terminal],
   terminal_meta : (String) -> @codegen.TerminalMeta,
   output : &Logger,
-  no_comments? : Bool = false,
-  derive_map? : @array_multimap.T[String, String] = @array_multimap.new(),
+  no_comments~ : Bool = false,
+  derive_map~ : @array_multimap.T[String, String] = @array_multimap.new(),
 ) -> Unit {
   ignore(no_comments)
   @mbt_ast.emit(
@@ -69,10 +69,10 @@ fn codegen(
   output : @logger_with_cursor.LoggerWithCursor,
   source_map_builder? : &@codegen.SourceMapBuilder,
   grammar_filename~ : String,
-  external_tokens? : Bool = false,
-  no_comments? : Bool = false,
-  mode? : @codegen.Mode = Default,
-  input_mode? : @codegen.InputMode = Array,
+  external_tokens~ : Bool = false,
+  no_comments~ : Bool = false,
+  mode~ : @codegen.Mode = Default,
+  input_mode~ : @codegen.InputMode = Array,
 ) -> Unit {
   let context = @mbt_common.Context::new(
     grammar,

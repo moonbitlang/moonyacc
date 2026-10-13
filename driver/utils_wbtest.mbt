@@ -15,9 +15,9 @@
 ///|
 fn assert_offset_line_column(
   content : String,
-  offset : Int,
-  line : Int,
-  column : Int,
+  offset : Int32,
+  line : Int32,
+  column : Int32,
 ) -> Unit raise {
   let (actual_line, actual_column) = offset_to_line_column(content, offset)
   assert_eq(actual_line, line)
