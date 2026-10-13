@@ -46,12 +46,12 @@ let _embed_stdlib_mbty : String =
   #|
   #|list[T](X : T) -> @list.List[T]
   #|  : { List([]) }
-  #|  | X list(X) { $2.add($1) }
+  #|  | X list(X) { $2.prepend($1) }
   #|  ;
   #|
   #|nonempty_list[T](X : T) -> @list.List[T]
   #|  : X { @list.singleton($1) }
-  #|  | X nonempty_list(X) { $2.add($1) }
+  #|  | X nonempty_list(X) { $2.prepend($1) }
   #|  ;
   #|
   #|separated_list[T](SEP, X : T) -> @list.List[T]
@@ -61,7 +61,7 @@ let _embed_stdlib_mbty : String =
   #|
   #|separated_nonempty_list[T](SEP, X : T) -> @list.List[T]
   #|  : X { @list.singleton($1) }
-  #|  | X SEP separated_nonempty_list(SEP, X) { $3.add($1) }
+  #|  | X SEP separated_nonempty_list(SEP, X) { $3.prepend($1) }
   #|  ;
   #|
 
