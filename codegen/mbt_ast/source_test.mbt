@@ -56,6 +56,14 @@ test "source maps follow layout while Unicode source and AST splices stay intact
         ),
       ),
       visibility=Public,
+      attributes=[
+        {
+          name: "deprecated",
+          arguments: [
+            Positional(String("Use another_generated_function instead")),
+          ],
+        },
+      ],
     ),
   ]
   let wide = @mbt_ast.render(items, width=120)

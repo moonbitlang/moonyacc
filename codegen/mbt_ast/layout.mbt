@@ -8,6 +8,7 @@ priv enum Doc {
   Concat(Array[Doc])
   Nest(Doc)
   Group(Doc)
+  SingleLine(Doc)
   Embedded(Array[Doc])
   Mapped(Origin, Doc)
 }
@@ -20,6 +21,28 @@ fn text(value : String) -> Doc {
 ///|
 fn cat(parts : Array[Doc]) -> Doc {
   Concat(parts)
+}
+
+///|
+/// Force optional breaks flat without rewriting source text or hard breaks.
+fn single_line(doc : Doc) -> Doc {
+  let pending = [doc]
+  while pending.pop() is Some(part) {
+    match part {
+      Text(value) | SoftLine(value) => {
+        guard! !value.contains("\n") && !value.contains("\r")
+        ()
+      }
+      HardLine => panic()
+      Concat(parts) | Embedded(parts) =>
+        for part in parts {
+          pending.push(part)
+        }
+      Nest(part) | Group(part) | SingleLine(part) | Mapped(_, part) =>
+        pending.push(part)
+    }
+  }
+  SingleLine(doc)
 }
 
 ///|
@@ -51,8 +74,8 @@ fn delimited(left : String, right : String, parts : Array[Doc]) -> Doc {
       part,
       text(if i + 1 < parts.length() { "," } else { "" }),
     ])
-    // Every delimited list uses the same layout rule. The document's
-    // width and hard line breaks determine whether another entry fits.
+    // Outside single-line contexts, width and hard line breaks determine
+    // whether another entry fits.
     body.push(if i > 0 { Group(entry) } else { entry })
   }
   Group(cat([text(left), Nest(cat(body)), SoftLine(""), text(right)]))
@@ -78,7 +101,8 @@ fn fits(doc : Doc, remaining : Int32) -> Bool {
         for i = parts.length() - 1; i >= 0; i = i - 1 {
           pending.push(parts[i])
         }
-      Nest(doc) | Group(doc) | Mapped(_, doc) => pending.push(doc)
+      Nest(doc) | Group(doc) | SingleLine(doc) | Mapped(_, doc) =>
+        pending.push(doc)
     }
   }
   remaining >= 0
@@ -163,6 +187,7 @@ fn write_doc(
           pending.push(Write(indent, flat, embedded, parts[i]))
         }
       Nest(doc) => pending.push(Write(indent + 2, flat, embedded, doc))
+      SingleLine(doc) => pending.push(Write(indent, true, embedded, doc))
       Group(doc) => {
         let used = if line_start { indent } else { column }
         pending.push(
