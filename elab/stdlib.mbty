@@ -11,7 +11,7 @@ option[T](X : T) -> Option[T]
   ;
 
 loption[T](X : @list.List[T]) -> @list.List[T]
-  : { @list.empty() }
+  : { List([]) }
   | X { $1 }
   ;
 
@@ -41,7 +41,7 @@ boption[T](X : T) -> Bool
   ;
 
 list[T](X : T) -> @list.List[T]
-  : { @list.empty() }
+  : { List([]) }
   | X list(X) { $2.add($1) }
   ;
 
@@ -51,7 +51,7 @@ nonempty_list[T](X : T) -> @list.List[T]
   ;
 
 separated_list[T](SEP, X : T) -> @list.List[T]
-  : { @list.empty() }
+  : { List([]) }
   | separated_nonempty_list(SEP, X) { $1 }
   ;
 

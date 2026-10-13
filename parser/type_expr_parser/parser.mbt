@@ -243,10 +243,10 @@ fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 }
 
 // file:///./parser.mbty
-// 62|    type_expr=type_expr { @list.cons(type_expr, @list.empty()) }
+// 62|    type_expr=type_expr { @list.cons(type_expr, List([])) }
 fn yy_action_14(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj__ast_TypeExpr(type_expr)
-  YYObj__list_List__ast_TypeExpr_({();  @list.cons(type_expr, @list.empty()) })
+  YYObj__list_List__ast_TypeExpr_({();  @list.cons(type_expr, List([])) })
 }
 
 // file:///./parser.mbty

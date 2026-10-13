@@ -162,20 +162,20 @@ fn yy_action_2(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYOb
 
 ///|
 // file:///./stdlib.mbty
-// 44|    { @list.empty() }
+// 44|    { List([]) }
 fn yy_action_4(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj__list_List_Char_(
-    ({();  @list.empty() 
+    ({();  List([])
     })
   )
 }
 
 ///|
 // file:///./stdlib.mbty
-// 14|    { @list.empty() }
+// 14|    { List([]) }
 fn yy_action_5(_last_pos : Unit, _args : ArrayView[(YYObj, Unit, Unit)]) -> YYObj {
   YYObj__list_List_Char_(
-    ({();  @list.empty() 
+    ({();  List([])
     })
   )
 }

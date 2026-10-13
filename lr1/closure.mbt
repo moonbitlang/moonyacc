@@ -54,7 +54,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
         partial_lookahead_set,
         epsilon_transitions: [],
         stamp: @stamp.initial(),
-        predecessors: @list.empty(),
+        predecessors: List([]),
         lookahead_set: LookaheadSet::empty(),
       }
       node_by_item.set(item, node)
@@ -124,7 +124,7 @@ pub fn[LookaheadSet : AbstractLookaheadSet] build_closure_fn(
     let closure = nodes.map(fn(node) { (node.item, node.lookahead_set) })
     // Cleanup the transient states
     for node in nodes {
-      node.predecessors = @list.empty()
+      node.predecessors = List([])
       node.lookahead_set = LookaheadSet::empty()
     }
     closure.sort_by_key(fn(pair) { pair.0 })

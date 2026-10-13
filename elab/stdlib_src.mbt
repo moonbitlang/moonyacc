@@ -15,7 +15,7 @@ let _embed_stdlib_mbty : String =
   #|  ;
   #|
   #|loption[T](X : @list.List[T]) -> @list.List[T]
-  #|  : { @list.empty() }
+  #|  : { List([]) }
   #|  | X { $1 }
   #|  ;
   #|
@@ -45,7 +45,7 @@ let _embed_stdlib_mbty : String =
   #|  ;
   #|
   #|list[T](X : T) -> @list.List[T]
-  #|  : { @list.empty() }
+  #|  : { List([]) }
   #|  | X list(X) { $2.add($1) }
   #|  ;
   #|
@@ -55,7 +55,7 @@ let _embed_stdlib_mbty : String =
   #|  ;
   #|
   #|separated_list[T](SEP, X : T) -> @list.List[T]
-  #|  : { @list.empty() }
+  #|  : { List([]) }
   #|  | separated_nonempty_list(SEP, X) { $1 }
   #|  ;
   #|
