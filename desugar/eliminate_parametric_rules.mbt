@@ -46,11 +46,7 @@ pub fn eliminate_rule_args(
         }
         RuleCall(specialized_rule_name, [], type_)
       }
-      Param(name, _type) =>
-        match env.get(name) {
-          Some(term) => term
-          None => term
-        }
+      Param(name, _type) => env.get(name).unwrap_or(term)
     }
   }
 

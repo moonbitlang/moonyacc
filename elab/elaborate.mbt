@@ -113,12 +113,10 @@ pub fn elaborate(
   let rule_by_name : Map[String, Rule] = Map([])
   let token_by_image : Map[String, Token] = Map([])
   let tokens : Array[Token] = []
-  match stdlib_rules {
-    None => ()
-    Some(stdlib_rules) =>
-      for rule_name, rule in stdlib_rules {
-        rule_by_name[rule_name] = rule
-      }
+  if stdlib_rules is Some(stdlib_rules) {
+    for rule_name, rule in stdlib_rules {
+      rule_by_name[rule_name] = rule
+    }
   }
   fn get_token_by_name(name : String) -> Token {
     match token_by_name.get(name) {
@@ -411,9 +409,8 @@ fn elaborate_action(
   let arity = items.length()
   let name_to_index : Map[String, Int32] = Map([])
   for index, item in items {
-    match item.binder {
-      None => ()
-      Some(name) => name_to_index[name] = index
+    if item.binder is Some(name) {
+      name_to_index[name] = index
     }
   }
   fn item_ident_to_index(ident : @ast.ClauseItemIdent) -> Int32 {
