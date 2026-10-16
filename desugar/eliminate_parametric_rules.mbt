@@ -59,9 +59,7 @@ pub fn eliminate_rule_args(
         })
         {
           ..clause,
-          items: clause.items.map(fn(item) {
-            { ..item, term: map_term(item.term, @immut/sorted_map.new()), }
-          }),
+          items,
           action: {
             ..clause.action,
             stamp: @stamp.new(),
