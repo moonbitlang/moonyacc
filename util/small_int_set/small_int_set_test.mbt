@@ -16,25 +16,25 @@
 test "@small_int_set.add/basic" {
   let empty = @small_int_set.empty()
   let s1 = empty.add(0)
-  inspect(s1.contains(0), content="true")
+  assert_true(s1.contains(0))
   let s2 = s1.add(1)
-  inspect(s2.contains(0), content="true")
-  inspect(s2.contains(1), content="true")
+  assert_true(s2.contains(0))
+  assert_true(s2.contains(1))
 }
 
 ///|
 test "@small_int_set.is_empty" {
   // Test empty set
   let empty = @small_int_set.empty()
-  inspect(empty.is_empty(), content="true")
+  assert_true(empty.is_empty())
 
   // Test non-empty set by adding elements
   let nonempty = empty.add(1)
-  inspect(nonempty.is_empty(), content="false")
+  assert_false(nonempty.is_empty())
 
   // Test set after removing all elements
   let removed = nonempty.remove(1)
-  inspect(removed.is_empty(), content="true")
+  assert_true(removed.is_empty())
 }
 
 ///|
@@ -49,18 +49,18 @@ test "@small_int_set.iter/empty" {
 test "@small_int_set.singleton/boundary" {
   // Test minimum reasonable input
   let set0 = @small_int_set.singleton(0)
-  inspect(set0.contains(0), content="true")
-  inspect(set0.contains(1), content="false")
+  assert_true(set0.contains(0))
+  assert_false(set0.contains(1))
 
   // Test boundary of first word
   let set31 = @small_int_set.singleton(31)
-  inspect(set31.contains(31), content="true")
-  inspect(set31.contains(30), content="false")
+  assert_true(set31.contains(31))
+  assert_false(set31.contains(30))
 
   // Test start of second word
   let set32 = @small_int_set.singleton(32)
-  inspect(set32.contains(32), content="true")
-  inspect(set32.contains(31), content="false")
+  assert_true(set32.contains(32))
+  assert_false(set32.contains(31))
 }
 
 ///|
@@ -95,27 +95,27 @@ test "@small_int_set.iter/multi_word" {
 ///|
 test "@small_int_set.from_iter/basic" {
   let set = @small_int_set.from_iter([1, 2, 3].iter())
-  inspect(set.contains(1), content="true")
-  inspect(set.contains(2), content="true")
-  inspect(set.contains(3), content="true")
-  inspect(set.contains(4), content="false")
+  assert_true(set.contains(1))
+  assert_true(set.contains(2))
+  assert_true(set.contains(3))
+  assert_false(set.contains(4))
 }
 
 ///|
 test "@small_int_set.from_iter/empty" {
   let set = @small_int_set.from_iter(Iter::empty())
-  inspect(set.is_empty(), content="true")
+  assert_true(set.is_empty())
 }
 
 ///|
 test "@small_int_set.from_iter/multi_word" {
   // Test with numbers that span multiple words (32-bit boundaries)
   let set = @small_int_set.from_iter([31, 32, 33, 64].iter())
-  inspect(set.contains(31), content="true")
-  inspect(set.contains(32), content="true")
-  inspect(set.contains(33), content="true")
-  inspect(set.contains(64), content="true")
-  inspect(set.contains(34), content="false")
+  assert_true(set.contains(31))
+  assert_true(set.contains(32))
+  assert_true(set.contains(33))
+  assert_true(set.contains(64))
+  assert_false(set.contains(34))
 }
 
 ///|
@@ -123,9 +123,9 @@ test "@small_int_set.add/word_boundary" {
   let empty = @small_int_set.empty()
   let s1 = empty.add(31)
   let s2 = s1.add(32)
-  inspect(s2.contains(31), content="true")
-  inspect(s2.contains(32), content="true")
-  inspect(s2.contains(33), content="false")
+  assert_true(s2.contains(31))
+  assert_true(s2.contains(32))
+  assert_false(s2.contains(33))
 }
 
 ///|
@@ -133,8 +133,8 @@ test "@small_int_set.add/idempotent" {
   let empty = @small_int_set.empty()
   let s1 = empty.add(5)
   let s2 = s1.add(5)
-  inspect(s1.contains(5), content="true")
-  inspect(s2.contains(5), content="true")
+  assert_true(s1.contains(5))
+  assert_true(s2.contains(5))
 }
 
 ///|
@@ -144,8 +144,8 @@ test "@small_int_set.remove basic" {
   let set1 = set.add(5)
   let set2 = set1.add(10)
   let result = set2.remove(5)
-  inspect(result.contains(5), content="false")
-  inspect(result.contains(10), content="true")
+  assert_false(result.contains(5))
+  assert_true(result.contains(10))
 }
 
 ///|
@@ -169,9 +169,9 @@ test "@small_int_set.remove/non_existent" {
   let set = @small_int_set.empty()
   let set1 = set.add(1)
   let result = set1.remove(42)
-  inspect(result.contains(1), content="true")
+  assert_true(result.contains(1))
   // Test that removing non-existent element doesn't modify the set
-  inspect(set1.contains(1), content="true")
+  assert_true(set1.contains(1))
 }
 
 ///|
@@ -182,9 +182,9 @@ test "@small_int_set.remove/boundary" {
   let set2 = set1.add(32)
   let set3 = set2.add(33)
   let result = set3.remove(32)
-  inspect(result.contains(31), content="true")
-  inspect(result.contains(32), content="false")
-  inspect(result.contains(33), content="true")
+  assert_true(result.contains(31))
+  assert_false(result.contains(32))
+  assert_true(result.contains(33))
 }
 
 ///|
@@ -194,7 +194,7 @@ test "@small_int_set.union/empty_sets" {
 
   // Empty union should contain no elements
   for i = 0; i < 32; i = i + 1 {
-    inspect(result.contains(i), content="false")
+    assert_false(result.contains(i))
   }
 }
 
@@ -203,11 +203,11 @@ test "@small_int_set.union/disjoint_sets" {
   let set1 = @small_int_set.empty() |> y => { y.add(1) } |> y => { y.add(3) }
   let set2 = @small_int_set.empty() |> y => { y.add(2) } |> y => { y.add(4) }
   let union = set1.union(set2)
-  inspect(union.contains(1), content="true")
-  inspect(union.contains(2), content="true")
-  inspect(union.contains(3), content="true")
-  inspect(union.contains(4), content="true")
-  inspect(union.contains(5), content="false")
+  assert_true(union.contains(1))
+  assert_true(union.contains(2))
+  assert_true(union.contains(3))
+  assert_true(union.contains(4))
+  assert_false(union.contains(5))
 }
 
 ///|
@@ -215,10 +215,10 @@ test "@small_int_set.union/overlapping_sets" {
   let set1 = @small_int_set.empty() |> y => { y.add(1) } |> y => { y.add(2) }
   let set2 = @small_int_set.empty() |> y => { y.add(2) } |> y => { y.add(3) }
   let union = set1.union(set2)
-  inspect(union.contains(1), content="true")
-  inspect(union.contains(2), content="true")
-  inspect(union.contains(3), content="true")
-  inspect(union.contains(4), content="false")
+  assert_true(union.contains(1))
+  assert_true(union.contains(2))
+  assert_true(union.contains(3))
+  assert_false(union.contains(4))
 }
 
 ///|
@@ -230,21 +230,21 @@ test "@small_int_set.union" {
   let set2 = @small_int_set.singleton(64)
   let union1 = set1.union(set2)
   // Both elements should be in the union
-  inspect(union1.contains(1), content="true")
-  inspect(union1.contains(64), content="true")
+  assert_true(union1.contains(1))
+  assert_true(union1.contains(64))
 
   // Case 2: Tests when ib > jb
   // Now test with sets in reverse order
   let union2 = set2.union(set1)
   // Should get the same result regardless of order
-  inspect(union2.contains(1), content="true")
-  inspect(union2.contains(64), content="true")
+  assert_true(union2.contains(1))
+  assert_true(union2.contains(64))
 
   // Case 3: Tests when elements are in same word (ib = jb)
   let set3 = @small_int_set.singleton(2)
   let union3 = set1.union(set3)
-  inspect(union3.contains(1), content="true")
-  inspect(union3.contains(2), content="true")
+  assert_true(union3.contains(1))
+  assert_true(union3.contains(2))
 }
 
 ///|
@@ -254,7 +254,7 @@ test "@small_int_set.intersection/empty_sets" {
   // Empty set intersection with empty set should give empty set
   // Test by checking no elements from 0 to 31 exist
   for i = 0; i < 32; i = i + 1 {
-    inspect(result.contains(i), content="false")
+    assert_false(result.contains(i))
   }
 }
 
@@ -272,7 +272,7 @@ test "@small_int_set.intersection/disjoint_sets" {
   // Test that no elements from either set exist in the intersection
   let test_values = [1, 2, 3, 4, 5, 6]
   for i = 0; i < test_values.length(); i = i + 1 {
-    inspect(result.contains(test_values[i]), content="false")
+    assert_false(result.contains(test_values[i]))
   }
 }
 
@@ -287,11 +287,11 @@ test "@small_int_set.intersection/overlapping_sets" {
     |> y => { y.add(4) }
   let result = set1.intersection(set2)
   // Test common elements are present
-  inspect(result.contains(2), content="true")
-  inspect(result.contains(3), content="true")
+  assert_true(result.contains(2))
+  assert_true(result.contains(3))
   // Test non-common elements are absent
-  inspect(result.contains(1), content="false")
-  inspect(result.contains(4), content="false")
+  assert_false(result.contains(1))
+  assert_false(result.contains(4))
 }
 
 ///|
@@ -321,7 +321,7 @@ test "@small_int_set.difference/empty_sets" {
   let result = empty.difference(empty)
   // An empty set minus an empty set should contain no elements
   for i = 0; i < 32; i = i + 1 {
-    inspect(result.contains(i), content="false")
+    assert_false(result.contains(i))
   }
 }
 
@@ -339,11 +339,11 @@ test "@small_int_set.difference/disjoint_sets" {
   let result = set1.difference(set2)
   // The difference should contain all elements from set1
   for i = 0; i < 3; i = i + 1 {
-    inspect(result.contains(i), content="true")
+    assert_true(result.contains(i))
   }
   // And none from set2
   for i = 3; i < 6; i = i + 1 {
-    inspect(result.contains(i), content="false")
+    assert_false(result.contains(i))
   }
 }
 
@@ -360,9 +360,9 @@ test "@small_int_set.difference/overlapping_sets" {
   }
   let result = set1.difference(set2)
   // The difference should only contain 0
-  inspect(result.contains(0), content="true")
+  assert_true(result.contains(0))
   for i = 1; i < 4; i = i + 1 {
-    inspect(result.contains(i), content="false")
+    assert_false(result.contains(i))
   }
 }
 
@@ -390,7 +390,7 @@ test "@small_int_set.difference" {
 test "@small_int_set.disjoint/empty_sets" {
   let empty1 = @small_int_set.empty()
   let empty2 = @small_int_set.empty()
-  inspect(empty1.disjoint(empty2), content="true")
+  assert_true(empty1.disjoint(empty2))
 }
 
 ///|
@@ -402,7 +402,7 @@ test "@small_int_set.disjoint/non_overlapping" {
   let mut set2 = @small_int_set.empty()
   set2 = set2.add(33)
   set2 = set2.add(34)
-  inspect(set1.disjoint(set2), content="true")
+  assert_true(set1.disjoint(set2))
 }
 
 ///|
@@ -413,7 +413,7 @@ test "@small_int_set.disjoint/overlapping" {
   let mut set2 = @small_int_set.empty()
   set2 = set2.add(10)
   set2 = set2.add(15)
-  inspect(set1.disjoint(set2), content="false")
+  assert_false(set1.disjoint(set2))
 }
 
 ///|
@@ -421,17 +421,17 @@ test "@small_int_set.disjoint" {
   // Test case 1: Sets with overlapping elements in the same word
   let set1 = @small_int_set.singleton(1).add(2)
   let set2 = @small_int_set.singleton(2).add(3)
-  inspect(set1.disjoint(set2), content="false")
+  assert_false(set1.disjoint(set2))
 
   // Test case 2: Sets with elements in different words
   let set3 = @small_int_set.singleton(1) // first word
   let set4 = @small_int_set.singleton(33) // second word
-  inspect(set3.disjoint(set4), content="true")
+  assert_true(set3.disjoint(set4))
 
   // Test case 3: Empty sets
   let empty1 = @small_int_set.empty()
   let empty2 = @small_int_set.empty()
-  inspect(empty1.disjoint(empty2), content="true")
+  assert_true(empty1.disjoint(empty2))
 }
 
 ///|
@@ -439,33 +439,32 @@ test "@small_int_set.subset" {
   // Empty set is subset of any set
   let empty = @small_int_set.empty()
   let set1 = @small_int_set.from_iter([1, 2, 3].iter())
-  inspect(empty.subset(set1), content="true")
+  assert_true(empty.subset(set1))
 
   // Set is subset of itself
-  inspect(set1.subset(set1), content="true")
+  assert_true(set1.subset(set1))
 
   // Proper subset testing
   let set2 = @small_int_set.from_iter([1, 2].iter())
-  inspect(set2.subset(set1), content="true")
+  assert_true(set2.subset(set1))
 
   // Not a subset testing
   let set3 = @small_int_set.from_iter([1, 4].iter())
-  inspect(set3.subset(set1), content="false")
+  assert_false(set3.subset(set1))
 
   // Testing with elements across word boundaries (> 32)
   let large_set1 = @small_int_set.from_iter([1, 33, 65].iter())
   let large_set2 = @small_int_set.from_iter([1, 33, 65, 97].iter())
-  inspect(large_set1.subset(large_set2), content="true")
-  inspect(large_set2.subset(large_set1), content="false")
+  assert_true(large_set1.subset(large_set2))
+  assert_false(large_set2.subset(large_set1))
 }
 
 ///|
 test "@small_int_set.subset: bad case" {
-  inspect(
+  assert_false(
     @small_int_set.from_iter([64].iter()).subset(
       @small_int_set.from_iter([21, 48, 58, 61, 81].iter()),
     ),
-    content="false",
   )
 }
 
@@ -473,24 +472,24 @@ test "@small_int_set.subset: bad case" {
 test "@small_int_set.is_singleton" {
   // Test with empty set
   let empty = @small_int_set.empty()
-  inspect(empty.is_singleton(0), content="false")
+  assert_false(empty.is_singleton(0))
 
   // Test with singleton set
   let single = @small_int_set.singleton(42)
-  inspect(single.is_singleton(42), content="true")
-  inspect(single.is_singleton(0), content="false")
+  assert_true(single.is_singleton(42))
+  assert_false(single.is_singleton(0))
 
   // Test with multiple elements
   let multi = @small_int_set.singleton(1).add(2)
-  inspect(multi.is_singleton(1), content="false")
-  inspect(multi.is_singleton(2), content="false")
+  assert_false(multi.is_singleton(1))
+  assert_false(multi.is_singleton(2))
 }
 
 ///|
 test "@small_int_set.is_singleton/boundary" {
   // Test with boundary values for word index and bit position
   let max_word = @small_int_set.singleton(31) // last bit in first word
-  inspect(max_word.is_singleton(31), content="true")
+  assert_true(max_word.is_singleton(31))
   let min_next_word = @small_int_set.singleton(32) // first bit in second word
-  inspect(min_next_word.is_singleton(32), content="true")
+  assert_true(min_next_word.is_singleton(32))
 }
