@@ -171,10 +171,10 @@ fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (
 }
 
 ///|
-let yy_prod_lhs_table : FixedArray[Int] = [6, 7, 7, 7, 7]
+let yy_prod_lhs_table : ReadOnlyArray[Int] = [6, 7, 7, 7, 7]
 
 ///|
-let yy_prod_len_table : FixedArray[Int] = [1, 1, 3, 3, 3]
+let yy_prod_len_table : ReadOnlyArray[Int] = [1, 1, 3, 3, 3]
 
 ///|
 let yy_prod_act_table : FixedArray[YYAction] = [
@@ -182,7 +182,7 @@ let yy_prod_act_table : FixedArray[YYAction] = [
 ]
 
 ///|
-let yy_state_table : FixedArray[Int] = [
+let yy_state_table : ReadOnlyArray[Int] = [
   0, 11, 0, 0, 4, 0, 3, 12, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, 0, 0, 4, 0, 0,
   5, 0, 0, 0, 9, 7, 0, 6, 0, 0, 0, 22, 0, 22, 22, 0, 22, 0, 0, 0, 0, 11, 0, 0,
   4, 0, 0, 8, 0, 16, 0, 0, 0, 0, 16, 0, 0, 0, 0, 11, 0, 0, 4, 0, 0, 10, 0, 15,
