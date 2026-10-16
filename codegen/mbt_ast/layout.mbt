@@ -98,7 +98,7 @@ fn fits(doc : Doc, remaining : Int32) -> Bool {
       }
       HardLine => return false
       Concat(parts) | Embedded(parts) =>
-        for i = parts.length() - 1; i >= 0; i = i - 1 {
+        for i in parts.length()>..0 {
           pending.push(parts[i])
         }
       Nest(doc) | Group(doc) | SingleLine(doc) | Mapped(_, doc) =>
@@ -183,7 +183,7 @@ fn write_doc(
           line_start = true
         }
       Concat(parts) =>
-        for i = parts.length() - 1; i >= 0; i = i - 1 {
+        for i in parts.length()>..0 {
           pending.push(Write(indent, flat, embedded, parts[i]))
         }
       Nest(doc) => pending.push(Write(indent + 2, flat, embedded, doc))
@@ -200,7 +200,7 @@ fn write_doc(
         if !embedded {
           indentation(indent)
         }
-        for i = parts.length() - 1; i >= 0; i = i - 1 {
+        for i in parts.length()>..0 {
           pending.push(Write(indent, true, true, parts[i]))
         }
       }

@@ -109,9 +109,8 @@ fn test_grammar(
     for nonterminal in grammar.nonterminals {
       if nonterminal != grammar.starts[0].lhs {
         it.write("|")
-        match state.goto.get(NT(nonterminal)) {
-          Some(next_state) => it.write(next_state.num)
-          None => ()
+        if state.goto.get(NT(nonterminal)) is Some(next_state) {
+          it.write(next_state.num)
         }
       }
     }

@@ -156,10 +156,7 @@ fn string_value(
 
 ///|
 fn string_option(matches : @argparse.Matches, name : String) -> String? {
-  match matches.values.get(name) {
-    Some(values) => Some(values[0])
-    None => None
-  }
+  matches.values.get(name).map(values => values[0])
 }
 
 ///|
@@ -276,13 +273,11 @@ async fn main {
 
   if options.output_file == "" {
     @stdio.stdout.write(output + "\n")
-    match options.output_map_file {
-      Some(file) =>
-        try! write_text_file(
-          file,
-          ToJson::to_json(source_map).stringify(indent=2),
-        )
-      None => ()
+    if options.output_map_file is Some(file) {
+      try! write_text_file(
+        file,
+        ToJson::to_json(source_map).stringify(indent=2),
+      )
     }
   } else {
     try! ({

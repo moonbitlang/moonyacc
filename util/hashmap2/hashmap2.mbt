@@ -96,18 +96,12 @@ pub fn[K, V] T::iterator2(self : T[K, V]) -> Iter2[K, V] {
 
 ///|
 pub fn[K : Hash + Eq, V] T::get(self : T[K, V], key : K) -> V? {
-  match self.get_entry_with_hash(key, Hash::hash(key)) {
-    Some(entry) => Some(entry.value)
-    None => None
-  }
+  self.get_entry_with_hash(key, Hash::hash(key)).map(entry => entry.value)
 }
 
 ///|
 pub fn[K : Hash + Eq, V] T::contains(self : T[K, V], key : K) -> Bool {
-  match self.get_entry_with_hash(key, Hash::hash(key)) {
-    Some(_) => true
-    None => false
-  }
+  self.get_entry_with_hash(key, Hash::hash(key)) is Some(_)
 }
 
 ///|

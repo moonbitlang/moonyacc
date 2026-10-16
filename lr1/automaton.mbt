@@ -165,10 +165,8 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
     let result = []
     for symbolic_item in symbolic_items {
       let (item, symbolic_lookahead_set) = symbolic_item
-      match item.decode_postdot(grammar) {
-        Some(_) => ()
-        None =>
-          result.push((symbolic_lookahead_set, item.decode_production(grammar)))
+      if item.decode_postdot(grammar) is None {
+        result.push((symbolic_lookahead_set, item.decode_production(grammar)))
       }
     }
     result
@@ -184,17 +182,14 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
     ] = @hashmap2.new(capacity=16)
     for entry in symbolic_items {
       let (item, symbolic_lookahead_set) = entry
-      match item.decode_postdot(grammar) {
-        None => ()
-        Some(symbol) => {
-          let next_item = item.unsafe_shift()
-          let (kernel_items, symbolic_lookahead_set_table) = trans.get_or_init(
-            symbol,
-            fn(_arg) { ([], []) },
-          )
-          kernel_items.push(next_item)
-          symbolic_lookahead_set_table.push(symbolic_lookahead_set)
-        }
+      if item.decode_postdot(grammar) is Some(symbol) {
+        let next_item = item.unsafe_shift()
+        let (kernel_items, symbolic_lookahead_set_table) = trans.get_or_init(
+          symbol,
+          fn(_arg) { ([], []) },
+        )
+        kernel_items.push(next_item)
+        symbolic_lookahead_set_table.push(symbolic_lookahead_set)
       }
     }
     trans
@@ -220,22 +215,17 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
       defer_ = Some(symbolic_items)
       node
     })
-    match defer_ {
-      Some(symbolic_items) => {
-        node_reductions.push(get_reductions(symbolic_items))
-        node_transitions.push(@hashmap2.new(capacity=16))
-        for tran in transitions(symbolic_items) {
-          let (symbol, (kernel_items, kernel_symbolic_lookahead_set_table)) = tran
-          let target = explore(
-            EncodedLR0ItemSet::from_sorted_array(kernel_items),
-          )
-          node_transitions[node.num].set(
-            symbol,
-            (target, kernel_symbolic_lookahead_set_table),
-          )
-        }
+    if defer_ is Some(symbolic_items) {
+      node_reductions.push(get_reductions(symbolic_items))
+      node_transitions.push(@hashmap2.new(capacity=16))
+      for tran in transitions(symbolic_items) {
+        let (symbol, (kernel_items, kernel_symbolic_lookahead_set_table)) = tran
+        let target = explore(EncodedLR0ItemSet::from_sorted_array(kernel_items))
+        node_transitions[node.num].set(
+          symbol,
+          (target, kernel_symbolic_lookahead_set_table),
+        )
       }
-      None => ()
     }
     node
   }
@@ -289,9 +279,8 @@ pub fn Automaton::build(grammar : @grm.Grammar, user_eoi~ : Bool) -> Automaton {
           items: candidate.items.merge(state.items),
           state: None,
         }
-        match family.search_by(fn(it) { physical_equal(it, state) }) {
-          Some(index) => family.remove(index) |> ignore
-          None => ()
+        if family.search_by(fn(it) { physical_equal(it, state) }) is Some(index) {
+          family.remove(index) |> ignore
         }
         return fuse(family, new_state)
       }

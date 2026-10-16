@@ -146,19 +146,14 @@ pub fn[Logger : Logger] Production::output_with_opt_dot(
   (logger : &Logger).write_object(self.lhs)
   Logger::write_string(logger, " →")
   for i, symbol in self.rhs {
-    match dot {
-      Some(d) => if i == d { Logger::write_string(logger, " •") }
-      None => ()
+    if dot is Some(d) && i == d {
+      Logger::write_string(logger, " •")
     }
     Logger::write_string(logger, " ")
     (logger : &Logger).write_object(symbol)
   }
-  match dot {
-    Some(d) =>
-      if d == self.rhs.length() {
-        Logger::write_string(logger, " •")
-      }
-    None => ()
+  if dot is Some(d) && d == self.rhs.length() {
+    Logger::write_string(logger, " •")
   }
 }
 

@@ -335,7 +335,7 @@ pub fn SmallIntSet::intersection(
       bitmask2 = bitmask2 & (bitmask2 - 1)
     }
   }
-  for i = to_remove_data_indices.length() - 1; i >= 0; i = i - 1 {
+  for i in to_remove_data_indices.length()>..0 {
     let k = to_remove_data_indices[i]
     bitmask = clear_nth_set_bit(bitmask, k)
     result.remove(k) |> ignore
@@ -385,7 +385,7 @@ pub fn SmallIntSet::difference(
       bitmask2 = bitmask2 & (bitmask2 - 1)
     }
   }
-  for i = to_remove_data_indices.length() - 1; i >= 0; i = i - 1 {
+  for i in to_remove_data_indices.length()>..0 {
     let k = to_remove_data_indices[i]
     bitmask = clear_nth_set_bit(bitmask, k)
     result.remove(k) |> ignore

@@ -193,7 +193,7 @@ test "@small_int_set.union/empty_sets" {
   let result = empty.union(empty)
 
   // Empty union should contain no elements
-  for i = 0; i < 32; i = i + 1 {
+  for i in 0..<32 {
     assert_false(result.contains(i))
   }
 }
@@ -253,7 +253,7 @@ test "@small_int_set.intersection/empty_sets" {
   let result = empty.intersection(empty)
   // Empty set intersection with empty set should give empty set
   // Test by checking no elements from 0 to 31 exist
-  for i = 0; i < 32; i = i + 1 {
+  for i in 0..<32 {
     assert_false(result.contains(i))
   }
 }
@@ -271,8 +271,8 @@ test "@small_int_set.intersection/disjoint_sets" {
   let result = set1.intersection(set2)
   // Test that no elements from either set exist in the intersection
   let test_values = [1, 2, 3, 4, 5, 6]
-  for i = 0; i < test_values.length(); i = i + 1 {
-    assert_false(result.contains(test_values[i]))
+  for value in test_values {
+    assert_false(result.contains(value))
   }
 }
 
@@ -320,7 +320,7 @@ test "@small_int_set.difference/empty_sets" {
   let empty = @small_int_set.empty()
   let result = empty.difference(empty)
   // An empty set minus an empty set should contain no elements
-  for i = 0; i < 32; i = i + 1 {
+  for i in 0..<32 {
     assert_false(result.contains(i))
   }
 }
@@ -330,19 +330,19 @@ test "@small_int_set.difference/disjoint_sets" {
   // Create two disjoint sets {0,1,2} and {3,4,5}
   let mut set1 = @small_int_set.empty()
   let mut set2 = @small_int_set.empty()
-  for i = 0; i < 3; i = i + 1 {
+  for i in 0..<3 {
     set1 = set1.add(i)
   }
-  for i = 3; i < 6; i = i + 1 {
+  for i in 3..<6 {
     set2 = set2.add(i)
   }
   let result = set1.difference(set2)
   // The difference should contain all elements from set1
-  for i = 0; i < 3; i = i + 1 {
+  for i in 0..<3 {
     assert_true(result.contains(i))
   }
   // And none from set2
-  for i = 3; i < 6; i = i + 1 {
+  for i in 3..<6 {
     assert_false(result.contains(i))
   }
 }
@@ -352,16 +352,16 @@ test "@small_int_set.difference/overlapping_sets" {
   // Create two overlapping sets {0,1,2} and {1,2,3}
   let mut set1 = @small_int_set.empty()
   let mut set2 = @small_int_set.empty()
-  for i = 0; i < 3; i = i + 1 {
+  for i in 0..<3 {
     set1 = set1.add(i)
   }
-  for i = 1; i < 4; i = i + 1 {
+  for i in 1..<4 {
     set2 = set2.add(i)
   }
   let result = set1.difference(set2)
   // The difference should only contain 0
   assert_true(result.contains(0))
-  for i = 1; i < 4; i = i + 1 {
+  for i in 1..<4 {
     assert_false(result.contains(i))
   }
 }
