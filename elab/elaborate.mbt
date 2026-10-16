@@ -293,7 +293,7 @@ pub fn elaborate(
           Some(rule) =>
             RuleCall(
               symbol,
-              map_error(args, arg => map_term(arg, rule_param_map)),
+              args.map(arg => map_term(arg, rule_param_map)),
               rule.type_,
             )
         }
@@ -312,7 +312,7 @@ pub fn elaborate(
     let mut clause_index = 0
     for ast_clause in ast_clause_iter {
       let (ast_clause, ast_clause_action) = ast_clause
-      let items = map_error(ast_clause.items, ast_item => Item::{
+      let items = ast_clause.items.map(ast_item => Item::{
         binder: ast_item.binder,
         term: map_term(ast_item.term, rule_param_map),
       })
@@ -413,10 +413,23 @@ fn elaborate_action(
       name_to_index[name] = index
     }
   }
-  fn item_ident_to_index(ident : @ast.ClauseItemIdent) -> Int32 {
+  fn item_ident_to_index(
+    ident : @ast.ClauseItemIdent,
+    loc : (Int32, Int32),
+  ) -> Int32 raise ElabError {
     match ident {
-      Dollar(index) => index - 1
-      Name(name) => name_to_index.get(name).unwrap()
+      Dollar(index) => {
+        guard index >= 1 && index <= arity else {
+          raise OutOfBoundsAccess(index, loc~)
+        }
+        index - 1
+      }
+      Name(name) => {
+        guard name_to_index.get(name) is Some(index) else {
+          raise UnresolvedSymbol(name, loc~)
+        }
+        index
+      }
     }
   }
 
@@ -431,10 +444,8 @@ fn elaborate_action(
     match desc {
       Dollar(index) => {
         let name = "_dollar\{index}"
-        guard index - 1 < items.length() else {
-          raise OutOfBoundsAccess(index, loc~) // TODO: correct loc
-        }
-        bindings.push((Data(index - 1, type_=items[index - 1].type_()), name))
+        let index = item_ident_to_index(Dollar(index), loc)
+        bindings.push((Data(index, type_=items[index].type_()), name))
       }
       StartPos => bindings.push((StartPos, "_start_pos"))
       Loc => {
@@ -443,11 +454,11 @@ fn elaborate_action(
       }
       EndPos => bindings.push((EndPos, "_end_pos"))
       StartPosOf(arg) => {
-        let index = item_ident_to_index(arg)
+        let index = item_ident_to_index(arg, loc)
         bindings.push((StartPosOf(index), "_start_pos_of_item\{index}"))
       }
       EndPosOf(arg) => {
-        let index = item_ident_to_index(arg)
+        let index = item_ident_to_index(arg, loc)
         bindings.push((EndPosOf(index), "_end_pos_of_item\{index}"))
       }
       LocOf(arg) => {
@@ -485,10 +496,8 @@ fn elaborate_action(
                 ),
               )
             }
-            add_binding(
-              item.desc,
-              (code.utf8_pos + item.start, code.utf8_pos + item.end),
-            )
+            let loc = (code.utf8_pos + item.start, code.utf8_pos + item.end)
+            add_binding(item.desc, loc)
             pieces.push(
               Reference(
                 match item.desc {
@@ -497,11 +506,13 @@ fn elaborate_action(
                   EndPos => Binding("_end_pos")
                   Loc => Location("_start_pos", "_end_pos")
                   StartPosOf(arg) =>
-                    Binding("_start_pos_of_item\{item_ident_to_index(arg)}")
+                    Binding(
+                      "_start_pos_of_item\{item_ident_to_index(arg, loc)}",
+                    )
                   EndPosOf(arg) =>
-                    Binding("_end_pos_of_item\{item_ident_to_index(arg)}")
+                    Binding("_end_pos_of_item\{item_ident_to_index(arg, loc)}")
                   LocOf(arg) => {
-                    let index = item_ident_to_index(arg)
+                    let index = item_ident_to_index(arg, loc)
                     Location(
                       "_start_pos_of_item\{index}",
                       "_end_pos_of_item\{index}",
@@ -590,16 +601,4 @@ fn elaborate_type_expr_with_generic_params(
     Arrow(args, ret) =>
       Arrow(args.map(elaborate_type_expr), elaborate_type_expr(ret))
   }
-}
-
-///|
-fn[T, R] map_error(
-  arr : Array[T],
-  f : (T) -> R raise ElabError,
-) -> Array[R] raise ElabError {
-  let result : Array[R] = []
-  for item in arr {
-    result.push(f(item))
-  }
-  result
 }
