@@ -131,6 +131,7 @@ pub fn token_items(
 pub fn Context::prelude(
   self : Context,
   external_tokens~ : Bool,
+  require_void~ : Bool = false,
 ) -> Array[@mbt_ast.Item] {
   let items = []
   if !self.meta.header.is_empty() {
@@ -179,7 +180,7 @@ pub fn Context::prelude(
   )
   items.append(derived_extensions("ParseError", error_traits))
   items.push(@mbt_ast.item(TypeAlias("YYObj", named_type("Error", []))))
-  if self.mode is Default || self.input_mode is Array {
+  if require_void || self.mode is Default || self.input_mode is Array {
     items.push(
       @mbt_ast.item(Suberror("YYObj_Void", [], []), visibility=Private),
     )

@@ -12,5 +12,6 @@ import {
 
 import {
   "moonbitlang/yacc/codegen/gen_mbt",
+  "moonbitlang/yacc/codegen/gen_mbt_direct",
   "moonbitlang/yacc/codegen/gen_mbt_table",
 } for "test"

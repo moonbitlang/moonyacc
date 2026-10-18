@@ -1,0 +1,152 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc/codegen/direct_ir"
+
+import {
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/lr1",
+}
+
+// Values
+pub fn lower(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, mode~ : @codegen.Mode) -> Program
+
+// Errors
+pub suberror InvalidProgram {
+  InvalidProgram(String)
+}
+
+// Types and methods
+pub(all) struct ActionArgument {
+  value : Value
+  start : Value
+  end : Value
+}
+
+pub(all) struct ActionSignature {
+  rhs : Array[Int]
+  lhs : Int
+  callable : Bool
+}
+
+pub(all) struct Block {
+  origin : Origin
+  parameters : Array[Register]
+  lookahead : Lookahead
+  instructions : Array[Instruction]
+  terminator : Terminator
+}
+
+pub(all) struct Cell {
+  symbol : Int?
+  fields : Array[Field]
+} derive(Eq)
+
+pub(all) enum DiagnosticAction {
+  Shift(Int)
+  Reduce(Int, Int)
+  Accept
+}
+
+pub(all) struct DiagnosticState {
+  default_ : DiagnosticAction?
+  actions : Array[(Token, DiagnosticAction)]
+  gotos : Array[(Int, Int)]
+}
+
+pub(all) struct Edge {
+  target : Int
+  arguments : Array[Value]
+}
+
+pub(all) struct Entry {
+  name : String
+  block : Int
+  state : Int
+  result_type : @elab.TypeExpr
+}
+
+pub(all) enum Field {
+  State
+  Semantic
+  Start
+  End
+} derive(Eq)
+
+pub(all) enum Instruction {
+  EnsureLookahead
+  Input(Int, Register, Register, Register)
+  ConsumeLookahead
+  SaveErrorSnapshot
+  ReadLastPosition(Register)
+  Bind(Array[(Register, Value)])
+  Push(Cell, Array[Value])
+  Pop(Cell, Array[Register?])
+  Peek(Int, Cell, Array[Register?])
+  Action(Int, Array[ActionArgument], Value, Register)
+}
+
+pub(all) enum Lookahead {
+  Any
+  Empty
+  Present
+  On(Token)
+} derive(Eq)
+
+pub(all) enum Origin {
+  Run(Int)
+  Shift(Int, Int)
+  Reduce(Int)
+  Goto(Int)
+  Helper
+}
+
+pub(all) struct Program {
+  entries : Array[Entry]
+  blocks : Array[Block]
+  symbols : Array[Symbol]
+  terminal_count : Int
+  actions : Array[ActionSignature]
+  diagnostics : Array[DiagnosticState]
+}
+pub fn Program::simplify(Self) -> Self
+pub fn Program::validate(Self) -> Unit raise InvalidProgram
+
+pub(all) struct Register {
+  id : Int
+  type_ : ValueType
+} derive(Eq)
+
+pub(all) struct Symbol {
+  name : String
+  type_ : @elab.TypeExpr
+}
+
+pub(all) enum Terminator {
+  Jump(Edge)
+  CaseToken(Array[(Token, Edge)], Edge)
+  CaseState(Value, Array[(Int, Edge)])
+  Return(Int, Value)
+  Stop(Int)
+  Unreachable
+}
+
+pub(all) enum Token {
+  Terminal(Int)
+  EndOfInput
+} derive(Eq, Hash)
+
+pub(all) enum Value {
+  Reg(Register)
+  State(Int)
+} derive(Eq)
+
+pub(all) enum ValueType {
+  State
+  Position
+  Semantic(@elab.TypeExpr)
+} derive(Eq)
+
+// Type aliases
+
+// Traits

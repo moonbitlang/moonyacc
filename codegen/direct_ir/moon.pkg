@@ -1,0 +1,6 @@
+import {
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/lr1",
+}

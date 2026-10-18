@@ -29,7 +29,10 @@ test "source maps preserve rewritten references and their interior positions" {
     ("$startpos(" + binder + ")", "_start_pos_of_item0"),
   ]
   let marker = "let _source_map_marker = ();"
-  for generator in [@gen_mbt.generator, @gen_mbt_table.generator] {
+  for
+    generator in [
+      @gen_mbt.generator, @gen_mbt_direct.generator, @gen_mbt_table.generator,
+    ] {
     for rewrite in rewrites {
       let (reference, replacement) = rewrite
       for padding in ["", " "] {

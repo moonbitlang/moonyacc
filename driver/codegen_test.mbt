@@ -30,7 +30,7 @@ test "JSON CST generation shares nonterminal construction" {
     #|%inline atom: NUMBER { () };
   for
     generator in [
-      @gen_mbt.generator, @gen_mbt_table.generator, @gen_mbt_table.compress_generator,
+      @gen_mbt.generator, @gen_mbt_direct.generator, @gen_mbt_table.generator, @gen_mbt_table.compress_generator,
     ] {
     for input_mode in [@driver.InputMode::Array, Pull] {
       let output = @driver.compile(

@@ -42,6 +42,8 @@ async fn write_text_file(file : String, content : String) -> Unit {
 priv suberror CliError {
   UnsupportedMode(String)
   UnsupportedInputMode(String)
+  UnsupportedBackend(String)
+  ConflictingBackendOptions
 }
 
 ///|
@@ -54,6 +56,7 @@ priv struct CliOptions {
   external_tokens : Bool
   no_comments : Bool
   no_std : Bool
+  direct : Bool
   table : Bool
   compress : Bool
   token_payload_rewrite : @driver.TokenPayloadRewrite
@@ -114,6 +117,11 @@ fn cli_command() -> @argparse.Command {
       ),
     ],
     options=[
+      OptionArg(
+        "backend",
+        long="backend",
+        about="Specify backend (code, direct, table). Default is code",
+      ),
       OptionArg(
         "output-file",
         short='o',
@@ -204,6 +212,18 @@ fn parse_token_payload_rewrite(
 fn parse_cli_args(argv : ArrayView[String]) -> CliOptions raise {
   let matches = cli_command().parse(argv~, env={})
   let compress = flag_value(matches, "compress-table")
+  let legacy_table = compress || flag_value(matches, "table")
+  let (direct, table) = match string_option(matches, "backend") {
+    None => (false, legacy_table)
+    Some("table") => (false, true)
+    Some("direct") | Some("code") as backend => {
+      if legacy_table {
+        raise ConflictingBackendOptions
+      }
+      (backend == Some("direct"), false)
+    }
+    Some(name) => raise UnsupportedBackend(name)
+  }
   {
     input_file: string_value(matches, "input-file", ""),
     output_file: string_value(matches, "output-file", ""),
@@ -213,7 +233,8 @@ fn parse_cli_args(argv : ArrayView[String]) -> CliOptions raise {
     external_tokens: flag_value(matches, "external-tokens"),
     no_comments: flag_value(matches, "no-comments"),
     no_std: flag_value(matches, "no-std"),
-    table: compress || flag_value(matches, "table"),
+    direct,
+    table,
     compress,
     token_payload_rewrite: parse_token_payload_rewrite(argv),
     force_int_position: flag_value(matches, "force-int-position"),
@@ -233,6 +254,16 @@ async fn main {
     }
     CliError::UnsupportedInputMode(input_mode_sym) => {
       println_to_stderr("Unsupported input mode: \{input_mode_sym}")
+      exit(1)
+    }
+    CliError::UnsupportedBackend(name) => {
+      println_to_stderr("Unsupported backend: \{name}")
+      exit(1)
+    }
+    CliError::ConflictingBackendOptions => {
+      println_to_stderr(
+        "--backend code/direct cannot be combined with --table or --compress-table",
+      )
       exit(1)
     }
     err => {
@@ -260,7 +291,9 @@ async fn main {
     no_std=options.no_std,
     token_payload_rewrite=options.token_payload_rewrite,
     force_int_position=options.force_int_position,
-    generator=if options.table {
+    generator=if options.direct {
+      @gen_mbt_direct.generator
+    } else if options.table {
       if options.compress {
         @gen_mbt_table.compress_generator
       } else {

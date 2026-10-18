@@ -36,3 +36,19 @@ test "parse cli args keeps moonyacc options" {
   assert_true(options.token_payload_rewrite is JsonPayload)
   assert_true(options.force_int_position)
 }
+
+///|
+test "direct backend selection is explicit and rejects table flags" {
+  let direct = parse_cli_args(["--backend", "direct", "parser.mbty"])
+  assert_true(direct.direct && !direct.table && !direct.compress)
+  let default_ = parse_cli_args(["parser.mbty"])
+  assert_false(default_.direct || default_.table)
+  for flag in ["--table", "--compress-table"] {
+    try parse_cli_args(["--backend", "direct", flag, "parser.mbty"]) catch {
+      CliError::ConflictingBackendOptions => ()
+      _ => fail("unexpected CLI error")
+    } noraise {
+      _ => fail("accepted incompatible backends")
+    }
+  }
+}

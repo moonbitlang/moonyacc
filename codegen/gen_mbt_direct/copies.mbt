@@ -1,0 +1,59 @@
+///|
+priv enum Move {
+  Store(@direct_ir.Register, @direct_ir.Value)
+  Save(Int, @direct_ir.Value)
+  Restore(@direct_ir.Register, Int)
+}
+
+///|
+/// Identity elimination and independent assignment preserve a parallel copy.
+/// If any remaining destination is also read, retain the snapshot-first form.
+fn parallel_moves(
+  moves : Array[(@direct_ir.Register, @direct_ir.Value)],
+  slot : (@direct_ir.Register) -> (Int, Int)?,
+) -> Array[Move] {
+  let moves = moves.filter(p => {
+    match p.1 {
+      Reg(reg) => slot(reg) != slot(p.0)
+      State(_) => true
+    }
+  })
+  let destinations = Set::from_iter(moves.iter().map(p => slot(p.0).unwrap()))
+  let needs_snapshot = moves
+    .iter()
+    .any(p => {
+      match p.1 {
+        Reg(reg) =>
+          slot(reg).map(s => destinations.contains(s)).unwrap_or(false)
+        State(_) => false
+      }
+    })
+  if !needs_snapshot {
+    return moves.map(p => Store(p.0, p.1))
+  }
+  let result = []
+  for i, (_, value) in moves {
+    result.push(Save(i, value))
+  }
+  for i, (reg, _) in moves {
+    result.push(Restore(reg, i))
+  }
+  result
+}
+
+///|
+fn Emitter::copies(
+  self : Emitter,
+  edge : @direct_ir.Edge,
+) -> Array[@mbt_ast.Stmt] {
+  let parameters = self.program.blocks[edge.target].parameters
+  let moves = edge.arguments.mapi((i, value) => (parameters[i], value))
+  parallel_moves(moves, reg => self.slots.get(reg.id)).map(step => {
+    match step {
+      Store(reg, value) =>
+        @mbt_ast.Stmt::Assign(self.register(reg), self.value(value))
+      Save(i, value) => binding("_yy_arg\{i}", self.value(value))
+      Restore(reg, i) => Assign(self.register(reg), Ident("_yy_arg\{i}"))
+    }
+  })
+}
