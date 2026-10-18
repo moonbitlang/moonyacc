@@ -1,0 +1,26 @@
+%{
+let reductions : Ref[Int] = Ref(0)
+%}
+
+%position<Int>
+%token<Int> NUMBER
+%token PLUS STAR EQ LPAREN RPAREN EOF
+%nonassoc EQ
+%left PLUS
+%left STAR
+%start<(Int, Int, Int)> start
+%type<Int> expr atom
+
+%%
+
+start: e=expr EOF { (e, $startpos(e), $endpos(e)) };
+
+expr:
+  | atom { $1 }
+  | expr PLUS expr { $1 + $3 }
+  | expr STAR expr { $1 * $3 }
+  | expr EQ expr { reductions.val += 1; $1 + $3 };
+
+%inline atom:
+  | NUMBER { $1 }
+  | LPAREN expr RPAREN { $2 };
