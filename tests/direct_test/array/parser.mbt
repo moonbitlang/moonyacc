@@ -728,80 +728,55 @@ pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> (
 }
 
 ///|
-#inline(never)
-fn yy_diagnostic(state : Int, _symbol : Int) -> (Int, Int, Int) {
-  match state {
-    0 =>
-      match _symbol {
-        1 => (2, 10, 0)
-        5 => (2, 2, 0)
-        8 => (2, 1, 0)
-        9 => (2, 12, 0)
-        _ => (0, 0, 0)
-      }
+let yy_diag_rows : FixedArray[Int] = [
+  0, -2, 9, 16, 25, 32, 41, -17, 48, 55, -18, -17, 66, -19
+]
+
+///|
+let yy_diag_data : FixedArray[Int] = [
+  4, 1, 12, 5, 4, 8, 3, 9, 14, 3, 1, 12, 5, 4, 9, 5, 4, 2, 10, 3, 8, 4, 6, 6,
+  13, 3, 1, 12, 5, 4, 9, 7, 4, 2, 10, 3, 8, 6, 16, 7, 16, 3, 1, 12, 5, 4, 9, 9,
+  3, 1, 12, 5, 4, 9, 11, 5, 2, 16, 3, 8, 4, 16, 6, 16, 7, 16, 4, 2, 10, 3, 8, 4,
+  6, 7, 15
+]
+
+///|
+let yy_diag_reductions : FixedArray[(Int, Int)] = [(3, 9), (1, 9), (2, 8)]
+
+///|
+fn yy_diag_lookup(state : Int, symbol : Int) -> Int {
+  let row = yy_diag_rows[state]
+  if row < 0 {
+    return -row - 1
+  }
+  for lo = 0, hi = yy_diag_data[row]; lo < hi {
+    let mid = lo + (hi - lo) / 2
+    let entry = row + 1 + mid * 2
+    let key = yy_diag_data[entry]
+    if symbol < key {
+      continue lo, mid
+    }
+    if symbol > key {
+      continue mid + 1, hi
+    }
+    return yy_diag_data[entry + 1]
+  }
+  0
+}
+
+///|
+fn yy_diagnostic(state : Int, symbol : Int) -> (Int, Int, Int) {
+  let code = yy_diag_lookup(state, symbol)
+  match code {
+    0 => (0, 0, 0)
     1 => (1, 0, 0)
-    2 =>
-      match _symbol {
-        1 => (2, 10, 0)
-        5 => (2, 2, 0)
-        9 => (2, 3, 0)
-        _ => (0, 0, 0)
+    _ =>
+      if code < 16 {
+        (2, code - 2, 0)
+      } else {
+        let (count, lhs) = yy_diag_reductions[code - 16]
+        (3, count, lhs)
       }
-    3 =>
-      match _symbol {
-        2 => (2, 8, 0)
-        3 => (2, 6, 0)
-        4 => (2, 4, 0)
-        6 => (2, 11, 0)
-        _ => (0, 0, 0)
-      }
-    4 =>
-      match _symbol {
-        1 => (2, 10, 0)
-        5 => (2, 2, 0)
-        9 => (2, 5, 0)
-        _ => (0, 0, 0)
-      }
-    5 =>
-      match _symbol {
-        2 => (2, 8, 0)
-        3 => (2, 6, 0)
-        6 | 7 => (3, 3, 9)
-        _ => (0, 0, 0)
-      }
-    6 =>
-      match _symbol {
-        1 => (2, 10, 0)
-        5 => (2, 2, 0)
-        9 => (2, 7, 0)
-        _ => (0, 0, 0)
-      }
-    7 => (3, 3, 9)
-    8 =>
-      match _symbol {
-        1 => (2, 10, 0)
-        5 => (2, 2, 0)
-        9 => (2, 9, 0)
-        _ => (0, 0, 0)
-      }
-    9 =>
-      match _symbol {
-        2 | 4 | 6 | 7 => (3, 3, 9)
-        3 => (2, 6, 0)
-        _ => (0, 0, 0)
-      }
-    10 => (3, 1, 9)
-    11 => (3, 3, 9)
-    12 =>
-      match _symbol {
-        2 => (2, 8, 0)
-        3 => (2, 6, 0)
-        4 => (2, 4, 0)
-        7 => (2, 13, 0)
-        _ => (0, 0, 0)
-      }
-    13 => (3, 2, 8)
-    _ => panic()
   }
 }
 

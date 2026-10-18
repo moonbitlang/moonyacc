@@ -254,24 +254,48 @@ pub fn unit(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Unit raise
 }
 
 ///|
-#inline(never)
-fn yy_diagnostic(state : Int, _symbol : Int) -> (Int, Int, Int) {
-  match state {
-    0 =>
-      match _symbol {
-        0 => (3, 0, 2)
-        2 => (2, 1, 0)
-        _ => (0, 0, 0)
-      }
+let yy_diag_rows : FixedArray[Int] = [0, -2, 5, -2]
+
+///|
+let yy_diag_data : FixedArray[Int] = [2, 0, 6, 2, 3, 2, 0, 7, 1, 5]
+
+///|
+let yy_diag_reductions : FixedArray[(Int, Int)] = [(0, 2), (0, 1)]
+
+///|
+fn yy_diag_lookup(state : Int, symbol : Int) -> Int {
+  let row = yy_diag_rows[state]
+  if row < 0 {
+    return -row - 1
+  }
+  for lo = 0, hi = yy_diag_data[row]; lo < hi {
+    let mid = lo + (hi - lo) / 2
+    let entry = row + 1 + mid * 2
+    let key = yy_diag_data[entry]
+    if symbol < key {
+      continue lo, mid
+    }
+    if symbol > key {
+      continue mid + 1, hi
+    }
+    return yy_diag_data[entry + 1]
+  }
+  0
+}
+
+///|
+fn yy_diagnostic(state : Int, symbol : Int) -> (Int, Int, Int) {
+  let code = yy_diag_lookup(state, symbol)
+  match code {
+    0 => (0, 0, 0)
     1 => (1, 0, 0)
-    2 =>
-      match _symbol {
-        0 => (3, 0, 1)
-        1 => (2, 3, 0)
-        _ => (0, 0, 0)
+    _ =>
+      if code < 6 {
+        (2, code - 2, 0)
+      } else {
+        let (count, lhs) = yy_diag_reductions[code - 6]
+        (3, count, lhs)
       }
-    3 => (1, 0, 0)
-    _ => panic()
   }
 }
 
