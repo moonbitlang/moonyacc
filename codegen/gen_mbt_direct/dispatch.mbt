@@ -1,10 +1,10 @@
 ///|
 fn Emitter::block_body(
   self : Emitter,
-  label : Int,
+  pc : Int,
   no_comments : Bool,
 ) -> @mbt_ast.Block {
-  let block = self.program.blocks[label]
+  let block = self.program.blocks[self.layout.blocks[pc]]
   let statements : Array[@mbt_ast.Stmt] = []
   if !no_comments {
     let comment = match block.origin {
@@ -24,7 +24,7 @@ fn Emitter::block_body(
     }
   }
   statements.append(self.block_instructions(block))
-  let finish = self.terminator(block.terminator, label / BLOCKS_PER_CHUNK)
+  let finish = self.terminator(block.terminator, pc / BLOCKS_PER_CHUNK)
   statements.append(finish.statements)
   { statements, result: finish.result, }
 }
@@ -88,10 +88,10 @@ fn Emitter::chunk_item(
   no_comments : Bool,
 ) -> @mbt_ast.Item {
   let first = chunk * BLOCKS_PER_CHUNK
-  let last = if first + BLOCKS_PER_CHUNK < self.program.blocks.length() {
+  let last = if first + BLOCKS_PER_CHUNK < self.layout.blocks.length() {
     first + BLOCKS_PER_CHUNK
   } else {
-    self.program.blocks.length()
+    self.layout.blocks.length()
   }
   let chunk_body = if self.chunk_loops.contains(chunk) {
     body([

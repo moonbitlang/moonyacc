@@ -66,7 +66,7 @@ fn Emitter::parse_item(self : Emitter, no_comments : Bool) -> @mbt_ast.Item {
         value_block(
           self.dispatch(
             0,
-            self.program.blocks.length(),
+            self.layout.blocks.length(),
             Ident("pc"),
             no_comments,
           ),

@@ -159,11 +159,12 @@ fn Emitter::jump(
   chunk : Int,
 ) -> @mbt_ast.Block {
   let statements = self.copies(edge)
+  let pc = self.layout.pc(edge.target)
   statements.push(
-    if self.chunked && edge.target / BLOCKS_PER_CHUNK != chunk {
-      Return(Int(edge.target))
+    if self.chunked && pc / BLOCKS_PER_CHUNK != chunk {
+      Return(Int(pc))
     } else {
-      Continue([Int(edge.target)])
+      Continue([Int(pc)])
     },
   )
   body(statements)

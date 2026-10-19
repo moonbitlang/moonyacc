@@ -49,22 +49,26 @@ fn Emitter::branch_jump(
     return value_block(Match(value, arms))
   }
   let arms = branches.map(p => {
-    (p.0, value_block(@mbt_ast.Expr::Int(p.1.target)))
+    (p.0, value_block(@mbt_ast.Expr::Int(self.layout.pc(p.1.target))))
   })
   arms.push(
     (
       Any,
       value_block(
         match fallback {
-          Some(e) => Int(e.target)
+          Some(e) => Int(self.layout.pc(e.target))
           None => call("panic", [])
         },
       ),
     ),
   )
   let next : @mbt_ast.Expr = Match(value, arms)
-  let within = edges.iter().all(e => e.target / BLOCKS_PER_CHUNK == chunk)
-  let outside = edges.iter().all(e => e.target / BLOCKS_PER_CHUNK != chunk)
+  let within = edges
+    .iter()
+    .all(e => self.layout.pc(e.target) / BLOCKS_PER_CHUNK == chunk)
+  let outside = edges
+    .iter()
+    .all(e => self.layout.pc(e.target) / BLOCKS_PER_CHUNK != chunk)
   if !self.chunked || within {
     return body([Continue([next])])
   }

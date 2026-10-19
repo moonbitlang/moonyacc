@@ -8,6 +8,7 @@ priv struct Emitter {
   meta : @codegen.MetaProvider
   support : @mbt_common.Context
   input_mode : @codegen.InputMode
+  layout : BlockLayout
   chunked : Bool
   consumes_input : Bool
   saves_snapshot : Bool
@@ -29,6 +30,8 @@ fn Emitter::new(
     meta,
     support,
     input_mode,
+    layout: BlockLayout::new(program.blocks),
+    // Keep shared runtime helpers when compaction leaves just one chunk.
     chunked: program.blocks.length() > BLOCKS_PER_CHUNK,
     consumes_input: program.blocks
     .iter()
@@ -41,38 +44,11 @@ fn Emitter::new(
     chunk_loops: Set([]),
     chunk_errors: Set([]),
   }
-  for label, block in program.blocks {
-    let chunk = label / BLOCKS_PER_CHUNK
-    if block.terminator is Stop(_) {
-      self.chunk_errors.add(chunk)
-    }
-    fn local_edge(edge : @direct_ir.Edge) -> Bool {
-      edge.target / BLOCKS_PER_CHUNK == chunk
-    }
-    let has_local_edge = match block.terminator {
-      Jump(edge) => local_edge(edge)
-      CaseToken(arms, fallback) =>
-        local_edge(fallback) || arms.iter().any(p => local_edge(p.1))
-      CaseState(_, arms) => arms.iter().any(p => local_edge(p.1))
-      Return(_) | Stop(_) | Unreachable => false
-    }
-    if has_local_edge {
-      self.chunk_loops.add(chunk)
-    }
-    // Block parameters do not coexist. Reuse slots by physical representation.
-    let counts = [0, 0, 0]
-    for parameter in block.parameters {
-      let kind = match parameter.type_ {
-        State => 0
-        Semantic(_) => 1
-        Position => 2
-      }
-      self.slots[parameter.id] = (kind, counts[kind])
-      counts[kind] += 1
-      if counts[kind] > self.maxima[kind] {
-        self.maxima[kind] = counts[kind]
-      }
-    }
+  for block in program.blocks {
+    self.allocate_parameters(block.parameters)
+  }
+  for pc, label in self.layout.blocks {
+    self.plan_control(label, pc / BLOCKS_PER_CHUNK)
   }
   coalesce_results(program.blocks, self.slots)
   self
@@ -80,7 +56,39 @@ fn Emitter::new(
 
 ///|
 fn Emitter::chunk_count(self : Emitter) -> Int {
-  (self.program.blocks.length() + BLOCKS_PER_CHUNK - 1) / BLOCKS_PER_CHUNK
+  (self.layout.blocks.length() + BLOCKS_PER_CHUNK - 1) / BLOCKS_PER_CHUNK
+}
+
+///|
+/// Block parameters do not coexist. Reuse slots by physical representation.
+fn Emitter::allocate_parameters(
+  self : Emitter,
+  parameters : Array[@direct_ir.Register],
+) -> Unit {
+  let counts = [0, 0, 0]
+  for parameter in parameters {
+    let kind = match parameter.type_ {
+      State => 0
+      Semantic(_) => 1
+      Position => 2
+    }
+    self.slots[parameter.id] = (kind, counts[kind])
+    counts[kind] += 1
+    self.maxima[kind] = Int::max(self.maxima[kind], counts[kind])
+  }
+}
+
+///|
+fn Emitter::plan_control(self : Emitter, label : Int, chunk : Int) -> Unit {
+  let block = self.program.blocks[label]
+  if block.terminator is Stop(_) {
+    self.chunk_errors.add(chunk)
+  }
+  if successors(block.terminator)
+    .iter()
+    .any(target => self.layout.pc(target) / BLOCKS_PER_CHUNK == chunk) {
+    self.chunk_loops.add(chunk)
+  }
 }
 
 ///|
