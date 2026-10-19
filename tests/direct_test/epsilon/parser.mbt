@@ -134,7 +134,7 @@ fn yy_parse(
           }
           continue match lookahead.unwrap().0 {
               0 => 2
-              _ => 8
+              _ => 6
             }
         })
       1 =>
@@ -153,7 +153,7 @@ fn yy_parse(
           }
           continue match lookahead.unwrap().0 {
               0 => 4
-              _ => 8
+              _ => 6
             }
         })
       2 =>
@@ -170,10 +170,13 @@ fn yy_parse(
         ({
           ()
           // goto unit
-          continue match _yy_p0_0 {
-              0 => 6
-              _ => panic()
-            }
+          match _yy_p0_0 {
+            0 => ()
+            _ => panic()
+          }
+          states = @list.cons(1, states)
+          data.push((_yy_p1_0, _yy_p2_0, _yy_p2_1))
+          continue 7
         })
       4 =>
         ({
@@ -189,39 +192,28 @@ fn yy_parse(
         ({
           ()
           // goto position
-          continue match _yy_p0_0 {
-              2 => 7
-              _ => panic()
-            }
-        })
-      6 =>
-        ({
-          ()
-          states = @list.cons(1, states)
-          data.push((_yy_p1_0, _yy_p2_0, _yy_p2_1))
-          continue 9
-        })
-      7 =>
-        ({
-          ()
+          match _yy_p0_0 {
+            2 => ()
+            _ => panic()
+          }
           states = @list.cons(3, states)
           data.push((_yy_p1_0, _yy_p2_0, _yy_p2_1))
-          continue 10
+          continue 8
         })
-      8 =>
+      6 =>
         ({
           ()
           let (_, (_, sp, ep), token) = lookahead.unwrap()
           yy_error(error_stack, token, (sp, ep))
           panic()
         })
-      9 =>
+      7 =>
         ({
           ()
           let _yy_r20 = data[data.length() - 1].0
           return _yy_r20
         })
-      10 =>
+      8 =>
         ({
           ()
           let _yy_r21 = data[data.length() - 1].0

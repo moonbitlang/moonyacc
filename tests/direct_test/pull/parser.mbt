@@ -297,9 +297,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().0 {
-              1 => 24
-              5 => 25
-              _ => 23
+              1 => 18
+              5 => 19
+              _ => 17
             }
         })
       1 =>
@@ -310,9 +310,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().0 {
-              1 => 24
-              5 => 25
-              _ => 23
+              1 => 18
+              5 => 19
+              _ => 17
             }
         })
       2 =>
@@ -323,11 +323,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().0 {
-              2 => 27
-              3 => 28
-              4 => 29
-              6 => 30
-              _ => 23
+              2 => 21
+              3 => 22
+              4 => 23
+              6 => 24
+              _ => 17
             }
         })
       3 =>
@@ -338,9 +338,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().0 {
-              1 => 24
-              5 => 25
-              _ => 23
+              1 => 18
+              5 => 19
+              _ => 17
             }
         })
       4 =>
@@ -351,10 +351,10 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().0 {
-              2 => 27
-              3 => 28
+              2 => 21
+              3 => 22
               6 | 7 => 9
-              _ => 23
+              _ => 17
             }
         })
       5 =>
@@ -365,9 +365,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().0 {
-              1 => 24
-              5 => 25
-              _ => 23
+              1 => 18
+              5 => 19
+              _ => 17
             }
         })
       6 =>
@@ -378,9 +378,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().0 {
-              1 => 24
-              5 => 25
-              _ => 23
+              1 => 18
+              5 => 19
+              _ => 17
             }
         })
       7 =>
@@ -392,8 +392,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           }
           continue match _env.lookahead.unwrap().0 {
               2 | 4 | 6 | 7 => 12
-              3 => 28
-              _ => 23
+              3 => 22
+              _ => 17
             }
         })
       8 =>
@@ -404,11 +404,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().0 {
-              2 => 27
-              3 => 28
-              4 => 29
-              7 => 31
-              _ => 23
+              2 => 21
+              3 => 22
+              4 => 23
+              7 => 25
+              _ => 17
             }
         })
       9 =>
@@ -429,14 +429,17 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
         ({
           ()
           // goto expr
-          continue match _env._yy_p0_0 {
-              0 => 17
-              2 => 18
-              4 => 19
-              6 => 20
-              8 => 21
-              _ => panic()
-            }
+          let (_yy_state, _yy_target) = match _env._yy_p0_0 {
+            0 => (12, 8)
+            2 => (3, 2)
+            4 => (5, 4)
+            6 => (7, 11)
+            8 => (9, 7)
+            _ => panic()
+          }
+          _env.states = @list.cons(_yy_state, _env.states)
+          _env.data.push((_env._yy_p1_0, _env._yy_p2_0, _env._yy_p2_1))
+          continue _yy_target
         })
       11 =>
         ({
@@ -514,108 +517,69 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
         ({
           ()
           // goto start
-          continue match _env._yy_p0_0 {
-              0 => 22
-              _ => panic()
-            }
+          match _env._yy_p0_0 {
+            0 => ()
+            _ => panic()
+          }
+          _env.states = @list.cons(1, _env.states)
+          _env.data.push((_env._yy_p1_0, _env._yy_p2_0, _env._yy_p2_1))
+          continue 20
         })
       17 =>
         ({
           ()
-          _env.states = @list.cons(12, _env.states)
-          _env.data.push((_env._yy_p1_0, _env._yy_p2_0, _env._yy_p2_1))
-          continue 8
-        })
-      18 =>
-        ({
-          ()
-          _env.states = @list.cons(3, _env.states)
-          _env.data.push((_env._yy_p1_0, _env._yy_p2_0, _env._yy_p2_1))
-          continue 2
-        })
-      19 =>
-        ({
-          ()
-          _env.states = @list.cons(5, _env.states)
-          _env.data.push((_env._yy_p1_0, _env._yy_p2_0, _env._yy_p2_1))
-          continue 4
-        })
-      20 =>
-        ({
-          ()
-          _env.states = @list.cons(7, _env.states)
-          _env.data.push((_env._yy_p1_0, _env._yy_p2_0, _env._yy_p2_1))
-          continue 11
-        })
-      21 =>
-        ({
-          ()
-          _env.states = @list.cons(9, _env.states)
-          _env.data.push((_env._yy_p1_0, _env._yy_p2_0, _env._yy_p2_1))
-          continue 7
-        })
-      22 =>
-        ({
-          ()
-          _env.states = @list.cons(1, _env.states)
-          _env.data.push((_env._yy_p1_0, _env._yy_p2_0, _env._yy_p2_1))
-          continue 26
-        })
-      23 =>
-        ({
-          ()
           return yy_stop(_env)
         })
-      24 =>
+      18 =>
         ({
           ()
           // shift NUMBER into state 10
           yy_shift(_env, 10)
           continue 13
         })
-      25 =>
+      19 =>
         ({
           ()
           // shift LPAREN into state 2
           yy_shift(_env, 2)
           continue 1
         })
-      26 =>
+      20 =>
         ({
           ()
           let _yy_r95 = _env.data[_env.data.length() - 1].0
           _env._yy_result = _yy_r95
           return -1
         })
-      27 =>
+      21 =>
         ({
           ()
           // shift PLUS into state 8
           yy_shift(_env, 8)
           continue 6
         })
-      28 =>
+      22 =>
         ({
           ()
           // shift STAR into state 6
           yy_shift(_env, 6)
           continue 5
         })
-      29 =>
+      23 =>
         ({
           ()
           // shift EQ into state 4
           yy_shift(_env, 4)
           continue 3
         })
-      30 =>
+      24 =>
         ({
           ()
           // shift RPAREN into state 11
           yy_shift(_env, 11)
           continue 14
         })
-      31 =>
+      25 =>
         ({
           ()
           // shift EOF into state 13
