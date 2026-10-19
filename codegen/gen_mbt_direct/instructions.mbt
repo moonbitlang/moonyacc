@@ -117,16 +117,23 @@ fn Emitter::push_cell(
     }
     fields[index] = self.value(values[i])
   }
+  self.push_values(fields[0], fields[1], fields[2], fields[3])
+}
+
+///|
+fn Emitter::push_values(
+  self : Emitter,
+  state : @mbt_ast.Expr,
+  value : @mbt_ast.Expr,
+  start : @mbt_ast.Expr,
+  end : @mbt_ast.Expr,
+) -> Array[@mbt_ast.Stmt] {
   [
     Assign(
       self.machine("states"),
-      call("@list.cons", [fields[0], self.machine("states")]),
+      call("@list.cons", [state, self.machine("states")]),
     ),
-    Eval(
-      dot_call(self.machine("data"), "push", [
-        Tuple([fields[1], fields[2], fields[3]]),
-      ]),
-    ),
+    Eval(dot_call(self.machine("data"), "push", [Tuple([value, start, end])])),
   ]
 }
 

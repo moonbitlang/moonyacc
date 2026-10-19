@@ -9,6 +9,7 @@ priv struct Emitter {
   support : @mbt_common.Context
   input_mode : @codegen.InputMode
   layout : BlockLayout
+  gotos : Map[Int, GotoPlan]
   chunked : Bool
   consumes_input : Bool
   saves_snapshot : Bool
@@ -25,12 +26,17 @@ fn Emitter::new(
   support : @mbt_common.Context,
   input_mode : @codegen.InputMode,
 ) -> Emitter {
+  let (gotos, omitted) = plan_gotos(
+    program.blocks,
+    program.entries.map(e => e.block),
+  )
   let self = Emitter::{
     program,
     meta,
     support,
     input_mode,
-    layout: BlockLayout::new(program.blocks),
+    layout: BlockLayout::new(program.blocks, omitted~),
+    gotos,
     // Keep shared runtime helpers when compaction leaves just one chunk.
     chunked: program.blocks.length() > BLOCKS_PER_CHUNK,
     consumes_input: program.blocks
@@ -84,7 +90,11 @@ fn Emitter::plan_control(self : Emitter, label : Int, chunk : Int) -> Unit {
   if block.terminator is Stop(_) {
     self.chunk_errors.add(chunk)
   }
-  if successors(block.terminator)
+  let targets = match self.gotos.get(label) {
+    Some(plan) => plan.choices.map(p => p.1.label)
+    None => successors(block.terminator)
+  }
+  if targets
     .iter()
     .any(target => self.layout.pc(target) / BLOCKS_PER_CHUNK == chunk) {
     self.chunk_loops.add(chunk)

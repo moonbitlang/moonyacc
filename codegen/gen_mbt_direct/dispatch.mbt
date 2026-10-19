@@ -4,7 +4,8 @@ fn Emitter::block_body(
   pc : Int,
   no_comments : Bool,
 ) -> @mbt_ast.Block {
-  let block = self.program.blocks[self.layout.blocks[pc]]
+  let label = self.layout.blocks[pc]
+  let block = self.program.blocks[label]
   let statements : Array[@mbt_ast.Stmt] = []
   if !no_comments {
     let comment = match block.origin {
@@ -24,7 +25,11 @@ fn Emitter::block_body(
     }
   }
   statements.append(self.block_instructions(block))
-  let finish = self.terminator(block.terminator, pc / BLOCKS_PER_CHUNK)
+  let chunk = pc / BLOCKS_PER_CHUNK
+  let finish = match self.gotos.get(label) {
+    Some(plan) => self.goto_finish(plan, chunk)
+    None => self.terminator(block.terminator, chunk)
+  }
   statements.append(finish.statements)
   { statements, result: finish.result, }
 }

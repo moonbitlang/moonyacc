@@ -1,23 +1,33 @@
 ///|
-fn branch_patterns(
-  arms : Array[(Int, @direct_ir.Edge)],
-) -> Array[(@mbt_ast.Pattern, @direct_ir.Edge)] {
-  let groups : Array[(Array[@mbt_ast.Pattern], @direct_ir.Edge)] = []
-  for (pattern, edge) in arms {
+fn[T] grouped_cases(
+  arms : Array[(Int, T)],
+  same : (T, T) -> Bool,
+) -> Array[(@mbt_ast.Pattern, T)] {
+  let groups : Array[(Array[@mbt_ast.Pattern], T)] = []
+  for (pattern, value) in arms {
     let mut found = false
     for (patterns, existing) in groups {
-      if existing.target == edge.target && existing.arguments == edge.arguments {
+      if same(existing, value) {
         patterns.push(Int(pattern))
         found = true
         break
       }
     }
     if !found {
-      groups.push(([Int(pattern)], edge))
+      groups.push(([Int(pattern)], value))
     }
   }
   groups.map(p => {
     (if p.0.length() == 1 { p.0[0] } else { @mbt_ast.Pattern::Or(p.0) }, p.1)
+  })
+}
+
+///|
+fn branch_patterns(
+  arms : Array[(Int, @direct_ir.Edge)],
+) -> Array[(@mbt_ast.Pattern, @direct_ir.Edge)] {
+  grouped_cases(arms, (a, b) => {
+    a.target == b.target && a.arguments == b.arguments
   })
 }
 
@@ -62,13 +72,22 @@ fn Emitter::branch_jump(
       ),
     ),
   )
-  let next : @mbt_ast.Expr = Match(value, arms)
-  let within = edges
+  self.transfer(Match(value, arms), edges.map(e => e.target), chunk)
+}
+
+///|
+fn Emitter::transfer(
+  self : Emitter,
+  next : @mbt_ast.Expr,
+  targets : Array[Int],
+  chunk : Int,
+) -> @mbt_ast.Block {
+  let within = targets
     .iter()
-    .all(e => self.layout.pc(e.target) / BLOCKS_PER_CHUNK == chunk)
-  let outside = edges
+    .all(target => self.layout.pc(target) / BLOCKS_PER_CHUNK == chunk)
+  let outside = targets
     .iter()
-    .all(e => self.layout.pc(e.target) / BLOCKS_PER_CHUNK != chunk)
+    .all(target => self.layout.pc(target) / BLOCKS_PER_CHUNK != chunk)
   if !self.chunked || within {
     return body([Continue([next])])
   }

@@ -14,11 +14,17 @@ fn shared_stop(block : @direct_ir.Block) -> Bool {
 }
 
 ///|
-fn BlockLayout::new(blocks : Array[@direct_ir.Block]) -> BlockLayout {
+fn BlockLayout::new(
+  blocks : Array[@direct_ir.Block],
+  omitted~ : Set[Int] = Set([]),
+) -> BlockLayout {
   let labels = Array::make(blocks.length(), -1)
   let emitted = []
   let mut stop = None
   for label, block in blocks {
+    if omitted.contains(label) {
+      continue
+    }
     if shared_stop(block) && stop is Some(pc) {
       labels[label] = pc
       continue
