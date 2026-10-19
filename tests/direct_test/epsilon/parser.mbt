@@ -153,7 +153,7 @@ fn yy_parse(
           }
           continue match lookahead.unwrap().0 {
               0 => 4
-              _ => 10
+              _ => 8
             }
         })
       2 =>
@@ -206,7 +206,7 @@ fn yy_parse(
           ()
           states = @list.cons(3, states)
           data.push((_yy_p1_0, _yy_p2_0, _yy_p2_1))
-          continue 11
+          continue 10
         })
       8 =>
         ({
@@ -222,13 +222,6 @@ fn yy_parse(
           return _yy_r20
         })
       10 =>
-        ({
-          ()
-          let (_, (_, sp, ep), token) = lookahead.unwrap()
-          yy_error(error_stack, token, (sp, ep))
-          panic()
-        })
-      11 =>
         ({
           ()
           let _yy_r21 = data[data.length() - 1].0
