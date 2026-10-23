@@ -290,6 +290,9 @@ fn yy_diagnostic(state : Int, symbol : Int) -> (Int, Int, Int) {
 }
 
 ///|
+let yy_terminals : ReadOnlyArray[(Int, TokenKind)] = []
+
+///|
 fn yy_expected(stack : @list.List[Int], terminal : Int) -> Bool {
   for stack = stack, symbol = terminal {
     guard stack is More(state, ..) else {
@@ -328,7 +331,8 @@ fn yy_expected(stack : @list.List[Int], terminal : Int) -> Bool {
 ///|
 fn yy_error(stack : @list.List[Int], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
   let expected = []
-  for (symbol, kind) in ([] : Array[(Int, TokenKind)]) {
+  for i in 0..<yy_terminals.length() {
+    let (symbol, kind) = yy_terminals[i]
     if yy_expected(stack, symbol) {
       expected.push(kind)
     }

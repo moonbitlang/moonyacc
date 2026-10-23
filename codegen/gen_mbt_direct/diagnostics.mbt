@@ -7,8 +7,9 @@ fn diagnostic_items(
 ) -> Array[@mbt_ast.Item] {
   let items = diagnostic_table_items(program.diagnostics)
   items.append([
+    terminal_array(program),
     expected_function(),
-    error_function(program, position, input_mode),
+    error_function(position, input_mode),
   ])
   items
 }
@@ -84,38 +85,52 @@ fn expected_function() -> @mbt_ast.Item {
 }
 
 ///|
-fn collect_expected(program : @direct_ir.Program) -> Array[@mbt_ast.Stmt] {
+fn terminal_array(program : @direct_ir.Program) -> @mbt_ast.Item {
   let terminals : Array[@mbt_ast.Expr] = []
   for i = 1; i <= program.terminal_count; i = i + 1 {
     terminals.push(Tuple([Int(i), Ident("TK_" + program.symbols[i].name)]))
   }
-  [
-    binding("expected", Array([])),
-    ForEach(
-      [Tuple([Bind("symbol"), Bind("kind")])],
-      Ascribe(
-        Array(terminals),
-        @mbt_common.named_type("Array", [
+  @mbt_ast.item(
+    Global(
+      "yy_terminals",
+      Some(
+        @mbt_common.named_type("ReadOnlyArray", [
           Tuple([type_("Int"), type_("TokenKind")]),
         ]),
       ),
-      value_block(
-        If(
-          call("yy_expected", [Ident("stack"), Ident("symbol")]),
-          value_block(dot_call(Ident("expected"), "push", [Ident("kind")])),
+      Array(terminals),
+    ),
+  )
+}
+
+///|
+fn collect_expected() -> Array[@mbt_ast.Stmt] {
+  [
+    binding("expected", Array([])),
+    ForEach(
+      [Bind("i")],
+      Range(Int(0), dot_call(Ident("yy_terminals"), "length", []), false),
+      body([
+        Let(
+          Tuple([Bind("symbol"), Bind("kind")]),
           None,
+          Index(Ident("yy_terminals"), Ident("i")),
         ),
-      ),
+        Eval(
+          If(
+            call("yy_expected", [Ident("stack"), Ident("symbol")]),
+            value_block(dot_call(Ident("expected"), "push", [Ident("kind")])),
+            None,
+          ),
+        ),
+      ]),
     ),
   ]
 }
 
 ///|
-fn error_body(
-  program : @direct_ir.Program,
-  input_mode : @codegen.InputMode,
-) -> @mbt_ast.Block {
-  let statements = collect_expected(program)
+fn error_body(input_mode : @codegen.InputMode) -> @mbt_ast.Block {
+  let statements = collect_expected()
   match input_mode {
     Array =>
       body(
@@ -163,7 +178,6 @@ fn error_body(
 
 ///|
 fn error_function(
-  program : @direct_ir.Program,
   position : @elab.TypeExpr,
   input_mode : @codegen.InputMode,
 ) -> @mbt_ast.Item {
@@ -176,7 +190,7 @@ fn error_function(
           typed("token", Option(type_("Token"))),
           typed("loc", Tuple([position, position])),
         ],
-        error_body(program, input_mode),
+        error_body(input_mode),
         result=type_("Unit"),
         effect=Raises(type_("ParseError")),
       ),
