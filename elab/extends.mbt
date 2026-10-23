@@ -14,3 +14,8 @@ pub extend TypeExpr with Eq::{not_equal, equal}
 #deprecated("Use Show::to_string or Show::output instead")
 #doc(hidden)
 pub extend TypeExpr with Show::{to_string, output}
+
+///|
+#deprecated("Use == / != or Eq::equal instead")
+#doc(hidden)
+pub extend PositionExpr with Eq::{not_equal, equal}

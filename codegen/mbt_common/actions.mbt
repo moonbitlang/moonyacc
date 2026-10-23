@@ -7,15 +7,18 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
       let last = if sub.start == 0 {
         @mbt_ast.Expr::Ident("_last_pos")
       } else {
-        component(Index(Ident("_args"), Int(sub.start - 1)), 2)
+        self.data_position(Index(Ident("_args"), Int(sub.start - 1)), 2)
       }
       body.push(
         binding(
           "_sub_action_\{index}_result",
-          call("yy_action_\{self.action_id(sub.action)}", [
-            last,
-            Slice(Ident("_args"), Some(Int(sub.start)), Some(Int(sub.end))),
-          ]),
+          call(
+            "yy_action_\{self.action_id(sub.action)}",
+            self.action_arguments(
+              last,
+              Slice(Ident("_args"), Some(Int(sub.start)), Some(Int(sub.end))),
+            ),
+          ),
         ),
       )
     }
@@ -28,76 +31,17 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
         )
       }
     }
-    let empty_args : @mbt_ast.Expr = Binary(
-      Equal,
-      dot_call(Ident("_args"), "length", []),
-      Int(0),
-    )
-    let last_index : @mbt_ast.Expr = Binary(
-      Subtract,
-      dot_call(Ident("_args"), "length", []),
-      Int(1),
-    )
-    // JSON CST positions are computed by the shared helper. Subactions above
-    // still run in their original order before the enclosing action.
+    // Only source-used position bindings are emitted. JSON CST obtains its
+    // enclosing extent directly from the production's normalized span.
     let bindings = if action.body is JsonCst(_) { [] } else { action.bindings }
     for (subject, name) in bindings {
       match subject {
         Data(index, type_~) =>
-          unbox(name, component(Index(Ident("_args"), Int(index)), 0), type_)
+          unbox(name, self.data_value(Index(Ident("_args"), Int(index))), type_)
         SubAction(index~, type_~) =>
           unbox(name, Ident("_sub_action_\{index}_result"), type_)
-        StartPos =>
-          body.push(
-            binding(
-              name,
-              If(
-                empty_args,
-                value_block(Ident("_last_pos")),
-                Some(value_block(component(Index(Ident("_args"), Int(0)), 1))),
-              ),
-            ),
-          )
-        EndPos =>
-          body.push(
-            binding(
-              name,
-              If(
-                empty_args,
-                value_block(Ident("_last_pos")),
-                Some(
-                  value_block(component(Index(Ident("_args"), last_index), 2)),
-                ),
-              ),
-            ),
-          )
-        StartPosOf(index) | EndPosOf(index) =>
-          body.push(
-            binding(
-              name,
-              if action.arity == 0 {
-                Ident("_last_pos")
-              } else {
-                component(
-                  Index(Ident("_args"), Int(index)),
-                  if subject is StartPosOf(_) {
-                    1
-                  } else {
-                    2
-                  },
-                )
-              },
-            ),
-          )
-        SymbolStartPos => {
-          self.needs_symbol_start = true
-          body.push(
-            binding(
-              name,
-              call("_get_symbol_start_pos", [Ident("_args"), Ident("_last_pos")]),
-            ),
-          )
-        }
+        Position(position) =>
+          body.push(binding(name, self.position_expr(position)))
       }
     }
     let clause = action.original_clause_info
@@ -122,10 +66,14 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
         Function(
           @mbt_ast.function(
             "yy_action_\{self.action_id(action)}",
-            [
-              typed("_last_pos", self.meta.position_data_type),
-              typed("_args", named_type("ArrayView", [self.data_type()])),
-            ],
+            if self.pass_before_rhs {
+              [
+                typed("_last_pos", self.meta.position_data_type),
+                typed("_args", named_type("ArrayView", [self.data_type()])),
+              ]
+            } else {
+              [typed("_args", named_type("ArrayView", [self.data_type()]))]
+            },
             statements(body, result=self.action_body(action)),
             result=named_type("YYObj", []),
           ),
@@ -133,6 +81,31 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
         comments~,
       ),
     )
+  }
+  if self.override_span_start {
+    for _, action in self.reductions {
+      // Inlining preserves the end of the physical RHS. Its start is either
+      // the first physical symbol or the anchor of an erased epsilon prefix.
+      guard! action.span.0 is (BeforeRhs | StartOf(0))
+      guard! action.span.1 ==
+        (if action.arity == 0 {
+          @elab.PositionExpr::BeforeRhs
+        } else {
+          EndOf(action.arity - 1)
+        })
+      items.push(
+        @mbt_ast.item(
+          Global(
+            "yy_reduction_\{self.action_id(action)}",
+            Some(named_type("YYReduction", [])),
+            Record(None, [
+              ("action", Ident("yy_action_\{self.action_id(action)}")),
+              ("start_before_rhs", Bool(action.span.0 is BeforeRhs)),
+            ]),
+          ),
+        ),
+      )
+    }
   }
   items
 }
@@ -163,61 +136,68 @@ fn Context::action_body(self : Context, action : @elab.Action) -> @mbt_ast.Expr 
       })
       Verbatim(@mbt_ast.Fragment(pieces))
     }
-    JsonCst(name~, rule_index~, clause_index~) =>
-      return call("yy_json_cst_action", [
+    JsonCst(name~, rule_index~, clause_index~) => {
+      let args : Array[@mbt_ast.Expr] = [
         String(name),
         Int(rule_index),
         Int(clause_index),
-        Ident("_last_pos"),
-        Ident("_args"),
-      ])
+      ]
+      if self.tracks_positions() {
+        args.push(self.position_expr(action.span.0))
+        args.push(self.position_expr(action.span.1))
+      }
+      args.push(Ident("_args"))
+      return call("yy_json_cst_action", args)
+    }
   }
   call("YYObj_" + type_ident(action.type_), [value])
 }
 
 ///|
 fn Context::json_cst_action(self : Context) -> @mbt_ast.Item {
-  let positions : @mbt_ast.Expr = If(
-    Binary(Equal, dot_call(Ident("_args"), "length", []), Int(0)),
-    value_block(Tuple([Ident("_last_pos"), Ident("_last_pos")])),
-    Some(
-      value_block(
-        Tuple([
-          component(Index(Ident("_args"), Int(0)), 1),
-          component(
-            Index(
-              Ident("_args"),
-              Binary(Subtract, dot_call(Ident("_args"), "length", []), Int(1)),
-            ),
-            2,
-          ),
-        ]),
-      ),
-    ),
-  )
+  let parameters = [
+    typed("name", named_type("Json", [])),
+    typed("rule_index", named_type("Json", [])),
+    typed("clause_index", named_type("Json", [])),
+  ]
+  if self.tracks_positions() {
+    parameters.push(typed("start_pos", self.meta.position_data_type))
+    parameters.push(typed("end_pos", self.meta.position_data_type))
+  }
+  parameters.push(typed("_args", named_type("ArrayView", [self.data_type()])))
   @mbt_ast.item(
     Function(
       @mbt_ast.function(
         "yy_json_cst_action",
-        [
-          // Accept JSON literals so each wrapper can pass constant metadata.
-          typed("name", named_type("Json", [])),
-          typed("rule_index", named_type("Json", [])),
-          typed("clause_index", named_type("Json", [])),
-          typed("_last_pos", self.meta.position_data_type),
-          typed("_args", named_type("ArrayView", [self.data_type()])),
-        ],
-        statements(
-          [Let(Tuple([Bind("start_pos"), Bind("end_pos")]), None, positions)],
-          result=call("YYObj_Json", [
+        parameters,
+        value_block(
+          call("YYObj_Json", [
             Map([
               (String("type"), String("NONTERMINAL")),
               (String("name"), Ident("name")),
               (String("rule_index"), Ident("rule_index")),
               (String("clause_index"), Ident("clause_index")),
               (String("children"), call("args_to_json", [Ident("_args")])),
-              (String("start"), call("ToJson::to_json", [Ident("start_pos")])),
-              (String("end"), call("ToJson::to_json", [Ident("end_pos")])),
+              (
+                String("start"),
+                call("ToJson::to_json", [
+                  if self.tracks_positions() {
+                    Ident("start_pos")
+                  } else {
+                    Unit
+                  },
+                ]),
+              ),
+              (
+                String("end"),
+                call("ToJson::to_json", [
+                  if self.tracks_positions() {
+                    Ident("end_pos")
+                  } else {
+                    Unit
+                  },
+                ]),
+              ),
             ]),
           ]),
         ),
@@ -232,61 +212,6 @@ fn Context::json_cst_action(self : Context) -> @mbt_ast.Item {
 ///|
 pub fn Context::action_runtime(self : Context) -> Array[@mbt_ast.Item] {
   let items = []
-  let position = self.meta.position_data_type
-  if self.needs_symbol_start {
-    let body = statements(
-      [
-        For(
-          [("i", Int(0))],
-          Some(Binary(Less, Ident("i"), dot_call(Ident("args"), "length", []))),
-          [("i", Binary(Add, Ident("i"), Int(1)))],
-          statements([
-            Let(
-              Tuple([Any, Bind("start_pos"), Bind("end_pos")]),
-              None,
-              Index(Ident("args"), Ident("i")),
-            ),
-            Eval(
-              If(
-                Binary(Equal, Ident("start_pos"), Ident("end_pos")),
-                statements([Continue([])]),
-                None,
-              ),
-            ),
-            Return(Ident("start_pos")),
-          ]),
-        ),
-      ],
-      result=component(
-        Index(
-          Ident("args"),
-          Binary(Subtract, dot_call(Ident("args"), "length", []), Int(1)),
-        ),
-        2,
-      ),
-    )
-    items.push(
-      @mbt_ast.item(
-        Function(
-          @mbt_ast.function(
-            "_get_symbol_start_pos",
-            [
-              typed("args", named_type("ArrayView", [self.data_type()])),
-              typed("last_pos", position),
-            ],
-            value_block(
-              If(
-                Binary(Equal, dot_call(Ident("args"), "length", []), Int(0)),
-                value_block(Ident("last_pos")),
-                Some(body),
-              ),
-            ),
-            result=position,
-          ),
-        ),
-      ),
-    )
-  }
   if self.mode is JsonCst {
     items.push(self.json_cst_action())
     let decode : @mbt_ast.Expr = Lambda(
@@ -294,7 +219,7 @@ pub fn Context::action_runtime(self : Context) -> Array[@mbt_ast.Item] {
       statements(
         [
           Assert(
-            Is(component(Ident("it"), 0), pat("YYObj_Json", [Bind("json")])),
+            Is(self.data_value(Ident("it")), pat("YYObj_Json", [Bind("json")])),
           ),
         ],
         result=Ident("json"),

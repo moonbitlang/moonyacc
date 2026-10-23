@@ -72,7 +72,7 @@ priv suberror YYObj_Int {
 type YYState = ((YYSymbol) -> YYDecision)
 
 ///|
-type YYAction = ((Int, ArrayView[(YYObj, Int, Int)]) -> YYObj)
+type YYAction = ((ArrayView[(YYObj, Int, Int)]) -> YYObj)
 
 ///|
 priv enum YYDecision {
@@ -105,7 +105,7 @@ fn init {
 ///|
 // file:///./parser.mbty
 // 10|       expr EOF { $1 }
-fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_0(_args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int(
     ({();  _dollar1 
@@ -116,7 +116,7 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 14|    expr EQ expr { $1 + $3 }
-fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_1(_args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj_Int(_dollar1)
   guard! _args[2].0 is YYObj_Int(_dollar3)
   YYObj_Int(
@@ -128,7 +128,7 @@ fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 13|    NUMBER { $1 }
-fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_2(_args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[0].0 is YYObj_Int(_dollar1)
   YYObj_Int(
     ({();  _dollar1 
@@ -217,9 +217,9 @@ fn[T] yy_parse(
   read_token : (() -> (Token, Int, Int)), start_pos : Int, start : YYState,
   return_ : ((YYObj) -> T)
 ) -> T raise ParseError {
+  let initial_position = start_pos
   let mut state_stack : @list.List[YYState] = @list.List([start])
   let data_stack : Array[(YYObj, Int, Int)] = []
-  let mut last_pos = start_pos
   let mut state = start
   let mut lookahead : (YYSymbol, (YYObj, Int, Int), Token)? = None
   let mut last_shifted_state_stack = state_stack
@@ -253,20 +253,30 @@ fn[T] yy_parse(
           state_stack = @list.cons(next_state, state_stack)
           last_shifted_state_stack = state_stack
           state = next_state
-          last_pos = la.1.2
           lookahead = None
         })
       Reduce(count, symbol, action) | ReduceNoLookahead(count, symbol, action) =>
         ({
           ()
           for count = count, symbol = symbol, action = action {
-            let args = data_stack[data_stack.length() - count:]
-            let data = action(last_pos, args)
-            let (start_pos, end_pos) = if args.length() == 0 {
-              (last_pos, last_pos)
+            let start_index = data_stack.length() - count
+            let args = data_stack[start_index:]
+            let previous_end = if start_index == 0 {
+              initial_position
             } else {
-              (args[0].1, args[args.length() - 1].2)
+              data_stack[start_index - 1].2
             }
+            let start_pos = if count == 0 {
+              previous_end
+            } else {
+              args[0].1
+            }
+            let end_pos = if count == 0 {
+              previous_end
+            } else {
+              args[count - 1].2
+            }
+            let data = action(args)
             for _ in 0..<count {
               ignore(data_stack.unsafe_pop())
               state_stack = state_stack.unsafe_tail()
@@ -300,8 +310,8 @@ fn[T] yy_parse(
       Error =>
         ({
           ()
-          let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-          error(last_shifted_state_stack, token, (start_pos, end_pos))
+          let (_, _data, token) = lookahead.unwrap()
+          error(last_shifted_state_stack, token, (_data.1, _data.2))
         })
     }
   }

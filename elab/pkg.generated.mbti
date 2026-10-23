@@ -28,6 +28,7 @@ pub(all) struct Action {
   stamp : @stamp.Stamp
   arity : Int
   type_ : TypeExpr
+  span : (PositionExpr, PositionExpr)
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, String)]
   body : ActionBody
@@ -58,11 +59,7 @@ pub(all) enum Associativity {
 
 pub(all) enum BindingSubject {
   Data(Int, type_~ : TypeExpr)
-  StartPosOf(Int)
-  EndPosOf(Int)
-  StartPos
-  EndPos
-  SymbolStartPos
+  Position(PositionExpr)
   SubAction(index~ : Int, type_~ : TypeExpr)
 }
 
@@ -99,6 +96,16 @@ pub(all) struct ParserSpec {
   position_type : TypeExpr
   derive_map : @array_multimap.T[String, String]
 }
+
+pub(all) enum PositionExpr {
+  BeforeRhs
+  StartOf(Int)
+  EndOf(Int)
+  FirstNonEmpty(Array[(PositionExpr, PositionExpr)])
+} derive(Eq)
+pub fn PositionExpr::rebase(Self, Int) -> Self
+pub fn PositionExpr::substitute(Self, index~ : Int, arity~ : Int, span~ : (Self, Self)) -> Self
+pub fn PositionExpr::uses_before_rhs(Self) -> Bool
 
 pub(all) struct Rule {
   name : String

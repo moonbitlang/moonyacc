@@ -279,16 +279,10 @@ fn codegen(
     @mbt_ast.item(
       Global(
         "yy_prod_act_table",
-        Some(
-          @mbt_common.named_type("FixedArray", [
-            @mbt_common.named_type("YYAction", []),
-          ]),
-        ),
+        Some(@mbt_common.named_type("FixedArray", [context.reduction_type()])),
         Array(
           used_productions.map(p => {
-            @mbt_ast.Expr::Ident(
-              "yy_action_\{context.action_id((meta.production_meta)(p.num).action)}",
-            )
+            context.reduction_reference((meta.production_meta)(p.num).action)
           }),
         ),
       ),

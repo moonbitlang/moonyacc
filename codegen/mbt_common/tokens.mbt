@@ -246,8 +246,26 @@ pub fn Context::input_function(
                 call("ToJson::to_json", [Ident("data")])
               },
             ),
-            (String("start"), call("ToJson::to_json", [Ident("_start_pos")])),
-            (String("end"), call("ToJson::to_json", [Ident("_end_pos")])),
+            (
+              String("start"),
+              call("ToJson::to_json", [
+                if self.tracks_positions() {
+                  Ident("_start_pos")
+                } else {
+                  Unit
+                },
+              ]),
+            ),
+            (
+              String("end"),
+              call("ToJson::to_json", [
+                if self.tracks_positions() {
+                  Ident("_end_pos")
+                } else {
+                  Unit
+                },
+              ]),
+            ),
           ]),
         ])
     }
@@ -257,11 +275,15 @@ pub fn Context::input_function(
     Function(
       @mbt_ast.function(
         "yy_input",
-        [
-          typed("token", named_type("Token", [])),
-          typed("_start_pos", self.meta.position_data_type),
-          typed("_end_pos", self.meta.position_data_type),
-        ],
+        if self.tracks_positions() {
+          [
+            typed("token", named_type("Token", [])),
+            typed("_start_pos", self.meta.position_data_type),
+            typed("_end_pos", self.meta.position_data_type),
+          ]
+        } else {
+          [typed("token", named_type("Token", []))]
+        },
         value_block(Match(Ident("token"), arms)),
         result=Tuple([named_type("YYSymbol", []), named_type("YYObj", [])]),
       ),

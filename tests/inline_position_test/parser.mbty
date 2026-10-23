@@ -1,0 +1,19 @@
+%position<Int>
+%token P A B C
+%start<Array[(Int, Int)]> multi empty_before empty_after all_empty nested propagated
+
+%%
+
+multi: P x=pair C { [x, $loc(x), $loc($3), $loc, $sloc] };
+
+empty_before: x=empty C { [x, $loc(x), $loc, $sloc] };
+empty_after: P x=empty { [x, $loc(x), $loc, $sloc] };
+all_empty: x=empty { [x, $loc(x), $loc, $sloc] };
+
+nested: P x=outer y=empty C { x + [y, $loc(x), $loc(y), $loc($4), $loc, $sloc] };
+propagated: P x=wrapper C { x + [$loc(x), $loc($3)] };
+wrapper -> Array[(Int, Int)]: x=outer { x + [$loc, $sloc] };
+
+%inline pair -> (Int, Int): A B { ($startpos, $endpos) };
+%inline empty -> (Int, Int): { $loc };
+%inline outer -> Array[(Int, Int)]: e=empty p=pair { [e, p, $loc, $sloc] };

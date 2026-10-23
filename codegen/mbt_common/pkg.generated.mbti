@@ -37,6 +37,8 @@ pub fn Context::input_function(Self, Engine) -> @mbt_ast.Item
 pub fn Context::new(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, filename~ : String, mode~ : @codegen.Mode, input_mode~ : @codegen.InputMode) -> Self
 pub fn Context::parser_runtime(Self, Engine) -> Array[@mbt_ast.Item]
 pub fn Context::prelude(Self, external_tokens~ : Bool) -> Array[@mbt_ast.Item]
+pub fn Context::reduction_reference(Self, @elab.Action) -> @mbt_ast.Expr
+pub fn Context::reduction_type(Self) -> @elab.TypeExpr
 pub fn Context::runtime_types(Self, Engine) -> Array[@mbt_ast.Item]
 
 pub(all) enum Engine {
