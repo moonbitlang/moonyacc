@@ -70,7 +70,7 @@ fn codegen_tokens(
 ///|
 fn decompressor() -> @mbt_ast.Item {
   let int = @mbt_common.named_type("Int", [])
-  let array = @mbt_common.named_type("FixedArray", [int])
+  let array = @mbt_common.named_type("ReadOnlyArray", [int])
   let repeated : @mbt_ast.Block = {
     statements: [
       Let(
@@ -113,7 +113,7 @@ fn decompressor() -> @mbt_ast.Item {
             ),
           ],
           result: Some(
-            @mbt_common.call("FixedArray::from_array", [Ident("output")]),
+            @mbt_common.call("ReadOnlyArray::from_array", [Ident("output")]),
           ),
         },
         result=array,
@@ -248,7 +248,7 @@ fn codegen(
     }
   }
 
-  let int_array = @mbt_common.named_type("FixedArray", [
+  let int_array = @mbt_common.named_type("ReadOnlyArray", [
     @mbt_common.named_type("Int", []),
   ])
   items.push(
@@ -279,7 +279,9 @@ fn codegen(
     @mbt_ast.item(
       Global(
         "yy_prod_act_table",
-        Some(@mbt_common.named_type("FixedArray", [context.reduction_type()])),
+        Some(
+          @mbt_common.named_type("ReadOnlyArray", [context.reduction_type()]),
+        ),
         Array(
           used_productions.map(p => {
             context.reduction_reference((meta.production_meta)(p.num).action)
