@@ -29,7 +29,7 @@ pub fn value_block(@mbt_ast.Expr) -> @mbt_ast.Block
 pub struct Context {
   // private fields
 }
-pub fn Context::action_id(Self, @elab.Action) -> Int
+pub fn Context::action_id(Self, @elab.Action) -> Int32
 pub fn Context::action_items(Self) -> Array[@mbt_ast.Item]
 pub fn Context::action_runtime(Self) -> Array[@mbt_ast.Item]
 pub fn Context::footer(Self) -> Array[@mbt_ast.Item]

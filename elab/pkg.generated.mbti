@@ -18,15 +18,15 @@ pub let stdlib_mbty : String
 
 // Errors
 pub suberror ElabError {
-  UnresolvedSymbol(String, loc~ : (Int, Int))
+  UnresolvedSymbol(String, loc~ : (Int32, Int32))
   FailedToParseTypeExpr(String)
-  OutOfBoundsAccess(Int, loc~ : (Int, Int))
+  OutOfBoundsAccess(Int32, loc~ : (Int32, Int32))
 }
 
 // Types and methods
 pub(all) struct Action {
   stamp : @stamp.Stamp
-  arity : Int
+  arity : Int32
   type_ : TypeExpr
   span : (PositionExpr, PositionExpr)
   sub_actions : Array[SubAction]
@@ -38,12 +38,12 @@ pub(all) struct Action {
 pub(all) enum ActionBody {
   Default
   User(Array[ActionPiece])
-  JsonCst(name~ : String, rule_index~ : Int, clause_index~ : Int)
+  JsonCst(name~ : String, rule_index~ : Int32, clause_index~ : Int32)
 }
 
 pub(all) enum ActionPiece {
-  Text(String, offset~ : Int)
-  Reference(ActionReference, offset~ : Int, length~ : Int)
+  Text(String, offset~ : Int32)
+  Reference(ActionReference, offset~ : Int32, length~ : Int32)
 }
 
 pub(all) enum ActionReference {
@@ -58,14 +58,14 @@ pub(all) enum Associativity {
 }
 
 pub(all) enum BindingSubject {
-  Data(Int, type_~ : TypeExpr)
+  Data(Int32, type_~ : TypeExpr)
   Position(PositionExpr)
-  SubAction(index~ : Int, type_~ : TypeExpr)
+  SubAction(index~ : Int32, type_~ : TypeExpr)
 }
 
 pub(all) struct Clause {
   items : Array[Item]
-  prec : Int?
+  prec : Int32?
   action : Action
 }
 
@@ -82,14 +82,14 @@ pub(all) enum JsonCst {
 
 pub(all) struct OriginalClauseInfo {
   file : String
-  line : Int
-  column : Int
+  line : Int32
+  column : Int32
   code : String
 }
 
 pub(all) struct ParserSpec {
-  header : @vector.Vector[(String, (Int, Int)?)]
-  trailer : @vector.Vector[(String, (Int, Int)?)]
+  header : @vector.Vector[(String, (Int32, Int32)?)]
+  trailer : @vector.Vector[(String, (Int32, Int32)?)]
   tokens : Array[Token]
   rules : Map[String, Rule]
   start_rules : Array[String]
@@ -99,12 +99,12 @@ pub(all) struct ParserSpec {
 
 pub(all) enum PositionExpr {
   BeforeRhs
-  StartOf(Int)
-  EndOf(Int)
+  StartOf(Int32)
+  EndOf(Int32)
   FirstNonEmpty(Array[(PositionExpr, PositionExpr)])
 } derive(Eq)
-pub fn PositionExpr::rebase(Self, Int) -> Self
-pub fn PositionExpr::substitute(Self, index~ : Int, arity~ : Int, span~ : (Self, Self)) -> Self
+pub fn PositionExpr::rebase(Self, Int32) -> Self
+pub fn PositionExpr::substitute(Self, index~ : Int32, arity~ : Int32, span~ : (Self, Self)) -> Self
 pub fn PositionExpr::uses_before_rhs(Self) -> Bool
 
 pub(all) struct Rule {
@@ -117,8 +117,8 @@ pub(all) struct Rule {
 }
 
 pub(all) struct SubAction {
-  start : Int
-  end : Int
+  start : Int32
+  end : Int32
   action : Action
 }
 
@@ -130,7 +130,7 @@ pub(all) enum Term {
 
 pub(all) struct Token {
   name : String
-  mut prec : (Int, Associativity)?
+  mut prec : (Int32, Associativity)?
   mut type_ : TypeExpr
   mut image : String?
 }
@@ -153,7 +153,7 @@ pub impl Show for TypeExpr
 // Type aliases
 pub type Code = String
 
-pub type CodeChunk = (String, (Int, Int)?)
+pub type CodeChunk = (String, (Int32, Int32)?)
 
 pub type Symbol = String
 
