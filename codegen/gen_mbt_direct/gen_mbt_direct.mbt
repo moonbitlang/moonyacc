@@ -26,6 +26,7 @@ fn codegen(
     filename=grammar_filename,
     mode~,
     input_mode~,
+    action_calls=Direct,
   )
   let items = support.prelude(external_tokens~, require_void=true)
   // Share the integer-symbol input ABI; the parse path uses no action table.

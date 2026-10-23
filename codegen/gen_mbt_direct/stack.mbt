@@ -73,7 +73,9 @@ fn Emitter::block_instructions(
   if self.chunked && shift_target(block) is Some(target) {
     return [Eval(call("yy_shift", [Ident("_env"), Int(target)]))]
   }
-  let args = action_arguments(block, self.program.actions)
+  let args = action_arguments(block, self.program.actions, id => {
+    self.support.action_uses_before_rhs((self.meta.production_meta)(id).action)
+  })
   let statements = []
   let mut index = 0
   while index < block.instructions.length() {
@@ -88,6 +90,7 @@ fn Emitter::block_instructions(
       continue
     }
     match instruction {
+      ReadPreviousPosition(_, reg) if args.unused.contains(reg.id) => ()
       Action(id, values, last, result) if args.slices.contains(index) =>
         statements.push(self.stack_action(id, values.length(), last, result))
       Peek(depth, cell, regs) =>

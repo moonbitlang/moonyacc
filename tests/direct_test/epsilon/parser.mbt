@@ -81,7 +81,7 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 8|      { () }
-fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_1(_args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   YYObj_Unit(
     ({();  () 
     })
@@ -162,7 +162,7 @@ fn yy_parse(
           } else {
             data[data.length() - 1].2
           }
-          _yy_p1_0 = yy_action_1(_yy_p2_0, [])
+          _yy_p1_0 = yy_action_1([])
           _yy_p0_0 = states.unsafe_head()
           _yy_p2_1 = _yy_p2_0
           continue 3

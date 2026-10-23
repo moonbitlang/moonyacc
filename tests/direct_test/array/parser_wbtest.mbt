@@ -16,6 +16,14 @@ test "direct inline epsilon spans use the position before the physical RHS" {
     ),
     [(2, 2), (2, 11), (10, 11), (2, 11)],
   )
+  // The action does not read the anchor, but its enclosing span still does.
+  assert_eq(
+    inline_positions(
+      [(LPAREN, 1, 2), (STAR, 5, 6), (NUMBER(1), 10, 11), (EOF, 20, 21)],
+      initial_pos=7,
+    ),
+    [(2, 11)],
+  )
 }
 
 ///|

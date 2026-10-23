@@ -12,12 +12,10 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
       body.push(
         binding(
           "_sub_action_\{index}_result",
-          call(
-            "yy_action_\{self.action_id(sub.action)}",
-            self.action_arguments(
-              last,
-              Slice(Ident("_args"), Some(Int(sub.start)), Some(Int(sub.end))),
-            ),
+          self.action_call(
+            sub.action,
+            last,
+            Slice(Ident("_args"), Some(Int(sub.start)), Some(Int(sub.end))),
           ),
         ),
       )
@@ -66,7 +64,7 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
         Function(
           @mbt_ast.function(
             "yy_action_\{self.action_id(action)}",
-            if self.pass_before_rhs {
+            if self.action_uses_before_rhs(action) {
               [
                 typed("_last_pos", self.meta.position_data_type),
                 typed("_args", named_type("ArrayView", [self.data_type()])),

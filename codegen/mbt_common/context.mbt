@@ -15,6 +15,8 @@ pub struct Context {
   priv reductions : @hashmap2.T[@stamp.Stamp, @elab.Action]
   priv get_action_id : (@elab.Action) -> Int32
   priv pass_before_rhs : Bool
+  priv action_calls : ActionCalls
+  priv before_rhs_actions : Set[@stamp.Stamp]
   priv override_span_start : Bool
 }
 
@@ -26,6 +28,7 @@ pub fn Context::new(
   filename~ : String,
   mode~ : @codegen.Mode,
   input_mode~ : @codegen.InputMode,
+  action_calls~ : ActionCalls = Indirect,
 ) -> Context {
   let actions : @hashmap2.T[@stamp.Stamp, @elab.Action] = @hashmap2.new(
     capacity=16,
@@ -90,6 +93,12 @@ pub fn Context::new(
     actions,
     reductions,
     pass_before_rhs,
+    action_calls,
+    before_rhs_actions: if action_calls is Direct && has_positions {
+      before_rhs_actions(actions.iter().map(p => p.1))
+    } else {
+      Set([])
+    },
     override_span_start,
     get_action_id: action => ids.get(action.stamp),
   }
@@ -158,7 +167,7 @@ pub fn Context::located_data(
 }
 
 ///|
-pub fn Context::action_arguments(
+fn Context::action_arguments(
   self : Context,
   before : @mbt_ast.Expr,
   args : @mbt_ast.Expr,

@@ -7,15 +7,17 @@ fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
   let fields : Array[@mbt_ast.Field] = [
     { name: "states", type_: state_stack, mutable: true, },
     { name: "data", type_: data_stack, mutable: false, },
-    {
-      name: "initial_position",
-      type_: self.meta.position_data_type,
-      mutable: false,
-    },
     { name: "error_stack", type_: state_stack, mutable: self.saves_snapshot, },
     { name: "lookahead", type_: self.lookahead_type(), mutable: true, },
     { name: "_yy_result", type_: type_("YYObj"), mutable: true, },
   ]
+  if self.needs_initial_position {
+    fields.push({
+      name: "initial_position",
+      type_: self.meta.position_data_type,
+      mutable: false,
+    })
+  }
   if self.input_mode is Array && self.support.tracks_positions() {
     fields.push({
       name: "last_pos",
@@ -53,11 +55,13 @@ fn Emitter::context_binding(self : Emitter) -> @mbt_ast.Stmt {
   let fields : Array[(String, @mbt_ast.Expr)] = [
     ("states", Ident("states")),
     ("data", Array([])),
-    ("initial_position", Ident("initial_position")),
     ("error_stack", Ident("states")),
     ("lookahead", Ident("None")),
     ("_yy_result", Ident("YYObj_Void")),
   ]
+  if self.needs_initial_position {
+    fields.push(("initial_position", Ident("initial_position")))
+  }
   if self.input_mode is Array && self.support.tracks_positions() {
     fields.push(("last_pos", Ident("initial_position")))
   }

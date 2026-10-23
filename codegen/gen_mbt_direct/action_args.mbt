@@ -12,7 +12,10 @@ priv struct ActionArguments {
 }
 
 ///|
-fn value_uses(block : @direct_ir.Block) -> Map[Int32, Int32] {
+fn value_uses(
+  block : @direct_ir.Block,
+  uses_before : (Int32) -> Bool,
+) -> Map[Int32, Int32] {
   let uses : Map[Int32, Int32] = Map([])
   fn use_(v : @direct_ir.Value) {
     if v is Reg(r) {
@@ -34,13 +37,15 @@ fn value_uses(block : @direct_ir.Block) -> Map[Int32, Int32] {
         for v in values {
           use_(v)
         }
-      Action(_, args, last, _) => {
+      Action(id, args, last, _) => {
         for arg in args {
           use_(arg.value)
           use_(arg.start)
           use_(arg.end)
         }
-        use_(last)
+        if uses_before(id) {
+          use_(last)
+        }
       }
       _ => ()
     }
@@ -103,6 +108,7 @@ fn stack_arguments(
 fn action_arguments(
   block : @direct_ir.Block,
   actions : Array[@direct_ir.ActionSignature],
+  uses_before : (Int32) -> Bool,
 ) -> ActionArguments {
   let reads : Map[Int32, StackRead] = Map([])
   let slices = Set([])
@@ -133,11 +139,16 @@ fn action_arguments(
       _ => reads.clear()
     }
   }
-  let uses = value_uses(block)
+  let uses = value_uses(block, uses_before)
   let unused = Set([])
   for id, count in replaced {
     if uses.get(id) == Some(count) {
       unused.add(id)
+    }
+  }
+  for instruction in block.instructions {
+    if instruction is ReadPreviousPosition(_, reg) && !uses.contains(reg.id) {
+      unused.add(reg.id)
     }
   }
   { slices, unused, }
@@ -151,7 +162,7 @@ fn Emitter::stack_action(
   last : @direct_ir.Value,
   result : @direct_ir.Register,
 ) -> @mbt_ast.Stmt {
-  let action = self.support.action_id((self.meta.production_meta)(id).action)
+  let action = (self.meta.production_meta)(id).action
   let start : @mbt_ast.Expr = Binary(
     Subtract,
     dot_call(self.machine("data"), "length", []),
@@ -159,12 +170,10 @@ fn Emitter::stack_action(
   )
   self.bind_register(
     result,
-    call(
-      "yy_action_\{action}",
-      self.support.action_arguments(
-        self.value(last),
-        Slice(self.machine("data"), Some(start), None),
-      ),
+    self.support.action_call(
+      action,
+      self.value(last),
+      Slice(self.machine("data"), Some(start), None),
     ),
   )
 }

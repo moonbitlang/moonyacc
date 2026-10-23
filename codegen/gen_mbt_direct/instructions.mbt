@@ -154,20 +154,17 @@ fn Emitter::action_call(
   args : Array[@direct_ir.ActionArgument],
   last_pos : @direct_ir.Value,
 ) -> @mbt_ast.Expr {
-  let action = self.support.action_id((self.meta.production_meta)(id).action)
-  call(
-    "yy_action_\{action}",
-    self.support.action_arguments(
-      self.value(last_pos),
-      Array(
-        args.map(a => {
-          self.support.located_data(
-            self.value(a.value),
-            self.value(a.start),
-            self.value(a.end),
-          )
-        }),
-      ),
+  self.support.action_call(
+    (self.meta.production_meta)(id).action,
+    self.value(last_pos),
+    Array(
+      args.map(a => {
+        self.support.located_data(
+          self.value(a.value),
+          self.value(a.start),
+          self.value(a.end),
+        )
+      }),
     ),
   )
 }

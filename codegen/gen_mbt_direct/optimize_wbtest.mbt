@@ -128,10 +128,14 @@ test "stack argument fusion preserves escaping spans and respects effects" {
     ],
     terminator: Return(0, Reg(next)),
   }
-  let plan = action_arguments(block, actions)
+  let plan = action_arguments(block, actions, _ => true)
   assert_true(plan.slices.contains(2))
   assert_true(plan.unused.contains(v.id))
   assert_false(plan.unused.contains(sp.id))
+  assert_false(plan.unused.contains(last.id))
+  let without_anchor = action_arguments(block, actions, id => id == 1)
+  assert_true(without_anchor.unused.contains(last.id))
+  assert_false(without_anchor.unused.contains(sp.id))
   let with_effect = {
     ..block,
     instructions: [
@@ -142,5 +146,7 @@ test "stack argument fusion preserves escaping spans and respects effects" {
     ],
     terminator: Return(0, Reg(result)),
   }
-  assert_true(action_arguments(with_effect, actions).slices.is_empty())
+  assert_true(
+    action_arguments(with_effect, actions, _ => true).slices.is_empty(),
+  )
 }

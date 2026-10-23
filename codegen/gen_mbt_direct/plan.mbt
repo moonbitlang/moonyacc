@@ -13,6 +13,7 @@ priv struct Emitter {
   chunked : Bool
   consumes_input : Bool
   saves_snapshot : Bool
+  needs_initial_position : Bool
   slots : Map[Int32, (Int32, Int32)]
   maxima : Array[Int32]
   chunk_loops : Set[Int32]
@@ -45,6 +46,20 @@ fn Emitter::new(
     saves_snapshot: program.blocks
     .iter()
     .any(b => b.instructions.iter().any(i => i is SaveErrorSnapshot)),
+    needs_initial_position: program.blocks.any(block => {
+      let args = action_arguments(block, program.actions, id => {
+        support.action_uses_before_rhs((meta.production_meta)(id).action)
+      })
+      block.instructions.any(instruction => {
+        match instruction {
+          ReadPreviousPosition(_, reg) => !args.unused.contains(reg.id)
+          Push(cell, _) =>
+            support.tracks_positions() &&
+            (!cell.fields.contains(Start) || !cell.fields.contains(End))
+          _ => false
+        }
+      })
+    }),
     slots: {},
     maxima: [0, 0, 0],
     chunk_loops: Set([]),
