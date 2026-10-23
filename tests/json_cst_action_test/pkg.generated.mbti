@@ -6,17 +6,19 @@ import {
 }
 
 // Values
-pub fn start(Array[(Token, (Int, Int), (Int, Int))], initial_pos? : (Int, Int)) -> Json raise ParseError
+pub fn leading_empty(Array[(Token, (Int32, Int32), (Int32, Int32))], initial_pos? : (Int32, Int32)) -> Json raise ParseError
+
+pub fn start(Array[(Token, (Int32, Int32), (Int32, Int32))], initial_pos? : (Int32, Int32)) -> Json raise ParseError
 
 // Errors
 pub suberror ParseError {
-  UnexpectedToken(Token, ((Int, Int), (Int, Int)), Array[TokenKind])
-  UnexpectedEndOfInput((Int, Int), Array[TokenKind])
+  UnexpectedToken(Token, ((Int32, Int32), (Int32, Int32)), Array[TokenKind])
+  UnexpectedEndOfInput((Int32, Int32), Array[TokenKind])
 }
 
 // Types and methods
 pub(all) enum Token {
-  NUMBER(Int)
+  NUMBER(Int32)
   MARK
   EOF
 }

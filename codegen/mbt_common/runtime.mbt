@@ -13,10 +13,14 @@ pub fn Context::runtime_types(
       TypeAlias(
         "YYAction",
         Arrow(
-          [
-            self.meta.position_data_type,
-            named_type("ArrayView", [self.data_type()]),
-          ],
+          if self.pass_before_rhs {
+            [
+              self.meta.position_data_type,
+              named_type("ArrayView", [self.data_type()]),
+            ]
+          } else {
+            [named_type("ArrayView", [self.data_type()])]
+          },
           named_type("YYObj", []),
         ),
       ),
@@ -30,12 +34,12 @@ pub fn Context::runtime_types(
           ctor("Reduce", [
             named_type("Int", []),
             named_type("YYSymbol", []),
-            named_type("YYAction", []),
+            self.reduction_type(),
           ]),
           ctor("ReduceNoLookahead", [
             named_type("Int", []),
             named_type("YYSymbol", []),
-            named_type("YYAction", []),
+            self.reduction_type(),
           ]),
           ctor("Error", []),
         ],
@@ -44,6 +48,21 @@ pub fn Context::runtime_types(
       visibility=Private,
     ),
   ]
+  if self.override_span_start {
+    items.push(
+      @mbt_ast.item(
+        Struct("YYReduction", [
+          { name: "action", type_: named_type("YYAction", []), mutable: false, },
+          {
+            name: "start_before_rhs",
+            type_: named_type("Bool", []),
+            mutable: false,
+          },
+        ]),
+        visibility=Private,
+      ),
+    )
+  }
   if engine is Table {
     items.push(@mbt_ast.item(TypeAlias("YYSymbol", named_type("Int", []))))
   }
@@ -78,6 +97,20 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
   if self.input_mode is Array {
     body.push(@mbt_ast.Stmt::LetMut("cursor", None, Int(0)))
   }
+  let initial : @mbt_ast.Expr = if self.input_mode is Array {
+    dot_call(Ident("initial_pos"), "unwrap_or_else", [
+      Lambda([], value_block(component(Index(Ident("tokens"), Int(0)), 1))),
+    ])
+  } else {
+    Ident("start_pos")
+  }
+  if self.tracks_positions() {
+    body.push(binding("initial_position", initial))
+  } else {
+    // Preserve the entry point's initial-position validation while erasing
+    // the internal Unit position fields.
+    body.push(Eval(call("ignore", [initial])))
+  }
   body.append([
     LetMut(
       "state_stack",
@@ -88,17 +121,6 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
       "data_stack",
       Array([]),
       type_=named_type("Array", [self.data_type()]),
-    ),
-    LetMut(
-      "last_pos",
-      None,
-      if self.input_mode is Array {
-        dot_call(Ident("initial_pos"), "unwrap_or_else", [
-          Lambda([], value_block(component(Index(Ident("tokens"), Int(0)), 1))),
-        ])
-      } else {
-        Ident("start_pos")
-      },
     ),
     LetMut("state", None, Ident("start")),
     LetMut(
@@ -120,9 +142,24 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
     ),
     LetMut("last_shifted_state_stack", None, Ident("state_stack")),
   ])
+  if self.input_mode is Array && self.tracks_positions() {
+    body.push(LetMut("last_pos", None, Ident("initial_position")))
+  }
   let read_statements : Array[@mbt_ast.Stmt] = [
     Let(
-      Tuple([Bind("token"), Bind("start_pos"), Bind("end_pos")]),
+      Tuple([
+        Bind("token"),
+        if self.tracks_positions() {
+          Bind("start_pos")
+        } else {
+          Any
+        },
+        if self.tracks_positions() {
+          Bind("end_pos")
+        } else {
+          Any
+        },
+      ]),
       None,
       if self.input_mode is Array {
         Index(Ident("tokens"), Ident("cursor"))
@@ -138,14 +175,21 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
     Let(
       Tuple([Bind("symbol"), Bind("data")]),
       None,
-      call("yy_input", [Ident("token"), Ident("start_pos"), Ident("end_pos")]),
+      call(
+        "yy_input",
+        if self.tracks_positions() {
+          [Ident("token"), Ident("start_pos"), Ident("end_pos")]
+        } else {
+          [Ident("token")]
+        },
+      ),
     ),
     Assign(
       Ident("lookahead"),
       call("Some", [
         Tuple([
           Ident("symbol"),
-          Tuple([Ident("data"), Ident("start_pos"), Ident("end_pos")]),
+          self.located_data(Ident("data"), Ident("start_pos"), Ident("end_pos")),
           if self.input_mode is Array {
             call("Some", [Ident("token")])
           } else {
@@ -172,11 +216,11 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
                 call("Some", [
                   Tuple([
                     engine.eoi(),
-                    Tuple([
+                    self.located_data(
                       Ident("YYObj_Void"),
                       Ident("last_pos"),
                       Ident("last_pos"),
-                    ]),
+                    ),
                     Ident("None"),
                   ]),
                 ]),
@@ -216,11 +260,11 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
   let accept = statements([
     @mbt_ast.Stmt::Return(
       call("return_", [
-        component(dot_call(Ident("data_stack"), "unsafe_pop", []), 0),
+        self.data_value(dot_call(Ident("data_stack"), "unsafe_pop", [])),
       ]),
     ),
   ])
-  let shift = statements([
+  let shift_statements : Array[@mbt_ast.Stmt] = [
     Assert(Is(Ident("lookahead"), pat("Some", [Bind("la")]))),
     Eval(dot_call(Ident("data_stack"), "push", [component(Ident("la"), 1)])),
     Assign(
@@ -229,12 +273,112 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
     ),
     Assign(Ident("last_shifted_state_stack"), Ident("state_stack")),
     Assign(Ident("state"), Ident("next_state")),
-    Assign(Ident("last_pos"), component(component(Ident("la"), 1), 2)),
-    Assign(Ident("lookahead"), Ident("None")),
-  ])
+  ]
+  if self.input_mode is Array && self.tracks_positions() {
+    shift_statements.push(
+      Assign(Ident("last_pos"), component(component(Ident("la"), 1), 2)),
+    )
+  }
+  shift_statements.push(Assign(Ident("lookahead"), Ident("None")))
+  let shift = statements(shift_statements)
   let reduce_pattern : @mbt_ast.Pattern = Or([
     pat("Reduce", [Bind("count"), Bind("symbol"), Bind("action")]),
     pat("ReduceNoLookahead", [Bind("count"), Bind("symbol"), Bind("action")]),
+  ])
+  let reduce_body : Array[@mbt_ast.Stmt] = [
+    binding(
+      "start_index",
+      Binary(
+        Subtract,
+        dot_call(Ident("data_stack"), "length", []),
+        Ident("count"),
+      ),
+    ),
+    binding(
+      "args",
+      Slice(Ident("data_stack"), Some(Ident("start_index")), None),
+    ),
+  ]
+  if self.tracks_positions() {
+    reduce_body.append([
+      binding(
+        "previous_end",
+        If(
+          Binary(Equal, Ident("start_index"), Int(0)),
+          value_block(Ident("initial_position")),
+          Some(
+            value_block(
+              component(
+                Index(
+                  Ident("data_stack"),
+                  Binary(Subtract, Ident("start_index"), Int(1)),
+                ),
+                2,
+              ),
+            ),
+          ),
+        ),
+      ),
+      binding(
+        "start_pos",
+        If(
+          if self.override_span_start {
+            Field(Ident("action"), Named("start_before_rhs"))
+          } else {
+            Binary(Equal, Ident("count"), Int(0))
+          },
+          value_block(Ident("previous_end")),
+          Some(value_block(component(Index(Ident("args"), Int(0)), 1))),
+        ),
+      ),
+      binding(
+        "end_pos",
+        If(
+          Binary(Equal, Ident("count"), Int(0)),
+          value_block(Ident("previous_end")),
+          Some(
+            value_block(
+              component(
+                Index(Ident("args"), Binary(Subtract, Ident("count"), Int(1))),
+                2,
+              ),
+            ),
+          ),
+        ),
+      ),
+    ])
+  }
+  reduce_body.push(
+    binding(
+      "data",
+      apply(
+        if self.override_span_start {
+          Field(Ident("action"), Named("action"))
+        } else {
+          Ident("action")
+        },
+        self.action_arguments(Ident("previous_end"), Ident("args")),
+      ),
+    ),
+  )
+  reduce_body.append([
+    ForEach(
+      [Any],
+      Range(Int(0), Ident("count"), false),
+      statements([
+        Eval(call("ignore", [dot_call(Ident("data_stack"), "unsafe_pop", [])])),
+        Assign(
+          Ident("state_stack"),
+          dot_call(Ident("state_stack"), "unsafe_tail", []),
+        ),
+      ]),
+    ),
+    Assign(Ident("state"), dot_call(Ident("state_stack"), "unsafe_head", [])),
+    Eval(
+      dot_call(Ident("data_stack"), "push", [
+        self.located_data(Ident("data"), Ident("start_pos"), Ident("end_pos")),
+      ]),
+    ),
   ])
   let reduce = statements([
     For(
@@ -246,71 +390,7 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
       None,
       [],
       statements(
-        [
-          binding(
-            "args",
-            Slice(
-              Ident("data_stack"),
-              Some(
-                Binary(
-                  Subtract,
-                  dot_call(Ident("data_stack"), "length", []),
-                  Ident("count"),
-                ),
-              ),
-              None,
-            ),
-          ),
-          binding("data", call("action", [Ident("last_pos"), Ident("args")])),
-          Let(
-            Tuple([Bind("start_pos"), Bind("end_pos")]),
-            None,
-            If(
-              Binary(Equal, dot_call(Ident("args"), "length", []), Int(0)),
-              value_block(Tuple([Ident("last_pos"), Ident("last_pos")])),
-              Some(
-                value_block(
-                  Tuple([
-                    component(Index(Ident("args"), Int(0)), 1),
-                    component(
-                      Index(
-                        Ident("args"),
-                        Binary(
-                          Subtract,
-                          dot_call(Ident("args"), "length", []),
-                          Int(1),
-                        ),
-                      ),
-                      2,
-                    ),
-                  ]),
-                ),
-              ),
-            ),
-          ),
-          ForEach(
-            [Any],
-            Range(Int(0), Ident("count"), false),
-            statements([
-              Eval(
-                call("ignore", [dot_call(Ident("data_stack"), "unsafe_pop", [])]),
-              ),
-              Assign(
-                Ident("state_stack"),
-                dot_call(Ident("state_stack"), "unsafe_tail", []),
-              ),
-            ]),
-          ),
-          Assign(
-            Ident("state"),
-            dot_call(Ident("state_stack"), "unsafe_head", []),
-          ),
-          Eval(
-            dot_call(Ident("data_stack"), "push", [
-              Tuple([Ident("data"), Ident("start_pos"), Ident("end_pos")]),
-            ]),
-          ),
-        ],
+        reduce_body,
         result=Match(engine.lookup(Ident("state"), Ident("symbol")), [
           (pat("Accept", []), accept),
           (
@@ -338,11 +418,7 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
   let error = statements(
     [
       Let(
-        Tuple([
-          Any,
-          Tuple([Any, Bind("start_pos"), Bind("end_pos")]),
-          Bind("token"),
-        ]),
+        Tuple([Any, Bind("_data"), Bind("token")]),
         None,
         dot_call(Ident("lookahead"), "unwrap", []),
       ),
@@ -350,7 +426,10 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
     result=call("error", [
       Ident("last_shifted_state_stack"),
       Ident("token"),
-      Tuple([Ident("start_pos"), Ident("end_pos")]),
+      Tuple([
+        self.data_position(Ident("_data"), 1),
+        self.data_position(Ident("_data"), 2),
+      ]),
     ]),
   )
   body.push(

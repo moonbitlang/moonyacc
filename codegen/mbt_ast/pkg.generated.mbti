@@ -8,22 +8,22 @@ import {
 }
 
 // Values
-pub fn emit(Array[Item], @logger_with_cursor.LoggerWithCursor, source_map_builder? : &@codegen.SourceMapBuilder, width? : Int) -> Unit
+pub fn emit(Array[Item], @logger_with_cursor.LoggerWithCursor, source_map_builder? : &@codegen.SourceMapBuilder, width? : Int32) -> Unit
 
-pub fn fragment(ArrayView[(String, (Int, Int)?)], source~ : String) -> Fragment
+pub fn fragment(ArrayView[(String, (Int32, Int32)?)], source~ : String) -> Fragment
 
 pub fn function(String, Array[Parameter], Block, result? : @elab.TypeExpr, effect? : Effect, type_parameters? : Array[TypeParameter]) -> Function
 
 pub fn item(Declaration, visibility? : Visibility, attributes? : Array[Attribute], comments? : Array[String]) -> Item
 
-pub fn render(Array[Item], width? : Int) -> Output
+pub fn render(Array[Item], width? : Int32) -> Output
 
 // Errors
 
 // Types and methods
 pub(all) enum Accessor {
   Named(String)
-  Tuple(Int)
+  Tuple(Int32)
 }
 
 pub(all) enum Argument {
@@ -89,7 +89,7 @@ pub(all) enum Effect {
 
 pub(all) enum Expr {
   Ident(String)
-  Int(Int)
+  Int(Int32)
   Bool(Bool)
   String(String)
   Char(Char)
@@ -141,8 +141,8 @@ pub(all) struct Item {
 
 pub(all) struct Origin {
   source : String
-  offset : Int
-  length : Int
+  offset : Int32
+  length : Int32
 }
 
 pub(all) struct Output {
@@ -159,7 +159,7 @@ pub(all) enum Parameter {
 pub(all) enum Pattern {
   Any
   Bind(String)
-  Int(Int)
+  Int(Int32)
   Bool(Bool)
   String(String)
   Tuple(Array[Pattern])
@@ -167,7 +167,7 @@ pub(all) enum Pattern {
   Or(Array[Pattern])
   As(Pattern, String)
   Rest
-  Range(Int, Int?, Bool)
+  Range(Int32, Int32?, Bool)
 }
 
 pub(all) enum Piece {

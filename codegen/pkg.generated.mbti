@@ -21,12 +21,12 @@ pub(all) enum InputMode {
 }
 
 pub(all) struct MetaProvider {
-  header : @vector.Vector[(String, (Int, Int)?)]
-  footer : @vector.Vector[(String, (Int, Int)?)]
+  header : @vector.Vector[(String, (Int32, Int32)?)]
+  footer : @vector.Vector[(String, (Int32, Int32)?)]
   position_data_type : @elab.TypeExpr
   terminal_meta : (String) -> TerminalMeta
   nonterminal_meta : (String) -> NonTerminalMeta
-  production_meta : (Int) -> ProductionMeta
+  production_meta : (Int32) -> ProductionMeta
   derive_map : @array_multimap.T[String, String]
 }
 
@@ -51,9 +51,9 @@ pub impl SourceMapBuilder for SourceMap
 
 pub(all) struct SourceMapping {
   source : String
-  original_offset : Int
-  generated_offset : Int
-  length : Int
+  original_offset : Int32
+  generated_offset : Int32
+  length : Int32
 } derive(ToJson)
 
 pub(all) struct TerminalMeta {
@@ -75,5 +75,5 @@ pub(open) trait CodeGenerator {
 }
 
 pub trait SourceMapBuilder {
-  fn add_mapping(Self, String, Int, Int, Int) -> Unit
+  fn add_mapping(Self, String, Int32, Int32, Int32) -> Unit
 }

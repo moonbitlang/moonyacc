@@ -16,8 +16,8 @@ pub(all) enum Associativity {
 pub struct BuilderContext {
   // private fields
 }
-pub fn BuilderContext::add_production(Self, String, Array[String]) -> Int
-pub fn BuilderContext::set_prec(Self, String, Associativity, Int) -> Unit
+pub fn BuilderContext::add_production(Self, String, Array[String]) -> Int32
+pub fn BuilderContext::set_prec(Self, String, Associativity, Int32) -> Unit
 pub fn BuilderContext::set_start(Self, String) -> Unit
 
 pub(all) struct Grammar {
@@ -28,7 +28,7 @@ pub(all) struct Grammar {
 }
 
 pub(all) struct Nonterminal {
-  mut num : Int
+  mut num : Int32
   name : String
   productions : Array[Production]
 }
@@ -44,12 +44,12 @@ pub(all) enum Nullability {
 } derive(Eq)
 
 pub(all) struct Production {
-  mut num : Int
+  mut num : Int32
   lhs : Nonterminal
   rhs : Array[Symbol]
-  mut prec : Int?
+  mut prec : Int32?
 }
-pub fn[Logger : Logger] Production::output_with_opt_dot(Self, Logger, dot? : Int) -> Unit
+pub fn[Logger : Logger] Production::output_with_opt_dot(Self, Logger, dot? : Int32) -> Unit
 pub impl Compare for Production
 pub impl Eq for Production
 pub impl Hash for Production
@@ -62,9 +62,9 @@ pub(all) enum Symbol {
 pub impl Show for Symbol
 
 pub(all) struct Terminal {
-  mut num : Int
+  mut num : Int32
   name : String
-  mut prec : (Int, Associativity)?
+  mut prec : (Int32, Associativity)?
 }
 pub impl Compare for Terminal
 pub impl Eq for Terminal

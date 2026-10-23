@@ -8,25 +8,25 @@ import {
 // Values
 pub let binary_search_ml : String
 
-pub fn implementation(() -> (Token, Int, Int), Int) -> Json raise ParseError
+pub fn implementation(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
 
-pub fn interface(() -> (Token, Int, Int), Int) -> Json raise ParseError
+pub fn interface(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
 
 pub fn new_lexer(String) -> Lexer
 
-pub fn parse_core_type(() -> (Token, Int, Int), Int) -> Json raise ParseError
+pub fn parse_core_type(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
 
-pub fn parse_expression(() -> (Token, Int, Int), Int) -> Json raise ParseError
+pub fn parse_expression(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
 
-pub fn parse_pattern(() -> (Token, Int, Int), Int) -> Json raise ParseError
+pub fn parse_pattern(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
 
-pub fn toplevel_phrase(() -> (Token, Int, Int), Int) -> Json raise ParseError
+pub fn toplevel_phrase(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
 
-pub fn use_file(() -> (Token, Int, Int), Int) -> Json raise ParseError
+pub fn use_file(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
 
 // Errors
 pub suberror ParseError {
-  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
+  UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
 }
 
 // Types and methods
@@ -34,7 +34,7 @@ pub(all) struct Lexer {
   base : StringView
   mut rest : StringView
 }
-pub fn Lexer::next_token(Self) -> (Token, Int, Int)
+pub fn Lexer::next_token(Self) -> (Token, Int32, Int32)
 
 pub(all) enum Token {
   AMPERAMPER

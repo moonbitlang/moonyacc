@@ -2,7 +2,7 @@
 package "moonbitlang/yacc/driver/util"
 
 // Values
-pub fn[T] exit(Int) -> T
+pub fn[T] exit(Int32) -> T
 
 pub fn path_basename(String) -> String
 

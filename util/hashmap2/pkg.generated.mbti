@@ -2,7 +2,7 @@
 package "moonbitlang/yacc/util/hashmap2"
 
 // Values
-pub fn[K, V] new(capacity~ : Int) -> T[K, V]
+pub fn[K, V] new(capacity~ : Int32) -> T[K, V]
 
 // Errors
 
@@ -14,7 +14,7 @@ pub fn[K : Hash + Eq, V] T::get_or_init(Self[K, V], K, (K) -> V) -> V
 pub fn[K, V] T::iter(Self[K, V]) -> Iter[(K, V)]
 pub fn[K, V] T::iterator2(Self[K, V]) -> Iter2[K, V]
 pub fn[K : Hash + Eq, V] T::set(Self[K, V], K, V) -> Unit
-pub fn[K, V] T::size(Self[K, V]) -> Int
+pub fn[K, V] T::size(Self[K, V]) -> Int32
 
 // Type aliases
 

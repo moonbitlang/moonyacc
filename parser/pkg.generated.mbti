@@ -9,30 +9,30 @@ import {
 // Values
 pub fn new_lexer(String) -> Lexer
 
-pub fn spec(() -> (Token, Int, Int), Int) -> @ast.ParserSpec raise ParseError
+pub fn spec(() -> (Token, Int32, Int32), Int32) -> @ast.ParserSpec raise ParseError
 
 // Errors
 pub suberror LexError {
   UnexpectedEndOfFile
-  Unrecognized(Char, Int)
+  Unrecognized(Char, Int32)
 }
 
 pub suberror ParseError {
-  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
+  UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
 }
 
 // Types and methods
 type Lexer
-pub fn Lexer::next_token(Self) -> (Token, Int, Int) raise LexError
+pub fn Lexer::next_token(Self) -> (Token, Int32, Int32) raise LexError
 
 pub(all) enum Token {
   EOF
   IDENT(String)
   STRING(String)
   LANGLE_CODE_RANGLE(String)
-  LBRACE_CODE_RBRACE((String, Int, Array[@ast.SubstItem]))
-  PERCENT_LBRACE_CODE_PERCENT_RBRACE((String, Int, Int))
-  PERCENT_PERCENT_CODE_EOF((String, Int, Int))
+  LBRACE_CODE_RBRACE((String, Int32, Array[@ast.SubstItem]))
+  PERCENT_LBRACE_CODE_PERCENT_RBRACE((String, Int32, Int32))
+  PERCENT_PERCENT_CODE_EOF((String, Int32, Int32))
   PKG_AND_IDENT((String, String))
   PERCENT_PERCENT
   PERCENT_START

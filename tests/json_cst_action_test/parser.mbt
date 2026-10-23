@@ -79,9 +79,15 @@ type YYAction = (((Int, Int), ArrayView[(YYObj, (Int, Int), (Int, Int))]) -> YYO
 priv enum YYDecision {
   Accept
   Shift(YYState)
-  Reduce(Int, YYSymbol, YYAction)
-  ReduceNoLookahead(Int, YYSymbol, YYAction)
+  Reduce(Int, YYSymbol, YYReduction)
+  ReduceNoLookahead(Int, YYSymbol, YYReduction)
   Error
+}
+
+///|
+priv struct YYReduction {
+  action : YYAction
+  start_before_rhs : Bool
 }
 
 ///|
@@ -94,7 +100,7 @@ fn yy_action_1(
   _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
 ) -> YYObj {
   let _sub_action_0_result = yy_action_0(_args[0].2, _args[1:2])
-  yy_json_cst_action("start", 0, 0, _last_pos, _args)
+  yy_json_cst_action("start", 0, 0, _args[0].1, _args[2].2, _args)
 }
 
 ///|
@@ -103,7 +109,7 @@ fn yy_action_1(
 fn yy_action_0(
   _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
 ) -> YYObj {
-  yy_json_cst_action("atom", 2, 0, _last_pos, _args)
+  yy_json_cst_action("atom", 2, 0, _args[0].1, _args[0].2, _args)
 }
 
 ///|
@@ -112,7 +118,7 @@ fn yy_action_0(
 fn yy_action_2(
   _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
 ) -> YYObj {
-  yy_json_cst_action("prefix", 1, 1, _last_pos, _args)
+  yy_json_cst_action("prefix", 1, 1, _args[0].1, _args[0].2, _args)
 }
 
 ///|
@@ -121,8 +127,43 @@ fn yy_action_2(
 fn yy_action_3(
   _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
 ) -> YYObj {
-  yy_json_cst_action("prefix", 1, 0, _last_pos, _args)
+  yy_json_cst_action("prefix", 1, 0, _last_pos, _last_pos, _args)
 }
+
+///|
+// file:///./parser.mbty
+// 11|               empty NUMBER EOF { () }
+fn yy_action_5(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  let _sub_action_0_result = yy_action_4(_last_pos, _args[0:0])
+  yy_json_cst_action("leading_empty", 3, 0, _last_pos, _args[1].2, _args)
+}
+
+///|
+// file:///./parser.mbty
+// 12|               { () }
+fn yy_action_4(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  yy_json_cst_action("empty", 4, 0, _last_pos, _last_pos, _args)
+}
+
+///|
+let yy_reduction_1 : YYReduction = {
+  action: yy_action_1, start_before_rhs: false
+}
+
+///|
+let yy_reduction_2 : YYReduction = {
+  action: yy_action_2, start_before_rhs: false
+}
+
+///|
+let yy_reduction_3 : YYReduction = {action: yy_action_3, start_before_rhs: true}
+
+///|
+let yy_reduction_5 : YYReduction = {action: yy_action_5, start_before_rhs: true}
 
 ///|
 fn yy_input(token : Token, _start_pos : (Int, Int), _end_pos : (Int, Int)) -> (
@@ -166,38 +207,40 @@ fn yy_input(token : Token, _start_pos : (Int, Int), _end_pos : (Int, Int)) -> (
 }
 
 ///|
-let yy_prod_lhs_table : FixedArray[Int] = [4, 5, 5]
+let yy_prod_lhs_table : FixedArray[Int] = [4, 5, 5, 6]
 
 ///|
-let yy_prod_len_table : FixedArray[Int] = [3, 0, 1]
+let yy_prod_len_table : FixedArray[Int] = [3, 0, 1, 2]
 
 ///|
-let yy_prod_act_table : FixedArray[YYAction] = [
-  yy_action_1, yy_action_3, yy_action_2
+let yy_prod_act_table : FixedArray[YYReduction] = [
+  yy_reduction_1, yy_reduction_3, yy_reduction_2, yy_reduction_5
 ]
 
 ///|
 let yy_state_table : FixedArray[Int] = [
-  0, 9, 4, 0, 3, 5, 0, 1, 0, 0, 0, 0, 0, 0, 0, 13, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0,
-  0, 0, 0, 0, 0, 7, 0, 0, 0, 11, 0, 0, 0, 0, 0, 0
+  0, 4, 0, 0, 0, 0, 3, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0,
+  0, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 13, 8, 0, 7, 9, 0, 0, 0, 1, 0, 0, 0, 0, 0,
+  0, 0, 0, 0, 18, 0, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11,
+  0, 0, 0, 0, 0, 16, 0, 0, 0, 0, 0, 0, 0, 0
 ]
 
 ///|
 fn yy_state(state : YYState, symbol : YYSymbol) -> YYDecision {
-  let encoded = yy_state_table[state * 7 + symbol]
+  let encoded = yy_state_table[state * 9 + symbol]
   match encoded {
     0 => Error
     1 => Accept
-    2..=7 => Shift(encoded - 2)
-    8..=10 =>
+    2..=11 => Shift(encoded - 2)
+    12..=15 =>
       Reduce(
-        yy_prod_len_table[encoded - 8], yy_prod_lhs_table[encoded - 8],
-        yy_prod_act_table[encoded - 8]
+        yy_prod_len_table[encoded - 12], yy_prod_lhs_table[encoded - 12],
+        yy_prod_act_table[encoded - 12]
       )
-    11..<_ =>
+    16..<_ =>
       ReduceNoLookahead(
-        yy_prod_len_table[encoded - 11], yy_prod_lhs_table[encoded - 11],
-        yy_prod_act_table[encoded - 11]
+        yy_prod_len_table[encoded - 16], yy_prod_lhs_table[encoded - 16],
+        yy_prod_act_table[encoded - 16]
       )
     _ => panic()
   }
@@ -209,12 +252,13 @@ fn[T] yy_parse(
   return_ : ((YYObj) -> T), initial_pos? : (Int, Int)
 ) -> T raise ParseError {
   let mut cursor = 0
+  let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut state_stack : @list.List[YYState] = @list.List([start])
   let data_stack : Array[(YYObj, (Int, Int), (Int, Int))] = []
-  let mut last_pos = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut state = start
   let mut lookahead : (YYSymbol, (YYObj, (Int, Int), (Int, Int)), Token?)? = None
   let mut last_shifted_state_stack = state_stack
+  let mut last_pos = initial_position
   while true {
     let decision = match yy_state(state, 0) {
       (ReduceNoLookahead(_) | Accept) as t => t
@@ -257,13 +301,24 @@ fn[T] yy_parse(
         ({
           ()
           for count = count, symbol = symbol, action = action {
-            let args = data_stack[data_stack.length() - count:]
-            let data = action(last_pos, args)
-            let (start_pos, end_pos) = if args.length() == 0 {
-              (last_pos, last_pos)
+            let start_index = data_stack.length() - count
+            let args = data_stack[start_index:]
+            let previous_end = if start_index == 0 {
+              initial_position
             } else {
-              (args[0].1, args[args.length() - 1].2)
+              data_stack[start_index - 1].2
             }
+            let start_pos = if action.start_before_rhs {
+              previous_end
+            } else {
+              args[0].1
+            }
+            let end_pos = if count == 0 {
+              previous_end
+            } else {
+              args[count - 1].2
+            }
+            let data = (action.action)(previous_end, args)
             for _ in 0..<count {
               ignore(data_stack.unsafe_pop())
               state_stack = state_stack.unsafe_tail()
@@ -297,8 +352,8 @@ fn[T] yy_parse(
       Error =>
         ({
           ()
-          let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-          error(last_shifted_state_stack, token, (start_pos, end_pos))
+          let (_, _data, token) = lookahead.unwrap()
+          error(last_shifted_state_stack, token, (_data.1, _data.2))
         })
     }
   }
@@ -364,6 +419,21 @@ pub fn start(
   tokens : Array[(Token, (Int, Int), (Int, Int))], initial_pos? : (Int, Int)
 ) -> Json raise ParseError {
   yy_parse(
+    tokens, 4,
+    (it) =>
+      ({
+        ()
+        guard! it is YYObj_Json(result)
+        result
+      }), initial_pos?
+  )
+}
+
+///|
+pub fn leading_empty(
+  tokens : Array[(Token, (Int, Int), (Int, Int))], initial_pos? : (Int, Int)
+) -> Json raise ParseError {
+  yy_parse(
     tokens, 0,
     (it) =>
       ({
@@ -377,14 +447,9 @@ pub fn start(
 ///|
 #inline(never)
 fn yy_json_cst_action(
-  name : Json, rule_index : Json, clause_index : Json, _last_pos : (Int, Int),
-  _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+  name : Json, rule_index : Json, clause_index : Json, start_pos : (Int, Int),
+  end_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
 ) -> YYObj {
-  let (start_pos, end_pos) = if _args.length() == 0 {
-    (_last_pos, _last_pos)
-  } else {
-    (_args[0].1, _args[_args.length() - 1].2)
-  }
   YYObj_Json(
     {
       "type": "NONTERMINAL", "name": name, "rule_index": rule_index,

@@ -36,18 +36,18 @@ pub(all) enum Decision {
   Conflict(@list.List[Decision])
 } derive(Eq)
 
-pub(all) struct EncodedLR0Item(Int) derive(Compare, Eq, Hash)
+pub(all) struct EncodedLR0Item(Int32) derive(Compare, Eq, Hash)
 pub fn EncodedLR0Item::decode(Self, @grm.Grammar) -> LR0Item
 pub fn EncodedLR0Item::decode_postdot(Self, @grm.Grammar) -> @grm.Symbol?
 pub fn EncodedLR0Item::decode_production(Self, @grm.Grammar) -> @grm.Production
-pub fn EncodedLR0Item::new(@grm.Production, Int) -> Self
+pub fn EncodedLR0Item::new(@grm.Production, Int32) -> Self
 pub fn EncodedLR0Item::unsafe_shift(Self) -> Self
 
 pub(all) struct EncodedLR0ItemSet {
   items : Array[EncodedLR0Item]
-  mut hash : Int?
+  mut hash : Int32?
 }
-pub fn EncodedLR0ItemSet::decode_iter(Self, @grm.Grammar) -> Iter[(Int, LR0Item)]
+pub fn EncodedLR0ItemSet::decode_iter(Self, @grm.Grammar) -> Iter[(Int32, LR0Item)]
 pub fn EncodedLR0ItemSet::empty() -> Self
 pub fn EncodedLR0ItemSet::from_sorted_array(Array[EncodedLR0Item]) -> Self
 pub impl Default for EncodedLR0ItemSet
@@ -58,15 +58,15 @@ type EncodedLR1ItemSet
 
 pub(all) struct LR0Item {
   production : @grm.Production
-  dot : Int
+  dot : Int32
 } derive(Compare, Eq, Hash)
-pub fn LR0Item::new(@grm.Production, Int) -> Self
+pub fn LR0Item::new(@grm.Production, Int32) -> Self
 pub fn LR0Item::postdot(Self) -> @grm.Symbol?
 pub fn LR0Item::shift(Self) -> Self
 
 pub(all) struct LR1Item {
   production : @grm.Production
-  dot : Int
+  dot : Int32
   lookahead : Lookahead
 } derive(Compare, Eq)
 pub fn LR1Item::core(Self) -> LR0Item
@@ -82,7 +82,7 @@ pub impl Show for LR1ItemGroup
 
 pub(all) struct LR1State {
   grammar : @grm.Grammar
-  mut num : Int
+  mut num : Int32
   items : EncodedLR1ItemSet
   goto : @sorted_map.SortedMap[@grm.Symbol, LR1State]
   action : @sorted_map.SortedMap[Lookahead, Decision]

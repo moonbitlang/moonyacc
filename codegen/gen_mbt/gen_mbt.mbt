@@ -168,8 +168,8 @@ fn codegen(
           @mbt_common.call(name, [
             Int(count),
             Ident("NT_" + derive_nonterminal_ident(nt)),
-            Ident(
-              "yy_action_\{context.action_id((meta.production_meta)(production).action)}",
+            context.reduction_reference(
+              (meta.production_meta)(production).action,
             ),
           ])
         }
