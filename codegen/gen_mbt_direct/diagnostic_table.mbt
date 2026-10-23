@@ -2,16 +2,16 @@
 priv struct DiagnosticTable {
   // Negative entries encode a constant decision as -(decision + 1).
   // Otherwise the entry points to [count, symbol, decision, ...] in data.
-  rows : Array[Int]
-  data : Array[Int]
-  reductions : Array[(Int, Int)]
+  rows : Array[Int32]
+  data : Array[Int32]
+  reductions : Array[(Int32, Int32)]
 }
 
 ///|
 priv struct DiagnosticEncoder {
-  state_count : Int
-  reductions : Array[(Int, Int)]
-  reduction_ids : Map[(Int, Int), Int]
+  state_count : Int32
+  reductions : Array[(Int32, Int32)]
+  reduction_ids : Map[(Int32, Int32), Int32]
 }
 
 ///|
@@ -20,7 +20,7 @@ priv struct DiagnosticEncoder {
 fn DiagnosticEncoder::encode(
   self : DiagnosticEncoder,
   action : @direct_ir.DiagnosticAction,
-) -> Int {
+) -> Int32 {
   match action {
     Accept => 1
     Shift(state) => state + 2
@@ -44,7 +44,7 @@ fn DiagnosticEncoder::encode(
 fn DiagnosticEncoder::entries(
   self : DiagnosticEncoder,
   state : @direct_ir.DiagnosticState,
-) -> Array[(Int, Int)] {
+) -> Array[(Int32, Int32)] {
   let entries = state.actions.map(p => (token_id(p.0), self.encode(p.1)))
   for (symbol, target) in state.gotos {
     entries.push((symbol, self.encode(Shift(target))))
@@ -66,7 +66,7 @@ fn diagnostic_table(
   }
   let rows = []
   let data = []
-  let shared : Map[Array[(Int, Int)], Int] = Map([])
+  let shared : Map[Array[(Int32, Int32)], Int32] = Map([])
   for state in states {
     if state.default_ is Some(action) {
       rows.push(-encoder.encode(action) - 1)

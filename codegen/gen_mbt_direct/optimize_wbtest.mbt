@@ -3,14 +3,14 @@ test "parallel copies preserve cycles, identity slots and local inputs" {
   let a : @direct_ir.Register = { id: 0, type_: State, }
   let b : @direct_ir.Register = { id: 1, type_: State, }
   let c : @direct_ir.Register = { id: 2, type_: State, }
-  fn slot(r : @direct_ir.Register) -> (Int, Int)? {
+  fn slot(r : @direct_ir.Register) -> (Int32, Int32)? {
     if r.id < 2 {
       Some((0, r.id))
     } else {
       None
     }
   }
-  fn read(v : @direct_ir.Value, slots : Array[Int]) -> Int {
+  fn read(v : @direct_ir.Value, slots : Array[Int32]) -> Int32 {
     match v {
       State(n) => n
       Reg(r) => if r.id < 2 { slots[r.id] } else { 30 }
@@ -29,7 +29,7 @@ test "parallel copies preserve cycles, identity slots and local inputs" {
       expected[dest.id] = read(value, initial)
     }
     let actual = initial.copy()
-    let saved : Map[Int, Int] = Map([])
+    let saved : Map[Int32, Int32] = Map([])
     for step in parallel_moves(moves, slot) {
       match step {
         Store(dest, value) => actual[dest.id] = read(value, actual)
@@ -58,7 +58,7 @@ test "coalescing keeps duplicated results and incoming parameters distinct" {
   let blocks = [
     {
       ..base,
-      instructions: [ReadLastPosition(value)],
+      instructions: [ReadPreviousPosition(0, value)],
       terminator: Jump({ target: 1, arguments: [Reg(value), Reg(value)], }),
     },
     {
@@ -121,7 +121,7 @@ test "stack argument fusion preserves escaping spans and respects effects" {
     lookahead: Any,
     instructions: [
       peek,
-      ReadLastPosition(last),
+      ReadPreviousPosition(0, last),
       Action(0, args, Reg(last), result),
       Pop(cell, [None, None, None, None]),
       Action(1, [], Reg(sp), next),
@@ -137,7 +137,7 @@ test "stack argument fusion preserves escaping spans and respects effects" {
     instructions: [
       peek,
       EnsureLookahead,
-      ReadLastPosition(last),
+      ReadPreviousPosition(0, last),
       Action(0, args, Reg(last), result),
     ],
     terminator: Return(0, Reg(result)),

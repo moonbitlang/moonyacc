@@ -6,17 +6,17 @@ import {
 }
 
 // Values
-pub fn start(() -> (Token, Int, Int), Int) -> Int raise ParseError
+pub fn start(() -> (Token, Int32, Int32), Int32) -> Int32 raise ParseError
 
 // Errors
 pub suberror ParseError {
-  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
+  UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
 } derive(@debug.Debug)
 
 // Types and methods
 pub(all) enum Token {
   EOF
-  NUMBER(Int)
+  NUMBER(Int32)
   PLUS
   MINUS
   STAR

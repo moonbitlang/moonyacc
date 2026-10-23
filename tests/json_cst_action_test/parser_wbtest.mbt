@@ -60,3 +60,16 @@ test "JSON CST sharing preserves metadata, empty ranges and inline children" {
     })
   }
 }
+
+///|
+test "JSON CST keeps the span of a leading empty inline symbol" {
+  let node = leading_empty(
+    [(NUMBER(7), (3, 9), (3, 11)), (EOF, (3, 11), (3, 11))],
+    initial_pos=(3, 4),
+  )
+  guard node is { "start": start, "end": end, "children": Array(children), .. } else {
+    fail("Expected a located nonterminal")
+  }
+  json_inspect([start, end], content=[[3, 4], [3, 11]])
+  assert_eq(children.length(), 2)
+}

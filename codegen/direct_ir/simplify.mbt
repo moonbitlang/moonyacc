@@ -13,7 +13,7 @@ fn Program::thread_edge(self : Program, original : Edge) -> Edge {
     guard block.instructions.is_empty() && block.terminator is Jump(next) else {
       return edge
     }
-    let values : Map[Int, Value] = Map([])
+    let values : Map[Int32, Value] = Map([])
     for i, parameter in block.parameters {
       values[parameter.id] = edge.arguments[i]
     }
@@ -60,7 +60,7 @@ fn Program::compact(self : Program) -> Program {
       pending.append(self.blocks[label].terminator.successors())
     }
   }
-  let labels : Map[Int, Int] = Map([])
+  let labels : Map[Int32, Int32] = Map([])
   for label, _ in self.blocks {
     if reachable.contains(label) {
       labels[label] = labels.length()

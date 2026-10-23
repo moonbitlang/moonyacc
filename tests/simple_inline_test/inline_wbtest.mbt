@@ -24,3 +24,9 @@ test {
   assert_eq(case([A, B, B, A, B]), "abbab")
   assert_eq(case([A, B, B, B, B]), "abbbb")
 }
+
+///|
+test "Unit positions keep the value-only action interface" {
+  let action : YYAction = fn(_args : ArrayView[YYObj]) { YYObj_Void }
+  assert_true(action([]) is YYObj_Void)
+}

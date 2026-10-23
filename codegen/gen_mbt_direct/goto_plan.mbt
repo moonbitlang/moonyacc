@@ -8,7 +8,7 @@ priv struct GotoPush {
 ///|
 priv struct GotoTarget {
   state : @direct_ir.Value
-  label : Int
+  label : Int32
 } derive(Eq)
 
 ///|
@@ -16,16 +16,16 @@ priv struct GotoPlan {
   selector : @direct_ir.Value
   data : (@direct_ir.Value, @direct_ir.Value, @direct_ir.Value)
   // Case keys and target.state are LR states; target.label names an IR block.
-  choices : Array[(Int, GotoTarget)]
-  helpers : Set[Int]
+  choices : Array[(Int32, GotoTarget)]
+  helpers : Set[Int32]
 }
 
 ///|
 /// -1 means no predecessor, -2 means shared or externally enterable.
 fn predecessor_owners(
   blocks : Array[@direct_ir.Block],
-  entries : Array[Int],
-) -> Array[Int] {
+  entries : Array[Int32],
+) -> Array[Int32] {
   let owners = Array::make(blocks.length(), -1)
   for entry in entries {
     owners[entry] = -2
@@ -94,8 +94,8 @@ fn goto_push(
 ///|
 fn plan_goto(
   blocks : Array[@direct_ir.Block],
-  owners : Array[Int],
-  label : Int,
+  owners : Array[Int32],
+  label : Int32,
 ) -> GotoPlan? {
   guard blocks[label].terminator is CaseState(selector, arms) &&
     !arms.is_empty() else {
@@ -120,8 +120,8 @@ fn plan_goto(
 ///|
 fn plan_gotos(
   blocks : Array[@direct_ir.Block],
-  entries : Array[Int],
-) -> (Map[Int, GotoPlan], Set[Int]) {
+  entries : Array[Int32],
+) -> (Map[Int32, GotoPlan], Set[Int32]) {
   let owners = predecessor_owners(blocks, entries)
   let plans = Map([])
   let omitted = Set([])

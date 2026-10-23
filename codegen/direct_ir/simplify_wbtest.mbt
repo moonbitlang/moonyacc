@@ -1,7 +1,7 @@
 ///|
 fn forwarding(
   parameters : Array[Register],
-  target : Int,
+  target : Int32,
   args : Array[Value],
 ) -> Block {
   {
@@ -25,7 +25,7 @@ test "jump threading substitutes arguments without renumbering LR states" {
     { ..forwarding([], 1, []), terminator: Unreachable, },
     {
       ..forwarding([], 3, [State(0), Reg(pos)]),
-      instructions: [ReadLastPosition(pos)],
+      instructions: [ReadPreviousPosition(0, pos)],
     },
     forwarding([s1, p1], 4, [Reg(p1), Reg(s1)]),
     {

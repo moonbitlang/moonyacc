@@ -3,7 +3,7 @@ fn Emitter::stop_body(self : Emitter) -> @mbt_ast.Block {
   body(
     [
       Let(
-        Tuple([Any, Tuple([Any, Bind("sp"), Bind("ep")]), Bind("token")]),
+        Tuple([Any, Bind("_data"), Bind("token")]),
         None,
         dot_call(self.machine("lookahead"), "unwrap", []),
       ),
@@ -11,7 +11,10 @@ fn Emitter::stop_body(self : Emitter) -> @mbt_ast.Block {
         call("yy_error", [
           self.machine("error_stack"),
           Ident("token"),
-          Tuple([Ident("sp"), Ident("ep")]),
+          Tuple([
+            self.support.data_position(Ident("_data"), 1),
+            self.support.data_position(Ident("_data"), 2),
+          ]),
         ]),
       ),
     ],

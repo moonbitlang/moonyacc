@@ -133,13 +133,25 @@ pub(all) enum ActionBody {
 ///|
 pub(all) struct Action {
   stamp : @stamp.Stamp
+  // Number of physical RHS items after expansion.
   arity : Int32
   type_ : TypeExpr
+  // The original production's extent, expressed in the current RHS layout.
+  span : (PositionExpr, PositionExpr)
   sub_actions : Array[SubAction]
   bindings : Array[(BindingSubject, Code)]
   body : ActionBody
   original_clause_info : OriginalClauseInfo
 }
+
+///|
+pub(all) enum PositionExpr {
+  BeforeRhs
+  StartOf(Int32)
+  EndOf(Int32)
+  // Fall back to the last span's end, or BeforeRhs if there are no spans.
+  FirstNonEmpty(Array[(PositionExpr, PositionExpr)])
+} derive(Eq)
 
 ///|
 pub(all) struct OriginalClauseInfo {
@@ -159,11 +171,7 @@ pub(all) struct SubAction {
 ///|
 pub(all) enum BindingSubject {
   Data(Int32, type_~ : TypeExpr)
-  StartPosOf(Int32)
-  EndPosOf(Int32)
-  StartPos
-  EndPos
-  SymbolStartPos
+  Position(PositionExpr)
   SubAction(index~ : Int32, type_~ : TypeExpr)
 }
 

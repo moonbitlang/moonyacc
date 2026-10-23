@@ -8,7 +8,7 @@ fn Lowering::lower_reductions(self : Lowering) -> Unit {
 ///|
 fn Lowering::read_rhs(
   self : Lowering,
-  rhs : Array[Int],
+  rhs : Array[Int32],
   instructions : Array[Instruction],
 ) -> Array[ActionArgument] {
   let args = []
@@ -34,13 +34,13 @@ fn Lowering::read_rhs(
 }
 
 ///|
-fn Lowering::reduction_block(self : Lowering, production : Int) -> Block {
+fn Lowering::reduction_block(self : Lowering, production : Int32) -> Block {
   let action = self.program.actions[production]
   let instructions = []
   let args = self.read_rhs(action.rhs, instructions)
   let result = self.fresh(Semantic(self.program.symbols[action.lhs].type_))
   let last_pos = self.fresh(Position)
-  instructions.push(ReadLastPosition(last_pos))
+  instructions.push(ReadPreviousPosition(action.rhs.length(), last_pos))
   instructions.push(Action(production, args, Reg(last_pos), result))
   // Actions run before any stack mutation. Keep this order visible here.
   for i = action.rhs.length() - 1; i >= 0; i = i - 1 {
@@ -48,7 +48,9 @@ fn Lowering::reduction_block(self : Lowering, production : Int) -> Block {
   }
   let pred = self.fresh(State)
   instructions.push(Peek(0, { symbol: None, fields: [State], }, [Some(pred)]))
-  let sp = if args.is_empty() { Reg(last_pos) } else { args[0].start }
+  let span = (self.meta.production_meta)(production).action.span
+  guard! span.0 is (BeforeRhs | StartOf(0))
+  let sp = if span.0 is BeforeRhs { Reg(last_pos) } else { args[0].start }
   let ep = if args.is_empty() {
     Reg(last_pos)
   } else {

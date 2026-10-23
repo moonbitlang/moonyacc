@@ -3,14 +3,15 @@
 priv struct Lowering {
   program : Program
   automaton : @lr1.Automaton
-  reduce_labels : Map[Int, Int]
-  goto_labels : Map[Int, Int]
-  shifts : Map[(Int, Int), Int]
-  mut next_register : Int
+  meta : @codegen.MetaProvider
+  reduce_labels : Map[Int32, Int32]
+  goto_labels : Map[Int32, Int32]
+  shifts : Map[(Int32, Int32), Int32]
+  mut next_register : Int32
 }
 
 ///|
-fn symbol_id(symbol : @grm.Symbol, terminal_count : Int) -> Int {
+fn symbol_id(symbol : @grm.Symbol, terminal_count : Int32) -> Int32 {
   match symbol {
     T(t) => t.num + 1
     NT(nt) => terminal_count + nt.num + 1
@@ -81,6 +82,7 @@ fn Lowering::new(
       diagnostics: [],
     },
     automaton,
+    meta,
     reduce_labels: {},
     goto_labels: {},
     shifts: {},
@@ -94,7 +96,7 @@ fn Lowering::new(
 }
 
 ///|
-fn Lowering::reserve(self : Lowering, origin : Origin) -> Int {
+fn Lowering::reserve(self : Lowering, origin : Origin) -> Int32 {
   let label = self.program.blocks.length()
   self.program.blocks.push({
     origin,
@@ -129,11 +131,11 @@ fn Lowering::reserve_reductions(self : Lowering) -> Unit {
 }
 
 ///|
-fn cell(symbol : Int) -> Cell {
+fn cell(symbol : Int32) -> Cell {
   { symbol: Some(symbol), fields: [State, Semantic, Start, End], }
 }
 
 ///|
-fn edge(target : Int) -> Edge {
+fn edge(target : Int32) -> Edge {
   { target, arguments: [], }
 }

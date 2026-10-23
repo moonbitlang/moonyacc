@@ -45,7 +45,7 @@ fn Emitter::goto_selection(
 fn Emitter::goto_finish(
   self : Emitter,
   plan : GotoPlan,
-  chunk : Int,
+  chunk : Int32,
 ) -> @mbt_ast.Block {
   let (selection, state, target) = self.goto_selection(plan)
   let statements = [selection]

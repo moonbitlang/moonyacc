@@ -3,9 +3,9 @@
 /// blocks so register identities remain unique throughout the program.
 priv struct BlockValidator {
   program : Program
-  definitions : Map[Int, Bool]
-  label : Int
-  locals : Map[Int, ValueType]
+  definitions : Map[Int32, Bool]
+  label : Int32
+  locals : Map[Int32, ValueType]
   mut lookahead : Lookahead
 }
 

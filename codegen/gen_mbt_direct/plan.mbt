@@ -9,14 +9,14 @@ priv struct Emitter {
   support : @mbt_common.Context
   input_mode : @codegen.InputMode
   layout : BlockLayout
-  gotos : Map[Int, GotoPlan]
+  gotos : Map[Int32, GotoPlan]
   chunked : Bool
   consumes_input : Bool
   saves_snapshot : Bool
-  slots : Map[Int, (Int, Int)]
-  maxima : Array[Int]
-  chunk_loops : Set[Int]
-  chunk_errors : Set[Int]
+  slots : Map[Int32, (Int32, Int32)]
+  maxima : Array[Int32]
+  chunk_loops : Set[Int32]
+  chunk_errors : Set[Int32]
 }
 
 ///|
@@ -61,7 +61,7 @@ fn Emitter::new(
 }
 
 ///|
-fn Emitter::chunk_count(self : Emitter) -> Int {
+fn Emitter::chunk_count(self : Emitter) -> Int32 {
   (self.layout.blocks.length() + BLOCKS_PER_CHUNK - 1) / BLOCKS_PER_CHUNK
 }
 
@@ -80,12 +80,12 @@ fn Emitter::allocate_parameters(
     }
     self.slots[parameter.id] = (kind, counts[kind])
     counts[kind] += 1
-    self.maxima[kind] = Int::max(self.maxima[kind], counts[kind])
+    self.maxima[kind] = Int32::max(self.maxima[kind], counts[kind])
   }
 }
 
 ///|
-fn Emitter::plan_control(self : Emitter, label : Int, chunk : Int) -> Unit {
+fn Emitter::plan_control(self : Emitter, label : Int32, chunk : Int32) -> Unit {
   let block = self.program.blocks[label]
   if block.terminator is Stop(_) {
     self.chunk_errors.add(chunk)
@@ -130,7 +130,7 @@ fn Emitter::value(self : Emitter, value : @direct_ir.Value) -> @mbt_ast.Expr {
 }
 
 ///|
-fn Emitter::slot_type(self : Emitter, kind : Int) -> @elab.TypeExpr {
+fn Emitter::slot_type(self : Emitter, kind : Int32) -> @elab.TypeExpr {
   match kind {
     0 => type_("Int")
     1 => type_("YYObj")
@@ -139,10 +139,10 @@ fn Emitter::slot_type(self : Emitter, kind : Int) -> @elab.TypeExpr {
 }
 
 ///|
-fn slot_initial(kind : Int) -> @mbt_ast.Expr {
+fn slot_initial(kind : Int32) -> @mbt_ast.Expr {
   match kind {
     0 => Int(0)
     1 => Ident("YYObj_Void")
-    _ => Ident("last_pos")
+    _ => Ident("initial_position")
   }
 }

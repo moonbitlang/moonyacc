@@ -78,7 +78,7 @@ priv suberror YYObj_Json {
 type YYState = Int
 
 ///|
-type YYAction = ((Int, ArrayView[(YYObj, Int, Int)]) -> YYObj)
+type YYAction = ((ArrayView[(YYObj, Int, Int)]) -> YYObj)
 
 ///|
 priv enum YYDecision {
@@ -95,15 +95,15 @@ type YYSymbol = Int
 ///|
 // file:///./parser.mbty
 // 11|    NUMBER                { $1 }
-fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  yy_json_cst_action("start", 0, 0, _last_pos, _args)
+fn yy_action_0(_args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  yy_json_cst_action("start", 0, 0, _args[0].1, _args[0].2, _args)
 }
 
 ///|
 // file:///./parser.mbty
 // 12|    LPAREN start RPAREN   { $2 }
-fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  yy_json_cst_action("start", 0, 1, _last_pos, _args)
+fn yy_action_1(_args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  yy_json_cst_action("start", 0, 1, _args[0].1, _args[2].2, _args)
 }
 
 ///|
@@ -220,12 +220,13 @@ fn[T] yy_parse(
   initial_pos? : Int
 ) -> T raise ParseError {
   let mut cursor = 0
+  let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut state_stack : @list.List[YYState] = @list.List([start])
   let data_stack : Array[(YYObj, Int, Int)] = []
-  let mut last_pos = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut state = start
   let mut lookahead : (YYSymbol, (YYObj, Int, Int), Token?)? = None
   let mut last_shifted_state_stack = state_stack
+  let mut last_pos = initial_position
   while true {
     let decision = match yy_state(state, 0) {
       (ReduceNoLookahead(_) | Accept) as t => t
@@ -268,13 +269,24 @@ fn[T] yy_parse(
         ({
           ()
           for count = count, symbol = symbol, action = action {
-            let args = data_stack[data_stack.length() - count:]
-            let data = action(last_pos, args)
-            let (start_pos, end_pos) = if args.length() == 0 {
-              (last_pos, last_pos)
+            let start_index = data_stack.length() - count
+            let args = data_stack[start_index:]
+            let previous_end = if start_index == 0 {
+              initial_position
             } else {
-              (args[0].1, args[args.length() - 1].2)
+              data_stack[start_index - 1].2
             }
+            let start_pos = if count == 0 {
+              previous_end
+            } else {
+              args[0].1
+            }
+            let end_pos = if count == 0 {
+              previous_end
+            } else {
+              args[count - 1].2
+            }
+            let data = action(args)
             for _ in 0..<count {
               ignore(data_stack.unsafe_pop())
               state_stack = state_stack.unsafe_tail()
@@ -308,8 +320,8 @@ fn[T] yy_parse(
       Error =>
         ({
           ()
-          let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-          error(last_shifted_state_stack, token, (start_pos, end_pos))
+          let (_, _data, token) = lookahead.unwrap()
+          error(last_shifted_state_stack, token, (_data.1, _data.2))
         })
     }
   }
@@ -384,14 +396,9 @@ pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Json rais
 ///|
 #inline(never)
 fn yy_json_cst_action(
-  name : Json, rule_index : Json, clause_index : Json, _last_pos : Int,
-  _args : ArrayView[(YYObj, Int, Int)]
+  name : Json, rule_index : Json, clause_index : Json, start_pos : Int,
+  end_pos : Int, _args : ArrayView[(YYObj, Int, Int)]
 ) -> YYObj {
-  let (start_pos, end_pos) = if _args.length() == 0 {
-    (_last_pos, _last_pos)
-  } else {
-    (_args[0].1, _args[_args.length() - 1].2)
-  }
   YYObj_Json(
     {
       "type": "NONTERMINAL", "name": name, "rule_index": rule_index,

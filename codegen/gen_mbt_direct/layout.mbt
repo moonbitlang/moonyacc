@@ -2,8 +2,8 @@
 /// Emitted PCs are separate from IR labels and LR states. Aliased blocks keep
 /// their original provenance in the validated IR.
 priv struct BlockLayout {
-  blocks : Array[Int]
-  labels : Array[Int]
+  blocks : Array[Int32]
+  labels : Array[Int32]
 }
 
 ///|
@@ -16,7 +16,7 @@ fn shared_stop(block : @direct_ir.Block) -> Bool {
 ///|
 fn BlockLayout::new(
   blocks : Array[@direct_ir.Block],
-  omitted~ : Set[Int] = Set([]),
+  omitted~ : Set[Int32] = Set([]),
 ) -> BlockLayout {
   let labels = Array::make(blocks.length(), -1)
   let emitted = []
@@ -40,14 +40,14 @@ fn BlockLayout::new(
 }
 
 ///|
-fn BlockLayout::pc(self : BlockLayout, label : Int) -> Int {
+fn BlockLayout::pc(self : BlockLayout, label : Int32) -> Int32 {
   let pc = self.labels[label]
   guard! pc >= 0
   pc
 }
 
 ///|
-fn successors(terminator : @direct_ir.Terminator) -> Array[Int] {
+fn successors(terminator : @direct_ir.Terminator) -> Array[Int32] {
   match terminator {
     Jump(edge) => [edge.target]
     CaseToken(arms, fallback) => {

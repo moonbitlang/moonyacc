@@ -11,7 +11,7 @@
 %%
 
 start
-  : a=a b=b x x b { a + b + $3 + $4 + $5 }
+  : a=a b=b x x b { let _ = ($loc, $sloc, $loc(a)); a + b + $3 + $4 + $5 }
   ;
 
 %inline a

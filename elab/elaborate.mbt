@@ -407,6 +407,12 @@ fn elaborate_action(
   json_cst~ : JsonCst,
 ) -> Action raise ElabError {
   let arity = items.length()
+  let start_pos : PositionExpr = if arity == 0 { BeforeRhs } else { StartOf(0) }
+  let end_pos : PositionExpr = if arity == 0 {
+    BeforeRhs
+  } else {
+    EndOf(arity - 1)
+  }
   let name_to_index : Map[String, Int32] = Map([])
   for index, item in items {
     if item.binder is Some(name) {
@@ -447,25 +453,35 @@ fn elaborate_action(
         let index = item_ident_to_index(Dollar(index), loc)
         bindings.push((Data(index, type_=items[index].type_()), name))
       }
-      StartPos => bindings.push((StartPos, "_start_pos"))
+      StartPos => bindings.push((Position(start_pos), "_start_pos"))
       Loc => {
         add_binding(StartPos, loc)
         add_binding(EndPos, loc)
       }
-      EndPos => bindings.push((EndPos, "_end_pos"))
+      EndPos => bindings.push((Position(end_pos), "_end_pos"))
       StartPosOf(arg) => {
         let index = item_ident_to_index(arg, loc)
-        bindings.push((StartPosOf(index), "_start_pos_of_item\{index}"))
+        bindings.push((Position(StartOf(index)), "_start_pos_of_item\{index}"))
       }
       EndPosOf(arg) => {
         let index = item_ident_to_index(arg, loc)
-        bindings.push((EndPosOf(index), "_end_pos_of_item\{index}"))
+        bindings.push((Position(EndOf(index)), "_end_pos_of_item\{index}"))
       }
       LocOf(arg) => {
         add_binding(StartPosOf(arg), loc)
         add_binding(EndPosOf(arg), loc)
       }
-      SymbolStartPos => bindings.push((SymbolStartPos, "_symbol_start_pos"))
+      SymbolStartPos =>
+        bindings.push(
+          (
+            Position(
+              FirstNonEmpty(
+                Array::makei(arity, index => (StartOf(index), EndOf(index))),
+              ),
+            ),
+            "_symbol_start_pos",
+          ),
+        )
       Sloc => {
         add_binding(SymbolStartPos, loc)
         add_binding(EndPos, loc)
@@ -561,6 +577,7 @@ fn elaborate_action(
     stamp: @stamp.new(),
     arity,
     type_,
+    span: (start_pos, end_pos),
     sub_actions: [],
     bindings,
     body,

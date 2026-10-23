@@ -1,8 +1,8 @@
 ///|
 priv enum Move {
   Store(@direct_ir.Register, @direct_ir.Value)
-  Save(Int, @direct_ir.Value)
-  Restore(@direct_ir.Register, Int)
+  Save(Int32, @direct_ir.Value)
+  Restore(@direct_ir.Register, Int32)
 }
 
 ///|
@@ -10,7 +10,7 @@ priv enum Move {
 /// If any remaining destination is also read, retain the snapshot-first form.
 fn parallel_moves(
   moves : Array[(@direct_ir.Register, @direct_ir.Value)],
-  slot : (@direct_ir.Register) -> (Int, Int)?,
+  slot : (@direct_ir.Register) -> (Int32, Int32)?,
 ) -> Array[Move] {
   let moves = moves.filter(p => {
     match p.1 {

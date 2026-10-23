@@ -31,13 +31,19 @@ fn Emitter::initial_state(self : Emitter) -> Array[@mbt_ast.Stmt] {
       ])
     Pull => @mbt_ast.Expr::Ident("start_pos")
   }
-  statements.push(
-    if !self.chunked && self.consumes_input {
-      LetMut("last_pos", None, position)
-    } else {
-      binding("last_pos", position)
-    },
-  )
+  statements.push(binding("initial_position", position))
+  if !self.chunked &&
+    self.input_mode is Array &&
+    self.support.tracks_positions() {
+    let position = @mbt_ast.Expr::Ident("initial_position")
+    statements.push(
+      if self.consumes_input {
+        LetMut("last_pos", None, position)
+      } else {
+        binding("last_pos", position)
+      },
+    )
+  }
   let states = call("@list.List", [Array([Ident("initial_state")])])
   let type_ = @mbt_common.named_type("@list.List", [type_("Int")])
   statements.push(

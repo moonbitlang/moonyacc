@@ -64,7 +64,7 @@ test "block arguments enforce both types and local SSA scope" {
       origin: Helper,
       parameters: [],
       lookahead: Any,
-      instructions: [ReadLastPosition(a)],
+      instructions: [ReadPreviousPosition(0, a)],
       terminator: Jump({ target: 1, arguments: [Reg(a)], }),
     },
     {

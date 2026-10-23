@@ -1,7 +1,7 @@
 ///|
 fn Emitter::bindings(
   self : Emitter,
-  depth : Int,
+  depth : Int32,
   cell : @direct_ir.Cell,
   registers : Array[@direct_ir.Register?],
 ) -> Array[@mbt_ast.Stmt] {
@@ -54,20 +54,26 @@ fn Emitter::instruction(
         [Some(value), Some(start), Some(end)],
         component(dot_call(self.machine("lookahead"), "unwrap", []), 1),
       )
-    ConsumeLookahead =>
-      [
-        Assign(
-          self.machine("last_pos"),
-          component(
-            component(dot_call(self.machine("lookahead"), "unwrap", []), 1),
-            2,
+    ConsumeLookahead => {
+      let statements : Array[@mbt_ast.Stmt] = []
+      if self.input_mode is Array && self.support.tracks_positions() {
+        statements.push(
+          Assign(
+            self.machine("last_pos"),
+            self.support.data_position(
+              component(dot_call(self.machine("lookahead"), "unwrap", []), 1),
+              2,
+            ),
           ),
-        ),
-        Assign(self.machine("lookahead"), Ident("None")),
-      ]
+        )
+      }
+      statements.push(Assign(self.machine("lookahead"), Ident("None")))
+      statements
+    }
     SaveErrorSnapshot =>
       [Assign(self.machine("error_stack"), self.machine("states"))]
-    ReadLastPosition(reg) => [self.bind_register(reg, self.machine("last_pos"))]
+    ReadPreviousPosition(depth, reg) =>
+      [self.bind_register(reg, self.previous_position(depth))]
     Bind(pairs) => {
       let statements = []
       for i, (_, value) in pairs {
@@ -105,8 +111,8 @@ fn Emitter::push_cell(
   let fields : Array[@mbt_ast.Expr] = [
     Int(0),
     Ident("YYObj_Void"),
-    self.machine("last_pos"),
-    self.machine("last_pos"),
+    self.previous_position(0),
+    self.previous_position(0),
   ]
   for i, field in cell.fields {
     let index = match field {
@@ -133,37 +139,44 @@ fn Emitter::push_values(
       self.machine("states"),
       call("@list.cons", [state, self.machine("states")]),
     ),
-    Eval(dot_call(self.machine("data"), "push", [Tuple([value, start, end])])),
+    Eval(
+      dot_call(self.machine("data"), "push", [
+        self.support.located_data(value, start, end),
+      ]),
+    ),
   ]
 }
 
 ///|
 fn Emitter::action_call(
   self : Emitter,
-  id : Int,
+  id : Int32,
   args : Array[@direct_ir.ActionArgument],
   last_pos : @direct_ir.Value,
 ) -> @mbt_ast.Expr {
   let action = self.support.action_id((self.meta.production_meta)(id).action)
-  call("yy_action_\{action}", [
-    self.value(last_pos),
-    Array(
-      args.map(a => {
-        @mbt_ast.Expr::Tuple([
-          self.value(a.value),
-          self.value(a.start),
-          self.value(a.end),
-        ])
-      }),
+  call(
+    "yy_action_\{action}",
+    self.support.action_arguments(
+      self.value(last_pos),
+      Array(
+        args.map(a => {
+          self.support.located_data(
+            self.value(a.value),
+            self.value(a.start),
+            self.value(a.end),
+          )
+        }),
+      ),
     ),
-  ])
+  )
 }
 
 ///|
 fn Emitter::jump(
   self : Emitter,
   edge : @direct_ir.Edge,
-  chunk : Int,
+  chunk : Int32,
 ) -> @mbt_ast.Block {
   let statements = self.copies(edge)
   let pc = self.layout.pc(edge.target)
@@ -181,7 +194,7 @@ fn Emitter::jump(
 fn Emitter::terminator(
   self : Emitter,
   terminator : @direct_ir.Terminator,
-  chunk : Int,
+  chunk : Int32,
 ) -> @mbt_ast.Block {
   match terminator {
     Jump(edge) => self.jump(edge, chunk)

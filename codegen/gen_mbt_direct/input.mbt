@@ -2,7 +2,19 @@
 fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
   let read = [
     @mbt_ast.Stmt::Let(
-      Tuple([Bind("token"), Bind("sp"), Bind("ep")]),
+      Tuple([
+        Bind("token"),
+        if self.support.tracks_positions() {
+          Bind("sp")
+        } else {
+          Any
+        },
+        if self.support.tracks_positions() {
+          Bind("ep")
+        } else {
+          Any
+        },
+      ]),
       None,
       match self.input_mode {
         Array => Index(self.machine("tokens"), self.machine("cursor"))
@@ -17,14 +29,21 @@ fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
     Let(
       Tuple([Bind("symbol"), Bind("payload")]),
       None,
-      call("yy_input", [Ident("token"), Ident("sp"), Ident("ep")]),
+      call(
+        "yy_input",
+        if self.support.tracks_positions() {
+          [Ident("token"), Ident("sp"), Ident("ep")]
+        } else {
+          [Ident("token")]
+        },
+      ),
     ),
     Assign(
       self.machine("lookahead"),
       call("Some", [
         Tuple([
           Ident("symbol"),
-          Tuple([Ident("payload"), Ident("sp"), Ident("ep")]),
+          self.support.located_data(Ident("payload"), Ident("sp"), Ident("ep")),
           call("Some", [Ident("token")]),
         ]),
       ]),
@@ -46,11 +65,11 @@ fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
               call("Some", [
                 Tuple([
                   Int(0),
-                  Tuple([
+                  self.support.located_data(
                     Ident("YYObj_Void"),
                     self.machine("last_pos"),
                     self.machine("last_pos"),
-                  ]),
+                  ),
                   Ident("None"),
                 ]),
               ]),

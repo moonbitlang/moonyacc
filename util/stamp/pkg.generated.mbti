@@ -6,7 +6,7 @@ pub fn initial() -> Stamp
 
 pub fn new() -> Stamp
 
-pub fn unsafe_from_int(Int) -> Stamp
+pub fn unsafe_from_int(Int32) -> Stamp
 
 // Errors
 

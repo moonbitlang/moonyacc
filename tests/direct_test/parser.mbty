@@ -9,11 +9,17 @@ let reductions : Ref[Int] = Ref(0)
 %left PLUS
 %left STAR
 %start<(Int, Int, Int)> start
+%start<Array[(Int, Int)]> inline_positions
 %type<Int> expr atom
 
 %%
 
 start: e=expr EOF { (e, $startpos(e), $endpos(e)) };
+
+inline_positions: prefix x=anchored EOF { x + [$loc(x)]};
+anchored -> Array[(Int, Int)]: e=empty NUMBER { [e, $loc, $sloc]};
+%inline prefix: LPAREN { ()} | { ()};
+%inline empty -> (Int, Int): { $loc};
 
 expr:
   | atom { $1 }

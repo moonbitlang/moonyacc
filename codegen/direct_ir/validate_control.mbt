@@ -17,10 +17,11 @@ fn BlockValidator::instruction(
       self.lookahead = Empty
     }
     SaveErrorSnapshot => ()
-    ReadLastPosition(reg) => {
+    ReadPreviousPosition(depth, reg) => {
+      self.check(depth >= 0, "negative previous-position depth")
       self.check(
         reg.type_ == Position,
-        "ReadLastPosition requires a position register",
+        "ReadPreviousPosition requires a position register",
       )
       self.add_definition(reg)
     }
@@ -56,7 +57,7 @@ fn BlockValidator::instruction(
 ///|
 fn BlockValidator::input(
   self : BlockValidator,
-  t : Int,
+  t : Int32,
   value : Register,
   sp : Register,
   ep : Register,
@@ -82,7 +83,7 @@ fn BlockValidator::input(
 ///|
 fn BlockValidator::action(
   self : BlockValidator,
-  id : Int,
+  id : Int32,
   args : Array[ActionArgument],
   last_pos : Value,
   result : Register,

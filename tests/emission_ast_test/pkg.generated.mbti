@@ -4,54 +4,54 @@ package "moonbitlang/yacc_tests/emission_ast_test"
 // Values
 pub fn bit_precedence() -> Bool
 
-pub fn bump(Env) -> Int
+pub fn bump(Env) -> Int32
 
 pub fn char_literal() -> Char
 
-pub fn from_field(Env) -> Int
+pub fn from_field(Env) -> Int32
 
-pub fn from_method(Env) -> Int
+pub fn from_method(Env) -> Int32
 
-pub fn grouping() -> Int
+pub fn grouping() -> Int32
 
 pub fn[T] identity(T) -> T
 
-pub fn identity_reader() -> (Int) -> Int
+pub fn identity_reader() -> (Int32) -> Int32
 
 pub fn literal() -> String
 
-pub fn loop_result(Int) -> Int
+pub fn loop_result(Int32) -> Int32
 
-pub fn make_env(Int) -> Env
+pub fn make_env(Int32) -> Env
 
-pub fn make_reader() -> (Int) -> Int
+pub fn make_reader() -> (Int32) -> Int32
 
-pub fn positive(Int) -> Int raise Failure
+pub fn positive(Int32) -> Int32 raise Failure
 
 pub fn show_ready() -> String
 
-pub fn sum_squares(Int) -> Int
+pub fn sum_squares(Int32) -> Int32
 
-pub fn sum_tail(Array[Int]) -> Int
+pub fn sum_tail(Array[Int32]) -> Int32
 
-pub fn table_value() -> Int
+pub fn table_value() -> Int32
 
-pub fn user_code() -> Int
+pub fn user_code() -> Int32
 
-pub fn walk(Int) -> Int
+pub fn walk(Int32) -> Int32
 
 // Errors
 pub suberror Failure {
-  Failed(Int)
+  Failed(Int32)
 }
 
 // Types and methods
 pub(all) struct Env {
-  read : (Int) -> Int
-  mut value : Int
+  read : (Int32) -> Int32
+  mut value : Int32
 }
 
 // Type aliases
-pub type Reader = (Int) -> Int
+pub type Reader = (Int32) -> Int32
 
 // Traits

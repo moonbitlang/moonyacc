@@ -89,7 +89,7 @@ fn diagnostic_lookup() -> @mbt_ast.Item {
 }
 
 ///|
-fn diagnostic_decoder(state_count : Int) -> @mbt_ast.Item {
+fn diagnostic_decoder(state_count : Int32) -> @mbt_ast.Item {
   let reduce_base = state_count + 2
   let reduction = body(
     [

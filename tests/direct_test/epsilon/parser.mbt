@@ -71,11 +71,7 @@ type YYSymbol = Int
 // file:///./parser.mbty
 // 7|          { $endpos }
 fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _end_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[_args.length() - 1].2
-  }
+  let _end_pos = _last_pos
   YYObj_Int(
     ({();  _end_pos 
     })
@@ -107,15 +103,16 @@ fn yy_parse(
   initial_pos? : Int
 ) -> YYObj raise ParseError {
   let mut cursor = 0
-  let last_pos = initial_pos.unwrap_or_else(() => tokens[0].1)
+  let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
+  let last_pos = initial_position
   let mut states : @list.List[Int] = @list.List([initial_state])
   let data : Array[(YYObj, Int, Int)] = []
   let error_stack = states
   let mut lookahead : (Int, (YYObj, Int, Int), Token?)? = None
   let mut _yy_p0_0 : Int = 0
   let mut _yy_p1_0 : YYObj = YYObj_Void
-  let mut _yy_p2_0 : Int = last_pos
-  let mut _yy_p2_1 : Int = last_pos
+  let mut _yy_p2_0 : Int = initial_position
+  let mut _yy_p2_1 : Int = initial_position
   for pc = entry {
     match pc {
       0 =>
@@ -160,7 +157,11 @@ fn yy_parse(
         ({
           ()
           // reduce unit -> 
-          _yy_p2_0 = last_pos
+          _yy_p2_0 = if data.length() == 0 {
+            initial_position
+          } else {
+            data[data.length() - 1].2
+          }
           _yy_p1_0 = yy_action_1(_yy_p2_0, [])
           _yy_p0_0 = states.unsafe_head()
           _yy_p2_1 = _yy_p2_0
@@ -182,7 +183,11 @@ fn yy_parse(
         ({
           ()
           // reduce position -> 
-          _yy_p2_0 = last_pos
+          _yy_p2_0 = if data.length() == 0 {
+            initial_position
+          } else {
+            data[data.length() - 1].2
+          }
           _yy_p1_0 = yy_action_0(_yy_p2_0, [])
           _yy_p0_0 = states.unsafe_head()
           _yy_p2_1 = _yy_p2_0
@@ -203,8 +208,8 @@ fn yy_parse(
       6 =>
         ({
           ()
-          let (_, (_, sp, ep), token) = lookahead.unwrap()
-          yy_error(error_stack, token, (sp, ep))
+          let (_, _data, token) = lookahead.unwrap()
+          yy_error(error_stack, token, (_data.1, _data.2))
           panic()
         })
       7 =>

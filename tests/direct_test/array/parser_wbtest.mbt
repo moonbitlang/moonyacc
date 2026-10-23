@@ -1,6 +1,21 @@
 ///|
-fn located(tokens : Array[Token]) -> Array[(Token, Int, Int)] {
+fn located(tokens : Array[Token]) -> Array[(Token, Int32, Int32)] {
   tokens.mapi((i, token) => (token, i, i + 1))
+}
+
+///|
+test "direct inline epsilon spans use the position before the physical RHS" {
+  assert_eq(
+    inline_positions([(NUMBER(1), 10, 11), (EOF, 20, 21)], initial_pos=7),
+    [(7, 7), (7, 11), (10, 11), (7, 11)],
+  )
+  assert_eq(
+    inline_positions(
+      [(LPAREN, 1, 2), (NUMBER(1), 10, 11), (EOF, 20, 21)],
+      initial_pos=7,
+    ),
+    [(2, 2), (2, 11), (10, 11), (2, 11)],
+  )
 }
 
 ///|

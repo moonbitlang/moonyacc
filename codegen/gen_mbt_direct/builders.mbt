@@ -18,7 +18,7 @@ fn dot_call(
 }
 
 ///|
-fn component(expr : @mbt_ast.Expr, index : Int) -> @mbt_ast.Expr {
+fn component(expr : @mbt_ast.Expr, index : Int32) -> @mbt_ast.Expr {
   Field(expr, Tuple(index))
 }
 
@@ -50,7 +50,7 @@ fn typed(name : String, type_ : @elab.TypeExpr) -> @mbt_ast.Parameter {
 }
 
 ///|
-fn token_id(token : @direct_ir.Token) -> Int {
+fn token_id(token : @direct_ir.Token) -> Int32 {
   match token {
     Terminal(id) => id
     EndOfInput => 0

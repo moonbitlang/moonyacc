@@ -1,6 +1,6 @@
 ///|
 fn[T] grouped_cases(
-  arms : Array[(Int, T)],
+  arms : Array[(Int32, T)],
   same : (T, T) -> Bool,
 ) -> Array[(@mbt_ast.Pattern, T)] {
   let groups : Array[(Array[@mbt_ast.Pattern], T)] = []
@@ -24,7 +24,7 @@ fn[T] grouped_cases(
 
 ///|
 fn branch_patterns(
-  arms : Array[(Int, @direct_ir.Edge)],
+  arms : Array[(Int32, @direct_ir.Edge)],
 ) -> Array[(@mbt_ast.Pattern, @direct_ir.Edge)] {
   grouped_cases(arms, (a, b) => {
     a.target == b.target && a.arguments == b.arguments
@@ -38,7 +38,7 @@ fn Emitter::branch_jump(
   self : Emitter,
   value : @mbt_ast.Expr,
   branches : Array[(@mbt_ast.Pattern, @direct_ir.Edge)],
-  chunk : Int,
+  chunk : Int32,
   fallback? : @direct_ir.Edge,
 ) -> @mbt_ast.Block {
   let edges = branches.map(p => p.1)
@@ -79,8 +79,8 @@ fn Emitter::branch_jump(
 fn Emitter::transfer(
   self : Emitter,
   next : @mbt_ast.Expr,
-  targets : Array[Int],
-  chunk : Int,
+  targets : Array[Int32],
+  chunk : Int32,
 ) -> @mbt_ast.Block {
   let within = targets
     .iter()

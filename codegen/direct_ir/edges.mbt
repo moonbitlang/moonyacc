@@ -12,7 +12,7 @@ fn Terminator::map_edges(self : Terminator, f : (Edge) -> Edge) -> Terminator {
 }
 
 ///|
-fn Terminator::successors(self : Terminator) -> Array[Int] {
+fn Terminator::successors(self : Terminator) -> Array[Int32] {
   match self {
     Jump(edge) => [edge.target]
     CaseToken(arms, fallback) => {

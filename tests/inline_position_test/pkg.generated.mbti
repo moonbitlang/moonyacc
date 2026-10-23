@@ -1,0 +1,47 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc_tests/inline_position_test"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn all_empty(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Array[(Int32, Int32)] raise ParseError
+
+pub fn empty_after(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Array[(Int32, Int32)] raise ParseError
+
+pub fn empty_before(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Array[(Int32, Int32)] raise ParseError
+
+pub fn multi(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Array[(Int32, Int32)] raise ParseError
+
+pub fn nested(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Array[(Int32, Int32)] raise ParseError
+
+pub fn propagated(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Array[(Int32, Int32)] raise ParseError
+
+// Errors
+pub suberror ParseError {
+  UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
+  UnexpectedEndOfInput(Int32, Array[TokenKind])
+}
+
+// Types and methods
+pub(all) enum Token {
+  P
+  A
+  B
+  C
+}
+pub fn Token::kind(Self) -> TokenKind
+
+pub(all) enum TokenKind {
+  TK_P
+  TK_A
+  TK_B
+  TK_C
+}
+pub impl Show for TokenKind
+pub impl @debug.Debug for TokenKind
+
+// Type aliases
+
+// Traits

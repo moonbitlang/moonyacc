@@ -2,13 +2,13 @@
 package "moonbitlang/yacc/util/logger_with_cursor"
 
 // Values
-pub fn new(&Logger, cursor? : Int) -> LoggerWithCursor
+pub fn new(&Logger, cursor? : Int32) -> LoggerWithCursor
 
 // Errors
 
 // Types and methods
 type LoggerWithCursor
-pub fn LoggerWithCursor::cursor(Self) -> Int
+pub fn LoggerWithCursor::cursor(Self) -> Int32
 pub impl Logger for LoggerWithCursor
 
 // Type aliases

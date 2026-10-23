@@ -31,7 +31,7 @@ fn Emitter::pop_one(self : Emitter) -> Array[@mbt_ast.Stmt] {
 }
 
 ///|
-fn Emitter::pop_cells(self : Emitter, count : Int) -> Array[@mbt_ast.Stmt] {
+fn Emitter::pop_cells(self : Emitter, count : Int32) -> Array[@mbt_ast.Stmt] {
   if count == 1 {
     return self.pop_one()
   }

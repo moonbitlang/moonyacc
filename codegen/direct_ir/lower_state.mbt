@@ -119,7 +119,7 @@ fn Lowering::target(
 
 ///|
 /// Shifting a token into a state is independent of its predecessor.
-fn Lowering::shift_edge(self : Lowering, term : Int, target : Int) -> Edge {
+fn Lowering::shift_edge(self : Lowering, term : Int32, target : Int32) -> Edge {
   if self.shifts.get((term, target)) is Some(label) {
     return edge(label)
   }

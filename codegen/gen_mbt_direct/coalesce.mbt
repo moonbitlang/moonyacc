@@ -4,7 +4,7 @@
 /// Each register gets at most one slot, even if passed more than once.
 fn coalesce_results(
   blocks : Array[@direct_ir.Block],
-  slots : Map[Int, (Int, Int)],
+  slots : Map[Int32, (Int32, Int32)],
 ) -> Unit {
   for block in blocks {
     if block.parameters.is_empty() && block.terminator is Jump(edge) {
@@ -37,6 +37,17 @@ fn Emitter::bind_data(
   data : Array[@direct_ir.Register?],
   read : @mbt_ast.Expr,
 ) -> Array[@mbt_ast.Stmt] {
+  if !self.support.tracks_positions() {
+    let statements = []
+    for index, reg in data {
+      if reg is Some(reg) {
+        statements.push(
+          self.bind_register(reg, if index == 0 { read } else { Unit }),
+        )
+      }
+    }
+    return statements
+  }
   let registers = data.filter_map(r => r)
   if registers.is_empty() {
     return []

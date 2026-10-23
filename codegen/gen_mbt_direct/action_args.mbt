@@ -1,19 +1,19 @@
 ///|
 priv struct StackRead {
-  symbol : Int
-  depth : Int
+  symbol : Int32
+  depth : Int32
   field : @direct_ir.Field
 }
 
 ///|
 priv struct ActionArguments {
-  slices : Set[Int]
-  unused : Set[Int]
+  slices : Set[Int32]
+  unused : Set[Int32]
 }
 
 ///|
-fn value_uses(block : @direct_ir.Block) -> Map[Int, Int] {
-  let uses : Map[Int, Int] = Map([])
+fn value_uses(block : @direct_ir.Block) -> Map[Int32, Int32] {
+  let uses : Map[Int32, Int32] = Map([])
   fn use_(v : @direct_ir.Value) {
     if v is Reg(r) {
       uses[r.id] = uses.get(r.id).unwrap_or(0) + 1
@@ -67,10 +67,10 @@ fn value_uses(block : @direct_ir.Block) -> Map[Int, Int] {
 
 ///|
 fn matches_read(
-  reads : Map[Int, StackRead],
+  reads : Map[Int32, StackRead],
   value : @direct_ir.Value,
-  symbol : Int,
-  depth : Int,
+  symbol : Int32,
+  depth : Int32,
   field : @direct_ir.Field,
 ) -> Bool {
   guard value is Reg(reg) && reads.get(reg.id) is Some(read) else { false }
@@ -79,8 +79,8 @@ fn matches_read(
 
 ///|
 fn stack_arguments(
-  reads : Map[Int, StackRead],
-  rhs : Array[Int],
+  reads : Map[Int32, StackRead],
+  rhs : Array[Int32],
   args : Array[@direct_ir.ActionArgument],
 ) -> Bool {
   if args.is_empty() || args.length() != rhs.length() {
@@ -104,9 +104,9 @@ fn action_arguments(
   block : @direct_ir.Block,
   actions : Array[@direct_ir.ActionSignature],
 ) -> ActionArguments {
-  let reads : Map[Int, StackRead] = Map([])
+  let reads : Map[Int32, StackRead] = Map([])
   let slices = Set([])
-  let replaced : Map[Int, Int] = Map([])
+  let replaced : Map[Int32, Int32] = Map([])
   for index, instruction in block.instructions {
     match instruction {
       Peek(depth, cell, regs) =>
@@ -117,7 +117,7 @@ fn action_arguments(
             }
           }
         }
-      ReadLastPosition(_) => ()
+      ReadPreviousPosition(_, _) => ()
       Action(id, args, _, _) => {
         if stack_arguments(reads, actions[id].rhs, args) {
           slices.add(index)
@@ -146,8 +146,8 @@ fn action_arguments(
 ///|
 fn Emitter::stack_action(
   self : Emitter,
-  id : Int,
-  count : Int,
+  id : Int32,
+  count : Int32,
   last : @direct_ir.Value,
   result : @direct_ir.Register,
 ) -> @mbt_ast.Stmt {
@@ -159,9 +159,12 @@ fn Emitter::stack_action(
   )
   self.bind_register(
     result,
-    call("yy_action_\{action}", [
-      self.value(last),
-      Slice(self.machine("data"), Some(start), None),
-    ]),
+    call(
+      "yy_action_\{action}",
+      self.support.action_arguments(
+        self.value(last),
+        Slice(self.machine("data"), Some(start), None),
+      ),
+    ),
   )
 }

@@ -10,14 +10,14 @@ pub(all) enum ValueType {
 ///|
 /// IDs are unique across a program; definitions are local to one block.
 pub(all) struct Register {
-  id : Int
+  id : Int32
   type_ : ValueType
 } derive(Eq)
 
 ///|
 pub(all) enum Value {
   Reg(Register)
-  State(Int)
+  State(Int32)
 } derive(Eq)
 
 ///|
@@ -32,7 +32,7 @@ pub(all) enum Field {
 /// Fields describe a logical cell, not a concrete tuple/array representation.
 /// None denotes an opaque prefix cell: only its state may be peeked.
 pub(all) struct Cell {
-  symbol : Int?
+  symbol : Int32?
   fields : Array[Field]
 } derive(Eq)
 
@@ -45,7 +45,7 @@ pub(all) struct ActionArgument {
 
 ///|
 pub(all) enum Token {
-  Terminal(Int)
+  Terminal(Int32)
   EndOfInput
 } derive(Eq, Hash)
 
@@ -62,21 +62,22 @@ pub(all) enum Lookahead {
 ///|
 pub(all) enum Instruction {
   EnsureLookahead
-  Input(Int, Register, Register, Register)
+  Input(Int32, Register, Register, Register)
   ConsumeLookahead
   SaveErrorSnapshot
-  ReadLastPosition(Register)
+  // End position before the top depth cells, or the initial position.
+  ReadPreviousPosition(Int32, Register)
   Bind(Array[(Register, Value)])
   Push(Cell, Array[Value])
   Pop(Cell, Array[Register?])
-  Peek(Int, Cell, Array[Register?])
-  Action(Int, Array[ActionArgument], Value, Register)
+  Peek(Int32, Cell, Array[Register?])
+  Action(Int32, Array[ActionArgument], Value, Register)
 }
 
 ///|
 /// Jump arguments are evaluated in parallel, before binding target parameters.
 pub(all) struct Edge {
-  target : Int
+  target : Int32
   arguments : Array[Value]
 }
 
@@ -84,19 +85,19 @@ pub(all) struct Edge {
 pub(all) enum Terminator {
   Jump(Edge)
   CaseToken(Array[(Token, Edge)], Edge)
-  CaseState(Value, Array[(Int, Edge)])
-  Return(Int, Value)
-  Stop(Int)
+  CaseState(Value, Array[(Int32, Edge)])
+  Return(Int32, Value)
+  Stop(Int32)
   Unreachable
 }
 
 ///|
 /// Provenance is for diagnostics/dumps, not a restriction on block contents.
 pub(all) enum Origin {
-  Run(Int)
-  Shift(Int, Int) // destination LR state, terminal symbol
-  Reduce(Int)
-  Goto(Int)
+  Run(Int32)
+  Shift(Int32, Int32) // destination LR state, terminal symbol
+  Reduce(Int32)
+  Goto(Int32)
   Helper
 }
 
@@ -112,8 +113,8 @@ pub(all) struct Block {
 ///|
 pub(all) struct Entry {
   name : String
-  block : Int
-  state : Int
+  block : Int32
+  state : Int32
   result_type : @elab.TypeExpr
 }
 
@@ -125,16 +126,16 @@ pub(all) struct Symbol {
 
 ///|
 pub(all) struct ActionSignature {
-  rhs : Array[Int]
-  lhs : Int
+  rhs : Array[Int32]
+  lhs : Int32
   callable : Bool
 }
 
 ///|
 /// Cold-path metadata only. It contains no semantic action function pointers.
 pub(all) enum DiagnosticAction {
-  Shift(Int)
-  Reduce(Int, Int)
+  Shift(Int32)
+  Reduce(Int32, Int32)
   Accept
 }
 
@@ -142,7 +143,7 @@ pub(all) enum DiagnosticAction {
 pub(all) struct DiagnosticState {
   default_ : DiagnosticAction?
   actions : Array[(Token, DiagnosticAction)]
-  gotos : Array[(Int, Int)]
+  gotos : Array[(Int32, Int32)]
 }
 
 ///|
@@ -152,7 +153,7 @@ pub(all) struct Program {
   entries : Array[Entry]
   blocks : Array[Block]
   symbols : Array[Symbol]
-  terminal_count : Int
+  terminal_count : Int32
   actions : Array[ActionSignature]
   diagnostics : Array[DiagnosticState]
 }

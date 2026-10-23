@@ -54,6 +54,7 @@ fn eliminate_inline_rules(
       cont_items : @immut/vector.Vector[@elab.Item],
       cont_bindings : @immut/vector.Vector[(@elab.BindingSubject, @elab.Code)],
       cont_subactions : @immut/vector.Vector[@elab.SubAction],
+      cont_span : (@elab.PositionExpr, @elab.PositionExpr),
       index : Int32,
     ) {
       if index >= clause.items.length() {
@@ -63,8 +64,10 @@ fn eliminate_inline_rules(
           action: {
             ..clause.action,
             stamp: @stamp.new(),
-            sub_actions: cont_subactions.to_array(),
+            arity: cont_items.length(),
+            span: cont_span,
             bindings: cont_bindings.to_array(),
+            sub_actions: cont_subactions.to_array(),
           },
         })
       } else {
@@ -78,36 +81,62 @@ fn eliminate_inline_rules(
             let start_index = cont_items.length()
             let end_index = start_index + inline_clause.items.length()
             let subaction_index = cont_subactions.length()
-            let next_cont_subactions = cont_subactions.push({
-              start: start_index,
-              end: end_index,
-              action: inline_clause.action,
-            })
             let index_shift = inline_clause.items.length() - 1
-            let next_cont_bindings = cont_bindings.map(fn(binding) {
-              let (subject, code) = binding
-              let new_subject : @elab.BindingSubject = match subject {
-                Data(data_index, type_~) if data_index == start_index =>
+            // Earlier passes may already have expanded a later sibling.
+            // Its slice must follow the new physical stack layout as well.
+            fn shift_boundary(index : Int32) -> Int32 {
+              if index > start_index {
+                index + index_shift
+              } else {
+                index
+              }
+            }
+            let next_cont_subactions = cont_subactions
+              .map(sub => {
+                ..sub,
+                start: shift_boundary(sub.start),
+                end: shift_boundary(sub.end),
+              })
+              .push({
+                start: start_index,
+                end: end_index,
+                action: inline_clause.action,
+              })
+            fn substitute(position : @elab.PositionExpr) -> @elab.PositionExpr {
+              position.substitute(
+                index=start_index,
+                arity=inline_clause.items.length(),
+                span=inline_clause.action.span,
+              )
+            }
+            let next_cont_bindings = cont_bindings.map(binding => {
+              let (subject, name) = binding
+              let subject : @elab.BindingSubject = match subject {
+                Data(index, type_~) if index == start_index =>
                   SubAction(index=subaction_index, type_~)
-                Data(data_index, type_~) if data_index > start_index =>
-                  Data(data_index + index_shift, type_~)
-                StartPosOf(data_index) if data_index > start_index =>
-                  StartPosOf(data_index + index_shift)
-                EndPosOf(data_index) if data_index > start_index =>
-                  EndPosOf(data_index + index_shift)
+                Data(index, type_~) if index > start_index =>
+                  Data(index + index_shift, type_~)
+                Position(position) => Position(substitute(position))
                 _ => subject
               }
-              (new_subject, code)
+              (subject, name)
             })
             cont(
               next_cont_items,
               next_cont_bindings,
               next_cont_subactions,
+              (substitute(cont_span.0), substitute(cont_span.1)),
               index + 1,
             )
           }
         } else {
-          cont(cont_items.push(item), cont_bindings, cont_subactions, index + 1)
+          cont(
+            cont_items.push(item),
+            cont_bindings,
+            cont_subactions,
+            cont_span,
+            index + 1,
+          )
         }
       }
     }
@@ -116,6 +145,7 @@ fn eliminate_inline_rules(
       @immut/vector.new(),
       @immut/vector.from_array(clause.action.bindings),
       @immut/vector.from_array(clause.action.sub_actions),
+      clause.action.span,
       0,
     )
   }

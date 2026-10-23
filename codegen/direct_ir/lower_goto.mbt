@@ -7,13 +7,13 @@ fn Lowering::lower_gotos(self : Lowering) -> Unit {
 
 ///|
 /// Dispatch on the state exposed after popping a production's RHS.
-fn Lowering::goto_block(self : Lowering, lhs : Int) -> Block {
+fn Lowering::goto_block(self : Lowering, lhs : Int32) -> Block {
   let pred = self.fresh(State)
   let value = self.fresh(Semantic(self.program.symbols[lhs].type_))
   let sp = self.fresh(Position)
   let ep = self.fresh(Position)
   let arms = []
-  let pushes : Map[Int, Int] = Map([])
+  let pushes : Map[Int32, Int32] = Map([])
   for state in self.automaton.states {
     for symbol, target in state.goto {
       if symbol is NT(_) &&
@@ -48,7 +48,7 @@ fn Lowering::goto_block(self : Lowering, lhs : Int) -> Block {
 }
 
 ///|
-fn Lowering::goto_push(self : Lowering, lhs : Int, target : Int) -> Int {
+fn Lowering::goto_push(self : Lowering, lhs : Int32, target : Int32) -> Int32 {
   let label = self.reserve(Helper)
   let value = self.fresh(Semantic(self.program.symbols[lhs].type_))
   let sp = self.fresh(Position)

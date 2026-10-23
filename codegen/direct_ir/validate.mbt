@@ -8,7 +8,7 @@ pub suberror InvalidProgram {
 /// prove inter-block stack shapes.
 pub fn Program::validate(self : Program) -> Unit raise InvalidProgram {
   self.validate_metadata()
-  let definitions : Map[Int, Bool] = Map([])
+  let definitions : Map[Int32, Bool] = Map([])
   for label, block in self.blocks {
     let validator = BlockValidator::{
       program: self,
@@ -32,7 +32,7 @@ fn require(ok : Bool, message : String) -> Unit raise InvalidProgram {
 ///|
 fn Program::checked_symbol(
   self : Program,
-  id : Int,
+  id : Int32,
 ) -> Symbol raise InvalidProgram {
   require(id > 0 && id < self.symbols.length(), "invalid symbol \{id}")
   self.symbols[id]
@@ -41,7 +41,7 @@ fn Program::checked_symbol(
 ///|
 fn Program::checked_state(
   self : Program,
-  id : Int,
+  id : Int32,
 ) -> Unit raise InvalidProgram {
   require(id >= 0 && id < self.diagnostics.length(), "invalid state \{id}")
 }

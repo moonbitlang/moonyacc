@@ -1,9 +1,9 @@
 ///|
 fn reference_decision(
   state : @direct_ir.DiagnosticState,
-  symbol : Int,
-) -> (Int, Int, Int) {
-  fn action(value : @direct_ir.DiagnosticAction) -> (Int, Int, Int) {
+  symbol : Int32,
+) -> (Int32, Int32, Int32) {
+  fn action(value : @direct_ir.DiagnosticAction) -> (Int32, Int32, Int32) {
     match value {
       Accept => (1, 0, 0)
       Shift(next) => (2, next, 0)
@@ -30,9 +30,9 @@ fn reference_decision(
 /// Read the packed format linearly, independently of the emitted binary search.
 fn DiagnosticTable::read(
   self : DiagnosticTable,
-  state : Int,
-  symbol : Int,
-) -> (Int, Int, Int) {
+  state : Int32,
+  symbol : Int32,
+) -> (Int32, Int32, Int32) {
   let row = self.rows[state]
   let mut code = if row < 0 { -row - 1 } else { 0 }
   if row >= 0 {

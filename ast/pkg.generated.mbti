@@ -14,7 +14,7 @@ pub fn print_spec(ParserSpec, StringBuilder, actions? : Bool) -> Unit
 // Types and methods
 pub(all) struct ClauseAction {
   code : CodeWithSubst?
-  loc : (Int, Int)
+  loc : (Int32, Int32)
 } derive(ToJson)
 
 pub(all) struct ClauseItem {
@@ -23,25 +23,25 @@ pub(all) struct ClauseItem {
 } derive(ToJson)
 
 pub(all) enum ClauseItemIdent {
-  Dollar(Int)
+  Dollar(Int32)
   Name(String)
 } derive(Compare, Eq, ToJson, @debug.Debug)
 
 pub(all) struct ClauseWithoutAction {
   items : Array[ClauseItem]
   prec : PrecSymbol?
-  loc : (Int, Int)
+  loc : (Int32, Int32)
 } derive(ToJson)
 
 pub(all) struct CodeWithSubst {
   code : String
-  utf8_pos : Int
+  utf8_pos : Int32
   subst : Array[SubstItem]
 } derive(ToJson)
 
 pub(all) enum Declaration {
-  Header(String, Int, Int)
-  Trailer(String, Int, Int)
+  Header(String, Int32, Int32)
+  Trailer(String, Int32, Int32)
   Start(Array[SymbolWithLoc], type_~ : String?)
   Token(Array[SymbolWithLoc], type_~ : String?)
   Token1(SymbolWithLoc, type_~ : String?, image~ : String)
@@ -73,13 +73,13 @@ pub(all) struct Rule {
 } derive(ToJson)
 
 pub(all) struct SubstItem {
-  start : Int
-  end : Int
+  start : Int32
+  end : Int32
   desc : SubstItemDesc
 } derive(ToJson, @debug.Debug)
 
 pub(all) enum SubstItemDesc {
-  Dollar(Int)
+  Dollar(Int32)
   StartPos
   EndPos
   Loc
@@ -92,13 +92,13 @@ pub(all) enum SubstItemDesc {
 
 pub(all) struct SymbolWithLoc {
   symbol : String
-  loc : (Int, Int)
+  loc : (Int32, Int32)
 } derive(ToJson)
 
 pub(all) enum Term {
-  Symbol(String, loc~ : (Int, Int))
-  Image(String, loc~ : (Int, Int))
-  RuleCall(String, symbol_loc~ : (Int, Int), Array[Term])
+  Symbol(String, loc~ : (Int32, Int32))
+  Image(String, loc~ : (Int32, Int32))
+  RuleCall(String, symbol_loc~ : (Int32, Int32), Array[Term])
 } derive(ToJson)
 
 pub(all) enum TypeExpr {

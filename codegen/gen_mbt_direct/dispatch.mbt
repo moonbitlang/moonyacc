@@ -1,7 +1,7 @@
 ///|
 fn Emitter::block_body(
   self : Emitter,
-  pc : Int,
+  pc : Int32,
   no_comments : Bool,
 ) -> @mbt_ast.Block {
   let label = self.layout.blocks[pc]
@@ -37,8 +37,8 @@ fn Emitter::block_body(
 ///|
 fn Emitter::dispatch(
   self : Emitter,
-  first : Int,
-  last : Int,
+  first : Int32,
+  last : Int32,
   pc : @mbt_ast.Expr,
   no_comments : Bool,
 ) -> @mbt_ast.Expr {
@@ -89,7 +89,7 @@ fn Emitter::chunk_dispatch(self : Emitter) -> @mbt_ast.Stmt {
 ///|
 fn Emitter::chunk_item(
   self : Emitter,
-  chunk : Int,
+  chunk : Int32,
   no_comments : Bool,
 ) -> @mbt_ast.Item {
   let first = chunk * BLOCKS_PER_CHUNK

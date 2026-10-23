@@ -1,10 +1,12 @@
 %position<(Int, Int)>
 %token<Int> NUMBER
 %token MARK EOF
-%start start
+%start start leading_empty
 
 %%
 
 start: prefix atom EOF { () };
 prefix: { () } | MARK { () };
 %inline atom: NUMBER { () };
+leading_empty: empty NUMBER EOF { () };
+%inline empty: { () };

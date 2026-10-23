@@ -9,16 +9,16 @@ import {
 // Values
 pub fn parse(String) -> @ast.TypeExpr raise ParseOrLexError
 
-pub fn parse_type_expr(Array[(Token, Int, Int)], initial_pos? : Int) -> @ast.TypeExpr raise ParseError
+pub fn parse_type_expr(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> @ast.TypeExpr raise ParseError
 
 // Errors
 pub suberror LexError {
-  Unrecognized(Char, Int)
+  Unrecognized(Char, Int32)
 } derive(@debug.Debug)
 
 pub suberror ParseError {
-  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
-  UnexpectedEndOfInput(Int, Array[TokenKind])
+  UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
+  UnexpectedEndOfInput(Int32, Array[TokenKind])
 } derive(@debug.Debug)
 
 type ParseOrLexError derive(@debug.Debug)
