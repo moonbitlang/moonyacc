@@ -2,19 +2,14 @@
 fn Emitter::stop_body(self : Emitter) -> @mbt_ast.Block {
   body(
     [
-      Let(
-        Tuple([Any, Bind("_data"), Bind("token")]),
-        None,
-        dot_call(self.machine("lookahead"), "unwrap", []),
-      ),
       Eval(
         call("yy_error", [
-          self.machine("error_stack"),
-          Ident("token"),
-          Tuple([
-            self.support.data_position(Ident("_data"), 1),
-            self.support.data_position(Ident("_data"), 2),
+          self.stack_call("states", [
+            self.machine("error_stack"),
+            self.machine("error_state"),
           ]),
+          self.cached("token"),
+          Tuple([self.cached_position(), self.cached_position(end=true)]),
         ]),
       ),
     ],

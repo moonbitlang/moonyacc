@@ -14,7 +14,7 @@ let reductions : Ref[Int] = Ref(0)
 
 %%
 
-start: e=expr EOF { (e, $startpos(e), $endpos(e)) };
+start: e=expr EOF { (e, $startpos(e), $endpos(e))};
 
 inline_positions: prefix x=anchored EOF { x + [$loc(x)]};
 anchored -> Array[(Int, Int)]:
@@ -25,11 +25,11 @@ anchored -> Array[(Int, Int)]:
 %inline unit_prefix: { ()};
 
 expr:
-  | atom { $1 }
-  | expr PLUS expr { $1 + $3 }
-  | expr STAR expr { $1 * $3 }
-  | expr EQ expr { reductions.val += 1; $1 + $3 };
+  | atom { $1}
+  | expr PLUS expr { $1 + $3}
+  | expr STAR expr { $1 * $3}
+  | expr EQ expr { reductions.val += 1; $1 + $3};
 
 %inline atom:
-  | NUMBER { $1 }
-  | LPAREN expr RPAREN { $2 };
+  | NUMBER { $1}
+  | LPAREN expr RPAREN { $2};

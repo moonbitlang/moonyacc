@@ -4,7 +4,10 @@ fn Emitter::parser_items(
   self : Emitter,
   no_comments~ : Bool,
 ) -> Array[@mbt_ast.Item] {
-  let items = []
+  let items = [self.stack_item(), self.result_item(), self.lookahead_item()]
+  if self.program.blocks.any(b => b.instructions.any(i => i is EnsureLookahead)) {
+    items.append(self.token_items())
+  }
   if self.chunked {
     items.push(self.context_item())
     if !self.chunk_errors.is_empty() {
@@ -18,9 +21,6 @@ fn Emitter::parser_items(
       .any(b => b.instructions.iter().any(i => i is EnsureLookahead)) {
       items.push(self.input_item())
     }
-    if self.program.blocks.iter().any(has_bulk_pop) {
-      items.push(self.pop_item())
-    }
   }
   items.push(self.parse_item(no_comments))
   if self.chunked {
@@ -28,8 +28,9 @@ fn Emitter::parser_items(
       items.push(self.chunk_item(chunk, no_comments))
     }
   }
-  for entry in self.program.entries {
-    items.push(self.entry_item(entry))
+  for index, entry in self.program.entries {
+    items.push(self.entry_item(index, entry))
   }
+  items.append(self.stack_helper_items())
   items
 }

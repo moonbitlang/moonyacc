@@ -37,12 +37,13 @@ test "direct action anchors follow subaction slices and JSON CST spans" {
     stamp: @stamp.new(),
     body: JsonCst(name="start", rule_index=0, clause_index=0),
   }
-  let needed = before_rhs_actions(
+  let plans = action_parameter_plans(
     [base, empty, leading, nested, following, json].iter(),
+    true,
   )
-  assert_false(needed.contains(base.stamp))
-  assert_false(needed.contains(following.stamp))
+  assert_false(plans[base.stamp].contains(Position(BeforeRhs)))
+  assert_false(plans[following.stamp].contains(Position(BeforeRhs)))
   for action in [empty, leading, nested, json] {
-    assert_true(needed.contains(action.stamp))
+    assert_true(plans[action.stamp].contains(Position(BeforeRhs)))
   }
 }

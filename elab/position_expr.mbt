@@ -62,3 +62,27 @@ pub fn PositionExpr::uses_before_rhs(self : PositionExpr) -> Bool {
       })
   }
 }
+
+///|
+/// Leaves that must be available to evaluate this expression. Equal spans are
+/// skipped exactly as in the short-circuit evaluation of FirstNonEmpty.
+pub fn PositionExpr::inputs(self : PositionExpr) -> Array[PositionExpr] {
+  let inputs = []
+  fn visit(position : PositionExpr) {
+    match position {
+      FirstNonEmpty([]) => visit(BeforeRhs)
+      FirstNonEmpty(spans) => {
+        for (start, end) in spans {
+          if start != end {
+            visit(start)
+            visit(end)
+          }
+        }
+        visit(spans[spans.length() - 1].1)
+      }
+      _ => if !inputs.contains(position) { inputs.push(position) }
+    }
+  }
+  visit(self)
+  inputs
+}

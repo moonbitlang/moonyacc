@@ -1,6 +1,7 @@
 ///|
 fn Emitter::entry_item(
   self : Emitter,
+  index : Int32,
   entry : @direct_ir.Entry,
 ) -> @mbt_ast.Item {
   let position = self.meta.position_data_type
@@ -32,26 +33,21 @@ fn Emitter::entry_item(
         ],
       )
   }
+  let arms : Array[(@mbt_ast.Pattern, @mbt_ast.Block)] = [
+    (
+      Constructor("YYAccept_\{index}", [Bind("result")]),
+      value_block(@mbt_ast.Expr::Ident("result")),
+    ),
+  ]
+  if self.program.entries.length() > 1 {
+    arms.push((Any, value_block(call("panic", []))))
+  }
   @mbt_ast.item(
     Function(
       @mbt_ast.function(
         entry.name,
         parameters,
-        body(
-          [
-            binding("result", Call(Ident("yy_parse"), arguments)),
-            Assert(
-              Is(
-                Ident("result"),
-                Constructor(
-                  "YYObj_" + @mbt_common.type_ident(entry.result_type),
-                  [Bind("result")],
-                ),
-              ),
-            ),
-          ],
-          result=Ident("result"),
-        ),
+        value_block(Match(Call(Ident("yy_parse"), arguments), arms)),
         result=entry.result_type,
         effect=Raises(type_("ParseError")),
       ),

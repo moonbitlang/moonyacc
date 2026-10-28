@@ -16,7 +16,7 @@ pub struct Context {
   priv get_action_id : (@elab.Action) -> Int32
   priv pass_before_rhs : Bool
   priv action_calls : ActionCalls
-  priv before_rhs_actions : Set[@stamp.Stamp]
+  priv typed_actions : Map[@stamp.Stamp, ActionPlan]
   priv override_span_start : Bool
 }
 
@@ -94,10 +94,10 @@ pub fn Context::new(
     reductions,
     pass_before_rhs,
     action_calls,
-    before_rhs_actions: if action_calls is Direct && has_positions {
-      before_rhs_actions(actions.iter().map(p => p.1))
+    typed_actions: if action_calls is Direct {
+      action_parameter_plans(actions.iter().map(p => p.1), has_positions)
     } else {
-      Set([])
+      Map([])
     },
     override_span_start,
     get_action_id: action => ids.get(action.stamp),
@@ -110,7 +110,7 @@ pub fn Context::action_id(self : Context, action : @elab.Action) -> Int32 {
 }
 
 ///|
-pub fn Context::data_type(self : Context) -> @elab.TypeExpr {
+fn Context::data_type(self : Context) -> @elab.TypeExpr {
   if self.tracks_positions() {
     Tuple([
       named_type("YYObj", []),
@@ -128,10 +128,7 @@ pub fn Context::tracks_positions(self : Context) -> Bool {
 }
 
 ///|
-pub fn Context::data_value(
-  self : Context,
-  data : @mbt_ast.Expr,
-) -> @mbt_ast.Expr {
+fn Context::data_value(self : Context, data : @mbt_ast.Expr) -> @mbt_ast.Expr {
   if self.tracks_positions() {
     component(data, 0)
   } else {
@@ -140,7 +137,7 @@ pub fn Context::data_value(
 }
 
 ///|
-pub fn Context::data_position(
+fn Context::data_position(
   self : Context,
   data : @mbt_ast.Expr,
   index : Int32,
@@ -153,7 +150,7 @@ pub fn Context::data_position(
 }
 
 ///|
-pub fn Context::located_data(
+fn Context::located_data(
   self : Context,
   data : @mbt_ast.Expr,
   start : @mbt_ast.Expr,

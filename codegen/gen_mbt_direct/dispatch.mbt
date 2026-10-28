@@ -14,8 +14,10 @@ fn Emitter::block_body(
         Some("shift \{self.program.symbols[token].name} into state \{state}")
       Reduce(production) => {
         let action = self.program.actions[production]
-        let rhs = action.rhs.map(id => self.program.symbols[id].name).join(" ")
-        Some("reduce \{self.program.symbols[action.lhs].name} -> \{rhs}")
+        let rhs = action.rhs
+          .map(id => " \{self.program.symbols[id].name}")
+          .join("")
+        Some("reduce \{self.program.symbols[action.lhs].name} ->\{rhs}")
       }
       Goto(symbol) => Some("goto \{self.program.symbols[symbol].name}")
       Helper => None
@@ -77,7 +79,7 @@ fn Emitter::chunk_dispatch(self : Emitter) -> @mbt_ast.Stmt {
       Eval(
         If(
           Binary(Less, Ident("next"), Int(0)),
-          body([Return(self.machine("_yy_result"))]),
+          body([Return(dot_call(self.machine("_yy_result"), "unwrap", []))]),
           None,
         ),
       ),

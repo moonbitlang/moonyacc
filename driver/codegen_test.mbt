@@ -50,3 +50,26 @@ test "JSON CST generation shares nonterminal construction" {
     assert_eq(output.split("\"NONTERMINAL\"").count() - 1, 0)
   }
 }
+
+///|
+test "direct Unit positions have no register storage" {
+  let grammar =
+    #|%token<Int> NUMBER
+    #|%start<(Unit, Unit)> start empty
+    #|%%
+    #|start: NUMBER { $loc };
+    #|empty: { $loc };
+  for input_mode in [@driver.InputMode::Array, Pull] {
+    for mode in [@driver.Mode::Default, JsonCst] {
+      let output = @driver.compile(
+        grammar,
+        filename="unit_positions.mbty",
+        input_mode~,
+        mode~,
+        generator=@gen_mbt_direct.generator,
+      )
+      assert_false(output.contains("_yy_position_"))
+      assert_false(output.contains("initial_position"))
+    }
+  }
+}

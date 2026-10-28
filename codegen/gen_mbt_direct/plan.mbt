@@ -8,6 +8,7 @@ priv struct Emitter {
   meta : @codegen.MetaProvider
   support : @mbt_common.Context
   input_mode : @codegen.InputMode
+  cache_json : Bool
   layout : BlockLayout
   gotos : Map[Int32, GotoPlan]
   chunked : Bool
@@ -15,6 +16,9 @@ priv struct Emitter {
   saves_snapshot : Bool
   needs_initial_position : Bool
   slots : Map[Int32, (Int32, Int32)]
+  slot_types : Array[SlotType]
+  cells : Array[StackCell]
+  stack_helpers : Set[String]
   maxima : Array[Int32]
   chunk_loops : Set[Int32]
   chunk_errors : Set[Int32]
@@ -31,11 +35,14 @@ fn Emitter::new(
     program.blocks,
     program.entries.map(e => e.block),
   )
+  let needs_initial_position = initial_position_needed(program, support, meta)
   let self = Emitter::{
     program,
     meta,
     support,
     input_mode,
+    cache_json: support.is_json_cst() &&
+    program.blocks.any(b => b.instructions.any(i => i is Input(_))),
     layout: BlockLayout::new(program.blocks, omitted~),
     gotos,
     // Keep shared runtime helpers when compaction leaves just one chunk.
@@ -46,22 +53,16 @@ fn Emitter::new(
     saves_snapshot: program.blocks
     .iter()
     .any(b => b.instructions.iter().any(i => i is SaveErrorSnapshot)),
-    needs_initial_position: program.blocks.any(block => {
-      let args = action_arguments(block, program.actions, id => {
-        support.action_uses_before_rhs((meta.production_meta)(id).action)
-      })
-      block.instructions.any(instruction => {
-        match instruction {
-          ReadPreviousPosition(_, reg) => !args.unused.contains(reg.id)
-          Push(cell, _) =>
-            support.tracks_positions() &&
-            (!cell.fields.contains(Start) || !cell.fields.contains(End))
-          _ => false
-        }
-      })
-    }),
+    needs_initial_position,
     slots: {},
-    maxima: [0, 0, 0],
+    slot_types: [],
+    cells: stack_cells(
+      program,
+      support.tracks_positions(),
+      needs_initial_position,
+    ),
+    stack_helpers: Set([]),
+    maxima: [],
     chunk_loops: Set([]),
     chunk_errors: Set([]),
   }
@@ -86,15 +87,26 @@ fn Emitter::allocate_parameters(
   self : Emitter,
   parameters : Array[@direct_ir.Register],
 ) -> Unit {
-  let counts = [0, 0, 0]
+  let counts : Map[Int32, Int32] = Map([])
   for parameter in parameters {
-    let kind = match parameter.type_ {
-      State => 0
-      Semantic(_) => 1
-      Position => 2
+    if self.erased_register(parameter) {
+      continue
     }
-    self.slots[parameter.id] = (kind, counts[kind])
-    counts[kind] += 1
+    let kind = match
+      self.slot_types.search_by(t => t.logical == parameter.type_) {
+      Some(kind) => kind
+      None => {
+        let kind = self.slot_types.length()
+        self.slot_types.push(
+          slot_type(parameter.type_, self.meta.position_data_type),
+        )
+        self.maxima.push(0)
+        kind
+      }
+    }
+    let count = counts.get(kind).unwrap_or(0)
+    self.slots[parameter.id] = (kind, count)
+    counts[kind] = count + 1
     self.maxima[kind] = Int32::max(self.maxima[kind], counts[kind])
   }
 }
@@ -130,9 +142,23 @@ fn Emitter::register(
   self : Emitter,
   reg : @direct_ir.Register,
 ) -> @mbt_ast.Expr {
+  if self.erased_register(reg) {
+    return Unit
+  }
+  let value = self.place(reg)
   match self.slots.get(reg.id) {
-    Some((kind, index)) => self.machine("_yy_p\{kind}_\{index}")
-    None => Ident("_yy_r\{reg.id}")
+    Some((kind, _)) if self.slot_types[kind].optional =>
+      dot_call(value, "unwrap", [])
+    _ => value
+  }
+}
+
+///|
+fn Emitter::erased_register(self : Emitter, reg : @direct_ir.Register) -> Bool {
+  match reg.type_ {
+    Position => !self.support.tracks_positions()
+    Semantic(Constr(pkg=None, "Unit", [])) => true
+    _ => false
   }
 }
 
@@ -141,23 +167,5 @@ fn Emitter::value(self : Emitter, value : @direct_ir.Value) -> @mbt_ast.Expr {
   match value {
     Reg(reg) => self.register(reg)
     State(id) => Int(id)
-  }
-}
-
-///|
-fn Emitter::slot_type(self : Emitter, kind : Int32) -> @elab.TypeExpr {
-  match kind {
-    0 => type_("Int")
-    1 => type_("YYObj")
-    _ => self.meta.position_data_type
-  }
-}
-
-///|
-fn slot_initial(kind : Int32) -> @mbt_ast.Expr {
-  match kind {
-    0 => Int(0)
-    1 => Ident("YYObj_Void")
-    _ => Ident("initial_position")
   }
 }

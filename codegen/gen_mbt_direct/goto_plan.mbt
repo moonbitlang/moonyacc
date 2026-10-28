@@ -13,6 +13,7 @@ priv struct GotoTarget {
 
 ///|
 priv struct GotoPlan {
+  cell : @direct_ir.Cell
   selector : @direct_ir.Value
   data : (@direct_ir.Value, @direct_ir.Value, @direct_ir.Value)
   // Case keys and target.state are LR states; target.label names an IR block.
@@ -114,7 +115,7 @@ fn plan_goto(
     choices.push((pattern, push.target))
     helpers.add(edge.target)
   }
-  Some({ selector, data: first.data, choices, helpers, })
+  Some({ cell: first.cell, selector, data: first.data, choices, helpers, })
 }
 
 ///|

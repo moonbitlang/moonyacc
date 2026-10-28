@@ -3,6 +3,7 @@ test "parallel copies preserve cycles, identity slots and local inputs" {
   let a : @direct_ir.Register = { id: 0, type_: State, }
   let b : @direct_ir.Register = { id: 1, type_: State, }
   let c : @direct_ir.Register = { id: 2, type_: State, }
+  let position : @direct_ir.Register = { id: 3, type_: Position, }
   fn slot(r : @direct_ir.Register) -> (Int32, Int32)? {
     if r.id < 2 {
       Some((0, r.id))
@@ -21,12 +22,15 @@ test "parallel copies preserve cycles, identity slots and local inputs" {
     [(a, Reg(a)), (b, State(7))],
     [(a, Reg(c)), (b, Reg(a))],
     [(a, State(4)), (b, Reg(c))],
+    [(a, Reg(b)), (position, Reg(position)), (b, Reg(a))],
   ]
   for moves in cases {
     let initial = [10, 20]
     let expected = initial.copy()
     for (dest, value) in moves {
-      expected[dest.id] = read(value, initial)
+      if slot(dest) is Some(_) {
+        expected[dest.id] = read(value, initial)
+      }
     }
     let actual = initial.copy()
     let saved : Map[Int32, Int32] = Map([])
@@ -87,66 +91,55 @@ test "coalescing keeps duplicated results and incoming parameters distinct" {
   assert_true(
     copies[0] is Store(dest, Reg(source)) && dest == b && source == value,
   )
+  let erased_slots : Map[Int32, (Int32, Int32)] = Map([])
+  coalesce_results(blocks, erased_slots)
+  assert_true(erased_slots.is_empty())
 }
 
 ///|
-test "stack argument fusion preserves escaping spans and respects effects" {
+test "typed reductions require the exact symbol suffix and effect order" {
   let int : @elab.TypeExpr = Constr(pkg=None, "Int", [])
-  let v : @direct_ir.Register = { id: 0, type_: Semantic(int), }
-  let sp : @direct_ir.Register = { id: 1, type_: Position, }
-  let ep : @direct_ir.Register = { id: 2, type_: Position, }
-  let last : @direct_ir.Register = { id: 3, type_: Position, }
+  let value : @direct_ir.Register = { id: 0, type_: Semantic(int), }
+  let start : @direct_ir.Register = { id: 1, type_: Position, }
+  let end : @direct_ir.Register = { id: 2, type_: Position, }
+  let before : @direct_ir.Register = { id: 3, type_: Position, }
   let result : @direct_ir.Register = { id: 4, type_: Semantic(int), }
-  let next : @direct_ir.Register = { id: 5, type_: Semantic(int), }
+  let state : @direct_ir.Register = { id: 5, type_: State, }
   let cell : @direct_ir.Cell = {
     symbol: Some(1),
     fields: [State, Semantic, Start, End],
   }
-  let peek : @direct_ir.Instruction = Peek(0, cell, [
-    None,
-    Some(v),
-    Some(sp),
-    Some(ep),
-  ])
-  let args : Array[@direct_ir.ActionArgument] = [
-    { value: Reg(v), start: Reg(sp), end: Reg(ep), },
-  ]
   let actions : Array[@direct_ir.ActionSignature] = [
     { rhs: [1], lhs: 2, callable: true, },
-    { rhs: [], lhs: 2, callable: true, },
   ]
   let block : @direct_ir.Block = {
-    origin: Reduce(0),
+    origin: Helper,
     parameters: [],
     lookahead: Any,
     instructions: [
-      peek,
-      ReadPreviousPosition(0, last),
-      Action(0, args, Reg(last), result),
+      Peek(0, cell, [None, Some(value), Some(start), Some(end)]),
+      ReadPreviousPosition(1, before),
+      Action(
+        0,
+        [{ value: Reg(value), start: Reg(start), end: Reg(end), }],
+        Reg(before),
+        result,
+      ),
       Pop(cell, [None, None, None, None]),
-      Action(1, [], Reg(sp), next),
-    ],
-    terminator: Return(0, Reg(next)),
-  }
-  let plan = action_arguments(block, actions, _ => true)
-  assert_true(plan.slices.contains(2))
-  assert_true(plan.unused.contains(v.id))
-  assert_false(plan.unused.contains(sp.id))
-  assert_false(plan.unused.contains(last.id))
-  let without_anchor = action_arguments(block, actions, id => id == 1)
-  assert_true(without_anchor.unused.contains(last.id))
-  assert_false(without_anchor.unused.contains(sp.id))
-  let with_effect = {
-    ..block,
-    instructions: [
-      peek,
-      EnsureLookahead,
-      ReadPreviousPosition(0, last),
-      Action(0, args, Reg(last), result),
+      Peek(0, { symbol: None, fields: [State], }, [Some(state)]),
     ],
     terminator: Return(0, Reg(result)),
   }
+  assert_true(reduction_plan(block, actions) is Some(_))
+  assert_true(unused_previous_positions(block, _ => false).contains(before.id))
+  assert_false(unused_previous_positions(block, _ => true).contains(before.id))
+  let changed = block.instructions.copy()
+  changed[3] = Pop({ ..cell, symbol: Some(2), }, [None, None, None, None])
   assert_true(
-    action_arguments(with_effect, actions, _ => true).slices.is_empty(),
+    reduction_plan({ ..block, instructions: changed, }, actions) is None,
+  )
+  changed[3] = SaveErrorSnapshot
+  assert_true(
+    reduction_plan({ ..block, instructions: changed, }, actions) is None,
   )
 }

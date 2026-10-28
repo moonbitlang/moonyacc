@@ -31,7 +31,14 @@ fn Emitter::initial_state(self : Emitter) -> Array[@mbt_ast.Stmt] {
       ])
     Pull => @mbt_ast.Expr::Ident("start_pos")
   }
-  statements.push(binding("initial_position", position))
+  statements.push(
+    if self.support.tracks_positions() {
+      binding("initial_position", position)
+    } else {
+      // Evaluating the array fallback preserves empty-input validation.
+      Eval(call("ignore", [position]))
+    },
+  )
   if !self.chunked &&
     self.input_mode is Array &&
     self.support.tracks_positions() {
@@ -44,15 +51,6 @@ fn Emitter::initial_state(self : Emitter) -> Array[@mbt_ast.Stmt] {
       },
     )
   }
-  let states = call("@list.List", [Array([Ident("initial_state")])])
-  let type_ = @mbt_common.named_type("@list.List", [type_("Int")])
-  statements.push(
-    if self.chunked {
-      binding("states", states, type_~)
-    } else {
-      LetMut("states", Some(type_), states)
-    },
-  )
   statements
 }
 
@@ -86,7 +84,7 @@ fn Emitter::parse_item(self : Emitter, no_comments : Bool) -> @mbt_ast.Item {
         "yy_parse",
         self.parse_parameters(),
         body(statements),
-        result=type_("YYObj"),
+        result=type_("YYResult"),
         effect=Raises(type_("ParseError")),
       ),
     ),

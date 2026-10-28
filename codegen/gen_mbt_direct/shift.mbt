@@ -27,34 +27,72 @@ fn shift_target(block : @direct_ir.Block) -> Int32? {
 
 ///|
 fn Emitter::shift_item(self : Emitter) -> @mbt_ast.Item {
+  let used = Set([])
+  for block in self.program.blocks {
+    if shift_target(block) is Some(_) &&
+      block.instructions[0] is Input(symbol, _, _, _) {
+      used.add(symbol)
+    }
+  }
+  let arms = []
+  for symbol in 1..<=self.program.terminal_count {
+    if !used.contains(symbol) {
+      continue
+    }
+    let value = if self.support.is_json_cst() {
+      self.cached("value")
+    } else if is_unit(self.program.symbols[symbol].type_) {
+      @mbt_ast.Expr::Unit
+    } else {
+      Ident("_value")
+    }
+    let cell : @direct_ir.Cell = {
+      symbol: Some(symbol),
+      fields: [State, Semantic, Start, End],
+    }
+    arms.push(
+      (
+        self.token_pattern(
+          symbol,
+          if self.support.is_json_cst() {
+            Any
+          } else {
+            Bind("_value")
+          },
+        ),
+        body(
+          self.push_values(
+            cell,
+            Ident("target"),
+            value,
+            self.cached_position(),
+            self.cached_position(end=true),
+          ),
+        ),
+      ),
+    )
+  }
+  if arms.length() < self.program.terminal_count {
+    arms.push((Any, value_block(call("panic", []))))
+  }
   let statements : Array[@mbt_ast.Stmt] = [
-    binding(
-      "data",
-      component(dot_call(self.machine("lookahead"), "unwrap", []), 1),
-    ),
-    Assign(
-      self.machine("states"),
-      call("@list.cons", [Ident("state"), self.machine("states")]),
-    ),
-    Eval(dot_call(self.machine("data"), "push", [Ident("data")])),
+    Eval(Match(dot_call(self.cached("token"), "unwrap", []), arms)),
   ]
   if self.input_mode is Array && self.support.tracks_positions() {
     statements.push(
-      Assign(
-        self.machine("last_pos"),
-        self.support.data_position(Ident("data"), 2),
-      ),
+      Assign(self.machine("last_pos"), self.cached_position(end=true)),
     )
   }
   statements.append([
     Assign(self.machine("lookahead"), Ident("None")),
-    Assign(self.machine("error_stack"), self.machine("states")),
+    Assign(self.machine("error_stack"), self.machine("stack")),
+    Assign(self.machine("error_state"), self.machine("state")),
   ])
   @mbt_ast.item(
     Function(
       @mbt_ast.function(
         "yy_shift",
-        [typed("_env", type_("YYContext")), typed("state", type_("Int"))],
+        [typed("_env", type_("YYContext")), typed("target", type_("Int"))],
         body(statements),
         result=type_("Unit"),
       ),

@@ -103,6 +103,7 @@ pub(all) enum PositionExpr {
   EndOf(Int32)
   FirstNonEmpty(Array[(PositionExpr, PositionExpr)])
 } derive(Eq)
+pub fn PositionExpr::inputs(Self) -> Array[Self]
 pub fn PositionExpr::rebase(Self, Int32) -> Self
 pub fn PositionExpr::substitute(Self, index~ : Int32, arity~ : Int32, span~ : (Self, Self)) -> Self
 pub fn PositionExpr::uses_before_rhs(Self) -> Bool

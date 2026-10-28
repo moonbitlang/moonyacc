@@ -51,6 +51,7 @@ fn Emitter::goto_finish(
   let statements = [selection]
   statements.append(
     self.push_values(
+      plan.cell,
       state,
       self.value(plan.data.0),
       self.value(plan.data.1),

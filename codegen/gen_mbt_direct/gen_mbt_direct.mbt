@@ -28,15 +28,12 @@ fn codegen(
     input_mode~,
     action_calls=Direct,
   )
-  let items = support.prelude(external_tokens~, require_void=true)
-  // Share the integer-symbol input ABI; the parse path uses no action table.
-  items.push(@mbt_ast.item(TypeAlias("YYSymbol", type_("Int"))))
-  items.append(support.action_items())
-  items.push(support.input_function(Table))
+  let items = support.preamble(external_tokens~)
+  items.append(support.typed_action_items())
   let emitter = Emitter::new(program, meta, support, input_mode)
   items.append(emitter.parser_items(no_comments~))
   items.append(diagnostic_items(program, meta.position_data_type, input_mode))
-  items.append(support.action_runtime())
+  items.append(support.typed_action_runtime())
   items.append(support.footer())
   @mbt_ast.emit(items, output, source_map_builder?)
 }

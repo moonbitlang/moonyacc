@@ -13,8 +13,9 @@ fn parallel_moves(
   slot : (@direct_ir.Register) -> (Int32, Int32)?,
 ) -> Array[Move] {
   let moves = moves.filter(p => {
+    guard slot(p.0) is Some(destination) else { false }
     match p.1 {
-      Reg(reg) => slot(reg) != slot(p.0)
+      Reg(reg) => slot(reg) != Some(destination)
       State(_) => true
     }
   })
@@ -50,10 +51,9 @@ fn Emitter::copies(
   let moves = edge.arguments.mapi((i, value) => (parameters[i], value))
   parallel_moves(moves, reg => self.slots.get(reg.id)).map(step => {
     match step {
-      Store(reg, value) =>
-        @mbt_ast.Stmt::Assign(self.register(reg), self.value(value))
+      Store(reg, value) => self.store(reg, self.value(value))
       Save(i, value) => binding("_yy_arg\{i}", self.value(value))
-      Restore(reg, i) => Assign(self.register(reg), Ident("_yy_arg\{i}"))
+      Restore(reg, i) => self.store(reg, Ident("_yy_arg\{i}"))
     }
   })
 }

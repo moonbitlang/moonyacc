@@ -1,0 +1,23 @@
+%{
+let marked : Ref[Int] = Ref(0)
+%}
+
+%token<Int> NUMBER
+%token PLUS STAR LPAREN RPAREN EOF
+%left PLUS
+%left STAR
+%start<Int> start empty
+%type<Int> expr
+
+%%
+
+start: marker expr EOF { $2};
+marker -> Unit: { marked.val += 1; ()};
+
+expr:
+  | NUMBER { $1}
+  | expr PLUS expr { $1 + $3}
+  | expr STAR expr { $1 * $3}
+  | LPAREN expr RPAREN { $2};
+
+empty: { ignore($loc); 42};

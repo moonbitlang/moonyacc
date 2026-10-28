@@ -1,0 +1,51 @@
+///|
+fn located(tokens : Array[Token]) -> Array[(Token, Pos, Pos)] {
+  tokens.mapi((i, token) => {
+    (token, Pos::{ offset: i, }, Pos::{ offset: i + 1, })
+  })
+}
+
+///|
+test "typed values preserve distinct result types without Default constraints" {
+  visits.val = 0
+  let value = item(located([TEXT("typed"), NUMBER(7), FLAG(true), EOF]))
+  assert_eq(value.text, "typed")
+  assert_eq(value.count, 7)
+  assert_true(value.enabled)
+  assert_eq(visits.val, 1)
+  let add = function(located([NUMBER(5), EOF]))
+  assert_eq(add(9), 14)
+  assert_eq(text(located([TEXT("identity"), EOF])), "identity")
+  assert_eq(text(located([TEXT("reenter"), EOF])), "nested")
+}
+
+///|
+test "typed stacks preserve the last-shift snapshot and custom positions" {
+  try item(located([TEXT("typed"), FLAG(false), EOF])) catch {
+    UnexpectedToken(FLAG(false), (start, end), expected) => {
+      assert_eq((start.offset, end.offset), (1, 2))
+      assert_true(expected.any(kind => kind is TK_NUMBER))
+    }
+    _ => fail("wrong typed-stack error")
+  } noraise {
+    _ => fail("accepted mismatched symbols")
+  }
+}
+
+///|
+test "typed action temporaries do not capture bindings or globals" {
+  assert_eq(
+    hygiene(
+      located([
+        NUMBER(7),
+        NUMBER(2),
+        NUMBER(2),
+        NUMBER(9),
+        NUMBER(2),
+        NUMBER(7),
+        EOF,
+      ]),
+    ),
+    (14, 42, 3, 107),
+  )
+}

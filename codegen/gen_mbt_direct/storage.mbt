@@ -1,15 +1,16 @@
 ///|
-/// The physical parser state lives in fields for chunked programs and locals
-/// otherwise. Keep its declaration and initialization together.
 fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
-  let state_stack = @mbt_common.named_type("@list.List", [type_("Int")])
-  let data_stack = @mbt_common.named_type("Array", [self.data_type()])
   let fields : Array[@mbt_ast.Field] = [
-    { name: "states", type_: state_stack, mutable: true, },
-    { name: "data", type_: data_stack, mutable: false, },
-    { name: "error_stack", type_: state_stack, mutable: self.saves_snapshot, },
+    { name: "stack", type_: type_("YYStack"), mutable: true, },
+    { name: "state", type_: type_("Int"), mutable: true, },
+    {
+      name: "error_stack",
+      type_: type_("YYStack"),
+      mutable: self.saves_snapshot,
+    },
+    { name: "error_state", type_: type_("Int"), mutable: self.saves_snapshot, },
     { name: "lookahead", type_: self.lookahead_type(), mutable: true, },
-    { name: "_yy_result", type_: type_("YYObj"), mutable: true, },
+    { name: "_yy_result", type_: Option(type_("YYResult")), mutable: true, },
   ]
   if self.needs_initial_position {
     fields.push({
@@ -41,8 +42,8 @@ fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
   for kind, count in self.maxima {
     for index in 0..<count {
       fields.push({
-        name: "_yy_p\{kind}_\{index}",
-        type_: self.slot_type(kind),
+        name: self.slot_name(kind, index),
+        type_: self.slot_types[kind].type_,
         mutable: true,
       })
     }
@@ -53,11 +54,12 @@ fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
 ///|
 fn Emitter::context_binding(self : Emitter) -> @mbt_ast.Stmt {
   let fields : Array[(String, @mbt_ast.Expr)] = [
-    ("states", Ident("states")),
-    ("data", Array([])),
-    ("error_stack", Ident("states")),
+    ("stack", Ident("YYEmpty")),
+    ("state", Ident("initial_state")),
+    ("error_stack", Ident("YYEmpty")),
+    ("error_state", Ident("initial_state")),
     ("lookahead", Ident("None")),
-    ("_yy_result", Ident("YYObj_Void")),
+    ("_yy_result", Ident("None")),
   ]
   if self.needs_initial_position {
     fields.push(("initial_position", Ident("initial_position")))
@@ -71,7 +73,7 @@ fn Emitter::context_binding(self : Emitter) -> @mbt_ast.Stmt {
   }
   for kind, count in self.maxima {
     for index in 0..<count {
-      fields.push(("_yy_p\{kind}_\{index}", slot_initial(kind)))
+      fields.push((self.slot_name(kind, index), self.slot_types[kind].initial))
     }
   }
   binding("_env", Record(Some(type_("YYContext")), fields))
@@ -79,16 +81,18 @@ fn Emitter::context_binding(self : Emitter) -> @mbt_ast.Stmt {
 
 ///|
 fn Emitter::local_storage(self : Emitter) -> Array[@mbt_ast.Stmt] {
-  let statements = [
-    binding(
-      "data",
-      Array([]),
-      type_=@mbt_common.named_type("Array", [self.data_type()]),
-    ),
+  let statements : Array[@mbt_ast.Stmt] = [
+    LetMut("stack", Some(type_("YYStack")), Ident("YYEmpty")),
+    LetMut("state", Some(type_("Int")), Ident("initial_state")),
     if self.saves_snapshot {
-      @mbt_ast.Stmt::LetMut("error_stack", None, Ident("states"))
+      LetMut("error_stack", Some(type_("YYStack")), Ident("YYEmpty"))
     } else {
-      binding("error_stack", Ident("states"))
+      binding("error_stack", Ident("YYEmpty"), type_=type_("YYStack"))
+    },
+    if self.saves_snapshot {
+      LetMut("error_state", None, Ident("initial_state"))
+    } else {
+      binding("error_state", Ident("initial_state"))
     },
     LetMut("lookahead", Some(self.lookahead_type()), Ident("None")),
   ]
@@ -96,9 +100,9 @@ fn Emitter::local_storage(self : Emitter) -> Array[@mbt_ast.Stmt] {
     for index in 0..<count {
       statements.push(
         LetMut(
-          "_yy_p\{kind}_\{index}",
-          Some(self.slot_type(kind)),
-          slot_initial(kind),
+          self.slot_name(kind, index),
+          Some(self.slot_types[kind].type_),
+          self.slot_types[kind].initial,
         ),
       )
     }
@@ -112,11 +116,6 @@ fn Emitter::tokens_type(self : Emitter) -> @elab.TypeExpr {
 }
 
 ///|
-fn Emitter::data_type(self : Emitter) -> @elab.TypeExpr {
-  self.support.data_type()
-}
-
-///|
 fn Emitter::located_type(self : Emitter) -> @elab.TypeExpr {
   Tuple([
     type_("Token"),
@@ -126,6 +125,56 @@ fn Emitter::located_type(self : Emitter) -> @elab.TypeExpr {
 }
 
 ///|
-fn Emitter::lookahead_type(self : Emitter) -> @elab.TypeExpr {
-  Option(Tuple([type_("Int"), self.data_type(), Option(type_("Token"))]))
+fn Emitter::lookahead_type(_self : Emitter) -> @elab.TypeExpr {
+  Option(type_("YYLookahead"))
+}
+
+///|
+/// A nominal cache keeps token transport separate from generic tuple values.
+fn Emitter::lookahead_item(self : Emitter) -> @mbt_ast.Item {
+  let fields : Array[@mbt_ast.Field] = [
+    { name: "symbol", type_: type_("Int"), mutable: false, },
+    { name: "token", type_: Option(type_("Token")), mutable: false, },
+  ]
+  if self.cache_json {
+    fields.push({ name: "value", type_: type_("Json"), mutable: false, })
+  }
+  if self.support.tracks_positions() {
+    fields.append([
+      { name: "start", type_: self.meta.position_data_type, mutable: false, },
+      { name: "end", type_: self.meta.position_data_type, mutable: false, },
+    ])
+  }
+  @mbt_ast.item(Struct("YYLookahead", fields), visibility=Private)
+}
+
+///|
+fn Emitter::cached(self : Emitter, name : String) -> @mbt_ast.Expr {
+  Field(dot_call(self.machine("lookahead"), "unwrap", []), Named(name))
+}
+
+///|
+fn Emitter::cached_position(
+  self : Emitter,
+  end~ : Bool = false,
+) -> @mbt_ast.Expr {
+  if !self.support.tracks_positions() {
+    return Unit
+  }
+  self.cached(if end { "end" } else { "start" })
+}
+
+///|
+fn Emitter::result_item(self : Emitter) -> @mbt_ast.Item {
+  @mbt_ast.item(
+    Enum(
+      "YYResult",
+      self.program.entries.mapi((index, entry) => @mbt_ast.Constructor::{
+        name: "YYAccept_\{index}",
+        arguments: [entry.result_type],
+      }),
+      [],
+    ),
+    visibility=Private,
+  )
 }

@@ -4,5 +4,5 @@
 
 %%
 
-position: { $endpos };
-unit: { () };
+position: { $endpos};
+unit: { ()};
