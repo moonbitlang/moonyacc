@@ -12,11 +12,29 @@ priv struct StackRewrite {
   aliases : Map[Int32, Value]
   output : Array[Instruction]
   mut cancelled : Int32
+  mut prefix_state : Value?
 }
 
 ///|
-fn StackRewrite::new() -> StackRewrite {
-  { pending: [], aliases: Map([]), output: [], cancelled: 0, }
+fn StackRewrite::new(incoming_state? : Int32) -> StackRewrite {
+  {
+    pending: [],
+    aliases: Map([]),
+    output: [],
+    cancelled: 0,
+    prefix_state: incoming_state.map(state => Value::State(state)),
+  }
+}
+
+///|
+fn StackRewrite::copy(self : StackRewrite) -> StackRewrite {
+  {
+    pending: self.pending.copy(),
+    aliases: self.aliases.copy(),
+    output: self.output.copy(),
+    cancelled: self.cancelled,
+    prefix_state: self.prefix_state,
+  }
 }
 
 ///|
@@ -43,6 +61,7 @@ fn StackRewrite::bind(
 fn StackRewrite::flush(self : StackRewrite) -> Unit {
   for pending in self.pending {
     self.output.push(Push(pending.cell, pending.values))
+    self.prefix_state = Some(pending.values[0])
   }
   self.pending.clear()
 }
@@ -83,6 +102,15 @@ fn StackRewrite::peek(
     self.output.push(Peek(depth, cell, regs))
   } else {
     self.output.push(Peek(depth - count, cell, regs))
+    if depth == count && cell.symbol is None && self.prefix_state is Some(state) {
+      // Retain the original read/check. Only its uses become constant under
+      // the independently validated specialization entry assumption.
+      for i, field in cell.fields {
+        if field is State && regs[i] is Some(reg) {
+          self.bind([(reg, state)])
+        }
+      }
+    }
   }
 }
 
@@ -123,6 +151,7 @@ fn StackRewrite::pop(
     self.flush()
   }
   self.output.push(Pop(cell, regs))
+  self.prefix_state = None
 }
 
 ///|
@@ -149,6 +178,10 @@ fn StackRewrite::instruction(
     _ => {
       self.flush()
       self.output.push(instruction)
+      if instruction is Push(_) {
+        // Partial cells are not part of the exact suffix model.
+        self.prefix_state = None
+      }
     }
   }
 }

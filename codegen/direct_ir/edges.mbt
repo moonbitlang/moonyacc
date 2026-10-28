@@ -1,7 +1,10 @@
 ///|
 /// Only control-flow labels are mapped here. LR states in CaseState patterns,
 /// constants, diagnostics and provenance belong to a separate namespace.
-fn Terminator::map_edges(self : Terminator, f : (Edge) -> Edge) -> Terminator {
+fn Terminator::map_edges(
+  self : Terminator,
+  f : (Edge) -> Edge raise?,
+) -> Terminator raise? {
   match self {
     Jump(edge) => Jump(f(edge))
     CaseToken(arms, fallback) =>

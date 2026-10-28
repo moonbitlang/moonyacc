@@ -74,9 +74,9 @@ fn yy_action_1(_value_0 : Json) -> Json {
 ///|
 priv enum YYStack {
   YYEmpty
-  YYCell_5(YYStack, Int, Json)
   YYCell_4(YYStack, Int, Json)
   YYCell_3(YYStack, Int, Json)
+  YYCell_5(YYStack, Int, Json)
 }
 
 ///|
@@ -152,8 +152,8 @@ fn yy_parse(
             )
           }
           continue match lookahead.unwrap().symbol {
-              1 => 6
-              _ => 5
+              1 => 7
+              _ => 4
             }
         })
       1 =>
@@ -170,23 +170,11 @@ fn yy_parse(
             )
           }
           continue match lookahead.unwrap().symbol {
-              3 => 8
-              _ => 5
+              3 => 6
+              _ => 4
             }
         })
       2 =>
-        ({
-          ()
-          // goto value
-          match _yy_state_0 {
-            0 => ()
-            _ => panic()
-          }
-          stack = YYCell_5(stack, state, _yy_value_1_0)
-          state = 3
-          continue 1
-        })
-      3 =>
         ({
           ()
           // reduce start -> value EOF
@@ -196,9 +184,9 @@ fn yy_parse(
           stack = _yy_tail0
           state = _yy_saved0
           _yy_state_0 = state
-          continue 4
+          continue 3
         })
-      4 =>
+      3 =>
         ({
           ()
           // goto start
@@ -208,9 +196,9 @@ fn yy_parse(
           }
           stack = YYCell_4(stack, state, _yy_value_1_0)
           state = 1
-          continue 7
+          continue 5
         })
-      5 =>
+      4 =>
         ({
           ()
           yy_error(
@@ -227,21 +215,7 @@ fn yy_parse(
           )
           panic()
         })
-      6 =>
-        ({
-          ()
-          // shift VALUE into state 2
-          let _yy_r29 = lookahead.unwrap().value
-          lookahead = None
-          error_stack = stack
-          error_state = state
-          error_suffix_0 = 2
-          error_depth = 1
-          _yy_value_1_0 = yy_action_1(_yy_r29)
-          _yy_state_0 = state
-          continue 2
-        })
-      7 =>
+      5 =>
         ({
           ()
           let _yy_r32 = match stack {
@@ -250,7 +224,7 @@ fn yy_parse(
           }
           return YYAccept_0(_yy_r32)
         })
-      8 =>
+      6 =>
         ({
           ()
           // shift EOF into state 4
@@ -261,7 +235,23 @@ fn yy_parse(
           error_stack = stack
           error_state = state
           error_depth = 0
-          continue 3
+          continue 2
+        })
+      7 =>
+        ({
+          ()
+          // shift VALUE into state 2
+          let _yy_r36 = lookahead.unwrap().value
+          lookahead = None
+          error_stack = stack
+          error_state = state
+          error_suffix_0 = 2
+          error_depth = 1
+          let _yy_r43 = yy_action_1(_yy_r36)
+          let _yy_r44 = state
+          stack = YYCell_5(stack, state, _yy_r43)
+          state = 3
+          continue 1
         })
       _ => panic()
     }
@@ -278,9 +268,9 @@ pub fn start(read_token : (() -> (Token, Unit, Unit)), start_pos : Unit) -> Json
 ///|
 fn yy_stack_tail(stack : YYStack) -> YYStack {
   match stack {
-    YYCell_5(tail, _, _) => tail
     YYCell_4(tail, _, _) => tail
     YYCell_3(tail, _, _) => tail
+    YYCell_5(tail, _, _) => tail
     YYEmpty => panic()
   }
 }
@@ -288,9 +278,9 @@ fn yy_stack_tail(stack : YYStack) -> YYStack {
 ///|
 fn yy_stack_saved(stack : YYStack) -> Int {
   match stack {
-    YYCell_5(_, saved, _) => saved
     YYCell_4(_, saved, _) => saved
     YYCell_3(_, saved, _) => saved
+    YYCell_5(_, saved, _) => saved
     YYEmpty => panic()
   }
 }

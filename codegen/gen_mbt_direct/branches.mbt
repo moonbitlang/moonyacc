@@ -84,10 +84,10 @@ fn Emitter::transfer(
 ) -> @mbt_ast.Block {
   let within = targets
     .iter()
-    .all(target => self.layout.pc(target) / BLOCKS_PER_CHUNK == chunk)
+    .all(target => self.layout.pc(target) / self.blocks_per_chunk == chunk)
   let outside = targets
     .iter()
-    .all(target => self.layout.pc(target) / BLOCKS_PER_CHUNK != chunk)
+    .all(target => self.layout.pc(target) / self.blocks_per_chunk != chunk)
   if !self.chunked || within {
     return body([Continue([next])])
   }
@@ -100,7 +100,7 @@ fn Emitter::transfer(
       If(
         Binary(
           Equal,
-          Binary(Divide, Ident("_yy_next"), Int(BLOCKS_PER_CHUNK)),
+          Binary(Divide, Ident("_yy_next"), Int(self.blocks_per_chunk)),
           Int(chunk),
         ),
         body([Continue([Ident("_yy_next")])]),

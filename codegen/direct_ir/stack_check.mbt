@@ -41,8 +41,9 @@ fn StackCheck::terminator(
 ///|
 fn stack_check_run(
   block : Block,
+  incoming_state? : Int32,
 ) -> (StackCheckStack, Array[StackCheckEvent], StackCheckTerminator) raise InvalidProgram {
-  let machine = StackCheck::new()
+  let machine = StackCheck::new(incoming_state?)
   for parameter in block.parameters {
     machine.bind_value(parameter, SymParameter(parameter))
   }
@@ -57,12 +58,22 @@ fn stack_check_run(
 /// enclosing program validator owns CFG, action-signature and lookahead checks.
 /// Opaque-prefix accesses remain observable checks; only known pushed cells can
 /// disappear. Dead registers are intentionally absent from the comparison.
-fn check_stack_rewrite(before : Block, after : Block) -> Bool {
+fn check_stack_rewrite(
+  before : Block,
+  after : Block,
+  incoming_state? : Int32,
+) -> Bool {
   if before.parameters != after.parameters ||
     before.lookahead != after.lookahead {
     return false
   }
-  try stack_check_run(before) == stack_check_run(after) catch {
+  if incoming_state is Some(state) && state < 0 {
+    return false
+  }
+  try
+    stack_check_run(before, incoming_state?) ==
+    stack_check_run(after, incoming_state?)
+  catch {
     InvalidProgram(_) => false
   }
 }

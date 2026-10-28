@@ -111,6 +111,7 @@ pub(all) struct Program {
 }
 pub fn Program::eliminate_stack(Self) -> Self raise InvalidProgram
 pub fn Program::simplify(Self) -> Self
+pub fn Program::specialize_states(Self) -> Self raise InvalidProgram
 pub fn Program::validate(Self) -> Unit raise InvalidProgram
 
 pub(all) struct Register {

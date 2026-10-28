@@ -118,7 +118,7 @@ fn Emitter::jump(
   let statements = self.copies(edge)
   let pc = self.layout.pc(edge.target)
   statements.push(
-    if self.chunked && pc / BLOCKS_PER_CHUNK != chunk {
+    if self.chunked && pc / self.blocks_per_chunk != chunk {
       Return(Int(pc))
     } else {
       Continue([Int(pc)])

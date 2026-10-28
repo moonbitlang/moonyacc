@@ -444,9 +444,8 @@ fn yy_parse(
     _yy_position_1: initial_position, _yy_value_3_0: 0, _yy_value_4_0: None
   }
   for pc = entry {
-    let next = match pc / 32 {
+    let next = match pc / 64 {
       0 => _yy_chunk_0(_env, pc)
-      1 => _yy_chunk_1(_env, pc)
       _ => panic()
     }
     if next < 0 {
@@ -469,9 +468,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().symbol {
-              1 => 27
-              3 => 28
-              5 => 29
+              1 => 40
+              3 => 27
+              5 => 28
               _ => 26
             }
         })
@@ -483,7 +482,7 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().symbol {
-              1 => 31
+              1 => 30
               _ => 26
             }
         })
@@ -494,15 +493,10 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            7 => 32
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              7 => 31
+              _ => 26
+            }
         })
       3 =>
         ({
@@ -512,8 +506,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().symbol {
-              1 => 27
-              3 => 28
+              1 => 41
+              3 => 27
               _ => 26
             }
         })
@@ -524,15 +518,10 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            7 => 33
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              7 => 32
+              _ => 26
+            }
         })
       5 =>
         ({
@@ -541,16 +530,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 34
-            5 => 35
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              1 => 42
+              5 => 33
+              _ => 26
+            }
         })
       6 =>
         ({
@@ -559,16 +543,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 34
-            5 => 35
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              1 => 43
+              5 => 33
+              _ => 26
+            }
         })
       7 =>
         ({
@@ -577,18 +556,13 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            2 => 37
-            3 => 38
-            4 => 39
-            6 => 40
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              2 => 35
+              3 => 36
+              4 => 37
+              6 => 38
+              _ => 26
+            }
         })
       8 =>
         ({
@@ -597,16 +571,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 34
-            5 => 35
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              1 => 44
+              5 => 33
+              _ => 26
+            }
         })
       9 =>
         ({
@@ -615,17 +584,12 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            2 => 37
-            3 => 38
-            6 | 7 => 19
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              2 => 35
+              3 => 36
+              6 | 7 => 19
+              _ => 26
+            }
         })
       10 =>
         ({
@@ -634,16 +598,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 34
-            5 => 35
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              1 => 45
+              5 => 33
+              _ => 26
+            }
         })
       11 =>
         ({
@@ -652,16 +611,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 34
-            5 => 35
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              1 => 46
+              5 => 33
+              _ => 26
+            }
         })
       12 =>
         ({
@@ -670,16 +624,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            2 | 4 | 6 | 7 => 22
-            3 => 38
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              2 | 4 | 6 | 7 => 22
+              3 => 36
+              _ => 26
+            }
         })
       13 =>
         ({
@@ -688,18 +637,13 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            2 => 37
-            3 => 38
-            4 => 39
-            7 => 41
-            _ => 26
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              2 => 35
+              3 => 36
+              4 => 37
+              7 => 39
+              _ => 26
+            }
         })
       14 =>
         ({
@@ -774,7 +718,7 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             _env._yy_position_1
           )
           _env.state = 1
-          continue 30
+          continue 29
         })
       18 =>
         ({
@@ -933,7 +877,7 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             _env._yy_position_1
           )
           _env.state = 11
-          return 36
+          continue 34
         })
       26 =>
         ({
@@ -943,45 +887,18 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
       27 =>
         ({
           ()
-          // shift NUMBER into state 4
-          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
-            _yy_token_value
-          )
-          let _yy_r142 = _yy_token_value
-          let _yy_r143 = _env.lookahead.unwrap().start
-          _env._yy_position_1 = _env.lookahead.unwrap().end
-          _env.last_pos = _env.lookahead.unwrap().end
-          _env.lookahead = None
-          _env.error_stack = _env.stack
-          _env.error_state = _env.state
-          _env.error_suffix_0 = 4
-          _env.error_depth = 1
-          _env._yy_position_0 = if _env.stack is YYEmpty {
-            _env.initial_position
-          } else {
-            yy_stack_end(_env.stack)
-          }
-          _env._yy_value_1_0 = Some(
-            yy_action_13(_env._yy_position_0, _env._yy_position_1, _yy_r143)
-          )
-          _env._yy_state_0 = _env.state
-          continue 15
-        })
-      28 =>
-        ({
-          ()
           // shift STAR into state 2
           yy_shift(_env, 2)
           continue 1
         })
-      29 =>
+      28 =>
         ({
           ()
           // shift LPAREN into state 7
           yy_shift(_env, 7)
           continue 3
         })
-      30 =>
+      29 =>
         ({
           ()
           let _yy_r151 = match _env.stack {
@@ -991,107 +908,259 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env._yy_result = Some(YYAccept_1(_yy_r151))
           return -1
         })
-      31 =>
+      30 =>
         ({
           ()
           // shift NUMBER into state 3
           yy_shift(_env, 3)
           continue 14
         })
+      31 =>
+        ({
+          ()
+          // shift EOF into state 6
+          yy_shift(_env, 6)
+          continue 16
+        })
+      32 =>
+        ({
+          ()
+          // shift EOF into state 9
+          yy_shift(_env, 9)
+          continue 18
+        })
+      33 =>
+        ({
+          ()
+          // shift LPAREN into state 12
+          yy_shift(_env, 12)
+          continue 6
+        })
+      34 =>
+        ({
+          ()
+          let _yy_r167 = match _env.stack {
+            YYCell_8(_, _, _value, _) => _value
+            _ => panic()
+          }
+          _env._yy_result = Some(YYAccept_0(_yy_r167))
+          return -1
+        })
+      35 =>
+        ({
+          ()
+          // shift PLUS into state 18
+          yy_shift(_env, 18)
+          continue 11
+        })
+      36 =>
+        ({
+          ()
+          // shift STAR into state 16
+          yy_shift(_env, 16)
+          continue 10
+        })
+      37 =>
+        ({
+          ()
+          // shift EQ into state 14
+          yy_shift(_env, 14)
+          continue 8
+        })
+      38 =>
+        ({
+          ()
+          // shift RPAREN into state 21
+          yy_shift(_env, 21)
+          continue 23
+        })
+      39 =>
+        ({
+          ()
+          // shift EOF into state 23
+          yy_shift(_env, 23)
+          continue 24
+        })
+      40 =>
+        ({
+          ()
+          // shift NUMBER into state 4
+          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
+            _yy_token_value
+          )
+          let _yy_r183 = _yy_token_value
+          let _yy_r184 = _env.lookahead.unwrap().start
+          let _yy_r185 = _env.lookahead.unwrap().end
+          _env.last_pos = _env.lookahead.unwrap().end
+          _env.lookahead = None
+          _env.error_stack = _env.stack
+          _env.error_state = _env.state
+          _env.error_suffix_0 = 4
+          _env.error_depth = 1
+          let _yy_r189 = if _env.stack is YYEmpty {
+            _env.initial_position
+          } else {
+            yy_stack_end(_env.stack)
+          }
+          let _yy_r190 = yy_action_13(_yy_r189, _yy_r185, _yy_r184)
+          let _yy_r191 = _env.state
+          _env.stack = YYCell_10(
+            _env.stack, _env.state, _yy_r190, _yy_r189, _yy_r185
+          )
+          _env.state = 5
+          continue 2
+        })
+      41 =>
+        ({
+          ()
+          // shift NUMBER into state 4
+          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
+            _yy_token_value
+          )
+          let _yy_r211 = _yy_token_value
+          let _yy_r212 = _env.lookahead.unwrap().start
+          let _yy_r213 = _env.lookahead.unwrap().end
+          _env.last_pos = _env.lookahead.unwrap().end
+          _env.lookahead = None
+          _env.error_stack = _env.stack
+          _env.error_state = _env.state
+          _env.error_suffix_0 = 4
+          _env.error_depth = 1
+          let _yy_r217 = if _env.stack is YYEmpty {
+            _env.initial_position
+          } else {
+            yy_stack_end(_env.stack)
+          }
+          let _yy_r218 = yy_action_13(_yy_r217, _yy_r213, _yy_r212)
+          let _yy_r219 = _env.state
+          _env.stack = YYCell_10(
+            _env.stack, _env.state, _yy_r218, _yy_r217, _yy_r213
+          )
+          _env.state = 8
+          continue 4
+        })
+      42 =>
+        ({
+          ()
+          // shift NUMBER into state 20
+          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
+            _yy_token_value
+          )
+          let _yy_r233 = _yy_token_value
+          let _yy_r234 = _env.lookahead.unwrap().start
+          let _yy_r235 = _env.lookahead.unwrap().end
+          _env.last_pos = _env.lookahead.unwrap().end
+          _env.lookahead = None
+          _env.error_stack = _env.stack
+          _env.error_state = _env.state
+          _env.error_suffix_0 = 20
+          _env.error_depth = 1
+          let _yy_r240 = yy_action_4(_yy_r233)
+          let _yy_r241 = _env.state
+          _env.stack = YYCell_11(
+            _env.stack, _env.state, _yy_r240, _yy_r234, _yy_r235
+          )
+          _env.state = 22
+          continue 13
+        })
+      43 =>
+        ({
+          ()
+          // shift NUMBER into state 20
+          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
+            _yy_token_value
+          )
+          let _yy_r252 = _yy_token_value
+          let _yy_r253 = _env.lookahead.unwrap().start
+          let _yy_r254 = _env.lookahead.unwrap().end
+          _env.last_pos = _env.lookahead.unwrap().end
+          _env.lookahead = None
+          _env.error_stack = _env.stack
+          _env.error_state = _env.state
+          _env.error_suffix_0 = 20
+          _env.error_depth = 1
+          let _yy_r259 = yy_action_4(_yy_r252)
+          let _yy_r260 = _env.state
+          _env.stack = YYCell_11(
+            _env.stack, _env.state, _yy_r259, _yy_r253, _yy_r254
+          )
+          _env.state = 13
+          continue 7
+        })
+      44 =>
+        ({
+          ()
+          // shift NUMBER into state 20
+          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
+            _yy_token_value
+          )
+          let _yy_r283 = _yy_token_value
+          let _yy_r284 = _env.lookahead.unwrap().start
+          let _yy_r285 = _env.lookahead.unwrap().end
+          _env.last_pos = _env.lookahead.unwrap().end
+          _env.lookahead = None
+          _env.error_stack = _env.stack
+          _env.error_state = _env.state
+          _env.error_suffix_0 = 20
+          _env.error_depth = 1
+          let _yy_r290 = yy_action_4(_yy_r283)
+          let _yy_r291 = _env.state
+          _env.stack = YYCell_11(
+            _env.stack, _env.state, _yy_r290, _yy_r284, _yy_r285
+          )
+          _env.state = 15
+          continue 9
+        })
+      45 =>
+        ({
+          ()
+          // shift NUMBER into state 20
+          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
+            _yy_token_value
+          )
+          let _yy_r308 = _yy_token_value
+          let _yy_r309 = _env.lookahead.unwrap().start
+          let _yy_r310 = _env.lookahead.unwrap().end
+          _env.last_pos = _env.lookahead.unwrap().end
+          _env.lookahead = None
+          _env.error_stack = _env.stack
+          _env.error_state = _env.state
+          _env.error_suffix_0 = 20
+          _env.error_depth = 1
+          let _yy_r315 = yy_action_4(_yy_r308)
+          let _yy_r316 = _env.state
+          _env.stack = YYCell_11(
+            _env.stack, _env.state, _yy_r315, _yy_r309, _yy_r310
+          )
+          _env.state = 17
+          continue 21
+        })
+      46 =>
+        ({
+          ()
+          // shift NUMBER into state 20
+          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
+            _yy_token_value
+          )
+          let _yy_r327 = _yy_token_value
+          let _yy_r328 = _env.lookahead.unwrap().start
+          let _yy_r329 = _env.lookahead.unwrap().end
+          _env.last_pos = _env.lookahead.unwrap().end
+          _env.lookahead = None
+          _env.error_stack = _env.stack
+          _env.error_state = _env.state
+          _env.error_suffix_0 = 20
+          _env.error_depth = 1
+          let _yy_r334 = yy_action_4(_yy_r327)
+          let _yy_r335 = _env.state
+          _env.stack = YYCell_11(
+            _env.stack, _env.state, _yy_r334, _yy_r328, _yy_r329
+          )
+          _env.state = 19
+          continue 12
+        })
       _ => panic()
     }
-  }
-}
-
-///|
-#inline(never)
-fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int {
-  match _entry {
-    32 =>
-      ({
-        ()
-        // shift EOF into state 6
-        yy_shift(_env, 6)
-        return 16
-      })
-    33 =>
-      ({
-        ()
-        // shift EOF into state 9
-        yy_shift(_env, 9)
-        return 18
-      })
-    34 =>
-      ({
-        ()
-        // shift NUMBER into state 20
-        guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(_yy_token_value)
-        let _yy_r161 = _yy_token_value
-        _env._yy_position_0 = _env.lookahead.unwrap().start
-        _env._yy_position_1 = _env.lookahead.unwrap().end
-        _env.last_pos = _env.lookahead.unwrap().end
-        _env.lookahead = None
-        _env.error_stack = _env.stack
-        _env.error_state = _env.state
-        _env.error_suffix_0 = 20
-        _env.error_depth = 1
-        _env._yy_value_3_0 = yy_action_4(_yy_r161)
-        _env._yy_state_0 = _env.state
-        return 20
-      })
-    35 =>
-      ({
-        ()
-        // shift LPAREN into state 12
-        yy_shift(_env, 12)
-        return 6
-      })
-    36 =>
-      ({
-        ()
-        let _yy_r167 = match _env.stack {
-          YYCell_8(_, _, _value, _) => _value
-          _ => panic()
-        }
-        _env._yy_result = Some(YYAccept_0(_yy_r167))
-        return -1
-      })
-    37 =>
-      ({
-        ()
-        // shift PLUS into state 18
-        yy_shift(_env, 18)
-        return 11
-      })
-    38 =>
-      ({
-        ()
-        // shift STAR into state 16
-        yy_shift(_env, 16)
-        return 10
-      })
-    39 =>
-      ({
-        ()
-        // shift EQ into state 14
-        yy_shift(_env, 14)
-        return 8
-      })
-    40 =>
-      ({
-        ()
-        // shift RPAREN into state 21
-        yy_shift(_env, 21)
-        return 23
-      })
-    41 =>
-      ({
-        ()
-        // shift EOF into state 23
-        yy_shift(_env, 23)
-        return 24
-      })
-    _ => panic()
   }
 }
 

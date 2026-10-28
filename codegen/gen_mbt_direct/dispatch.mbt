@@ -27,7 +27,7 @@ fn Emitter::block_body(
     }
   }
   statements.append(self.block_instructions(block))
-  let chunk = pc / BLOCKS_PER_CHUNK
+  let chunk = pc / self.blocks_per_chunk
   let finish = match self.gotos.get(label) {
     Some(plan) => self.goto_finish(plan, chunk)
     None => self.terminator(block.terminator, chunk)
@@ -74,7 +74,7 @@ fn Emitter::chunk_dispatch(self : Emitter) -> @mbt_ast.Stmt {
     body([
       binding(
         "next",
-        Match(Binary(Divide, Ident("pc"), Int(BLOCKS_PER_CHUNK)), arms),
+        Match(Binary(Divide, Ident("pc"), Int(self.blocks_per_chunk)), arms),
       ),
       Eval(
         If(
@@ -94,9 +94,9 @@ fn Emitter::chunk_item(
   chunk : Int32,
   no_comments : Bool,
 ) -> @mbt_ast.Item {
-  let first = chunk * BLOCKS_PER_CHUNK
-  let last = if first + BLOCKS_PER_CHUNK < self.layout.blocks.length() {
-    first + BLOCKS_PER_CHUNK
+  let first = chunk * self.blocks_per_chunk
+  let last = if first + self.blocks_per_chunk < self.layout.blocks.length() {
+    first + self.blocks_per_chunk
   } else {
     self.layout.blocks.length()
   }

@@ -93,6 +93,11 @@ fn StackCheck::read(
       stack_check_field_type(field, reg.type_)
       let value = match known {
         Some(top) => top.values[if cell.symbol is None { 0 } else { i }]
+        None if offset == 0 && field == State =>
+          match self.incoming_state {
+            Some(state) => SymState(state)
+            None => SymPrefixField(offset, field, reg.type_)
+          }
         None => SymPrefixField(offset, field, reg.type_)
       }
       self.bind_value(reg, value)

@@ -32,7 +32,10 @@ fn stack_inlineable(block : Block, available : Int32) -> Bool {
       _ => ()
     }
   }
-  !(block.terminator is CaseToken(_))
+  // Acceptance still observes a materialized result cell in this IR. Keep its
+  // reader shared instead of constructing an unread cell before an inlined
+  // return; terminal-stack erasure is a separate transformation.
+  block.terminator is (Jump(_) | CaseState(_))
 }
 
 ///|
@@ -74,57 +77,74 @@ fn stack_region_root(block : Block) -> Bool {
 }
 
 ///|
+priv struct StackRegion {
+  block : Block
+  resolved_states : Int32
+}
+
+///|
 fn Program::stack_region(
   self : Program,
   label : Int32,
+  root : Block,
   supply : RegisterSupply,
-) -> Block? raise InvalidProgram {
-  let root = self.blocks[label]
+  incoming_state? : Int32,
+) -> StackRegion? raise InvalidProgram {
   // Structural eligibility, not Origin: leave canonical reductions shared.
   guard stack_region_root(root) else { None }
-  let rewrite = StackRewrite::new()
-  let original = root.instructions.copy()
-  for instruction in original {
+  let mut rewrite = StackRewrite::new(incoming_state?)
+  let segments = [(label, root)]
+  let mut cost = root.instructions.length()
+  for instruction in root.instructions {
     rewrite.instruction(instruction)
   }
   let path = Set([label])
   let mut terminator = root.terminator
-  while !rewrite.pending.is_empty() && path.length() < STACK_REGION_BLOCKS {
-    // State specialization and token-branch cloning belong to later passes.
-    guard terminator is Jump(edge) else { break }
+  let mut resolved_states = 0
+  while path.length() < STACK_REGION_BLOCKS {
+    guard !rewrite.pending.is_empty() || rewrite.prefix_state is Some(_) else {
+      break
+    }
+    guard rewrite.finish(terminator) is Jump(edge) else { break }
     let target = self.blocks[edge.target]
     guard !path.contains(edge.target) &&
-      original.length() + target.instructions.length() + 1 <=
-      STACK_REGION_INSTRUCTIONS &&
+      cost + target.instructions.length() + 1 <= STACK_REGION_INSTRUCTIONS &&
       stack_inlineable(target, rewrite.pending.length()) else {
       break
     }
-    path.add(edge.target)
     let target = supply.clone_block(target)
+    let trial = rewrite.copy()
     let bindings = Bind(
       target.parameters.mapi((i, reg) => (reg, edge.arguments[i])),
     )
-    original.push(bindings)
-    rewrite.instruction(bindings)
-    original.append(target.instructions)
+    trial.instruction(bindings)
     for instruction in target.instructions {
-      rewrite.instruction(instruction)
+      trial.instruction(instruction)
     }
+    // Unknown goto switches remain shared; only enter a state dispatch when
+    // its selected edge is already determined by this region.
+    guard !(trial.finish(target.terminator) is CaseState(_)) else { break }
+    if terminator is CaseState(_) {
+      resolved_states += 1
+    }
+    path.add(edge.target)
+    segments.push((edge.target, target))
+    cost += target.instructions.length() + 1
+    rewrite = trial
     terminator = target.terminator
   }
   guard rewrite.cancelled > 0 else { None }
-  rewrite.flush()
-  let before = { ..root, instructions: original, terminator, }
-  let after = {
-    ..root,
-    instructions: rewrite.output,
-    terminator: rewrite.finish(terminator),
+  let finish = rewrite.finish(terminator)
+  if terminator is CaseState(_) && finish is Jump(_) {
+    resolved_states += 1
   }
+  rewrite.flush()
+  let after = { ..root, instructions: rewrite.output, terminator: finish, }
   require(
-    check_stack_rewrite(before, after),
+    check_stack_region(segments, after, incoming_state?),
     "invalid stack rewrite at block \{label}",
   )
-  Some(after)
+  Some({ block: after, resolved_states, })
 }
 
 ///|
@@ -135,7 +155,10 @@ fn Program::stack_region(
 pub fn Program::eliminate_stack(self : Program) -> Program raise InvalidProgram {
   let supply = RegisterSupply::new(self)
   let blocks = self.blocks.mapi((label, block) => {
-    self.stack_region(label, supply).unwrap_or(block)
+    match self.stack_region(label, block, supply) {
+      Some(region) => region.block
+      None => block
+    }
   })
   Program::{ ..self, blocks, }.compact()
 }

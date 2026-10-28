@@ -61,12 +61,13 @@ priv struct StackCheck {
   registers : Map[Int32, StackCheckValue]
   suffix : Array[StackCheckCell]
   trace : Array[StackCheckEvent]
+  incoming_state : Int32?
   mut removed : Int32
 }
 
 ///|
-fn StackCheck::new() -> StackCheck {
-  { registers: Map([]), suffix: [], trace: [], removed: 0, }
+fn StackCheck::new(incoming_state? : Int32) -> StackCheck {
+  { registers: Map([]), suffix: [], trace: [], incoming_state, removed: 0, }
 }
 
 ///|

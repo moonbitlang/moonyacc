@@ -1,8 +1,4 @@
 ///|
-/// Bound Wasm function size/local counts without relying on tail calls.
-const BLOCKS_PER_CHUNK = 32
-
-///|
 priv struct Emitter {
   program : @direct_ir.Program
   meta : @codegen.MetaProvider
@@ -10,6 +6,7 @@ priv struct Emitter {
   input_mode : @codegen.InputMode
   cache_json : Bool
   layout : BlockLayout
+  blocks_per_chunk : Int32
   gotos : Map[Int32, GotoPlan]
   chunked : Bool
   consumes_input : Bool
@@ -36,6 +33,8 @@ fn Emitter::new(
     program.entries.map(e => e.block),
   )
   let needs_initial_position = initial_position_needed(program, support, meta)
+  let layout = BlockLayout::new(program.blocks, omitted~)
+  let blocks_per_chunk = dispatch_width(program.blocks, layout)
   let self = Emitter::{
     program,
     meta,
@@ -43,7 +42,8 @@ fn Emitter::new(
     input_mode,
     cache_json: support.is_json_cst() &&
     program.blocks.any(b => b.instructions.any(i => i is Input(_))),
-    layout: BlockLayout::new(program.blocks, omitted~),
+    layout,
+    blocks_per_chunk,
     gotos,
     // Keep shared runtime helpers when compaction leaves just one chunk.
     chunked: program.blocks.length() > BLOCKS_PER_CHUNK,
@@ -68,7 +68,7 @@ fn Emitter::new(
     self.allocate_parameters(block.parameters)
   }
   for pc, label in self.layout.blocks {
-    self.plan_control(label, pc / BLOCKS_PER_CHUNK)
+    self.plan_control(label, pc / self.blocks_per_chunk)
   }
   coalesce_results(program.blocks, self.slots)
   self
@@ -76,7 +76,8 @@ fn Emitter::new(
 
 ///|
 fn Emitter::chunk_count(self : Emitter) -> Int32 {
-  (self.layout.blocks.length() + BLOCKS_PER_CHUNK - 1) / BLOCKS_PER_CHUNK
+  (self.layout.blocks.length() + self.blocks_per_chunk - 1) /
+  self.blocks_per_chunk
 }
 
 ///|
@@ -121,7 +122,7 @@ fn Emitter::plan_control(self : Emitter, label : Int32, chunk : Int32) -> Unit {
   }
   if targets
     .iter()
-    .any(target => self.layout.pc(target) / BLOCKS_PER_CHUNK == chunk) {
+    .any(target => self.layout.pc(target) / self.blocks_per_chunk == chunk) {
     self.chunk_loops.add(chunk)
   }
 }

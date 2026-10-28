@@ -98,10 +98,6 @@ fn yy_parse(
   let mut error_depth : Int = 0
   let mut error_suffix_0 : Int = 0
   let mut lookahead : YYLookahead? = None
-  let mut _yy_state_0 : Int = 0
-  let mut _yy_value_1_0 : Char = '\u{00}'
-  let mut _yy_position_0 : Int = initial_position
-  let mut _yy_position_1 : Int = initial_position
   for pc = entry {
     match pc {
       0 =>
@@ -128,22 +124,10 @@ fn yy_parse(
           }
           continue match lookahead.unwrap().symbol {
               1 => 3
-              _ => 2
+              _ => 1
             }
         })
       1 =>
-        ({
-          ()
-          // goto start
-          match _yy_state_0 {
-            0 => ()
-            _ => panic()
-          }
-          stack = YYCell_2(stack, state, _yy_value_1_0)
-          state = 1
-          continue 4
-        })
-      2 =>
         ({
           ()
           yy_error(
@@ -161,25 +145,7 @@ fn yy_parse(
           )
           panic()
         })
-      3 =>
-        ({
-          ()
-          // shift VALUE into state 2
-          let VALUE(_yy_token_value) = lookahead.unwrap().token.unwrap()
-          let _yy_r13 = _yy_token_value
-          _yy_position_0 = lookahead.unwrap().start
-          _yy_position_1 = lookahead.unwrap().end
-          last_pos = lookahead.unwrap().end
-          lookahead = None
-          error_stack = stack
-          error_state = state
-          error_suffix_0 = 2
-          error_depth = 1
-          _yy_value_1_0 = yy_action_0(_yy_r13)
-          _yy_state_0 = state
-          continue 1
-        })
-      4 =>
+      2 =>
         ({
           ()
           let _yy_r16 = match stack {
@@ -187,6 +153,26 @@ fn yy_parse(
             _ => panic()
           }
           return YYAccept_0(_yy_r16)
+        })
+      3 =>
+        ({
+          ()
+          // shift VALUE into state 2
+          let VALUE(_yy_token_value) = lookahead.unwrap().token.unwrap()
+          let _yy_r17 = _yy_token_value
+          let _yy_r18 = lookahead.unwrap().start
+          let _yy_r19 = lookahead.unwrap().end
+          last_pos = lookahead.unwrap().end
+          lookahead = None
+          error_stack = stack
+          error_state = state
+          error_suffix_0 = 2
+          error_depth = 1
+          let _yy_r24 = yy_action_0(_yy_r17)
+          let _yy_r25 = state
+          stack = YYCell_2(stack, state, _yy_r24)
+          state = 1
+          continue 2
         })
       _ => panic()
     }
