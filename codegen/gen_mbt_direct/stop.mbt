@@ -4,10 +4,7 @@ fn Emitter::stop_body(self : Emitter) -> @mbt_ast.Block {
     [
       Eval(
         call("yy_error", [
-          self.stack_call("states", [
-            self.machine("error_stack"),
-            self.machine("error_state"),
-          ]),
+          self.snapshot_states(),
           self.cached("token"),
           Tuple([self.cached_position(), self.cached_position(end=true)]),
         ]),

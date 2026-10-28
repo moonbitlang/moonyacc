@@ -64,7 +64,9 @@ pub(all) enum Instruction {
   EnsureLookahead
   Input(Int32, Register, Register, Register)
   ConsumeLookahead
-  SaveErrorSnapshot
+  // Snapshot the physical stack plus a virtual suffix of destination states,
+  // ordered bottom to top. Values are captured now, not read on the error path.
+  SaveErrorSnapshot(Array[Value])
   // End position before the top depth cells, or the initial position.
   ReadPreviousPosition(Int32, Register)
   Bind(Array[(Register, Value)])

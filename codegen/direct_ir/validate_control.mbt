@@ -16,7 +16,10 @@ fn BlockValidator::instruction(
       )
       self.lookahead = Empty
     }
-    SaveErrorSnapshot => ()
+    SaveErrorSnapshot(suffix) =>
+      for state in suffix {
+        self.expect(state, State)
+      }
     ReadPreviousPosition(depth, reg) => {
       self.check(depth >= 0, "negative previous-position depth")
       self.check(

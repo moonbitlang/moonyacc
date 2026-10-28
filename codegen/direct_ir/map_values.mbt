@@ -13,7 +13,8 @@ fn Instruction::map_values(
   definition : (Register) -> Register,
 ) -> Instruction {
   match self {
-    EnsureLookahead | ConsumeLookahead | SaveErrorSnapshot => self
+    EnsureLookahead | ConsumeLookahead => self
+    SaveErrorSnapshot(suffix) => SaveErrorSnapshot(suffix.map(operand))
     Input(token, value, start, end) =>
       Input(token, definition(value), definition(start), definition(end))
     ReadPreviousPosition(depth, reg) =>

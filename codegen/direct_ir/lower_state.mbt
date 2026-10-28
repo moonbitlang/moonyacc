@@ -135,7 +135,7 @@ fn Lowering::shift_edge(self : Lowering, term : Int32, target : Int32) -> Edge {
       Input(term, value, sp, ep),
       Push(cell(term), [State(target), Reg(value), Reg(sp), Reg(ep)]),
       ConsumeLookahead,
-      SaveErrorSnapshot,
+      SaveErrorSnapshot([]),
     ],
     terminator: Jump(edge(target)),
   }

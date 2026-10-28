@@ -3,15 +3,12 @@ fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
   let fields : Array[@mbt_ast.Field] = [
     { name: "stack", type_: type_("YYStack"), mutable: true, },
     { name: "state", type_: type_("Int"), mutable: true, },
-    {
-      name: "error_stack",
-      type_: type_("YYStack"),
-      mutable: self.saves_snapshot,
-    },
-    { name: "error_state", type_: type_("Int"), mutable: self.saves_snapshot, },
+  ]
+  fields.append(self.snapshots.storage().map(pair => pair.0))
+  fields.append([
     { name: "lookahead", type_: self.lookahead_type(), mutable: true, },
     { name: "_yy_result", type_: Option(type_("YYResult")), mutable: true, },
-  ]
+  ])
   if self.needs_initial_position {
     fields.push({
       name: "initial_position",
@@ -56,11 +53,9 @@ fn Emitter::context_binding(self : Emitter) -> @mbt_ast.Stmt {
   let fields : Array[(String, @mbt_ast.Expr)] = [
     ("stack", Ident("YYEmpty")),
     ("state", Ident("initial_state")),
-    ("error_stack", Ident("YYEmpty")),
-    ("error_state", Ident("initial_state")),
-    ("lookahead", Ident("None")),
-    ("_yy_result", Ident("None")),
   ]
+  fields.append(self.snapshots.storage().map(pair => (pair.0.name, pair.1)))
+  fields.append([("lookahead", Ident("None")), ("_yy_result", Ident("None"))])
   if self.needs_initial_position {
     fields.push(("initial_position", Ident("initial_position")))
   }
@@ -84,18 +79,11 @@ fn Emitter::local_storage(self : Emitter) -> Array[@mbt_ast.Stmt] {
   let statements : Array[@mbt_ast.Stmt] = [
     LetMut("stack", Some(type_("YYStack")), Ident("YYEmpty")),
     LetMut("state", Some(type_("Int")), Ident("initial_state")),
-    if self.saves_snapshot {
-      LetMut("error_stack", Some(type_("YYStack")), Ident("YYEmpty"))
-    } else {
-      binding("error_stack", Ident("YYEmpty"), type_=type_("YYStack"))
-    },
-    if self.saves_snapshot {
-      LetMut("error_state", None, Ident("initial_state"))
-    } else {
-      binding("error_state", Ident("initial_state"))
-    },
-    LetMut("lookahead", Some(self.lookahead_type()), Ident("None")),
   ]
+  statements.append(self.snapshots.local_storage())
+  statements.push(
+    LetMut("lookahead", Some(self.lookahead_type()), Ident("None")),
+  )
   for kind, count in self.maxima {
     for index in 0..<count {
       statements.push(

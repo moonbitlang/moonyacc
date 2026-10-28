@@ -4,4 +4,5 @@
 
 %%
 
-start: VALUE EOF { ()};
+start: value EOF { ()};
+value: VALUE { ()};

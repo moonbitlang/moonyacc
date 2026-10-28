@@ -175,13 +175,17 @@ test "stack elimination forwards a typed goto cell without duplicating action re
 }
 
 ///|
-test "stack regions stop at snapshots token branches physical RHS cells and cycles" {
+test "stack regions preserve snapshots and stop at token branches physical RHS cells and cycles" {
   for boundary in 0..<5 {
     let program = stack_test_program()
     let forward = program.blocks[3]
     let parameter = forward.parameters[0]
     match boundary {
-      0 => program.blocks[3] = { ..forward, instructions: [SaveErrorSnapshot], }
+      0 =>
+        program.blocks[3] = {
+          ..forward,
+          instructions: [SaveErrorSnapshot([])],
+        }
       1 =>
         program.blocks[3] = {
           ..forward,
@@ -226,6 +230,11 @@ test "stack regions stop at snapshots token branches physical RHS cells and cycl
     let result = program.eliminate_stack()
     result.validate()
     let root = stack_test_root(result)
+    if boundary == 0 {
+      assert_false(root.instructions.any(i => i is (Push(_) | Pop(_))))
+      assert_true(root.instructions[0] is SaveErrorSnapshot([State(0)]))
+      continue
+    }
     guard root.instructions is [Push(actual, values)] else {
       fail("crossed stack-region boundary \{boundary}")
     }
@@ -240,6 +249,55 @@ test "stack regions stop at snapshots token branches physical RHS cells and cycl
       ],
     )
   }
+}
+
+///|
+test "checked shifts keep input consume and snapshot before the forwarded action" {
+  let program = stack_test_program()
+  // The A-token route shifts its own cell before reducing it. Keep the B route
+  // independently reachable so the unchanged reduction still checks the cell.
+  for i in [2, 4, 6] {
+    let block = program.blocks[i]
+    program.blocks[i] = {
+      ..block,
+      instructions: block.instructions.map(instruction => {
+        match instruction {
+          Push(c, values) => Push({ ..c, symbol: Some(1), }, values)
+          Pop(c, regs) => Pop({ ..c, symbol: Some(1), }, regs)
+          Peek(depth, c, regs) if c.symbol is Some(_) =>
+            Peek(depth, { ..c, symbol: Some(1), }, regs)
+          _ => instruction
+        }
+      }),
+    }
+  }
+  program.actions[0] = { ..program.actions[0], rhs: [1], }
+  let shift = program.blocks[1]
+  guard shift.instructions[0] is Input(_, value, start, end) else {
+    fail("missing fixture input")
+  }
+  program.blocks[1] = {
+    ..shift,
+    instructions: [
+      Input(1, value, start, end),
+      Push(cell(1), [State(0), Reg(value), Reg(start), Reg(end)]),
+      ConsumeLookahead,
+      SaveErrorSnapshot([]),
+    ],
+    terminator: Jump({ target: 4, arguments: [Reg(start)], }),
+  }
+  program.validate()
+  let optimized = program.eliminate_stack()
+  optimized.validate()
+  let shifts = optimized.blocks.filter(b => b.lookahead == On(Terminal(1)))
+  assert_eq(shifts.length(), 1)
+  let instructions = shifts[0].instructions
+  assert_false(instructions.any(i => i is (Push(_) | Pop(_))))
+  assert_true(instructions[0] is Input(1, _, _, _))
+  assert_true(instructions[1] is ConsumeLookahead)
+  assert_true(instructions[2] is SaveErrorSnapshot([State(0)]))
+  assert_true(instructions[3] is ReadPreviousPosition(0, _))
+  assert_true(instructions[4] is Action(0, _, _, _))
 }
 
 ///|

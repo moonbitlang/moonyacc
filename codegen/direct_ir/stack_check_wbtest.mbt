@@ -196,18 +196,24 @@ test "stack rewrite checker snapshots logical state before later pops" {
     Reg(pos),
   ])
   let pop : Instruction = Pop(cell(1), [None, None, None, None])
-  let original = check_block([value, pos], [push, SaveErrorSnapshot, pop], [])
+  let original = check_block([value, pos], [push, SaveErrorSnapshot([]), pop], [])
   assert_true(check_stack_rewrite(original, original))
-  assert_false(
+  assert_true(
     check_stack_rewrite(original, {
       ..original,
-      instructions: [SaveErrorSnapshot],
+      instructions: [SaveErrorSnapshot([State(4)])],
     }),
   )
   assert_false(
     check_stack_rewrite(original, {
       ..original,
-      instructions: [push, pop, SaveErrorSnapshot],
+      instructions: [SaveErrorSnapshot([])],
+    }),
+  )
+  assert_false(
+    check_stack_rewrite(original, {
+      ..original,
+      instructions: [push, pop, SaveErrorSnapshot([])],
     }),
   )
   assert_false(
@@ -215,11 +221,114 @@ test "stack rewrite checker snapshots logical state before later pops" {
       ..original,
       instructions: [
         Push(cell(1), [State(5), Reg(value), Reg(pos), Reg(pos)]),
-        SaveErrorSnapshot,
+        SaveErrorSnapshot([]),
         pop,
       ],
     }),
   )
+}
+
+///|
+test "stack rewrite checker normalizes physical and virtual snapshot suffixes" {
+  let value = check_int(0)
+  let pos = check_reg(1, Position)
+  let first : Instruction = Push(cell(1), [
+    State(4),
+    Reg(value),
+    Reg(pos),
+    Reg(pos),
+  ])
+  let second : Instruction = Push(cell(2), [
+    State(5),
+    Reg(value),
+    Reg(pos),
+    Reg(pos),
+  ])
+  let pop_first : Instruction = Pop(cell(1), [None, None, None, None])
+  let pop_second : Instruction = Pop(cell(2), [None, None, None, None])
+  let original = check_block(
+    [value, pos],
+    [first, second, SaveErrorSnapshot([]), pop_second, pop_first],
+    [],
+  )
+  let virtual_snapshot = {
+    ..original,
+    instructions: [SaveErrorSnapshot([State(4), State(5)])],
+  }
+  assert_true(check_stack_rewrite(original, virtual_snapshot))
+  assert_true(
+    check_stack_rewrite(original, {
+      ..original,
+      instructions: [first, SaveErrorSnapshot([State(5)]), pop_first],
+    }),
+  )
+  assert_false(
+    check_stack_rewrite(original, {
+      ..original,
+      instructions: [SaveErrorSnapshot([State(5), State(4)])],
+    }),
+  )
+  assert_false(
+    check_stack_rewrite(original, {
+      ..original,
+      instructions: [SaveErrorSnapshot([State(5)])],
+    }),
+  )
+  assert_false(
+    check_stack_rewrite(original, {
+      ..original,
+      instructions: [SaveErrorSnapshot([Reg(pos)])],
+    }),
+  )
+  // Snapshot equivalence does not excuse a changed final physical stack.
+  assert_false(
+    check_stack_rewrite(
+      { ..original, instructions: [first, second, SaveErrorSnapshot([])], },
+      virtual_snapshot,
+    ),
+  )
+}
+
+///|
+test "stack rewrite checker captures dynamic snapshot values and prefix identity" {
+  let value = check_int(0)
+  let pos = check_reg(1, Position)
+  let initial = check_reg(2, State)
+  let captured = check_reg(3, State)
+  let later = check_reg(4, State)
+  let push : Instruction = Push(cell(1), [
+    Reg(captured),
+    Reg(value),
+    Reg(pos),
+    Reg(pos),
+  ])
+  let pop : Instruction = Pop(cell(1), [None, None, None, None])
+  let next : Instruction = Bind([(later, State(9))])
+  let original = check_block(
+    [value, pos, initial],
+    [Bind([(captured, Reg(initial))]), push, SaveErrorSnapshot([]), pop, next],
+    [Reg(later)],
+  )
+  assert_true(
+    check_stack_rewrite(original, {
+      ..original,
+      instructions: [SaveErrorSnapshot([Reg(initial)]), next],
+    }),
+  )
+  assert_false(
+    check_stack_rewrite(original, {
+      ..original,
+      instructions: [next, SaveErrorSnapshot([Reg(later)])],
+    }),
+  )
+  let prefix_pop : Instruction = Pop(cell(2), [None, None, None, None])
+  let before_pop = check_block(
+    [],
+    [SaveErrorSnapshot([State(4)]), prefix_pop],
+    [],
+  )
+  let after_pop = check_block([], [prefix_pop, SaveErrorSnapshot([State(4)])], [])
+  assert_false(check_stack_rewrite(before_pop, after_pop))
 }
 
 ///|

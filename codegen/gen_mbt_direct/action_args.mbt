@@ -20,7 +20,7 @@ fn value_uses(
         for (_, v) in pairs {
           use_(v)
         }
-      Push(_, values) =>
+      Push(_, values) | SaveErrorSnapshot(values) =>
         for v in values {
           use_(v)
         }

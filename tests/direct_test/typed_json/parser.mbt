@@ -59,16 +59,23 @@ pub suberror ParseError {
 
 ///|
 // file:///./parser.mbty
-// 7|       VALUE EOF { ()}
+// 7|       value EOF { ()}
 fn yy_action_0(_value_0 : Json, _value_1 : Json) -> Json {
   yy_json_cst_action("start", 0, 0, [_value_0, _value_1])
 }
 
 ///|
+// file:///./parser.mbty
+// 8|       VALUE { ()}
+fn yy_action_1(_value_0 : Json) -> Json {
+  yy_json_cst_action("value", 1, 0, [_value_0])
+}
+
+///|
 priv enum YYStack {
   YYEmpty
+  YYCell_5(YYStack, Int, Json)
   YYCell_4(YYStack, Int, Json)
-  YYCell_1(YYStack, Int, Json)
   YYCell_3(YYStack, Int, Json)
 }
 
@@ -123,7 +130,9 @@ fn yy_parse(
   let mut stack : YYStack = YYEmpty
   let mut state : Int = initial_state
   let mut error_stack : YYStack = YYEmpty
-  let mut error_state = initial_state
+  let mut error_state : Int = initial_state
+  let mut error_depth : Int = 0
+  let mut error_suffix_0 : Int = 0
   let mut lookahead : YYLookahead? = None
   let mut _yy_state_0 : Int = 0
   let mut _yy_value_1_0 : Json = Json::null()
@@ -143,14 +152,14 @@ fn yy_parse(
             )
           }
           continue match lookahead.unwrap().symbol {
-              1 => 5
-              _ => 4
+              1 => 6
+              _ => 5
             }
         })
       1 =>
         ({
           ()
-          // run state 2
+          // run state 3
           if lookahead is None {
             let (token, _, _) = read_token()
             lookahead = Some(
@@ -161,23 +170,35 @@ fn yy_parse(
             )
           }
           continue match lookahead.unwrap().symbol {
-              3 => 7
-              _ => 4
+              3 => 8
+              _ => 5
             }
         })
       2 =>
         ({
           ()
-          // reduce start -> VALUE EOF
-          guard! stack is YYCell_3(_yy_tail1, _yy_saved1, _yy_r10)
-          guard! _yy_tail1 is YYCell_1(_yy_tail0, _yy_saved0, _yy_r7)
-          _yy_value_1_0 = yy_action_0(_yy_r7, _yy_r10)
+          // goto value
+          match _yy_state_0 {
+            0 => ()
+            _ => panic()
+          }
+          stack = YYCell_5(stack, state, _yy_value_1_0)
+          state = 3
+          continue 1
+        })
+      3 =>
+        ({
+          ()
+          // reduce start -> value EOF
+          guard! stack is YYCell_3(_yy_tail1, _yy_saved1, _yy_r23)
+          guard! _yy_tail1 is YYCell_5(_yy_tail0, _yy_saved0, _yy_r20)
+          _yy_value_1_0 = yy_action_0(_yy_r20, _yy_r23)
           stack = _yy_tail0
           state = _yy_saved0
           _yy_state_0 = state
-          continue 3
+          continue 4
         })
-      3 =>
+      4 =>
         ({
           ()
           // goto start
@@ -187,49 +208,60 @@ fn yy_parse(
           }
           stack = YYCell_4(stack, state, _yy_value_1_0)
           state = 1
-          continue 6
-        })
-      4 =>
-        ({
-          ()
-          yy_error(
-            yy_stack_states(error_stack, error_state), lookahead.unwrap().token,
-            ((), ())
-          )
-          panic()
+          continue 7
         })
       5 =>
         ({
           ()
-          // shift VALUE into state 2
-          let _yy_r16 = lookahead.unwrap().value
-          stack = YYCell_1(stack, state, _yy_r16)
-          state = 2
-          lookahead = None
-          error_stack = stack
-          error_state = state
-          continue 1
+          yy_error(
+            ({
+              ()
+              let mut _yy_error_states = yy_stack_states(
+                error_stack, error_state
+              )
+              if error_depth > 0 {
+                _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
+              }
+              _yy_error_states
+            }), lookahead.unwrap().token, ((), ())
+          )
+          panic()
         })
       6 =>
         ({
           ()
-          let _yy_r19 = match stack {
-            YYCell_4(_, _, _value) => _value
-            _ => panic()
-          }
-          return YYAccept_0(_yy_r19)
+          // shift VALUE into state 2
+          let _yy_r29 = lookahead.unwrap().value
+          lookahead = None
+          error_stack = stack
+          error_state = state
+          error_suffix_0 = 2
+          error_depth = 1
+          _yy_value_1_0 = yy_action_1(_yy_r29)
+          _yy_state_0 = state
+          continue 2
         })
       7 =>
         ({
           ()
-          // shift EOF into state 3
-          let _yy_r20 = lookahead.unwrap().value
-          stack = YYCell_3(stack, state, _yy_r20)
-          state = 3
+          let _yy_r32 = match stack {
+            YYCell_4(_, _, _value) => _value
+            _ => panic()
+          }
+          return YYAccept_0(_yy_r32)
+        })
+      8 =>
+        ({
+          ()
+          // shift EOF into state 4
+          let _yy_r33 = lookahead.unwrap().value
+          stack = YYCell_3(stack, state, _yy_r33)
+          state = 4
           lookahead = None
           error_stack = stack
           error_state = state
-          continue 2
+          error_depth = 0
+          continue 3
         })
       _ => panic()
     }
@@ -246,8 +278,8 @@ pub fn start(read_token : (() -> (Token, Unit, Unit)), start_pos : Unit) -> Json
 ///|
 fn yy_stack_tail(stack : YYStack) -> YYStack {
   match stack {
+    YYCell_5(tail, _, _) => tail
     YYCell_4(tail, _, _) => tail
-    YYCell_1(tail, _, _) => tail
     YYCell_3(tail, _, _) => tail
     YYEmpty => panic()
   }
@@ -256,8 +288,8 @@ fn yy_stack_tail(stack : YYStack) -> YYStack {
 ///|
 fn yy_stack_saved(stack : YYStack) -> Int {
   match stack {
+    YYCell_5(_, saved, _) => saved
     YYCell_4(_, saved, _) => saved
-    YYCell_1(_, saved, _) => saved
     YYCell_3(_, saved, _) => saved
     YYEmpty => panic()
   }
@@ -281,13 +313,13 @@ fn yy_stack_states(stack : YYStack, state : Int) -> @list.List[Int] {
 }
 
 ///|
-let yy_diag_rows : FixedArray[Int] = [0, -2, 5, -7]
+let yy_diag_rows : FixedArray[Int] = [0, -2, -8, 7, -9]
 
 ///|
-let yy_diag_data : FixedArray[Int] = [2, 1, 4, 4, 3, 1, 3, 5]
+let yy_diag_data : FixedArray[Int] = [3, 1, 4, 4, 3, 5, 5, 1, 3, 6]
 
 ///|
-let yy_diag_reductions : FixedArray[(Int, Int)] = [(2, 4)]
+let yy_diag_reductions : FixedArray[(Int, Int)] = [(1, 5), (2, 4)]
 
 ///|
 fn yy_diag_lookup(state : Int, symbol : Int) -> Int {
@@ -317,10 +349,10 @@ fn yy_diagnostic(state : Int, symbol : Int) -> (Int, Int, Int) {
     0 => (0, 0, 0)
     1 => (1, 0, 0)
     _ =>
-      if code < 6 {
+      if code < 7 {
         (2, code - 2, 0)
       } else {
-        let (count, lhs) = yy_diag_reductions[code - 6]
+        let (count, lhs) = yy_diag_reductions[code - 7]
         (3, count, lhs)
       }
   }

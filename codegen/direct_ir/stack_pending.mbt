@@ -138,9 +138,15 @@ fn StackRewrite::instruction(
     Peek(depth, cell, regs) => self.peek(depth, cell, regs)
     ReadPreviousPosition(depth, reg) => self.previous(depth, reg)
     Pop(cell, regs) => self.pop(cell, regs)
-    Action(_) => self.output.push(instruction)
+    Action(_) | ConsumeLookahead => self.output.push(instruction)
+    SaveErrorSnapshot(suffix) => {
+      // Only LR states are needed for diagnostics. Keep immutable SSA values in
+      // the instruction so emission captures them before any register reuse.
+      let states = self.pending.map(p => p.values[0])
+      states.append(suffix)
+      self.output.push(SaveErrorSnapshot(states))
+    }
     _ => {
-      // In particular, a last-shift snapshot observes the complete stack.
       self.flush()
       self.output.push(instruction)
     }

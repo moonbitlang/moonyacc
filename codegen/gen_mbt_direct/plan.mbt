@@ -13,7 +13,7 @@ priv struct Emitter {
   gotos : Map[Int32, GotoPlan]
   chunked : Bool
   consumes_input : Bool
-  saves_snapshot : Bool
+  snapshots : SnapshotPlan
   needs_initial_position : Bool
   slots : Map[Int32, (Int32, Int32)]
   slot_types : Array[SlotType]
@@ -50,9 +50,7 @@ fn Emitter::new(
     consumes_input: program.blocks
     .iter()
     .any(b => b.instructions.iter().any(i => i is ConsumeLookahead)),
-    saves_snapshot: program.blocks
-    .iter()
-    .any(b => b.instructions.iter().any(i => i is SaveErrorSnapshot)),
+    snapshots: SnapshotPlan::new(program.blocks),
     needs_initial_position,
     slots: {},
     slot_types: [],

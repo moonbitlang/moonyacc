@@ -26,7 +26,7 @@ fn goto_fixture() -> Array[@direct_ir.Block] {
     {
       ..base,
       parameters: [pred, value, sp, ep],
-      instructions: [SaveErrorSnapshot],
+      instructions: [SaveErrorSnapshot([])],
       terminator: CaseState(Reg(pred), [
         (10, { target: 1, arguments: [Reg(value), Reg(sp), Reg(ep)], }),
         (20, { target: 2, arguments: [Reg(ep), Reg(value), Reg(sp)], }),
@@ -68,7 +68,7 @@ test "goto factoring substitutes parameters and keeps LR states separate from PC
   let layout = BlockLayout::new(blocks, omitted~)
   assert_eq(layout.blocks, [0, 3])
   assert_eq(layout.pc(3), 1)
-  assert_true(blocks[0].instructions is [SaveErrorSnapshot])
+  assert_true(blocks[0].instructions is [SaveErrorSnapshot([])])
 }
 
 ///|
@@ -77,7 +77,7 @@ test "goto factoring retains effects, unequal spans and externally used helpers"
   let blocks = original.copy()
   blocks[2] = {
     ..original[2],
-    instructions: [..original[2].instructions, SaveErrorSnapshot],
+    instructions: [..original[2].instructions, SaveErrorSnapshot([])],
   }
   assert_true(plan_gotos(blocks, []).0.is_empty())
   blocks[2] = original[2]

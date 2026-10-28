@@ -256,9 +256,9 @@ priv enum YYStack {
   YYCell_9(YYStack, Int, Array[(Int, Int)], Int)
   YYCell_11(YYStack, Int, Int, Int, Int)
   YYCell_8(YYStack, Int, (Int, Int, Int), Int)
-  YYCell_1(YYStack, Int, Int, Int, Int)
   YYCell_3_void(YYStack, Int, Int, Int)
   YYCell_5_void(YYStack, Int, Int, Int)
+  YYCell_1(YYStack, Int, Int, Int, Int)
   YYCell_7_void(YYStack, Int, Int, Int)
   YYCell_2_void(YYStack, Int, Int, Int)
   YYCell_4_void(YYStack, Int, Int, Int)
@@ -298,6 +298,8 @@ priv struct YYContext {
   mut state : Int
   mut error_stack : YYStack
   mut error_state : Int
+  mut error_depth : Int
+  mut error_suffix_0 : Int
   mut lookahead : YYLookahead?
   mut _yy_result : YYResult?
   initial_position : Int
@@ -314,8 +316,16 @@ priv struct YYContext {
 #inline(never)
 fn yy_stop(_env : YYContext) -> Int raise ParseError {
   yy_error(
-    yy_stack_states(_env.error_stack, _env.error_state),
-    _env.lookahead.unwrap().token,
+    ({
+      ()
+      let mut _yy_error_states = yy_stack_states(
+        _env.error_stack, _env.error_state
+      )
+      if _env.error_depth > 0 {
+        _yy_error_states = @list.cons(_env.error_suffix_0, _yy_error_states)
+      }
+      _yy_error_states
+    }), _env.lookahead.unwrap().token,
     (_env.lookahead.unwrap().start, _env.lookahead.unwrap().end)
   )
   panic()
@@ -392,6 +402,7 @@ fn yy_shift(_env : YYContext, target : Int) -> Unit {
   _env.lookahead = None
   _env.error_stack = _env.stack
   _env.error_state = _env.state
+  _env.error_depth = 0
 }
 
 ///|
@@ -413,10 +424,11 @@ fn yy_parse(
   let initial_position = start_pos
   let _env = YYContext::{
     stack: YYEmpty, state: initial_state, error_stack: YYEmpty,
-    error_state: initial_state, lookahead: None, _yy_result: None,
-    initial_position: initial_position, read_token: read_token, _yy_state_0: 0,
-    _yy_value_1_0: None, _yy_position_0: initial_position,
-    _yy_position_1: initial_position, _yy_value_3_0: 0, _yy_value_4_0: None
+    error_state: initial_state, error_depth: 0, error_suffix_0: 0,
+    lookahead: None, _yy_result: None, initial_position: initial_position,
+    read_token: read_token, _yy_state_0: 0, _yy_value_1_0: None,
+    _yy_position_0: initial_position, _yy_position_1: initial_position,
+    _yy_value_3_0: 0, _yy_value_4_0: None
   }
   for pc = entry {
     let next = match pc / 32 {
@@ -444,10 +456,10 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().symbol {
-              1 => 29
-              3 => 30
-              5 => 31
-              _ => 28
+              1 => 27
+              3 => 28
+              5 => 29
+              _ => 26
             }
         })
       1 =>
@@ -457,15 +469,10 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           if _env.lookahead is None {
             yy_read_token(_env)
           }
-          let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 33
-            _ => 28
-          }
-          if _yy_next / 32 == 0 {
-            continue _yy_next
-          } else {
-            return _yy_next
-          }
+          continue match _env.lookahead.unwrap().symbol {
+              1 => 31
+              _ => 26
+            }
         })
       2 =>
         ({
@@ -475,8 +482,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            7 => 34
-            _ => 28
+            7 => 32
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -492,9 +499,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           continue match _env.lookahead.unwrap().symbol {
-              1 => 29
-              3 => 30
-              _ => 28
+              1 => 27
+              3 => 28
+              _ => 26
             }
         })
       4 =>
@@ -505,8 +512,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            7 => 35
-            _ => 28
+            7 => 33
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -522,9 +529,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 36
-            5 => 37
-            _ => 28
+            1 => 34
+            5 => 35
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -540,9 +547,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 36
-            5 => 37
-            _ => 28
+            1 => 34
+            5 => 35
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -558,11 +565,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            2 => 39
-            3 => 40
-            4 => 41
-            6 => 42
-            _ => 28
+            2 => 37
+            3 => 38
+            4 => 39
+            6 => 40
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -578,9 +585,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 36
-            5 => 37
-            _ => 28
+            1 => 34
+            5 => 35
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -596,10 +603,10 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            2 => 39
-            3 => 40
-            6 | 7 => 20
-            _ => 28
+            2 => 37
+            3 => 38
+            6 | 7 => 19
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -615,9 +622,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 36
-            5 => 37
-            _ => 28
+            1 => 34
+            5 => 35
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -633,9 +640,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            1 => 36
-            5 => 37
-            _ => 28
+            1 => 34
+            5 => 35
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -651,9 +658,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            2 | 4 | 6 | 7 => 23
-            3 => 40
-            _ => 28
+            2 | 4 | 6 | 7 => 22
+            3 => 38
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -669,11 +676,11 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             yy_read_token(_env)
           }
           let _yy_next = match _env.lookahead.unwrap().symbol {
-            2 => 39
-            3 => 40
-            4 => 41
-            7 => 43
-            _ => 28
+            2 => 37
+            3 => 38
+            4 => 39
+            7 => 41
+            _ => 26
           }
           if _yy_next / 32 == 0 {
             continue _yy_next
@@ -722,27 +729,6 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
       16 =>
         ({
           ()
-          // reduce anchored -> NUMBER
-          guard! _env.stack is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r52, _yy_r53, _yy_read54
-          )
-          _env._yy_position_1 = _yy_read54
-          _env._yy_position_0 = if _yy_tail0 is YYEmpty {
-            _env.initial_position
-          } else {
-            yy_stack_end(_yy_tail0)
-          }
-          _env._yy_value_1_0 = Some(
-            yy_action_13(_env._yy_position_0, _env._yy_position_1, _yy_r53)
-          )
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 15
-        })
-      17 =>
-        ({
-          ()
           // reduce inline_positions -> anchored EOF
           guard! _env.stack is YYCell_7_void(
             _yy_tail1, _yy_saved1, _yy_r62, _yy_read63
@@ -760,9 +746,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 18
+          continue 17
         })
-      18 =>
+      17 =>
         ({
           ()
           // goto inline_positions
@@ -775,9 +761,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             _env._yy_position_1
           )
           _env.state = 1
-          return 32
+          continue 30
         })
-      19 =>
+      18 =>
         ({
           ()
           // reduce inline_positions -> LPAREN anchored EOF
@@ -796,9 +782,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 18
+          continue 17
         })
-      20 =>
+      19 =>
         ({
           ()
           // reduce expr -> expr EQ expr
@@ -817,9 +803,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 21
+          continue 20
         })
-      21 =>
+      20 =>
         ({
           ()
           // goto expr
@@ -827,7 +813,7 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             10 => (22, 13)
             12 => (13, 7)
             14 => (15, 9)
-            16 => (17, 22)
+            16 => (17, 21)
             18 => (19, 12)
             _ => panic()
           }
@@ -838,7 +824,7 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.state = _yy_state
           continue _yy_target
         })
-      22 =>
+      21 =>
         ({
           ()
           // reduce expr -> expr STAR expr
@@ -857,9 +843,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 21
+          continue 20
         })
-      23 =>
+      22 =>
         ({
           ()
           // reduce expr -> expr PLUS expr
@@ -878,24 +864,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 21
+          continue 20
         })
-      24 =>
-        ({
-          ()
-          // reduce expr -> NUMBER
-          guard! _env.stack is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r115, _yy_read116, _yy_read117
-          )
-          _env._yy_position_0 = _yy_read116
-          _env._yy_position_1 = _yy_read117
-          _env._yy_value_3_0 = yy_action_4(_yy_r115)
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 21
-        })
-      25 =>
+      23 =>
         ({
           ()
           // reduce expr -> LPAREN expr RPAREN
@@ -914,9 +885,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 21
+          continue 20
         })
-      26 =>
+      24 =>
         ({
           ()
           // reduce start -> expr EOF
@@ -934,9 +905,9 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 27
+          continue 25
         })
-      27 =>
+      25 =>
         ({
           ()
           // goto start
@@ -949,33 +920,69 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
             _env._yy_position_1
           )
           _env.state = 11
-          return 38
+          return 36
         })
-      28 =>
+      26 =>
         ({
           ()
           return yy_stop(_env)
         })
-      29 =>
+      27 =>
         ({
           ()
           // shift NUMBER into state 4
-          yy_shift(_env, 4)
-          continue 16
+          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
+            _yy_token_value
+          )
+          let _yy_r142 = _yy_token_value
+          let _yy_r143 = _env.lookahead.unwrap().start
+          _env._yy_position_1 = _env.lookahead.unwrap().end
+          _env.lookahead = None
+          _env.error_stack = _env.stack
+          _env.error_state = _env.state
+          _env.error_suffix_0 = 4
+          _env.error_depth = 1
+          _env._yy_position_0 = if _env.stack is YYEmpty {
+            _env.initial_position
+          } else {
+            yy_stack_end(_env.stack)
+          }
+          _env._yy_value_1_0 = Some(
+            yy_action_13(_env._yy_position_0, _env._yy_position_1, _yy_r143)
+          )
+          _env._yy_state_0 = _env.state
+          continue 15
         })
-      30 =>
+      28 =>
         ({
           ()
           // shift STAR into state 2
           yy_shift(_env, 2)
           continue 1
         })
-      31 =>
+      29 =>
         ({
           ()
           // shift LPAREN into state 7
           yy_shift(_env, 7)
           continue 3
+        })
+      30 =>
+        ({
+          ()
+          let _yy_r151 = match _env.stack {
+            YYCell_9(_, _, _value, _) => _value
+            _ => panic()
+          }
+          _env._yy_result = Some(YYAccept_1(_yy_r151))
+          return -1
+        })
+      31 =>
+        ({
+          ()
+          // shift NUMBER into state 3
+          yy_shift(_env, 3)
+          continue 14
         })
       _ => panic()
     }
@@ -989,49 +996,42 @@ fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int {
     32 =>
       ({
         ()
-        let _yy_r151 = match _env.stack {
-          YYCell_9(_, _, _value, _) => _value
-          _ => panic()
-        }
-        _env._yy_result = Some(YYAccept_1(_yy_r151))
-        return -1
+        // shift EOF into state 6
+        yy_shift(_env, 6)
+        return 16
       })
     33 =>
       ({
         ()
-        // shift NUMBER into state 3
-        yy_shift(_env, 3)
-        return 14
+        // shift EOF into state 9
+        yy_shift(_env, 9)
+        return 18
       })
     34 =>
       ({
         ()
-        // shift EOF into state 6
-        yy_shift(_env, 6)
-        return 17
+        // shift NUMBER into state 20
+        guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(_yy_token_value)
+        let _yy_r161 = _yy_token_value
+        _env._yy_position_0 = _env.lookahead.unwrap().start
+        _env._yy_position_1 = _env.lookahead.unwrap().end
+        _env.lookahead = None
+        _env.error_stack = _env.stack
+        _env.error_state = _env.state
+        _env.error_suffix_0 = 20
+        _env.error_depth = 1
+        _env._yy_value_3_0 = yy_action_4(_yy_r161)
+        _env._yy_state_0 = _env.state
+        return 20
       })
     35 =>
-      ({
-        ()
-        // shift EOF into state 9
-        yy_shift(_env, 9)
-        return 19
-      })
-    36 =>
-      ({
-        ()
-        // shift NUMBER into state 20
-        yy_shift(_env, 20)
-        return 24
-      })
-    37 =>
       ({
         ()
         // shift LPAREN into state 12
         yy_shift(_env, 12)
         return 6
       })
-    38 =>
+    36 =>
       ({
         ()
         let _yy_r167 = match _env.stack {
@@ -1041,40 +1041,40 @@ fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int {
         _env._yy_result = Some(YYAccept_0(_yy_r167))
         return -1
       })
-    39 =>
+    37 =>
       ({
         ()
         // shift PLUS into state 18
         yy_shift(_env, 18)
         return 11
       })
-    40 =>
+    38 =>
       ({
         ()
         // shift STAR into state 16
         yy_shift(_env, 16)
         return 10
       })
-    41 =>
+    39 =>
       ({
         ()
         // shift EQ into state 14
         yy_shift(_env, 14)
         return 8
       })
-    42 =>
+    40 =>
       ({
         ()
         // shift RPAREN into state 21
         yy_shift(_env, 21)
-        return 25
+        return 23
       })
-    43 =>
+    41 =>
       ({
         ()
         // shift EOF into state 23
         yy_shift(_env, 23)
-        return 26
+        return 24
       })
     _ => panic()
   }
@@ -1107,9 +1107,9 @@ fn yy_stack_tail(stack : YYStack) -> YYStack {
     YYCell_9(tail, _, _, _) => tail
     YYCell_11(tail, _, _, _, _) => tail
     YYCell_8(tail, _, _, _) => tail
-    YYCell_1(tail, _, _, _, _) => tail
     YYCell_3_void(tail, _, _, _) => tail
     YYCell_5_void(tail, _, _, _) => tail
+    YYCell_1(tail, _, _, _, _) => tail
     YYCell_7_void(tail, _, _, _) => tail
     YYCell_2_void(tail, _, _, _) => tail
     YYCell_4_void(tail, _, _, _) => tail
@@ -1125,9 +1125,9 @@ fn yy_stack_saved(stack : YYStack) -> Int {
     YYCell_9(_, saved, _, _) => saved
     YYCell_11(_, saved, _, _, _) => saved
     YYCell_8(_, saved, _, _) => saved
-    YYCell_1(_, saved, _, _, _) => saved
     YYCell_3_void(_, saved, _, _) => saved
     YYCell_5_void(_, saved, _, _) => saved
+    YYCell_1(_, saved, _, _, _) => saved
     YYCell_7_void(_, saved, _, _) => saved
     YYCell_2_void(_, saved, _, _) => saved
     YYCell_4_void(_, saved, _, _) => saved
@@ -1143,9 +1143,9 @@ fn yy_stack_end(stack : YYStack) -> Int {
     YYCell_9(_, _, _, end) => end
     YYCell_11(_, _, _, _, end) => end
     YYCell_8(_, _, _, end) => end
-    YYCell_1(_, _, _, _, end) => end
     YYCell_3_void(_, _, _, end) => end
     YYCell_5_void(_, _, _, end) => end
+    YYCell_1(_, _, _, _, end) => end
     YYCell_7_void(_, _, _, end) => end
     YYCell_2_void(_, _, _, end) => end
     YYCell_4_void(_, _, _, end) => end

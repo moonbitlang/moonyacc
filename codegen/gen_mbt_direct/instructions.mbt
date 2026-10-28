@@ -17,11 +17,7 @@ fn Emitter::instruction(
       statements.push(Assign(self.machine("lookahead"), Ident("None")))
       statements
     }
-    SaveErrorSnapshot =>
-      [
-        Assign(self.machine("error_stack"), self.machine("stack")),
-        Assign(self.machine("error_state"), self.machine("state")),
-      ]
+    SaveErrorSnapshot(suffix) => self.save_snapshot(suffix)
     ReadPreviousPosition(depth, reg) =>
       if self.erased_register(reg) {
         []

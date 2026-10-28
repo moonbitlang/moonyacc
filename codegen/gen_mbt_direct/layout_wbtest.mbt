@@ -11,7 +11,7 @@ test "shared error exits preserve effects, parameters and LR provenance" {
   let blocks : Array[@direct_ir.Block] = [
     stop,
     { ..stop, lookahead: On(Terminal(1)), terminator: Stop(1), },
-    { ..stop, instructions: [SaveErrorSnapshot], },
+    { ..stop, instructions: [SaveErrorSnapshot([])], },
     { ..stop, parameters: [position], },
     {
       ..stop,

@@ -61,7 +61,6 @@ fn yy_action_0(_value_0 : Char) -> Char {
 priv enum YYStack {
   YYEmpty
   YYCell_2(YYStack, Int, Char)
-  YYCell_1(YYStack, Int, Char, Int, Int)
 }
 
 ///|
@@ -95,7 +94,9 @@ fn yy_parse(
   let mut stack : YYStack = YYEmpty
   let mut state : Int = initial_state
   let mut error_stack : YYStack = YYEmpty
-  let mut error_state = initial_state
+  let mut error_state : Int = initial_state
+  let mut error_depth : Int = 0
+  let mut error_suffix_0 : Int = 0
   let mut lookahead : YYLookahead? = None
   let mut _yy_state_0 : Int = 0
   let mut _yy_value_1_0 : Char = '\u{00}'
@@ -126,26 +127,11 @@ fn yy_parse(
             }
           }
           continue match lookahead.unwrap().symbol {
-              1 => 4
-              _ => 3
+              1 => 3
+              _ => 2
             }
         })
       1 =>
-        ({
-          ()
-          // reduce start -> VALUE
-          guard! stack is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r7, _yy_read8, _yy_read9
-          )
-          _yy_position_0 = _yy_read8
-          _yy_position_1 = _yy_read9
-          _yy_value_1_0 = yy_action_0(_yy_r7)
-          stack = _yy_tail0
-          state = _yy_saved0
-          _yy_state_0 = state
-          continue 2
-        })
-      2 =>
         ({
           ()
           // goto start
@@ -155,34 +141,45 @@ fn yy_parse(
           }
           stack = YYCell_2(stack, state, _yy_value_1_0)
           state = 1
-          continue 5
+          continue 4
         })
-      3 =>
+      2 =>
         ({
           ()
           yy_error(
-            yy_stack_states(error_stack, error_state), lookahead.unwrap().token,
+            ({
+              ()
+              let mut _yy_error_states = yy_stack_states(
+                error_stack, error_state
+              )
+              if error_depth > 0 {
+                _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
+              }
+              _yy_error_states
+            }), lookahead.unwrap().token,
             (lookahead.unwrap().start, lookahead.unwrap().end)
           )
           panic()
         })
-      4 =>
+      3 =>
         ({
           ()
           // shift VALUE into state 2
           let VALUE(_yy_token_value) = lookahead.unwrap().token.unwrap()
           let _yy_r13 = _yy_token_value
-          let _yy_r14 = lookahead.unwrap().start
-          let _yy_r15 = lookahead.unwrap().end
-          stack = YYCell_1(stack, state, _yy_r13, _yy_r14, _yy_r15)
-          state = 2
+          _yy_position_0 = lookahead.unwrap().start
+          _yy_position_1 = lookahead.unwrap().end
           last_pos = lookahead.unwrap().end
           lookahead = None
           error_stack = stack
           error_state = state
+          error_suffix_0 = 2
+          error_depth = 1
+          _yy_value_1_0 = yy_action_0(_yy_r13)
+          _yy_state_0 = state
           continue 1
         })
-      5 =>
+      4 =>
         ({
           ()
           let _yy_r16 = match stack {
@@ -207,7 +204,6 @@ pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Char rais
 fn yy_stack_tail(stack : YYStack) -> YYStack {
   match stack {
     YYCell_2(tail, _, _) => tail
-    YYCell_1(tail, _, _, _, _) => tail
     YYEmpty => panic()
   }
 }
@@ -216,7 +212,6 @@ fn yy_stack_tail(stack : YYStack) -> YYStack {
 fn yy_stack_saved(stack : YYStack) -> Int {
   match stack {
     YYCell_2(_, saved, _) => saved
-    YYCell_1(_, saved, _, _, _) => saved
     YYEmpty => panic()
   }
 }

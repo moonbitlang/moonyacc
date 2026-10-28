@@ -20,9 +20,19 @@ test "typed JsonCst converts each read token, including rejected lookahead" {
     "clause_index": 0,
     "children": [
       {
-        "type": "TERMINAL",
-        "name": "VALUE",
-        "data": 7,
+        "type": "NONTERMINAL",
+        "name": "value",
+        "rule_index": 1,
+        "clause_index": 0,
+        "children": [
+          {
+            "type": "TERMINAL",
+            "name": "VALUE",
+            "data": 7,
+            "start": null,
+            "end": null,
+          },
+        ],
         "start": null,
         "end": null,
       },
@@ -39,21 +49,23 @@ test "typed JsonCst converts each read token, including rejected lookahead" {
   })
   conversions.val = 0
   let mut reads = 0
+  let invalid = [VALUE(Payload::{ value: 7, }), INVALID(Payload::{ value: 9, })]
   try
     start(
       () => {
+        let token = invalid[reads]
         reads += 1
-        (INVALID(Payload::{ value: 9, }), (), ())
+        (token, (), ())
       },
       (),
     )
   catch {
     UnexpectedToken(INVALID(_), _, expected) =>
-      assert_true(expected.any(kind => kind is TK_VALUE))
+      assert_true(expected is [TK_EOF])
     _ => fail("wrong rejected lookahead")
   } noraise {
     _ => fail("accepted invalid token")
   }
-  assert_eq(reads, 1)
-  assert_eq(conversions.val, 1)
+  assert_eq(reads, 2)
+  assert_eq(conversions.val, 2)
 }

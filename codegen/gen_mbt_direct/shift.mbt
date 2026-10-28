@@ -1,6 +1,6 @@
 ///|
 /// Fold the canonical shift sequence only when no extracted value escapes it.
-/// The IR still checks the token guard; the helper operates on its boxed payload.
+/// The IR checks the token guard; the helper decodes the cached token payload.
 fn shift_target(block : @direct_ir.Block) -> Int32? {
   guard block.terminator is Jump(edge) && edge.arguments.is_empty() else {
     None
@@ -10,7 +10,7 @@ fn shift_target(block : @direct_ir.Block) -> Int32? {
       Input(token, value, sp, ep),
       Push(cell, [State(target), Reg(v), Reg(s), Reg(e)]),
       ConsumeLookahead,
-      SaveErrorSnapshot,
+      SaveErrorSnapshot([]),
     ] =>
       if cell.symbol == Some(token) &&
         cell.fields == [State, Semantic, Start, End] &&
@@ -83,11 +83,8 @@ fn Emitter::shift_item(self : Emitter) -> @mbt_ast.Item {
       Assign(self.machine("last_pos"), self.cached_position(end=true)),
     )
   }
-  statements.append([
-    Assign(self.machine("lookahead"), Ident("None")),
-    Assign(self.machine("error_stack"), self.machine("stack")),
-    Assign(self.machine("error_state"), self.machine("state")),
-  ])
+  statements.push(Assign(self.machine("lookahead"), Ident("None")))
+  statements.append(self.save_snapshot([]))
   @mbt_ast.item(
     Function(
       @mbt_ast.function(

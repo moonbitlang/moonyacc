@@ -5,15 +5,14 @@ const STACK_REGION_BLOCKS : Int32 = 16
 const STACK_REGION_INSTRUCTIONS : Int32 = 96
 
 ///|
-/// Do not duplicate token dispatch or change the last-shift checkpoint. Requiring
+/// Do not duplicate token dispatch or read another token. Requiring
 /// the complete RHS in the virtual suffix also keeps partially reduced physical
 /// RHSs on the existing shared, fused reduction path.
 fn stack_inlineable(block : Block, available : Int32) -> Bool {
   let mut count = available
   for instruction in block.instructions {
     match instruction {
-      EnsureLookahead | Input(_) | ConsumeLookahead | SaveErrorSnapshot =>
-        return false
+      EnsureLookahead | Input(_) | ConsumeLookahead => return false
       Push(cell, _) => {
         if cell.fields != [State, Semantic, Start, End] {
           return false
@@ -53,19 +52,36 @@ fn StackRewrite::finish(
 }
 
 ///|
+/// Small push continuations and complete checked shifts may start a region.
+/// The token read/consume/snapshot order remains explicit in the latter case.
+fn stack_region_root(block : Block) -> Bool {
+  guard block.terminator is Jump(_) else { false }
+  match block.instructions {
+    [Push(cell, _)] => cell.fields == [State, Semantic, Start, End]
+    [
+      Input(token, value, start, end),
+      Push(cell, [_, Reg(v), Reg(s), Reg(e)]),
+      ConsumeLookahead,
+      SaveErrorSnapshot([]),
+    ] =>
+      cell.symbol == Some(token) &&
+      cell.fields == [State, Semantic, Start, End] &&
+      value == v &&
+      start == s &&
+      end == e
+    _ => false
+  }
+}
+
+///|
 fn Program::stack_region(
   self : Program,
   label : Int32,
   supply : RegisterSupply,
 ) -> Block? raise InvalidProgram {
   let root = self.blocks[label]
-  // Structural eligibility, not Origin: leave canonical reductions and shifts
-  // shared. Only the small goto push continuations start an expansion region.
-  guard root.instructions is [Push(cell, _)] &&
-    cell.fields == [State, Semantic, Start, End] &&
-    root.terminator is Jump(_) else {
-    None
-  }
+  // Structural eligibility, not Origin: leave canonical reductions shared.
+  guard stack_region_root(root) else { None }
   let rewrite = StackRewrite::new()
   let original = root.instructions.copy()
   for instruction in original {
@@ -112,9 +128,10 @@ fn Program::stack_region(
 }
 
 ///|
-/// Eliminate proven temporary goto cells in bounded straight-line regions.
+/// Eliminate proven temporary shift/goto cells in bounded straight-line regions.
 /// Requires a validated program. Each rewrite is independently checked before
-/// replacement; snapshots and unknown control flow retain materialized stacks.
+/// replacement. Snapshots capture virtual states; unknown control flow keeps a
+/// materialized stack.
 pub fn Program::eliminate_stack(self : Program) -> Program raise InvalidProgram {
   let supply = RegisterSupply::new(self)
   let blocks = self.blocks.mapi((label, block) => {

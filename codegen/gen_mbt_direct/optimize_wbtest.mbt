@@ -138,7 +138,7 @@ test "typed reductions require the exact symbol suffix and effect order" {
   assert_true(
     reduction_plan({ ..block, instructions: changed, }, actions) is None,
   )
-  changed[3] = SaveErrorSnapshot
+  changed[3] = SaveErrorSnapshot([])
   assert_true(
     reduction_plan({ ..block, instructions: changed, }, actions) is None,
   )

@@ -21,11 +21,19 @@ priv struct StackCheckStack {
 } derive(Eq)
 
 ///|
+/// Diagnostics observe state identities, including the state at the opaque
+/// prefix boundary, but never semantic values or source positions.
+priv struct StackCheckSnapshot {
+  removed : Int32
+  states : Array[StackCheckValue]
+} derive(Eq)
+
+///|
 priv enum StackCheckEvent {
   ReadLookahead
   ReadInput(Int32, Register, Register, Register)
   AdvanceLookahead
-  CaptureSnapshot(StackCheckStack)
+  CaptureSnapshot(StackCheckSnapshot)
   CheckPeek(Int32, Cell)
   CheckPop(Int32, Cell)
   CheckPreviousPosition(Int32)

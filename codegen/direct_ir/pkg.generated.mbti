@@ -77,7 +77,7 @@ pub(all) enum Instruction {
   EnsureLookahead
   Input(Int32, Register, Register, Register)
   ConsumeLookahead
-  SaveErrorSnapshot
+  SaveErrorSnapshot(Array[Value])
   ReadPreviousPosition(Int32, Register)
   Bind(Array[(Register, Value)])
   Push(Cell, Array[Value])

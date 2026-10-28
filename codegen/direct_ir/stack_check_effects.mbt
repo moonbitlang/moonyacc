@@ -57,6 +57,21 @@ fn StackCheck::action(
 }
 
 ///|
+fn StackCheck::snapshot(
+  self : StackCheck,
+  suffix : Array[Value],
+) -> Unit raise InvalidProgram {
+  let states = self.suffix.map(cell => cell.values[0])
+  for value in suffix {
+    let value = self.value(value)
+    require(value.type_() == State, "stack rewrite snapshot state type")
+    states.push(value)
+  }
+  // Both arrays and operands are captured now, before later pops or Bind nodes.
+  self.trace.push(CaptureSnapshot({ removed: self.removed, states, }))
+}
+
+///|
 fn StackCheck::instruction(
   self : StackCheck,
   instruction : Instruction,
@@ -65,7 +80,7 @@ fn StackCheck::instruction(
     EnsureLookahead => self.trace.push(ReadLookahead)
     Input(token, value, start, end) => self.input(token, value, start, end)
     ConsumeLookahead => self.trace.push(AdvanceLookahead)
-    SaveErrorSnapshot => self.trace.push(CaptureSnapshot(self.stack()))
+    SaveErrorSnapshot(suffix) => self.snapshot(suffix)
     ReadPreviousPosition(depth, reg) => self.previous_position(depth, reg)
     Bind(bindings) => self.bind(bindings)
     Push(cell, values) => self.push(cell, values)

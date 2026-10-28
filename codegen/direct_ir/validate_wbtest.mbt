@@ -12,6 +12,39 @@ fn fixture(blocks : Array[Block]) -> Program {
 }
 
 ///|
+test "snapshot suffix values must be defined LR states" {
+  let position : Register = { id: 0, type_: Position, }
+  let state : Register = { id: 1, type_: State, }
+  let program = fixture([
+    {
+      origin: Helper,
+      parameters: [],
+      lookahead: Any,
+      instructions: [
+        ReadPreviousPosition(0, position),
+        SaveErrorSnapshot([State(0)]),
+      ],
+      terminator: Unreachable,
+    },
+  ])
+  program.validate()
+  for value in [Reg(position), Reg(state), State(1)] {
+    program.blocks[0] = {
+      ..program.blocks[0],
+      instructions: [
+        ReadPreviousPosition(0, position),
+        SaveErrorSnapshot([value]),
+      ],
+    }
+    try program.validate() catch {
+      InvalidProgram(_) => ()
+    } noraise {
+      _ => fail("accepted an invalid snapshot suffix")
+    }
+  }
+}
+
+///|
 test "token extraction requires a checked branch, even after ensuring lookahead" {
   let v : Register = { id: 0, type_: Semantic(Constr(pkg=None, "Unit", [])), }
   let sp : Register = { id: 1, type_: Position, }

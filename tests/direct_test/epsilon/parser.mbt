@@ -104,7 +104,7 @@ fn yy_parse(
   let mut stack : YYStack = YYEmpty
   let mut state : Int = initial_state
   let error_stack : YYStack = YYEmpty
-  let error_state = initial_state
+  let error_state : Int = initial_state
   let mut lookahead : YYLookahead? = None
   let mut _yy_state_0 : Int = 0
   let mut _yy_position_0 : Int = initial_position
