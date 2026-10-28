@@ -109,6 +109,7 @@ pub(all) struct Program {
   actions : Array[ActionSignature]
   diagnostics : Array[DiagnosticState]
 }
+pub fn Program::eliminate_stack(Self) -> Self raise InvalidProgram
 pub fn Program::simplify(Self) -> Self
 pub fn Program::validate(Self) -> Unit raise InvalidProgram
 

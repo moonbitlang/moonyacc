@@ -9,6 +9,8 @@ pub(all) struct Item {
 }
 pub type Mapper = (Int) -> Int
 let visits : Ref[Int] = Ref(0)
+let amount_events : Ref[Array[String]] = Ref([])
+let amount_spans : Ref[Array[(Int, Int, Int)]] = Ref([])
 let _value_0 = 40
 let _sub_action_0_result = 100
 fn nested_text() -> String {
@@ -83,7 +85,7 @@ pub suberror ParseError {
 
 ///|
 // file:///./parser.mbty
-// 32|      mark word amount flag EOF { Item::{ text: $2, count: $3, enabled: $4 }}
+// 34|      mark word amount flag EOF { Item::{ text: $2, count: $3, enabled: $4 }}
 fn yy_action_0(_value_1 : String, _value_2 : Int, _value_3 : Bool) -> Item {
   let _dollar2 = _value_1
   let _dollar3 = _value_2
@@ -94,7 +96,7 @@ fn yy_action_0(_value_1 : String, _value_2 : Int, _value_3 : Bool) -> Item {
 
 ///|
 // file:///./parser.mbty
-// 36|              FLAG { $1}
+// 50|              FLAG { $1}
 fn yy_action_1(_value_0 : Bool) -> Bool {
   let _dollar1 = _value_0
   ({();  _dollar1
@@ -103,25 +105,73 @@ fn yy_action_1(_value_0 : Bool) -> Bool {
 
 ///|
 // file:///./parser.mbty
-// 35|               NUMBER { $1}
-fn yy_action_2(_value_0 : Int) -> Int {
+// 37|               decoded_amount amount_end { amount_events.val.push("amount")
+// 38|  amount_spans.val.push(($startpos($1).offset, $endpos($1).offset, $2))
+// 39|  $1
+// 40|}
+fn yy_action_2(_start_0 : Pos, _end_0 : Pos, _value_1 : Int, _value_0 : Int) -> Int {
+  let _start_pos_of_item0 = _start_0
+  let _end_pos_of_item0 = _end_0
+  let _dollar2 = _value_1
   let _dollar1 = _value_0
-  ({();  _dollar1
+  ({();  amount_events.val.push("amount")
+  amount_spans.val.push((_start_pos_of_item0.offset, _end_pos_of_item0.offset, _dollar2))
+  _dollar1
+
   })
 }
 
 ///|
 // file:///./parser.mbty
-// 33|              { visits.val += 1; ()}
-fn yy_action_3() -> Unit {
+// 47|                   { amount_events.val.push("end")
+// 48|  $endpos.offset
+// 49|}
+fn yy_action_3(_before_rhs : Pos) -> Int {
+  let _end_pos = _before_rhs
+  ({();  amount_events.val.push("end")
+  _end_pos.offset
+
+  })
+}
+
+///|
+// file:///./parser.mbty
+// 41|                                 NUMBER { amount_events.val.push("encode")
+// 42|  ("decode", $1)
+// 43|}
+fn yy_action_4(_value_0 : Int) -> (String, Int) {
+  let _dollar1 = _value_0
+  ({();  amount_events.val.push("encode")
+  ("decode", _dollar1)
+
+  })
+}
+
+///|
+// file:///./parser.mbty
+// 44|                       encoded_amount { amount_events.val.push($1.0)
+// 45|  $1.1
+// 46|}
+fn yy_action_5(_value_0 : (String, Int)) -> Int {
+  let _dollar1 = _value_0
+  ({();  amount_events.val.push(_dollar1.0)
+  _dollar1.1
+
+  })
+}
+
+///|
+// file:///./parser.mbty
+// 35|              { visits.val += 1; ()}
+fn yy_action_6() -> Unit {
   ({();  visits.val += 1; ()
   })
 }
 
 ///|
 // file:///./parser.mbty
-// 37|          closure EOF { $1}
-fn yy_action_4(_value_0 : Mapper) -> Mapper {
+// 51|          closure EOF { $1}
+fn yy_action_7(_value_0 : Mapper) -> Mapper {
   let _dollar1 = _value_0
   ({();  _dollar1
   })
@@ -129,8 +179,8 @@ fn yy_action_4(_value_0 : Mapper) -> Mapper {
 
 ///|
 // file:///./parser.mbty
-// 38|                   NUMBER { let n = $1; x => x + n}
-fn yy_action_5(_value_0 : Int) -> Mapper {
+// 52|                   NUMBER { let n = $1; x => x + n}
+fn yy_action_8(_value_0 : Int) -> Mapper {
   let _dollar1 = _value_0
   ({();  let n = _dollar1; x => x + n
   })
@@ -138,8 +188,8 @@ fn yy_action_5(_value_0 : Int) -> Mapper {
 
 ///|
 // file:///./parser.mbty
-// 34|                TEXT { if $1 == "reenter" { nested_text() } else { $1 }}
-fn yy_action_6(_value_0 : String) -> String {
+// 36|                TEXT { if $1 == "reenter" { nested_text() } else { $1 }}
+fn yy_action_9(_value_0 : String) -> String {
   let _dollar1 = _value_0
   ({();  if _dollar1 == "reenter" { nested_text() } else { _dollar1 }
   })
@@ -147,8 +197,8 @@ fn yy_action_6(_value_0 : String) -> String {
 
 ///|
 // file:///./parser.mbty
-// 39|      word EOF { $1}
-fn yy_action_7(_value_0 : String) -> String {
+// 53|      word EOF { $1}
+fn yy_action_10(_value_0 : String) -> String {
   let _dollar1 = _value_0
   ({();  _dollar1
   })
@@ -156,8 +206,8 @@ fn yy_action_7(_value_0 : String) -> String {
 
 ///|
 // file:///./parser.mbty
-// 41|         named_input global_input position_input inline_input EOF { ($1, $2, $3, $4)}
-fn yy_action_8(_value_0 : Int, _value_1 : Int, _value_2 : Int, _value_3 : Int) -> (
+// 55|         named_input global_input position_input inline_input EOF { ($1, $2, $3, $4)}
+fn yy_action_11(_value_0 : Int, _value_1 : Int, _value_2 : Int, _value_3 : Int) -> (
   Int, Int, Int, Int
 ) {
   let _dollar1 = _value_0
@@ -170,9 +220,9 @@ fn yy_action_8(_value_0 : Int, _value_1 : Int, _value_2 : Int, _value_3 : Int) -
 
 ///|
 // file:///./parser.mbty
-// 45|                     forwarded_number { _sub_action_0_result + $1}
-fn yy_action_10(_value_0 : Int) -> Int {
-  let _sub_action_0_result_1 = yy_action_9(_value_0)
+// 59|                     forwarded_number { _sub_action_0_result + $1}
+fn yy_action_13(_value_0 : Int) -> Int {
+  let _sub_action_0_result_1 = yy_action_12(_value_0)
   let _dollar1 = _sub_action_0_result_1
   ({();  _sub_action_0_result + _dollar1
   })
@@ -180,8 +230,8 @@ fn yy_action_10(_value_0 : Int) -> Int {
 
 ///|
 // file:///./parser.mbty
-// 46|                                 NUMBER { $1}
-fn yy_action_9(_value_0 : Int) -> Int {
+// 60|                                 NUMBER { $1}
+fn yy_action_12(_value_0 : Int) -> Int {
   let _dollar1 = _value_0
   ({();  _dollar1
   })
@@ -189,8 +239,8 @@ fn yy_action_9(_value_0 : Int) -> Int {
 
 ///|
 // file:///./parser.mbty
-// 44|                       NUMBER _start_0=NUMBER { $startpos($1).offset}
-fn yy_action_11(_value_1 : Int, _start_0_1 : Pos) -> Int {
+// 58|                       NUMBER _start_0=NUMBER { $startpos($1).offset}
+fn yy_action_14(_value_1 : Int, _start_0_1 : Pos) -> Int {
   let _start_0 = _value_1
   let _start_pos_of_item0 = _start_0_1
   ({();  _start_pos_of_item0.offset
@@ -199,8 +249,8 @@ fn yy_action_11(_value_1 : Int, _start_0_1 : Pos) -> Int {
 
 ///|
 // file:///./parser.mbty
-// 43|                     NUMBER { _value_0 + $1}
-fn yy_action_12(_value_0_1 : Int) -> Int {
+// 57|                     NUMBER { _value_0 + $1}
+fn yy_action_15(_value_0_1 : Int) -> Int {
   let _dollar1 = _value_0_1
   ({();  _value_0 + _dollar1
   })
@@ -208,8 +258,8 @@ fn yy_action_12(_value_0_1 : Int) -> Int {
 
 ///|
 // file:///./parser.mbty
-// 42|                    a=NUMBER _value_0=NUMBER { a + $1}
-fn yy_action_13(_value_0_1 : Int, _value_1 : Int) -> Int {
+// 56|                    a=NUMBER _value_0=NUMBER { a + $1}
+fn yy_action_16(_value_0_1 : Int, _value_1 : Int) -> Int {
   let a = _value_0_1
   let _value_0 = _value_1
   let _dollar1 = _value_0_1
@@ -220,18 +270,20 @@ fn yy_action_13(_value_0_1 : Int, _value_1 : Int) -> Int {
 ///|
 priv enum YYStack {
   YYEmpty
-  YYCell_14(YYStack, Int, Int, Pos, Pos)
-  YYCell_15(YYStack, Int, Int, Pos, Pos)
-  YYCell_16(YYStack, Int, Int, Pos, Pos)
   YYCell_17(YYStack, Int, Int, Pos, Pos)
-  YYCell_13(YYStack, Int, (Int, Int, Int, Int), Pos)
-  YYCell_12(YYStack, Int, String, Pos)
+  YYCell_18(YYStack, Int, Int, Pos, Pos)
+  YYCell_19(YYStack, Int, Int, Pos, Pos)
+  YYCell_20(YYStack, Int, Int, Pos, Pos)
+  YYCell_16(YYStack, Int, (Int, Int, Int, Int), Pos)
+  YYCell_15(YYStack, Int, String, Pos)
   YYCell_7(YYStack, Int, String, Pos, Pos)
-  YYCell_11(YYStack, Int, Mapper, Pos, Pos)
-  YYCell_10(YYStack, Int, Mapper, Pos)
+  YYCell_14(YYStack, Int, Mapper, Pos, Pos)
+  YYCell_13(YYStack, Int, Mapper, Pos)
   YYCell_6_void(YYStack, Int, Pos, Pos)
+  YYCell_10(YYStack, Int, Int, Pos, Pos)
+  YYCell_11(YYStack, Int, Int, Pos, Pos)
   YYCell_8(YYStack, Int, Int, Pos, Pos)
-  YYCell_9(YYStack, Int, Bool, Pos, Pos)
+  YYCell_12(YYStack, Int, Bool, Pos, Pos)
   YYCell_5(YYStack, Int, Item, Pos)
   YYCell_1(YYStack, Int, Int, Pos, Pos)
   YYCell_4_void(YYStack, Int, Pos, Pos)
@@ -284,8 +336,9 @@ priv struct YYContext {
   mut _yy_value_3_0 : (Int, Int, Int, Int)?
   mut _yy_value_4_0 : String
   mut _yy_value_5_0 : Mapper?
-  mut _yy_value_6_0 : Bool
-  mut _yy_value_7_0 : Item?
+  mut _yy_value_6_0 : (String, Int)?
+  mut _yy_value_7_0 : Bool
+  mut _yy_value_8_0 : Item?
 }
 
 ///|
@@ -379,12 +432,13 @@ fn yy_parse(
     tokens: tokens, cursor: 0, _yy_state_0: 0, _yy_value_1_0: 0,
     _yy_position_0: initial_position, _yy_position_1: initial_position,
     _yy_value_3_0: None, _yy_value_4_0: "", _yy_value_5_0: None,
-    _yy_value_6_0: false, _yy_value_7_0: None
+    _yy_value_6_0: None, _yy_value_7_0: false, _yy_value_8_0: None
   }
   for pc = entry {
     let next = match pc / 32 {
       0 => _yy_chunk_0(_env, pc)
       1 => _yy_chunk_1(_env, pc)
+      2 => _yy_chunk_2(_env, pc)
       _ => panic()
     }
     if next < 0 {
@@ -407,8 +461,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            1 => 43
-            _ => 42
+            1 => 50
+            _ => 49
           }
         })
       1 =>
@@ -419,8 +473,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            1 => 45
-            _ => 42
+            1 => 52
+            _ => 49
           }
         })
       2 =>
@@ -431,8 +485,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            1 => 46
-            _ => 42
+            1 => 53
+            _ => 49
           }
         })
       3 =>
@@ -443,8 +497,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            1 => 47
-            _ => 42
+            1 => 54
+            _ => 49
           }
         })
       4 =>
@@ -455,8 +509,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            1 => 48
-            _ => 42
+            1 => 55
+            _ => 49
           }
         })
       5 =>
@@ -467,8 +521,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            1 => 49
-            _ => 42
+            1 => 56
+            _ => 49
           }
         })
       6 =>
@@ -479,8 +533,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            4 => 50
-            _ => 42
+            4 => 57
+            _ => 49
           }
         })
       7 =>
@@ -491,8 +545,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            2 => 51
-            _ => 42
+            2 => 58
+            _ => 49
           }
         })
       8 =>
@@ -503,8 +557,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            4 => 53
-            _ => 42
+            4 => 60
+            _ => 49
           }
         })
       9 =>
@@ -515,8 +569,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            1 => 54
-            _ => 42
+            1 => 61
+            _ => 49
           }
         })
       10 =>
@@ -527,8 +581,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            4 => 56
-            _ => 42
+            4 => 63
+            _ => 49
           }
         })
       11 =>
@@ -539,8 +593,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            2 => 34
-            _ => 42
+            2 => 35
+            _ => 49
           }
         })
       12 =>
@@ -551,8 +605,8 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            2 => 51
-            _ => 42
+            2 => 58
+            _ => 49
           }
         })
       13 =>
@@ -563,53 +617,65 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            1 => 58
-            _ => 42
+            1 => 65
+            _ => 49
           }
         })
       14 =>
         ({
           ()
-          // run state 28
+          // run state 29
           if _env.lookahead is None {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            3 => 59
-            _ => 42
+            3 => 40
+            _ => 49
           }
         })
       15 =>
         ({
           ()
-          // run state 30
+          // run state 31
           if _env.lookahead is None {
             yy_read_token(_env)
           }
           return match _env.lookahead.unwrap().symbol {
-            4 => 60
-            _ => 42
+            3 => 66
+            _ => 49
           }
         })
       16 =>
         ({
           ()
+          // run state 33
+          if _env.lookahead is None {
+            yy_read_token(_env)
+          }
+          return match _env.lookahead.unwrap().symbol {
+            4 => 67
+            _ => 49
+          }
+        })
+      17 =>
+        ({
+          ()
           // reduce named_input -> NUMBER NUMBER
           guard! _env.stack is YYCell_1(
-            _yy_tail1, _yy_saved1, _yy_r97, _yy_r98, _yy_read99
+            _yy_tail1, _yy_saved1, _yy_r118, _yy_r119, _yy_read120
           )
-          _env._yy_position_1 = _yy_read99
+          _env._yy_position_1 = _yy_read120
           guard! _yy_tail1 is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r94, _yy_read95, _yy_r96
+            _yy_tail0, _yy_saved0, _yy_r115, _yy_read116, _yy_r117
           )
-          _env._yy_position_0 = _yy_read95
-          _env._yy_value_1_0 = yy_action_13(_yy_r94, _yy_r97)
+          _env._yy_position_0 = _yy_read116
+          _env._yy_value_1_0 = yy_action_16(_yy_r115, _yy_r118)
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 17
+          continue 18
         })
-      17 =>
+      18 =>
         ({
           ()
           // goto named_input
@@ -617,29 +683,29 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             0 => ()
             _ => panic()
           }
-          _env.stack = YYCell_14(
+          _env.stack = YYCell_17(
             _env.stack, _env.state, _env._yy_value_1_0, _env._yy_position_0,
             _env._yy_position_1
           )
           _env.state = 4
           continue 2
         })
-      18 =>
+      19 =>
         ({
           ()
           // reduce global_input -> NUMBER
           guard! _env.stack is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r103, _yy_read104, _yy_read105
+            _yy_tail0, _yy_saved0, _yy_r124, _yy_read125, _yy_read126
           )
-          _env._yy_position_0 = _yy_read104
-          _env._yy_position_1 = _yy_read105
-          _env._yy_value_1_0 = yy_action_12(_yy_r103)
+          _env._yy_position_0 = _yy_read125
+          _env._yy_position_1 = _yy_read126
+          _env._yy_value_1_0 = yy_action_15(_yy_r124)
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 19
+          continue 20
         })
-      19 =>
+      20 =>
         ({
           ()
           // goto global_input
@@ -647,32 +713,32 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             4 => ()
             _ => panic()
           }
-          _env.stack = YYCell_15(
+          _env.stack = YYCell_18(
             _env.stack, _env.state, _env._yy_value_1_0, _env._yy_position_0,
             _env._yy_position_1
           )
           _env.state = 6
           continue 3
         })
-      20 =>
+      21 =>
         ({
           ()
           // reduce position_input -> NUMBER NUMBER
           guard! _env.stack is YYCell_1(
-            _yy_tail1, _yy_saved1, _yy_r112, _yy_r113, _yy_read114
+            _yy_tail1, _yy_saved1, _yy_r133, _yy_r134, _yy_read135
           )
-          _env._yy_position_1 = _yy_read114
+          _env._yy_position_1 = _yy_read135
           guard! _yy_tail1 is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r109, _yy_read110, _yy_r111
+            _yy_tail0, _yy_saved0, _yy_r130, _yy_read131, _yy_r132
           )
-          _env._yy_position_0 = _yy_read110
-          _env._yy_value_1_0 = yy_action_11(_yy_r112, _env._yy_position_0)
+          _env._yy_position_0 = _yy_read131
+          _env._yy_value_1_0 = yy_action_14(_yy_r133, _env._yy_position_0)
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 21
+          continue 22
         })
-      21 =>
+      22 =>
         ({
           ()
           // goto position_input
@@ -680,29 +746,29 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             6 => ()
             _ => panic()
           }
-          _env.stack = YYCell_16(
+          _env.stack = YYCell_19(
             _env.stack, _env.state, _env._yy_value_1_0, _env._yy_position_0,
             _env._yy_position_1
           )
           _env.state = 9
           continue 5
         })
-      22 =>
+      23 =>
         ({
           ()
           // reduce inline_input -> NUMBER
           guard! _env.stack is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r118, _yy_read119, _yy_read120
+            _yy_tail0, _yy_saved0, _yy_r139, _yy_read140, _yy_read141
           )
-          _env._yy_position_0 = _yy_read119
-          _env._yy_position_1 = _yy_read120
-          _env._yy_value_1_0 = yy_action_10(_yy_r118)
+          _env._yy_position_0 = _yy_read140
+          _env._yy_position_1 = _yy_read141
+          _env._yy_value_1_0 = yy_action_13(_yy_r139)
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 23
+          continue 24
         })
-      23 =>
+      24 =>
         ({
           ()
           // goto inline_input
@@ -710,43 +776,43 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             9 => ()
             _ => panic()
           }
-          _env.stack = YYCell_17(
+          _env.stack = YYCell_20(
             _env.stack, _env.state, _env._yy_value_1_0, _env._yy_position_0,
             _env._yy_position_1
           )
           _env.state = 11
           continue 6
         })
-      24 =>
+      25 =>
         ({
           ()
           // reduce hygiene -> named_input global_input position_input inline_input EOF
           guard! _env.stack is YYCell_4_void(
-            _yy_tail4, _yy_saved4, _yy_r137, _yy_read138
+            _yy_tail4, _yy_saved4, _yy_r158, _yy_read159
           )
-          _env._yy_position_1 = _yy_read138
-          guard! _yy_tail4 is YYCell_17(
-            _yy_tail3, _yy_saved3, _yy_r133, _yy_r134, _yy_r135
+          _env._yy_position_1 = _yy_read159
+          guard! _yy_tail4 is YYCell_20(
+            _yy_tail3, _yy_saved3, _yy_r154, _yy_r155, _yy_r156
           )
-          guard! _yy_tail3 is YYCell_16(
-            _yy_tail2, _yy_saved2, _yy_r130, _yy_r131, _yy_r132
+          guard! _yy_tail3 is YYCell_19(
+            _yy_tail2, _yy_saved2, _yy_r151, _yy_r152, _yy_r153
           )
-          guard! _yy_tail2 is YYCell_15(
-            _yy_tail1, _yy_saved1, _yy_r127, _yy_r128, _yy_r129
+          guard! _yy_tail2 is YYCell_18(
+            _yy_tail1, _yy_saved1, _yy_r148, _yy_r149, _yy_r150
           )
-          guard! _yy_tail1 is YYCell_14(
-            _yy_tail0, _yy_saved0, _yy_r124, _yy_read125, _yy_r126
+          guard! _yy_tail1 is YYCell_17(
+            _yy_tail0, _yy_saved0, _yy_r145, _yy_read146, _yy_r147
           )
-          _env._yy_position_0 = _yy_read125
+          _env._yy_position_0 = _yy_read146
           _env._yy_value_3_0 = Some(
-            yy_action_8(_yy_r124, _yy_r127, _yy_r130, _yy_r133)
+            yy_action_11(_yy_r145, _yy_r148, _yy_r151, _yy_r154)
           )
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 25
+          continue 26
         })
-      25 =>
+      26 =>
         ({
           ()
           // goto hygiene
@@ -754,32 +820,32 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             0 => ()
             _ => panic()
           }
-          _env.stack = YYCell_13(
+          _env.stack = YYCell_16(
             _env.stack, _env.state, _env._yy_value_3_0.unwrap(),
             _env._yy_position_1
           )
           _env.state = 1
-          return 44
+          return 51
         })
-      26 =>
+      27 =>
         ({
           ()
           // reduce text -> word EOF
           guard! _env.stack is YYCell_4_void(
-            _yy_tail1, _yy_saved1, _yy_r146, _yy_read147
+            _yy_tail1, _yy_saved1, _yy_r167, _yy_read168
           )
-          _env._yy_position_1 = _yy_read147
+          _env._yy_position_1 = _yy_read168
           guard! _yy_tail1 is YYCell_7(
-            _yy_tail0, _yy_saved0, _yy_r142, _yy_read143, _yy_r144
+            _yy_tail0, _yy_saved0, _yy_r163, _yy_read164, _yy_r165
           )
-          _env._yy_position_0 = _yy_read143
-          _env._yy_value_4_0 = yy_action_7(_yy_r142)
+          _env._yy_position_0 = _yy_read164
+          _env._yy_value_4_0 = yy_action_10(_yy_r163)
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 27
+          continue 28
         })
-      27 =>
+      28 =>
         ({
           ()
           // goto text
@@ -787,28 +853,28 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
             13 => ()
             _ => panic()
           }
-          _env.stack = YYCell_12(
+          _env.stack = YYCell_15(
             _env.stack, _env.state, _env._yy_value_4_0, _env._yy_position_1
           )
           _env.state = 14
-          return 52
+          return 59
         })
-      28 =>
+      29 =>
         ({
           ()
           // reduce word -> TEXT
           guard! _env.stack is YYCell_2(
-            _yy_tail0, _yy_saved0, _yy_r151, _yy_read152, _yy_read153
+            _yy_tail0, _yy_saved0, _yy_r172, _yy_read173, _yy_read174
           )
-          _env._yy_position_0 = _yy_read152
-          _env._yy_position_1 = _yy_read153
-          _env._yy_value_4_0 = yy_action_6(_yy_r151)
+          _env._yy_position_0 = _yy_read173
+          _env._yy_position_1 = _yy_read174
+          _env._yy_value_4_0 = yy_action_9(_yy_r172)
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 29
+          continue 30
         })
-      29 =>
+      30 =>
         ({
           ()
           // goto word
@@ -824,35 +890,20 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int {
           _env.state = _yy_state
           continue _yy_target
         })
-      30 =>
+      31 =>
         ({
           ()
           // reduce closure -> NUMBER
           guard! _env.stack is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r157, _yy_read158, _yy_read159
+            _yy_tail0, _yy_saved0, _yy_r178, _yy_read179, _yy_read180
           )
-          _env._yy_position_0 = _yy_read158
-          _env._yy_position_1 = _yy_read159
-          _env._yy_value_5_0 = Some(yy_action_5(_yy_r157))
+          _env._yy_position_0 = _yy_read179
+          _env._yy_position_1 = _yy_read180
+          _env._yy_value_5_0 = Some(yy_action_8(_yy_r178))
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 31
-        })
-      31 =>
-        ({
-          ()
-          // goto closure
-          match _env._yy_state_0 {
-            18 => ()
-            _ => panic()
-          }
-          _env.stack = YYCell_11(
-            _env.stack, _env.state, _env._yy_value_5_0.unwrap(),
-            _env._yy_position_0, _env._yy_position_1
-          )
-          _env.state = 21
-          continue 10
+          return 32
         })
       _ => panic()
     }
@@ -867,22 +918,37 @@ fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int raise ParseError {
       32 =>
         ({
           ()
+          // goto closure
+          match _env._yy_state_0 {
+            18 => ()
+            _ => panic()
+          }
+          _env.stack = YYCell_14(
+            _env.stack, _env.state, _env._yy_value_5_0.unwrap(),
+            _env._yy_position_0, _env._yy_position_1
+          )
+          _env.state = 21
+          return 10
+        })
+      33 =>
+        ({
+          ()
           // reduce function -> closure EOF
           guard! _env.stack is YYCell_4_void(
-            _yy_tail1, _yy_saved1, _yy_r167, _yy_read168
+            _yy_tail1, _yy_saved1, _yy_r188, _yy_read189
           )
-          _env._yy_position_1 = _yy_read168
-          guard! _yy_tail1 is YYCell_11(
-            _yy_tail0, _yy_saved0, _yy_r163, _yy_read164, _yy_r165
+          _env._yy_position_1 = _yy_read189
+          guard! _yy_tail1 is YYCell_14(
+            _yy_tail0, _yy_saved0, _yy_r184, _yy_read185, _yy_r186
           )
-          _env._yy_position_0 = _yy_read164
-          _env._yy_value_5_0 = Some(yy_action_4(_yy_r163))
+          _env._yy_position_0 = _yy_read185
+          _env._yy_value_5_0 = Some(yy_action_7(_yy_r184))
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 33
+          continue 34
         })
-      33 =>
+      34 =>
         ({
           ()
           // goto function
@@ -890,14 +956,14 @@ fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int raise ParseError {
             18 => ()
             _ => panic()
           }
-          _env.stack = YYCell_10(
+          _env.stack = YYCell_13(
             _env.stack, _env.state, _env._yy_value_5_0.unwrap(),
             _env._yy_position_1
           )
           _env.state = 19
-          continue 55
+          continue 62
         })
-      34 =>
+      35 =>
         ({
           ()
           // reduce mark ->
@@ -906,12 +972,12 @@ fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int raise ParseError {
           } else {
             yy_stack_end(_env.stack)
           }
-          yy_action_3()
+          yy_action_6()
           _env._yy_state_0 = _env.state
           _env._yy_position_1 = _env._yy_position_0
-          continue 35
+          continue 36
         })
-      35 =>
+      36 =>
         ({
           ()
           // goto mark
@@ -925,22 +991,95 @@ fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int raise ParseError {
           _env.state = 25
           return 12
         })
-      36 =>
+      37 =>
         ({
           ()
-          // reduce amount -> NUMBER
-          guard! _env.stack is YYCell_1(
-            _yy_tail0, _yy_saved0, _yy_r175, _yy_read176, _yy_read177
+          // goto decoded_amount
+          match _env._yy_state_0 {
+            26 => ()
+            _ => panic()
+          }
+          _env.stack = YYCell_10(
+            _env.stack, _env.state, _env._yy_value_1_0, _env._yy_position_0,
+            _env._yy_position_1
           )
-          _env._yy_position_0 = _yy_read176
-          _env._yy_position_1 = _yy_read177
-          _env._yy_value_1_0 = yy_action_2(_yy_r175)
+          _env.state = 29
+          return 14
+        })
+      38 =>
+        ({
+          ()
+          // reduce encoded_amount -> NUMBER
+          guard! _env.stack is YYCell_1(
+            _yy_tail0, _yy_saved0, _yy_r202, _yy_read203, _yy_read204
+          )
+          _env._yy_position_0 = _yy_read203
+          _env._yy_position_1 = _yy_read204
+          _env._yy_value_6_0 = Some(yy_action_4(_yy_r202))
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 37
+          continue 39
         })
-      37 =>
+      39 =>
+        ({
+          ()
+          // goto encoded_amount
+          continue match _env._yy_state_0 {
+              26 => 48
+              _ => panic()
+            }
+        })
+      40 =>
+        ({
+          ()
+          // reduce amount_end ->
+          _env._yy_position_0 = if _env.stack is YYEmpty {
+            _env.initial_position
+          } else {
+            yy_stack_end(_env.stack)
+          }
+          _env._yy_value_1_0 = yy_action_3(_env._yy_position_0)
+          _env._yy_state_0 = _env.state
+          _env._yy_position_1 = _env._yy_position_0
+          continue 41
+        })
+      41 =>
+        ({
+          ()
+          // goto amount_end
+          match _env._yy_state_0 {
+            29 => ()
+            _ => panic()
+          }
+          _env.stack = YYCell_11(
+            _env.stack, _env.state, _env._yy_value_1_0, _env._yy_position_0,
+            _env._yy_position_1
+          )
+          _env.state = 30
+          continue 42
+        })
+      42 =>
+        ({
+          ()
+          // reduce amount -> decoded_amount amount_end
+          guard! _env.stack is YYCell_11(
+            _yy_tail1, _yy_saved1, _yy_r214, _yy_r215, _yy_read216
+          )
+          _env._yy_position_1 = _yy_read216
+          guard! _yy_tail1 is YYCell_10(
+            _yy_tail0, _yy_saved0, _yy_r211, _yy_read212, _yy_r213
+          )
+          _env._yy_position_0 = _yy_read212
+          _env._yy_value_1_0 = yy_action_2(
+            _env._yy_position_0, _yy_r213, _yy_r214, _yy_r211
+          )
+          _env.stack = _yy_tail0
+          _env.state = _yy_saved0
+          _env._yy_state_0 = _env.state
+          continue 43
+        })
+      43 =>
         ({
           ()
           // goto amount
@@ -952,67 +1091,67 @@ fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int raise ParseError {
             _env.stack, _env.state, _env._yy_value_1_0, _env._yy_position_0,
             _env._yy_position_1
           )
-          _env.state = 28
-          return 14
+          _env.state = 31
+          return 15
         })
-      38 =>
+      44 =>
         ({
           ()
           // reduce flag -> FLAG
           guard! _env.stack is YYCell_3(
-            _yy_tail0, _yy_saved0, _yy_r181, _yy_read182, _yy_read183
+            _yy_tail0, _yy_saved0, _yy_r220, _yy_read221, _yy_read222
           )
-          _env._yy_position_0 = _yy_read182
-          _env._yy_position_1 = _yy_read183
-          _env._yy_value_6_0 = yy_action_1(_yy_r181)
+          _env._yy_position_0 = _yy_read221
+          _env._yy_position_1 = _yy_read222
+          _env._yy_value_7_0 = yy_action_1(_yy_r220)
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 39
+          continue 45
         })
-      39 =>
+      45 =>
         ({
           ()
           // goto flag
           match _env._yy_state_0 {
-            28 => ()
+            31 => ()
             _ => panic()
           }
-          _env.stack = YYCell_9(
-            _env.stack, _env.state, _env._yy_value_6_0, _env._yy_position_0,
+          _env.stack = YYCell_12(
+            _env.stack, _env.state, _env._yy_value_7_0, _env._yy_position_0,
             _env._yy_position_1
           )
-          _env.state = 30
-          return 15
+          _env.state = 33
+          return 16
         })
-      40 =>
+      46 =>
         ({
           ()
           // reduce item -> mark word amount flag EOF
           guard! _env.stack is YYCell_4_void(
-            _yy_tail4, _yy_saved4, _yy_r200, _yy_read201
+            _yy_tail4, _yy_saved4, _yy_r239, _yy_read240
           )
-          _env._yy_position_1 = _yy_read201
-          guard! _yy_tail4 is YYCell_9(
-            _yy_tail3, _yy_saved3, _yy_r196, _yy_r197, _yy_r198
+          _env._yy_position_1 = _yy_read240
+          guard! _yy_tail4 is YYCell_12(
+            _yy_tail3, _yy_saved3, _yy_r235, _yy_r236, _yy_r237
           )
           guard! _yy_tail3 is YYCell_8(
-            _yy_tail2, _yy_saved2, _yy_r193, _yy_r194, _yy_r195
+            _yy_tail2, _yy_saved2, _yy_r232, _yy_r233, _yy_r234
           )
           guard! _yy_tail2 is YYCell_7(
-            _yy_tail1, _yy_saved1, _yy_r190, _yy_r191, _yy_r192
+            _yy_tail1, _yy_saved1, _yy_r229, _yy_r230, _yy_r231
           )
           guard! _yy_tail1 is YYCell_6_void(
-            _yy_tail0, _yy_saved0, _yy_read188, _yy_r189
+            _yy_tail0, _yy_saved0, _yy_read227, _yy_r228
           )
-          _env._yy_position_0 = _yy_read188
-          _env._yy_value_7_0 = Some(yy_action_0(_yy_r190, _yy_r193, _yy_r196))
+          _env._yy_position_0 = _yy_read227
+          _env._yy_value_8_0 = Some(yy_action_0(_yy_r229, _yy_r232, _yy_r235))
           _env.stack = _yy_tail0
           _env.state = _yy_saved0
           _env._yy_state_0 = _env.state
-          continue 41
+          continue 47
         })
-      41 =>
+      47 =>
         ({
           ()
           // goto item
@@ -1021,157 +1160,174 @@ fn _yy_chunk_1(_env : YYContext, _entry : Int) -> Int raise ParseError {
             _ => panic()
           }
           _env.stack = YYCell_5(
-            _env.stack, _env.state, _env._yy_value_7_0.unwrap(),
+            _env.stack, _env.state, _env._yy_value_8_0.unwrap(),
             _env._yy_position_1
           )
           _env.state = 24
-          continue 57
+          return 64
         })
-      42 =>
+      48 =>
+        ({
+          ()
+          let _yy_r297 = yy_action_5(_env._yy_value_6_0.unwrap())
+          let _yy_r298 = _env.state
+          _env._yy_state_0 = _yy_r298
+          _env._yy_value_1_0 = _yy_r297
+          continue 37
+        })
+      49 =>
         ({
           ()
           return yy_stop(_env)
         })
-      43 =>
+      50 =>
         ({
           ()
           // shift NUMBER into state 2
           yy_shift(_env, 2)
           return 1
         })
-      44 =>
+      51 =>
         ({
           ()
-          let _yy_r208 = match _env.stack {
-            YYCell_13(_, _, _value, _) => _value
+          let _yy_r247 = match _env.stack {
+            YYCell_16(_, _, _value, _) => _value
             _ => panic()
           }
-          _env._yy_result = Some(YYAccept_3(_yy_r208))
+          _env._yy_result = Some(YYAccept_3(_yy_r247))
           return -1
         })
-      45 =>
+      52 =>
         ({
           ()
           // shift NUMBER into state 3
           yy_shift(_env, 3)
-          return 16
+          return 17
         })
-      46 =>
+      53 =>
         ({
           ()
           // shift NUMBER into state 5
           yy_shift(_env, 5)
-          return 18
+          return 19
         })
-      47 =>
+      54 =>
         ({
           ()
           // shift NUMBER into state 7
           yy_shift(_env, 7)
           return 4
         })
-      48 =>
+      55 =>
         ({
           ()
           // shift NUMBER into state 8
           yy_shift(_env, 8)
-          return 20
-        })
-      49 =>
-        ({
-          ()
-          // shift NUMBER into state 10
-          yy_shift(_env, 10)
-          return 22
-        })
-      50 =>
-        ({
-          ()
-          // shift EOF into state 12
-          yy_shift(_env, 12)
-          return 24
-        })
-      51 =>
-        ({
-          ()
-          // shift TEXT into state 17
-          yy_shift(_env, 17)
-          return 28
-        })
-      52 =>
-        ({
-          ()
-          let _yy_r230 = match _env.stack {
-            YYCell_12(_, _, _value, _) => _value
-            _ => panic()
-          }
-          _env._yy_result = Some(YYAccept_2(_yy_r230))
-          return -1
-        })
-      53 =>
-        ({
-          ()
-          // shift EOF into state 16
-          yy_shift(_env, 16)
-          return 26
-        })
-      54 =>
-        ({
-          ()
-          // shift NUMBER into state 20
-          yy_shift(_env, 20)
-          return 30
-        })
-      55 =>
-        ({
-          ()
-          let _yy_r237 = match _env.stack {
-            YYCell_10(_, _, _value, _) => _value
-            _ => panic()
-          }
-          _env._yy_result = Some(YYAccept_1(_yy_r237))
-          return -1
+          return 21
         })
       56 =>
         ({
           ()
-          // shift EOF into state 22
-          yy_shift(_env, 22)
-          continue 32
+          // shift NUMBER into state 10
+          yy_shift(_env, 10)
+          return 23
         })
       57 =>
         ({
           ()
-          let _yy_r241 = match _env.stack {
-            YYCell_5(_, _, _value, _) => _value
-            _ => panic()
-          }
-          _env._yy_result = Some(YYAccept_0(_yy_r241))
-          return -1
+          // shift EOF into state 12
+          yy_shift(_env, 12)
+          return 25
         })
       58 =>
         ({
           ()
-          // shift NUMBER into state 27
-          yy_shift(_env, 27)
-          continue 36
+          // shift TEXT into state 17
+          yy_shift(_env, 17)
+          return 29
         })
       59 =>
         ({
           ()
-          // shift FLAG into state 29
-          yy_shift(_env, 29)
-          continue 38
+          let _yy_r269 = match _env.stack {
+            YYCell_15(_, _, _value, _) => _value
+            _ => panic()
+          }
+          _env._yy_result = Some(YYAccept_2(_yy_r269))
+          return -1
         })
       60 =>
         ({
           ()
-          // shift EOF into state 31
-          yy_shift(_env, 31)
-          continue 40
+          // shift EOF into state 16
+          yy_shift(_env, 16)
+          return 27
+        })
+      61 =>
+        ({
+          ()
+          // shift NUMBER into state 20
+          yy_shift(_env, 20)
+          return 31
+        })
+      62 =>
+        ({
+          ()
+          let _yy_r276 = match _env.stack {
+            YYCell_13(_, _, _value, _) => _value
+            _ => panic()
+          }
+          _env._yy_result = Some(YYAccept_1(_yy_r276))
+          return -1
+        })
+      63 =>
+        ({
+          ()
+          // shift EOF into state 22
+          yy_shift(_env, 22)
+          continue 33
         })
       _ => panic()
     }
+  }
+}
+
+///|
+#inline(never)
+fn _yy_chunk_2(_env : YYContext, _entry : Int) -> Int {
+  match _entry {
+    64 =>
+      ({
+        ()
+        let _yy_r280 = match _env.stack {
+          YYCell_5(_, _, _value, _) => _value
+          _ => panic()
+        }
+        _env._yy_result = Some(YYAccept_0(_yy_r280))
+        return -1
+      })
+    65 =>
+      ({
+        ()
+        // shift NUMBER into state 28
+        yy_shift(_env, 28)
+        return 38
+      })
+    66 =>
+      ({
+        ()
+        // shift FLAG into state 32
+        yy_shift(_env, 32)
+        return 44
+      })
+    67 =>
+      ({
+        ()
+        // shift EOF into state 34
+        yy_shift(_env, 34)
+        return 46
+      })
+    _ => panic()
   }
 }
 
@@ -1212,18 +1368,20 @@ pub fn hygiene(tokens : Array[(Token, Pos, Pos)], initial_pos? : Pos) -> (
 ///|
 fn yy_stack_tail(stack : YYStack) -> YYStack {
   match stack {
-    YYCell_14(tail, _, _, _, _) => tail
-    YYCell_15(tail, _, _, _, _) => tail
-    YYCell_16(tail, _, _, _, _) => tail
     YYCell_17(tail, _, _, _, _) => tail
-    YYCell_13(tail, _, _, _) => tail
-    YYCell_12(tail, _, _, _) => tail
+    YYCell_18(tail, _, _, _, _) => tail
+    YYCell_19(tail, _, _, _, _) => tail
+    YYCell_20(tail, _, _, _, _) => tail
+    YYCell_16(tail, _, _, _) => tail
+    YYCell_15(tail, _, _, _) => tail
     YYCell_7(tail, _, _, _, _) => tail
-    YYCell_11(tail, _, _, _, _) => tail
-    YYCell_10(tail, _, _, _) => tail
+    YYCell_14(tail, _, _, _, _) => tail
+    YYCell_13(tail, _, _, _) => tail
     YYCell_6_void(tail, _, _, _) => tail
+    YYCell_10(tail, _, _, _, _) => tail
+    YYCell_11(tail, _, _, _, _) => tail
     YYCell_8(tail, _, _, _, _) => tail
-    YYCell_9(tail, _, _, _, _) => tail
+    YYCell_12(tail, _, _, _, _) => tail
     YYCell_5(tail, _, _, _) => tail
     YYCell_1(tail, _, _, _, _) => tail
     YYCell_4_void(tail, _, _, _) => tail
@@ -1236,18 +1394,20 @@ fn yy_stack_tail(stack : YYStack) -> YYStack {
 ///|
 fn yy_stack_saved(stack : YYStack) -> Int {
   match stack {
-    YYCell_14(_, saved, _, _, _) => saved
-    YYCell_15(_, saved, _, _, _) => saved
-    YYCell_16(_, saved, _, _, _) => saved
     YYCell_17(_, saved, _, _, _) => saved
-    YYCell_13(_, saved, _, _) => saved
-    YYCell_12(_, saved, _, _) => saved
+    YYCell_18(_, saved, _, _, _) => saved
+    YYCell_19(_, saved, _, _, _) => saved
+    YYCell_20(_, saved, _, _, _) => saved
+    YYCell_16(_, saved, _, _) => saved
+    YYCell_15(_, saved, _, _) => saved
     YYCell_7(_, saved, _, _, _) => saved
-    YYCell_11(_, saved, _, _, _) => saved
-    YYCell_10(_, saved, _, _) => saved
+    YYCell_14(_, saved, _, _, _) => saved
+    YYCell_13(_, saved, _, _) => saved
     YYCell_6_void(_, saved, _, _) => saved
+    YYCell_10(_, saved, _, _, _) => saved
+    YYCell_11(_, saved, _, _, _) => saved
     YYCell_8(_, saved, _, _, _) => saved
-    YYCell_9(_, saved, _, _, _) => saved
+    YYCell_12(_, saved, _, _, _) => saved
     YYCell_5(_, saved, _, _) => saved
     YYCell_1(_, saved, _, _, _) => saved
     YYCell_4_void(_, saved, _, _) => saved
@@ -1260,18 +1420,20 @@ fn yy_stack_saved(stack : YYStack) -> Int {
 ///|
 fn yy_stack_end(stack : YYStack) -> Pos {
   match stack {
-    YYCell_14(_, _, _, _, end) => end
-    YYCell_15(_, _, _, _, end) => end
-    YYCell_16(_, _, _, _, end) => end
     YYCell_17(_, _, _, _, end) => end
-    YYCell_13(_, _, _, end) => end
-    YYCell_12(_, _, _, end) => end
+    YYCell_18(_, _, _, _, end) => end
+    YYCell_19(_, _, _, _, end) => end
+    YYCell_20(_, _, _, _, end) => end
+    YYCell_16(_, _, _, end) => end
+    YYCell_15(_, _, _, end) => end
     YYCell_7(_, _, _, _, end) => end
-    YYCell_11(_, _, _, _, end) => end
-    YYCell_10(_, _, _, end) => end
+    YYCell_14(_, _, _, _, end) => end
+    YYCell_13(_, _, _, end) => end
     YYCell_6_void(_, _, _, end) => end
+    YYCell_10(_, _, _, _, end) => end
+    YYCell_11(_, _, _, _, end) => end
     YYCell_8(_, _, _, _, end) => end
-    YYCell_9(_, _, _, _, end) => end
+    YYCell_12(_, _, _, _, end) => end
     YYCell_5(_, _, _, end) => end
     YYCell_1(_, _, _, _, end) => end
     YYCell_4_void(_, _, _, end) => end
@@ -1300,22 +1462,22 @@ fn yy_stack_states(stack : YYStack, state : Int) -> @list.List[Int] {
 
 ///|
 let yy_diag_rows : FixedArray[Int] = [
-  0, -2, 7, -35, 10, -36, 15, 20, -37, 23, -38, 28, -39, 31, -2, 38, -40, -41,
-  41, -2, -42, 48, -43, 51, -2, 58, 63, -45, 68, -46, 73, -47
+  0, -2, 7, -38, 10, -39, 15, 20, -40, 23, -41, 28, -42, 31, -2, 38, -43, -44,
+  41, -2, -45, 48, -46, 51, -2, 58, 63, -48, -49, 72, -51, 77, -52, 82, -53
 ]
 
 ///|
 let yy_diag_data : FixedArray[Int] = [
-  3, 1, 4, 13, 3, 14, 6, 1, 1, 5, 2, 1, 7, 15, 8, 2, 1, 9, 16, 11, 1, 1, 10, 2,
-  1, 12, 17, 13, 1, 4, 14, 3, 2, 19, 7, 17, 12, 16, 1, 4, 18, 3, 1, 22, 10, 21,
-  11, 23, 1, 4, 24, 3, 2, 43, 5, 26, 6, 27, 2, 2, 19, 7, 28, 2, 1, 29, 8, 30, 2,
-  3, 31, 9, 32, 1, 4, 33
+  3, 1, 4, 16, 3, 17, 6, 1, 1, 5, 2, 1, 7, 18, 8, 2, 1, 9, 19, 11, 1, 1, 10, 2,
+  1, 12, 20, 13, 1, 4, 14, 3, 2, 19, 7, 17, 15, 16, 1, 4, 18, 3, 1, 22, 13, 21,
+  14, 23, 1, 4, 24, 3, 2, 46, 5, 26, 6, 27, 2, 2, 19, 7, 28, 4, 1, 30, 8, 33, 9,
+  29, 10, 31, 2, 3, 49, 11, 32, 2, 3, 34, 12, 35, 1, 4, 36
 ]
 
 ///|
 let yy_diag_reductions : FixedArray[(Int, Int)] = [
-  (2, 14), (1, 15), (2, 16), (1, 17), (5, 13), (2, 12), (1, 7), (1, 11),
-  (2, 10), (0, 6), (1, 8), (1, 9), (5, 5)
+  (2, 17), (1, 18), (2, 19), (1, 20), (5, 16), (2, 15), (1, 7), (1, 14),
+  (2, 13), (0, 6), (1, 10), (1, 9), (0, 11), (2, 8), (1, 12), (5, 5)
 ]
 
 ///|
@@ -1346,10 +1508,10 @@ fn yy_diagnostic(state : Int, symbol : Int) -> (Int, Int, Int) {
     0 => (0, 0, 0)
     1 => (1, 0, 0)
     _ =>
-      if code < 34 {
+      if code < 37 {
         (2, code - 2, 0)
       } else {
-        let (count, lhs) = yy_diag_reductions[code - 34]
+        let (count, lhs) = yy_diag_reductions[code - 37]
         (3, count, lhs)
       }
   }

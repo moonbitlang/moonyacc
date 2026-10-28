@@ -16,6 +16,9 @@ fn codegen(
     InvalidProgram(message) => abort(message)
   }
   let program = program.simplify()
+  let program = program.eliminate_stack() catch {
+    InvalidProgram(message) => abort(message)
+  }
   program.validate() catch {
     InvalidProgram(message) => abort(message)
   }

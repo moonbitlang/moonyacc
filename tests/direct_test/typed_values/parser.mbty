@@ -9,6 +9,8 @@ pub(all) struct Item {
 }
 pub type Mapper = (Int) -> Int
 let visits : Ref[Int] = Ref(0)
+let amount_events : Ref[Array[String]] = Ref([])
+let amount_spans : Ref[Array[(Int, Int, Int)]] = Ref([])
 let _value_0 = 40
 let _sub_action_0_result = 100
 fn nested_text() -> String {
@@ -32,7 +34,19 @@ fn nested_text() -> String {
 item: mark word amount flag EOF { Item::{ text: $2, count: $3, enabled: $4 }};
 mark -> Unit: { visits.val += 1; ()};
 word -> String: TEXT { if $1 == "reenter" { nested_text() } else { $1 }};
-amount -> Int: NUMBER { $1};
+amount -> Int: decoded_amount amount_end { amount_events.val.push("amount")
+  amount_spans.val.push(($startpos($1).offset, $endpos($1).offset, $2))
+  $1
+};
+encoded_amount -> (String, Int): NUMBER { amount_events.val.push("encode")
+  ("decode", $1)
+};
+decoded_amount -> Int: encoded_amount { amount_events.val.push($1.0)
+  $1.1
+};
+amount_end -> Int: { amount_events.val.push("end")
+  $endpos.offset
+};
 flag -> Bool: FLAG { $1};
 function: closure EOF { $1};
 closure -> Mapper: NUMBER { let n = $1; x => x + n};
