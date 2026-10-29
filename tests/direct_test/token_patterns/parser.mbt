@@ -218,7 +218,7 @@ fn yy_parse(
                 _yy_stack_2[_yy_depth_2] = _yy_position_1
               }
               _yy_depth_2 += 1
-              yy_stack_push(stack, 2)
+              yy_stack_push_unprotected(stack, 2)
               state = 2
               last_pos = _yy_token_end
               _yy_token_token = None
@@ -293,7 +293,7 @@ fn yy_parse(
                 _yy_stack_2[_yy_depth_2] = _yy_position_1
               }
               _yy_depth_2 += 1
-              yy_stack_push(stack, 4)
+              yy_stack_push_unprotected(stack, 4)
               state = 4
               last_pos = _yy_token_end
               _yy_token_token = None
@@ -436,7 +436,7 @@ pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Array[
 }
 
 ///|
-fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
+fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
   if stack.depth == stack.values.length() {
     stack.values.push(state)
   } else {

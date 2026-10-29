@@ -57,6 +57,20 @@ pub(all) struct Cell {
   fields : Array[Field]
 } derive(Eq)
 
+pub struct CheckpointFact {
+  upper : Int32?
+}
+pub fn CheckpointFact::no_overlap(Self) -> Bool
+pub fn CheckpointFact::step(Self, Instruction) -> Self
+
+pub struct CheckpointFlow {
+  entries : Array[CheckpointFact?]
+}
+pub fn CheckpointFlow::entry(Self, Int32) -> CheckpointFact
+pub fn CheckpointFlow::has_unprotected_push(Self, Program) -> Bool
+pub fn CheckpointFlow::requires_journal(Self, Program) -> Bool
+pub fn CheckpointFlow::validate(Self, Program) -> Unit raise InvalidProgram
+
 pub(all) enum DiagnosticAction {
   Shift(Int32)
   Reduce(Int32, Int32)
@@ -127,6 +141,7 @@ pub struct PreparedProgram {
   program : Program
   flow : StackFlow
   demand : StorageDemand
+  checkpoints : CheckpointFlow
 }
 
 pub(all) struct Program {
@@ -137,6 +152,7 @@ pub(all) struct Program {
   actions : Array[ActionSignature]
   diagnostics : Array[DiagnosticState]
 }
+pub fn Program::checkpoint_flow(Self) -> CheckpointFlow raise InvalidProgram
 pub fn Program::commute_pushes(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::exhaustive_tokens(Self, Array[TokenPattern]) -> Bool
 pub fn Program::inline_blocks(Self, cautious~ : Bool) -> Self raise InvalidProgram

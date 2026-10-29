@@ -169,7 +169,7 @@ fn yy_parse(
             _ =>
               ({
                 ()
-                yy_stack_push(stack, 3)
+                yy_stack_push_unprotected(stack, 3)
                 break _yy_scope_1~
               })
           }
@@ -205,15 +205,7 @@ pub fn start(read_token : (() -> (Token, Unit, Unit)), start_pos : Unit) -> Json
 }
 
 ///|
-fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
-  while stack.saved_prefix > stack.depth {
-    stack.saved_prefix -= 1
-    if stack.checkpoint - stack.saved_prefix - 1 == stack.undo.length() {
-      stack.undo.push(stack.values[stack.saved_prefix])
-    } else {
-      stack.undo[stack.checkpoint - stack.saved_prefix - 1] = stack.values[stack.saved_prefix]
-    }
-  }
+fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
   if stack.depth == stack.values.length() {
     stack.values.push(state)
   } else {

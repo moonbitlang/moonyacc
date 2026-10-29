@@ -5,6 +5,7 @@ pub struct PreparedProgram {
   program : Program
   flow : StackFlow
   demand : StorageDemand
+  checkpoints : CheckpointFlow
 }
 
 ///|
@@ -20,6 +21,7 @@ pub fn Program::prepare(
   let program = program.prune_control(knowledge).discard_unobserved_snapshots()
   let flow = program.stack_flow(knowledge)
   let demand = program.storage_demand(flow, positions~)
+  let checkpoints = program.checkpoint_flow()
   for block in program.blocks {
     for instruction in block.all_instructions() {
       if instruction is Push(cell, _) {
@@ -32,5 +34,5 @@ pub fn Program::prepare(
       }
     }
   }
-  { program, flow, demand, }
+  { program, flow, demand, checkpoints, }
 }

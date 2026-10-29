@@ -417,7 +417,7 @@ fn yy_parse(
                                             _yy_stack_0[_yy_depth_0] = _yy_r579
                                           }
                                           _yy_depth_0 += 1
-                                          yy_stack_push(stack, 4)
+                                          yy_stack_push_unprotected(stack, 4)
                                           state = 4
                                           ({
                                             ()
@@ -456,7 +456,9 @@ fn yy_parse(
                                                   _yy_stack_0[_yy_depth_0] = _yy_r586
                                                 }
                                                 _yy_depth_0 += 1
-                                                yy_stack_push(stack, 6)
+                                                yy_stack_push_unprotected(
+                                                  stack, 6
+                                                )
                                                 state = 6
                                                 ({
                                                   ()
@@ -543,7 +545,7 @@ fn yy_parse(
                                                               _yy_stack_0[_yy_depth_0] = _yy_r596
                                                             }
                                                             _yy_depth_0 += 1
-                                                            yy_stack_push(
+                                                            yy_stack_push_unprotected(
                                                               stack, 9
                                                             )
                                                             state = 9
@@ -660,7 +662,7 @@ fn yy_parse(
                                                                     _ =>
                                                                       ({
                                                                         ()
-                                                                        yy_stack_push(
+                                                                        yy_stack_push_unprotected(
                                                                           stack,
                                                                           11
                                                                         )
@@ -679,7 +681,7 @@ fn yy_parse(
                                                         _ =>
                                                           ({
                                                             ()
-                                                            yy_stack_push(
+                                                            yy_stack_push_unprotected(
                                                               stack, 7
                                                             )
                                                             state = 7
@@ -704,7 +706,7 @@ fn yy_parse(
                                       _ =>
                                         ({
                                           ()
-                                          yy_stack_push(stack, 2)
+                                          yy_stack_push_unprotected(stack, 2)
                                           state = 2
                                           break _yy_scope_14~
                                         })
@@ -815,7 +817,7 @@ fn yy_parse(
                               _ =>
                                 ({
                                   ()
-                                  yy_stack_push(stack, 21)
+                                  yy_stack_push_unprotected(stack, 21)
                                   state = 21
                                   break _yy_scope_14~
                                 })
@@ -848,7 +850,7 @@ fn yy_parse(
                         ({
                           ()
                           ignore(yy_action_6())
-                          yy_stack_push(stack, 25)
+                          yy_stack_push_unprotected(stack, 25)
                           state = 25
                           match _yy_token_token {
                             Some(TEXT(_yy_r720)) =>
@@ -907,7 +909,7 @@ fn yy_parse(
                 _yy_stack_1[_yy_depth_1] = _yy_value_1_0
               }
               _yy_depth_1 += 1
-              yy_stack_push(stack, 26)
+              yy_stack_push_unprotected(stack, 26)
               state = 26
               ({
                 ()
@@ -968,7 +970,7 @@ fn yy_parse(
                       _yy_stack_3[_yy_depth_3] = _yy_r731
                     }
                     _yy_depth_3 += 1
-                    yy_stack_push(stack, 29)
+                    yy_stack_push_unprotected(stack, 29)
                     state = 29
                     ({
                       ()
@@ -1029,7 +1031,7 @@ fn yy_parse(
             _yy_stack_0[_yy_depth_0] = _yy_value_3_0
           }
           _yy_depth_0 += 1
-          yy_stack_push(stack, 31)
+          yy_stack_push_unprotected(stack, 31)
           state = 31
           match _yy_token_token {
             Some(FLAG(_yy_r329)) =>
@@ -1084,7 +1086,7 @@ fn yy_parse(
                   _ =>
                     ({
                       ()
-                      yy_stack_push(stack, 33)
+                      yy_stack_push_unprotected(stack, 33)
                       state = 33
                       break _yy_scope_14~
                     })
@@ -1144,7 +1146,7 @@ fn yy_parse(
             _yy_stack_1[_yy_depth_1] = _yy_value_1_0
           }
           _yy_depth_1 += 1
-          yy_stack_push(stack, 15)
+          yy_stack_push_unprotected(stack, 15)
           state = 15
           break _yy_scope_14~
         })
@@ -1201,15 +1203,7 @@ pub fn hygiene(tokens : Array[(Token, Pos, Pos)], initial_pos? : Pos) -> (
 }
 
 ///|
-fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
-  while stack.saved_prefix > stack.depth {
-    stack.saved_prefix -= 1
-    if stack.checkpoint - stack.saved_prefix - 1 == stack.undo.length() {
-      stack.undo.push(stack.values[stack.saved_prefix])
-    } else {
-      stack.undo[stack.checkpoint - stack.saved_prefix - 1] = stack.values[stack.saved_prefix]
-    }
-  }
+fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
   if stack.depth == stack.values.length() {
     stack.values.push(state)
   } else {

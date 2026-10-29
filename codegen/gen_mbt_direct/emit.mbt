@@ -40,8 +40,16 @@ fn Emitter::parser_items(
   for index, entry in self.program.entries {
     items.push(self.entry_item(index, entry))
   }
-  if self.program.blocks.any(b => b.all_instructions().any(i => i is Push(_))) {
-    items.push(state_push_item(diagnostics=self.diagnostics))
+  if self.diagnostics && self.checkpoints.requires_journal(self.program) {
+    items.push(state_push_item(journal=true))
+  }
+  let has_plain_push = if self.diagnostics {
+    self.checkpoints.has_unprotected_push(self.program)
+  } else {
+    self.program.blocks.any(b => b.all_instructions().any(i => i is Push(_)))
+  }
+  if has_plain_push {
+    items.push(state_push_item(journal=false))
   }
   if self.has_stack {
     if self.snapshots.saves {

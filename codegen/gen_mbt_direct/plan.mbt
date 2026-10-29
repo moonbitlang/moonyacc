@@ -5,6 +5,7 @@ priv struct Emitter {
   support : @mbt_common.Context
   flow : @direct_ir.StackFlow
   demand : @direct_ir.StorageDemand
+  checkpoints : @direct_ir.CheckpointFlow
   input_mode : @codegen.InputMode
   cache_ready : Bool
   cache_json : Bool
@@ -68,6 +69,7 @@ fn Emitter::new(
     support,
     flow,
     demand,
+    checkpoints: prepared.checkpoints,
     input_mode,
     cache_ready: program.blocks.any(b => {
       b.all_instructions().any(i => i is EnsureLookahead)

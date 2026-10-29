@@ -2,6 +2,7 @@
 fn Emitter::instruction(
   self : Emitter,
   instruction : @direct_ir.Instruction,
+  checkpoint : @direct_ir.CheckpointFact,
 ) -> Array[@mbt_ast.Stmt] {
   match instruction {
     EnsureLookahead => [self.read_lookahead()]
@@ -25,7 +26,7 @@ fn Emitter::instruction(
       }
       statements
     }
-    Push(cell, values) => self.push_cell(cell, values)
+    Push(cell, values) => self.push_cell(cell, values, checkpoint)
     Pop(cell, registers) => {
       let statements = self.bindings(0, cell, registers)
       statements.append(self.pop_cells([cell]))
@@ -42,6 +43,7 @@ fn Emitter::push_cell(
   self : Emitter,
   cell : @direct_ir.Cell,
   values : Array[@direct_ir.Value],
+  checkpoint : @direct_ir.CheckpointFact,
 ) -> Array[@mbt_ast.Stmt] {
   let symbol = cell.symbol.unwrap()
   let statements : Array[@mbt_ast.Stmt] = []
@@ -58,7 +60,12 @@ fn Emitter::push_cell(
     statements.push(Augment(depth, Add, Int(1)))
   }
   let state = self.value(values[cell.fields.search(State).unwrap()])
-  statements.push(Eval(call("yy_stack_push", [self.machine("stack"), state])))
+  let helper = if !self.diagnostics || checkpoint.no_overlap() {
+    "yy_stack_push_unprotected"
+  } else {
+    "yy_stack_push"
+  }
+  statements.push(Eval(call(helper, [self.machine("stack"), state])))
   if self.cache_state {
     statements.push(Assign(self.machine("state"), state))
   }
@@ -81,15 +88,18 @@ fn Emitter::terminator(
   self : Emitter,
   terminator : @direct_ir.Terminator,
   routes : Map[Int32, @control_flow.Transfer],
+  checkpoint : @direct_ir.CheckpointFact,
 ) -> @mbt_ast.Block {
   match terminator {
     Jump(edge) => self.jump(edge, routes)
-    CaseToken(arms, fallback) => self.token_cases(arms, fallback, routes)
+    CaseToken(arms, fallback) =>
+      self.token_cases(arms, fallback, routes, checkpoint)
     CaseState(value, arms) =>
       self.branch_bodies(
         self.value(value),
         grouped_cases(arms, (a, b) => a == b),
         routes,
+        checkpoint,
       )
     Return(entry, value) =>
       if self.shared_context {

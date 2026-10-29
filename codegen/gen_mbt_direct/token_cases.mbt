@@ -58,6 +58,7 @@ fn Emitter::token_cases(
   arms : Array[(@direct_ir.TokenPattern, @direct_ir.Body)],
   fallback : @direct_ir.Body,
   routes : Map[Int32, @control_flow.Transfer],
+  checkpoint : @direct_ir.CheckpointFact,
 ) -> @mbt_ast.Block {
   let exhaustive = self.program.exhaustive_tokens(arms.map(p => p.0))
   let prefixes : Array[Array[@mbt_ast.Stmt]] = arms.map(_ => [])
@@ -69,12 +70,13 @@ fn Emitter::token_cases(
       self.cached("token"),
       arms.mapi((i, arm) => (patterns[i], arm.1)),
       routes,
+      checkpoint,
       fallback?=if exhaustive { None } else { Some(fallback) },
       exhaustive~,
     )
   }
   let branches = arms.mapi((i, arm) => {
-    let code = self.inline_body(arm.1, routes)
+    let code = self.inline_body(arm.1, routes, checkpoint)
     (
       patterns[i],
       @mbt_ast.Block::{
@@ -84,7 +86,7 @@ fn Emitter::token_cases(
     )
   })
   if !exhaustive {
-    branches.push((Any, self.inline_body(fallback, routes)))
+    branches.push((Any, self.inline_body(fallback, routes, checkpoint)))
   }
   value_block(Match(self.cached("token"), branches))
 }

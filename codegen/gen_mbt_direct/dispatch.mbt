@@ -24,8 +24,12 @@ fn Emitter::block_body(
       statements.push(Comment(comment))
     }
   }
-  statements.append(self.block_instructions(block))
-  let finish = self.terminator(block.terminator, routes)
+  let (code, checkpoint) = self.block_instructions(
+    block,
+    self.checkpoints.entry(label),
+  )
+  statements.append(code)
+  let finish = self.terminator(block.terminator, routes, checkpoint)
   statements.append(finish.statements)
   { statements, result: finish.result, }
 }

@@ -244,7 +244,7 @@ fn yy_parse(
               ({
                 ()
                 ignore(yy_action_5())
-                yy_stack_push(stack, 4)
+                yy_stack_push_unprotected(stack, 4)
                 state = 4
                 match _yy_token_token {
                   Some(NUMBER(_yy_r260)) =>
@@ -284,7 +284,7 @@ fn yy_parse(
                       ({
                         ()
                         // run state 5
-                        yy_stack_push(stack, 5)
+                        yy_stack_push_unprotected(stack, 5)
                         state = 5
                         _yy_token_token = None
                         _yy_token_ready = false
@@ -577,7 +577,7 @@ fn yy_parse(
               }
             }
             // run state 10
-            yy_stack_push(stack, 10)
+            yy_stack_push_unprotected(stack, 10)
             state = 10
             _yy_token_token = None
             _yy_token_ready = false
@@ -617,7 +617,7 @@ fn yy_parse(
             }
           }
           // run state 8
-          yy_stack_push(stack, 8)
+          yy_stack_push_unprotected(stack, 8)
           state = 8
           _yy_token_token = None
           _yy_token_ready = false
@@ -705,6 +705,16 @@ fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
       stack.undo[stack.checkpoint - stack.saved_prefix - 1] = stack.values[stack.saved_prefix]
     }
   }
+  if stack.depth == stack.values.length() {
+    stack.values.push(state)
+  } else {
+    stack.values[stack.depth] = state
+  }
+  stack.depth += 1
+}
+
+///|
+fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
   if stack.depth == stack.values.length() {
     stack.values.push(state)
   } else {

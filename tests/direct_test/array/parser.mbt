@@ -371,7 +371,7 @@ fn yy_parse(
                               _yy_stack_1[_yy_depth_1] = _yy_r189
                             }
                             _yy_depth_1 += 1
-                            yy_stack_push(stack, 7)
+                            yy_stack_push_unprotected(stack, 7)
                             state = 7
                             last_pos = _yy_token_end
                             _yy_token_token = None
@@ -503,7 +503,7 @@ fn yy_parse(
                     _ =>
                       ({
                         ()
-                        yy_stack_push(stack, 2)
+                        yy_stack_push_unprotected(stack, 2)
                         state = 2
                         break _yy_scope_10~
                       })
@@ -567,7 +567,7 @@ fn yy_parse(
                 _ =>
                   ({
                     ()
-                    yy_stack_push(stack, 8)
+                    yy_stack_push_unprotected(stack, 8)
                     state = 8
                     break _yy_scope_10~
                   })
@@ -615,7 +615,7 @@ fn yy_parse(
             _ =>
               ({
                 ()
-                yy_stack_push(stack, 5)
+                yy_stack_push_unprotected(stack, 5)
                 state = 5
                 break _yy_scope_10~
               })
@@ -693,7 +693,7 @@ fn yy_parse(
                         _yy_stack_1[_yy_depth_1] = _yy_position_1
                       }
                       _yy_depth_1 += 1
-                      yy_stack_push(stack, 12)
+                      yy_stack_push_unprotected(stack, 12)
                       state = 12
                       last_pos = _yy_token_end
                       _yy_token_token = None
@@ -1225,7 +1225,7 @@ fn yy_parse(
             }
           }
           // run state 18
-          yy_stack_push(stack, 18)
+          yy_stack_push_unprotected(stack, 18)
           state = 18
           last_pos = _yy_token_end
           _yy_token_token = None
@@ -1280,7 +1280,7 @@ fn yy_parse(
           }
         }
         // run state 16
-        yy_stack_push(stack, 16)
+        yy_stack_push_unprotected(stack, 16)
         state = 16
         last_pos = _yy_token_end
         _yy_token_token = None
@@ -1335,7 +1335,7 @@ fn yy_parse(
         }
       }
       // run state 14
-      yy_stack_push(stack, 14)
+      yy_stack_push_unprotected(stack, 14)
       state = 14
       last_pos = _yy_token_end
       _yy_token_token = None
@@ -1436,6 +1436,16 @@ fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
       stack.undo[stack.checkpoint - stack.saved_prefix - 1] = stack.values[stack.saved_prefix]
     }
   }
+  if stack.depth == stack.values.length() {
+    stack.values.push(state)
+  } else {
+    stack.values[stack.depth] = state
+  }
+  stack.depth += 1
+}
+
+///|
+fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
   if stack.depth == stack.values.length() {
     stack.values.push(state)
   } else {

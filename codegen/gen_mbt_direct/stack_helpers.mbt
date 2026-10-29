@@ -32,7 +32,19 @@ fn stack_field(name : String) -> @mbt_ast.Expr {
 }
 
 ///|
-fn state_push_item(diagnostics~ : Bool) -> @mbt_ast.Item {
+fn state_write(
+  stack : @mbt_ast.Expr,
+  state : @mbt_ast.Expr,
+) -> Array[@mbt_ast.Stmt] {
+  let depth = @mbt_ast.Expr::Field(stack, Named("depth"))
+  [
+    array_stack_write(Field(stack, Named("values")), depth, state),
+    Augment(depth, Add, Int(1)),
+  ]
+}
+
+///|
+fn state_push_item(journal~ : Bool) -> @mbt_ast.Item {
   let depth = stack_field("depth")
   let saved_prefix = stack_field("saved_prefix")
   let values = stack_field("values")
@@ -40,13 +52,17 @@ fn state_push_item(diagnostics~ : Bool) -> @mbt_ast.Item {
   @mbt_ast.item(
     Function(
       @mbt_ast.function(
-        "yy_stack_push",
+        if journal {
+          "yy_stack_push"
+        } else {
+          "yy_stack_push_unprotected"
+        },
         [typed("stack", type_("YYStateStack")), typed("state", type_("Int"))],
         body(
           [
             // Preserve the checkpoint's entire overwritten suffix, including cells
             // popped without a subsequent push. Subsequent writes only extend it.
-            ..if diagnostics {
+            ..if journal {
               [
                 @mbt_ast.Stmt::While(
                   Binary(Greater, saved_prefix, depth),
@@ -71,8 +87,7 @@ fn state_push_item(diagnostics~ : Bool) -> @mbt_ast.Item {
             } else {
               []
             },
-            array_stack_write(values, depth, Ident("state")),
-            Augment(depth, Add, Int(1)),
+            ..state_write(Ident("stack"), Ident("state")),
           ],
         ),
         result=type_("Unit"),
