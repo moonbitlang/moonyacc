@@ -96,7 +96,7 @@ fn Emitter::stack_storage(
   self : Emitter,
 ) -> Array[(@mbt_ast.Field, @mbt_ast.Expr)] {
   let fields : Array[(@mbt_ast.Field, @mbt_ast.Expr)] = if !self.has_stack {
-    if self.chunked && self.needs_initial_state {
+    if self.shared_context && self.needs_initial_state {
       [
         (
           { name: "initial_state", type_: type_("Int"), mutable: false, },

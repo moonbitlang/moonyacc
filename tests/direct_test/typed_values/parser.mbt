@@ -286,7 +286,7 @@ priv struct YYStateStack {
 
 ///|
 fn yy_parse(
-  tokens : Array[(Token, Pos, Pos)], entry : Int, initial_state : Int,
+  tokens : Array[(Token, Pos, Pos)], _entry : Int, initial_state : Int,
   initial_pos? : Pos
 ) -> YYResult raise ParseError {
   let mut cursor = 0
@@ -315,74 +315,444 @@ fn yy_parse(
   let mut _yy_value_2_0 : Item? = None
   let mut _yy_value_3_0 : Int = 0
   let mut _yy_state_0 : Int = 0
-  for pc = entry {
-    match pc {
-      0 =>
-        ({
-          ()
-          // run state 0
-          ({
-            ()
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_token = Some(token)
-              _yy_token_start = Some(sp)
-              _yy_token_end = Some(ep)
-            } else {
-              _yy_token_token = None
-              _yy_token_start = Some(last_pos)
-              _yy_token_end = Some(last_pos)
-            }
-          })
-          match _yy_token_token {
-            Some(NUMBER(_yy_r286)) =>
-              ({
-                ()
-                last_pos = _yy_token_end.unwrap()
-                _yy_token_token = None
-                _yy_token_start = None
-                _yy_token_end = None
-                yy_stack_checkpoint(stack)
-                error_suffix_0 = 2
-                error_depth = 1
-                ({
-                  ()
-                  if cursor < tokens.length() {
-                    let (token, sp, ep) = tokens[cursor]
-                    cursor += 1
-                    _yy_token_token = Some(token)
-                    _yy_token_start = Some(sp)
-                    _yy_token_end = Some(ep)
-                  } else {
-                    _yy_token_token = None
-                    _yy_token_start = Some(last_pos)
-                    _yy_token_end = Some(last_pos)
-                  }
-                })
-                match _yy_token_token {
-                  Some(NUMBER(_yy_r338)) =>
-                    ({
-                      ()
-                      last_pos = _yy_token_end.unwrap()
-                      _yy_token_token = None
-                      _yy_token_start = None
-                      _yy_token_end = None
-                      yy_stack_checkpoint(stack)
-                      error_suffix_0 = 2
-                      error_suffix_1 = 3
-                      error_depth = 2
-                      let _yy_r393 = yy_action_16(_yy_r286, _yy_r338)
-                      let _yy_bind0 = _yy_r393
-                      let _yy_r579 = _yy_bind0
-                      if _yy_depth_0 == _yy_stack_0.length() {
-                        _yy_stack_0.push(_yy_r579)
-                      } else {
-                        _yy_stack_0[_yy_depth_0] = _yy_r579
+  _yy_scope_14~: while true {
+    _yy_scope_13~: while true {
+      _yy_scope_12~: while true {
+        _yy_scope_11~: while true {
+          _yy_scope_10~: while true {
+            _yy_scope_9~: while true {
+              _yy_scope_8~: while true {
+                _yy_scope_7~: while true {
+                  _yy_scope_6~: while true {
+                    _yy_scope_5~: while true {
+                      _yy_scope_4~: while true {
+                        _yy_scope_3~: while true {
+                          _yy_scope_2~: while true {
+                            _yy_scope_1~: while true {
+                              _yy_scope_0~: while true {
+                                match _entry {
+                                  0 =>
+                                    ({
+                                      ()
+                                      break _yy_scope_0~
+                                    })
+                                  1 =>
+                                    ({
+                                      ()
+                                      break _yy_scope_3~
+                                    })
+                                  2 =>
+                                    ({
+                                      ()
+                                      break _yy_scope_4~
+                                    })
+                                  3 =>
+                                    ({
+                                      ()
+                                      break _yy_scope_5~
+                                    })
+                                  _ => panic()
+                                }
+                              }
+                              // run state 0
+                              ({
+                                ()
+                                if cursor < tokens.length() {
+                                  let (token, sp, ep) = tokens[cursor]
+                                  cursor += 1
+                                  _yy_token_token = Some(token)
+                                  _yy_token_start = Some(sp)
+                                  _yy_token_end = Some(ep)
+                                } else {
+                                  _yy_token_token = None
+                                  _yy_token_start = Some(last_pos)
+                                  _yy_token_end = Some(last_pos)
+                                }
+                              })
+                              match _yy_token_token {
+                                Some(NUMBER(_yy_r286)) =>
+                                  ({
+                                    ()
+                                    last_pos = _yy_token_end.unwrap()
+                                    _yy_token_token = None
+                                    _yy_token_start = None
+                                    _yy_token_end = None
+                                    yy_stack_checkpoint(stack)
+                                    error_suffix_0 = 2
+                                    error_depth = 1
+                                    ({
+                                      ()
+                                      if cursor < tokens.length() {
+                                        let (token, sp, ep) = tokens[cursor]
+                                        cursor += 1
+                                        _yy_token_token = Some(token)
+                                        _yy_token_start = Some(sp)
+                                        _yy_token_end = Some(ep)
+                                      } else {
+                                        _yy_token_token = None
+                                        _yy_token_start = Some(last_pos)
+                                        _yy_token_end = Some(last_pos)
+                                      }
+                                    })
+                                    match _yy_token_token {
+                                      Some(NUMBER(_yy_r338)) =>
+                                        ({
+                                          ()
+                                          last_pos = _yy_token_end.unwrap()
+                                          _yy_token_token = None
+                                          _yy_token_start = None
+                                          _yy_token_end = None
+                                          yy_stack_checkpoint(stack)
+                                          error_suffix_0 = 2
+                                          error_suffix_1 = 3
+                                          error_depth = 2
+                                          let _yy_r393 = yy_action_16(
+                                            _yy_r286, _yy_r338
+                                          )
+                                          let _yy_bind0 = _yy_r393
+                                          let _yy_r579 = _yy_bind0
+                                          if _yy_depth_0 == _yy_stack_0.length() {
+                                            _yy_stack_0.push(_yy_r579)
+                                          } else {
+                                            _yy_stack_0[_yy_depth_0] = _yy_r579
+                                          }
+                                          _yy_depth_0 += 1
+                                          yy_stack_push(stack, 4)
+                                          state = 4
+                                          ({
+                                            ()
+                                            if cursor < tokens.length() {
+                                              let (token, sp, ep) = tokens[cursor]
+                                              cursor += 1
+                                              _yy_token_token = Some(token)
+                                              _yy_token_start = Some(sp)
+                                              _yy_token_end = Some(ep)
+                                            } else {
+                                              _yy_token_token = None
+                                              _yy_token_start = Some(last_pos)
+                                              _yy_token_end = Some(last_pos)
+                                            }
+                                          })
+                                          match _yy_token_token {
+                                            Some(NUMBER(_yy_r582)) =>
+                                              ({
+                                                ()
+                                                last_pos = _yy_token_end.unwrap()
+                                                _yy_token_token = None
+                                                _yy_token_start = None
+                                                _yy_token_end = None
+                                                yy_stack_checkpoint(stack)
+                                                error_suffix_0 = 5
+                                                error_depth = 1
+                                                let _yy_r585 = yy_action_15(
+                                                  _yy_r582
+                                                )
+                                                let _yy_bind0 = _yy_r585
+                                                let _yy_r586 = _yy_bind0
+                                                if _yy_depth_0 ==
+                                                  _yy_stack_0.length() {
+                                                  _yy_stack_0.push(_yy_r586)
+                                                } else {
+                                                  _yy_stack_0[_yy_depth_0] = _yy_r586
+                                                }
+                                                _yy_depth_0 += 1
+                                                yy_stack_push(stack, 6)
+                                                state = 6
+                                                ({
+                                                  ()
+                                                  if cursor < tokens.length() {
+                                                    let (token, sp, ep) = tokens[cursor]
+                                                    cursor += 1
+                                                    _yy_token_token = Some(
+                                                      token
+                                                    )
+                                                    _yy_token_start = Some(sp)
+                                                    _yy_token_end = Some(ep)
+                                                  } else {
+                                                    _yy_token_token = None
+                                                    _yy_token_start = Some(
+                                                      last_pos
+                                                    )
+                                                    _yy_token_end = Some(
+                                                      last_pos
+                                                    )
+                                                  }
+                                                })
+                                                match _yy_token_token {
+                                                  Some(NUMBER(_)) =>
+                                                    ({
+                                                      ()
+                                                      let _yy_r590 = _yy_token_start.unwrap()
+                                                      last_pos = _yy_token_end.unwrap()
+                                                      _yy_token_token = None
+                                                      _yy_token_start = None
+                                                      _yy_token_end = None
+                                                      yy_stack_checkpoint(stack)
+                                                      error_suffix_0 = 7
+                                                      error_depth = 1
+                                                      ({
+                                                        ()
+                                                        if cursor <
+                                                          tokens.length() {
+                                                          let (token, sp, ep) = tokens[cursor]
+                                                          cursor += 1
+                                                          _yy_token_token = Some(
+                                                            token
+                                                          )
+                                                          _yy_token_start = Some(
+                                                            sp
+                                                          )
+                                                          _yy_token_end = Some(
+                                                            ep
+                                                          )
+                                                        } else {
+                                                          _yy_token_token = None
+                                                          _yy_token_start = Some(
+                                                            last_pos
+                                                          )
+                                                          _yy_token_end = Some(
+                                                            last_pos
+                                                          )
+                                                        }
+                                                      })
+                                                      match _yy_token_token {
+                                                        Some(NUMBER(_yy_r592)) =>
+                                                          ({
+                                                            ()
+                                                            last_pos = _yy_token_end.unwrap()
+                                                            _yy_token_token = None
+                                                            _yy_token_start = None
+                                                            _yy_token_end = None
+                                                            yy_stack_checkpoint(
+                                                              stack
+                                                            )
+                                                            error_suffix_0 = 7
+                                                            error_suffix_1 = 8
+                                                            error_depth = 2
+                                                            let _yy_r595 = yy_action_14(
+                                                              _yy_r592, _yy_r590
+                                                            )
+                                                            let _yy_bind0 = _yy_r595
+                                                            let _yy_r596 = _yy_bind0
+                                                            if _yy_depth_0 ==
+                                                              _yy_stack_0.length() {
+                                                              _yy_stack_0.push(
+                                                                _yy_r596
+                                                              )
+                                                            } else {
+                                                              _yy_stack_0[_yy_depth_0] = _yy_r596
+                                                            }
+                                                            _yy_depth_0 += 1
+                                                            yy_stack_push(
+                                                              stack, 9
+                                                            )
+                                                            state = 9
+                                                            ({
+                                                              ()
+                                                              if cursor <
+                                                                tokens.length() {
+                                                                let (
+                                                                  token, sp, ep
+                                                                ) = tokens[cursor]
+                                                                cursor += 1
+                                                                _yy_token_token = Some(
+                                                                  token
+                                                                )
+                                                                _yy_token_start = Some(
+                                                                  sp
+                                                                )
+                                                                _yy_token_end = Some(
+                                                                  ep
+                                                                )
+                                                              } else {
+                                                                _yy_token_token = None
+                                                                _yy_token_start = Some(
+                                                                  last_pos
+                                                                )
+                                                                _yy_token_end = Some(
+                                                                  last_pos
+                                                                )
+                                                              }
+                                                            })
+                                                            match _yy_token_token {
+                                                              Some(
+                                                                NUMBER(_yy_r599)
+                                                              ) =>
+                                                                ({
+                                                                  ()
+                                                                  last_pos = _yy_token_end.unwrap()
+                                                                  _yy_token_token = None
+                                                                  _yy_token_start = None
+                                                                  _yy_token_end = None
+                                                                  yy_stack_checkpoint(
+                                                                    stack
+                                                                  )
+                                                                  error_suffix_0 = 10
+                                                                  error_depth = 1
+                                                                  let _yy_r602 = yy_action_13(
+                                                                    _yy_r599
+                                                                  )
+                                                                  let _yy_bind0 = _yy_r602
+                                                                  let _yy_r603 = _yy_bind0
+                                                                  ({
+                                                                    ()
+                                                                    if cursor <
+                                                                      tokens.length() {
+                                                                      let (
+                                                                        token,
+                                                                        sp, ep
+                                                                      ) = tokens[cursor]
+                                                                      cursor += 1
+                                                                      _yy_token_token = Some(
+                                                                        token
+                                                                      )
+                                                                      _yy_token_start = Some(
+                                                                        sp
+                                                                      )
+                                                                      _yy_token_end = Some(
+                                                                        ep
+                                                                      )
+                                                                    } else {
+                                                                      _yy_token_token = None
+                                                                      _yy_token_start = Some(
+                                                                        last_pos
+                                                                      )
+                                                                      _yy_token_end = Some(
+                                                                        last_pos
+                                                                      )
+                                                                    }
+                                                                  })
+                                                                  match _yy_token_token {
+                                                                    Some(EOF) =>
+                                                                      ({
+                                                                        ()
+                                                                        last_pos = _yy_token_end.unwrap()
+                                                                        _yy_token_token = None
+                                                                        _yy_token_start = None
+                                                                        _yy_token_end = None
+                                                                        yy_stack_checkpoint(
+                                                                          stack
+                                                                        )
+                                                                        error_suffix_0 = 11
+                                                                        error_suffix_1 = 12
+                                                                        error_depth = 2
+                                                                        let _yy_r609 = _yy_stack_0[_yy_depth_0 -
+                                                                          3]
+                                                                        let _yy_r612 = _yy_stack_0[_yy_depth_0 -
+                                                                          2]
+                                                                        let _yy_r615 = _yy_stack_0[_yy_depth_0 -
+                                                                          1]
+                                                                        let _yy_r619 = yy_action_11(
+                                                                          _yy_r609,
+                                                                          _yy_r612,
+                                                                          _yy_r615,
+                                                                          _yy_r603
+                                                                        )
+                                                                        _yy_depth_0 -= 3
+                                                                        stack.depth -= 3
+                                                                        state = stack.values[stack.depth -
+                                                                          1]
+                                                                        _yy_value_0_0 = Some(
+                                                                          _yy_r619
+                                                                        )
+                                                                        break _yy_scope_1~
+                                                                      })
+                                                                    _ =>
+                                                                      ({
+                                                                        ()
+                                                                        yy_stack_push(
+                                                                          stack,
+                                                                          11
+                                                                        )
+                                                                        state = 11
+                                                                        break _yy_scope_14~
+                                                                      })
+                                                                  }
+                                                                })
+                                                              _ =>
+                                                                ({
+                                                                  ()
+                                                                  break _yy_scope_14~
+                                                                })
+                                                            }
+                                                          })
+                                                        _ =>
+                                                          ({
+                                                            ()
+                                                            yy_stack_push(
+                                                              stack, 7
+                                                            )
+                                                            state = 7
+                                                            break _yy_scope_14~
+                                                          })
+                                                      }
+                                                    })
+                                                  _ =>
+                                                    ({
+                                                      ()
+                                                      break _yy_scope_14~
+                                                    })
+                                                }
+                                              })
+                                            _ =>
+                                              ({
+                                                ()
+                                                break _yy_scope_14~
+                                              })
+                                          }
+                                        })
+                                      _ =>
+                                        ({
+                                          ()
+                                          yy_stack_push(stack, 2)
+                                          state = 2
+                                          break _yy_scope_14~
+                                        })
+                                    }
+                                  })
+                                _ =>
+                                  ({
+                                    ()
+                                    break _yy_scope_14~
+                                  })
+                              }
+                            }
+                            // goto hygiene
+                            break _yy_scope_2~
+                          }
+                          // run state 1
+                          return YYAccept_3(_yy_value_0_0.unwrap())
+                        }
+                        // run state 13
+                        ({
+                          ()
+                          if cursor < tokens.length() {
+                            let (token, sp, ep) = tokens[cursor]
+                            cursor += 1
+                            _yy_token_token = Some(token)
+                            _yy_token_start = Some(sp)
+                            _yy_token_end = Some(ep)
+                          } else {
+                            _yy_token_token = None
+                            _yy_token_start = Some(last_pos)
+                            _yy_token_end = Some(last_pos)
+                          }
+                        })
+                        match _yy_token_token {
+                          Some(TEXT(_yy_r308)) =>
+                            ({
+                              ()
+                              _yy_value_1_0 = _yy_r308
+                              break _yy_scope_6~
+                            })
+                          _ =>
+                            ({
+                              ()
+                              break _yy_scope_14~
+                            })
+                        }
                       }
-                      _yy_depth_0 += 1
-                      yy_stack_push(stack, 4)
-                      state = 4
+                      // run state 18
                       ({
                         ()
                         if cursor < tokens.length() {
@@ -398,7 +768,7 @@ fn yy_parse(
                         }
                       })
                       match _yy_token_token {
-                        Some(NUMBER(_yy_r582)) =>
+                        Some(NUMBER(_yy_r315)) =>
                           ({
                             ()
                             last_pos = _yy_token_end.unwrap()
@@ -406,19 +776,11 @@ fn yy_parse(
                             _yy_token_start = None
                             _yy_token_end = None
                             yy_stack_checkpoint(stack)
-                            error_suffix_0 = 5
+                            error_suffix_0 = 20
                             error_depth = 1
-                            let _yy_r585 = yy_action_15(_yy_r582)
-                            let _yy_bind0 = _yy_r585
-                            let _yy_r586 = _yy_bind0
-                            if _yy_depth_0 == _yy_stack_0.length() {
-                              _yy_stack_0.push(_yy_r586)
-                            } else {
-                              _yy_stack_0[_yy_depth_0] = _yy_r586
-                            }
-                            _yy_depth_0 += 1
-                            yy_stack_push(stack, 6)
-                            state = 6
+                            let _yy_r483 = yy_action_8(_yy_r315)
+                            let _yy_bind0 = _yy_r483
+                            let _yy_r702 = _yy_bind0
                             ({
                               ()
                               if cursor < tokens.length() {
@@ -434,549 +796,232 @@ fn yy_parse(
                               }
                             })
                             match _yy_token_token {
-                              Some(NUMBER(_)) =>
+                              Some(EOF) =>
                                 ({
                                   ()
-                                  let _yy_r590 = _yy_token_start.unwrap()
                                   last_pos = _yy_token_end.unwrap()
                                   _yy_token_token = None
                                   _yy_token_start = None
                                   _yy_token_end = None
                                   yy_stack_checkpoint(stack)
-                                  error_suffix_0 = 7
-                                  error_depth = 1
-                                  ({
-                                    ()
-                                    if cursor < tokens.length() {
-                                      let (token, sp, ep) = tokens[cursor]
-                                      cursor += 1
-                                      _yy_token_token = Some(token)
-                                      _yy_token_start = Some(sp)
-                                      _yy_token_end = Some(ep)
-                                    } else {
-                                      _yy_token_token = None
-                                      _yy_token_start = Some(last_pos)
-                                      _yy_token_end = Some(last_pos)
-                                    }
-                                  })
-                                  match _yy_token_token {
-                                    Some(NUMBER(_yy_r592)) =>
-                                      ({
-                                        ()
-                                        last_pos = _yy_token_end.unwrap()
-                                        _yy_token_token = None
-                                        _yy_token_start = None
-                                        _yy_token_end = None
-                                        yy_stack_checkpoint(stack)
-                                        error_suffix_0 = 7
-                                        error_suffix_1 = 8
-                                        error_depth = 2
-                                        let _yy_r595 = yy_action_14(
-                                          _yy_r592, _yy_r590
-                                        )
-                                        let _yy_bind0 = _yy_r595
-                                        let _yy_r596 = _yy_bind0
-                                        if _yy_depth_0 == _yy_stack_0.length() {
-                                          _yy_stack_0.push(_yy_r596)
-                                        } else {
-                                          _yy_stack_0[_yy_depth_0] = _yy_r596
-                                        }
-                                        _yy_depth_0 += 1
-                                        yy_stack_push(stack, 9)
-                                        state = 9
-                                        ({
-                                          ()
-                                          if cursor < tokens.length() {
-                                            let (token, sp, ep) = tokens[cursor]
-                                            cursor += 1
-                                            _yy_token_token = Some(token)
-                                            _yy_token_start = Some(sp)
-                                            _yy_token_end = Some(ep)
-                                          } else {
-                                            _yy_token_token = None
-                                            _yy_token_start = Some(last_pos)
-                                            _yy_token_end = Some(last_pos)
-                                          }
-                                        })
-                                        match _yy_token_token {
-                                          Some(NUMBER(_yy_r599)) =>
-                                            ({
-                                              ()
-                                              last_pos = _yy_token_end.unwrap()
-                                              _yy_token_token = None
-                                              _yy_token_start = None
-                                              _yy_token_end = None
-                                              yy_stack_checkpoint(stack)
-                                              error_suffix_0 = 10
-                                              error_depth = 1
-                                              let _yy_r602 = yy_action_13(
-                                                _yy_r599
-                                              )
-                                              let _yy_bind0 = _yy_r602
-                                              let _yy_r603 = _yy_bind0
-                                              ({
-                                                ()
-                                                if cursor < tokens.length() {
-                                                  let (token, sp, ep) = tokens[cursor]
-                                                  cursor += 1
-                                                  _yy_token_token = Some(token)
-                                                  _yy_token_start = Some(sp)
-                                                  _yy_token_end = Some(ep)
-                                                } else {
-                                                  _yy_token_token = None
-                                                  _yy_token_start = Some(
-                                                    last_pos
-                                                  )
-                                                  _yy_token_end = Some(last_pos)
-                                                }
-                                              })
-                                              match _yy_token_token {
-                                                Some(EOF) =>
-                                                  ({
-                                                    ()
-                                                    last_pos = _yy_token_end.unwrap()
-                                                    _yy_token_token = None
-                                                    _yy_token_start = None
-                                                    _yy_token_end = None
-                                                    yy_stack_checkpoint(stack)
-                                                    error_suffix_0 = 11
-                                                    error_suffix_1 = 12
-                                                    error_depth = 2
-                                                    let _yy_r609 = _yy_stack_0[_yy_depth_0 -
-                                                      3]
-                                                    let _yy_r612 = _yy_stack_0[_yy_depth_0 -
-                                                      2]
-                                                    let _yy_r615 = _yy_stack_0[_yy_depth_0 -
-                                                      1]
-                                                    let _yy_r619 = yy_action_11(
-                                                      _yy_r609, _yy_r612,
-                                                      _yy_r615, _yy_r603
-                                                    )
-                                                    _yy_depth_0 -= 3
-                                                    stack.depth -= 3
-                                                    state = stack.values[stack.depth -
-                                                      1]
-                                                    _yy_value_0_0 = Some(
-                                                      _yy_r619
-                                                    )
-                                                    continue 11
-                                                  })
-                                                _ =>
-                                                  ({
-                                                    ()
-                                                    yy_stack_push(stack, 11)
-                                                    state = 11
-                                                    continue 10
-                                                  })
-                                              }
-                                            })
-                                          _ =>
-                                            ({
-                                              ()
-                                              continue 10
-                                            })
-                                        }
-                                      })
-                                    _ =>
-                                      ({
-                                        ()
-                                        yy_stack_push(stack, 7)
-                                        state = 7
-                                        continue 10
-                                      })
-                                  }
+                                  error_suffix_0 = 21
+                                  error_suffix_1 = 22
+                                  error_depth = 2
+                                  let _yy_r709 = yy_action_7(_yy_r702)
+                                  let _yy_bind0 = _yy_r709
+                                  let _yy_r711 = _yy_bind0
+                                  return YYAccept_1(_yy_r711)
                                 })
                               _ =>
                                 ({
                                   ()
-                                  continue 10
+                                  yy_stack_push(stack, 21)
+                                  state = 21
+                                  break _yy_scope_14~
                                 })
                             }
                           })
                         _ =>
                           ({
                             ()
-                            continue 10
+                            break _yy_scope_14~
                           })
                       }
-                    })
-                  _ =>
+                    }
+                    // run state 23
                     ({
                       ()
-                      yy_stack_push(stack, 2)
-                      state = 2
-                      continue 10
+                      if cursor < tokens.length() {
+                        let (token, sp, ep) = tokens[cursor]
+                        cursor += 1
+                        _yy_token_token = Some(token)
+                        _yy_token_start = Some(sp)
+                        _yy_token_end = Some(ep)
+                      } else {
+                        _yy_token_token = None
+                        _yy_token_start = Some(last_pos)
+                        _yy_token_end = Some(last_pos)
+                      }
                     })
-                }
-              })
-            _ =>
-              ({
-                ()
-                continue 10
-              })
-          }
-        })
-      1 =>
-        ({
-          ()
-          // run state 1
-          return YYAccept_3(_yy_value_0_0.unwrap())
-        })
-      2 =>
-        ({
-          ()
-          // run state 13
-          ({
-            ()
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_token = Some(token)
-              _yy_token_start = Some(sp)
-              _yy_token_end = Some(ep)
-            } else {
-              _yy_token_token = None
-              _yy_token_start = Some(last_pos)
-              _yy_token_end = Some(last_pos)
-            }
-          })
-          match _yy_token_token {
-            Some(TEXT(_yy_r308)) =>
-              ({
-                ()
-                _yy_value_1_0 = _yy_r308
-                continue 4
-              })
-            _ =>
-              ({
-                ()
-                continue 10
-              })
-          }
-        })
-      3 =>
-        ({
-          ()
-          // run state 15
-          ({
-            ()
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_token = Some(token)
-              _yy_token_start = Some(sp)
-              _yy_token_end = Some(ep)
-            } else {
-              _yy_token_token = None
-              _yy_token_start = Some(last_pos)
-              _yy_token_end = Some(last_pos)
-            }
-          })
-          match _yy_token_token {
-            Some(EOF) =>
-              ({
-                ()
-                last_pos = _yy_token_end.unwrap()
-                _yy_token_token = None
-                _yy_token_start = None
-                _yy_token_end = None
-                yy_stack_checkpoint(stack)
-                error_suffix_0 = 15
-                error_suffix_1 = 16
-                error_depth = 2
-                let _yy_r463 = yy_action_10(_yy_value_1_0)
-                let _yy_bind0 = _yy_r463
-                let _yy_r699 = _yy_bind0
-                return YYAccept_2(_yy_r699)
-              })
-            _ =>
-              ({
-                ()
-                if _yy_depth_1 == _yy_stack_1.length() {
-                  _yy_stack_1.push(_yy_value_1_0)
-                } else {
-                  _yy_stack_1[_yy_depth_1] = _yy_value_1_0
-                }
-                _yy_depth_1 += 1
-                yy_stack_push(stack, 15)
-                state = 15
-                continue 10
-              })
-          }
-        })
-      4 =>
-        ({
-          ()
-          // run state 17
-          last_pos = _yy_token_end.unwrap()
-          _yy_token_token = None
-          _yy_token_start = None
-          _yy_token_end = None
-          yy_stack_checkpoint(stack)
-          error_suffix_0 = 17
-          error_depth = 1
-          let _yy_r473 = yy_action_9(_yy_value_1_0)
-          let _yy_r474 = state
-          _yy_state_0 = _yy_r474
-          _yy_value_1_0 = _yy_r473
-          continue 12
-        })
-      5 =>
-        ({
-          ()
-          // run state 18
-          ({
-            ()
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_token = Some(token)
-              _yy_token_start = Some(sp)
-              _yy_token_end = Some(ep)
-            } else {
-              _yy_token_token = None
-              _yy_token_start = Some(last_pos)
-              _yy_token_end = Some(last_pos)
-            }
-          })
-          match _yy_token_token {
-            Some(NUMBER(_yy_r315)) =>
-              ({
-                ()
-                last_pos = _yy_token_end.unwrap()
-                _yy_token_token = None
-                _yy_token_start = None
-                _yy_token_end = None
-                yy_stack_checkpoint(stack)
-                error_suffix_0 = 20
-                error_depth = 1
-                let _yy_r483 = yy_action_8(_yy_r315)
-                let _yy_bind0 = _yy_r483
-                let _yy_r702 = _yy_bind0
-                ({
-                  ()
-                  if cursor < tokens.length() {
-                    let (token, sp, ep) = tokens[cursor]
-                    cursor += 1
-                    _yy_token_token = Some(token)
-                    _yy_token_start = Some(sp)
-                    _yy_token_end = Some(ep)
-                  } else {
-                    _yy_token_token = None
-                    _yy_token_start = Some(last_pos)
-                    _yy_token_end = Some(last_pos)
+                    match _yy_token_token {
+                      Some(TEXT(_)) =>
+                        ({
+                          ()
+                          ignore(yy_action_6())
+                          yy_stack_push(stack, 25)
+                          state = 25
+                          match _yy_token_token {
+                            Some(TEXT(_yy_r720)) =>
+                              ({
+                                ()
+                                _yy_value_1_0 = _yy_r720
+                                break _yy_scope_6~
+                              })
+                            _ =>
+                              ({
+                                ()
+                                break _yy_scope_14~
+                              })
+                          }
+                        })
+                      _ =>
+                        ({
+                          ()
+                          break _yy_scope_14~
+                        })
+                    }
                   }
-                })
-                match _yy_token_token {
-                  Some(EOF) =>
-                    ({
-                      ()
-                      last_pos = _yy_token_end.unwrap()
-                      _yy_token_token = None
-                      _yy_token_start = None
-                      _yy_token_end = None
-                      yy_stack_checkpoint(stack)
-                      error_suffix_0 = 21
-                      error_suffix_1 = 22
-                      error_depth = 2
-                      let _yy_r709 = yy_action_7(_yy_r702)
-                      let _yy_bind0 = _yy_r709
-                      let _yy_r711 = _yy_bind0
-                      return YYAccept_1(_yy_r711)
-                    })
-                  _ =>
-                    ({
-                      ()
-                      yy_stack_push(stack, 21)
-                      state = 21
-                      continue 10
-                    })
+                  // run state 17
+                  last_pos = _yy_token_end.unwrap()
+                  _yy_token_token = None
+                  _yy_token_start = None
+                  _yy_token_end = None
+                  yy_stack_checkpoint(stack)
+                  error_suffix_0 = 17
+                  error_depth = 1
+                  let _yy_r473 = yy_action_9(_yy_value_1_0)
+                  let _yy_r474 = state
+                  _yy_state_0 = _yy_r474
+                  _yy_value_1_0 = _yy_r473
+                  break _yy_scope_7~
                 }
-              })
-            _ =>
-              ({
-                ()
-                continue 10
-              })
-          }
-        })
-      6 =>
-        ({
-          ()
-          // run state 23
-          ({
-            ()
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_token = Some(token)
-              _yy_token_start = Some(sp)
-              _yy_token_end = Some(ep)
-            } else {
-              _yy_token_token = None
-              _yy_token_start = Some(last_pos)
-              _yy_token_end = Some(last_pos)
-            }
-          })
-          match _yy_token_token {
-            Some(TEXT(_)) =>
-              ({
-                ()
-                ignore(yy_action_6())
-                yy_stack_push(stack, 25)
-                state = 25
-                match _yy_token_token {
-                  Some(TEXT(_yy_r720)) =>
+                // goto word
+                match _yy_state_0 {
+                  13 =>
                     ({
                       ()
-                      _yy_value_1_0 = _yy_r720
-                      continue 4
+                      break _yy_scope_13~
                     })
-                  _ =>
+                  25 =>
                     ({
                       ()
-                      continue 10
+                      break _yy_scope_8~
                     })
+                  _ => panic()
                 }
-              })
-            _ =>
+              }
+              // run state 26
+              if _yy_depth_1 == _yy_stack_1.length() {
+                _yy_stack_1.push(_yy_value_1_0)
+              } else {
+                _yy_stack_1[_yy_depth_1] = _yy_value_1_0
+              }
+              _yy_depth_1 += 1
+              yy_stack_push(stack, 26)
+              state = 26
               ({
                 ()
-                continue 10
-              })
-          }
-        })
-      7 =>
-        ({
-          ()
-          // run state 24
-          return YYAccept_0(_yy_value_2_0.unwrap())
-        })
-      8 =>
-        ({
-          ()
-          // run state 26
-          if _yy_depth_1 == _yy_stack_1.length() {
-            _yy_stack_1.push(_yy_value_1_0)
-          } else {
-            _yy_stack_1[_yy_depth_1] = _yy_value_1_0
-          }
-          _yy_depth_1 += 1
-          yy_stack_push(stack, 26)
-          state = 26
-          ({
-            ()
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_token = Some(token)
-              _yy_token_start = Some(sp)
-              _yy_token_end = Some(ep)
-            } else {
-              _yy_token_token = None
-              _yy_token_start = Some(last_pos)
-              _yy_token_end = Some(last_pos)
-            }
-          })
-          match _yy_token_token {
-            Some(NUMBER(_yy_r326)) =>
-              ({
-                ()
-                let _yy_r327 = _yy_token_start.unwrap()
-                let _yy_r328 = _yy_token_end.unwrap()
-                last_pos = _yy_token_end.unwrap()
-                _yy_token_token = None
-                _yy_token_start = None
-                _yy_token_end = None
-                yy_stack_checkpoint(stack)
-                error_suffix_0 = 28
-                error_depth = 1
-                let _yy_r515 = yy_action_4(_yy_r326)
-                let _yy_bind0 = _yy_r515
-                let _yy_bind1 = _yy_r327
-                let _yy_bind2 = _yy_r328
-                let _yy_r723 = _yy_bind0
-                let _yy_r724 = _yy_bind1
-                let _yy_r725 = _yy_bind2
-                let _yy_r727 = yy_action_5(_yy_r723)
-                let _yy_bind0 = _yy_r727
-                let _yy_bind1 = _yy_r724
-                let _yy_bind2 = _yy_r725
-                let _yy_r729 = _yy_bind0
-                let _yy_r730 = _yy_bind1
-                let _yy_r731 = _yy_bind2
-                if _yy_depth_0 == _yy_stack_0.length() {
-                  _yy_stack_0.push(_yy_r729)
+                if cursor < tokens.length() {
+                  let (token, sp, ep) = tokens[cursor]
+                  cursor += 1
+                  _yy_token_token = Some(token)
+                  _yy_token_start = Some(sp)
+                  _yy_token_end = Some(ep)
                 } else {
-                  _yy_stack_0[_yy_depth_0] = _yy_r729
+                  _yy_token_token = None
+                  _yy_token_start = Some(last_pos)
+                  _yy_token_end = Some(last_pos)
                 }
-                _yy_depth_0 += 1
-                if _yy_depth_2 == _yy_stack_2.length() {
-                  _yy_stack_2.push(_yy_r730)
-                } else {
-                  _yy_stack_2[_yy_depth_2] = _yy_r730
-                }
-                _yy_depth_2 += 1
-                if _yy_depth_3 == _yy_stack_3.length() {
-                  _yy_stack_3.push(_yy_r731)
-                } else {
-                  _yy_stack_3[_yy_depth_3] = _yy_r731
-                }
-                _yy_depth_3 += 1
-                yy_stack_push(stack, 29)
-                state = 29
-                ({
-                  ()
-                  if cursor < tokens.length() {
-                    let (token, sp, ep) = tokens[cursor]
-                    cursor += 1
-                    _yy_token_token = Some(token)
-                    _yy_token_start = Some(sp)
-                    _yy_token_end = Some(ep)
-                  } else {
+              })
+              match _yy_token_token {
+                Some(NUMBER(_yy_r326)) =>
+                  ({
+                    ()
+                    let _yy_r327 = _yy_token_start.unwrap()
+                    let _yy_r328 = _yy_token_end.unwrap()
+                    last_pos = _yy_token_end.unwrap()
                     _yy_token_token = None
-                    _yy_token_start = Some(last_pos)
-                    _yy_token_end = Some(last_pos)
-                  }
-                })
-                match _yy_token_token {
-                  Some(FLAG(_)) =>
+                    _yy_token_start = None
+                    _yy_token_end = None
+                    yy_stack_checkpoint(stack)
+                    error_suffix_0 = 28
+                    error_depth = 1
+                    let _yy_r515 = yy_action_4(_yy_r326)
+                    let _yy_bind0 = _yy_r515
+                    let _yy_bind1 = _yy_r327
+                    let _yy_bind2 = _yy_r328
+                    let _yy_r723 = _yy_bind0
+                    let _yy_r724 = _yy_bind1
+                    let _yy_r725 = _yy_bind2
+                    let _yy_r727 = yy_action_5(_yy_r723)
+                    let _yy_bind0 = _yy_r727
+                    let _yy_bind1 = _yy_r724
+                    let _yy_bind2 = _yy_r725
+                    let _yy_r729 = _yy_bind0
+                    let _yy_r730 = _yy_bind1
+                    let _yy_r731 = _yy_bind2
+                    if _yy_depth_0 == _yy_stack_0.length() {
+                      _yy_stack_0.push(_yy_r729)
+                    } else {
+                      _yy_stack_0[_yy_depth_0] = _yy_r729
+                    }
+                    _yy_depth_0 += 1
+                    if _yy_depth_2 == _yy_stack_2.length() {
+                      _yy_stack_2.push(_yy_r730)
+                    } else {
+                      _yy_stack_2[_yy_depth_2] = _yy_r730
+                    }
+                    _yy_depth_2 += 1
+                    if _yy_depth_3 == _yy_stack_3.length() {
+                      _yy_stack_3.push(_yy_r731)
+                    } else {
+                      _yy_stack_3[_yy_depth_3] = _yy_r731
+                    }
+                    _yy_depth_3 += 1
+                    yy_stack_push(stack, 29)
+                    state = 29
                     ({
                       ()
-                      let _yy_r732 = yy_action_3(_yy_r731)
-                      let _yy_bind0 = _yy_r732
-                      let _yy_r733 = _yy_bind0
-                      let _yy_r736 = _yy_stack_0[_yy_depth_0 - 1]
-                      let _yy_r737 = _yy_stack_2[_yy_depth_2 - 1]
-                      let _yy_r738 = _yy_stack_3[_yy_depth_3 - 1]
-                      let _yy_r740 = yy_action_2(
-                        _yy_r737, _yy_r738, _yy_r733, _yy_r736
-                      )
-                      _yy_depth_0 -= 1
-                      _yy_depth_2 -= 1
-                      _yy_depth_3 -= 1
-                      stack.depth -= 1
-                      state = stack.values[stack.depth - 1]
-                      _yy_value_3_0 = _yy_r740
-                      continue 13
+                      if cursor < tokens.length() {
+                        let (token, sp, ep) = tokens[cursor]
+                        cursor += 1
+                        _yy_token_token = Some(token)
+                        _yy_token_start = Some(sp)
+                        _yy_token_end = Some(ep)
+                      } else {
+                        _yy_token_token = None
+                        _yy_token_start = Some(last_pos)
+                        _yy_token_end = Some(last_pos)
+                      }
                     })
-                  _ =>
-                    ({
-                      ()
-                      continue 10
-                    })
-                }
-              })
-            _ =>
-              ({
-                ()
-                continue 10
-              })
+                    match _yy_token_token {
+                      Some(FLAG(_)) =>
+                        ({
+                          ()
+                          let _yy_r732 = yy_action_3(_yy_r731)
+                          let _yy_bind0 = _yy_r732
+                          let _yy_r733 = _yy_bind0
+                          let _yy_r736 = _yy_stack_0[_yy_depth_0 - 1]
+                          let _yy_r737 = _yy_stack_2[_yy_depth_2 - 1]
+                          let _yy_r738 = _yy_stack_3[_yy_depth_3 - 1]
+                          let _yy_r740 = yy_action_2(
+                            _yy_r737, _yy_r738, _yy_r733, _yy_r736
+                          )
+                          _yy_depth_0 -= 1
+                          _yy_depth_2 -= 1
+                          _yy_depth_3 -= 1
+                          stack.depth -= 1
+                          state = stack.values[stack.depth - 1]
+                          _yy_value_3_0 = _yy_r740
+                          break _yy_scope_9~
+                        })
+                      _ =>
+                        ({
+                          ()
+                          break _yy_scope_14~
+                        })
+                    }
+                  })
+                _ =>
+                  ({
+                    ()
+                    break _yy_scope_14~
+                  })
+              }
+            }
+            // goto amount
+            break _yy_scope_10~
           }
-        })
-      9 =>
-        ({
-          ()
           // run state 31
           if _yy_depth_0 == _yy_stack_0.length() {
             _yy_stack_0.push(_yy_value_3_0)
@@ -1034,79 +1079,96 @@ fn yy_parse(
                       stack.depth -= 3
                       state = stack.values[stack.depth - 1]
                       _yy_value_2_0 = Some(_yy_r780)
-                      continue 14
+                      break _yy_scope_11~
                     })
                   _ =>
                     ({
                       ()
                       yy_stack_push(stack, 33)
                       state = 33
-                      continue 10
+                      break _yy_scope_14~
                     })
                 }
               })
             _ =>
               ({
                 ()
-                continue 10
+                break _yy_scope_14~
               })
           }
-        })
-      10 =>
+        }
+        // goto item
+        break _yy_scope_12~
+      }
+      // run state 24
+      return YYAccept_0(_yy_value_2_0.unwrap())
+    }
+    // run state 15
+    ({
+      ()
+      if cursor < tokens.length() {
+        let (token, sp, ep) = tokens[cursor]
+        cursor += 1
+        _yy_token_token = Some(token)
+        _yy_token_start = Some(sp)
+        _yy_token_end = Some(ep)
+      } else {
+        _yy_token_token = None
+        _yy_token_start = Some(last_pos)
+        _yy_token_end = Some(last_pos)
+      }
+    })
+    match _yy_token_token {
+      Some(EOF) =>
         ({
           ()
-          _yy_error(
-            ({
-              ()
-              let mut _yy_error_states = yy_stack_snapshot(stack)
-              if error_depth > 0 {
-                _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
-              }
-              if error_depth > 1 {
-                _yy_error_states = @list.cons(error_suffix_1, _yy_error_states)
-              }
-              _yy_error_states
-            }), _yy_token_token,
-            (_yy_token_start.unwrap(), _yy_token_end.unwrap())
-          )
-          panic()
+          last_pos = _yy_token_end.unwrap()
+          _yy_token_token = None
+          _yy_token_start = None
+          _yy_token_end = None
+          yy_stack_checkpoint(stack)
+          error_suffix_0 = 15
+          error_suffix_1 = 16
+          error_depth = 2
+          let _yy_r463 = yy_action_10(_yy_value_1_0)
+          let _yy_bind0 = _yy_r463
+          let _yy_r699 = _yy_bind0
+          return YYAccept_2(_yy_r699)
         })
-      11 =>
+      _ =>
         ({
           ()
-          // goto hygiene
-          continue 1
+          if _yy_depth_1 == _yy_stack_1.length() {
+            _yy_stack_1.push(_yy_value_1_0)
+          } else {
+            _yy_stack_1[_yy_depth_1] = _yy_value_1_0
+          }
+          _yy_depth_1 += 1
+          yy_stack_push(stack, 15)
+          state = 15
+          break _yy_scope_14~
         })
-      12 =>
-        ({
-          ()
-          // goto word
-          continue match _yy_state_0 {
-              13 => 3
-              25 => 8
-              _ => panic()
-            }
-        })
-      13 =>
-        ({
-          ()
-          // goto amount
-          continue 9
-        })
-      14 =>
-        ({
-          ()
-          // goto item
-          continue 7
-        })
-      _ => panic()
     }
   }
+  _yy_error(
+    ({
+      ()
+      let mut _yy_error_states = yy_stack_snapshot(stack)
+      if error_depth > 0 {
+        _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
+      }
+      if error_depth > 1 {
+        _yy_error_states = @list.cons(error_suffix_1, _yy_error_states)
+      }
+      _yy_error_states
+    }), _yy_token_token, (_yy_token_start.unwrap(), _yy_token_end.unwrap())
+  )
+  panic()
 }
 
 ///|
 pub fn item(tokens : Array[(Token, Pos, Pos)], initial_pos? : Pos) -> Item raise ParseError {
-  match yy_parse(tokens, 6, 23, initial_pos?) {
+  match yy_parse(tokens, 3, 23, initial_pos?) {
     YYAccept_0(result) => result
     _ => panic()
   }
@@ -1114,7 +1176,7 @@ pub fn item(tokens : Array[(Token, Pos, Pos)], initial_pos? : Pos) -> Item raise
 
 ///|
 pub fn function(tokens : Array[(Token, Pos, Pos)], initial_pos? : Pos) -> Mapper raise ParseError {
-  match yy_parse(tokens, 5, 18, initial_pos?) {
+  match yy_parse(tokens, 2, 18, initial_pos?) {
     YYAccept_1(result) => result
     _ => panic()
   }
@@ -1122,7 +1184,7 @@ pub fn function(tokens : Array[(Token, Pos, Pos)], initial_pos? : Pos) -> Mapper
 
 ///|
 pub fn text(tokens : Array[(Token, Pos, Pos)], initial_pos? : Pos) -> String raise ParseError {
-  match yy_parse(tokens, 2, 13, initial_pos?) {
+  match yy_parse(tokens, 1, 13, initial_pos?) {
     YYAccept_2(result) => result
     _ => panic()
   }

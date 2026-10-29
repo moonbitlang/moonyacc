@@ -1,0 +1,54 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc/codegen/direct_ir/control_flow"
+
+import {
+  "moonbitlang/yacc/codegen/direct_ir",
+}
+
+// Values
+pub fn plan(@direct_ir.Program) -> Plan raise InvalidControl
+
+// Errors
+pub suberror InvalidControl {
+  InvalidControl(String)
+}
+
+// Types and methods
+pub(all) enum Control {
+  Run(Int32, Map[Int32, Transfer])
+  Sequence(Array[Control])
+  Scope(Int32, Control)
+  Loop(Int32, Control)
+  Dispatch(Int32, Array[Int32], Control)
+  Switch(Array[(Int32, Control)])
+  Select(Array[(Int32, Transfer)])
+}
+pub fn Control::uses_dispatch(Self) -> Bool
+
+pub struct Plan {
+  source : @direct_ir.Program
+  regions : Array[Region]
+  owner : Array[Int32]
+  addresses : Array[Int32]
+  stride : Int32
+}
+pub fn Plan::address(Self, Int32) -> Int32
+pub fn Plan::validate(Self) -> Unit raise InvalidControl
+
+pub struct Region {
+  members : Array[Int32]
+  entries : Array[Int32]
+  control : Control
+}
+
+pub(all) enum Transfer {
+  Break(Int32)
+  Enter(Int32)
+  Continue(Int32)
+  Dispatch(Int32)
+  Exit
+} derive(Eq)
+
+// Type aliases
+
+// Traits

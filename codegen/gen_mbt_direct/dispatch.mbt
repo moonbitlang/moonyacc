@@ -1,10 +1,10 @@
 ///|
 fn Emitter::block_body(
   self : Emitter,
-  pc : Int32,
+  label : Int32,
+  routes : Map[Int32, @control_flow.Transfer],
   no_comments : Bool,
 ) -> @mbt_ast.Block {
-  let label = self.layout.blocks[pc]
   let block = self.program.blocks[label]
   let statements : Array[@mbt_ast.Stmt] = []
   if !no_comments {
@@ -25,51 +25,30 @@ fn Emitter::block_body(
     }
   }
   statements.append(self.block_instructions(block))
-  let chunk = pc / self.blocks_per_chunk
-  let finish = self.terminator(block.terminator, chunk)
+  let finish = self.terminator(block.terminator, routes)
   statements.append(finish.statements)
   { statements, result: finish.result, }
 }
 
 ///|
-fn Emitter::dispatch(
-  self : Emitter,
-  first : Int32,
-  last : Int32,
-  pc : @mbt_ast.Expr,
-  no_comments : Bool,
-) -> @mbt_ast.Expr {
-  let arms = []
-  for label in first..<last {
-    arms.push(
-      (@mbt_ast.Pattern::Int(label), self.block_body(label, no_comments)),
+/// Every inter-region edge returns to this driver. The number of parser calls
+/// on the host stack is independent of input length and LR-stack depth.
+fn Emitter::region_dispatch(self : Emitter) -> @mbt_ast.Stmt {
+  let arms = self.control.regions.mapi((index, _) => {
+    (
+      @mbt_ast.Pattern::Int(index),
+      value_block(call("_yy_region_\{index}", [Ident("_env"), Ident("pc")])),
     )
-  }
-  arms.push((Any, value_block(call("panic", []))))
-  Match(pc, arms)
-}
-
-///|
-/// Chunks return a label to this outer loop; they never call each other.
-fn Emitter::chunk_dispatch(self : Emitter) -> @mbt_ast.Stmt {
-  let arms = []
-  for chunk in 0..<self.chunk_count() {
-    arms.push(
-      (
-        @mbt_ast.Pattern::Int(chunk),
-        value_block(call("_yy_chunk_\{chunk}", [Ident("_env"), Ident("pc")])),
-      ),
-    )
-  }
+  })
   arms.push((Any, value_block(call("panic", []))))
   For(
-    [("pc", Ident("entry"))],
+    [("pc", Ident("_entry"))],
     None,
     [],
     body([
       binding(
         "next",
-        Match(Binary(Divide, Ident("pc"), Int(self.blocks_per_chunk)), arms),
+        Match(Binary(Divide, Ident("pc"), Int(self.control.stride)), arms),
       ),
       Eval(
         If(
@@ -84,37 +63,44 @@ fn Emitter::chunk_dispatch(self : Emitter) -> @mbt_ast.Stmt {
 }
 
 ///|
-fn Emitter::chunk_item(
+fn Emitter::region_body(
   self : Emitter,
-  chunk : Int32,
+  region : Int32,
+  no_comments : Bool,
+) -> @mbt_ast.Block {
+  let control = self.control.regions[region].control
+  let statements = []
+  let scoped = if self.shared_context {
+    let slots = self.regional_slots(region)
+    statements.append(self.region_locals(slots))
+    { ..self, local_slots: slots.used, }
+  } else {
+    self
+  }
+  if control.uses_dispatch() {
+    statements.push(
+      @mbt_ast.Stmt::LetMut("_yy_control", Some(type_("Int")), Int(0)),
+    )
+  }
+  let code = scoped.structured(control, no_comments)
+  statements.append(code.statements)
+  { statements, result: code.result, }
+}
+
+///|
+fn Emitter::region_item(
+  self : Emitter,
+  region : Int32,
   no_comments : Bool,
 ) -> @mbt_ast.Item {
-  let first = chunk * self.blocks_per_chunk
-  let last = if first + self.blocks_per_chunk < self.layout.blocks.length() {
-    first + self.blocks_per_chunk
-  } else {
-    self.layout.blocks.length()
-  }
-  let chunk_body = if self.chunk_loops.contains(chunk) {
-    body([
-      For(
-        [("pc", Ident("_entry"))],
-        None,
-        [],
-        value_block(self.dispatch(first, last, Ident("pc"), no_comments)),
-      ),
-    ])
-  } else {
-    value_block(self.dispatch(first, last, Ident("_entry"), no_comments))
-  }
   @mbt_ast.item(
     Function(
       @mbt_ast.function(
-        "_yy_chunk_\{chunk}",
+        "_yy_region_\{region}",
         [typed("_env", type_("YYContext")), typed("_entry", type_("Int"))],
-        chunk_body,
+        self.region_body(region, no_comments),
         result=type_("Int"),
-        effect=if self.chunk_errors.contains(chunk) {
+        effect=if self.region_errors.contains(region) {
           Raises(type_("ParseError"))
         } else {
           Default

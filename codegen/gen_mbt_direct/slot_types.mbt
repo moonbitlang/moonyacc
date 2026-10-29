@@ -72,7 +72,12 @@ fn value_slot(
 ///|
 fn Emitter::place(self : Emitter, reg : @direct_ir.Register) -> @mbt_ast.Expr {
   match self.slots.get(reg.id) {
-    Some((kind, index)) => self.machine(self.slot_name(kind, index))
+    Some((kind, index)) =>
+      if self.local_slots.contains((kind, index)) {
+        Ident(self.slot_name(kind, index))
+      } else {
+        self.machine(self.slot_name(kind, index))
+      }
     None => Ident("_yy_r\{reg.id}")
   }
 }

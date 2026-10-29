@@ -64,7 +64,7 @@ priv enum YYResult {
 
 ///|
 fn yy_parse(
-  tokens : Array[(Token, Int, Int)], entry : Int, initial_state : Int,
+  tokens : Array[(Token, Int, Int)], _entry : Int, initial_state : Int,
   initial_pos? : Int
 ) -> YYResult raise ParseError {
   let mut cursor = 0
@@ -75,60 +75,54 @@ fn yy_parse(
   let mut _yy_token_token : Token? = None
   let mut _yy_token_start : Int = 0
   let mut _yy_token_end : Int = 0
-  match entry {
-    0 =>
+  _yy_scope_0~: while true {
+    break _yy_scope_0~
+  }
+  // run state 0
+  ({
+    ()
+    if cursor < tokens.length() {
+      let (token, sp, ep) = tokens[cursor]
+      cursor += 1
+      _yy_token_token = Some(token)
+      _yy_token_start = sp
+      _yy_token_end = ep
+    } else {
+      _yy_token_token = None
+      _yy_token_start = last_pos
+      _yy_token_end = last_pos
+    }
+  })
+  match _yy_token_token {
+    Some(VALUE(_yy_r16)) =>
       ({
         ()
-        // run state 0
-        ({
-          ()
-          if cursor < tokens.length() {
-            let (token, sp, ep) = tokens[cursor]
-            cursor += 1
-            _yy_token_token = Some(token)
-            _yy_token_start = sp
-            _yy_token_end = ep
-          } else {
-            _yy_token_token = None
-            _yy_token_start = last_pos
-            _yy_token_end = last_pos
-          }
-        })
-        match _yy_token_token {
-          Some(VALUE(_yy_r16)) =>
-            ({
-              ()
-              last_pos = _yy_token_end
-              _yy_token_token = None
-              _yy_token_start = 0
-              _yy_token_end = 0
-              error_suffix_0 = 2
-              error_depth = 1
-              let _yy_r27 = yy_action_0(_yy_r16)
-              let _yy_bind0 = _yy_r27
-              let _yy_r29 = _yy_bind0
-              return YYAccept_0(_yy_r29)
-            })
-          _ =>
-            ({
-              ()
-              _yy_error(
-                ({
-                  ()
-                  let mut _yy_error_states = @list.List([initial_state])
-                  if error_depth > 0 {
-                    _yy_error_states = @list.cons(
-                      error_suffix_0, _yy_error_states
-                    )
-                  }
-                  _yy_error_states
-                }), _yy_token_token, (_yy_token_start, _yy_token_end)
-              )
-              panic()
-            })
-        }
+        last_pos = _yy_token_end
+        _yy_token_token = None
+        _yy_token_start = 0
+        _yy_token_end = 0
+        error_suffix_0 = 2
+        error_depth = 1
+        let _yy_r27 = yy_action_0(_yy_r16)
+        let _yy_bind0 = _yy_r27
+        let _yy_r29 = _yy_bind0
+        return YYAccept_0(_yy_r29)
       })
-    _ => panic()
+    _ =>
+      ({
+        ()
+        _yy_error(
+          ({
+            ()
+            let mut _yy_error_states = @list.List([initial_state])
+            if error_depth > 0 {
+              _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
+            }
+            _yy_error_states
+          }), _yy_token_token, (_yy_token_start, _yy_token_end)
+        )
+        panic()
+      })
   }
 }
 

@@ -4,7 +4,7 @@ priv struct RegisterSupply {
 }
 
 ///|
-fn Instruction::definitions(self : Instruction) -> Array[Register] {
+pub fn Instruction::definitions(self : Instruction) -> Array[Register] {
   match self {
     ReadPreviousPosition(_, reg) | Action(_, _, _, reg) => [reg]
     Bind(pairs) => pairs.map(p => p.0)

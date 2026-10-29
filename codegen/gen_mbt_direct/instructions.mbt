@@ -69,17 +69,10 @@ fn Emitter::push_cell(
 fn Emitter::jump(
   self : Emitter,
   edge : @direct_ir.Edge,
-  chunk : Int32,
+  routes : Map[Int32, @control_flow.Transfer],
 ) -> @mbt_ast.Block {
   let statements = self.copies(edge)
-  let pc = self.layout.pc(edge.target)
-  statements.push(
-    if self.chunked && pc / self.blocks_per_chunk != chunk {
-      Return(Int(pc))
-    } else {
-      Continue([Int(pc)])
-    },
-  )
+  statements.append(self.control_transfer(edge.target, routes[edge.target]))
   body(statements)
 }
 
@@ -87,19 +80,19 @@ fn Emitter::jump(
 fn Emitter::terminator(
   self : Emitter,
   terminator : @direct_ir.Terminator,
-  chunk : Int32,
+  routes : Map[Int32, @control_flow.Transfer],
 ) -> @mbt_ast.Block {
   match terminator {
-    Jump(edge) => self.jump(edge, chunk)
-    CaseToken(arms, fallback) => self.token_cases(arms, fallback, chunk)
+    Jump(edge) => self.jump(edge, routes)
+    CaseToken(arms, fallback) => self.token_cases(arms, fallback, routes)
     CaseState(value, arms) =>
       self.branch_bodies(
         self.value(value),
         grouped_cases(arms, (a, b) => a == b),
-        chunk,
+        routes,
       )
     Return(entry, value) =>
-      if self.chunked {
+      if self.shared_context {
         body([
           Assign(
             self.machine("_yy_result"),
@@ -111,7 +104,7 @@ fn Emitter::terminator(
         body([Return(call("YYAccept_\{entry}", [self.value(value)]))])
       }
     Stop =>
-      if self.chunked {
+      if self.shared_context {
         body([Return(call("yy_stop", [Ident("_env")]))])
       } else {
         self.stop_body()

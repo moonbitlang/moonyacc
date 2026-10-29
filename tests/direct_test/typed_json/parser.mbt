@@ -108,7 +108,7 @@ fn yy_input_json(token : Token) -> Json {
 
 ///|
 fn yy_parse(
-  read_token : (() -> (Token, Unit, Unit)), start_pos : Unit, entry : Int,
+  read_token : (() -> (Token, Unit, Unit)), start_pos : Unit, _entry : Int,
   initial_state : Int
 ) -> YYResult raise ParseError {
   ignore(start_pos)
@@ -120,12 +120,30 @@ fn yy_parse(
   let mut error_suffix_1 : Int = 0
   let mut _yy_token_token : Token? = None
   let mut _yy_token_value : Json = Json::null()
-  for pc = entry {
-    match pc {
-      0 =>
+  _yy_scope_1~: while true {
+    _yy_scope_0~: while true {
+      break _yy_scope_0~
+    }
+    // run state 0
+    ({
+      ()
+      let (token, _, _) = read_token()
+      _yy_token_token = Some(token)
+      _yy_token_value = yy_input_json(token)
+    })
+    match _yy_token_token {
+      Some(VALUE(_)) =>
         ({
           ()
-          // run state 0
+          let _yy_r35 = _yy_token_value
+          _yy_token_token = None
+          _yy_token_value = Json::null()
+          yy_stack_checkpoint(stack)
+          error_suffix_0 = 2
+          error_depth = 1
+          let _yy_r52 = yy_action_1(_yy_r35)
+          let _yy_bind0 = _yy_r52
+          let _yy_r68 = _yy_bind0
           ({
             ()
             let (token, _, _) = read_token()
@@ -133,76 +151,50 @@ fn yy_parse(
             _yy_token_value = yy_input_json(token)
           })
           match _yy_token_token {
-            Some(VALUE(_)) =>
+            Some(EOF) =>
               ({
                 ()
-                let _yy_r35 = _yy_token_value
+                let _yy_r71 = _yy_token_value
                 _yy_token_token = None
                 _yy_token_value = Json::null()
                 yy_stack_checkpoint(stack)
-                error_suffix_0 = 2
-                error_depth = 1
-                let _yy_r52 = yy_action_1(_yy_r35)
-                let _yy_bind0 = _yy_r52
-                let _yy_r68 = _yy_bind0
-                ({
-                  ()
-                  let (token, _, _) = read_token()
-                  _yy_token_token = Some(token)
-                  _yy_token_value = yy_input_json(token)
-                })
-                match _yy_token_token {
-                  Some(EOF) =>
-                    ({
-                      ()
-                      let _yy_r71 = _yy_token_value
-                      _yy_token_token = None
-                      _yy_token_value = Json::null()
-                      yy_stack_checkpoint(stack)
-                      error_suffix_0 = 3
-                      error_suffix_1 = 4
-                      error_depth = 2
-                      let _yy_r75 = yy_action_0(_yy_r68, _yy_r71)
-                      let _yy_bind0 = _yy_r75
-                      let _yy_r77 = _yy_bind0
-                      return YYAccept_0(_yy_r77)
-                    })
-                  _ =>
-                    ({
-                      ()
-                      yy_stack_push(stack, 3)
-                      continue 1
-                    })
-                }
+                error_suffix_0 = 3
+                error_suffix_1 = 4
+                error_depth = 2
+                let _yy_r75 = yy_action_0(_yy_r68, _yy_r71)
+                let _yy_bind0 = _yy_r75
+                let _yy_r77 = _yy_bind0
+                return YYAccept_0(_yy_r77)
               })
             _ =>
               ({
                 ()
-                continue 1
+                yy_stack_push(stack, 3)
+                break _yy_scope_1~
               })
           }
         })
-      1 =>
+      _ =>
         ({
           ()
-          _yy_error(
-            ({
-              ()
-              let mut _yy_error_states = yy_stack_snapshot(stack)
-              if error_depth > 0 {
-                _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
-              }
-              if error_depth > 1 {
-                _yy_error_states = @list.cons(error_suffix_1, _yy_error_states)
-              }
-              _yy_error_states
-            }), _yy_token_token, ((), ())
-          )
-          panic()
+          break _yy_scope_1~
         })
-      _ => panic()
     }
   }
+  _yy_error(
+    ({
+      ()
+      let mut _yy_error_states = yy_stack_snapshot(stack)
+      if error_depth > 0 {
+        _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
+      }
+      if error_depth > 1 {
+        _yy_error_states = @list.cons(error_suffix_1, _yy_error_states)
+      }
+      _yy_error_states
+    }), _yy_token_token, ((), ())
+  )
+  panic()
 }
 
 ///|

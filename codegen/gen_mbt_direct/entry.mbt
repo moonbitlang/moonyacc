@@ -14,7 +14,7 @@ fn Emitter::entry_item(
         ],
         [
           @mbt_ast.Argument::Positional(Ident("tokens")),
-          Positional(Int(self.layout.pc(entry.block))),
+          Positional(Int(self.control.address(entry.block))),
           Positional(Int(entry.state)),
           ForwardOptional("initial_pos"),
         ],
@@ -28,7 +28,7 @@ fn Emitter::entry_item(
         [
           @mbt_ast.Argument::Positional(Ident("read_token")),
           Positional(Ident("start_pos")),
-          Positional(Int(self.layout.pc(entry.block))),
+          Positional(Int(self.control.address(entry.block))),
           Positional(Int(entry.state)),
         ],
       )
@@ -49,7 +49,7 @@ fn Emitter::entry_item(
         parameters,
         value_block(Match(Call(Ident("yy_parse"), arguments), arms)),
         result=entry.result_type,
-        effect=if self.chunk_errors.is_empty() {
+        effect=if self.region_errors.is_empty() {
           Default
         } else {
           Raises(type_("ParseError"))

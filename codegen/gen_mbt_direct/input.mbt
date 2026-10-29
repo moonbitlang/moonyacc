@@ -144,7 +144,7 @@ fn Emitter::read_lookahead(
   self : Emitter,
   ready~ : Bool = true,
 ) -> @mbt_ast.Stmt {
-  let read = if self.chunked {
+  let read = if self.shared_context {
     value_block(call("yy_read_token", [Ident("_env")]))
   } else {
     self.read_token_body()

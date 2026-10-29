@@ -107,6 +107,7 @@ pub(all) enum Instruction {
   Peek(Int32, Cell, Array[Register?])
   Action(Int32, Array[ActionArgument], Value, Register)
 } derive(Eq)
+pub fn Instruction::definitions(Self) -> Array[Register]
 
 pub(all) enum Lookahead {
   Any
@@ -205,6 +206,7 @@ pub(all) enum Terminator {
 } derive(Eq)
 pub fn Terminator::bodies(Self) -> Array[Body]
 pub fn Terminator::can_stop(Self) -> Bool
+pub fn Terminator::successors(Self) -> Array[Int32]
 pub fn Terminator::token_patterns(Self) -> Array[TokenPattern]
 
 pub(all) enum Token {

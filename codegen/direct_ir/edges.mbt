@@ -21,7 +21,7 @@ fn Body::map_edges(self : Body, f : (Edge) -> Edge raise?) -> Body raise? {
 }
 
 ///|
-fn Terminator::successors(self : Terminator) -> Array[Int32] {
+pub fn Terminator::successors(self : Terminator) -> Array[Int32] {
   match self {
     Jump(edge) => [edge.target]
     CaseToken(arms, fallback) => {

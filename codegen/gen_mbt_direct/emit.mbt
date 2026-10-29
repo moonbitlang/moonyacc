@@ -1,5 +1,5 @@
 ///|
-/// Assemble runtime storage, parser dispatch, chunks and public entry wrappers.
+/// Assemble runtime storage, structured regions and public entry wrappers.
 fn Emitter::parser_items(
   self : Emitter,
   no_comments~ : Bool,
@@ -15,9 +15,9 @@ fn Emitter::parser_items(
     }) {
     items.append(self.token_items())
   }
-  if self.chunked {
+  if self.shared_context {
     items.push(self.context_item())
-    if !self.chunk_errors.is_empty() {
+    if !self.region_errors.is_empty() {
       items.push(self.stop_item())
     }
     if self.program.blocks
@@ -32,9 +32,9 @@ fn Emitter::parser_items(
     }
   }
   items.push(self.parse_item(no_comments))
-  if self.chunked {
-    for chunk in 0..<self.chunk_count() {
-      items.push(self.chunk_item(chunk, no_comments))
+  if self.shared_context {
+    for region in 0..<self.control.regions.length() {
+      items.push(self.region_item(region, no_comments))
     }
   }
   for index, entry in self.program.entries {

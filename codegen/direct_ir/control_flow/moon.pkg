@@ -1,0 +1,3 @@
+import {
+  "moonbitlang/yacc/codegen/direct_ir",
+}
