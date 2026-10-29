@@ -73,6 +73,28 @@ fn Program::validate_metadata(self : Program) -> Unit raise InvalidProgram {
     for id in action.rhs {
       ignore(self.checked_symbol(id))
     }
+    for input in action.inputs {
+      match input {
+        Value(index, type_) => {
+          require(
+            index >= 0 && index < action.rhs.length(),
+            "action input index out of range",
+          )
+          require(
+            self.symbols[action.rhs[index]].type_ == type_,
+            "action input type mismatch",
+          )
+        }
+        Position(StartOf(index) | EndOf(index)) =>
+          require(
+            index >= 0 && index < action.rhs.length(),
+            "action position index out of range",
+          )
+        Position(BeforeRhs) => ()
+        Position(FirstNonEmpty(_)) =>
+          raise InvalidProgram("non-atomic action input")
+      }
+    }
   }
   for entry in self.entries {
     require(

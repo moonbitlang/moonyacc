@@ -6,91 +6,47 @@ fn Emitter::bindings(
   registers : Array[@direct_ir.Register?],
 ) -> Array[@mbt_ast.Stmt] {
   let statements = []
-  let wanted : Array[(@direct_ir.Field, @direct_ir.Register)] = []
   for i, reg in registers {
-    if reg is Some(reg) && !self.erased_register(reg) {
-      if cell.fields[i] is State {
-        statements.push(self.bind_register(reg, self.state_at(depth)))
-      } else {
-        wanted.push((cell.fields[i], reg))
-      }
+    guard reg is Some(reg) && !self.erased_register(reg) else { continue }
+    let field = cell.fields[i]
+    let value = if field is State {
+      self.state_at(depth)
+    } else {
+      let lane = self.stack.lane(cell.symbol.unwrap(), field)
+      let above = self.stack.above(self.flow.read_above[reg.id], lane)
+      self.lane_read(lane, above)
     }
-  }
-  guard cell.symbol is Some(symbol) else { return statements }
-  let fields = wanted.map(p => p.0)
-  let arms : Array[(@mbt_ast.Pattern, @mbt_ast.Block)] = []
-  for layout in self.cells {
-    if layout.symbol != symbol ||
-      (fields.contains(Semantic) && !layout.has_value) ||
-      (fields.contains(Start) && !layout.start) ||
-      (fields.contains(End) && !layout.end) {
-      continue
-    }
-    let pattern = layout.pattern(
-      Any,
-      Any,
-      if fields.contains(Semantic) {
-        Bind("_value")
-      } else {
-        Any
-      },
-      if fields.contains(Start) {
-        Bind("_start")
-      } else {
-        Any
-      },
-      if fields.contains(End) {
-        Bind("_end")
-      } else {
-        Any
-      },
-    )
-    let values = fields.map(field => {
-      @mbt_ast.Expr::Ident(
-        match field {
-          Semantic => "_value"
-          Start => "_start"
-          End => "_end"
-          State => abort("unexpected state field")
-        },
-      )
-    })
-    let result : @mbt_ast.Expr = match values {
-      [] => Unit
-      [single] => single
-      _ => Tuple(values)
-    }
-    arms.push((pattern, value_block(result)))
-  }
-  arms.push((Any, value_block(call("panic", []))))
-  let read : @mbt_ast.Expr = Match(self.stack_at(depth), arms)
-  match wanted {
-    [] => statements.push(Eval(read))
-    [(_, reg)] => statements.push(self.bind_register(reg, read))
-    _ => {
-      statements.push(
-        Let(
-          Tuple(wanted.map(p => @mbt_ast.Pattern::Bind("_yy_read\{p.1.id}"))),
-          None,
-          read,
-        ),
-      )
-      for (_, reg) in wanted {
-        statements.push(self.bind_register(reg, Ident("_yy_read\{reg.id}")))
-      }
-    }
+    statements.push(self.bind_register(reg, value))
   }
   statements
 }
 
 ///|
-fn Emitter::pop_one(self : Emitter) -> Array[@mbt_ast.Stmt] {
-  [
-    binding("_yy_tail", self.stack_call("tail", [self.machine("stack")])),
-    Assign(
-      self.machine("state"),
-      self.stack_call("saved", [self.machine("stack")]),
+fn Emitter::pop_cells(
+  self : Emitter,
+  cells : Array[@direct_ir.Cell],
+) -> Array[@mbt_ast.Stmt] {
+  let statements : Array[@mbt_ast.Stmt] = []
+  let counts : Map[Int32, Int32] = Map([])
+  for cell in cells {
+    for (_, lane) in self.stack.symbols[cell.symbol.unwrap()] {
+      counts[lane] = counts.get(lane).unwrap_or(0) + 1
+    }
+  }
+  for (lane, count) in counts {
+    statements.push(
+      Augment(self.machine(lane_depth(lane)), Subtract, Int(count)),
+    )
+  }
+  statements.push(
+    Augment(
+      Field(self.machine("stack"), Named("depth")),
+      Subtract,
+      Int(cells.length()),
     ),
-    Assign(self.machine("stack"), Ident("_yy_tail")),
-  ]
+  )
+  if self.cache_state {
+    statements.push(Assign(self.machine("state"), self.stored_state_at(0)))
+  }
+  statements
 }

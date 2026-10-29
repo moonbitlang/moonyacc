@@ -9,7 +9,7 @@ fn SnapshotPlan::new(blocks : Array[@direct_ir.Block]) -> SnapshotPlan {
   let mut saves = false
   let mut width = 0
   for block in blocks {
-    for instruction in block.instructions {
+    for instruction in block.all_instructions() {
       if instruction is SaveErrorSnapshot(suffix) {
         saves = true
         width = Int32::max(width, suffix.length())
@@ -29,16 +29,7 @@ fn snapshot_slot(index : Int32) -> String {
 fn SnapshotPlan::storage(
   self : SnapshotPlan,
 ) -> Array[(@mbt_ast.Field, @mbt_ast.Expr)] {
-  let storage : Array[(@mbt_ast.Field, @mbt_ast.Expr)] = [
-    (
-      { name: "error_stack", type_: type_("YYStack"), mutable: self.saves, },
-      Ident("YYEmpty"),
-    ),
-    (
-      { name: "error_state", type_: type_("Int"), mutable: self.saves, },
-      Ident("initial_state"),
-    ),
-  ]
+  let storage : Array[(@mbt_ast.Field, @mbt_ast.Expr)] = []
   if self.width > 0 {
     storage.push(
       ({ name: "error_depth", type_: type_("Int"), mutable: true, }, Int(0)),
@@ -76,12 +67,14 @@ fn SnapshotPlan::capture(
   self : SnapshotPlan,
   suffix : Array[@mbt_ast.Expr],
   machine : (String) -> @mbt_ast.Expr,
+  physical~ : Bool = true,
 ) -> Array[@mbt_ast.Stmt] {
   guard suffix.length() <= self.width else { abort("snapshot suffix overflow") }
-  let statements : Array[@mbt_ast.Stmt] = [
-    Assign(machine("error_stack"), machine("stack")),
-    Assign(machine("error_state"), machine("state")),
-  ]
+  let statements : Array[@mbt_ast.Stmt] = if physical {
+    [Eval(call("yy_stack_checkpoint", [machine("stack")]))]
+  } else {
+    []
+  }
   for index, value in suffix {
     statements.push(Assign(machine(snapshot_slot(index)), value))
   }
@@ -97,9 +90,11 @@ fn Emitter::save_snapshot(
   self : Emitter,
   suffix : Array[@direct_ir.Value],
 ) -> Array[@mbt_ast.Stmt] {
-  self.snapshots.capture(suffix.map(v => self.value(v)), name => {
-    self.machine(name)
-  })
+  self.snapshots.capture(
+    suffix.map(v => self.value(v)),
+    name => self.machine(name),
+    physical=self.has_stack,
+  )
 }
 
 ///|
@@ -138,9 +133,10 @@ fn SnapshotPlan::states(
 
 ///|
 fn Emitter::snapshot_states(self : Emitter) -> @mbt_ast.Expr {
-  let prefix = self.stack_call("states", [
-    self.machine("error_stack"),
-    self.machine("error_state"),
-  ])
+  let prefix = if self.has_stack {
+    call("yy_stack_snapshot", [self.machine("stack")])
+  } else {
+    call("@list.List", [Array([self.machine("initial_state")])])
+  }
   self.snapshots.states(prefix, name => self.machine(name))
 }

@@ -1,0 +1,161 @@
+// Token-domain propagation follows Menhir's StackLangTokenAnalysis. Stack-state
+// domains use the same checked transfer functions as the physical stack proof.
+
+///|
+fn append_body(instructions : Array[Instruction], rest : Body) -> Body {
+  {
+    instructions: [..instructions, ..rest.instructions],
+    terminator: rest.terminator,
+  }
+}
+
+///|
+fn StackFlowPass::prune(
+  self : StackFlowPass,
+  body : Body,
+  machine : StackMachineFact,
+  lookahead : Lookahead,
+) -> Body raise InvalidProgram {
+  let machine = machine.copy()
+  let instructions = []
+  let mut lookahead = lookahead
+  for instruction in body.instructions {
+    let redundant = instruction is EnsureLookahead &&
+      lookahead is (Present | On(_))
+    let emitted = if instruction is EnsureLookahead && lookahead is Empty {
+      Instruction::LoadLookahead
+    } else {
+      instruction
+    }
+    match instruction {
+      EnsureLookahead | LoadLookahead =>
+        if !(lookahead is On(_)) {
+          lookahead = Present
+        }
+      ConsumeLookahead => lookahead = Empty
+      _ => ()
+    }
+    self.instruction(instruction, machine)
+    if !redundant {
+      instructions.push(emitted)
+    }
+  }
+  let finish = match body.terminator {
+    CaseToken(arms, fallback) => {
+      let remaining = machine.tokens.copy()
+      let live = []
+      for (tokens, branch) in arms {
+        let selected = tokens.filter(token => machine.tokens.contains(token))
+        for token in tokens {
+          remaining.remove(token)
+        }
+        if !selected.is_empty() {
+          live.push(
+            (
+              selected,
+              self.prune(
+                branch,
+                { ..machine, empty_token: false, tokens: Set(selected), },
+                if selected is [token] {
+                  On(token)
+                } else {
+                  Present
+                },
+              ),
+            ),
+          )
+        }
+      }
+      if lookahead is On(token) &&
+        live is [([selected], branch)] &&
+        selected == token {
+        return append_body(instructions, branch)
+      }
+      // Keep the checked cold failure continuation and public error ABI even
+      // when the token fixed point proves it unreachable on well-formed input.
+      let fallback = if remaining.is_empty() {
+        if self.program.cold_failure(fallback) {
+          fallback
+        } else {
+          { instructions: [], terminator: Unreachable, }
+        }
+      } else {
+        self.prune(fallback, { ..machine, tokens: remaining, }, lookahead)
+      }
+      CaseToken(live, fallback)
+    }
+    CaseState(value, arms) => {
+      let fact = machine.value(value)
+      let live = []
+      for (state, branch) in arms {
+        if !fact.states.contains(state) {
+          continue
+        }
+        let machine = machine.copy()
+        if value is Reg(reg) {
+          machine.registers[reg.id] = { ..fact, states: Set([state]), }
+        }
+        if fact.depth == Some(0) {
+          machine.current = Set([state])
+          self.refine(machine)
+        }
+        live.push((state, self.prune(branch, machine, lookahead)))
+      }
+      if live is [(_, branch), ..] && live.all(p => p.1 == branch) {
+        return append_body(instructions, branch)
+      }
+      CaseState(value, live)
+    }
+    term => term
+  }
+  { instructions, terminator: finish, }
+}
+
+///|
+fn Program::cold_failure(self : Program, body : Body) -> Bool {
+  if !body.instructions.is_empty() {
+    return false
+  }
+  match body.terminator {
+    Stop => true
+    Jump(edge) => {
+      let target = self.blocks[edge.target]
+      target.parameters.is_empty() &&
+      target.instructions.is_empty() &&
+      target.terminator is Stop
+    }
+    _ => false
+  }
+}
+
+///|
+/// Remove only branches excluded by the whole-CFG fixed point. Keeping a
+/// singleton token test when it supplies an Input witness preserves the lookahead
+/// IR contract; the target compiler can still simplify its pattern binding.
+pub fn Program::prune_control(
+  self : Program,
+  knowledge : StackKnowledge,
+) -> Program raise InvalidProgram {
+  let flow = self.stack_flow(knowledge)
+  let pass = StackFlowPass::new(self, knowledge)
+  let blocks = self.blocks.mapi((label, block) => {
+    let body = match flow.entries[label] {
+      None =>
+        if block.instructions.is_empty() && block.terminator is Stop {
+          { instructions: [], terminator: block.terminator, }
+        } else {
+          { instructions: [], terminator: Unreachable, }
+        }
+      Some(entry) =>
+        pass.prune(
+          { instructions: block.instructions, terminator: block.terminator, },
+          entry.machine(block),
+          block.lookahead,
+        )
+    }
+    { ..block, instructions: body.instructions, terminator: body.terminator, }
+  })
+  let result = Program::{ ..self, blocks, }.compact()
+  result.validate()
+  result
+}

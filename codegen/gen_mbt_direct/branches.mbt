@@ -23,15 +23,6 @@ fn[T] grouped_cases(
 }
 
 ///|
-fn branch_patterns(
-  arms : Array[(Int32, @direct_ir.Edge)],
-) -> Array[(@mbt_ast.Pattern, @direct_ir.Edge)] {
-  grouped_cases(arms, (a, b) => {
-    a.target == b.target && a.arguments == b.arguments
-  })
-}
-
-///|
 /// Factor a shared control transfer out of branches once parameter copies are
 /// proven to be identities. State IDs in the stack are not block labels.
 fn Emitter::branch_jump(
@@ -108,4 +99,58 @@ fn Emitter::transfer(
       ),
     ),
   ])
+}
+
+///|
+fn Emitter::inline_body(
+  self : Emitter,
+  code : @direct_ir.Body,
+  chunk : Int32,
+) -> @mbt_ast.Block {
+  let block : @direct_ir.Block = {
+    hint: NoHint,
+    origin: Helper,
+    parameters: [],
+    lookahead: Any,
+    instructions: code.instructions,
+    terminator: code.terminator,
+  }
+  let statements = self.block_instructions(block)
+  let finish = self.terminator(code.terminator, chunk)
+  statements.append(finish.statements)
+  { statements, result: finish.result, }
+}
+
+///|
+fn Emitter::branch_bodies(
+  self : Emitter,
+  value : @mbt_ast.Expr,
+  branches : Array[(@mbt_ast.Pattern, @direct_ir.Body)],
+  chunk : Int32,
+  fallback? : @direct_ir.Body,
+) -> @mbt_ast.Block {
+  if branches.all(p => p.1.edge() is Some(_)) &&
+    fallback.map(b => b.edge() is Some(_)).unwrap_or(true) {
+    let fallback = match fallback {
+      Some(body) => body.edge()
+      None => None
+    }
+    return self.branch_jump(
+      value,
+      branches.map(p => (p.0, p.1.edge().unwrap())),
+      chunk,
+      fallback?,
+    )
+  }
+  let arms = branches.map(p => (p.0, self.inline_body(p.1, chunk)))
+  arms.push(
+    (
+      Any,
+      match fallback {
+        Some(body) => self.inline_body(body, chunk)
+        None => value_block(call("panic", []))
+      },
+    ),
+  )
+  value_block(Match(value, arms))
 }

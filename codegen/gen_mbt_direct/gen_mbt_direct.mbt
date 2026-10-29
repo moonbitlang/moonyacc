@@ -11,20 +11,15 @@ fn codegen(
   mode~ : @codegen.Mode = Default,
   input_mode~ : @codegen.InputMode = Array,
 ) -> Unit {
+  let knowledge = @direct_ir.analyze_stack(grammar, automaton)
   let program = @direct_ir.lower(grammar, automaton, meta, mode~)
-  program.validate() catch {
+  let prepared = program.prepare(
+    knowledge,
+    positions=!(meta.position_data_type is Constr(pkg=None, "Unit", [])),
+  ) catch {
     InvalidProgram(message) => abort(message)
   }
-  let program = program.simplify()
-  let program = program.specialize_states() catch {
-    InvalidProgram(message) => abort(message)
-  }
-  let program = program.eliminate_stack() catch {
-    InvalidProgram(message) => abort(message)
-  }
-  program.validate() catch {
-    InvalidProgram(message) => abort(message)
-  }
+  let program = prepared.program
   let support = @mbt_common.Context::new(
     grammar,
     automaton,
@@ -36,9 +31,11 @@ fn codegen(
   )
   let items = support.preamble(external_tokens~)
   items.append(support.typed_action_items())
-  let emitter = Emitter::new(program, meta, support, input_mode)
+  let emitter = Emitter::new(prepared, meta, support, input_mode)
   items.append(emitter.parser_items(no_comments~))
-  items.append(diagnostic_items(program, meta.position_data_type, input_mode))
+  if !emitter.chunk_errors.is_empty() {
+    items.append(diagnostic_items(program, meta.position_data_type, input_mode))
+  }
   items.append(support.typed_action_runtime())
   items.append(support.footer())
   @mbt_ast.emit(items, output, source_map_builder?)

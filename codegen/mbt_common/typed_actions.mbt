@@ -2,7 +2,7 @@
 fn Context::parameter_value(
   self : Context,
   action : @elab.Action,
-  parameter : ActionParameter,
+  parameter : @elab.ActionInput,
 ) -> @mbt_ast.Expr {
   match parameter {
     Value(_, Constr(pkg=None, "Unit", [])) => Unit

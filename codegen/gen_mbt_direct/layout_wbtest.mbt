@@ -1,16 +1,17 @@
 ///|
 test "shared error exits preserve effects, parameters and LR provenance" {
   let stop : @direct_ir.Block = {
+    hint: NoHint,
     origin: Helper,
     parameters: [],
     lookahead: Present,
     instructions: [],
-    terminator: Stop(0),
+    terminator: Stop,
   }
   let position : @direct_ir.Register = { id: 0, type_: Position, }
   let blocks : Array[@direct_ir.Block] = [
     stop,
-    { ..stop, lookahead: On(Terminal(1)), terminator: Stop(1), },
+    { ..stop, lookahead: On(Terminal(1)), terminator: Stop, },
     { ..stop, instructions: [SaveErrorSnapshot([])], },
     { ..stop, parameters: [position], },
     {
@@ -26,7 +27,7 @@ test "shared error exits preserve effects, parameters and LR provenance" {
   assert_eq(layout.pc(3), 2)
   assert_eq(layout.pc(4), 3)
   // Planning aliases emitted labels without rewriting the validated IR.
-  assert_true(blocks[1].terminator is Stop(1))
+  assert_true(blocks[1].terminator is Stop)
   assert_true(blocks[4].instructions is [Bind([(_, State(1))])])
   guard blocks[4].terminator is Jump(edge) else { fail("lost edge") }
   assert_eq(layout.pc(edge.target), layout.pc(0))

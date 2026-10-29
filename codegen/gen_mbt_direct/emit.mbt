@@ -4,8 +4,13 @@ fn Emitter::parser_items(
   self : Emitter,
   no_comments~ : Bool,
 ) -> Array[@mbt_ast.Item] {
-  let items = [self.stack_item(), self.result_item(), self.lookahead_item()]
-  if self.program.blocks.any(b => b.instructions.any(i => i is EnsureLookahead)) {
+  let items = [self.result_item()]
+  if self.has_stack {
+    items.push(state_stack_item(self.snapshots.saves))
+  }
+  if self.program.blocks.any(b => {
+      b.all_instructions().any(i => i is (EnsureLookahead | LoadLookahead))
+    }) {
     items.append(self.token_items())
   }
   if self.chunked {
@@ -13,12 +18,14 @@ fn Emitter::parser_items(
     if !self.chunk_errors.is_empty() {
       items.push(self.stop_item())
     }
-    if self.program.blocks.iter().any(b => shift_target(b) is Some(_)) {
-      items.push(self.shift_item())
-    }
     if self.program.blocks
       .iter()
-      .any(b => b.instructions.iter().any(i => i is EnsureLookahead)) {
+      .any(b => {
+        b
+        .all_instructions()
+        .iter()
+        .any(i => i is (EnsureLookahead | LoadLookahead))
+      }) {
       items.push(self.input_item())
     }
   }
@@ -31,6 +38,14 @@ fn Emitter::parser_items(
   for index, entry in self.program.entries {
     items.push(self.entry_item(index, entry))
   }
-  items.append(self.stack_helper_items())
+  if self.program.blocks.any(b => b.all_instructions().any(i => i is Push(_))) {
+    items.push(state_push_item())
+  }
+  if self.has_stack {
+    if self.snapshots.saves {
+      items.push(state_checkpoint_item())
+    }
+    items.push(state_snapshot_item())
+  }
   items
 }

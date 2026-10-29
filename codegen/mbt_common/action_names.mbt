@@ -3,14 +3,14 @@
 /// conservatively reserving every textual occurrence also protects references
 /// to globals, strings and comments without pretending to parse MoonBit here.
 priv struct ActionPlan {
-  parameters : Array[(ActionParameter, String)]
+  parameters : Array[(@elab.ActionInput, String)]
   subactions : Array[String]
 }
 
 ///|
 fn ActionPlan::new(
   action : @elab.Action,
-  parameters : Array[ActionParameter],
+  parameters : Array[@elab.ActionInput],
 ) -> ActionPlan {
   let used = Set::from_iter(action.bindings.iter().map(binding => binding.1))
   let text = match action.body {
@@ -34,7 +34,9 @@ fn ActionPlan::new(
     }
   }
   {
-    parameters: parameters.map(parameter => (parameter, fresh(parameter.name()))),
+    parameters: parameters.map(parameter => {
+      (parameter, fresh(parameter_base_name(parameter)))
+    }),
     subactions: action.sub_actions.mapi((index, _) => {
       fresh("_sub_action_\{index}_result")
     }),
@@ -42,14 +44,17 @@ fn ActionPlan::new(
 }
 
 ///|
-fn ActionPlan::contains(self : ActionPlan, parameter : ActionParameter) -> Bool {
+fn ActionPlan::contains(
+  self : ActionPlan,
+  parameter : @elab.ActionInput,
+) -> Bool {
   self.parameters.any(pair => pair.0 == parameter)
 }
 
 ///|
 fn ActionPlan::parameter_name(
   self : ActionPlan,
-  parameter : ActionParameter,
+  parameter : @elab.ActionInput,
 ) -> String {
   for (candidate, name) in self.parameters {
     if candidate == parameter {

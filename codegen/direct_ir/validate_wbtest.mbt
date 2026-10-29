@@ -17,6 +17,7 @@ test "snapshot suffix values must be defined LR states" {
   let state : Register = { id: 1, type_: State, }
   let program = fixture([
     {
+      hint: NoHint,
       origin: Helper,
       parameters: [],
       lookahead: Any,
@@ -51,16 +52,18 @@ test "token extraction requires a checked branch, even after ensuring lookahead"
   let ep : Register = { id: 2, type_: Position, }
   let program = fixture([
     {
+      hint: NoHint,
       origin: Helper,
       parameters: [],
       lookahead: Any,
       instructions: [EnsureLookahead],
-      terminator: CaseToken([(Terminal(1), { target: 1, arguments: [], })], {
-        target: 2,
-        arguments: [],
-      }),
+      terminator: CaseToken(
+        [([Terminal(1)], Body::jump({ target: 1, arguments: [], }))],
+        Body::jump({ target: 2, arguments: [], }),
+      ),
     },
     {
+      hint: NoHint,
       origin: Helper,
       parameters: [],
       lookahead: On(Terminal(1)),
@@ -68,11 +71,12 @@ test "token extraction requires a checked branch, even after ensuring lookahead"
       terminator: Return(0, Reg(v)),
     },
     {
+      hint: NoHint,
       origin: Helper,
       parameters: [],
       lookahead: Present,
       instructions: [],
-      terminator: Stop(0),
+      terminator: Stop,
     },
   ])
   program.validate()
@@ -94,6 +98,7 @@ test "block arguments enforce both types and local SSA scope" {
   let b : Register = { id: 1, type_: Position, }
   let program = fixture([
     {
+      hint: NoHint,
       origin: Helper,
       parameters: [],
       lookahead: Any,
@@ -101,6 +106,7 @@ test "block arguments enforce both types and local SSA scope" {
       terminator: Jump({ target: 1, arguments: [Reg(a)], }),
     },
     {
+      hint: NoHint,
       origin: Helper,
       parameters: [b],
       lookahead: Any,

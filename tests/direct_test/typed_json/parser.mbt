@@ -72,23 +72,17 @@ fn yy_action_1(_value_0 : Json) -> Json {
 }
 
 ///|
-priv enum YYStack {
-  YYEmpty
-  YYCell_4(YYStack, Int, Json)
-  YYCell_3(YYStack, Int, Json)
-  YYCell_5(YYStack, Int, Json)
-}
-
-///|
 priv enum YYResult {
   YYAccept_0(Json)
 }
 
 ///|
-priv struct YYLookahead {
-  symbol : Int
-  token : Token?
-  value : Json
+priv struct YYStateStack {
+  values : Array[Int]
+  mut depth : Int
+  mut checkpoint : Int
+  mut saved_prefix : Int
+  undo : Array[Int]
 }
 
 ///|
@@ -127,131 +121,96 @@ fn yy_parse(
   initial_state : Int
 ) -> YYResult raise ParseError {
   ignore(start_pos)
-  let mut stack : YYStack = YYEmpty
-  let mut state : Int = initial_state
-  let mut error_stack : YYStack = YYEmpty
-  let mut error_state : Int = initial_state
+  let stack : YYStateStack = YYStateStack::{
+    values: [initial_state], depth: 1, checkpoint: 1, saved_prefix: 1, undo: []
+  }
   let mut error_depth : Int = 0
   let mut error_suffix_0 : Int = 0
-  let mut lookahead : YYLookahead? = None
-  let mut _yy_state_0 : Int = 0
-  let mut _yy_value_1_0 : Json = Json::null()
+  let mut error_suffix_1 : Int = 0
+  let mut _yy_token_symbol : Int = 0
+  let mut _yy_token_token : Token? = None
+  let mut _yy_token_value : Json = Json::null()
   for pc = entry {
     match pc {
       0 =>
         ({
           ()
           // run state 0
-          if lookahead is None {
+          ({
+            ()
             let (token, _, _) = read_token()
-            lookahead = Some(
-              YYLookahead::{
-                symbol: yy_symbol(token), token: Some(token),
-                value: yy_input_json(token)
-              }
-            )
+            _yy_token_symbol = yy_symbol(token)
+            _yy_token_token = Some(token)
+            _yy_token_value = yy_input_json(token)
+          })
+          match _yy_token_symbol {
+            1 =>
+              ({
+                ()
+                let _yy_r35 = _yy_token_value
+                _yy_token_token = None
+                _yy_token_value = Json::null()
+                yy_stack_checkpoint(stack)
+                error_suffix_0 = 2
+                error_depth = 1
+                let _yy_r52 = yy_action_1(_yy_r35)
+                let _yy_bind0 = _yy_r52
+                let _yy_r68 = _yy_bind0
+                ({
+                  ()
+                  let (token, _, _) = read_token()
+                  _yy_token_symbol = yy_symbol(token)
+                  _yy_token_token = Some(token)
+                  _yy_token_value = yy_input_json(token)
+                })
+                match _yy_token_symbol {
+                  3 =>
+                    ({
+                      ()
+                      let _yy_r71 = _yy_token_value
+                      _yy_token_token = None
+                      _yy_token_value = Json::null()
+                      yy_stack_checkpoint(stack)
+                      error_suffix_0 = 3
+                      error_suffix_1 = 4
+                      error_depth = 2
+                      let _yy_r75 = yy_action_0(_yy_r68, _yy_r71)
+                      let _yy_bind0 = _yy_r75
+                      let _yy_r77 = _yy_bind0
+                      return YYAccept_0(_yy_r77)
+                    })
+                  _ =>
+                    ({
+                      ()
+                      yy_stack_push(stack, 3)
+                      continue 1
+                    })
+                }
+              })
+            _ =>
+              ({
+                ()
+                continue 1
+              })
           }
-          continue match lookahead.unwrap().symbol {
-              1 => 7
-              _ => 4
-            }
         })
       1 =>
-        ({
-          ()
-          // run state 3
-          if lookahead is None {
-            let (token, _, _) = read_token()
-            lookahead = Some(
-              YYLookahead::{
-                symbol: yy_symbol(token), token: Some(token),
-                value: yy_input_json(token)
-              }
-            )
-          }
-          continue match lookahead.unwrap().symbol {
-              3 => 6
-              _ => 4
-            }
-        })
-      2 =>
-        ({
-          ()
-          // reduce start -> value EOF
-          guard! stack is YYCell_3(_yy_tail1, _yy_saved1, _yy_r23)
-          guard! _yy_tail1 is YYCell_5(_yy_tail0, _yy_saved0, _yy_r20)
-          _yy_value_1_0 = yy_action_0(_yy_r20, _yy_r23)
-          stack = _yy_tail0
-          state = _yy_saved0
-          _yy_state_0 = state
-          continue 3
-        })
-      3 =>
-        ({
-          ()
-          // goto start
-          match _yy_state_0 {
-            0 => ()
-            _ => panic()
-          }
-          stack = YYCell_4(stack, state, _yy_value_1_0)
-          state = 1
-          continue 5
-        })
-      4 =>
         ({
           ()
           yy_error(
             ({
               ()
-              let mut _yy_error_states = yy_stack_states(
-                error_stack, error_state
-              )
+              let mut _yy_error_states = yy_stack_snapshot(stack)
               if error_depth > 0 {
                 _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
               }
+              if error_depth > 1 {
+                _yy_error_states = @list.cons(error_suffix_1, _yy_error_states)
+              }
               _yy_error_states
-            }), lookahead.unwrap().token, ((), ())
+            }), _yy_token_token, ((), ())
           )
           panic()
-        })
-      5 =>
-        ({
-          ()
-          let _yy_r32 = match stack {
-            YYCell_4(_, _, _value) => _value
-            _ => panic()
-          }
-          return YYAccept_0(_yy_r32)
-        })
-      6 =>
-        ({
-          ()
-          // shift EOF into state 4
-          let _yy_r33 = lookahead.unwrap().value
-          stack = YYCell_3(stack, state, _yy_r33)
-          state = 4
-          lookahead = None
-          error_stack = stack
-          error_state = state
-          error_depth = 0
-          continue 2
-        })
-      7 =>
-        ({
-          ()
-          // shift VALUE into state 2
-          let _yy_r36 = lookahead.unwrap().value
-          lookahead = None
-          error_stack = stack
-          error_state = state
-          error_suffix_0 = 2
-          error_depth = 1
-          let _yy_r43 = yy_action_1(_yy_r36)
-          let _yy_r44 = state
-          stack = YYCell_5(stack, state, _yy_r43)
-          state = 3
-          continue 1
         })
       _ => panic()
     }
@@ -266,40 +225,42 @@ pub fn start(read_token : (() -> (Token, Unit, Unit)), start_pos : Unit) -> Json
 }
 
 ///|
-fn yy_stack_tail(stack : YYStack) -> YYStack {
-  match stack {
-    YYCell_4(tail, _, _) => tail
-    YYCell_3(tail, _, _) => tail
-    YYCell_5(tail, _, _) => tail
-    YYEmpty => panic()
-  }
-}
-
-///|
-fn yy_stack_saved(stack : YYStack) -> Int {
-  match stack {
-    YYCell_4(_, saved, _) => saved
-    YYCell_3(_, saved, _) => saved
-    YYCell_5(_, saved, _) => saved
-    YYEmpty => panic()
-  }
-}
-
-///|
-fn yy_stack_states(stack : YYStack, state : Int) -> @list.List[Int] {
-  let states : Array[Int] = []
-  for stack = stack, state = state {
-    states.push(state)
-    if stack is YYEmpty {
-      break
+fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
+  while stack.saved_prefix > stack.depth {
+    stack.saved_prefix -= 1
+    if stack.checkpoint - stack.saved_prefix - 1 == stack.undo.length() {
+      stack.undo.push(stack.values[stack.saved_prefix])
+    } else {
+      stack.undo[stack.checkpoint - stack.saved_prefix - 1] = stack.values[stack.saved_prefix]
     }
-    continue yy_stack_tail(stack), yy_stack_saved(stack)
   }
-  let mut result : @list.List[Int] = @list.List([])
-  for i = states.length() - 1; i >= 0; i = i - 1 {
-    result = @list.cons(states[i], result)
+  if stack.depth == stack.values.length() {
+    stack.values.push(state)
+  } else {
+    stack.values[stack.depth] = state
   }
-  result
+  stack.depth += 1
+}
+
+///|
+fn yy_stack_checkpoint(stack : YYStateStack) -> Unit {
+  stack.checkpoint = stack.depth
+  stack.saved_prefix = stack.depth
+}
+
+///|
+fn yy_stack_snapshot(stack : YYStateStack) -> @list.List[Int] {
+  let mut states : @list.List[Int] = @list.List([])
+  for i = 0; i < stack.checkpoint; i = i + 1 {
+    states = @list.cons(
+      if i < stack.saved_prefix {
+        stack.values[i]
+      } else {
+        stack.undo[stack.checkpoint - i - 1]
+      }, states
+    )
+  }
+  states
 }
 
 ///|

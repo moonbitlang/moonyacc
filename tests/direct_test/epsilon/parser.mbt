@@ -66,24 +66,9 @@ fn yy_action_1() -> Unit {
 }
 
 ///|
-priv enum YYStack {
-  YYEmpty
-  YYCell_2_void(YYStack, Int, Int)
-  YYCell_1(YYStack, Int, Int, Int)
-}
-
-///|
 priv enum YYResult {
   YYAccept_0(Int)
   YYAccept_1(Unit)
-}
-
-///|
-priv struct YYLookahead {
-  symbol : Int
-  token : Token?
-  start : Int
-  end : Int
 }
 
 ///|
@@ -101,149 +86,91 @@ fn yy_parse(
   let mut cursor = 0
   let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
   let last_pos = initial_position
-  let mut stack : YYStack = YYEmpty
-  let mut state : Int = initial_state
-  let error_stack : YYStack = YYEmpty
-  let error_state : Int = initial_state
-  let mut lookahead : YYLookahead? = None
-  let mut _yy_state_0 : Int = 0
-  let mut _yy_position_0 : Int = initial_position
-  let mut _yy_position_1 : Int = initial_position
-  let mut _yy_value_2_0 : Int = 0
+  let mut _yy_token_symbol : Int = 0
+  let mut _yy_token_token : Token? = None
+  let mut _yy_token_start : Int = 0
+  let mut _yy_token_end : Int = 0
   for pc = entry {
     match pc {
       0 =>
         ({
           ()
           // run state 0
-          if lookahead is None {
+          ({
+            ()
             if cursor < tokens.length() {
               let (token, sp, ep) = tokens[cursor]
               cursor += 1
-              lookahead = Some(
-                YYLookahead::{
-                  symbol: yy_symbol(token), token: Some(token), start: sp,
-                  end: ep
-                }
-              )
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
             } else {
-              lookahead = Some(
-                YYLookahead::{
-                  symbol: 0, token: None, start: last_pos, end: last_pos
-                }
-              )
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
             }
+          })
+          match _yy_token_symbol {
+            0 =>
+              ({
+                ()
+                ignore(yy_action_1())
+                return YYAccept_1(())
+              })
+            _ =>
+              ({
+                ()
+                continue 2
+              })
           }
-          continue match lookahead.unwrap().symbol {
-              0 => 2
-              _ => 6
-            }
         })
       1 =>
         ({
           ()
           // run state 2
-          if lookahead is None {
+          ({
+            ()
             if cursor < tokens.length() {
               let (token, sp, ep) = tokens[cursor]
               cursor += 1
-              lookahead = Some(
-                YYLookahead::{
-                  symbol: yy_symbol(token), token: Some(token), start: sp,
-                  end: ep
-                }
-              )
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
             } else {
-              lookahead = Some(
-                YYLookahead::{
-                  symbol: 0, token: None, start: last_pos, end: last_pos
-                }
-              )
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
             }
+          })
+          match _yy_token_symbol {
+            0 =>
+              ({
+                ()
+                let _yy_r30 = initial_position
+                let _yy_r31 = yy_action_0(_yy_r30)
+                let _yy_bind0 = _yy_r31
+                let _yy_r36 = _yy_bind0
+                return YYAccept_0(_yy_r36)
+              })
+            _ =>
+              ({
+                ()
+                continue 2
+              })
           }
-          continue match lookahead.unwrap().symbol {
-              0 => 4
-              _ => 6
-            }
         })
       2 =>
         ({
           ()
-          // reduce unit ->
-          _yy_position_0 = if stack is YYEmpty {
-            initial_position
-          } else {
-            yy_stack_end(stack)
-          }
-          yy_action_1()
-          _yy_state_0 = state
-          _yy_position_1 = _yy_position_0
-          continue 3
-        })
-      3 =>
-        ({
-          ()
-          // goto unit
-          match _yy_state_0 {
-            0 => ()
-            _ => panic()
-          }
-          stack = YYCell_2_void(stack, state, _yy_position_1)
-          state = 1
-          continue 7
-        })
-      4 =>
-        ({
-          ()
-          // reduce position ->
-          _yy_position_0 = if stack is YYEmpty {
-            initial_position
-          } else {
-            yy_stack_end(stack)
-          }
-          _yy_value_2_0 = yy_action_0(_yy_position_0)
-          _yy_state_0 = state
-          _yy_position_1 = _yy_position_0
-          continue 5
-        })
-      5 =>
-        ({
-          ()
-          // goto position
-          match _yy_state_0 {
-            2 => ()
-            _ => panic()
-          }
-          stack = YYCell_1(stack, state, _yy_value_2_0, _yy_position_1)
-          state = 3
-          continue 8
-        })
-      6 =>
-        ({
-          ()
           yy_error(
-            yy_stack_states(error_stack, error_state), lookahead.unwrap().token,
-            (lookahead.unwrap().start, lookahead.unwrap().end)
+            @list.List([initial_state]), _yy_token_token,
+            (_yy_token_start, _yy_token_end)
           )
           panic()
-        })
-      7 =>
-        ({
-          ()
-          match stack {
-            YYCell_2_void(_, _, _) => ()
-            _ => panic()
-          }
-          return YYAccept_1(())
-        })
-      8 =>
-        ({
-          ()
-          let _yy_r21 = match stack {
-            YYCell_1(_, _, _value, _) => _value
-            _ => panic()
-          }
-          return YYAccept_0(_yy_r21)
         })
       _ => panic()
     }
@@ -264,50 +191,6 @@ pub fn unit(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Unit raise
     YYAccept_1(result) => result
     _ => panic()
   }
-}
-
-///|
-fn yy_stack_tail(stack : YYStack) -> YYStack {
-  match stack {
-    YYCell_2_void(tail, _, _) => tail
-    YYCell_1(tail, _, _, _) => tail
-    YYEmpty => panic()
-  }
-}
-
-///|
-fn yy_stack_saved(stack : YYStack) -> Int {
-  match stack {
-    YYCell_2_void(_, saved, _) => saved
-    YYCell_1(_, saved, _, _) => saved
-    YYEmpty => panic()
-  }
-}
-
-///|
-fn yy_stack_end(stack : YYStack) -> Int {
-  match stack {
-    YYCell_2_void(_, _, end) => end
-    YYCell_1(_, _, _, end) => end
-    YYEmpty => panic()
-  }
-}
-
-///|
-fn yy_stack_states(stack : YYStack, state : Int) -> @list.List[Int] {
-  let states : Array[Int] = []
-  for stack = stack, state = state {
-    states.push(state)
-    if stack is YYEmpty {
-      break
-    }
-    continue yy_stack_tail(stack), yy_stack_saved(stack)
-  }
-  let mut result : @list.List[Int] = @list.List([])
-  for i = states.length() - 1; i >= 0; i = i - 1 {
-    result = @list.cons(states[i], result)
-  }
-  result
 }
 
 ///|

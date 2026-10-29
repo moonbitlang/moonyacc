@@ -5,7 +5,14 @@ fn Emitter::parse_parameters(self : Emitter) -> Array[@mbt_ast.Parameter] {
       [
         typed("tokens", self.tokens_type()),
         typed("entry", type_("Int")),
-        typed("initial_state", type_("Int")),
+        typed(
+          if !self.has_stack && self.chunk_errors.is_empty() {
+            "_initial_state"
+          } else {
+            "initial_state"
+          },
+          type_("Int"),
+        ),
         Optional("initial_pos", self.meta.position_data_type, None),
       ]
     Pull =>
@@ -13,7 +20,14 @@ fn Emitter::parse_parameters(self : Emitter) -> Array[@mbt_ast.Parameter] {
         typed("read_token", Arrow([], self.located_type())),
         typed("start_pos", self.meta.position_data_type),
         typed("entry", type_("Int")),
-        typed("initial_state", type_("Int")),
+        typed(
+          if !self.has_stack && self.chunk_errors.is_empty() {
+            "_initial_state"
+          } else {
+            "initial_state"
+          },
+          type_("Int"),
+        ),
       ]
   }
 }
@@ -63,19 +77,30 @@ fn Emitter::parse_item(self : Emitter, no_comments : Bool) -> @mbt_ast.Item {
   } else {
     statements.append(self.local_storage())
     statements.push(
-      For(
-        [("pc", Ident("entry"))],
-        None,
-        [],
-        value_block(
+      if self.chunk_loops.contains(0) {
+        For(
+          [("pc", Ident("entry"))],
+          None,
+          [],
+          value_block(
+            self.dispatch(
+              0,
+              self.layout.blocks.length(),
+              Ident("pc"),
+              no_comments,
+            ),
+          ),
+        )
+      } else {
+        Eval(
           self.dispatch(
             0,
             self.layout.blocks.length(),
-            Ident("pc"),
+            Ident("entry"),
             no_comments,
           ),
-        ),
-      ),
+        )
+      },
     )
   }
   @mbt_ast.item(
@@ -85,7 +110,11 @@ fn Emitter::parse_item(self : Emitter, no_comments : Bool) -> @mbt_ast.Item {
         self.parse_parameters(),
         body(statements),
         result=type_("YYResult"),
-        effect=Raises(type_("ParseError")),
+        effect=if self.chunk_errors.is_empty() {
+          Default
+        } else {
+          Raises(type_("ParseError"))
+        },
       ),
     ),
   )

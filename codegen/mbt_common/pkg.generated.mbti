@@ -33,19 +33,12 @@ pub(all) enum ActionCalls {
   Direct
 }
 
-pub(all) enum ActionParameter {
-  Value(Int32, @elab.TypeExpr)
-  Position(@elab.PositionExpr)
-} derive(Eq)
-pub fn ActionParameter::equal(Self, Self) -> Bool
-pub fn ActionParameter::not_equal(Self, Self) -> Bool
-
 pub struct Context {
   // private fields
 }
 pub fn Context::action_id(Self, @elab.Action) -> Int32
 pub fn Context::action_items(Self) -> Array[@mbt_ast.Item]
-pub fn Context::action_parameters(Self, @elab.Action) -> Array[ActionParameter]
+pub fn Context::action_parameters(Self, @elab.Action) -> Array[@elab.ActionInput]
 pub fn Context::action_runtime(Self) -> Array[@mbt_ast.Item]
 pub fn Context::action_uses_before_rhs(Self, @elab.Action) -> Bool
 pub fn Context::footer(Self) -> Array[@mbt_ast.Item]
@@ -59,7 +52,7 @@ pub fn Context::reduction_reference(Self, @elab.Action) -> @mbt_ast.Expr
 pub fn Context::reduction_type(Self) -> @elab.TypeExpr
 pub fn Context::runtime_types(Self, Engine) -> Array[@mbt_ast.Item]
 pub fn Context::tracks_positions(Self) -> Bool
-pub fn Context::typed_action_call(Self, @elab.Action, (ActionParameter) -> @mbt_ast.Expr) -> @mbt_ast.Expr
+pub fn Context::typed_action_call(Self, @elab.Action, (@elab.ActionInput) -> @mbt_ast.Expr) -> @mbt_ast.Expr
 pub fn Context::typed_action_items(Self) -> Array[@mbt_ast.Item]
 pub fn Context::typed_action_runtime(Self) -> Array[@mbt_ast.Item]
 

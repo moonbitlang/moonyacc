@@ -5,24 +5,16 @@ fn Emitter::instruction(
 ) -> Array[@mbt_ast.Stmt] {
   match instruction {
     EnsureLookahead => [self.read_lookahead()]
+    LoadLookahead => [self.read_lookahead(ready=false)]
     Input(token, value, start, end) =>
       self.input_bindings(token, value, start, end)
-    ConsumeLookahead => {
-      let statements : Array[@mbt_ast.Stmt] = []
-      if self.input_mode is Array && self.support.tracks_positions() {
-        statements.push(
-          Assign(self.machine("last_pos"), self.cached_position(end=true)),
-        )
-      }
-      statements.push(Assign(self.machine("lookahead"), Ident("None")))
-      statements
-    }
+    ConsumeLookahead => self.consume_lookahead()
     SaveErrorSnapshot(suffix) => self.save_snapshot(suffix)
     ReadPreviousPosition(depth, reg) =>
       if self.erased_register(reg) {
         []
       } else {
-        [self.bind_register(reg, self.previous_position(depth))]
+        [self.bind_register(reg, self.previous_position(depth, reg))]
       }
     Bind(pairs) => {
       let pairs = pairs.filter(p => !self.erased_register(p.0))
@@ -38,7 +30,7 @@ fn Emitter::instruction(
     Push(cell, values) => self.push_cell(cell, values)
     Pop(cell, registers) => {
       let statements = self.bindings(0, cell, registers)
-      statements.append(self.pop_one())
+      statements.append(self.pop_cells([cell]))
       statements
     }
     Peek(depth, cell, registers) => self.bindings(depth, cell, registers)
@@ -53,60 +45,26 @@ fn Emitter::push_cell(
   cell : @direct_ir.Cell,
   values : Array[@direct_ir.Value],
 ) -> Array[@mbt_ast.Stmt] {
-  let fields : Array[@mbt_ast.Expr?] = [None, None, None, None]
-  for i, field in cell.fields {
-    let index = match field {
-      State => 0
-      Semantic => 1
-      Start => 2
-      End => 3
-    }
-    fields[index] = Some(self.value(values[i]))
-  }
-  let layout = self.cell_layout(cell)
-  let start = if layout.start {
-    fields[2].unwrap_or_else(() => self.previous_position(0))
-  } else {
-    @mbt_ast.Expr::Unit
-  }
-  let end = if layout.end {
-    fields[3].unwrap_or_else(() => self.previous_position(0))
-  } else {
-    @mbt_ast.Expr::Unit
-  }
-  self.push_values(
-    cell,
-    fields[0].unwrap_or(Int(0)),
-    fields[1].unwrap_or(Unit),
-    start,
-    end,
-  )
-}
-
-///|
-fn Emitter::push_values(
-  self : Emitter,
-  cell : @direct_ir.Cell,
-  state : @mbt_ast.Expr,
-  value : @mbt_ast.Expr,
-  start : @mbt_ast.Expr,
-  end : @mbt_ast.Expr,
-) -> Array[@mbt_ast.Stmt] {
-  [
-    Assign(
-      self.machine("stack"),
-      self
-      .cell_layout(cell)
-      .construct(
-        self.machine("stack"),
-        self.machine("state"),
-        value,
-        start,
-        end,
+  let symbol = cell.symbol.unwrap()
+  let statements : Array[@mbt_ast.Stmt] = []
+  for (field, lane) in self.stack.symbols[symbol] {
+    let index = cell.fields.search(field).unwrap()
+    let depth = self.machine(lane_depth(lane))
+    statements.push(
+      array_stack_write(
+        self.machine(lane_name(lane)),
+        depth,
+        self.value(values[index]),
       ),
-    ),
-    Assign(self.machine("state"), state),
-  ]
+    )
+    statements.push(Augment(depth, Add, Int(1)))
+  }
+  let state = self.value(values[cell.fields.search(State).unwrap()])
+  statements.push(Eval(call("yy_stack_push", [self.machine("stack"), state])))
+  if self.cache_state {
+    statements.push(Assign(self.machine("state"), state))
+  }
+  statements
 }
 
 ///|
@@ -136,14 +94,27 @@ fn Emitter::terminator(
   match terminator {
     Jump(edge) => self.jump(edge, chunk)
     CaseToken(arms, fallback) =>
-      self.branch_jump(
+      self.branch_bodies(
         self.cached("symbol"),
-        branch_patterns(arms.map(p => (token_id(p.0), p.1))),
+        arms.map(p => {
+          (
+            if p.0 is [token] {
+              @mbt_ast.Pattern::Int(token_id(token))
+            } else {
+              Or(p.0.map(t => @mbt_ast.Pattern::Int(token_id(t))))
+            },
+            p.1,
+          )
+        }),
         chunk,
         fallback~,
       )
     CaseState(value, arms) =>
-      self.branch_jump(self.value(value), branch_patterns(arms), chunk)
+      self.branch_bodies(
+        self.value(value),
+        grouped_cases(arms, (a, b) => a == b),
+        chunk,
+      )
     Return(entry, value) =>
       if self.chunked {
         body([
@@ -156,7 +127,7 @@ fn Emitter::terminator(
       } else {
         body([Return(call("YYAccept_\{entry}", [self.value(value)]))])
       }
-    Stop(_) =>
+    Stop =>
       if self.chunked {
         body([Return(call("yy_stop", [Ident("_env")]))])
       } else {

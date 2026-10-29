@@ -15,6 +15,7 @@ fn check_block(
   arguments : Array[Value],
 ) -> Block {
   {
+    hint: NoHint,
     origin: Helper,
     parameters,
     lookahead: Any,
@@ -363,7 +364,9 @@ test "stack rewrite checker resolves parallel copies and constant state exits" {
   assert_false(check_stack_rewrite(invalid_parallel, invalid_parallel))
   let branch = {
     ..check_block([], [Bind([(state, State(2))])], []),
-    terminator: CaseState(Reg(state), [(2, { target: 1, arguments: [], })]),
+    terminator: CaseState(Reg(state), [
+      (2, Body::jump({ target: 1, arguments: [], })),
+    ]),
   }
   assert_true(
     check_stack_rewrite(branch, {
@@ -404,9 +407,87 @@ test "stack rewrite checker rejects incompatible cells and malformed reads" {
   assert_false(check_stack_rewrite(bad_arity, bad_arity))
   let bad_field = {
     ..valid,
-    instructions: [Push({ symbol: Some(1), fields: [State], }, [State(4)])],
+    instructions: [
+      Push({ symbol: Some(1), fields: [State, State], }, [State(4), State(4)]),
+    ],
   }
   assert_false(check_stack_rewrite(bad_field, bad_field))
   let unbound_reg = { ..valid, terminator: Return(0, Reg(check_int(99))), }
   assert_false(check_stack_rewrite(unbound_reg, unbound_reg))
+}
+
+///|
+test "stack checker state seed applies only to the original prefix top" {
+  let parameter = check_reg(0, State)
+  let top = check_reg(1, State)
+  let deep = check_reg(2, State)
+  let opaque_cell : Cell = { symbol: None, fields: [State], }
+  let original = check_block(
+    [parameter],
+    [Peek(0, opaque_cell, [Some(top)]), Peek(1, opaque_cell, [Some(deep)])],
+    [Reg(top), Reg(deep), Reg(parameter)],
+  )
+  let specialized = {
+    ..original,
+    terminator: Jump({
+      target: 0,
+      arguments: [State(4), Reg(deep), Reg(parameter)],
+    }),
+  }
+  assert_true(check_stack_rewrite(original, specialized, incoming_state=4))
+  assert_false(check_stack_rewrite(original, specialized))
+  assert_false(
+    check_stack_rewrite(
+      original,
+      {
+        ..specialized,
+        terminator: Jump({
+          target: 0,
+          arguments: [State(4), State(4), Reg(parameter)],
+        }),
+      },
+      incoming_state=4,
+    ),
+  )
+  assert_false(
+    check_stack_rewrite(
+      original,
+      {
+        ..specialized,
+        terminator: Jump({
+          target: 0,
+          arguments: [State(4), Reg(deep), State(4)],
+        }),
+      },
+      incoming_state=4,
+    ),
+  )
+  // A constant result does not authorize removing the unknown prefix access.
+  assert_false(
+    check_stack_rewrite(
+      original,
+      { ..specialized, instructions: [Peek(1, opaque_cell, [Some(deep)])], },
+      incoming_state=4,
+    ),
+  )
+  let popped = check_block(
+    [],
+    [Pop(cell(1), [None, None, None, None]), Peek(0, opaque_cell, [Some(top)])],
+    [Reg(top)],
+  )
+  assert_false(
+    check_stack_rewrite(
+      popped,
+      { ..popped, terminator: Jump({ target: 0, arguments: [State(4)], }), },
+      incoming_state=4,
+    ),
+  )
+  let snapshot = check_block([], [SaveErrorSnapshot([])], [])
+  assert_false(
+    check_stack_rewrite(
+      snapshot,
+      { ..snapshot, instructions: [SaveErrorSnapshot([State(4)])], },
+      incoming_state=4,
+    ),
+  )
 }

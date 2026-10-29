@@ -57,42 +57,56 @@ fn Lowering::lower_state(self : Lowering, state : @lr1.LR1State) -> Unit {
     }
   }
   let default_ = default_decision(state, !gotos.is_empty())
-  self.program.diagnostics.push({
+  self.program.diagnostics[state.num] = {
     default_: default_.map(d => self.diagnostic(d)),
     actions: state.action
     .iter()
     .map(p => (token(p.0), self.diagnostic(p.1)))
     .to_array(),
     gotos,
-  })
+  }
   // Terminal goto edges can retain shifts removed by precedence resolution.
   // Only the resolved action map is allowed to build token branches.
   let (instructions, terminator) = match default_ {
-    Some(decision) => ([], Jump(self.target(state, decision, EndOfInput)))
+    Some(decision) => {
+      let body = self.target(state, decision, EndOfInput)
+      (body.instructions, body.terminator)
+    }
     None => {
-      let stop = self.reserve(Helper)
-      self.program.blocks[stop] = {
-        origin: Helper,
-        parameters: [],
-        lookahead: Present,
-        instructions: [],
-        terminator: Stop(state.num),
+      let stop = self.error_label
+      let arms : Array[(Array[Token], Body)] = []
+      for (lookahead, decision) in state.action {
+        let input = token(lookahead)
+        let body = self.target(state, decision, input)
+        if arms.search_by(p => p.1 == body) is Some(index) {
+          arms[index].0.push(input)
+        } else {
+          arms.push(([input], body))
+        }
       }
-      let arms = state.action
-        .iter()
-        .map(p => {
-          let input = token(p.0)
-          (input, self.target(state, p.1, input))
-        })
-        .to_array()
-      ([EnsureLookahead], CaseToken(arms, edge(stop)))
+      ([EnsureLookahead], CaseToken(arms, Body::jump(edge(stop))))
     }
   }
+  let parameters = self.program.blocks[state.num].parameters
+  let prefix = []
+  let mut lookahead = if self.incoming[state.num] is None { Empty } else { Any }
+  if self.incoming[state.num] is Some(symbol) {
+    guard! parameters is [value, start, end]
+    prefix.push(
+      Push(cell(symbol), [State(state.num), Reg(value), Reg(start), Reg(end)]),
+    )
+    if symbol <= self.program.terminal_count {
+      prefix.append([ConsumeLookahead, SaveErrorSnapshot([])])
+      lookahead = On(Terminal(symbol))
+    }
+  }
+  prefix.append(instructions)
   self.program.blocks[state.num] = {
     origin: Run(state.num),
-    parameters: [],
-    lookahead: Any,
-    instructions,
+    hint: NoHint,
+    parameters,
+    lookahead,
+    instructions: prefix,
     terminator,
   }
 }
@@ -103,44 +117,31 @@ fn Lowering::target(
   state : @lr1.LR1State,
   decision : @lr1.Decision,
   input : Token,
-) -> Edge {
+) -> Body {
   match decision {
-    Reduce(p) => edge(self.reduce_labels[p.num])
+    Reduce(p) => Body::jump(edge(self.reduce_labels[p.num]))
     Shift(next) => {
       guard input is Terminal(term) else {
         abort("cannot shift internal end-of-input")
       }
-      self.shift_edge(term, next.num)
+      self.shift_body(term, next.num)
     }
-    Accept => self.accept_edge(state)
+    Accept => Body::jump(self.accept_edge(state))
     Conflict(_) => abort("direct backend requires resolved conflicts")
   }
 }
 
 ///|
-/// Shifting a token into a state is independent of its predecessor.
-fn Lowering::shift_edge(self : Lowering, term : Int32, target : Int32) -> Edge {
-  if self.shifts.get((term, target)) is Some(label) {
-    return edge(label)
-  }
+/// Token payloads are bound in the selecting branch. The target run routine
+/// owns its incoming cell, so a shared run can commute its push into its cases.
+fn Lowering::shift_body(self : Lowering, term : Int32, target : Int32) -> Body {
   let value = self.fresh(Semantic(self.program.symbols[term].type_))
   let sp = self.fresh(Position)
   let ep = self.fresh(Position)
-  let label = self.reserve(Shift(target, term))
-  self.program.blocks[label] = {
-    origin: Shift(target, term),
-    parameters: [],
-    lookahead: On(Terminal(term)),
-    instructions: [
-      Input(term, value, sp, ep),
-      Push(cell(term), [State(target), Reg(value), Reg(sp), Reg(ep)]),
-      ConsumeLookahead,
-      SaveErrorSnapshot([]),
-    ],
-    terminator: Jump(edge(target)),
+  {
+    instructions: [Input(term, value, sp, ep)],
+    terminator: Jump({ target, arguments: [Reg(value), Reg(sp), Reg(ep)], }),
   }
-  self.shifts[(term, target)] = label
-  edge(label)
 }
 
 ///|
@@ -162,9 +163,10 @@ fn Lowering::accept_edge(self : Lowering, state : @lr1.LR1State) -> Edge {
   let label = self.reserve(Helper)
   self.program.blocks[label] = {
     origin: Helper,
+    hint: IfCells(1),
     parameters: [],
     lookahead: Any,
-    instructions: [Peek(0, cell(symbol), [None, Some(value), None, None])],
+    instructions: [Pop(cell(symbol), [None, Some(value), None, None])],
     terminator: Return(entry, Reg(value)),
   }
   edge(label)

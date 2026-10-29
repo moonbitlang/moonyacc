@@ -26,7 +26,7 @@ pub(all) enum Field {
   Semantic
   Start
   End
-} derive(Eq)
+} derive(Eq, Hash)
 
 ///|
 /// Fields describe a logical cell, not a concrete tuple/array representation.
@@ -41,7 +41,7 @@ pub(all) struct ActionArgument {
   value : Value
   start : Value
   end : Value
-}
+} derive(Eq)
 
 ///|
 pub(all) enum Token {
@@ -62,6 +62,8 @@ pub(all) enum Lookahead {
 ///|
 pub(all) enum Instruction {
   EnsureLookahead
+  // Unconditional lexer read, requiring an empty cache.
+  LoadLookahead
   Input(Int32, Register, Register, Register)
   ConsumeLookahead
   // Snapshot the physical stack plus a virtual suffix of destination states,
@@ -74,38 +76,69 @@ pub(all) enum Instruction {
   Pop(Cell, Array[Register?])
   Peek(Int32, Cell, Array[Register?])
   Action(Int32, Array[ActionArgument], Value, Register)
-}
+} derive(Eq)
 
 ///|
 /// Jump arguments are evaluated in parallel, before binding target parameters.
 pub(all) struct Edge {
   target : Int32
   arguments : Array[Value]
-}
+} derive(Eq)
 
 ///|
 pub(all) enum Terminator {
   Jump(Edge)
-  CaseToken(Array[(Token, Edge)], Edge)
-  CaseState(Value, Array[(Int32, Edge)])
+  CaseToken(Array[(Array[Token], Body)], Body)
+  CaseState(Value, Array[(Int32, Body)])
   Return(Int32, Value)
-  Stop(Int32)
+  Stop
   Unreachable
+} derive(Eq)
+
+///|
+/// Branches are extended basic blocks. Their definitions are scoped below the
+/// branch; only explicit Jump arguments can escape to another CFG block.
+pub(all) struct Body {
+  instructions : Array[Instruction]
+  terminator : Terminator
+} derive(Eq)
+
+///|
+pub fn Body::jump(edge : Edge) -> Body {
+  { instructions: [], terminator: Jump(edge), }
+}
+
+///|
+pub fn Body::edge(self : Body) -> Edge? {
+  if self.instructions.is_empty() && self.terminator is Jump(edge) {
+    Some(edge)
+  } else {
+    None
+  }
 }
 
 ///|
 /// Provenance is for diagnostics/dumps, not a restriction on block contents.
 pub(all) enum Origin {
   Run(Int32)
-  Shift(Int32, Int32) // destination LR state, terminal symbol
   Reduce(Int32)
   Goto(Int32)
   Helper
 }
 
 ///|
+/// Producer-supplied optimization policy, never a typing assumption.
+pub(all) enum InlineHint {
+  NoHint
+  Always
+  IfKnownState
+  IfCells(Int32)
+} derive(Eq)
+
+///|
 pub(all) struct Block {
   origin : Origin
+  hint : InlineHint
   parameters : Array[Register]
   lookahead : Lookahead
   instructions : Array[Instruction]
@@ -130,6 +163,7 @@ pub(all) struct Symbol {
 pub(all) struct ActionSignature {
   rhs : Array[Int32]
   lhs : Int32
+  inputs : Array[@elab.ActionInput]
   callable : Bool
 }
 

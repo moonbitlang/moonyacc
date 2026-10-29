@@ -61,7 +61,9 @@ fn StackCheck::snapshot(
   self : StackCheck,
   suffix : Array[Value],
 ) -> Unit raise InvalidProgram {
-  let states = self.suffix.map(cell => cell.values[0])
+  let states = self.suffix.map(cell => {
+    cell.values[cell.cell.fields.search(State).unwrap()]
+  })
   for value in suffix {
     let value = self.value(value)
     require(value.type_() == State, "stack rewrite snapshot state type")
@@ -77,7 +79,7 @@ fn StackCheck::instruction(
   instruction : Instruction,
 ) -> Unit raise InvalidProgram {
   match instruction {
-    EnsureLookahead => self.trace.push(ReadLookahead)
+    EnsureLookahead | LoadLookahead => self.trace.push(ReadLookahead)
     Input(token, value, start, end) => self.input(token, value, start, end)
     ConsumeLookahead => self.trace.push(AdvanceLookahead)
     SaveErrorSnapshot(suffix) => self.snapshot(suffix)

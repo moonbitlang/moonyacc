@@ -8,6 +8,13 @@ fn BlockValidator::instruction(
       if !(self.lookahead is On(_)) {
         self.lookahead = Present
       }
+    LoadLookahead => {
+      self.check(
+        self.lookahead is Empty,
+        "unconditional read requires an empty cache",
+      )
+      self.lookahead = Present
+    }
     Input(t, value, sp, ep) => self.input(t, value, sp, ep)
     ConsumeLookahead => {
       self.check(
@@ -124,13 +131,16 @@ fn BlockValidator::terminator(
         "CaseToken requires lookahead",
       )
       let seen = []
-      for (t, target) in arms {
-        self.program.checked_token(t)
-        self.check(!seen.contains(t), "duplicate token branch")
-        seen.push(t)
-        self.edge(target, On(t))
+      for (tokens, target) in arms {
+        self.check(!tokens.is_empty(), "empty token branch")
+        for token in tokens {
+          self.program.checked_token(token)
+          self.check(!seen.contains(token), "duplicate token branch")
+          seen.push(token)
+        }
+        self.body(target, if tokens is [token] { On(token) } else { Present })
       }
-      self.edge(default_, self.lookahead)
+      self.body(default_, self.lookahead)
     }
     CaseState(value, arms) => {
       self.expect(value, State)
@@ -139,7 +149,7 @@ fn BlockValidator::terminator(
         self.program.checked_state(id)
         self.check(!seen.contains(id), "duplicate state branch")
         seen.push(id)
-        self.edge(target, self.lookahead)
+        self.body(target, self.lookahead)
       }
     }
     Return(entry, value) => {
@@ -149,10 +159,8 @@ fn BlockValidator::terminator(
       )
       self.expect(value, Semantic(self.program.entries[entry].result_type))
     }
-    Stop(id) => {
-      self.program.checked_state(id)
+    Stop =>
       self.check(self.lookahead is (Present | On(_)), "Stop requires lookahead")
-    }
     Unreachable => ()
   }
 }

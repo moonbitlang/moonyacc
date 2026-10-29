@@ -6,7 +6,8 @@ priv struct Lowering {
   meta : @codegen.MetaProvider
   reduce_labels : Map[Int32, Int32]
   goto_labels : Map[Int32, Int32]
-  shifts : Map[(Int32, Int32), Int32]
+  error_label : Int32
+  incoming : Array[Int32?]
   mut next_register : Int32
 }
 
@@ -70,8 +71,26 @@ fn Lowering::new(
   let actions = grammar.productions.map(p => ActionSignature::{
     rhs: p.rhs.map(s => symbol_id(s, terminal_count)),
     lhs: symbol_id(NT(p.lhs), terminal_count),
+    inputs: if grammar.starts.contains(p) {
+      []
+    } else {
+      (meta.production_meta)(p.num).action.inputs(
+        tracks_positions=!(meta.position_data_type
+          is Constr(pkg=None, "Unit", [])),
+      )
+    },
     callable: !grammar.starts.contains(p),
   })
+  let incoming : Array[Int32?] = Array::make(automaton.states.length(), None)
+  for state in automaton.states {
+    for (symbol, target) in state.goto {
+      let id = symbol_id(symbol, terminal_count)
+      guard incoming[target.num] is None || incoming[target.num] == Some(id) else {
+        abort("LR state has inconsistent incoming symbols")
+      }
+      incoming[target.num] = Some(id)
+    }
+  }
   let self = Lowering::{
     program: {
       entries,
@@ -79,18 +98,40 @@ fn Lowering::new(
       symbols,
       terminal_count,
       actions,
-      diagnostics: [],
+      diagnostics: Array::makei(automaton.states.length(), _ => {
+        default_: None,
+        actions: [],
+        gotos: [],
+      }),
     },
     automaton,
     meta,
     reduce_labels: {},
     goto_labels: {},
-    shifts: {},
+    error_label: automaton.states.length(),
+    incoming,
     next_register: 0,
   }
   // Run labels occupy the LR state numbers; all other labels follow them.
-  for state in automaton.states {
-    ignore(self.reserve(Run(state.num)))
+  for state in 0..<automaton.states.length() {
+    let label = self.reserve(Run(state))
+    if incoming[state] is Some(symbol) {
+      self.program.blocks[label] = {
+        ..self.program.blocks[label],
+        parameters: [
+          self.fresh(Semantic(symbols[symbol].type_)),
+          self.fresh(Position),
+          self.fresh(Position),
+        ],
+      }
+    }
+  }
+  let error = self.reserve(Helper)
+  guard! error == self.error_label
+  self.program.blocks[error] = {
+    ..self.program.blocks[error],
+    lookahead: Present,
+    terminator: Stop,
   }
   self
 }
@@ -100,6 +141,12 @@ fn Lowering::reserve(self : Lowering, origin : Origin) -> Int32 {
   let label = self.program.blocks.length()
   self.program.blocks.push({
     origin,
+    hint: match origin {
+      Reduce(production) =>
+        IfCells(self.program.actions[production].rhs.length())
+      Goto(_) => IfKnownState
+      _ => NoHint
+    },
     parameters: [],
     lookahead: Any,
     instructions: [],

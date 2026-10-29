@@ -10,21 +10,15 @@ priv struct BlockLayout {
 fn shared_stop(block : @direct_ir.Block) -> Bool {
   block.parameters.is_empty() &&
   block.instructions.is_empty() &&
-  block.terminator is Stop(_)
+  block.terminator is Stop
 }
 
 ///|
-fn BlockLayout::new(
-  blocks : Array[@direct_ir.Block],
-  omitted~ : Set[Int32] = Set([]),
-) -> BlockLayout {
+fn BlockLayout::new(blocks : Array[@direct_ir.Block]) -> BlockLayout {
   let labels = Array::make(blocks.length(), -1)
   let emitted = []
   let mut stop = None
   for label, block in blocks {
-    if omitted.contains(label) {
-      continue
-    }
     if shared_stop(block) && stop is Some(pc) {
       labels[label] = pc
       continue
@@ -51,11 +45,20 @@ fn successors(terminator : @direct_ir.Terminator) -> Array[Int32] {
   match terminator {
     Jump(edge) => [edge.target]
     CaseToken(arms, fallback) => {
-      let targets = arms.map(p => p.1.target)
-      targets.push(fallback.target)
+      let targets = []
+      for (_, body) in arms {
+        targets.append(successors(body.terminator))
+      }
+      targets.append(successors(fallback.terminator))
       targets
     }
-    CaseState(_, arms) => arms.map(p => p.1.target)
-    Return(_) | Stop(_) | Unreachable => []
+    CaseState(_, arms) => {
+      let targets = []
+      for (_, body) in arms {
+        targets.append(successors(body.terminator))
+      }
+      targets
+    }
+    Return(_) | Stop | Unreachable => []
   }
 }

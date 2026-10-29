@@ -49,7 +49,11 @@ fn Emitter::entry_item(
         parameters,
         value_block(Match(Call(Ident("yy_parse"), arguments), arms)),
         result=entry.result_type,
-        effect=Raises(type_("ParseError")),
+        effect=if self.chunk_errors.is_empty() {
+          Default
+        } else {
+          Raises(type_("ParseError"))
+        },
       ),
     ),
     visibility=Public,

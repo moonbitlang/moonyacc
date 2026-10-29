@@ -3,19 +3,22 @@ priv struct Emitter {
   program : @direct_ir.Program
   meta : @codegen.MetaProvider
   support : @mbt_common.Context
+  flow : @direct_ir.StackFlow
+  demand : @direct_ir.StorageDemand
   input_mode : @codegen.InputMode
+  cache_ready : Bool
   cache_json : Bool
   layout : BlockLayout
   blocks_per_chunk : Int32
-  gotos : Map[Int32, GotoPlan]
   chunked : Bool
+  has_stack : Bool
+  cache_state : Bool
   consumes_input : Bool
   snapshots : SnapshotPlan
   needs_initial_position : Bool
   slots : Map[Int32, (Int32, Int32)]
   slot_types : Array[SlotType]
-  cells : Array[StackCell]
-  stack_helpers : Set[String]
+  stack : StackStorage
   maxima : Array[Int32]
   chunk_loops : Set[Int32]
   chunk_errors : Set[Int32]
@@ -23,43 +26,65 @@ priv struct Emitter {
 
 ///|
 fn Emitter::new(
-  program : @direct_ir.Program,
+  prepared : @direct_ir.PreparedProgram,
   meta : @codegen.MetaProvider,
   support : @mbt_common.Context,
   input_mode : @codegen.InputMode,
 ) -> Emitter {
-  let (gotos, omitted) = plan_gotos(
-    program.blocks,
-    program.entries.map(e => e.block),
-  )
-  let needs_initial_position = initial_position_needed(program, support, meta)
-  let layout = BlockLayout::new(program.blocks, omitted~)
+  let program = prepared.program
+  let flow = prepared.flow
+  let demand = prepared.demand
+  let needs_initial_position = support.tracks_positions() &&
+    flow.previous_initial.iter().any(id => demand.registers.contains(id))
+  let layout = BlockLayout::new(program.blocks)
   let blocks_per_chunk = dispatch_width(program.blocks, layout)
+  let has_stack = program.blocks.any(b => {
+    b.all_instructions().any(i => i is (Push(_) | Pop(_)))
+  })
   let self = Emitter::{
     program,
     meta,
     support,
+    flow,
+    demand,
     input_mode,
+    cache_ready: program.blocks.any(b => {
+      b.all_instructions().any(i => i is EnsureLookahead)
+    }),
     cache_json: support.is_json_cst() &&
-    program.blocks.any(b => b.instructions.any(i => i is Input(_))),
+    program.blocks.any(b => b.all_instructions().any(i => i is Input(_))),
     layout,
     blocks_per_chunk,
-    gotos,
     // Keep shared runtime helpers when compaction leaves just one chunk.
     chunked: program.blocks.length() > BLOCKS_PER_CHUNK,
+    has_stack,
+    cache_state: has_stack &&
+    program.blocks.any(b => {
+      b
+      .all_instructions()
+      .any(i => {
+        match i {
+          Peek(0, cell, regs) | Pop(cell, regs) =>
+            cell.fields
+            .mapi((index, field) => {
+              field is State &&
+              regs[index]
+              .map(r => demand.registers.contains(r.id))
+              .unwrap_or(false)
+            })
+            .any(x => x)
+          _ => false
+        }
+      })
+    }),
     consumes_input: program.blocks
     .iter()
-    .any(b => b.instructions.iter().any(i => i is ConsumeLookahead)),
+    .any(b => b.all_instructions().iter().any(i => i is ConsumeLookahead)),
     snapshots: SnapshotPlan::new(program.blocks),
     needs_initial_position,
     slots: {},
     slot_types: [],
-    cells: stack_cells(
-      program,
-      support.tracks_positions(),
-      needs_initial_position,
-    ),
-    stack_helpers: Set([]),
+    stack: StackStorage::new(program, demand, meta.position_data_type),
     maxima: [],
     chunk_loops: Set([]),
     chunk_errors: Set([]),
@@ -113,18 +138,20 @@ fn Emitter::allocate_parameters(
 ///|
 fn Emitter::plan_control(self : Emitter, label : Int32, chunk : Int32) -> Unit {
   let block = self.program.blocks[label]
-  if block.terminator is Stop(_) {
+  if terminator_stops(block.terminator) {
     self.chunk_errors.add(chunk)
   }
-  let targets = match self.gotos.get(label) {
-    Some(plan) => plan.choices.map(p => p.1.label)
-    None => successors(block.terminator)
-  }
+  let targets = successors(block.terminator)
   if targets
     .iter()
     .any(target => self.layout.pc(target) / self.blocks_per_chunk == chunk) {
     self.chunk_loops.add(chunk)
   }
+}
+
+///|
+fn terminator_stops(term : @direct_ir.Terminator) -> Bool {
+  term is Stop || term.bodies().any(body => terminator_stops(body.terminator))
 }
 
 ///|
@@ -141,8 +168,11 @@ fn Emitter::register(
   self : Emitter,
   reg : @direct_ir.Register,
 ) -> @mbt_ast.Expr {
-  if self.erased_register(reg) {
+  if self.unit_register(reg) {
     return Unit
+  }
+  guard self.demand.registers.contains(reg.id) else {
+    abort("reading an unallocated register")
   }
   let value = self.place(reg)
   match self.slots.get(reg.id) {
@@ -154,6 +184,11 @@ fn Emitter::register(
 
 ///|
 fn Emitter::erased_register(self : Emitter, reg : @direct_ir.Register) -> Bool {
+  self.unit_register(reg) || !self.demand.registers.contains(reg.id)
+}
+
+///|
+fn Emitter::unit_register(self : Emitter, reg : @direct_ir.Register) -> Bool {
   match reg.type_ {
     Position => !self.support.tracks_positions()
     Semantic(Constr(pkg=None, "Unit", [])) => true

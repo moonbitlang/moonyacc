@@ -83,28 +83,6 @@ fn Emitter::token_items(self : Emitter) -> Array[@mbt_ast.Item] {
 }
 
 ///|
-fn Emitter::cache(
-  self : Emitter,
-  symbol : @mbt_ast.Expr,
-  token : @mbt_ast.Expr,
-  value : @mbt_ast.Expr,
-  start : @mbt_ast.Expr,
-  end : @mbt_ast.Expr,
-) -> @mbt_ast.Expr {
-  let fields : Array[(String, @mbt_ast.Expr)] = [
-    ("symbol", symbol),
-    ("token", token),
-  ]
-  if self.cache_json {
-    fields.push(("value", value))
-  }
-  if self.support.tracks_positions() {
-    fields.append([("start", start), ("end", end)])
-  }
-  call("Some", [Record(Some(type_("YYLookahead")), fields)])
-}
-
-///|
 fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
   let read : Array[@mbt_ast.Stmt] = [
     Let(
@@ -144,16 +122,13 @@ fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
   if self.support.is_json_cst() && !self.cache_json {
     read.push(Eval(call("ignore", [payload])))
   }
-  read.push(
-    Assign(
-      self.machine("lookahead"),
-      self.cache(
-        call("yy_symbol", [Ident("token")]),
-        call("Some", [Ident("token")]),
-        payload,
-        Ident("sp"),
-        Ident("ep"),
-      ),
+  read.append(
+    self.cache(
+      call("yy_symbol", [Ident("token")]),
+      call("Some", [Ident("token")]),
+      payload,
+      Ident("sp"),
+      Ident("ep"),
     ),
   )
   if self.input_mode is Array {
@@ -166,18 +141,15 @@ fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
         ),
         body(read),
         Some(
-          body([
-            Assign(
-              self.machine("lookahead"),
-              self.cache(
-                Int(0),
-                Ident("None"),
-                call("Json::null", []),
-                self.machine("last_pos"),
-                self.machine("last_pos"),
-              ),
+          body(
+            self.cache(
+              Int(0),
+              Ident("None"),
+              call("Json::null", []),
+              self.machine("last_pos"),
+              self.machine("last_pos"),
             ),
-          ]),
+          ),
         ),
       ),
     )
@@ -221,13 +193,20 @@ fn Emitter::input_bindings(
 }
 
 ///|
-fn Emitter::read_lookahead(self : Emitter) -> @mbt_ast.Stmt {
+fn Emitter::read_lookahead(
+  self : Emitter,
+  ready~ : Bool = true,
+) -> @mbt_ast.Stmt {
   let read = if self.chunked {
     value_block(call("yy_read_token", [Ident("_env")]))
   } else {
     self.read_token_body()
   }
-  Eval(If(Is(self.machine("lookahead"), Constructor("None", [])), read, None))
+  if ready {
+    Eval(If(Unary(Not, self.machine("_yy_token_ready")), read, None))
+  } else {
+    Eval(Block(read))
+  }
 }
 
 ///|

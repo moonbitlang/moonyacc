@@ -27,6 +27,19 @@ fn BlockValidator::validate(
 }
 
 ///|
+fn BlockValidator::body(
+  self : BlockValidator,
+  body : Body,
+  lookahead : Lookahead,
+) -> Unit raise InvalidProgram {
+  let branch = { ..self, locals: self.locals.copy(), lookahead, }
+  for instruction in body.instructions {
+    branch.instruction(instruction)
+  }
+  branch.terminator(body.terminator)
+}
+
+///|
 fn BlockValidator::check(
   self : BlockValidator,
   ok : Bool,

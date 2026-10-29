@@ -1,12 +1,9 @@
 ///|
 fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
-  let fields : Array[@mbt_ast.Field] = [
-    { name: "stack", type_: type_("YYStack"), mutable: true, },
-    { name: "state", type_: type_("Int"), mutable: true, },
-  ]
+  let fields = self.stack_storage().map(pair => pair.0)
   fields.append(self.snapshots.storage().map(pair => pair.0))
+  fields.append(self.lookahead_storage().map(pair => pair.0))
   fields.append([
-    { name: "lookahead", type_: self.lookahead_type(), mutable: true, },
     { name: "_yy_result", type_: Option(type_("YYResult")), mutable: true, },
   ])
   if self.needs_initial_position {
@@ -50,12 +47,10 @@ fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
 
 ///|
 fn Emitter::context_binding(self : Emitter) -> @mbt_ast.Stmt {
-  let fields : Array[(String, @mbt_ast.Expr)] = [
-    ("stack", Ident("YYEmpty")),
-    ("state", Ident("initial_state")),
-  ]
+  let fields = self.stack_storage().map(pair => (pair.0.name, pair.1))
   fields.append(self.snapshots.storage().map(pair => (pair.0.name, pair.1)))
-  fields.append([("lookahead", Ident("None")), ("_yy_result", Ident("None"))])
+  fields.append(self.lookahead_storage().map(pair => (pair.0.name, pair.1)))
+  fields.push(("_yy_result", Ident("None")))
   if self.needs_initial_position {
     fields.push(("initial_position", Ident("initial_position")))
   }
@@ -76,13 +71,20 @@ fn Emitter::context_binding(self : Emitter) -> @mbt_ast.Stmt {
 
 ///|
 fn Emitter::local_storage(self : Emitter) -> Array[@mbt_ast.Stmt] {
-  let statements : Array[@mbt_ast.Stmt] = [
-    LetMut("stack", Some(type_("YYStack")), Ident("YYEmpty")),
-    LetMut("state", Some(type_("Int")), Ident("initial_state")),
-  ]
+  let statements = self
+    .stack_storage()
+    .map(pair => {
+      if pair.0.mutable {
+        @mbt_ast.Stmt::LetMut(pair.0.name, Some(pair.0.type_), pair.1)
+      } else {
+        binding(pair.0.name, pair.1, type_=pair.0.type_)
+      }
+    })
   statements.append(self.snapshots.local_storage())
-  statements.push(
-    LetMut("lookahead", Some(self.lookahead_type()), Ident("None")),
+  statements.append(
+    self
+    .lookahead_storage()
+    .map(pair => LetMut(pair.0.name, Some(pair.0.type_), pair.1)),
   )
   for kind, count in self.maxima {
     for index in 0..<count {
@@ -110,46 +112,6 @@ fn Emitter::located_type(self : Emitter) -> @elab.TypeExpr {
     self.meta.position_data_type,
     self.meta.position_data_type,
   ])
-}
-
-///|
-fn Emitter::lookahead_type(_self : Emitter) -> @elab.TypeExpr {
-  Option(type_("YYLookahead"))
-}
-
-///|
-/// A nominal cache keeps token transport separate from generic tuple values.
-fn Emitter::lookahead_item(self : Emitter) -> @mbt_ast.Item {
-  let fields : Array[@mbt_ast.Field] = [
-    { name: "symbol", type_: type_("Int"), mutable: false, },
-    { name: "token", type_: Option(type_("Token")), mutable: false, },
-  ]
-  if self.cache_json {
-    fields.push({ name: "value", type_: type_("Json"), mutable: false, })
-  }
-  if self.support.tracks_positions() {
-    fields.append([
-      { name: "start", type_: self.meta.position_data_type, mutable: false, },
-      { name: "end", type_: self.meta.position_data_type, mutable: false, },
-    ])
-  }
-  @mbt_ast.item(Struct("YYLookahead", fields), visibility=Private)
-}
-
-///|
-fn Emitter::cached(self : Emitter, name : String) -> @mbt_ast.Expr {
-  Field(dot_call(self.machine("lookahead"), "unwrap", []), Named(name))
-}
-
-///|
-fn Emitter::cached_position(
-  self : Emitter,
-  end~ : Bool = false,
-) -> @mbt_ast.Expr {
-  if !self.support.tracks_positions() {
-    return Unit
-  }
-  self.cached(if end { "end" } else { "start" })
 }
 
 ///|

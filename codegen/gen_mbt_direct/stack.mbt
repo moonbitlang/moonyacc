@@ -3,21 +3,24 @@ fn Emitter::block_instructions(
   self : Emitter,
   block : @direct_ir.Block,
 ) -> Array[@mbt_ast.Stmt] {
-  if self.chunked && shift_target(block) is Some(target) {
-    return [Eval(call("yy_shift", [Ident("_env"), Int(target)]))]
-  }
-  let unused = unused_previous_positions(block, id => {
-    self.support.action_uses_before_rhs((self.meta.production_meta)(id).action)
-  })
-  if reduction_plan(block, self.program.actions) is Some(plan) {
-    return self.reduction_instructions(plan, unused)
-  }
   let statements = []
-  for instruction in block.instructions {
-    if instruction is ReadPreviousPosition(_, reg) && unused.contains(reg.id) {
-      continue
+  let pending = []
+  fn flush() {
+    if !pending.is_empty() {
+      statements.append(self.pop_cells(pending))
+      pending.clear()
     }
-    statements.append(self.instruction(instruction))
   }
+  for instruction in block.instructions {
+    if instruction is Pop(cell, regs) &&
+      regs.all(reg => reg.map(r => self.erased_register(r)).unwrap_or(true)) {
+      pending.push(cell)
+    } else {
+      // No read, semantic action, lexer call or checkpoint is crossed.
+      flush()
+      statements.append(self.instruction(instruction))
+    }
+  }
+  flush()
   statements
 }

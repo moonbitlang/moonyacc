@@ -10,8 +10,6 @@ fn Emitter::block_body(
   if !no_comments {
     let comment = match block.origin {
       Run(state) => Some("run state \{state}")
-      Shift(state, token) =>
-        Some("shift \{self.program.symbols[token].name} into state \{state}")
       Reduce(production) => {
         let action = self.program.actions[production]
         let rhs = action.rhs
@@ -28,10 +26,7 @@ fn Emitter::block_body(
   }
   statements.append(self.block_instructions(block))
   let chunk = pc / self.blocks_per_chunk
-  let finish = match self.gotos.get(label) {
-    Some(plan) => self.goto_finish(plan, chunk)
-    None => self.terminator(block.terminator, chunk)
-  }
+  let finish = self.terminator(block.terminator, chunk)
   statements.append(finish.statements)
   { statements, result: finish.result, }
 }

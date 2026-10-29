@@ -1,5 +1,5 @@
 ///|
-/// Large parsers retain small Wasm functions and bounded local counts.
+/// Partition the optimized CFG for iterative dispatch on every target.
 const BLOCKS_PER_CHUNK = 32
 
 ///|
@@ -27,35 +27,39 @@ fn dispatch_width(
       true
     }
   }
-  fn edge_fits(edge : @direct_ir.Edge) -> Bool {
-    spend(edge.arguments.length()) && spend(1)
+  fn fits(
+    instructions : Array[@direct_ir.Instruction],
+    term : @direct_ir.Terminator,
+  ) -> Bool {
+    if !spend(instructions.length()) || !spend(1) {
+      return false
+    }
+    match term {
+      Jump(edge) => spend(edge.arguments.length())
+      CaseToken(arms, fallback) => {
+        for (_, body) in arms {
+          if !fits(body.instructions, body.terminator) {
+            return false
+          }
+        }
+        fits(fallback.instructions, fallback.terminator)
+      }
+      CaseState(_, arms) => {
+        for (_, body) in arms {
+          if !fits(body.instructions, body.terminator) {
+            return false
+          }
+        }
+        true
+      }
+      Return(_) | Stop | Unreachable => true
+    }
   }
   for label in layout.blocks {
     let block = blocks[label]
-    if !spend(block.instructions.length()) ||
-      !spend(block.parameters.length()) ||
-      !spend(1) {
+    if !spend(block.parameters.length()) ||
+      !fits(block.instructions, block.terminator) {
       return BLOCKS_PER_CHUNK
-    }
-    match block.terminator {
-      Jump(edge) => if !edge_fits(edge) { return BLOCKS_PER_CHUNK }
-      CaseToken(arms, fallback) => {
-        for (_, edge) in arms {
-          if !edge_fits(edge) {
-            return BLOCKS_PER_CHUNK
-          }
-        }
-        if !edge_fits(fallback) {
-          return BLOCKS_PER_CHUNK
-        }
-      }
-      CaseState(_, arms) =>
-        for (_, edge) in arms {
-          if !edge_fits(edge) {
-            return BLOCKS_PER_CHUNK
-          }
-        }
-      Return(_) | Stop(_) | Unreachable => ()
     }
   }
   SMALL_BLOCKS_PER_CHUNK

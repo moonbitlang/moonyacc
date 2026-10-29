@@ -251,33 +251,18 @@ fn yy_action_14() -> Unit {
 }
 
 ///|
-priv enum YYStack {
-  YYEmpty
-  YYCell_10(YYStack, Int, Array[(Int, Int)], Int, Int)
-  YYCell_9(YYStack, Int, Array[(Int, Int)], Int)
-  YYCell_11(YYStack, Int, Int, Int, Int)
-  YYCell_8(YYStack, Int, (Int, Int, Int), Int)
-  YYCell_3_void(YYStack, Int, Int, Int)
-  YYCell_5_void(YYStack, Int, Int, Int)
-  YYCell_1(YYStack, Int, Int, Int, Int)
-  YYCell_7_void(YYStack, Int, Int, Int)
-  YYCell_2_void(YYStack, Int, Int, Int)
-  YYCell_4_void(YYStack, Int, Int, Int)
-  YYCell_6_void(YYStack, Int, Int, Int)
-}
-
-///|
 priv enum YYResult {
   YYAccept_0((Int, Int, Int))
   YYAccept_1(Array[(Int, Int)])
 }
 
 ///|
-priv struct YYLookahead {
-  symbol : Int
-  token : Token?
-  start : Int
-  end : Int
+priv struct YYStateStack {
+  values : Array[Int]
+  mut depth : Int
+  mut checkpoint : Int
+  mut saved_prefix : Int
+  undo : Array[Int]
 }
 
 ///|
@@ -294,870 +279,1176 @@ fn yy_symbol(token : Token) -> Int {
 }
 
 ///|
-priv struct YYContext {
-  mut stack : YYStack
-  mut state : Int
-  mut error_stack : YYStack
-  mut error_state : Int
-  mut error_depth : Int
-  mut error_suffix_0 : Int
-  mut lookahead : YYLookahead?
-  mut _yy_result : YYResult?
-  initial_position : Int
-  mut last_pos : Int
-  tokens : Array[(Token, Int, Int)]
-  mut cursor : Int
-  mut _yy_state_0 : Int
-  mut _yy_value_1_0 : Array[(Int, Int)]?
-  mut _yy_position_0 : Int
-  mut _yy_position_1 : Int
-  mut _yy_value_3_0 : Int
-  mut _yy_value_4_0 : (Int, Int, Int)?
-}
-
-///|
-#inline(never)
-fn yy_stop(_env : YYContext) -> Int raise ParseError {
-  yy_error(
-    ({
-      ()
-      let mut _yy_error_states = yy_stack_states(
-        _env.error_stack, _env.error_state
-      )
-      if _env.error_depth > 0 {
-        _yy_error_states = @list.cons(_env.error_suffix_0, _yy_error_states)
-      }
-      _yy_error_states
-    }), _env.lookahead.unwrap().token,
-    (_env.lookahead.unwrap().start, _env.lookahead.unwrap().end)
-  )
-  panic()
-}
-
-///|
-#inline(never)
-fn yy_shift(_env : YYContext, target : Int) -> Unit {
-  match _env.lookahead.unwrap().token.unwrap() {
-    NUMBER(_value) =>
-      ({
-        ()
-        _env.stack = YYCell_1(
-          _env.stack, _env.state, _value, _env.lookahead.unwrap().start,
-          _env.lookahead.unwrap().end
-        )
-        _env.state = target
-      })
-    PLUS =>
-      ({
-        ()
-        _env.stack = YYCell_2_void(
-          _env.stack, _env.state, _env.lookahead.unwrap().start,
-          _env.lookahead.unwrap().end
-        )
-        _env.state = target
-      })
-    STAR =>
-      ({
-        ()
-        _env.stack = YYCell_3_void(
-          _env.stack, _env.state, _env.lookahead.unwrap().start,
-          _env.lookahead.unwrap().end
-        )
-        _env.state = target
-      })
-    EQ =>
-      ({
-        ()
-        _env.stack = YYCell_4_void(
-          _env.stack, _env.state, _env.lookahead.unwrap().start,
-          _env.lookahead.unwrap().end
-        )
-        _env.state = target
-      })
-    LPAREN =>
-      ({
-        ()
-        _env.stack = YYCell_5_void(
-          _env.stack, _env.state, _env.lookahead.unwrap().start,
-          _env.lookahead.unwrap().end
-        )
-        _env.state = target
-      })
-    RPAREN =>
-      ({
-        ()
-        _env.stack = YYCell_6_void(
-          _env.stack, _env.state, _env.lookahead.unwrap().start,
-          _env.lookahead.unwrap().end
-        )
-        _env.state = target
-      })
-    EOF =>
-      ({
-        ()
-        _env.stack = YYCell_7_void(
-          _env.stack, _env.state, _env.lookahead.unwrap().start,
-          _env.lookahead.unwrap().end
-        )
-        _env.state = target
-      })
-  }
-  _env.last_pos = _env.lookahead.unwrap().end
-  _env.lookahead = None
-  _env.error_stack = _env.stack
-  _env.error_state = _env.state
-  _env.error_depth = 0
-}
-
-///|
-#inline(never)
-fn yy_read_token(_env : YYContext) -> Unit {
-  if _env.cursor < _env.tokens.length() {
-    let (token, sp, ep) = _env.tokens[_env.cursor]
-    _env.cursor += 1
-    _env.lookahead = Some(
-      YYLookahead::{
-        symbol: yy_symbol(token), token: Some(token), start: sp, end: ep
-      }
-    )
-  } else {
-    _env.lookahead = Some(
-      YYLookahead::{
-        symbol: 0, token: None, start: _env.last_pos, end: _env.last_pos
-      }
-    )
-  }
-}
-
-///|
 fn yy_parse(
   tokens : Array[(Token, Int, Int)], entry : Int, initial_state : Int,
   initial_pos? : Int
 ) -> YYResult raise ParseError {
+  let mut cursor = 0
   let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
-  let _env = YYContext::{
-    stack: YYEmpty, state: initial_state, error_stack: YYEmpty,
-    error_state: initial_state, error_depth: 0, error_suffix_0: 0,
-    lookahead: None, _yy_result: None, initial_position: initial_position,
-    last_pos: initial_position, tokens: tokens, cursor: 0, _yy_state_0: 0,
-    _yy_value_1_0: None, _yy_position_0: initial_position,
-    _yy_position_1: initial_position, _yy_value_3_0: 0, _yy_value_4_0: None
+  let mut last_pos = initial_position
+  let stack : YYStateStack = YYStateStack::{
+    values: [initial_state], depth: 1, checkpoint: 1, saved_prefix: 1, undo: []
   }
+  let mut state : Int = initial_state
+  let _yy_stack_0 : Array[Int] = []
+  let mut _yy_depth_0 : Int = 0
+  let _yy_stack_1 : Array[Int] = []
+  let mut _yy_depth_1 : Int = 0
+  let _yy_stack_2 : Array[Int] = []
+  let mut _yy_depth_2 : Int = 0
+  let mut error_depth : Int = 0
+  let mut error_suffix_0 : Int = 0
+  let mut error_suffix_1 : Int = 0
+  let mut _yy_token_symbol : Int = 0
+  let mut _yy_token_token : Token? = None
+  let mut _yy_token_ready : Bool = false
+  let mut _yy_token_start : Int = 0
+  let mut _yy_token_end : Int = 0
+  let mut _yy_value_0_0 : Array[(Int, Int)]? = None
+  let mut _yy_position_0 : Int = initial_position
+  let mut _yy_position_1 : Int = initial_position
+  let mut _yy_value_2_0 : Int = 0
+  let mut _yy_state_0 : Int = 0
   for pc = entry {
-    let next = match pc / 64 {
-      0 => _yy_chunk_0(_env, pc)
-      _ => panic()
-    }
-    if next < 0 {
-      return _env._yy_result.unwrap()
-    }
-    continue next
-  }
-}
-
-///|
-#inline(never)
-fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
-  for pc = _entry {
     match pc {
       0 =>
         ({
           ()
           // run state 0
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              1 => 40
-              3 => 27
-              5 => 28
-              _ => 26
+          ({
+            ()
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          })
+          match _yy_token_symbol {
+            1 =>
+              ({
+                ()
+                let _yy_r182 = _yy_token_start
+                let _yy_r183 = _yy_token_end
+                _yy_position_0 = _yy_r182
+                _yy_position_1 = _yy_r183
+                continue 3
+              })
+            3 =>
+              ({
+                ()
+                continue 2
+              })
+            5 =>
+              ({
+                ()
+                let _yy_r188 = _yy_token_start
+                let _yy_r189 = _yy_token_end
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_r188)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_r188
+                }
+                _yy_depth_0 += 1
+                if _yy_depth_1 == _yy_stack_1.length() {
+                  _yy_stack_1.push(_yy_r189)
+                } else {
+                  _yy_stack_1[_yy_depth_1] = _yy_r189
+                }
+                _yy_depth_1 += 1
+                yy_stack_push(stack, 7)
+                state = 7
+                last_pos = _yy_token_end
+                _yy_token_token = None
+                _yy_token_ready = false
+                _yy_token_start = 0
+                _yy_token_end = 0
+                yy_stack_checkpoint(stack)
+                error_depth = 0
+                ({
+                  ()
+                  if cursor < tokens.length() {
+                    let (token, sp, ep) = tokens[cursor]
+                    cursor += 1
+                    _yy_token_symbol = yy_symbol(token)
+                    _yy_token_token = Some(token)
+                    _yy_token_start = sp
+                    _yy_token_end = ep
+                    _yy_token_ready = true
+                  } else {
+                    _yy_token_symbol = 0
+                    _yy_token_token = None
+                    _yy_token_start = last_pos
+                    _yy_token_end = last_pos
+                    _yy_token_ready = true
+                  }
+                })
+                match _yy_token_symbol {
+                  1 =>
+                    ({
+                      ()
+                      let _yy_r274 = _yy_token_start
+                      let _yy_r275 = _yy_token_end
+                      _yy_position_0 = _yy_r274
+                      _yy_position_1 = _yy_r275
+                      continue 3
+                    })
+                  3 =>
+                    ({
+                      ()
+                      continue 2
+                    })
+                  _ =>
+                    ({
+                      ()
+                      continue 17
+                    })
+                }
+              })
+            _ =>
+              ({
+                ()
+                continue 17
+              })
+          }
         })
       1 =>
         ({
           ()
-          // run state 2
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              1 => 30
-              _ => 26
-            }
+          // run state 1
+          return YYAccept_1(_yy_value_0_0.unwrap())
         })
       2 =>
         ({
           ()
-          // run state 5
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              7 => 31
-              _ => 26
+          // run state 2
+          last_pos = _yy_token_end
+          _yy_token_token = None
+          _yy_token_ready = false
+          _yy_token_start = 0
+          _yy_token_end = 0
+          yy_stack_checkpoint(stack)
+          error_suffix_0 = 2
+          error_depth = 1
+          ({
+            ()
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          })
+          match _yy_token_symbol {
+            1 =>
+              ({
+                ()
+                let _yy_r193 = _yy_token_end
+                last_pos = _yy_token_end
+                _yy_token_token = None
+                _yy_token_ready = false
+                _yy_token_start = 0
+                _yy_token_end = 0
+                yy_stack_checkpoint(stack)
+                error_suffix_0 = 2
+                error_suffix_1 = 3
+                error_depth = 2
+                let _yy_r301 = if stack.depth == 1 {
+                  initial_position
+                } else {
+                  _yy_stack_1[_yy_depth_1 - 1]
+                }
+                let _yy_r302 = yy_action_15()
+                let _yy_r303 = state
+                _yy_state_0 = _yy_r303
+                _yy_value_0_0 = Some(_yy_r302)
+                _yy_position_0 = _yy_r301
+                _yy_position_1 = _yy_r193
+                continue 18
+              })
+            _ =>
+              ({
+                ()
+                yy_stack_push(stack, 2)
+                state = 2
+                continue 17
+              })
+          }
         })
       3 =>
         ({
           ()
-          // run state 7
-          if _env.lookahead is None {
-            yy_read_token(_env)
+          // run state 4
+          last_pos = _yy_token_end
+          _yy_token_token = None
+          _yy_token_ready = false
+          _yy_token_start = 0
+          _yy_token_end = 0
+          yy_stack_checkpoint(stack)
+          error_suffix_0 = 4
+          error_depth = 1
+          let _yy_r311 = if stack.depth == 1 {
+            initial_position
+          } else {
+            _yy_stack_1[_yy_depth_1 - 1]
           }
-          continue match _env.lookahead.unwrap().symbol {
-              1 => 41
-              3 => 27
-              _ => 26
-            }
+          let _yy_r312 = yy_action_13(_yy_r311, _yy_position_1, _yy_position_0)
+          let _yy_r313 = state
+          _yy_state_0 = _yy_r313
+          _yy_value_0_0 = Some(_yy_r312)
+          _yy_position_0 = _yy_r311
+          continue 18
         })
       4 =>
         ({
           ()
-          // run state 8
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              7 => 32
-              _ => 26
+          // run state 5
+          if !_yy_token_ready {
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          }
+          match _yy_token_symbol {
+            7 =>
+              ({
+                ()
+                last_pos = _yy_token_end
+                _yy_token_token = None
+                _yy_token_ready = false
+                _yy_token_start = 0
+                _yy_token_end = 0
+                yy_stack_checkpoint(stack)
+                error_suffix_0 = 5
+                error_suffix_1 = 6
+                error_depth = 2
+                let _yy_r325 = yy_action_11(
+                  _yy_value_0_0.unwrap(), _yy_position_0, _yy_position_1
+                )
+                _yy_value_0_0 = Some(_yy_r325)
+                continue 1
+              })
+            _ =>
+              ({
+                ()
+                yy_stack_push(stack, 5)
+                state = 5
+                continue 17
+              })
+          }
         })
       5 =>
         ({
           ()
-          // run state 10
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              1 => 42
-              5 => 33
-              _ => 26
+          // run state 8
+          if !_yy_token_ready {
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          }
+          match _yy_token_symbol {
+            7 =>
+              ({
+                ()
+                last_pos = _yy_token_end
+                _yy_token_token = None
+                _yy_token_ready = false
+                _yy_token_start = 0
+                _yy_token_end = 0
+                yy_stack_checkpoint(stack)
+                error_suffix_0 = 8
+                error_suffix_1 = 9
+                error_depth = 2
+                let _yy_r341 = yy_action_9(
+                  _yy_value_0_0.unwrap(), _yy_position_0, _yy_position_1
+                )
+                _yy_depth_0 -= 1
+                _yy_depth_1 -= 1
+                stack.depth -= 1
+                state = stack.values[stack.depth - 1]
+                _yy_value_0_0 = Some(_yy_r341)
+                continue 19
+              })
+            _ =>
+              ({
+                ()
+                yy_stack_push(stack, 8)
+                state = 8
+                continue 17
+              })
+          }
         })
       6 =>
         ({
           ()
-          // run state 12
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              1 => 43
-              5 => 33
-              _ => 26
+          // run state 10
+          ({
+            ()
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          })
+          match _yy_token_symbol {
+            1 =>
+              ({
+                ()
+                guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
+                let _yy_r206 = _yy_token_value
+                let _yy_r207 = _yy_token_start
+                let _yy_r208 = _yy_token_end
+                _yy_value_2_0 = _yy_r206
+                _yy_position_0 = _yy_r207
+                _yy_position_1 = _yy_r208
+                continue 15
+              })
+            5 =>
+              ({
+                ()
+                let _yy_r210 = _yy_token_start
+                let _yy_r211 = _yy_token_end
+                _yy_position_0 = _yy_r210
+                _yy_position_1 = _yy_r211
+                continue 7
+              })
+            _ =>
+              ({
+                ()
+                continue 17
+              })
+          }
         })
       7 =>
         ({
           ()
-          // run state 13
-          if _env.lookahead is None {
-            yy_read_token(_env)
+          // run state 12
+          if _yy_depth_0 == _yy_stack_0.length() {
+            _yy_stack_0.push(_yy_position_0)
+          } else {
+            _yy_stack_0[_yy_depth_0] = _yy_position_0
           }
-          continue match _env.lookahead.unwrap().symbol {
-              2 => 35
-              3 => 36
-              4 => 37
-              6 => 38
-              _ => 26
+          _yy_depth_0 += 1
+          if _yy_depth_1 == _yy_stack_1.length() {
+            _yy_stack_1.push(_yy_position_1)
+          } else {
+            _yy_stack_1[_yy_depth_1] = _yy_position_1
+          }
+          _yy_depth_1 += 1
+          yy_stack_push(stack, 12)
+          state = 12
+          last_pos = _yy_token_end
+          _yy_token_token = None
+          _yy_token_ready = false
+          _yy_token_start = 0
+          _yy_token_end = 0
+          yy_stack_checkpoint(stack)
+          error_depth = 0
+          ({
+            ()
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          })
+          match _yy_token_symbol {
+            1 =>
+              ({
+                ()
+                guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
+                let _yy_r213 = _yy_token_value
+                let _yy_r214 = _yy_token_start
+                let _yy_r215 = _yy_token_end
+                _yy_value_2_0 = _yy_r213
+                _yy_position_0 = _yy_r214
+                _yy_position_1 = _yy_r215
+                continue 15
+              })
+            5 =>
+              ({
+                ()
+                let _yy_r217 = _yy_token_start
+                let _yy_r218 = _yy_token_end
+                _yy_position_0 = _yy_r217
+                _yy_position_1 = _yy_r218
+                continue 7
+              })
+            _ =>
+              ({
+                ()
+                continue 17
+              })
+          }
         })
       8 =>
         ({
           ()
-          // run state 14
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              1 => 44
-              5 => 33
-              _ => 26
+          // run state 13
+          if !_yy_token_ready {
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          }
+          match _yy_token_symbol {
+            2 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 13)
+                state = 13
+                continue 13
+              })
+            3 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 13)
+                state = 13
+                continue 11
+              })
+            4 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 13)
+                state = 13
+                continue 9
+              })
+            6 =>
+              ({
+                ()
+                let _yy_r230 = _yy_token_end
+                last_pos = _yy_token_end
+                _yy_token_token = None
+                _yy_token_ready = false
+                _yy_token_start = 0
+                _yy_token_end = 0
+                yy_stack_checkpoint(stack)
+                error_suffix_0 = 13
+                error_suffix_1 = 21
+                error_depth = 2
+                let _yy_r349 = _yy_stack_0[_yy_depth_0 - 1]
+                let _yy_r358 = yy_action_2(_yy_value_2_0)
+                _yy_depth_0 -= 1
+                _yy_depth_1 -= 1
+                stack.depth -= 1
+                state = stack.values[stack.depth - 1]
+                let _yy_r359 = state
+                _yy_state_0 = _yy_r359
+                _yy_value_2_0 = _yy_r358
+                _yy_position_0 = _yy_r349
+                _yy_position_1 = _yy_r230
+                continue 20
+              })
+            _ =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 13)
+                state = 13
+                continue 17
+              })
+          }
         })
       9 =>
         ({
           ()
-          // run state 15
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              2 => 35
-              3 => 36
-              6 | 7 => 19
-              _ => 26
+          // run state 14
+          yy_stack_push(stack, 14)
+          state = 14
+          last_pos = _yy_token_end
+          _yy_token_token = None
+          _yy_token_ready = false
+          _yy_token_start = 0
+          _yy_token_end = 0
+          yy_stack_checkpoint(stack)
+          error_depth = 0
+          ({
+            ()
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          })
+          match _yy_token_symbol {
+            1 =>
+              ({
+                ()
+                guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
+                let _yy_r231 = _yy_token_value
+                let _yy_r232 = _yy_token_start
+                let _yy_r233 = _yy_token_end
+                _yy_value_2_0 = _yy_r231
+                _yy_position_0 = _yy_r232
+                _yy_position_1 = _yy_r233
+                continue 15
+              })
+            5 =>
+              ({
+                ()
+                let _yy_r235 = _yy_token_start
+                let _yy_r236 = _yy_token_end
+                _yy_position_0 = _yy_r235
+                _yy_position_1 = _yy_r236
+                continue 7
+              })
+            _ =>
+              ({
+                ()
+                continue 17
+              })
+          }
         })
       10 =>
         ({
           ()
-          // run state 16
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              1 => 45
-              5 => 33
-              _ => 26
+          // run state 15
+          if !_yy_token_ready {
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          }
+          match _yy_token_symbol {
+            2 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 15)
+                state = 15
+                continue 13
+              })
+            3 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 15)
+                state = 15
+                continue 11
+              })
+            6 | 7 =>
+              ({
+                ()
+                let _yy_r364 = _yy_stack_2[_yy_depth_2 - 1]
+                let _yy_r365 = _yy_stack_0[_yy_depth_0 - 1]
+                let _yy_r374 = yy_action_7(_yy_r364, _yy_value_2_0)
+                _yy_depth_2 -= 1
+                _yy_depth_0 -= 1
+                stack.depth -= 2
+                state = stack.values[stack.depth - 1]
+                let _yy_r375 = state
+                _yy_state_0 = _yy_r375
+                _yy_value_2_0 = _yy_r374
+                _yy_position_0 = _yy_r365
+                continue 20
+              })
+            _ =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 15)
+                state = 15
+                continue 17
+              })
+          }
         })
       11 =>
         ({
           ()
-          // run state 18
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              1 => 46
-              5 => 33
-              _ => 26
+          // run state 16
+          yy_stack_push(stack, 16)
+          state = 16
+          last_pos = _yy_token_end
+          _yy_token_token = None
+          _yy_token_ready = false
+          _yy_token_start = 0
+          _yy_token_end = 0
+          yy_stack_checkpoint(stack)
+          error_depth = 0
+          ({
+            ()
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          })
+          match _yy_token_symbol {
+            1 =>
+              ({
+                ()
+                guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
+                let _yy_r243 = _yy_token_value
+                let _yy_r244 = _yy_token_start
+                let _yy_r245 = _yy_token_end
+                _yy_value_2_0 = _yy_r243
+                _yy_position_0 = _yy_r244
+                _yy_position_1 = _yy_r245
+                continue 15
+              })
+            5 =>
+              ({
+                ()
+                let _yy_r247 = _yy_token_start
+                let _yy_r248 = _yy_token_end
+                _yy_position_0 = _yy_r247
+                _yy_position_1 = _yy_r248
+                continue 7
+              })
+            _ =>
+              ({
+                ()
+                continue 17
+              })
+          }
         })
       12 =>
         ({
           ()
-          // run state 19
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              2 | 4 | 6 | 7 => 22
-              3 => 36
-              _ => 26
-            }
+          // run state 17
+          let _yy_r380 = _yy_stack_2[_yy_depth_2 - 1]
+          let _yy_r381 = _yy_stack_0[_yy_depth_0 - 1]
+          let _yy_r390 = yy_action_6(_yy_r380, _yy_value_2_0)
+          _yy_depth_2 -= 1
+          _yy_depth_0 -= 1
+          stack.depth -= 2
+          state = stack.values[stack.depth - 1]
+          let _yy_r391 = state
+          let _yy_arg0 = _yy_r391
+          let _yy_arg1 = _yy_r390
+          let _yy_arg2 = _yy_r381
+          let _yy_arg3 = _yy_position_0
+          _yy_state_0 = _yy_arg0
+          _yy_value_2_0 = _yy_arg1
+          _yy_position_0 = _yy_arg2
+          _yy_position_1 = _yy_arg3
+          continue 20
         })
       13 =>
         ({
           ()
-          // run state 22
-          if _env.lookahead is None {
-            yy_read_token(_env)
-          }
-          continue match _env.lookahead.unwrap().symbol {
-              2 => 35
-              3 => 36
-              4 => 37
-              7 => 39
-              _ => 26
+          // run state 18
+          yy_stack_push(stack, 18)
+          state = 18
+          last_pos = _yy_token_end
+          _yy_token_token = None
+          _yy_token_ready = false
+          _yy_token_start = 0
+          _yy_token_end = 0
+          yy_stack_checkpoint(stack)
+          error_depth = 0
+          ({
+            ()
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
             }
+          })
+          match _yy_token_symbol {
+            1 =>
+              ({
+                ()
+                guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
+                let _yy_r249 = _yy_token_value
+                let _yy_r250 = _yy_token_start
+                let _yy_r251 = _yy_token_end
+                _yy_value_2_0 = _yy_r249
+                _yy_position_0 = _yy_r250
+                _yy_position_1 = _yy_r251
+                continue 15
+              })
+            5 =>
+              ({
+                ()
+                let _yy_r253 = _yy_token_start
+                let _yy_r254 = _yy_token_end
+                _yy_position_0 = _yy_r253
+                _yy_position_1 = _yy_r254
+                continue 7
+              })
+            _ =>
+              ({
+                ()
+                continue 17
+              })
+          }
         })
       14 =>
         ({
           ()
-          // reduce anchored -> STAR NUMBER
-          guard! _env.stack is YYCell_1(
-            _yy_tail1, _yy_saved1, _yy_r46, _yy_r47, _yy_read48
-          )
-          _env._yy_position_1 = _yy_read48
-          guard! _yy_tail1 is YYCell_3_void(
-            _yy_tail0, _yy_saved0, _yy_r44, _yy_r45
-          )
-          _env._yy_position_0 = if _yy_tail0 is YYEmpty {
-            _env.initial_position
-          } else {
-            yy_stack_end(_yy_tail0)
+          // run state 19
+          if !_yy_token_ready {
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
+            }
           }
-          _env._yy_value_1_0 = Some(yy_action_15())
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 15
+          match _yy_token_symbol {
+            2 | 4 | 6 | 7 =>
+              ({
+                ()
+                let _yy_r396 = _yy_stack_2[_yy_depth_2 - 1]
+                let _yy_r397 = _yy_stack_0[_yy_depth_0 - 1]
+                let _yy_r406 = yy_action_5(_yy_r396, _yy_value_2_0)
+                _yy_depth_2 -= 1
+                _yy_depth_0 -= 1
+                stack.depth -= 2
+                state = stack.values[stack.depth - 1]
+                let _yy_r407 = state
+                _yy_state_0 = _yy_r407
+                _yy_value_2_0 = _yy_r406
+                _yy_position_0 = _yy_r397
+                continue 20
+              })
+            3 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 19)
+                state = 19
+                continue 11
+              })
+            _ =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 19)
+                state = 19
+                continue 17
+              })
+          }
         })
       15 =>
         ({
           ()
-          // goto anchored
-          let (_yy_state, _yy_target) = match _env._yy_state_0 {
-            0 => (5, 2)
-            7 => (8, 4)
-            _ => panic()
-          }
-          _env.stack = YYCell_10(
-            _env.stack, _env.state, _env._yy_value_1_0.unwrap(),
-            _env._yy_position_0, _env._yy_position_1
-          )
-          _env.state = _yy_state
-          continue _yy_target
+          // run state 20
+          last_pos = _yy_token_end
+          _yy_token_token = None
+          _yy_token_ready = false
+          _yy_token_start = 0
+          _yy_token_end = 0
+          yy_stack_checkpoint(stack)
+          error_suffix_0 = 20
+          error_depth = 1
+          let _yy_r416 = yy_action_4(_yy_value_2_0)
+          let _yy_r417 = state
+          _yy_state_0 = _yy_r417
+          _yy_value_2_0 = _yy_r416
+          continue 20
         })
       16 =>
         ({
           ()
-          // reduce inline_positions -> anchored EOF
-          guard! _env.stack is YYCell_7_void(
-            _yy_tail1, _yy_saved1, _yy_r62, _yy_read63
-          )
-          _env._yy_position_1 = _yy_read63
-          guard! _yy_tail1 is YYCell_10(
-            _yy_tail0, _yy_saved0, _yy_r58, _yy_r59, _yy_r60
-          )
-          _env._yy_position_0 = if _yy_tail0 is YYEmpty {
-            _env.initial_position
-          } else {
-            yy_stack_end(_yy_tail0)
+          // run state 22
+          if !_yy_token_ready {
+            if cursor < tokens.length() {
+              let (token, sp, ep) = tokens[cursor]
+              cursor += 1
+              _yy_token_symbol = yy_symbol(token)
+              _yy_token_token = Some(token)
+              _yy_token_start = sp
+              _yy_token_end = ep
+              _yy_token_ready = true
+            } else {
+              _yy_token_symbol = 0
+              _yy_token_token = None
+              _yy_token_start = last_pos
+              _yy_token_end = last_pos
+              _yy_token_ready = true
+            }
           }
-          _env._yy_value_1_0 = Some(yy_action_11(_yy_r58, _yy_r59, _yy_r60))
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 17
+          match _yy_token_symbol {
+            2 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 22)
+                state = 22
+                continue 13
+              })
+            3 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 22)
+                state = 22
+                continue 11
+              })
+            4 =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 22)
+                state = 22
+                continue 9
+              })
+            7 =>
+              ({
+                ()
+                last_pos = _yy_token_end
+                _yy_token_token = None
+                _yy_token_ready = false
+                _yy_token_start = 0
+                _yy_token_end = 0
+                yy_stack_checkpoint(stack)
+                error_suffix_0 = 22
+                error_suffix_1 = 23
+                error_depth = 2
+                let _yy_r429 = yy_action_0(
+                  _yy_value_2_0, _yy_position_0, _yy_position_1
+                )
+                let _yy_bind0 = _yy_r429
+                let _yy_r431 = _yy_bind0
+                return YYAccept_0(_yy_r431)
+              })
+            _ =>
+              ({
+                ()
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_value_2_0)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_value_2_0
+                }
+                _yy_depth_2 += 1
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_position_0)
+                } else {
+                  _yy_stack_0[_yy_depth_0] = _yy_position_0
+                }
+                _yy_depth_0 += 1
+                yy_stack_push(stack, 22)
+                state = 22
+                continue 17
+              })
+          }
         })
       17 =>
         ({
           ()
-          // goto inline_positions
-          match _env._yy_state_0 {
-            0 => ()
-            _ => panic()
-          }
-          _env.stack = YYCell_9(
-            _env.stack, _env.state, _env._yy_value_1_0.unwrap(),
-            _env._yy_position_1
+          yy_error(
+            ({
+              ()
+              let mut _yy_error_states = yy_stack_snapshot(stack)
+              if error_depth > 0 {
+                _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
+              }
+              if error_depth > 1 {
+                _yy_error_states = @list.cons(error_suffix_1, _yy_error_states)
+              }
+              _yy_error_states
+            }), _yy_token_token, (_yy_token_start, _yy_token_end)
           )
-          _env.state = 1
-          continue 29
+          panic()
         })
       18 =>
         ({
           ()
-          // reduce inline_positions -> LPAREN anchored EOF
-          guard! _env.stack is YYCell_7_void(
-            _yy_tail2, _yy_saved2, _yy_r74, _yy_read75
-          )
-          _env._yy_position_1 = _yy_read75
-          guard! _yy_tail2 is YYCell_10(
-            _yy_tail1, _yy_saved1, _yy_r70, _yy_r71, _yy_r72
-          )
-          guard! _yy_tail1 is YYCell_5_void(
-            _yy_tail0, _yy_saved0, _yy_read68, _yy_r69
-          )
-          _env._yy_position_0 = _yy_read68
-          _env._yy_value_1_0 = Some(yy_action_9(_yy_r70, _yy_r71, _yy_r72))
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 17
+          // goto anchored
+          continue match _yy_state_0 {
+              0 => 4
+              7 => 5
+              _ => panic()
+            }
         })
       19 =>
         ({
           ()
-          // reduce expr -> expr EQ expr
-          guard! _env.stack is YYCell_11(
-            _yy_tail2, _yy_saved2, _yy_r85, _yy_r86, _yy_read87
-          )
-          _env._yy_position_1 = _yy_read87
-          guard! _yy_tail2 is YYCell_4_void(
-            _yy_tail1, _yy_saved1, _yy_r83, _yy_r84
-          )
-          guard! _yy_tail1 is YYCell_11(
-            _yy_tail0, _yy_saved0, _yy_r79, _yy_read80, _yy_r81
-          )
-          _env._yy_position_0 = _yy_read80
-          _env._yy_value_3_0 = yy_action_7(_yy_r79, _yy_r85)
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 20
+          // goto inline_positions
+          continue 1
         })
       20 =>
         ({
           ()
           // goto expr
-          let (_yy_state, _yy_target) = match _env._yy_state_0 {
-            10 => (22, 13)
-            12 => (13, 7)
-            14 => (15, 9)
-            16 => (17, 21)
-            18 => (19, 12)
+          match _yy_state_0 {
+            10 =>
+              ({
+                ()
+                continue 16
+              })
+            12 =>
+              ({
+                ()
+                continue 8
+              })
+            14 =>
+              ({
+                ()
+                continue 10
+              })
+            16 =>
+              ({
+                ()
+                _yy_position_0 = _yy_position_1
+                continue 12
+              })
+            18 =>
+              ({
+                ()
+                continue 14
+              })
             _ => panic()
           }
-          _env.stack = YYCell_11(
-            _env.stack, _env.state, _env._yy_value_3_0, _env._yy_position_0,
-            _env._yy_position_1
-          )
-          _env.state = _yy_state
-          continue _yy_target
-        })
-      21 =>
-        ({
-          ()
-          // reduce expr -> expr STAR expr
-          guard! _env.stack is YYCell_11(
-            _yy_tail2, _yy_saved2, _yy_r97, _yy_r98, _yy_read99
-          )
-          _env._yy_position_1 = _yy_read99
-          guard! _yy_tail2 is YYCell_3_void(
-            _yy_tail1, _yy_saved1, _yy_r95, _yy_r96
-          )
-          guard! _yy_tail1 is YYCell_11(
-            _yy_tail0, _yy_saved0, _yy_r91, _yy_read92, _yy_r93
-          )
-          _env._yy_position_0 = _yy_read92
-          _env._yy_value_3_0 = yy_action_6(_yy_r91, _yy_r97)
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 20
-        })
-      22 =>
-        ({
-          ()
-          // reduce expr -> expr PLUS expr
-          guard! _env.stack is YYCell_11(
-            _yy_tail2, _yy_saved2, _yy_r109, _yy_r110, _yy_read111
-          )
-          _env._yy_position_1 = _yy_read111
-          guard! _yy_tail2 is YYCell_2_void(
-            _yy_tail1, _yy_saved1, _yy_r107, _yy_r108
-          )
-          guard! _yy_tail1 is YYCell_11(
-            _yy_tail0, _yy_saved0, _yy_r103, _yy_read104, _yy_r105
-          )
-          _env._yy_position_0 = _yy_read104
-          _env._yy_value_3_0 = yy_action_5(_yy_r103, _yy_r109)
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 20
-        })
-      23 =>
-        ({
-          ()
-          // reduce expr -> LPAREN expr RPAREN
-          guard! _env.stack is YYCell_6_void(
-            _yy_tail2, _yy_saved2, _yy_r128, _yy_read129
-          )
-          _env._yy_position_1 = _yy_read129
-          guard! _yy_tail2 is YYCell_11(
-            _yy_tail1, _yy_saved1, _yy_r124, _yy_r125, _yy_r126
-          )
-          guard! _yy_tail1 is YYCell_5_void(
-            _yy_tail0, _yy_saved0, _yy_read122, _yy_r123
-          )
-          _env._yy_position_0 = _yy_read122
-          _env._yy_value_3_0 = yy_action_2(_yy_r124)
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 20
-        })
-      24 =>
-        ({
-          ()
-          // reduce start -> expr EOF
-          guard! _env.stack is YYCell_7_void(
-            _yy_tail1, _yy_saved1, _yy_r137, _yy_read138
-          )
-          _env._yy_position_1 = _yy_read138
-          guard! _yy_tail1 is YYCell_11(
-            _yy_tail0, _yy_saved0, _yy_r133, _yy_read134, _yy_r135
-          )
-          _env._yy_position_0 = _yy_read134
-          _env._yy_value_4_0 = Some(
-            yy_action_0(_yy_r133, _env._yy_position_0, _yy_r135)
-          )
-          _env.stack = _yy_tail0
-          _env.state = _yy_saved0
-          _env._yy_state_0 = _env.state
-          continue 25
-        })
-      25 =>
-        ({
-          ()
-          // goto start
-          match _env._yy_state_0 {
-            10 => ()
-            _ => panic()
-          }
-          _env.stack = YYCell_8(
-            _env.stack, _env.state, _env._yy_value_4_0.unwrap(),
-            _env._yy_position_1
-          )
-          _env.state = 11
-          continue 34
-        })
-      26 =>
-        ({
-          ()
-          return yy_stop(_env)
-        })
-      27 =>
-        ({
-          ()
-          // shift STAR into state 2
-          yy_shift(_env, 2)
-          continue 1
-        })
-      28 =>
-        ({
-          ()
-          // shift LPAREN into state 7
-          yy_shift(_env, 7)
-          continue 3
-        })
-      29 =>
-        ({
-          ()
-          let _yy_r151 = match _env.stack {
-            YYCell_9(_, _, _value, _) => _value
-            _ => panic()
-          }
-          _env._yy_result = Some(YYAccept_1(_yy_r151))
-          return -1
-        })
-      30 =>
-        ({
-          ()
-          // shift NUMBER into state 3
-          yy_shift(_env, 3)
-          continue 14
-        })
-      31 =>
-        ({
-          ()
-          // shift EOF into state 6
-          yy_shift(_env, 6)
-          continue 16
-        })
-      32 =>
-        ({
-          ()
-          // shift EOF into state 9
-          yy_shift(_env, 9)
-          continue 18
-        })
-      33 =>
-        ({
-          ()
-          // shift LPAREN into state 12
-          yy_shift(_env, 12)
-          continue 6
-        })
-      34 =>
-        ({
-          ()
-          let _yy_r167 = match _env.stack {
-            YYCell_8(_, _, _value, _) => _value
-            _ => panic()
-          }
-          _env._yy_result = Some(YYAccept_0(_yy_r167))
-          return -1
-        })
-      35 =>
-        ({
-          ()
-          // shift PLUS into state 18
-          yy_shift(_env, 18)
-          continue 11
-        })
-      36 =>
-        ({
-          ()
-          // shift STAR into state 16
-          yy_shift(_env, 16)
-          continue 10
-        })
-      37 =>
-        ({
-          ()
-          // shift EQ into state 14
-          yy_shift(_env, 14)
-          continue 8
-        })
-      38 =>
-        ({
-          ()
-          // shift RPAREN into state 21
-          yy_shift(_env, 21)
-          continue 23
-        })
-      39 =>
-        ({
-          ()
-          // shift EOF into state 23
-          yy_shift(_env, 23)
-          continue 24
-        })
-      40 =>
-        ({
-          ()
-          // shift NUMBER into state 4
-          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
-            _yy_token_value
-          )
-          let _yy_r183 = _yy_token_value
-          let _yy_r184 = _env.lookahead.unwrap().start
-          let _yy_r185 = _env.lookahead.unwrap().end
-          _env.last_pos = _env.lookahead.unwrap().end
-          _env.lookahead = None
-          _env.error_stack = _env.stack
-          _env.error_state = _env.state
-          _env.error_suffix_0 = 4
-          _env.error_depth = 1
-          let _yy_r189 = if _env.stack is YYEmpty {
-            _env.initial_position
-          } else {
-            yy_stack_end(_env.stack)
-          }
-          let _yy_r190 = yy_action_13(_yy_r189, _yy_r185, _yy_r184)
-          let _yy_r191 = _env.state
-          _env.stack = YYCell_10(
-            _env.stack, _env.state, _yy_r190, _yy_r189, _yy_r185
-          )
-          _env.state = 5
-          continue 2
-        })
-      41 =>
-        ({
-          ()
-          // shift NUMBER into state 4
-          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
-            _yy_token_value
-          )
-          let _yy_r211 = _yy_token_value
-          let _yy_r212 = _env.lookahead.unwrap().start
-          let _yy_r213 = _env.lookahead.unwrap().end
-          _env.last_pos = _env.lookahead.unwrap().end
-          _env.lookahead = None
-          _env.error_stack = _env.stack
-          _env.error_state = _env.state
-          _env.error_suffix_0 = 4
-          _env.error_depth = 1
-          let _yy_r217 = if _env.stack is YYEmpty {
-            _env.initial_position
-          } else {
-            yy_stack_end(_env.stack)
-          }
-          let _yy_r218 = yy_action_13(_yy_r217, _yy_r213, _yy_r212)
-          let _yy_r219 = _env.state
-          _env.stack = YYCell_10(
-            _env.stack, _env.state, _yy_r218, _yy_r217, _yy_r213
-          )
-          _env.state = 8
-          continue 4
-        })
-      42 =>
-        ({
-          ()
-          // shift NUMBER into state 20
-          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
-            _yy_token_value
-          )
-          let _yy_r233 = _yy_token_value
-          let _yy_r234 = _env.lookahead.unwrap().start
-          let _yy_r235 = _env.lookahead.unwrap().end
-          _env.last_pos = _env.lookahead.unwrap().end
-          _env.lookahead = None
-          _env.error_stack = _env.stack
-          _env.error_state = _env.state
-          _env.error_suffix_0 = 20
-          _env.error_depth = 1
-          let _yy_r240 = yy_action_4(_yy_r233)
-          let _yy_r241 = _env.state
-          _env.stack = YYCell_11(
-            _env.stack, _env.state, _yy_r240, _yy_r234, _yy_r235
-          )
-          _env.state = 22
-          continue 13
-        })
-      43 =>
-        ({
-          ()
-          // shift NUMBER into state 20
-          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
-            _yy_token_value
-          )
-          let _yy_r252 = _yy_token_value
-          let _yy_r253 = _env.lookahead.unwrap().start
-          let _yy_r254 = _env.lookahead.unwrap().end
-          _env.last_pos = _env.lookahead.unwrap().end
-          _env.lookahead = None
-          _env.error_stack = _env.stack
-          _env.error_state = _env.state
-          _env.error_suffix_0 = 20
-          _env.error_depth = 1
-          let _yy_r259 = yy_action_4(_yy_r252)
-          let _yy_r260 = _env.state
-          _env.stack = YYCell_11(
-            _env.stack, _env.state, _yy_r259, _yy_r253, _yy_r254
-          )
-          _env.state = 13
-          continue 7
-        })
-      44 =>
-        ({
-          ()
-          // shift NUMBER into state 20
-          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
-            _yy_token_value
-          )
-          let _yy_r283 = _yy_token_value
-          let _yy_r284 = _env.lookahead.unwrap().start
-          let _yy_r285 = _env.lookahead.unwrap().end
-          _env.last_pos = _env.lookahead.unwrap().end
-          _env.lookahead = None
-          _env.error_stack = _env.stack
-          _env.error_state = _env.state
-          _env.error_suffix_0 = 20
-          _env.error_depth = 1
-          let _yy_r290 = yy_action_4(_yy_r283)
-          let _yy_r291 = _env.state
-          _env.stack = YYCell_11(
-            _env.stack, _env.state, _yy_r290, _yy_r284, _yy_r285
-          )
-          _env.state = 15
-          continue 9
-        })
-      45 =>
-        ({
-          ()
-          // shift NUMBER into state 20
-          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
-            _yy_token_value
-          )
-          let _yy_r308 = _yy_token_value
-          let _yy_r309 = _env.lookahead.unwrap().start
-          let _yy_r310 = _env.lookahead.unwrap().end
-          _env.last_pos = _env.lookahead.unwrap().end
-          _env.lookahead = None
-          _env.error_stack = _env.stack
-          _env.error_state = _env.state
-          _env.error_suffix_0 = 20
-          _env.error_depth = 1
-          let _yy_r315 = yy_action_4(_yy_r308)
-          let _yy_r316 = _env.state
-          _env.stack = YYCell_11(
-            _env.stack, _env.state, _yy_r315, _yy_r309, _yy_r310
-          )
-          _env.state = 17
-          continue 21
-        })
-      46 =>
-        ({
-          ()
-          // shift NUMBER into state 20
-          guard! _env.lookahead.unwrap().token.unwrap() is NUMBER(
-            _yy_token_value
-          )
-          let _yy_r327 = _yy_token_value
-          let _yy_r328 = _env.lookahead.unwrap().start
-          let _yy_r329 = _env.lookahead.unwrap().end
-          _env.last_pos = _env.lookahead.unwrap().end
-          _env.lookahead = None
-          _env.error_stack = _env.stack
-          _env.error_state = _env.state
-          _env.error_suffix_0 = 20
-          _env.error_depth = 1
-          let _yy_r334 = yy_action_4(_yy_r327)
-          let _yy_r335 = _env.state
-          _env.stack = YYCell_11(
-            _env.stack, _env.state, _yy_r334, _yy_r328, _yy_r329
-          )
-          _env.state = 19
-          continue 12
         })
       _ => panic()
     }
@@ -1168,7 +1459,7 @@ fn _yy_chunk_0(_env : YYContext, _entry : Int) -> Int raise ParseError {
 pub fn start(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> (
   Int, Int, Int
 ) raise ParseError {
-  match yy_parse(tokens, 5, 10, initial_pos?) {
+  match yy_parse(tokens, 6, 10, initial_pos?) {
     YYAccept_0(result) => result
     _ => panic()
   }
@@ -1185,74 +1476,42 @@ pub fn inline_positions(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -
 }
 
 ///|
-fn yy_stack_tail(stack : YYStack) -> YYStack {
-  match stack {
-    YYCell_10(tail, _, _, _, _) => tail
-    YYCell_9(tail, _, _, _) => tail
-    YYCell_11(tail, _, _, _, _) => tail
-    YYCell_8(tail, _, _, _) => tail
-    YYCell_3_void(tail, _, _, _) => tail
-    YYCell_5_void(tail, _, _, _) => tail
-    YYCell_1(tail, _, _, _, _) => tail
-    YYCell_7_void(tail, _, _, _) => tail
-    YYCell_2_void(tail, _, _, _) => tail
-    YYCell_4_void(tail, _, _, _) => tail
-    YYCell_6_void(tail, _, _, _) => tail
-    YYEmpty => panic()
-  }
-}
-
-///|
-fn yy_stack_saved(stack : YYStack) -> Int {
-  match stack {
-    YYCell_10(_, saved, _, _, _) => saved
-    YYCell_9(_, saved, _, _) => saved
-    YYCell_11(_, saved, _, _, _) => saved
-    YYCell_8(_, saved, _, _) => saved
-    YYCell_3_void(_, saved, _, _) => saved
-    YYCell_5_void(_, saved, _, _) => saved
-    YYCell_1(_, saved, _, _, _) => saved
-    YYCell_7_void(_, saved, _, _) => saved
-    YYCell_2_void(_, saved, _, _) => saved
-    YYCell_4_void(_, saved, _, _) => saved
-    YYCell_6_void(_, saved, _, _) => saved
-    YYEmpty => panic()
-  }
-}
-
-///|
-fn yy_stack_end(stack : YYStack) -> Int {
-  match stack {
-    YYCell_10(_, _, _, _, end) => end
-    YYCell_9(_, _, _, end) => end
-    YYCell_11(_, _, _, _, end) => end
-    YYCell_8(_, _, _, end) => end
-    YYCell_3_void(_, _, _, end) => end
-    YYCell_5_void(_, _, _, end) => end
-    YYCell_1(_, _, _, _, end) => end
-    YYCell_7_void(_, _, _, end) => end
-    YYCell_2_void(_, _, _, end) => end
-    YYCell_4_void(_, _, _, end) => end
-    YYCell_6_void(_, _, _, end) => end
-    YYEmpty => panic()
-  }
-}
-
-///|
-fn yy_stack_states(stack : YYStack, state : Int) -> @list.List[Int] {
-  let states : Array[Int] = []
-  for stack = stack, state = state {
-    states.push(state)
-    if stack is YYEmpty {
-      break
+fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
+  while stack.saved_prefix > stack.depth {
+    stack.saved_prefix -= 1
+    if stack.checkpoint - stack.saved_prefix - 1 == stack.undo.length() {
+      stack.undo.push(stack.values[stack.saved_prefix])
+    } else {
+      stack.undo[stack.checkpoint - stack.saved_prefix - 1] = stack.values[stack.saved_prefix]
     }
-    continue yy_stack_tail(stack), yy_stack_saved(stack)
   }
-  let mut result : @list.List[Int] = @list.List([])
-  for i = states.length() - 1; i >= 0; i = i - 1 {
-    result = @list.cons(states[i], result)
+  if stack.depth == stack.values.length() {
+    stack.values.push(state)
+  } else {
+    stack.values[stack.depth] = state
   }
-  result
+  stack.depth += 1
+}
+
+///|
+fn yy_stack_checkpoint(stack : YYStateStack) -> Unit {
+  stack.checkpoint = stack.depth
+  stack.saved_prefix = stack.depth
+}
+
+///|
+fn yy_stack_snapshot(stack : YYStateStack) -> @list.List[Int] {
+  let mut states : @list.List[Int] = @list.List([])
+  for i = 0; i < stack.checkpoint; i = i + 1 {
+    states = @list.cons(
+      if i < stack.saved_prefix {
+        stack.values[i]
+      } else {
+        stack.undo[stack.checkpoint - i - 1]
+      }, states
+    )
+  }
+  states
 }
 
 ///|

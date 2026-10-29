@@ -32,39 +32,40 @@ fn slot_type(
         initial: Ident("initial_position"),
         optional: false,
       }
-    Semantic(type_) => {
-      let initial : @mbt_ast.Expr? = match type_ {
-        Constr(
-          pkg=None,
-          "Int"
-          | "Int32"
-          | "Int64"
-          | "UInt"
-          | "UInt32"
-          | "UInt64"
-          | "Byte"
-          | "UInt16"
-          | "Float"
-          | "Double",
-          []
-        ) => Some(Int(0))
-        Constr(pkg=None, "Bool", []) => Some(Bool(false))
-        Constr(pkg=None, "Char", []) => Some(Char('\u0000'))
-        Constr(pkg=None, "String", []) => Some(String(""))
-        Constr(pkg=None, "Json", []) => Some(call("Json::null", []))
-        _ => None
-      }
-      match initial {
-        Some(initial) => { logical, type_, initial, optional: false, }
-        None =>
-          {
-            logical,
-            type_: Option(type_),
-            initial: Ident("None"),
-            optional: true,
-          }
-      }
-    }
+    Semantic(type_) => value_slot(logical, type_)
+  }
+}
+
+///|
+fn value_slot(
+  logical : @direct_ir.ValueType,
+  type_ : @elab.TypeExpr,
+) -> SlotType {
+  let initial : @mbt_ast.Expr? = match type_ {
+    Constr(
+      pkg=None,
+      "Int"
+      | "Int32"
+      | "Int64"
+      | "UInt"
+      | "UInt32"
+      | "UInt64"
+      | "Byte"
+      | "UInt16"
+      | "Float"
+      | "Double",
+      []
+    ) => Some(Int(0))
+    Constr(pkg=None, "Bool", []) => Some(Bool(false))
+    Constr(pkg=None, "Char", []) => Some(Char('\u0000'))
+    Constr(pkg=None, "String", []) => Some(String(""))
+    Constr(pkg=None, "Json", []) => Some(call("Json::null", []))
+    _ => None
+  }
+  match initial {
+    Some(initial) => { logical, type_, initial, optional: false, }
+    None =>
+      { logical, type_: Option(type_), initial: Ident("None"), optional: true, }
   }
 }
 

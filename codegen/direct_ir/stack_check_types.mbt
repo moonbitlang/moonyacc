@@ -49,11 +49,18 @@ priv struct StackCheckEdge {
 ///|
 priv enum StackCheckTerminator {
   CheckJump(StackCheckEdge)
-  CheckCaseToken(Array[(Token, StackCheckEdge)], StackCheckEdge)
-  CheckCaseState(StackCheckValue, Array[(Int32, StackCheckEdge)])
+  CheckCaseToken(Array[(Array[Token], StackCheckBranch)], StackCheckBranch)
+  CheckCaseState(StackCheckValue, Array[(Int32, StackCheckBranch)])
   CheckReturn(Int32, StackCheckValue)
-  CheckStop(Int32)
+  CheckStop
   CheckUnreachable
+} derive(Eq)
+
+///|
+priv struct StackCheckBranch {
+  stack : StackCheckStack
+  trace : Array[StackCheckEvent]
+  terminator : StackCheckTerminator
 } derive(Eq)
 
 ///|
@@ -117,4 +124,14 @@ fn StackCheck::bind_value(
 ///|
 fn StackCheck::stack(self : StackCheck) -> StackCheckStack {
   { removed: self.removed, suffix: self.suffix.map(c => c), }
+}
+
+///|
+fn StackCheck::copy(self : StackCheck) -> StackCheck {
+  {
+    ..self,
+    registers: self.registers.copy(),
+    suffix: self.suffix.copy(),
+    trace: self.trace.copy(),
+  }
 }

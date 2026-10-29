@@ -2,6 +2,7 @@
 package "moonbitlang/yacc/codegen/direct_ir"
 
 import {
+  "moonbitlang/core/set",
   "moonbitlang/yacc/codegen",
   "moonbitlang/yacc/elab",
   "moonbitlang/yacc/grm",
@@ -9,6 +10,8 @@ import {
 }
 
 // Values
+pub fn analyze_stack(@grm.Grammar, @lr1.Automaton) -> StackKnowledge
+
 pub fn lower(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, mode~ : @codegen.Mode) -> Program
 
 // Errors
@@ -21,21 +24,33 @@ pub(all) struct ActionArgument {
   value : Value
   start : Value
   end : Value
-}
+} derive(Eq)
 
 pub(all) struct ActionSignature {
   rhs : Array[Int32]
   lhs : Int32
+  inputs : Array[@elab.ActionInput]
   callable : Bool
 }
+pub fn ActionSignature::operands(Self, Array[ActionArgument], Value) -> Array[Value]
 
 pub(all) struct Block {
   origin : Origin
+  hint : InlineHint
   parameters : Array[Register]
   lookahead : Lookahead
   instructions : Array[Instruction]
   terminator : Terminator
 }
+pub fn Block::all_instructions(Self) -> Array[Instruction]
+
+pub(all) struct Body {
+  instructions : Array[Instruction]
+  terminator : Terminator
+} derive(Eq)
+pub fn Body::all_instructions(Self) -> Array[Instruction]
+pub fn Body::edge(Self) -> Edge?
+pub fn Body::jump(Edge) -> Self
 
 pub(all) struct Cell {
   symbol : Int32?
@@ -57,7 +72,7 @@ pub(all) struct DiagnosticState {
 pub(all) struct Edge {
   target : Int32
   arguments : Array[Value]
-}
+} derive(Eq)
 
 pub(all) struct Entry {
   name : String
@@ -71,10 +86,18 @@ pub(all) enum Field {
   Semantic
   Start
   End
+} derive(Eq, Hash)
+
+pub(all) enum InlineHint {
+  NoHint
+  Always
+  IfKnownState
+  IfCells(Int32)
 } derive(Eq)
 
 pub(all) enum Instruction {
   EnsureLookahead
+  LoadLookahead
   Input(Int32, Register, Register, Register)
   ConsumeLookahead
   SaveErrorSnapshot(Array[Value])
@@ -84,7 +107,7 @@ pub(all) enum Instruction {
   Pop(Cell, Array[Register?])
   Peek(Int32, Cell, Array[Register?])
   Action(Int32, Array[ActionArgument], Value, Register)
-}
+} derive(Eq)
 
 pub(all) enum Lookahead {
   Any
@@ -95,10 +118,15 @@ pub(all) enum Lookahead {
 
 pub(all) enum Origin {
   Run(Int32)
-  Shift(Int32, Int32)
   Reduce(Int32)
   Goto(Int32)
   Helper
+}
+
+pub struct PreparedProgram {
+  program : Program
+  flow : StackFlow
+  demand : StorageDemand
 }
 
 pub(all) struct Program {
@@ -109,15 +137,58 @@ pub(all) struct Program {
   actions : Array[ActionSignature]
   diagnostics : Array[DiagnosticState]
 }
-pub fn Program::eliminate_stack(Self) -> Self raise InvalidProgram
+pub fn Program::commute_pushes(Self, StackKnowledge) -> Self raise InvalidProgram
+pub fn Program::inline_blocks(Self, cautious~ : Bool) -> Self raise InvalidProgram
+pub fn Program::prepare(Self, StackKnowledge, positions~ : Bool) -> PreparedProgram raise InvalidProgram
+pub fn Program::prune_control(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::simplify(Self) -> Self
-pub fn Program::specialize_states(Self) -> Self raise InvalidProgram
+pub fn Program::stack_flow(Self, StackKnowledge) -> StackFlow raise InvalidProgram
+pub fn Program::storage_demand(Self, StackFlow, positions~ : Bool) -> StorageDemand
 pub fn Program::validate(Self) -> Unit raise InvalidProgram
 
 pub(all) struct Register {
   id : Int32
   type_ : ValueType
 } derive(Eq)
+
+pub(all) struct StackCellFact {
+  symbol : Int32
+  predecessors : @set.Set[Int32]
+}
+
+pub(all) struct StackEntryFact {
+  word : Array[StackCellFact]
+  exact : Bool
+  current : @set.Set[Int32]
+  parameters : Array[StateValueFact]
+  empty_token : Bool
+  tokens : @set.Set[Token]
+}
+
+pub(all) struct StackFlow {
+  entries : Array[StackEntryFact?]
+  previous_symbols : Map[Int32, @set.Set[Int32]]
+  previous_initial : @set.Set[Int32]
+  read_above : Map[Int32, Array[Int32]]
+}
+
+pub(all) struct StackKnowledge {
+  transitions : Array[Array[(Int32, Int32)]]
+  short : Array[Array[StackCellFact]]
+  long : Array[Array[StackCellFact]]
+  production_sites : Array[Array[Int32]]
+  entry_origins : Array[@set.Set[Int32]]
+}
+
+pub(all) struct StateValueFact {
+  states : @set.Set[Int32]
+  depth : Int32?
+}
+
+pub(all) struct StorageDemand {
+  registers : @set.Set[Int32]
+  fields : Array[@set.Set[Field]]
+}
 
 pub(all) struct Symbol {
   name : String
@@ -126,12 +197,13 @@ pub(all) struct Symbol {
 
 pub(all) enum Terminator {
   Jump(Edge)
-  CaseToken(Array[(Token, Edge)], Edge)
-  CaseState(Value, Array[(Int32, Edge)])
+  CaseToken(Array[(Array[Token], Body)], Body)
+  CaseState(Value, Array[(Int32, Body)])
   Return(Int32, Value)
-  Stop(Int32)
+  Stop
   Unreachable
-}
+} derive(Eq)
+pub fn Terminator::bodies(Self) -> Array[Body]
 
 pub(all) enum Token {
   Terminal(Int32)

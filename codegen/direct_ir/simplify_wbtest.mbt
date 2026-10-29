@@ -5,6 +5,7 @@ fn forwarding(
   args : Array[Value],
 ) -> Block {
   {
+    hint: NoHint,
     origin: Helper,
     parameters,
     lookahead: Any,
@@ -30,12 +31,14 @@ test "jump threading substitutes arguments without renumbering LR states" {
     forwarding([s1, p1], 4, [Reg(p1), Reg(s1)]),
     {
       ..forwarding([p2, s2], 5, []),
-      terminator: CaseState(Reg(s2), [(0, { target: 5, arguments: [], })]),
+      terminator: CaseState(Reg(s2), [
+        (0, Body::jump({ target: 5, arguments: [], })),
+      ]),
     },
     {
       ..forwarding([], 5, []),
       instructions: [EnsureLookahead],
-      terminator: Stop(0),
+      terminator: Stop,
     },
   ])
   program.validate()
@@ -51,9 +54,9 @@ test "jump threading substitutes arguments without renumbering LR states" {
     fail("lost state branch")
   }
   assert_eq(state, 0)
-  assert_eq(edge.target, 2)
+  assert_eq(edge.edge().unwrap().target, 2)
   assert_true(result.blocks[2].instructions is [EnsureLookahead])
-  assert_true(result.blocks[2].terminator is Stop(0))
+  assert_true(result.blocks[2].terminator is Stop)
 }
 
 ///|
@@ -68,7 +71,7 @@ test "threading retains entry initialization and forwarding cycles" {
     {
       ..forwarding([c, d], 2, []),
       instructions: [EnsureLookahead],
-      terminator: Stop(0),
+      terminator: Stop,
     },
   ])
   program.validate()

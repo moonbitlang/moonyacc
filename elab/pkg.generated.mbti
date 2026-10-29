@@ -34,12 +34,19 @@ pub(all) struct Action {
   body : ActionBody
   original_clause_info : OriginalClauseInfo
 }
+pub fn Action::inputs(Self, tracks_positions~ : Bool) -> Array[ActionInput]
 
 pub(all) enum ActionBody {
   Default
   User(Array[ActionPiece])
   JsonCst(name~ : String, rule_index~ : Int32, clause_index~ : Int32)
 }
+
+pub(all) enum ActionInput {
+  Value(Int32, TypeExpr)
+  Position(PositionExpr)
+} derive(Eq)
+pub fn ActionInput::rebase(Self, Int32) -> Self
 
 pub(all) enum ActionPiece {
   Text(String, offset~ : Int32)

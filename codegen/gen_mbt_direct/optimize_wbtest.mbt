@@ -53,6 +53,7 @@ test "coalescing keeps duplicated results and incoming parameters distinct" {
   let c : @direct_ir.Register = { id: 3, type_: Position, }
   let d : @direct_ir.Register = { id: 4, type_: Position, }
   let base : @direct_ir.Block = {
+    hint: NoHint,
     origin: Helper,
     parameters: [],
     lookahead: Any,
@@ -94,52 +95,4 @@ test "coalescing keeps duplicated results and incoming parameters distinct" {
   let erased_slots : Map[Int32, (Int32, Int32)] = Map([])
   coalesce_results(blocks, erased_slots)
   assert_true(erased_slots.is_empty())
-}
-
-///|
-test "typed reductions require the exact symbol suffix and effect order" {
-  let int : @elab.TypeExpr = Constr(pkg=None, "Int", [])
-  let value : @direct_ir.Register = { id: 0, type_: Semantic(int), }
-  let start : @direct_ir.Register = { id: 1, type_: Position, }
-  let end : @direct_ir.Register = { id: 2, type_: Position, }
-  let before : @direct_ir.Register = { id: 3, type_: Position, }
-  let result : @direct_ir.Register = { id: 4, type_: Semantic(int), }
-  let state : @direct_ir.Register = { id: 5, type_: State, }
-  let cell : @direct_ir.Cell = {
-    symbol: Some(1),
-    fields: [State, Semantic, Start, End],
-  }
-  let actions : Array[@direct_ir.ActionSignature] = [
-    { rhs: [1], lhs: 2, callable: true, },
-  ]
-  let block : @direct_ir.Block = {
-    origin: Helper,
-    parameters: [],
-    lookahead: Any,
-    instructions: [
-      Peek(0, cell, [None, Some(value), Some(start), Some(end)]),
-      ReadPreviousPosition(1, before),
-      Action(
-        0,
-        [{ value: Reg(value), start: Reg(start), end: Reg(end), }],
-        Reg(before),
-        result,
-      ),
-      Pop(cell, [None, None, None, None]),
-      Peek(0, { symbol: None, fields: [State], }, [Some(state)]),
-    ],
-    terminator: Return(0, Reg(result)),
-  }
-  assert_true(reduction_plan(block, actions) is Some(_))
-  assert_true(unused_previous_positions(block, _ => false).contains(before.id))
-  assert_false(unused_previous_positions(block, _ => true).contains(before.id))
-  let changed = block.instructions.copy()
-  changed[3] = Pop({ ..cell, symbol: Some(2), }, [None, None, None, None])
-  assert_true(
-    reduction_plan({ ..block, instructions: changed, }, actions) is None,
-  )
-  changed[3] = SaveErrorSnapshot([])
-  assert_true(
-    reduction_plan({ ..block, instructions: changed, }, actions) is None,
-  )
 }

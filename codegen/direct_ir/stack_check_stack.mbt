@@ -4,9 +4,12 @@ fn stack_check_cell(
   allow_opaque~ : Bool,
 ) -> Unit raise InvalidProgram {
   require(
-    (cell.symbol is Some(_) && cell.fields == [State, Semantic, Start, End]) ||
+    (
+      cell.symbol is Some(_) &&
+      Set(cell.fields).length() == cell.fields.length()
+    ) ||
     (allow_opaque && cell.symbol is None && cell.fields == [State]),
-    "stack rewrite requires a full symbol cell or an opaque state peek",
+    "stack rewrite requires distinct symbol fields or an opaque state peek",
   )
 }
 
@@ -45,6 +48,7 @@ fn StackCheck::push(
   values : Array[Value],
 ) -> Unit raise InvalidProgram {
   stack_check_cell(cell, allow_opaque=false)
+  require(cell.fields.contains(State), "pushed cell lacks its LR state")
   require(values.length() == cell.fields.length(), "stack rewrite push arity")
   let values = values.map(v => self.value(v))
   for i, value in values {
@@ -75,7 +79,8 @@ fn StackCheck::read(
   match known {
     Some(top) =>
       require(
-        cell.symbol is None || top.cell == cell,
+        (cell.symbol is None || top.cell.symbol == cell.symbol) &&
+        cell.fields.all(field => top.cell.fields.contains(field)),
         "stack rewrite cell mismatch",
       )
     None =>
@@ -92,7 +97,7 @@ fn StackCheck::read(
       let field = cell.fields[i]
       stack_check_field_type(field, reg.type_)
       let value = match known {
-        Some(top) => top.values[if cell.symbol is None { 0 } else { i }]
+        Some(top) => top.values[top.cell.fields.search(field).unwrap()]
         None if offset == 0 && field == State =>
           match self.incoming_state {
             Some(state) => SymState(state)
@@ -123,7 +128,11 @@ fn StackCheck::previous_position(
     "stack rewrite previous position",
   )
   let value = if depth < self.suffix.length() {
-    self.suffix[self.suffix.length() - depth - 1].values[3]
+    let top = self.suffix[self.suffix.length() - depth - 1]
+    guard top.cell.fields.search(End) is Some(index) else {
+      raise InvalidProgram("previous position is absent from a known cell")
+    }
+    top.values[index]
   } else {
     let offset = self.prefix_offset(depth)
     self.trace.push(CheckPreviousPosition(offset))

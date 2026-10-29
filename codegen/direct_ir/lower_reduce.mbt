@@ -58,6 +58,7 @@ fn Lowering::reduction_block(self : Lowering, production : Int32) -> Block {
   }
   {
     origin: Reduce(production),
+    hint: IfCells(action.rhs.length()),
     parameters: [],
     lookahead: Any,
     instructions,

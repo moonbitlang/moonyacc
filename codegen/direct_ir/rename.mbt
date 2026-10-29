@@ -21,7 +21,7 @@ fn RegisterSupply::new(program : Program) -> RegisterSupply {
     for reg in block.parameters {
       next = Int32::max(next, reg.id + 1)
     }
-    for instruction in block.instructions {
+    for instruction in block.all_instructions() {
       for reg in instruction.definitions() {
         next = Int32::max(next, reg.id + 1)
       }
@@ -42,7 +42,7 @@ fn RegisterSupply::clone_block(self : RegisterSupply, block : Block) -> Block {
     renamed
   }
   let parameters = block.parameters.map(fresh)
-  for instruction in block.instructions {
+  for instruction in block.all_instructions() {
     for reg in instruction.definitions() {
       ignore(fresh(reg))
     }
@@ -59,6 +59,6 @@ fn RegisterSupply::clone_block(self : RegisterSupply, block : Block) -> Block {
     instructions: block.instructions.map(i => {
       i.map_values(value, r => names[r.id])
     }),
-    terminator: block.terminator.map_values(value),
+    terminator: block.terminator.map_registers(value, r => names[r.id]),
   }
 }

@@ -13,7 +13,7 @@ fn Instruction::map_values(
   definition : (Register) -> Register,
 ) -> Instruction {
   match self {
-    EnsureLookahead | ConsumeLookahead => self
+    EnsureLookahead | LoadLookahead | ConsumeLookahead => self
     SaveErrorSnapshot(suffix) => SaveErrorSnapshot(suffix.map(operand))
     Input(token, value, start, end) =>
       Input(token, definition(value), definition(start), definition(end))
@@ -39,10 +39,40 @@ fn Terminator::map_values(
   self : Terminator,
   f : (Value) -> Value,
 ) -> Terminator {
-  let term = self.map_edges(e => { ..e, arguments: e.arguments.map(f), })
-  match term {
-    CaseState(value, arms) => CaseState(f(value), arms)
-    Return(entry, value) => Return(entry, f(value))
-    _ => term
+  self.map_registers(f, r => r)
+}
+
+///|
+fn Body::map_registers(
+  self : Body,
+  operand : (Value) -> Value,
+  definition : (Register) -> Register,
+) -> Body {
+  {
+    instructions: self.instructions.map(i => i.map_values(operand, definition)),
+    terminator: self.terminator.map_registers(operand, definition),
+  }
+}
+
+///|
+fn Terminator::map_registers(
+  self : Terminator,
+  operand : (Value) -> Value,
+  definition : (Register) -> Register,
+) -> Terminator {
+  match self {
+    Jump(edge) => Jump({ ..edge, arguments: edge.arguments.map(operand), })
+    CaseToken(arms, fallback) =>
+      CaseToken(
+        arms.map(p => (p.0, p.1.map_registers(operand, definition))),
+        fallback.map_registers(operand, definition),
+      )
+    CaseState(value, arms) =>
+      CaseState(
+        operand(value),
+        arms.map(p => (p.0, p.1.map_registers(operand, definition))),
+      )
+    Return(entry, value) => Return(entry, operand(value))
+    Stop | Unreachable => self
   }
 }
