@@ -33,3 +33,46 @@ pub fn Body::all_instructions(self : Body) -> Array[Instruction] {
   collect_instructions(self.instructions, self.terminator, result)
   result
 }
+
+///|
+fn Body::definitions(self : Body) -> Array[Register] {
+  let result = []
+  for instruction in self.instructions {
+    result.append(instruction.definitions())
+  }
+  if self.terminator is CaseToken(arms, _) {
+    for (pattern, _) in arms {
+      result.append(pattern.definitions())
+    }
+  }
+  for body in self.terminator.bodies() {
+    result.append(body.definitions())
+  }
+  result
+}
+
+///|
+fn Block::definitions(self : Block) -> Array[Register] {
+  let body : Body = {
+    instructions: self.instructions,
+    terminator: self.terminator,
+  }
+  [..self.parameters, ..body.definitions()]
+}
+
+///|
+pub fn Terminator::token_patterns(self : Terminator) -> Array[TokenPattern] {
+  let result = match self {
+    CaseToken(arms, _) => arms.map(p => p.0)
+    _ => []
+  }
+  for body in self.bodies() {
+    result.append(body.terminator.token_patterns())
+  }
+  result
+}
+
+///|
+pub fn Terminator::can_stop(self : Terminator) -> Bool {
+  self is Stop || self.bodies().any(b => b.terminator.can_stop())
+}

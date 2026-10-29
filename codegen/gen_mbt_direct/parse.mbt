@@ -6,7 +6,7 @@ fn Emitter::parse_parameters(self : Emitter) -> Array[@mbt_ast.Parameter] {
         typed("tokens", self.tokens_type()),
         typed("entry", type_("Int")),
         typed(
-          if !self.has_stack && self.chunk_errors.is_empty() {
+          if !self.needs_initial_state {
             "_initial_state"
           } else {
             "initial_state"
@@ -21,7 +21,7 @@ fn Emitter::parse_parameters(self : Emitter) -> Array[@mbt_ast.Parameter] {
         typed("start_pos", self.meta.position_data_type),
         typed("entry", type_("Int")),
         typed(
-          if !self.has_stack && self.chunk_errors.is_empty() {
+          if !self.needs_initial_state {
             "_initial_state"
           } else {
             "initial_state"

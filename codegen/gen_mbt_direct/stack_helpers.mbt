@@ -3,15 +3,17 @@
 /// checkpoint journal saves overwritten integer states once per checkpoint.
 /// Both buffers are bounded by the maximum materialized LR depth. Semantic
 /// arrays are independent and are never retained by diagnostic snapshots.
-fn state_stack_item(saves : Bool) -> @mbt_ast.Item {
-  @mbt_ast.item(
-    Struct("YYStateStack", [
-      {
-        name: "values",
-        type_: @mbt_common.named_type("Array", [type_("Int")]),
-        mutable: false,
-      },
-      { name: "depth", type_: type_("Int"), mutable: true, },
+fn state_stack_item(saves : Bool, diagnostics~ : Bool) -> @mbt_ast.Item {
+  let fields : Array[@mbt_ast.Field] = [
+    {
+      name: "values",
+      type_: @mbt_common.named_type("Array", [type_("Int")]),
+      mutable: false,
+    },
+    { name: "depth", type_: type_("Int"), mutable: true, },
+  ]
+  if diagnostics {
+    fields.append([
       { name: "checkpoint", type_: type_("Int"), mutable: saves, },
       { name: "saved_prefix", type_: type_("Int"), mutable: true, },
       {
@@ -19,9 +21,9 @@ fn state_stack_item(saves : Bool) -> @mbt_ast.Item {
         type_: @mbt_common.named_type("Array", [type_("Int")]),
         mutable: false,
       },
-    ]),
-    visibility=Private,
-  )
+    ])
+  }
+  @mbt_ast.item(Struct("YYStateStack", fields), visibility=Private)
 }
 
 ///|
@@ -30,7 +32,7 @@ fn stack_field(name : String) -> @mbt_ast.Expr {
 }
 
 ///|
-fn state_push_item() -> @mbt_ast.Item {
+fn state_push_item(diagnostics~ : Bool) -> @mbt_ast.Item {
   let depth = stack_field("depth")
   let saved_prefix = stack_field("saved_prefix")
   let values = stack_field("values")
@@ -40,27 +42,39 @@ fn state_push_item() -> @mbt_ast.Item {
       @mbt_ast.function(
         "yy_stack_push",
         [typed("stack", type_("YYStateStack")), typed("state", type_("Int"))],
-        body([
-          // Preserve the checkpoint's entire overwritten suffix, including cells
-          // popped without a subsequent push. Subsequent writes only extend it.
-          While(
-            Binary(Greater, saved_prefix, depth),
-            body([
-              Augment(saved_prefix, Subtract, Int(1)),
-              array_stack_write(
-                undo,
-                Binary(
-                  Subtract,
-                  Binary(Subtract, stack_field("checkpoint"), saved_prefix),
-                  Int(1),
+        body(
+          [
+            // Preserve the checkpoint's entire overwritten suffix, including cells
+            // popped without a subsequent push. Subsequent writes only extend it.
+            ..if diagnostics {
+              [
+                @mbt_ast.Stmt::While(
+                  Binary(Greater, saved_prefix, depth),
+                  body([
+                    Augment(saved_prefix, Subtract, Int(1)),
+                    array_stack_write(
+                      undo,
+                      Binary(
+                        Subtract,
+                        Binary(
+                          Subtract,
+                          stack_field("checkpoint"),
+                          saved_prefix,
+                        ),
+                        Int(1),
+                      ),
+                      Index(values, saved_prefix),
+                    ),
+                  ]),
                 ),
-                Index(values, saved_prefix),
-              ),
-            ]),
-          ),
-          array_stack_write(values, depth, Ident("state")),
-          Augment(depth, Add, Int(1)),
-        ]),
+              ]
+            } else {
+              []
+            },
+            array_stack_write(values, depth, Ident("state")),
+            Augment(depth, Add, Int(1)),
+          ],
+        ),
         result=type_("Unit"),
       ),
     ),

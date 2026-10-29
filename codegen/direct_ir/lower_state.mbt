@@ -69,19 +69,29 @@ fn Lowering::lower_state(self : Lowering, state : @lr1.LR1State) -> Unit {
   // Only the resolved action map is allowed to build token branches.
   let (instructions, terminator) = match default_ {
     Some(decision) => {
-      let body = self.target(state, decision, EndOfInput)
+      let body = self.target(state, decision)
       (body.instructions, body.terminator)
     }
     None => {
       let stop = self.error_label
-      let arms : Array[(Array[Token], Body)] = []
+      let arms : Array[(TokenPattern, Body)] = []
       for (lookahead, decision) in state.action {
         let input = token(lookahead)
-        let body = self.target(state, decision, input)
-        if arms.search_by(p => p.1 == body) is Some(index) {
-          arms[index].0.push(input)
-        } else {
-          arms.push(([input], body))
+        match decision {
+          Shift(next) => {
+            guard! input is Terminal(term)
+            arms.push(self.shift_branch(term, next.num))
+          }
+          _ => {
+            let body = self.target(state, decision)
+            if arms.search_by(p => p.0 is Tokens(_) && p.1 == body)
+              is Some(index) {
+              guard! arms[index].0 is Tokens(tokens)
+              tokens.push(input)
+            } else {
+              arms.push((Tokens([input]), body))
+            }
+          }
         }
       }
       ([EnsureLookahead], CaseToken(arms, Body::jump(edge(stop))))
@@ -116,16 +126,10 @@ fn Lowering::target(
   self : Lowering,
   state : @lr1.LR1State,
   decision : @lr1.Decision,
-  input : Token,
 ) -> Body {
   match decision {
     Reduce(p) => Body::jump(edge(self.reduce_labels[p.num]))
-    Shift(next) => {
-      guard input is Terminal(term) else {
-        abort("cannot shift internal end-of-input")
-      }
-      self.shift_body(term, next.num)
-    }
+    Shift(_) => abort("shift requires a binding token pattern")
     Accept => Body::jump(self.accept_edge(state))
     Conflict(_) => abort("direct backend requires resolved conflicts")
   }
@@ -134,14 +138,21 @@ fn Lowering::target(
 ///|
 /// Token payloads are bound in the selecting branch. The target run routine
 /// owns its incoming cell, so a shared run can commute its push into its cases.
-fn Lowering::shift_body(self : Lowering, term : Int32, target : Int32) -> Body {
+fn Lowering::shift_branch(
+  self : Lowering,
+  term : Int32,
+  target : Int32,
+) -> (TokenPattern, Body) {
   let value = self.fresh(Semantic(self.program.symbols[term].type_))
   let sp = self.fresh(Position)
   let ep = self.fresh(Position)
-  {
-    instructions: [Input(term, value, sp, ep)],
-    terminator: Jump({ target, arguments: [Reg(value), Reg(sp), Reg(ep)], }),
-  }
+  (
+    BindToken(term, value, sp, ep),
+    {
+      instructions: [],
+      terminator: Jump({ target, arguments: [Reg(value), Reg(sp), Reg(ep)], }),
+    },
+  )
 }
 
 ///|

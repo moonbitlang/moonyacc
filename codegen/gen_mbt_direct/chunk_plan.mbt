@@ -37,8 +37,9 @@ fn dispatch_width(
     match term {
       Jump(edge) => spend(edge.arguments.length())
       CaseToken(arms, fallback) => {
-        for (_, body) in arms {
-          if !fits(body.instructions, body.terminator) {
+        for (pattern, body) in arms {
+          if !spend(if pattern is BindToken(_) { 1 } else { 0 }) ||
+            !fits(body.instructions, body.terminator) {
             return false
           }
         }

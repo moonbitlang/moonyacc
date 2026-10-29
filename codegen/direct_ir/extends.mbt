@@ -43,6 +43,11 @@ pub extend Token with Hash::{hash, hash_combine}
 ///|
 #deprecated("Use Eq::equal or Eq::not_equal instead")
 #doc(hidden)
+pub extend TokenPattern with Eq::{equal, not_equal}
+
+///|
+#deprecated("Use Eq::equal or Eq::not_equal instead")
+#doc(hidden)
 pub extend ActionArgument with Eq::{equal, not_equal}
 
 ///|

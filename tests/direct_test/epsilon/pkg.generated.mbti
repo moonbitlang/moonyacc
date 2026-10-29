@@ -6,9 +6,9 @@ import {
 }
 
 // Values
-pub fn position(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Int32 raise ParseError
+pub fn position(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Int32
 
-pub fn unit(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Unit raise ParseError
+pub fn unit(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Unit
 
 // Errors
 pub suberror ParseError {

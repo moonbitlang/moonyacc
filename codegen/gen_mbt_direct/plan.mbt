@@ -12,6 +12,8 @@ priv struct Emitter {
   blocks_per_chunk : Int32
   chunked : Bool
   has_stack : Bool
+  diagnostics : Bool
+  needs_initial_state : Bool
   cache_state : Bool
   consumes_input : Bool
   snapshots : SnapshotPlan
@@ -41,6 +43,25 @@ fn Emitter::new(
   let has_stack = program.blocks.any(b => {
     b.all_instructions().any(i => i is (Push(_) | Pop(_)))
   })
+  let reads_state = program.blocks.any(b => {
+    b
+    .all_instructions()
+    .any(i => {
+      match i {
+        Peek(0, cell, regs) | Pop(cell, regs) =>
+          cell.fields
+          .mapi((index, field) => {
+            field is State &&
+            regs[index]
+            .map(r => demand.registers.contains(r.id))
+            .unwrap_or(false)
+          })
+          .any(x => x)
+        _ => false
+      }
+    })
+  })
+  let diagnostics = program.blocks.any(b => b.terminator.can_stop())
   let self = Emitter::{
     program,
     meta,
@@ -52,31 +73,21 @@ fn Emitter::new(
       b.all_instructions().any(i => i is EnsureLookahead)
     }),
     cache_json: support.is_json_cst() &&
-    program.blocks.any(b => b.all_instructions().any(i => i is Input(_))),
+    program.blocks.any(b => {
+      b.terminator
+      .token_patterns()
+      .any(p => {
+        p is BindToken(_, value, _, _) && demand.registers.contains(value.id)
+      })
+    }),
     layout,
     blocks_per_chunk,
     // Keep shared runtime helpers when compaction leaves just one chunk.
     chunked: program.blocks.length() > BLOCKS_PER_CHUNK,
     has_stack,
-    cache_state: has_stack &&
-    program.blocks.any(b => {
-      b
-      .all_instructions()
-      .any(i => {
-        match i {
-          Peek(0, cell, regs) | Pop(cell, regs) =>
-            cell.fields
-            .mapi((index, field) => {
-              field is State &&
-              regs[index]
-              .map(r => demand.registers.contains(r.id))
-              .unwrap_or(false)
-            })
-            .any(x => x)
-          _ => false
-        }
-      })
-    }),
+    cache_state: has_stack && reads_state,
+    diagnostics,
+    needs_initial_state: has_stack || reads_state || diagnostics,
     consumes_input: program.blocks
     .iter()
     .any(b => b.all_instructions().iter().any(i => i is ConsumeLookahead)),
@@ -138,7 +149,7 @@ fn Emitter::allocate_parameters(
 ///|
 fn Emitter::plan_control(self : Emitter, label : Int32, chunk : Int32) -> Unit {
   let block = self.program.blocks[label]
-  if terminator_stops(block.terminator) {
+  if block.terminator.can_stop() {
     self.chunk_errors.add(chunk)
   }
   let targets = successors(block.terminator)
@@ -147,11 +158,6 @@ fn Emitter::plan_control(self : Emitter, label : Int32, chunk : Int32) -> Unit {
     .any(target => self.layout.pc(target) / self.blocks_per_chunk == chunk) {
     self.chunk_loops.add(chunk)
   }
-}
-
-///|
-fn terminator_stops(term : @direct_ir.Terminator) -> Bool {
-  term is Stop || term.bodies().any(body => terminator_stops(body.terminator))
 }
 
 ///|

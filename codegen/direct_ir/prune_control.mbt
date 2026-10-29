@@ -44,7 +44,8 @@ fn StackFlowPass::prune(
     CaseToken(arms, fallback) => {
       let remaining = machine.tokens.copy()
       let live = []
-      for (tokens, branch) in arms {
+      for (pattern, branch) in arms {
+        let tokens = pattern.tokens()
         let selected = tokens.filter(token => machine.tokens.contains(token))
         for token in tokens {
           remaining.remove(token)
@@ -52,7 +53,10 @@ fn StackFlowPass::prune(
         if !selected.is_empty() {
           live.push(
             (
-              selected,
+              match pattern {
+                Tokens(_) => Tokens(selected)
+                BindToken(_) => pattern
+              },
               self.prune(
                 branch,
                 { ..machine, empty_token: false, tokens: Set(selected), },
@@ -67,13 +71,15 @@ fn StackFlowPass::prune(
         }
       }
       if lookahead is On(token) &&
-        live is [([selected], branch)] &&
+        live is [(Tokens([selected]), branch)] &&
         selected == token {
         return append_body(instructions, branch)
       }
-      // Keep the checked cold failure continuation and public error ABI even
-      // when the token fixed point proves it unreachable on well-formed input.
-      let fallback = if remaining.is_empty() {
+      // Unmatched tokens retain their cold failure path. A match covering
+      // the entire token type has no default constructor case.
+      let fallback = if self.program.exhaustive_tokens(live.map(p => p.0)) {
+        { instructions: [], terminator: Unreachable, }
+      } else if remaining.is_empty() {
         if self.program.cold_failure(fallback) {
           fallback
         } else {
@@ -129,9 +135,8 @@ fn Program::cold_failure(self : Program, body : Body) -> Bool {
 }
 
 ///|
-/// Remove only branches excluded by the whole-CFG fixed point. Keeping a
-/// singleton token test when it supplies an Input witness preserves the lookahead
-/// IR contract; the target compiler can still simplify its pattern binding.
+/// Remove branches excluded by the whole-CFG fixed point. A binding pattern
+/// remains even for a singleton domain: it defines branch-scoped values.
 pub fn Program::prune_control(
   self : Program,
   knowledge : StackKnowledge,
@@ -139,6 +144,11 @@ pub fn Program::prune_control(
   let flow = self.stack_flow(knowledge)
   let pass = StackFlowPass::new(self, knowledge)
   let blocks = self.blocks.mapi((label, block) => {
+    let block = match flow.entries[label] {
+      Some(entry) =>
+        { ..block, lookahead: entry.cache_contract(block.lookahead), }
+      None => block
+    }
     let body = match flow.entries[label] {
       None =>
         if block.instructions.is_empty() && block.terminator is Stop {

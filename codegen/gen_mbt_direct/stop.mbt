@@ -3,7 +3,7 @@ fn Emitter::stop_body(self : Emitter) -> @mbt_ast.Block {
   body(
     [
       Eval(
-        call("yy_error", [
+        call("_yy_error", [
           self.snapshot_states(),
           self.cached("token"),
           Tuple([self.cached_position(), self.cached_position(end=true)]),
@@ -16,7 +16,7 @@ fn Emitter::stop_body(self : Emitter) -> @mbt_ast.Block {
 
 ///|
 /// All syntax errors inspect the same cached token and last-shift snapshot.
-/// Keep the IR's Stop state for provenance; share only the emitted error body.
+/// Share the emitted error body across the checked IR error exits.
 fn Emitter::stop_item(self : Emitter) -> @mbt_ast.Item {
   @mbt_ast.item(
     Function(

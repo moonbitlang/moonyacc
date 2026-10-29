@@ -285,16 +285,6 @@ priv struct YYStateStack {
 }
 
 ///|
-fn yy_symbol(token : Token) -> Int {
-  match token {
-    NUMBER(_) => 1
-    TEXT(_) => 2
-    FLAG(_) => 3
-    EOF => 4
-  }
-}
-
-///|
 fn yy_parse(
   tokens : Array[(Token, Pos, Pos)], entry : Int, initial_state : Int,
   initial_pos? : Pos
@@ -317,9 +307,7 @@ fn yy_parse(
   let mut error_depth : Int = 0
   let mut error_suffix_0 : Int = 0
   let mut error_suffix_1 : Int = 0
-  let mut _yy_token_symbol : Int = 0
   let mut _yy_token_token : Token? = None
-  let mut _yy_token_ready : Bool = false
   let mut _yy_token_start : Pos? = None
   let mut _yy_token_end : Pos? = None
   let mut _yy_value_0_0 : (Int, Int, Int, Int)? = None
@@ -338,28 +326,21 @@ fn yy_parse(
             if cursor < tokens.length() {
               let (token, sp, ep) = tokens[cursor]
               cursor += 1
-              _yy_token_symbol = yy_symbol(token)
               _yy_token_token = Some(token)
               _yy_token_start = Some(sp)
               _yy_token_end = Some(ep)
-              _yy_token_ready = true
             } else {
-              _yy_token_symbol = 0
               _yy_token_token = None
               _yy_token_start = Some(last_pos)
               _yy_token_end = Some(last_pos)
-              _yy_token_ready = true
             }
           })
-          match _yy_token_symbol {
-            1 =>
+          match _yy_token_token {
+            Some(NUMBER(_yy_r286)) =>
               ({
                 ()
-                guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
-                let _yy_r286 = _yy_token_value
                 last_pos = _yy_token_end.unwrap()
                 _yy_token_token = None
-                _yy_token_ready = false
                 _yy_token_start = None
                 _yy_token_end = None
                 yy_stack_checkpoint(stack)
@@ -370,28 +351,21 @@ fn yy_parse(
                   if cursor < tokens.length() {
                     let (token, sp, ep) = tokens[cursor]
                     cursor += 1
-                    _yy_token_symbol = yy_symbol(token)
                     _yy_token_token = Some(token)
                     _yy_token_start = Some(sp)
                     _yy_token_end = Some(ep)
-                    _yy_token_ready = true
                   } else {
-                    _yy_token_symbol = 0
                     _yy_token_token = None
                     _yy_token_start = Some(last_pos)
                     _yy_token_end = Some(last_pos)
-                    _yy_token_ready = true
                   }
                 })
-                match _yy_token_symbol {
-                  1 =>
+                match _yy_token_token {
+                  Some(NUMBER(_yy_r338)) =>
                     ({
                       ()
-                      guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
-                      let _yy_r338 = _yy_token_value
                       last_pos = _yy_token_end.unwrap()
                       _yy_token_token = None
-                      _yy_token_ready = false
                       _yy_token_start = None
                       _yy_token_end = None
                       yy_stack_checkpoint(stack)
@@ -414,30 +388,21 @@ fn yy_parse(
                         if cursor < tokens.length() {
                           let (token, sp, ep) = tokens[cursor]
                           cursor += 1
-                          _yy_token_symbol = yy_symbol(token)
                           _yy_token_token = Some(token)
                           _yy_token_start = Some(sp)
                           _yy_token_end = Some(ep)
-                          _yy_token_ready = true
                         } else {
-                          _yy_token_symbol = 0
                           _yy_token_token = None
                           _yy_token_start = Some(last_pos)
                           _yy_token_end = Some(last_pos)
-                          _yy_token_ready = true
                         }
                       })
-                      match _yy_token_symbol {
-                        1 =>
+                      match _yy_token_token {
+                        Some(NUMBER(_yy_r582)) =>
                           ({
                             ()
-                            guard! _yy_token_token.unwrap() is NUMBER(
-                              _yy_token_value
-                            )
-                            let _yy_r582 = _yy_token_value
                             last_pos = _yy_token_end.unwrap()
                             _yy_token_token = None
-                            _yy_token_ready = false
                             _yy_token_start = None
                             _yy_token_end = None
                             yy_stack_checkpoint(stack)
@@ -459,27 +424,22 @@ fn yy_parse(
                               if cursor < tokens.length() {
                                 let (token, sp, ep) = tokens[cursor]
                                 cursor += 1
-                                _yy_token_symbol = yy_symbol(token)
                                 _yy_token_token = Some(token)
                                 _yy_token_start = Some(sp)
                                 _yy_token_end = Some(ep)
-                                _yy_token_ready = true
                               } else {
-                                _yy_token_symbol = 0
                                 _yy_token_token = None
                                 _yy_token_start = Some(last_pos)
                                 _yy_token_end = Some(last_pos)
-                                _yy_token_ready = true
                               }
                             })
-                            match _yy_token_symbol {
-                              1 =>
+                            match _yy_token_token {
+                              Some(NUMBER(_)) =>
                                 ({
                                   ()
                                   let _yy_r590 = _yy_token_start.unwrap()
                                   last_pos = _yy_token_end.unwrap()
                                   _yy_token_token = None
-                                  _yy_token_ready = false
                                   _yy_token_start = None
                                   _yy_token_end = None
                                   yy_stack_checkpoint(stack)
@@ -490,30 +450,21 @@ fn yy_parse(
                                     if cursor < tokens.length() {
                                       let (token, sp, ep) = tokens[cursor]
                                       cursor += 1
-                                      _yy_token_symbol = yy_symbol(token)
                                       _yy_token_token = Some(token)
                                       _yy_token_start = Some(sp)
                                       _yy_token_end = Some(ep)
-                                      _yy_token_ready = true
                                     } else {
-                                      _yy_token_symbol = 0
                                       _yy_token_token = None
                                       _yy_token_start = Some(last_pos)
                                       _yy_token_end = Some(last_pos)
-                                      _yy_token_ready = true
                                     }
                                   })
-                                  match _yy_token_symbol {
-                                    1 =>
+                                  match _yy_token_token {
+                                    Some(NUMBER(_yy_r592)) =>
                                       ({
                                         ()
-                                        guard! _yy_token_token.unwrap() is NUMBER(
-                                          _yy_token_value
-                                        )
-                                        let _yy_r592 = _yy_token_value
                                         last_pos = _yy_token_end.unwrap()
                                         _yy_token_token = None
-                                        _yy_token_ready = false
                                         _yy_token_start = None
                                         _yy_token_end = None
                                         yy_stack_checkpoint(stack)
@@ -538,30 +489,21 @@ fn yy_parse(
                                           if cursor < tokens.length() {
                                             let (token, sp, ep) = tokens[cursor]
                                             cursor += 1
-                                            _yy_token_symbol = yy_symbol(token)
                                             _yy_token_token = Some(token)
                                             _yy_token_start = Some(sp)
                                             _yy_token_end = Some(ep)
-                                            _yy_token_ready = true
                                           } else {
-                                            _yy_token_symbol = 0
                                             _yy_token_token = None
                                             _yy_token_start = Some(last_pos)
                                             _yy_token_end = Some(last_pos)
-                                            _yy_token_ready = true
                                           }
                                         })
-                                        match _yy_token_symbol {
-                                          1 =>
+                                        match _yy_token_token {
+                                          Some(NUMBER(_yy_r599)) =>
                                             ({
                                               ()
-                                              guard! _yy_token_token.unwrap() is NUMBER(
-                                                _yy_token_value
-                                              )
-                                              let _yy_r599 = _yy_token_value
                                               last_pos = _yy_token_end.unwrap()
                                               _yy_token_token = None
-                                              _yy_token_ready = false
                                               _yy_token_start = None
                                               _yy_token_end = None
                                               yy_stack_checkpoint(stack)
@@ -577,30 +519,23 @@ fn yy_parse(
                                                 if cursor < tokens.length() {
                                                   let (token, sp, ep) = tokens[cursor]
                                                   cursor += 1
-                                                  _yy_token_symbol = yy_symbol(
-                                                    token
-                                                  )
                                                   _yy_token_token = Some(token)
                                                   _yy_token_start = Some(sp)
                                                   _yy_token_end = Some(ep)
-                                                  _yy_token_ready = true
                                                 } else {
-                                                  _yy_token_symbol = 0
                                                   _yy_token_token = None
                                                   _yy_token_start = Some(
                                                     last_pos
                                                   )
                                                   _yy_token_end = Some(last_pos)
-                                                  _yy_token_ready = true
                                                 }
                                               })
-                                              match _yy_token_symbol {
-                                                4 =>
+                                              match _yy_token_token {
+                                                Some(EOF) =>
                                                   ({
                                                     ()
                                                     last_pos = _yy_token_end.unwrap()
                                                     _yy_token_token = None
-                                                    _yy_token_ready = false
                                                     _yy_token_start = None
                                                     _yy_token_end = None
                                                     yy_stack_checkpoint(stack)
@@ -696,25 +631,19 @@ fn yy_parse(
             if cursor < tokens.length() {
               let (token, sp, ep) = tokens[cursor]
               cursor += 1
-              _yy_token_symbol = yy_symbol(token)
               _yy_token_token = Some(token)
               _yy_token_start = Some(sp)
               _yy_token_end = Some(ep)
-              _yy_token_ready = true
             } else {
-              _yy_token_symbol = 0
               _yy_token_token = None
               _yy_token_start = Some(last_pos)
               _yy_token_end = Some(last_pos)
-              _yy_token_ready = true
             }
           })
-          match _yy_token_symbol {
-            2 =>
+          match _yy_token_token {
+            Some(TEXT(_yy_r308)) =>
               ({
                 ()
-                guard! _yy_token_token.unwrap() is TEXT(_yy_token_value)
-                let _yy_r308 = _yy_token_value
                 _yy_value_1_0 = _yy_r308
                 continue 4
               })
@@ -729,30 +658,26 @@ fn yy_parse(
         ({
           ()
           // run state 15
-          if !_yy_token_ready {
+          ({
+            ()
             if cursor < tokens.length() {
               let (token, sp, ep) = tokens[cursor]
               cursor += 1
-              _yy_token_symbol = yy_symbol(token)
               _yy_token_token = Some(token)
               _yy_token_start = Some(sp)
               _yy_token_end = Some(ep)
-              _yy_token_ready = true
             } else {
-              _yy_token_symbol = 0
               _yy_token_token = None
               _yy_token_start = Some(last_pos)
               _yy_token_end = Some(last_pos)
-              _yy_token_ready = true
             }
-          }
-          match _yy_token_symbol {
-            4 =>
+          })
+          match _yy_token_token {
+            Some(EOF) =>
               ({
                 ()
                 last_pos = _yy_token_end.unwrap()
                 _yy_token_token = None
-                _yy_token_ready = false
                 _yy_token_start = None
                 _yy_token_end = None
                 yy_stack_checkpoint(stack)
@@ -785,7 +710,6 @@ fn yy_parse(
           // run state 17
           last_pos = _yy_token_end.unwrap()
           _yy_token_token = None
-          _yy_token_ready = false
           _yy_token_start = None
           _yy_token_end = None
           yy_stack_checkpoint(stack)
@@ -806,28 +730,21 @@ fn yy_parse(
             if cursor < tokens.length() {
               let (token, sp, ep) = tokens[cursor]
               cursor += 1
-              _yy_token_symbol = yy_symbol(token)
               _yy_token_token = Some(token)
               _yy_token_start = Some(sp)
               _yy_token_end = Some(ep)
-              _yy_token_ready = true
             } else {
-              _yy_token_symbol = 0
               _yy_token_token = None
               _yy_token_start = Some(last_pos)
               _yy_token_end = Some(last_pos)
-              _yy_token_ready = true
             }
           })
-          match _yy_token_symbol {
-            1 =>
+          match _yy_token_token {
+            Some(NUMBER(_yy_r315)) =>
               ({
                 ()
-                guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
-                let _yy_r315 = _yy_token_value
                 last_pos = _yy_token_end.unwrap()
                 _yy_token_token = None
-                _yy_token_ready = false
                 _yy_token_start = None
                 _yy_token_end = None
                 yy_stack_checkpoint(stack)
@@ -841,26 +758,21 @@ fn yy_parse(
                   if cursor < tokens.length() {
                     let (token, sp, ep) = tokens[cursor]
                     cursor += 1
-                    _yy_token_symbol = yy_symbol(token)
                     _yy_token_token = Some(token)
                     _yy_token_start = Some(sp)
                     _yy_token_end = Some(ep)
-                    _yy_token_ready = true
                   } else {
-                    _yy_token_symbol = 0
                     _yy_token_token = None
                     _yy_token_start = Some(last_pos)
                     _yy_token_end = Some(last_pos)
-                    _yy_token_ready = true
                   }
                 })
-                match _yy_token_symbol {
-                  4 =>
+                match _yy_token_token {
+                  Some(EOF) =>
                     ({
                       ()
                       last_pos = _yy_token_end.unwrap()
                       _yy_token_token = None
-                      _yy_token_ready = false
                       _yy_token_start = None
                       _yy_token_end = None
                       yy_stack_checkpoint(stack)
@@ -897,30 +809,35 @@ fn yy_parse(
             if cursor < tokens.length() {
               let (token, sp, ep) = tokens[cursor]
               cursor += 1
-              _yy_token_symbol = yy_symbol(token)
               _yy_token_token = Some(token)
               _yy_token_start = Some(sp)
               _yy_token_end = Some(ep)
-              _yy_token_ready = true
             } else {
-              _yy_token_symbol = 0
               _yy_token_token = None
               _yy_token_start = Some(last_pos)
               _yy_token_end = Some(last_pos)
-              _yy_token_ready = true
             }
           })
-          match _yy_token_symbol {
-            2 =>
+          match _yy_token_token {
+            Some(TEXT(_)) =>
               ({
                 ()
                 ignore(yy_action_6())
                 yy_stack_push(stack, 25)
                 state = 25
-                guard! _yy_token_token.unwrap() is TEXT(_yy_token_value)
-                let _yy_r720 = _yy_token_value
-                _yy_value_1_0 = _yy_r720
-                continue 4
+                match _yy_token_token {
+                  Some(TEXT(_yy_r720)) =>
+                    ({
+                      ()
+                      _yy_value_1_0 = _yy_r720
+                      continue 4
+                    })
+                  _ =>
+                    ({
+                      ()
+                      continue 10
+                    })
+                }
               })
             _ =>
               ({
@@ -947,34 +864,28 @@ fn yy_parse(
           _yy_depth_1 += 1
           yy_stack_push(stack, 26)
           state = 26
-          if !_yy_token_ready {
+          ({
+            ()
             if cursor < tokens.length() {
               let (token, sp, ep) = tokens[cursor]
               cursor += 1
-              _yy_token_symbol = yy_symbol(token)
               _yy_token_token = Some(token)
               _yy_token_start = Some(sp)
               _yy_token_end = Some(ep)
-              _yy_token_ready = true
             } else {
-              _yy_token_symbol = 0
               _yy_token_token = None
               _yy_token_start = Some(last_pos)
               _yy_token_end = Some(last_pos)
-              _yy_token_ready = true
             }
-          }
-          match _yy_token_symbol {
-            1 =>
+          })
+          match _yy_token_token {
+            Some(NUMBER(_yy_r326)) =>
               ({
                 ()
-                guard! _yy_token_token.unwrap() is NUMBER(_yy_token_value)
-                let _yy_r326 = _yy_token_value
                 let _yy_r327 = _yy_token_start.unwrap()
                 let _yy_r328 = _yy_token_end.unwrap()
                 last_pos = _yy_token_end.unwrap()
                 _yy_token_token = None
-                _yy_token_ready = false
                 _yy_token_start = None
                 _yy_token_end = None
                 yy_stack_checkpoint(stack)
@@ -1019,21 +930,17 @@ fn yy_parse(
                   if cursor < tokens.length() {
                     let (token, sp, ep) = tokens[cursor]
                     cursor += 1
-                    _yy_token_symbol = yy_symbol(token)
                     _yy_token_token = Some(token)
                     _yy_token_start = Some(sp)
                     _yy_token_end = Some(ep)
-                    _yy_token_ready = true
                   } else {
-                    _yy_token_symbol = 0
                     _yy_token_token = None
                     _yy_token_start = Some(last_pos)
                     _yy_token_end = Some(last_pos)
-                    _yy_token_ready = true
                   }
                 })
-                match _yy_token_symbol {
-                  3 =>
+                match _yy_token_token {
+                  Some(FLAG(_)) =>
                     ({
                       ()
                       let _yy_r732 = yy_action_3(_yy_r731)
@@ -1079,32 +986,12 @@ fn yy_parse(
           _yy_depth_0 += 1
           yy_stack_push(stack, 31)
           state = 31
-          if !_yy_token_ready {
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_symbol = yy_symbol(token)
-              _yy_token_token = Some(token)
-              _yy_token_start = Some(sp)
-              _yy_token_end = Some(ep)
-              _yy_token_ready = true
-            } else {
-              _yy_token_symbol = 0
-              _yy_token_token = None
-              _yy_token_start = Some(last_pos)
-              _yy_token_end = Some(last_pos)
-              _yy_token_ready = true
-            }
-          }
-          match _yy_token_symbol {
-            3 =>
+          match _yy_token_token {
+            Some(FLAG(_yy_r329)) =>
               ({
                 ()
-                guard! _yy_token_token.unwrap() is FLAG(_yy_token_value)
-                let _yy_r329 = _yy_token_value
                 last_pos = _yy_token_end.unwrap()
                 _yy_token_token = None
-                _yy_token_ready = false
                 _yy_token_start = None
                 _yy_token_end = None
                 yy_stack_checkpoint(stack)
@@ -1118,26 +1005,21 @@ fn yy_parse(
                   if cursor < tokens.length() {
                     let (token, sp, ep) = tokens[cursor]
                     cursor += 1
-                    _yy_token_symbol = yy_symbol(token)
                     _yy_token_token = Some(token)
                     _yy_token_start = Some(sp)
                     _yy_token_end = Some(ep)
-                    _yy_token_ready = true
                   } else {
-                    _yy_token_symbol = 0
                     _yy_token_token = None
                     _yy_token_start = Some(last_pos)
                     _yy_token_end = Some(last_pos)
-                    _yy_token_ready = true
                   }
                 })
-                match _yy_token_symbol {
-                  4 =>
+                match _yy_token_token {
+                  Some(EOF) =>
                     ({
                       ()
                       last_pos = _yy_token_end.unwrap()
                       _yy_token_token = None
-                      _yy_token_ready = false
                       _yy_token_start = None
                       _yy_token_end = None
                       yy_stack_checkpoint(stack)
@@ -1173,7 +1055,7 @@ fn yy_parse(
       10 =>
         ({
           ()
-          yy_error(
+          _yy_error(
             ({
               ()
               let mut _yy_error_states = yy_stack_snapshot(stack)
@@ -1394,7 +1276,7 @@ fn yy_expected(stack : @list.List[Int], terminal : Int) -> Bool {
 }
 
 ///|
-fn yy_error(stack : @list.List[Int], token : Token?, loc : (Pos, Pos)) -> Unit raise ParseError {
+fn _yy_error(stack : @list.List[Int], token : Token?, loc : (Pos, Pos)) -> Unit raise ParseError {
   let expected = []
   for i in 0..<yy_terminals.length() {
     let (symbol, kind) = yy_terminals[i]

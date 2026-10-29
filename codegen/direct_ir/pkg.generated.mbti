@@ -98,7 +98,6 @@ pub(all) enum InlineHint {
 pub(all) enum Instruction {
   EnsureLookahead
   LoadLookahead
-  Input(Int32, Register, Register, Register)
   ConsumeLookahead
   SaveErrorSnapshot(Array[Value])
   ReadPreviousPosition(Int32, Register)
@@ -138,6 +137,7 @@ pub(all) struct Program {
   diagnostics : Array[DiagnosticState]
 }
 pub fn Program::commute_pushes(Self, StackKnowledge) -> Self raise InvalidProgram
+pub fn Program::exhaustive_tokens(Self, Array[TokenPattern]) -> Bool
 pub fn Program::inline_blocks(Self, cautious~ : Bool) -> Self raise InvalidProgram
 pub fn Program::prepare(Self, StackKnowledge, positions~ : Bool) -> PreparedProgram raise InvalidProgram
 pub fn Program::prune_control(Self, StackKnowledge) -> Self raise InvalidProgram
@@ -197,18 +197,27 @@ pub(all) struct Symbol {
 
 pub(all) enum Terminator {
   Jump(Edge)
-  CaseToken(Array[(Array[Token], Body)], Body)
+  CaseToken(Array[(TokenPattern, Body)], Body)
   CaseState(Value, Array[(Int32, Body)])
   Return(Int32, Value)
   Stop
   Unreachable
 } derive(Eq)
 pub fn Terminator::bodies(Self) -> Array[Body]
+pub fn Terminator::can_stop(Self) -> Bool
+pub fn Terminator::token_patterns(Self) -> Array[TokenPattern]
 
 pub(all) enum Token {
   Terminal(Int32)
   EndOfInput
 } derive(Eq, Hash)
+
+pub(all) enum TokenPattern {
+  Tokens(Array[Token])
+  BindToken(Int32, Register, Register, Register)
+} derive(Eq)
+pub fn TokenPattern::definitions(Self) -> Array[Register]
+pub fn TokenPattern::tokens(Self) -> Array[Token]
 
 pub(all) enum Value {
   Reg(Register)

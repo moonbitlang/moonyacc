@@ -11,24 +11,7 @@ fn Emitter::token_pattern(
 
 ///|
 fn Emitter::token_items(self : Emitter) -> Array[@mbt_ast.Item] {
-  let arms = []
-  for symbol in 1..<=self.program.terminal_count {
-    arms.push(
-      (self.token_pattern(symbol, Any), value_block(@mbt_ast.Expr::Int(symbol))),
-    )
-  }
-  let items = [
-    @mbt_ast.item(
-      Function(
-        @mbt_ast.function(
-          "yy_symbol",
-          [typed("token", type_("Token"))],
-          value_block(Match(Ident("token"), arms)),
-          result=type_("Int"),
-        ),
-      ),
-    ),
-  ]
+  let items = []
   if self.support.is_json_cst() {
     let parameters = [typed("token", type_("Token"))]
     if self.support.tracks_positions() {
@@ -124,7 +107,6 @@ fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
   }
   read.append(
     self.cache(
-      call("yy_symbol", [Ident("token")]),
       call("Some", [Ident("token")]),
       payload,
       Ident("sp"),
@@ -143,7 +125,6 @@ fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
         Some(
           body(
             self.cache(
-              Int(0),
               Ident("None"),
               call("Json::null", []),
               self.machine("last_pos"),
@@ -156,40 +137,6 @@ fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
   } else {
     body(read)
   }
-}
-
-///|
-fn Emitter::input_bindings(
-  self : Emitter,
-  symbol : Int32,
-  value : @direct_ir.Register,
-  start : @direct_ir.Register,
-  end : @direct_ir.Register,
-) -> Array[@mbt_ast.Stmt] {
-  let statements = []
-  if !self.erased_register(value) {
-    if self.support.is_json_cst() {
-      statements.push(self.bind_register(value, self.cached("value")))
-    } else {
-      let token = dot_call(self.cached("token"), "unwrap", [])
-      let pattern = self.token_pattern(symbol, Bind("_yy_token_value"))
-      statements.push(
-        if self.program.terminal_count == 1 {
-          Let(pattern, None, token)
-        } else {
-          Assert(Is(token, pattern))
-        },
-      )
-      statements.push(self.bind_register(value, Ident("_yy_token_value")))
-    }
-  }
-  if !self.erased_register(start) {
-    statements.push(self.bind_register(start, self.cached_position()))
-  }
-  if !self.erased_register(end) {
-    statements.push(self.bind_register(end, self.cached_position(end=true)))
-  }
-  statements
 }
 
 ///|

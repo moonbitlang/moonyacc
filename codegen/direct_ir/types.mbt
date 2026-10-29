@@ -51,7 +51,7 @@ pub(all) enum Token {
 
 ///|
 /// Cached lookahead is an explicit machine resource. Any imposes no precondition;
-/// On also witnesses the token identity required by Input.
+/// On also witnesses the identity of the cached token.
 pub(all) enum Lookahead {
   Any
   Empty
@@ -64,7 +64,6 @@ pub(all) enum Instruction {
   EnsureLookahead
   // Unconditional lexer read, requiring an empty cache.
   LoadLookahead
-  Input(Int32, Register, Register, Register)
   ConsumeLookahead
   // Snapshot the physical stack plus a virtual suffix of destination states,
   // ordered bottom to top. Values are captured now, not read on the error path.
@@ -86,9 +85,18 @@ pub(all) struct Edge {
 } derive(Eq)
 
 ///|
+/// A binding pattern selects one real token and defines its logical semantic
+/// value and span in the branch scope. It never reads the lexer or converts a
+/// JsonCst payload: these effects belong to loading the lookahead resource.
+pub(all) enum TokenPattern {
+  Tokens(Array[Token])
+  BindToken(Int32, Register, Register, Register)
+} derive(Eq)
+
+///|
 pub(all) enum Terminator {
   Jump(Edge)
-  CaseToken(Array[(Array[Token], Body)], Body)
+  CaseToken(Array[(TokenPattern, Body)], Body)
   CaseState(Value, Array[(Int32, Body)])
   Return(Int32, Value)
   Stop

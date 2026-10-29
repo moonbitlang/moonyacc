@@ -46,49 +46,54 @@ test "snapshot suffix values must be defined LR states" {
 }
 
 ///|
-test "token extraction requires a checked branch, even after ensuring lookahead" {
+test "token pattern bindings have checked types and branch-local scope" {
   let v : Register = { id: 0, type_: Semantic(Constr(pkg=None, "Unit", [])), }
   let sp : Register = { id: 1, type_: Position, }
   let ep : Register = { id: 2, type_: Position, }
-  let program = fixture([
-    {
-      hint: NoHint,
-      origin: Helper,
-      parameters: [],
-      lookahead: Any,
-      instructions: [EnsureLookahead],
-      terminator: CaseToken(
-        [([Terminal(1)], Body::jump({ target: 1, arguments: [], }))],
-        Body::jump({ target: 2, arguments: [], }),
-      ),
-    },
-    {
-      hint: NoHint,
-      origin: Helper,
-      parameters: [],
-      lookahead: On(Terminal(1)),
-      instructions: [Input(1, v, sp, ep), ConsumeLookahead],
-      terminator: Return(0, Reg(v)),
-    },
-    {
-      hint: NoHint,
-      origin: Helper,
-      parameters: [],
-      lookahead: Present,
-      instructions: [],
-      terminator: Stop,
-    },
-  ])
-  program.validate()
-  program.blocks[0] = {
-    ..program.blocks[0],
-    terminator: Jump({ target: 1, arguments: [], }),
+  let branch : Body = {
+    instructions: [ConsumeLookahead],
+    terminator: Return(0, Reg(v)),
   }
-  try program.validate() catch {
-    InvalidProgram(message) =>
-      assert_true(message.contains("lookahead mismatch"))
-  } noraise {
-    _ => fail("unchecked payload extraction accepted")
+  let fallback : Body = { instructions: [], terminator: Stop, }
+  let pattern = TokenPattern::BindToken(1, v, sp, ep)
+  let block : Block = {
+    hint: NoHint,
+    origin: Helper,
+    parameters: [],
+    lookahead: Empty,
+    instructions: [LoadLookahead],
+    terminator: CaseToken([(pattern, branch)], fallback),
+  }
+  let program = fixture([block])
+  program.validate()
+  let invalid = [
+    { ..block, instructions: [], },
+    {
+      ..block,
+      terminator: CaseToken([(Tokens([Terminal(1)]), branch)], fallback),
+    },
+    {
+      ..block,
+      terminator: CaseToken([(BindToken(1, sp, v, ep), branch)], fallback),
+    },
+    {
+      ..block,
+      terminator: CaseToken([(pattern, branch)], {
+        ..fallback,
+        terminator: Return(0, Reg(v)),
+      }),
+    },
+  ]
+  for block in invalid {
+    let bad = { ..program, blocks: [block], }
+    assert_true(
+      try {
+        bad.validate()
+        false
+      } catch {
+        _ => true
+      },
+    )
   }
 }
 

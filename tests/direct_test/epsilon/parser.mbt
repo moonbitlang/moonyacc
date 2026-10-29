@@ -72,113 +72,80 @@ priv enum YYResult {
 }
 
 ///|
-fn yy_symbol(token : Token) -> Int {
-  match token {
-
-  }
-}
-
-///|
 fn yy_parse(
-  tokens : Array[(Token, Int, Int)], entry : Int, initial_state : Int,
+  tokens : Array[(Token, Int, Int)], entry : Int, _initial_state : Int,
   initial_pos? : Int
-) -> YYResult raise ParseError {
+) -> YYResult {
   let mut cursor = 0
   let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
   let last_pos = initial_position
-  let mut _yy_token_symbol : Int = 0
   let mut _yy_token_token : Token? = None
   let mut _yy_token_start : Int = 0
   let mut _yy_token_end : Int = 0
-  for pc = entry {
-    match pc {
-      0 =>
+  match entry {
+    0 =>
+      ({
+        ()
+        // run state 0
         ({
           ()
-          // run state 0
-          ({
-            ()
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_symbol = yy_symbol(token)
-              _yy_token_token = Some(token)
-              _yy_token_start = sp
-              _yy_token_end = ep
-            } else {
-              _yy_token_symbol = 0
-              _yy_token_token = None
-              _yy_token_start = last_pos
-              _yy_token_end = last_pos
-            }
-          })
-          match _yy_token_symbol {
-            0 =>
-              ({
-                ()
-                ignore(yy_action_1())
-                return YYAccept_1(())
-              })
-            _ =>
-              ({
-                ()
-                continue 2
-              })
+          if cursor < tokens.length() {
+            let (token, sp, ep) = tokens[cursor]
+            cursor += 1
+            _yy_token_token = Some(token)
+            _yy_token_start = sp
+            _yy_token_end = ep
+          } else {
+            _yy_token_token = None
+            _yy_token_start = last_pos
+            _yy_token_end = last_pos
           }
         })
-      1 =>
+        match _yy_token_token {
+          None =>
+            ({
+              ()
+              ignore(yy_action_1())
+              return YYAccept_1(())
+            })
+        }
+      })
+    1 =>
+      ({
+        ()
+        // run state 2
         ({
           ()
-          // run state 2
-          ({
-            ()
-            if cursor < tokens.length() {
-              let (token, sp, ep) = tokens[cursor]
-              cursor += 1
-              _yy_token_symbol = yy_symbol(token)
-              _yy_token_token = Some(token)
-              _yy_token_start = sp
-              _yy_token_end = ep
-            } else {
-              _yy_token_symbol = 0
-              _yy_token_token = None
-              _yy_token_start = last_pos
-              _yy_token_end = last_pos
-            }
-          })
-          match _yy_token_symbol {
-            0 =>
-              ({
-                ()
-                let _yy_r30 = initial_position
-                let _yy_r31 = yy_action_0(_yy_r30)
-                let _yy_bind0 = _yy_r31
-                let _yy_r36 = _yy_bind0
-                return YYAccept_0(_yy_r36)
-              })
-            _ =>
-              ({
-                ()
-                continue 2
-              })
+          if cursor < tokens.length() {
+            let (token, sp, ep) = tokens[cursor]
+            cursor += 1
+            _yy_token_token = Some(token)
+            _yy_token_start = sp
+            _yy_token_end = ep
+          } else {
+            _yy_token_token = None
+            _yy_token_start = last_pos
+            _yy_token_end = last_pos
           }
         })
-      2 =>
-        ({
-          ()
-          yy_error(
-            @list.List([initial_state]), _yy_token_token,
-            (_yy_token_start, _yy_token_end)
-          )
-          panic()
-        })
-      _ => panic()
-    }
+        match _yy_token_token {
+          None =>
+            ({
+              ()
+              let _yy_r30 = initial_position
+              let _yy_r31 = yy_action_0(_yy_r30)
+              let _yy_bind0 = _yy_r31
+              let _yy_r36 = _yy_bind0
+              return YYAccept_0(_yy_r36)
+            })
+        }
+      })
+    _ => panic()
   }
 }
 
 ///|
-pub fn position(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Int raise ParseError {
+pub fn position(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Int {
   match yy_parse(tokens, 1, 2, initial_pos?) {
     YYAccept_0(result) => result
     _ => panic()
@@ -186,7 +153,7 @@ pub fn position(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Int ra
 }
 
 ///|
-pub fn unit(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Unit raise ParseError {
+pub fn unit(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -> Unit {
   match yy_parse(tokens, 0, 0, initial_pos?) {
     YYAccept_1(result) => result
     _ => panic()
@@ -279,7 +246,7 @@ fn yy_expected(stack : @list.List[Int], terminal : Int) -> Bool {
 }
 
 ///|
-fn yy_error(stack : @list.List[Int], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
+fn _yy_error(stack : @list.List[Int], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
   let expected = []
   for i in 0..<yy_terminals.length() {
     let (symbol, kind) = yy_terminals[i]

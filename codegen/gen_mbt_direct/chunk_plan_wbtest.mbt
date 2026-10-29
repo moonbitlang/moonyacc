@@ -57,7 +57,9 @@ test "dispatch cost includes branch arguments and the token fallback edge" {
   blocks[0] = {
     ..blocks[0],
     terminator: CaseToken(
-      arms.map(pair => ([Terminal(pair.0 + 1)], @direct_ir.Body::jump(pair.1))),
+      arms.map(pair => {
+        (Tokens([Terminal(pair.0 + 1)]), @direct_ir.Body::jump(pair.1))
+      }),
       @direct_ir.Body::jump({ target: 0, arguments: [], }),
     ),
   }

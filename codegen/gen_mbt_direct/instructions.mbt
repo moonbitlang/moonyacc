@@ -6,8 +6,6 @@ fn Emitter::instruction(
   match instruction {
     EnsureLookahead => [self.read_lookahead()]
     LoadLookahead => [self.read_lookahead(ready=false)]
-    Input(token, value, start, end) =>
-      self.input_bindings(token, value, start, end)
     ConsumeLookahead => self.consume_lookahead()
     SaveErrorSnapshot(suffix) => self.save_snapshot(suffix)
     ReadPreviousPosition(depth, reg) =>
@@ -93,22 +91,7 @@ fn Emitter::terminator(
 ) -> @mbt_ast.Block {
   match terminator {
     Jump(edge) => self.jump(edge, chunk)
-    CaseToken(arms, fallback) =>
-      self.branch_bodies(
-        self.cached("symbol"),
-        arms.map(p => {
-          (
-            if p.0 is [token] {
-              @mbt_ast.Pattern::Int(token_id(token))
-            } else {
-              Or(p.0.map(t => @mbt_ast.Pattern::Int(token_id(t))))
-            },
-            p.1,
-          )
-        }),
-        chunk,
-        fallback~,
-      )
+    CaseToken(arms, fallback) => self.token_cases(arms, fallback, chunk)
     CaseState(value, arms) =>
       self.branch_bodies(
         self.value(value),

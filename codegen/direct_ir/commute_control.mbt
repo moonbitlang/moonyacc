@@ -105,7 +105,7 @@ fn PushCommuter::finish(
 ///|
 fn PushCommuter::token_cases(
   self : PushCommuter,
-  arms : Array[(Array[Token], Body)],
+  arms : Array[(TokenPattern, Body)],
   fallback : Body,
   env : PushEnv,
   path : Set[Int32],

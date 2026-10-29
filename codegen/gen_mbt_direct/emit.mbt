@@ -6,7 +6,9 @@ fn Emitter::parser_items(
 ) -> Array[@mbt_ast.Item] {
   let items = [self.result_item()]
   if self.has_stack {
-    items.push(state_stack_item(self.snapshots.saves))
+    items.push(
+      state_stack_item(self.snapshots.saves, diagnostics=self.diagnostics),
+    )
   }
   if self.program.blocks.any(b => {
       b.all_instructions().any(i => i is (EnsureLookahead | LoadLookahead))
@@ -39,13 +41,15 @@ fn Emitter::parser_items(
     items.push(self.entry_item(index, entry))
   }
   if self.program.blocks.any(b => b.all_instructions().any(i => i is Push(_))) {
-    items.push(state_push_item())
+    items.push(state_push_item(diagnostics=self.diagnostics))
   }
   if self.has_stack {
     if self.snapshots.saves {
       items.push(state_checkpoint_item())
     }
-    items.push(state_snapshot_item())
+    if self.diagnostics {
+      items.push(state_snapshot_item())
+    }
   }
   items
 }

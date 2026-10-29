@@ -5,7 +5,6 @@ fn Emitter::lookahead_storage(
   self : Emitter,
 ) -> Array[(@mbt_ast.Field, @mbt_ast.Expr)] {
   let fields : Array[(@mbt_ast.Field, @mbt_ast.Expr)] = [
-    ({ name: "_yy_token_symbol", type_: type_("Int"), mutable: true, }, Int(0)),
     (
       { name: "_yy_token_token", type_: Option(type_("Token")), mutable: true, },
       Ident("None"),
@@ -68,14 +67,12 @@ fn Emitter::cached_position(
 /// types use the same checked unwritten-slot representation as typed registers.
 fn Emitter::cache(
   self : Emitter,
-  symbol : @mbt_ast.Expr,
   token : @mbt_ast.Expr,
   value : @mbt_ast.Expr,
   start : @mbt_ast.Expr,
   end : @mbt_ast.Expr,
 ) -> Array[@mbt_ast.Stmt] {
   let statements : Array[@mbt_ast.Stmt] = [
-    Assign(self.machine("_yy_token_symbol"), symbol),
     Assign(self.machine("_yy_token_token"), token),
   ]
   if self.cache_json {
@@ -103,7 +100,7 @@ fn Emitter::cache(
 }
 
 ///|
-/// Consume also releases cached references. Values captured by Input retain
+/// Consume also releases cached references. Values captured by token patterns retain
 /// their own lifetime; stale payloads never survive merely because Ready=false.
 fn Emitter::consume_lookahead(self : Emitter) -> Array[@mbt_ast.Stmt] {
   let statements : Array[@mbt_ast.Stmt] = []
@@ -113,9 +110,7 @@ fn Emitter::consume_lookahead(self : Emitter) -> Array[@mbt_ast.Stmt] {
     )
   }
   for (field, initial) in self.lookahead_storage() {
-    if field.name != "_yy_token_symbol" {
-      statements.push(Assign(self.machine(field.name), initial))
-    }
+    statements.push(Assign(self.machine(field.name), initial))
   }
   statements
 }

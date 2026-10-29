@@ -142,35 +142,23 @@ test "stack rewrite checker retains action order arguments and lexer timing" {
   let args = [{ value: Reg(value), start: Reg(pos), end: Reg(pos), }]
   let first : Instruction = Action(0, args, Reg(pos), result)
   let second : Instruction = Action(1, [], Reg(pos), unit)
-  let input : Instruction = Input(1, input_value, input_start, input_end)
-  let original = check_block(
-    [value, other, pos],
-    [first, second, EnsureLookahead, input, ConsumeLookahead],
-    [],
-  )
+  let pattern = TokenPattern::BindToken(1, input_value, input_start, input_end)
+  let selected : Body = {
+    instructions: [ConsumeLookahead],
+    terminator: Jump({ target: 0, arguments: [], }),
+  }
+  let fallback : Body = { instructions: [], terminator: Stop, }
+  let original = {
+    ..check_block([value, other, pos], [first, second, EnsureLookahead], []),
+    terminator: CaseToken([(pattern, selected)], fallback),
+  }
   assert_true(check_stack_rewrite(original, original))
-  assert_false(
-    check_stack_rewrite(original, {
-      ..original,
-      instructions: [second, first, EnsureLookahead, input, ConsumeLookahead],
-    }),
-  )
-  assert_false(
-    check_stack_rewrite(original, {
-      ..original,
-      instructions: [first, EnsureLookahead, input, ConsumeLookahead],
-    }),
-  )
-  assert_false(
-    check_stack_rewrite(original, {
-      ..original,
-      instructions: [EnsureLookahead, input, first, second, ConsumeLookahead],
-    }),
-  )
-  assert_false(
-    check_stack_rewrite(original, {
-      ..original,
-      instructions: [
+  for
+    instructions in [
+      [second, first, EnsureLookahead],
+      [first, EnsureLookahead],
+      [EnsureLookahead, first, second],
+      [
         Action(
           0,
           [{ value: Reg(other), start: Reg(pos), end: Reg(pos), }],
@@ -179,9 +167,23 @@ test "stack rewrite checker retains action order arguments and lexer timing" {
         ),
         second,
         EnsureLookahead,
-        input,
-        ConsumeLookahead,
       ],
+    ] {
+    assert_false(check_stack_rewrite(original, { ..original, instructions, }))
+  }
+  assert_false(
+    check_stack_rewrite(original, {
+      ..original,
+      instructions: [EnsureLookahead],
+      terminator: CaseToken(
+        [
+          (
+            pattern,
+            { ..selected, instructions: [first, second, ConsumeLookahead], },
+          ),
+        ],
+        fallback,
+      ),
     }),
   )
 }

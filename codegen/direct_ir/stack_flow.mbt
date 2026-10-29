@@ -77,11 +77,6 @@ fn StackFlowPass::instruction(
       machine.empty_token = true
       machine.tokens = Set([])
     }
-    Input(symbol, _, _, _) =>
-      require(
-        !machine.empty_token && machine.tokens == Set([Terminal(symbol)]),
-        "input token is not proved",
-      )
     Bind(bindings) => {
       let facts = bindings.map(p => machine.value(p.1))
       for i, (reg, _) in bindings {
@@ -219,7 +214,8 @@ fn StackFlowPass::finish(
     CaseToken(arms, fallback) => {
       require(!machine.empty_token, "token case without a cached token")
       let remaining = machine.tokens.copy()
-      for (tokens, body) in arms {
+      for (pattern, body) in arms {
+        let tokens = pattern.tokens()
         let selected = Set::from_iter(
           tokens.iter().filter(token => machine.tokens.contains(token)),
         )

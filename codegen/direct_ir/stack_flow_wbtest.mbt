@@ -88,12 +88,9 @@ test "stack proof rejects wrong symbols transitions selectors and returns" {
         terminator: CaseToken(
           [
             (
-              [Terminal(1)],
+              BindToken(1, value, sp, ep),
               {
-                instructions: [
-                  Input(1, value, sp, ep),
-                  Push(logical, [State(1)]),
-                ],
+                instructions: [Push(logical, [State(1)])],
                 terminator: Return(0, Reg(value)),
               },
             ),

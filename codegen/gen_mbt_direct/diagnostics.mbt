@@ -184,7 +184,9 @@ fn error_function(
   @mbt_ast.item(
     Function(
       @mbt_ast.function(
-        "yy_error",
+        // Keep the public error family available even for an infallible parser.
+        // The cold helper may then be unused and eliminated by the compiler.
+        "_yy_error",
         [
           typed("stack", @mbt_common.named_type("@list.List", [type_("Int")])),
           typed("token", Option(type_("Token"))),

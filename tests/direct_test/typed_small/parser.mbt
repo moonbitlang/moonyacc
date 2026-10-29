@@ -63,13 +63,6 @@ priv enum YYResult {
 }
 
 ///|
-fn yy_symbol(token : Token) -> Int {
-  match token {
-    VALUE(_) => 1
-  }
-}
-
-///|
 fn yy_parse(
   tokens : Array[(Token, Int, Int)], entry : Int, initial_state : Int,
   initial_pos? : Int
@@ -79,7 +72,6 @@ fn yy_parse(
   let mut last_pos = initial_position
   let mut error_depth : Int = 0
   let mut error_suffix_0 : Int = 0
-  let mut _yy_token_symbol : Int = 0
   let mut _yy_token_token : Token? = None
   let mut _yy_token_start : Int = 0
   let mut _yy_token_end : Int = 0
@@ -93,23 +85,19 @@ fn yy_parse(
           if cursor < tokens.length() {
             let (token, sp, ep) = tokens[cursor]
             cursor += 1
-            _yy_token_symbol = yy_symbol(token)
             _yy_token_token = Some(token)
             _yy_token_start = sp
             _yy_token_end = ep
           } else {
-            _yy_token_symbol = 0
             _yy_token_token = None
             _yy_token_start = last_pos
             _yy_token_end = last_pos
           }
         })
-        match _yy_token_symbol {
-          1 =>
+        match _yy_token_token {
+          Some(VALUE(_yy_r16)) =>
             ({
               ()
-              let VALUE(_yy_token_value) = _yy_token_token.unwrap()
-              let _yy_r16 = _yy_token_value
               last_pos = _yy_token_end
               _yy_token_token = None
               _yy_token_start = 0
@@ -124,7 +112,7 @@ fn yy_parse(
           _ =>
             ({
               ()
-              yy_error(
+              _yy_error(
                 ({
                   ()
                   let mut _yy_error_states = @list.List([initial_state])
@@ -237,7 +225,7 @@ fn yy_expected(stack : @list.List[Int], terminal : Int) -> Bool {
 }
 
 ///|
-fn yy_error(stack : @list.List[Int], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
+fn _yy_error(stack : @list.List[Int], token : Token?, loc : (Int, Int)) -> Unit raise ParseError {
   let expected = []
   for i in 0..<yy_terminals.length() {
     let (symbol, kind) = yy_terminals[i]

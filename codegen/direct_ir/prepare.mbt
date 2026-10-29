@@ -17,7 +17,7 @@ pub fn Program::prepare(
   ignore(self.stack_flow(knowledge))
   let program = self.simplify().inline_blocks(cautious=true)
   let program = program.commute_pushes(knowledge).inline_blocks(cautious=false)
-  let program = program.prune_control(knowledge)
+  let program = program.prune_control(knowledge).discard_unobserved_snapshots()
   let flow = program.stack_flow(knowledge)
   let demand = program.storage_demand(flow, positions~)
   for block in program.blocks {

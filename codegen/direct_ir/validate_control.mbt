@@ -15,7 +15,6 @@ fn BlockValidator::instruction(
       )
       self.lookahead = Present
     }
-    Input(t, value, sp, ep) => self.input(t, value, sp, ep)
     ConsumeLookahead => {
       self.check(
         self.lookahead is On(Terminal(_)),
@@ -65,7 +64,7 @@ fn BlockValidator::instruction(
 }
 
 ///|
-fn BlockValidator::input(
+fn BlockValidator::bind_token(
   self : BlockValidator,
   t : Int32,
   value : Register,
@@ -75,15 +74,15 @@ fn BlockValidator::input(
   self.program.checked_token(Terminal(t))
   self.check(
     self.lookahead == On(Terminal(t)),
-    "Input requires the matching token branch",
+    "binding requires the matching token branch",
   )
   self.check(
     value.type_ == Semantic(self.program.checked_symbol(t).type_),
-    "Input payload type mismatch",
+    "token binding payload type mismatch",
   )
   self.check(
     sp.type_ == Position && ep.type_ == Position,
-    "Input position type mismatch",
+    "token binding position type mismatch",
   )
   self.add_definition(value)
   self.add_definition(sp)
@@ -131,14 +130,24 @@ fn BlockValidator::terminator(
         "CaseToken requires lookahead",
       )
       let seen = []
-      for (tokens, target) in arms {
+      for (pattern, target) in arms {
+        let tokens = pattern.tokens()
         self.check(!tokens.is_empty(), "empty token branch")
         for token in tokens {
           self.program.checked_token(token)
           self.check(!seen.contains(token), "duplicate token branch")
           seen.push(token)
         }
-        self.body(target, if tokens is [token] { On(token) } else { Present })
+        let lookahead = if tokens is [token] {
+          Lookahead::On(token)
+        } else {
+          Present
+        }
+        let branch = { ..self, locals: self.locals.copy(), lookahead, }
+        if pattern is BindToken(token, value, start, end) {
+          branch.bind_token(token, value, start, end)
+        }
+        branch.body(target, lookahead)
       }
       self.body(default_, self.lookahead)
     }

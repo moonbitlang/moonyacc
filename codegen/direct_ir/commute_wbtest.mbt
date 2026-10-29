@@ -48,14 +48,14 @@ test "push trains split across token branches with exact prefix reads and snapsh
     terminator: CaseToken(
       [
         (
-          [Terminal(1)],
+          Tokens([Terminal(1)]),
           {
             instructions: [pop_upper, pop_lower],
             terminator: Jump({ target: 0, arguments: [Reg(prefix)], }),
           },
         ),
         (
-          [Terminal(2), Terminal(3)],
+          Tokens([Terminal(2), Terminal(3)]),
           {
             instructions: [
               pop_upper,
@@ -101,45 +101,49 @@ test "commuting partial cells preserves extraction consumption and action order"
   let read = check_int(3)
   let result = check_int(4)
   let partial : Cell = { symbol: Some(1), fields: [Semantic, State], }
+  let branch : Body = {
+    instructions: [
+      Push(partial, [Reg(value), State(7)]),
+      ConsumeLookahead,
+      SaveErrorSnapshot([]),
+      Peek(0, partial, [Some(read), None]),
+      Action(
+        0,
+        [{ value: Reg(read), start: Reg(sp), end: Reg(ep), }],
+        Reg(sp),
+        result,
+      ),
+      Pop(partial, [None, None]),
+    ],
+    terminator: Jump({ target: 0, arguments: [Reg(result)], }),
+  }
+  let pattern = TokenPattern::BindToken(1, value, sp, ep)
+  let fallback : Body = { instructions: [], terminator: Stop, }
   let original = {
-    ..check_block(
-      [],
-      [
-        EnsureLookahead,
-        Input(1, value, sp, ep),
-        Push(partial, [Reg(value), State(7)]),
-        ConsumeLookahead,
-        SaveErrorSnapshot([]),
-        Peek(0, partial, [Some(read), None]),
-        Action(
-          0,
-          [{ value: Reg(read), start: Reg(sp), end: Reg(ep), }],
-          Reg(sp),
-          result,
-        ),
-        Pop(partial, [None, None]),
-      ],
-      [Reg(result)],
-    ),
-    lookahead: On(Terminal(1)),
+    ..check_block([], [EnsureLookahead], []),
+    terminator: CaseToken([(pattern, branch)], fallback),
   }
   let after = commute_test(original)
+  guard after.terminator is CaseToken([(actual_pattern, body)], _) else {
+    fail("lost binding pattern")
+  }
+  assert_true(actual_pattern.definitions() == pattern.definitions())
   assert_true(
-    after.instructions
-    is [
-      EnsureLookahead,
-      Input(_),
-      ConsumeLookahead,
-      SaveErrorSnapshot([State(7)]),
-      Action(_),
-    ],
+    body.instructions
+    is [ConsumeLookahead, SaveErrorSnapshot([State(7)]), Action(_)],
   )
-  let changed = after.instructions.copy()
-  let action = changed[4]
-  changed[4] = changed[2]
-  changed[2] = action
+  let changed = body.instructions.copy()
+  let action = changed[2]
+  changed[2] = changed[0]
+  changed[0] = action
   assert_false(
-    check_stack_rewrite(original, { ..after, instructions: changed, }),
+    check_stack_rewrite(original, {
+      ..after,
+      terminator: CaseToken(
+        [(pattern, { ..body, instructions: changed, })],
+        fallback,
+      ),
+    }),
   )
 }
 

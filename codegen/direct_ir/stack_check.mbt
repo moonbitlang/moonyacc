@@ -15,7 +15,7 @@ fn StackCheck::terminator(
     Jump(edge) => CheckJump(self.edge(edge))
     CaseToken(arms, fallback) =>
       CheckCaseToken(
-        arms.map(pair => (pair.0, self.branch(pair.1))),
+        arms.map(pair => (pair.0.tokens(), self.token_branch(pair.0, pair.1))),
         self.branch(fallback),
       )
     CaseState(value, arms) => {
@@ -70,6 +70,22 @@ fn StackCheck::branch(
   body : Body,
 ) -> StackCheckBranch raise InvalidProgram {
   let branch = self.copy()
+  for instruction in body.instructions {
+    branch.instruction(instruction)
+  }
+  branch.result(body.terminator)
+}
+
+///|
+fn StackCheck::token_branch(
+  self : StackCheck,
+  pattern : TokenPattern,
+  body : Body,
+) -> StackCheckBranch raise InvalidProgram {
+  let branch = self.copy()
+  if pattern is BindToken(token, value, start, end) {
+    branch.bind_token(token, value, start, end)
+  }
   for instruction in body.instructions {
     branch.instruction(instruction)
   }

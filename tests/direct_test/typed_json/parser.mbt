@@ -86,15 +86,6 @@ priv struct YYStateStack {
 }
 
 ///|
-fn yy_symbol(token : Token) -> Int {
-  match token {
-    VALUE(_) => 1
-    INVALID(_) => 2
-    EOF => 3
-  }
-}
-
-///|
 fn yy_input_json(token : Token) -> Json {
   match token {
     VALUE(value) =>
@@ -127,7 +118,6 @@ fn yy_parse(
   let mut error_depth : Int = 0
   let mut error_suffix_0 : Int = 0
   let mut error_suffix_1 : Int = 0
-  let mut _yy_token_symbol : Int = 0
   let mut _yy_token_token : Token? = None
   let mut _yy_token_value : Json = Json::null()
   for pc = entry {
@@ -139,12 +129,11 @@ fn yy_parse(
           ({
             ()
             let (token, _, _) = read_token()
-            _yy_token_symbol = yy_symbol(token)
             _yy_token_token = Some(token)
             _yy_token_value = yy_input_json(token)
           })
-          match _yy_token_symbol {
-            1 =>
+          match _yy_token_token {
+            Some(VALUE(_)) =>
               ({
                 ()
                 let _yy_r35 = _yy_token_value
@@ -159,12 +148,11 @@ fn yy_parse(
                 ({
                   ()
                   let (token, _, _) = read_token()
-                  _yy_token_symbol = yy_symbol(token)
                   _yy_token_token = Some(token)
                   _yy_token_value = yy_input_json(token)
                 })
-                match _yy_token_symbol {
-                  3 =>
+                match _yy_token_token {
+                  Some(EOF) =>
                     ({
                       ()
                       let _yy_r71 = _yy_token_value
@@ -197,7 +185,7 @@ fn yy_parse(
       1 =>
         ({
           ()
-          yy_error(
+          _yy_error(
             ({
               ()
               let mut _yy_error_states = yy_stack_snapshot(stack)
@@ -351,7 +339,7 @@ fn yy_expected(stack : @list.List[Int], terminal : Int) -> Bool {
 }
 
 ///|
-fn yy_error(stack : @list.List[Int], token : Token?, loc : (Unit, Unit)) -> Unit raise ParseError {
+fn _yy_error(stack : @list.List[Int], token : Token?, loc : (Unit, Unit)) -> Unit raise ParseError {
   let expected = []
   for i in 0..<yy_terminals.length() {
     let (symbol, kind) = yy_terminals[i]

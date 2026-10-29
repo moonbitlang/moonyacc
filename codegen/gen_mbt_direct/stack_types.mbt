@@ -96,7 +96,7 @@ fn Emitter::stack_storage(
   self : Emitter,
 ) -> Array[(@mbt_ast.Field, @mbt_ast.Expr)] {
   let fields : Array[(@mbt_ast.Field, @mbt_ast.Expr)] = if !self.has_stack {
-    if self.chunked && !self.chunk_errors.is_empty() {
+    if self.chunked && self.needs_initial_state {
       [
         (
           { name: "initial_state", type_: type_("Int"), mutable: false, },
@@ -107,19 +107,25 @@ fn Emitter::stack_storage(
       []
     }
   } else {
+    let initial : Array[(String, @mbt_ast.Expr)] = [
+      ("values", Array([Ident("initial_state")])),
+      ("depth", Int(1)),
+    ]
+    if self.diagnostics {
+      initial.append([
+        ("checkpoint", Int(1)),
+        ("saved_prefix", Int(1)),
+        ("undo", Array([])),
+      ])
+    }
     [
       (
         { name: "stack", type_: type_("YYStateStack"), mutable: false, },
-        Record(Some(type_("YYStateStack")), [
-          ("values", Array([Ident("initial_state")])),
-          ("depth", Int(1)),
-          ("checkpoint", Int(1)),
-          ("saved_prefix", Int(1)),
-          ("undo", Array([])),
-        ]),
+        Record(Some(type_("YYStateStack")), initial),
       ),
     ]
   }
+
   if self.cache_state {
     fields.push(
       (

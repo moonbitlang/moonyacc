@@ -15,8 +15,6 @@ fn Instruction::map_values(
   match self {
     EnsureLookahead | LoadLookahead | ConsumeLookahead => self
     SaveErrorSnapshot(suffix) => SaveErrorSnapshot(suffix.map(operand))
-    Input(token, value, start, end) =>
-      Input(token, definition(value), definition(start), definition(end))
     ReadPreviousPosition(depth, reg) =>
       ReadPreviousPosition(depth, definition(reg))
     Bind(pairs) => Bind(pairs.map(p => (definition(p.0), operand(p.1))))
@@ -64,7 +62,12 @@ fn Terminator::map_registers(
     Jump(edge) => Jump({ ..edge, arguments: edge.arguments.map(operand), })
     CaseToken(arms, fallback) =>
       CaseToken(
-        arms.map(p => (p.0, p.1.map_registers(operand, definition))),
+        arms.map(p => {
+          (
+            p.0.map_definitions(definition),
+            p.1.map_registers(operand, definition),
+          )
+        }),
         fallback.map_registers(operand, definition),
       )
     CaseState(value, arms) =>

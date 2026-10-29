@@ -33,9 +33,7 @@ fn codegen(
   items.append(support.typed_action_items())
   let emitter = Emitter::new(prepared, meta, support, input_mode)
   items.append(emitter.parser_items(no_comments~))
-  if !emitter.chunk_errors.is_empty() {
-    items.append(diagnostic_items(program, meta.position_data_type, input_mode))
-  }
+  items.append(diagnostic_items(program, meta.position_data_type, input_mode))
   items.append(support.typed_action_runtime())
   items.append(support.footer())
   @mbt_ast.emit(items, output, source_map_builder?)

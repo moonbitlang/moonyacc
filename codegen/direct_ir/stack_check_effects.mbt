@@ -11,7 +11,7 @@ fn StackCheck::bind(
 }
 
 ///|
-fn StackCheck::input(
+fn StackCheck::bind_token(
   self : StackCheck,
   token : Int32,
   value : Register,
@@ -80,7 +80,6 @@ fn StackCheck::instruction(
 ) -> Unit raise InvalidProgram {
   match instruction {
     EnsureLookahead | LoadLookahead => self.trace.push(ReadLookahead)
-    Input(token, value, start, end) => self.input(token, value, start, end)
     ConsumeLookahead => self.trace.push(AdvanceLookahead)
     SaveErrorSnapshot(suffix) => self.snapshot(suffix)
     ReadPreviousPosition(depth, reg) => self.previous_position(depth, reg)

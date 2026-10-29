@@ -31,6 +31,7 @@ fn Emitter::branch_jump(
   branches : Array[(@mbt_ast.Pattern, @direct_ir.Edge)],
   chunk : Int32,
   fallback? : @direct_ir.Edge,
+  exhaustive~ : Bool = false,
 ) -> @mbt_ast.Block {
   let edges = branches.map(p => p.1)
   if fallback is Some(edge) {
@@ -38,31 +39,35 @@ fn Emitter::branch_jump(
   }
   if edges.is_empty() || edges.iter().any(e => !self.copies(e).is_empty()) {
     let arms = branches.map(p => (p.0, self.jump(p.1, chunk)))
-    arms.push(
-      (
-        Any,
-        match fallback {
-          Some(e) => self.jump(e, chunk)
-          None => value_block(call("panic", []))
-        },
-      ),
-    )
+    if !exhaustive {
+      arms.push(
+        (
+          Any,
+          match fallback {
+            Some(e) => self.jump(e, chunk)
+            None => value_block(call("panic", []))
+          },
+        ),
+      )
+    }
     return value_block(Match(value, arms))
   }
   let arms = branches.map(p => {
     (p.0, value_block(@mbt_ast.Expr::Int(self.layout.pc(p.1.target))))
   })
-  arms.push(
-    (
-      Any,
-      value_block(
-        match fallback {
-          Some(e) => Int(self.layout.pc(e.target))
-          None => call("panic", [])
-        },
+  if !exhaustive {
+    arms.push(
+      (
+        Any,
+        value_block(
+          match fallback {
+            Some(e) => Int(self.layout.pc(e.target))
+            None => call("panic", [])
+          },
+        ),
       ),
-    ),
-  )
+    )
+  }
   self.transfer(Match(value, arms), edges.map(e => e.target), chunk)
 }
 
@@ -128,6 +133,7 @@ fn Emitter::branch_bodies(
   branches : Array[(@mbt_ast.Pattern, @direct_ir.Body)],
   chunk : Int32,
   fallback? : @direct_ir.Body,
+  exhaustive~ : Bool = false,
 ) -> @mbt_ast.Block {
   if branches.all(p => p.1.edge() is Some(_)) &&
     fallback.map(b => b.edge() is Some(_)).unwrap_or(true) {
@@ -140,17 +146,20 @@ fn Emitter::branch_bodies(
       branches.map(p => (p.0, p.1.edge().unwrap())),
       chunk,
       fallback?,
+      exhaustive~,
     )
   }
   let arms = branches.map(p => (p.0, self.inline_body(p.1, chunk)))
-  arms.push(
-    (
-      Any,
-      match fallback {
-        Some(body) => self.inline_body(body, chunk)
-        None => value_block(call("panic", []))
-      },
-    ),
-  )
+  if !exhaustive {
+    arms.push(
+      (
+        Any,
+        match fallback {
+          Some(body) => self.inline_body(body, chunk)
+          None => value_block(call("panic", []))
+        },
+      ),
+    )
+  }
   value_block(Match(value, arms))
 }
