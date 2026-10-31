@@ -12,7 +12,22 @@ fn StackCheck::terminator(
   term : Terminator,
 ) -> StackCheckTerminator raise InvalidProgram {
   match term {
-    Jump(edge) => CheckJump(self.edge(edge))
+    Jump(edge) =>
+      match self.continuations.get(edge.target) {
+        None => CheckJump(self.edge(edge))
+        Some(target) => {
+          // The continuation checker accepts only independent blocks.
+          // Evaluate arguments before binding any parameter (parallel copy).
+          let values = edge.arguments.map(v => self.value(v))
+          for i, parameter in target.parameters {
+            self.bind_value(parameter, values[i])
+          }
+          for instruction in target.instructions {
+            self.instruction(instruction)
+          }
+          self.terminator(target.terminator)
+        }
+      }
     CaseToken(arms, fallback) =>
       CheckCaseToken(
         arms.map(pair => (pair.0.tokens(), self.token_branch(pair.0, pair.1))),
@@ -96,8 +111,15 @@ fn StackCheck::token_branch(
 fn stack_check_run(
   block : Block,
   incoming_state? : Int32,
+  continuations~ : Map[Int32, Block] = Map([]),
 ) -> StackCheckBranch raise InvalidProgram {
-  let machine = StackCheck::new(incoming_state?)
+  for _, target in continuations {
+    require(
+      target.terminator.successors().all(next => !continuations.contains(next)),
+      "recursive continuation witness",
+    )
+  }
+  let machine = StackCheck::new(incoming_state?, continuations~)
   for parameter in block.parameters {
     machine.bind_value(parameter, SymParameter(parameter))
   }

@@ -35,6 +35,19 @@ pub fn Program::prepare(
       .discard_unobserved_snapshots()
     program.prune_registers(knowledge, positions~)
   }
+  program.prepare_emission(knowledge, positions~)
+}
+
+///|
+/// Recompute every storage proof after a checked CFG transformation. Layout
+/// trials must never reuse facts or register demands from the previous graph.
+pub fn Program::prepare_emission(
+  self : Program,
+  knowledge : StackKnowledge,
+  positions~ : Bool,
+) -> PreparedProgram raise InvalidProgram {
+  self.validate()
+  let program = self
   let flow = program.stack_flow(knowledge)
   let demand = program.storage_demand(flow, positions~)
   let checkpoints = program.checkpoint_flow()

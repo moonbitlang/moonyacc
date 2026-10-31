@@ -35,6 +35,9 @@ pub struct Plan {
   stride : Int32
 }
 pub fn Plan::address(Self, Int32) -> Int32
+pub fn Plan::continuation_candidates(Self) -> Array[Int32]
+pub fn Plan::transfer_cost(Self) -> TransferCost
+pub fn Plan::transfers(Self, Int32) -> Map[Int32, Transfer]
 pub fn Plan::validate(Self) -> Unit raise InvalidControl
 
 pub struct Region {
@@ -50,6 +53,11 @@ pub(all) enum Transfer {
   Dispatch(Int32)
   Exit
 } derive(Eq)
+
+pub struct TransferCost {
+  selectors : Int32
+  exits : Int32
+}
 
 // Type aliases
 

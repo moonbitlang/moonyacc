@@ -21,7 +21,6 @@ fn codegen(
   ) catch {
     InvalidProgram(message) => abort(message)
   }
-  let program = prepared.program
   let support = @mbt_common.Context::new(
     grammar,
     automaton,
@@ -33,9 +32,14 @@ fn codegen(
   )
   let items = support.preamble(external_tokens~)
   items.append(support.typed_action_items())
-  let emitter = Emitter::new(prepared, meta, support, input_mode)
+  let emitter = match optimization_level {
+    O2 => layout_emitter(prepared, knowledge, meta, support, input_mode)
+    O0 | O1 => Emitter::new(prepared, meta, support, input_mode)
+  }
   items.append(emitter.parser_items(no_comments~))
-  items.append(diagnostic_items(program, meta.position_data_type, input_mode))
+  items.append(
+    diagnostic_items(emitter.program, meta.position_data_type, input_mode),
+  )
   items.append(support.typed_action_runtime())
   items.append(support.footer())
   @mbt_ast.emit(items, output, source_map_builder?)

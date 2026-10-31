@@ -178,3 +178,32 @@ test "partition uses target costs and retains indivisible oversized blocks" {
     )
   }
 }
+
+///|
+test "duplicating a shared continuation removes an administrative loop selector" {
+  let source = graph_program([[1, 2], [2], [1, 3], []], [0])
+  let source = {
+    ..source,
+    blocks: source.blocks.mapi((i, block) => {
+      let selector : @direct_ir.Register = { id: i, type_: State, }
+      {
+        ..block,
+        instructions: [
+          Peek(0, { symbol: None, fields: [State], }, [Some(selector)]),
+        ],
+        terminator: match block.terminator {
+          CaseState(_, arms) => CaseState(Reg(selector), arms)
+          other => other
+        },
+      }
+    }),
+  }
+  let before = graph_plan(source)
+  assert_true(before.continuation_candidates().contains(1))
+  let after = graph_plan(source.duplicate_continuations([1]).program)
+  assert_true(
+    after.transfer_cost().selectors < before.transfer_cost().selectors,
+  )
+  assert_eq(after.transfer_cost().exits, 0)
+  after.validate()
+}

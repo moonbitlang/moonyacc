@@ -82,6 +82,11 @@ pub(all) struct DiagnosticState {
   gotos : Array[(Int32, Int32)]
 }
 
+pub struct DuplicatedContinuations {
+  program : Program
+  sources : Array[Int32]
+}
+
 pub(all) struct Edge {
   target : Int32
   arguments : Array[Value]
@@ -154,9 +159,12 @@ pub(all) struct Program {
 }
 pub fn Program::checkpoint_flow(Self) -> CheckpointFlow raise InvalidProgram
 pub fn Program::commute_pushes(Self, StackKnowledge) -> Self raise InvalidProgram
+pub fn Program::duplicate_continuations(Self, Array[Int32]) -> DuplicatedContinuations raise InvalidProgram
 pub fn Program::exhaustive_tokens(Self, Array[TokenPattern]) -> Bool
 pub fn Program::inline_blocks(Self, cautious~ : Bool) -> Self raise InvalidProgram
+pub fn Program::merge_continuations(Self) -> Self raise InvalidProgram
 pub fn Program::prepare(Self, StackKnowledge, positions~ : Bool, optimization_level? : @codegen.OptimizationLevel) -> PreparedProgram raise InvalidProgram
+pub fn Program::prepare_emission(Self, StackKnowledge, positions~ : Bool) -> PreparedProgram raise InvalidProgram
 pub fn Program::prune_control(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::prune_registers(Self, StackKnowledge, positions~ : Bool) -> Self raise InvalidProgram
 pub fn Program::simplify(Self) -> Self

@@ -52,6 +52,13 @@ pub fn Program::simplify(self : Program) -> Program {
 
 ///|
 fn Program::compact(self : Program) -> Program {
+  self.compact_with_sources().0
+}
+
+///|
+// Keep the new-to-old label map when a downstream cost model needs provenance.
+// This is the same reachability/renumbering used by ordinary compaction.
+fn Program::compact_with_sources(self : Program) -> (Program, Array[Int32]) {
   let reachable = Set([])
   let pending = self.entries.map(e => e.block)
   while pending.pop() is Some(label) {
@@ -67,8 +74,10 @@ fn Program::compact(self : Program) -> Program {
     }
   }
   let blocks = []
+  let sources = []
   for label, block in self.blocks {
     if reachable.contains(label) {
+      sources.push(label)
       blocks.push({
         ..block,
         terminator: block.terminator.map_edges(e => {
@@ -78,9 +87,12 @@ fn Program::compact(self : Program) -> Program {
       })
     }
   }
-  {
-    ..self,
-    blocks,
-    entries: self.entries.map(e => { ..e, block: labels[e.block], }),
-  }
+  (
+    {
+      ..self,
+      blocks,
+      entries: self.entries.map(e => { ..e, block: labels[e.block], }),
+    },
+    sources,
+  )
 }

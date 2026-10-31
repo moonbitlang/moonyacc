@@ -10,6 +10,7 @@ priv struct Emitter {
   cache_ready : Bool
   cache_json : Bool
   control : @control_flow.Plan
+  block_estimates : Array[Int32]
   shared_context : Bool
   has_stack : Bool
   diagnostics : Bool
@@ -39,10 +40,14 @@ fn Emitter::new(
     InvalidControl(message) => abort(message)
   }
   let probe = Emitter::with_plan(prepared, meta, support, input_mode, isolated)
-  let control = @control_flow.plan(prepared.program, costs=probe.block_costs()) catch {
+  let costs = probe.block_costs()
+  let control = @control_flow.plan(prepared.program, costs~) catch {
     InvalidControl(message) => abort(message)
   }
-  Emitter::with_plan(prepared, meta, support, input_mode, control)
+  {
+    ..Emitter::with_plan(prepared, meta, support, input_mode, control),
+    block_estimates: costs,
+  }
 }
 
 ///|
@@ -100,6 +105,7 @@ fn Emitter::with_plan(
       })
     }),
     control,
+    block_estimates: [],
     shared_context: control.regions.length() > 1,
     has_stack,
     cache_state: has_stack && reads_state,
