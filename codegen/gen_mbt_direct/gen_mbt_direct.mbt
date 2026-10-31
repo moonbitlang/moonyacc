@@ -10,12 +10,14 @@ fn codegen(
   no_comments~ : Bool = false,
   mode~ : @codegen.Mode = Default,
   input_mode~ : @codegen.InputMode = Array,
+  optimization_level~ : @codegen.OptimizationLevel,
 ) -> Unit {
   let knowledge = @direct_ir.analyze_stack(grammar, automaton)
   let program = @direct_ir.lower(grammar, automaton, meta, mode~)
   let prepared = program.prepare(
     knowledge,
     positions=!(meta.position_data_type is Constr(pkg=None, "Unit", [])),
+    optimization_level~,
   ) catch {
     InvalidProgram(message) => abort(message)
   }
@@ -40,7 +42,7 @@ fn codegen(
 }
 
 ///|
-priv struct CodeGenerator(Unit)
+priv struct CodeGenerator(@codegen.OptimizationLevel)
 
 ///|
 impl @codegen.CodeGenerator for CodeGenerator with fn codegen_tokens(
@@ -73,7 +75,7 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
   mode~,
   input_mode~,
 ) {
-  let CodeGenerator(_) = self
+  let CodeGenerator(optimization_level) = self
   codegen(
     grammar,
     automaton,
@@ -85,8 +87,17 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
     no_comments~,
     mode~,
     input_mode~,
+    optimization_level~,
   )
 }
 
 ///|
-pub let generator : &@codegen.CodeGenerator = CodeGenerator(())
+/// Configure direct code generation. O0 and O2 currently use the O1 pipeline.
+pub fn new(
+  optimization_level~ : @codegen.OptimizationLevel = O1,
+) -> &@codegen.CodeGenerator {
+  CodeGenerator(optimization_level)
+}
+
+///|
+pub let generator : &@codegen.CodeGenerator = new()

@@ -31,6 +31,15 @@ pub(all) enum InputMode {
 }
 
 ///|
+/// Direct backend optimization level. O1 is the default; O0 and O2 currently
+/// use the O1 pipeline until their distinct policies are implemented.
+pub(all) enum OptimizationLevel {
+  O0
+  O1
+  O2
+}
+
+///|
 pub(all) struct ProductionMeta {
   action : @elab.Action
 }

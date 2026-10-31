@@ -8,6 +8,8 @@ import {
 // Values
 pub let generator : &@codegen.CodeGenerator
 
+pub fn new(optimization_level? : @codegen.OptimizationLevel) -> &@codegen.CodeGenerator
+
 // Errors
 
 // Types and methods

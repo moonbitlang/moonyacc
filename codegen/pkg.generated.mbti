@@ -39,6 +39,12 @@ pub(all) struct NonTerminalMeta {
   data_type : @elab.TypeExpr
 }
 
+pub(all) enum OptimizationLevel {
+  O0
+  O1
+  O2
+}
+
 pub(all) struct ProductionMeta {
   action : @elab.Action
 }

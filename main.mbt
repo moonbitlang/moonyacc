@@ -43,6 +43,7 @@ priv suberror CliError {
   UnsupportedMode(String)
   UnsupportedInputMode(String)
   UnsupportedBackend(String)
+  UnsupportedOptimizationLevel(String)
   ConflictingBackendOptions
 }
 
@@ -59,6 +60,7 @@ priv struct CliOptions {
   direct : Bool
   table : Bool
   compress : Bool
+  optimization_level : @codegen.OptimizationLevel
   token_payload_rewrite : @driver.TokenPayloadRewrite
   force_int_position : Bool
   print_as_mly_without_actions : Bool
@@ -117,6 +119,13 @@ fn cli_command() -> @argparse.Command {
       ),
     ],
     options=[
+      OptionArg(
+        "optimization-level",
+        short='O',
+        long="optimization-level",
+        action=Append,
+        about="Direct backend optimization level (0, 1, 2; default: 1). Levels 0 and 2 currently use level 1",
+      ),
       OptionArg(
         "backend",
         long="backend",
@@ -209,6 +218,24 @@ fn parse_token_payload_rewrite(
 }
 
 ///|
+fn parse_optimization_level(
+  matches : @argparse.Matches,
+) -> @codegen.OptimizationLevel raise CliError {
+  let mut level : @codegen.OptimizationLevel = O1
+  if matches.values.get("optimization-level") is Some(values) {
+    for value in values {
+      level = match value {
+        "0" => O0
+        "1" => O1
+        "2" => O2
+        _ => raise UnsupportedOptimizationLevel(value)
+      }
+    }
+  }
+  level
+}
+
+///|
 fn parse_cli_args(argv : ArrayView[String]) -> CliOptions raise {
   let matches = cli_command().parse(argv~, env={})
   let compress = flag_value(matches, "compress-table")
@@ -236,6 +263,7 @@ fn parse_cli_args(argv : ArrayView[String]) -> CliOptions raise {
     direct,
     table,
     compress,
+    optimization_level: parse_optimization_level(matches),
     token_payload_rewrite: parse_token_payload_rewrite(argv),
     force_int_position: flag_value(matches, "force-int-position"),
     print_as_mly_without_actions: flag_value(
@@ -258,6 +286,12 @@ async fn main {
     }
     CliError::UnsupportedBackend(name) => {
       println_to_stderr("Unsupported backend: \{name}")
+      exit(1)
+    }
+    CliError::UnsupportedOptimizationLevel(level) => {
+      println_to_stderr(
+        "Unsupported optimization level: \{level} (expected 0, 1, or 2)",
+      )
       exit(1)
     }
     CliError::ConflictingBackendOptions => {
@@ -292,7 +326,7 @@ async fn main {
     token_payload_rewrite=options.token_payload_rewrite,
     force_int_position=options.force_int_position,
     generator=if options.direct {
-      @gen_mbt_direct.generator
+      @gen_mbt_direct.new(optimization_level=options.optimization_level)
     } else if options.table {
       if options.compress {
         @gen_mbt_table.compress_generator

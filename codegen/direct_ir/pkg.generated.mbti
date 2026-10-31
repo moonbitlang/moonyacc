@@ -156,7 +156,7 @@ pub fn Program::checkpoint_flow(Self) -> CheckpointFlow raise InvalidProgram
 pub fn Program::commute_pushes(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::exhaustive_tokens(Self, Array[TokenPattern]) -> Bool
 pub fn Program::inline_blocks(Self, cautious~ : Bool) -> Self raise InvalidProgram
-pub fn Program::prepare(Self, StackKnowledge, positions~ : Bool) -> PreparedProgram raise InvalidProgram
+pub fn Program::prepare(Self, StackKnowledge, positions~ : Bool, optimization_level? : @codegen.OptimizationLevel) -> PreparedProgram raise InvalidProgram
 pub fn Program::prune_control(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::simplify(Self) -> Self
 pub fn Program::stack_flow(Self, StackKnowledge) -> StackFlow raise InvalidProgram
