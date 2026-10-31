@@ -89,6 +89,7 @@ fn Emitter::assess_layout(
     self.meta,
     self.support,
     self.input_mode,
+    optimize_resources=self.optimize_resources,
   )
   let before = self.control.transfer_cost()
   let after = candidate.control.transfer_cost()
@@ -148,7 +149,13 @@ fn layout_emitter(
   support : @mbt_common.Context,
   input_mode : @codegen.InputMode,
 ) -> Emitter {
-  let mut current = Emitter::new(prepared, meta, support, input_mode)
+  let mut current = Emitter::new(
+    prepared,
+    meta,
+    support,
+    input_mode,
+    optimize_resources=true,
+  )
   let initial_size = current.structured_cost()
   let mut current_size = initial_size
   let growth = initial_size / 8

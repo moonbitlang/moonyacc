@@ -5,29 +5,48 @@ fn Emitter::entry_item(
   entry : @direct_ir.Entry,
 ) -> @mbt_ast.Item {
   let position = self.meta.position_data_type
-  let (parameters, arguments) = match self.input_mode {
+  let (parameters, arguments) : (
+    Array[@mbt_ast.Parameter],
+    Array[@mbt_ast.Argument],
+  ) = match self.input_mode {
     Array =>
       (
         [
           typed("tokens", self.tokens_type()),
-          @mbt_ast.Parameter::Optional("initial_pos", position, None),
+          ..if self.support.input_layout is Located {
+            [@mbt_ast.Parameter::Optional("initial_pos", position, None)]
+          } else {
+            []
+          },
         ],
         [
           @mbt_ast.Argument::Positional(Ident("tokens")),
           Positional(Int(self.control.address(entry.block))),
           Positional(Int(entry.state)),
-          ForwardOptional("initial_pos"),
+          ..if self.support.input_layout is Located {
+            [@mbt_ast.Argument::ForwardOptional("initial_pos")]
+          } else {
+            []
+          },
         ],
       )
     Pull =>
       (
         [
-          typed("read_token", Arrow([], self.located_type())),
-          typed("start_pos", position),
+          typed("read_token", Arrow([], self.support.input_type())),
+          ..if self.support.input_layout is Located {
+            [typed("start_pos", position)]
+          } else {
+            []
+          },
         ],
         [
           @mbt_ast.Argument::Positional(Ident("read_token")),
-          Positional(Ident("start_pos")),
+          ..if self.support.input_layout is Located {
+            [@mbt_ast.Argument::Positional(Ident("start_pos"))]
+          } else {
+            []
+          },
           Positional(Int(self.control.address(entry.block))),
           Positional(Int(entry.state)),
         ],

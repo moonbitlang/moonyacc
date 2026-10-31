@@ -30,6 +30,7 @@ fn Emitter::control_transfer(
     Exit =>
       [
         ..self.flush_parameters(target),
+        ..self.flush_resources(target),
         Return(Int(self.control.address(target))),
       ]
   }

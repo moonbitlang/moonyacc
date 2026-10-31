@@ -6,6 +6,17 @@ fn Emitter::block_body(
   no_comments : Bool,
 ) -> @mbt_ast.Block {
   let block = self.program.blocks[label]
+  let scoped = if self.resources is Some(plan) &&
+    self.resource_entry_writes.get(label) is Some(before) {
+    // Include all writes in this extended block, so branch-local helper calls
+    // and exits are safe without path-specific mutable emitter state.
+    {
+      ..self,
+      resource_written: resource_union(before, plan.effects[label].writes),
+    }
+  } else {
+    self
+  }
   let statements : Array[@mbt_ast.Stmt] = []
   if !no_comments {
     let comment = match block.origin {
@@ -24,12 +35,12 @@ fn Emitter::block_body(
       statements.push(Comment(comment))
     }
   }
-  let (code, checkpoint) = self.block_instructions(
+  let (code, checkpoint) = scoped.block_instructions(
     block,
     self.checkpoints.entry(label),
   )
   statements.append(code)
-  let finish = self.terminator(block.terminator, routes, checkpoint)
+  let finish = scoped.terminator(block.terminator, routes, checkpoint)
   statements.append(finish.statements)
   { statements, result: finish.result, }
 }
@@ -72,12 +83,36 @@ fn Emitter::region_body(
   region : Int32,
   no_comments : Bool,
 ) -> @mbt_ast.Block {
+  self.render_region(
+    region,
+    no_comments,
+    self.resource_regions.get(region).unwrap_or(RegionalResources::empty()),
+  )
+}
+
+///|
+fn Emitter::render_region(
+  self : Emitter,
+  region : Int32,
+  no_comments : Bool,
+  resources : RegionalResources,
+) -> @mbt_ast.Block {
   let control = self.control.regions[region].control
   let statements = []
   let scoped = if self.shared_context {
     let slots = self.regional_slots(region)
     statements.append(self.region_locals(slots))
-    { ..self, local_slots: slots.used, }
+    statements.append(self.resource_declarations(resources))
+    {
+      ..self,
+      local_slots: slots.used,
+      resource_locals: resources.used,
+      resource_written: resources.written,
+      resource_entry_writes: match self.resources {
+        Some(plan) => plan.written_before(self.control.regions[region].members)
+        None => Map([])
+      },
+    }
   } else {
     self
   }

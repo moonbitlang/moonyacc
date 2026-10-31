@@ -42,6 +42,7 @@ async fn write_text_file(file : String, content : String) -> Unit {
 priv suberror CliError {
   UnsupportedMode(String)
   UnsupportedInputMode(String)
+  UnsupportedInputLayout(String)
   UnsupportedBackend(String)
   UnsupportedOptimizationLevel(String)
   ConflictingBackendOptions
@@ -54,6 +55,7 @@ priv struct CliOptions {
   output_map_file : String?
   mode : @driver.Mode
   input_mode : @driver.InputMode
+  input_layout : @codegen.InputLayout
   external_tokens : Bool
   no_comments : Bool
   no_std : Bool
@@ -124,7 +126,7 @@ fn cli_command() -> @argparse.Command {
         short='O',
         long="optimization-level",
         action=Append,
-        about="Direct backend optimization level (0, 1, 2; default: 1). Level 2 specializes states; level 0 currently uses level 1",
+        about="Direct backend optimization level (0, 1, 2; default: 1). Level 2 specializes states and optimizes runtime storage; level 0 currently uses level 1",
       ),
       OptionArg(
         "backend",
@@ -151,6 +153,11 @@ fn cli_command() -> @argparse.Command {
         "input-mode",
         long="input-mode",
         about="Specify input mode (array, pull). Default is array",
+      ),
+      OptionArg(
+        "input-layout",
+        long="input-layout",
+        about="Input representation (located, token-only). Token-only requires Unit positions; default: located",
       ),
     ],
     positionals=[
@@ -199,6 +206,15 @@ fn parse_input_mode(
     "array" => Array
     "pull" => Pull
     _ => raise UnsupportedInputMode(input_mode_sym)
+  }
+}
+
+///|
+fn parse_input_layout(layout : String) -> @codegen.InputLayout raise CliError {
+  match layout {
+    "located" => Located
+    "token-only" => TokenOnly
+    _ => raise UnsupportedInputLayout(layout)
   }
 }
 
@@ -257,6 +273,9 @@ fn parse_cli_args(argv : ArrayView[String]) -> CliOptions raise {
     output_map_file: string_option(matches, "output-map-file"),
     mode: parse_mode(string_value(matches, "mode", "default")),
     input_mode: parse_input_mode(string_value(matches, "input-mode", "array")),
+    input_layout: parse_input_layout(
+      string_value(matches, "input-layout", "located"),
+    ),
     external_tokens: flag_value(matches, "external-tokens"),
     no_comments: flag_value(matches, "no-comments"),
     no_std: flag_value(matches, "no-std"),
@@ -282,6 +301,12 @@ async fn main {
     }
     CliError::UnsupportedInputMode(input_mode_sym) => {
       println_to_stderr("Unsupported input mode: \{input_mode_sym}")
+      exit(1)
+    }
+    CliError::UnsupportedInputLayout(layout) => {
+      println_to_stderr(
+        "Unsupported input layout: \{layout} (expected located or token-only)",
+      )
       exit(1)
     }
     CliError::UnsupportedBackend(name) => {
@@ -319,6 +344,7 @@ async fn main {
     mode=options.mode,
     source_map_builder=source_map,
     input_mode=options.input_mode,
+    input_layout=options.input_layout,
     filename=options.input_file,
     external_tokens=options.external_tokens,
     no_comments=options.no_comments,

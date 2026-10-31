@@ -73,6 +73,7 @@ fn codegen(
   no_comments~ : Bool = false,
   mode~ : @codegen.Mode = Default,
   input_mode~ : @codegen.InputMode = Array,
+  input_layout~ : @codegen.InputLayout = Located,
 ) -> Unit {
   let context = @mbt_common.Context::new(
     grammar,
@@ -81,6 +82,7 @@ fn codegen(
     filename=grammar_filename,
     mode~,
     input_mode~,
+    input_layout~,
   )
   let items = context.prelude(external_tokens~)
   items.append(context.runtime_types(Code))
@@ -252,6 +254,7 @@ fn codegen(
         state=Ident("yy_state_\{state.num}"),
         unbox="YYObj_" + @mbt_common.type_ident(type_),
         input_mode~,
+        input_layout~,
       ),
     )
   }
@@ -289,6 +292,7 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
   no_comments~,
   mode~,
   input_mode~,
+  input_layout~,
 ) {
   ignore(self)
   codegen(
@@ -302,6 +306,7 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
     no_comments~,
     mode~,
     input_mode~,
+    input_layout~,
   )
 }
 

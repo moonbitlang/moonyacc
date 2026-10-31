@@ -7,10 +7,16 @@ priv struct Emitter {
   demand : @direct_ir.StorageDemand
   checkpoints : @direct_ir.CheckpointFlow
   input_mode : @codegen.InputMode
+  optimize_resources : Bool
   cache_ready : Bool
   cache_json : Bool
   control : @control_flow.Plan
   block_estimates : Array[Int32]
+  resources : ResourcePlan?
+  resource_locals : Set[Int32]
+  resource_written : Set[Int32]
+  resource_entry_writes : Map[Int32, Set[Int32]]
+  resource_regions : Array[RegionalResources]
   shared_context : Bool
   has_stack : Bool
   diagnostics : Bool
@@ -35,19 +41,41 @@ fn Emitter::new(
   meta : @codegen.MetaProvider,
   support : @mbt_common.Context,
   input_mode : @codegen.InputMode,
+  optimize_resources~ : Bool = false,
 ) -> Emitter {
   let isolated = @control_flow.isolate(prepared.program) catch {
     InvalidControl(message) => abort(message)
   }
-  let probe = Emitter::with_plan(prepared, meta, support, input_mode, isolated)
+  let probe = Emitter::with_plan(
+    prepared,
+    meta,
+    support,
+    input_mode,
+    isolated,
+    optimize_resources~,
+  )
+  let resources = if optimize_resources {
+    probe.analyze_resources()
+  } else {
+    None
+  }
+  let probe = Emitter::{ ..probe, resources, }.select_resources()
   let costs = probe.block_costs()
   let control = @control_flow.plan(prepared.program, costs~) catch {
     InvalidControl(message) => abort(message)
   }
-  {
-    ..Emitter::with_plan(prepared, meta, support, input_mode, control),
+  Emitter::{
+    ..Emitter::with_plan(
+      prepared,
+      meta,
+      support,
+      input_mode,
+      control,
+      optimize_resources~,
+    ),
     block_estimates: costs,
-  }
+    resources,
+  }.select_resources()
 }
 
 ///|
@@ -57,6 +85,7 @@ fn Emitter::with_plan(
   support : @mbt_common.Context,
   input_mode : @codegen.InputMode,
   control : @control_flow.Plan,
+  optimize_resources~ : Bool = false,
 ) -> Emitter {
   let program = prepared.program
   let flow = prepared.flow
@@ -93,6 +122,7 @@ fn Emitter::with_plan(
     demand,
     checkpoints: prepared.checkpoints,
     input_mode,
+    optimize_resources,
     cache_ready: program.blocks.any(b => {
       b.all_instructions().any(i => i is EnsureLookahead)
     }),
@@ -106,6 +136,11 @@ fn Emitter::with_plan(
     }),
     control,
     block_estimates: [],
+    resources: None,
+    resource_locals: Set([]),
+    resource_written: Set([]),
+    resource_entry_writes: Map([]),
+    resource_regions: [],
     shared_context: control.regions.length() > 1,
     has_stack,
     cache_state: has_stack && reads_state,
@@ -169,6 +204,12 @@ fn Emitter::allocate_parameters(
 
 ///|
 fn Emitter::machine(self : Emitter, name : String) -> @mbt_ast.Expr {
+  if self.shared_context &&
+    self.resources is Some(plan) &&
+    plan.catalog.names.get(name) is Some(id) &&
+    self.resource_locals.contains(id) {
+    return Ident(resource_local(id))
+  }
   if self.shared_context {
     Field(Ident("_env"), Named(name))
   } else {

@@ -77,6 +77,7 @@ pub fn compile(
   parser_spec_str : String,
   mode~ : Mode = Default,
   input_mode~ : InputMode = Array,
+  input_layout~ : @codegen.InputLayout = Located,
   filename~ : String,
   external_tokens~ : Bool = false,
   no_comments~ : Bool = false,
@@ -221,6 +222,12 @@ pub fn compile(
     }
     _ => ()
   }
+  if !input_layout.accepts_position(position_data_type) {
+    println_to_stderr(
+      "Token-only input requires %position<Unit> (or the default Unit position type)",
+    )
+    exit(1)
+  }
   for rule_name, rule in spec.rules {
     let lhs = get_nonterminal_by_name(rule_name)
     nonterminal_meta_map[lhs.num] = { data_type: rule.type_, }
@@ -336,6 +343,7 @@ pub fn compile(
       Array => Array
       Pull => Pull
     },
+    input_layout~,
     external_tokens~,
     no_comments~,
   )

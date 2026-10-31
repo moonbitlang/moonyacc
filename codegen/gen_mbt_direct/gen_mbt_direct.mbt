@@ -10,6 +10,7 @@ fn codegen(
   no_comments~ : Bool = false,
   mode~ : @codegen.Mode = Default,
   input_mode~ : @codegen.InputMode = Array,
+  input_layout~ : @codegen.InputLayout = Located,
   optimization_level~ : @codegen.OptimizationLevel,
 ) -> Unit {
   let knowledge = @direct_ir.analyze_stack(grammar, automaton)
@@ -28,6 +29,7 @@ fn codegen(
     filename=grammar_filename,
     mode~,
     input_mode~,
+    input_layout~,
     action_calls=Direct,
   )
   let items = support.preamble(external_tokens~)
@@ -78,6 +80,7 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
   no_comments~,
   mode~,
   input_mode~,
+  input_layout~,
 ) {
   let CodeGenerator(optimization_level) = self
   codegen(
@@ -91,6 +94,7 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
     no_comments~,
     mode~,
     input_mode~,
+    input_layout~,
     optimization_level~,
   )
 }

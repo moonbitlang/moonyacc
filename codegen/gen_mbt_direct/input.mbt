@@ -69,19 +69,23 @@ fn Emitter::token_items(self : Emitter) -> Array[@mbt_ast.Item] {
 fn Emitter::read_token_body(self : Emitter) -> @mbt_ast.Block {
   let read : Array[@mbt_ast.Stmt] = [
     Let(
-      Tuple([
-        Bind("token"),
-        if self.support.tracks_positions() {
-          Bind("sp")
-        } else {
-          Any
-        },
-        if self.support.tracks_positions() {
-          Bind("ep")
-        } else {
-          Any
-        },
-      ]),
+      if self.support.input_layout is TokenOnly {
+        Bind("token")
+      } else {
+        Tuple([
+          Bind("token"),
+          if self.support.tracks_positions() {
+            Bind("sp")
+          } else {
+            Any
+          },
+          if self.support.tracks_positions() {
+            Bind("ep")
+          } else {
+            Any
+          },
+        ])
+      },
       None,
       match self.input_mode {
         Array => Index(self.machine("tokens"), self.machine("cursor"))
@@ -144,8 +148,13 @@ fn Emitter::read_lookahead(
   self : Emitter,
   ready~ : Bool = true,
 ) -> @mbt_ast.Stmt {
-  let read = if self.shared_context {
-    value_block(call("yy_read_token", [Ident("_env")]))
+  // A pull read is a lexer primitive, as in Menhir's PrimLexerCall lowering:
+  // call the lexer directly and capture its result in this block. The lexer
+  // never receives the parser frame, and scalar definitions stay visible to
+  // resource analysis. Array input retains its shared bounds/EOI helper.
+  let read = if self.shared_context &&
+    !(self.optimize_resources && self.input_mode is Pull) {
+    value_block(self.resource_call("yy_read_token"))
   } else {
     self.read_token_body()
   }

@@ -11,6 +11,7 @@ pub struct Context {
   priv filename : String
   priv mode : @codegen.Mode
   priv input_mode : @codegen.InputMode
+  input_layout : @codegen.InputLayout
   priv actions : @hashmap2.T[@stamp.Stamp, @elab.Action]
   priv reductions : @hashmap2.T[@stamp.Stamp, @elab.Action]
   priv get_action_id : (@elab.Action) -> Int32
@@ -28,8 +29,10 @@ pub fn Context::new(
   filename~ : String,
   mode~ : @codegen.Mode,
   input_mode~ : @codegen.InputMode,
+  input_layout~ : @codegen.InputLayout = Located,
   action_calls~ : ActionCalls = Indirect,
 ) -> Context {
+  guard! input_layout.accepts_position(meta.position_data_type)
   let actions : @hashmap2.T[@stamp.Stamp, @elab.Action] = @hashmap2.new(
     capacity=16,
   )
@@ -90,6 +93,7 @@ pub fn Context::new(
     filename,
     mode,
     input_mode,
+    input_layout,
     actions,
     reductions,
     pass_before_rhs,

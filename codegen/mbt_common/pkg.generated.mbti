@@ -13,7 +13,9 @@ import {
 // Values
 pub fn call(String, Array[@mbt_ast.Expr]) -> @mbt_ast.Expr
 
-pub fn entry_point(name~ : String, result~ : @elab.TypeExpr, position~ : @elab.TypeExpr, state~ : @mbt_ast.Expr, unbox~ : String, input_mode~ : @codegen.InputMode) -> @mbt_ast.Item
+pub fn entry_point(name~ : String, result~ : @elab.TypeExpr, position~ : @elab.TypeExpr, state~ : @mbt_ast.Expr, unbox~ : String, input_mode~ : @codegen.InputMode, input_layout~ : @codegen.InputLayout) -> @mbt_ast.Item
+
+pub fn input_type(@codegen.InputLayout, @elab.TypeExpr) -> @elab.TypeExpr
 
 pub fn named_type(String, Array[@elab.TypeExpr]) -> @elab.TypeExpr
 
@@ -34,6 +36,7 @@ pub(all) enum ActionCalls {
 }
 
 pub struct Context {
+  input_layout : @codegen.InputLayout
   // private fields
 }
 pub fn Context::action_id(Self, @elab.Action) -> Int32
@@ -43,8 +46,9 @@ pub fn Context::action_runtime(Self) -> Array[@mbt_ast.Item]
 pub fn Context::action_uses_before_rhs(Self, @elab.Action) -> Bool
 pub fn Context::footer(Self) -> Array[@mbt_ast.Item]
 pub fn Context::input_function(Self, Engine) -> @mbt_ast.Item
+pub fn Context::input_type(Self) -> @elab.TypeExpr
 pub fn Context::is_json_cst(Self) -> Bool
-pub fn Context::new(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, filename~ : String, mode~ : @codegen.Mode, input_mode~ : @codegen.InputMode, action_calls? : ActionCalls) -> Self
+pub fn Context::new(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, filename~ : String, mode~ : @codegen.Mode, input_mode~ : @codegen.InputMode, input_layout? : @codegen.InputLayout, action_calls? : ActionCalls) -> Self
 pub fn Context::parser_runtime(Self, Engine) -> Array[@mbt_ast.Item]
 pub fn Context::preamble(Self, external_tokens~ : Bool) -> Array[@mbt_ast.Item]
 pub fn Context::prelude(Self, external_tokens~ : Bool, require_void? : Bool) -> Array[@mbt_ast.Item]

@@ -15,6 +15,12 @@ import {
 // Errors
 
 // Types and methods
+pub(all) enum InputLayout {
+  Located
+  TokenOnly
+}
+pub fn InputLayout::accepts_position(Self, @elab.TypeExpr) -> Bool
+
 pub(all) enum InputMode {
   Array
   Pull
@@ -77,7 +83,7 @@ pub(all) enum TokenPayloadRewrite {
 // Traits
 pub(open) trait CodeGenerator {
   fn codegen_tokens(Self, Array[@grm.Terminal], (String) -> TerminalMeta, &Logger, no_comments~ : Bool, derive_map~ : @array_multimap.T[String, String]) -> Unit
-  fn codegen(Self, @grm.Grammar, @lr1.Automaton, MetaProvider, @logger_with_cursor.LoggerWithCursor, source_map_builder~ : &SourceMapBuilder?, grammar_filename~ : String, external_tokens~ : Bool, no_comments~ : Bool, mode~ : Mode, input_mode~ : InputMode) -> Unit
+  fn codegen(Self, @grm.Grammar, @lr1.Automaton, MetaProvider, @logger_with_cursor.LoggerWithCursor, source_map_builder~ : &SourceMapBuilder?, grammar_filename~ : String, external_tokens~ : Bool, no_comments~ : Bool, mode~ : Mode, input_mode~ : InputMode, input_layout~ : InputLayout) -> Unit
 }
 
 pub trait SourceMapBuilder {

@@ -31,8 +31,23 @@ pub(all) enum InputMode {
 }
 
 ///|
+/// Public input representation, independent of input mode and optimization.
+pub(all) enum InputLayout {
+  Located
+  TokenOnly
+}
+
+///|
+pub fn InputLayout::accepts_position(
+  self : InputLayout,
+  position : @elab.TypeExpr,
+) -> Bool {
+  self is Located || position is Constr(pkg=None, "Unit", [])
+}
+
+///|
 /// Direct backend optimization level. O1 is the default; O2 adds bounded state
-/// specialization. O0 currently uses the O1 pipeline.
+/// specialization and regional runtime optimization. O0 currently uses O1.
 pub(all) enum OptimizationLevel {
   O0
   O1

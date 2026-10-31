@@ -1,38 +1,67 @@
 ///|
-fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
-  let fields = self.stack_storage().map(pair => pair.0)
-  fields.append(self.snapshots.storage().map(pair => pair.0))
-  fields.append(self.lookahead_storage().map(pair => pair.0))
-  fields.append([
-    { name: "_yy_result", type_: Option(type_("YYResult")), mutable: true, },
-  ])
+fn Emitter::context_storage(
+  self : Emitter,
+) -> Array[(@mbt_ast.Field, @mbt_ast.Expr)] {
+  let fields = self.stack_storage()
+  fields.append(self.snapshots.storage())
+  fields.append(self.lookahead_storage())
+  fields.push(
+    (
+      { name: "_yy_result", type_: Option(type_("YYResult")), mutable: true, },
+      Ident("None"),
+    ),
+  )
   if self.needs_initial_position {
-    fields.push({
-      name: "initial_position",
-      type_: self.meta.position_data_type,
-      mutable: false,
-    })
+    fields.push(
+      (
+        {
+          name: "initial_position",
+          type_: self.meta.position_data_type,
+          mutable: false,
+        },
+        Ident("initial_position"),
+      ),
+    )
   }
   if self.input_mode is Array && self.support.tracks_positions() {
-    fields.push({
-      name: "last_pos",
-      type_: self.meta.position_data_type,
-      mutable: self.consumes_input,
-    })
+    fields.push(
+      (
+        {
+          name: "last_pos",
+          type_: self.meta.position_data_type,
+          mutable: self.consumes_input,
+        },
+        Ident("initial_position"),
+      ),
+    )
   }
   match self.input_mode {
     Array =>
       fields.append([
-        { name: "tokens", type_: self.tokens_type(), mutable: false, },
-        { name: "cursor", type_: type_("Int"), mutable: true, },
+        (
+          { name: "tokens", type_: self.tokens_type(), mutable: false, },
+          Ident("tokens"),
+        ),
+        ({ name: "cursor", type_: type_("Int"), mutable: true, }, Int(0)),
       ])
     Pull =>
-      fields.push({
-        name: "read_token",
-        type_: Arrow([], self.located_type()),
-        mutable: false,
-      })
+      fields.push(
+        (
+          {
+            name: "read_token",
+            type_: Arrow([], self.support.input_type()),
+            mutable: false,
+          },
+          Ident("read_token"),
+        ),
+      )
   }
+  fields
+}
+
+///|
+fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
+  let fields = self.stored_context().map(pair => pair.0)
   for kind, count in self.maxima {
     for index in 0..<count {
       fields.push({
@@ -47,20 +76,7 @@ fn Emitter::context_item(self : Emitter) -> @mbt_ast.Item {
 
 ///|
 fn Emitter::context_binding(self : Emitter) -> @mbt_ast.Stmt {
-  let fields = self.stack_storage().map(pair => (pair.0.name, pair.1))
-  fields.append(self.snapshots.storage().map(pair => (pair.0.name, pair.1)))
-  fields.append(self.lookahead_storage().map(pair => (pair.0.name, pair.1)))
-  fields.push(("_yy_result", Ident("None")))
-  if self.needs_initial_position {
-    fields.push(("initial_position", Ident("initial_position")))
-  }
-  if self.input_mode is Array && self.support.tracks_positions() {
-    fields.push(("last_pos", Ident("initial_position")))
-  }
-  match self.input_mode {
-    Array => fields.append([("tokens", Ident("tokens")), ("cursor", Int(0))])
-    Pull => fields.push(("read_token", Ident("read_token")))
-  }
+  let fields = self.stored_context().map(pair => (pair.0.name, pair.1))
   for kind, count in self.maxima {
     for index in 0..<count {
       fields.push((self.slot_name(kind, index), self.slot_types[kind].initial))
@@ -102,16 +118,7 @@ fn Emitter::local_storage(self : Emitter) -> Array[@mbt_ast.Stmt] {
 
 ///|
 fn Emitter::tokens_type(self : Emitter) -> @elab.TypeExpr {
-  @mbt_common.named_type("Array", [self.located_type()])
-}
-
-///|
-fn Emitter::located_type(self : Emitter) -> @elab.TypeExpr {
-  Tuple([
-    type_("Token"),
-    self.meta.position_data_type,
-    self.meta.position_data_type,
-  ])
+  @mbt_common.named_type("Array", [self.support.input_type()])
 }
 
 ///|

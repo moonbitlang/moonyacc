@@ -13,12 +13,26 @@ fn Emitter::parse_parameters(self : Emitter) -> Array[@mbt_ast.Parameter] {
           },
           type_("Int"),
         ),
-        Optional("initial_pos", self.meta.position_data_type, None),
+        ..if self.support.input_layout is Located {
+          [
+            @mbt_ast.Parameter::Optional(
+              "initial_pos",
+              self.meta.position_data_type,
+              None,
+            ),
+          ]
+        } else {
+          []
+        },
       ]
     Pull =>
       [
-        typed("read_token", Arrow([], self.located_type())),
-        typed("start_pos", self.meta.position_data_type),
+        typed("read_token", Arrow([], self.support.input_type())),
+        ..if self.support.input_layout is Located {
+          [typed("start_pos", self.meta.position_data_type)]
+        } else {
+          []
+        },
         typed("_entry", type_("Int")),
         typed(
           if !self.needs_initial_state {
@@ -37,6 +51,11 @@ fn Emitter::initial_state(self : Emitter) -> Array[@mbt_ast.Stmt] {
   let statements = []
   if self.input_mode is Array && !self.shared_context {
     statements.push(@mbt_ast.Stmt::LetMut("cursor", None, Int(0)))
+  }
+  if self.support.input_layout is TokenOnly {
+    // Unit is the initial position even for an empty input; no first-token
+    // access or dummy position argument is required by this ABI.
+    return statements
   }
   let position = match self.input_mode {
     Array =>

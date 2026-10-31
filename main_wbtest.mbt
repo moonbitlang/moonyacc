@@ -123,3 +123,23 @@ test "direct backend selection is explicit and rejects table flags" {
     }
   }
 }
+
+///|
+test "input layout is explicit and independent of mode and optimization" {
+  assert_true(parse_cli_args(["parser.mbty"]).input_layout is Located)
+  for mode in ["array", "pull"] {
+    for level in ["-O0", "-O1", "-O2"] {
+      let options = parse_cli_args([
+        "--input-layout=token-only", "--input-mode", mode, level, "parser.mbty",
+      ])
+      assert_true(options.input_layout is TokenOnly)
+      assert_false(options.direct || options.table)
+    }
+  }
+  try parse_cli_args(["--input-layout", "unknown", "parser.mbty"]) catch {
+    CliError::UnsupportedInputLayout("unknown") => ()
+    _ => fail("unexpected layout error")
+  } noraise {
+    _ => fail("accepted an unknown input layout")
+  }
+}

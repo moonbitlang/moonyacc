@@ -117,7 +117,7 @@ fn Emitter::terminator(
       }
     Stop =>
       if self.shared_context {
-        body([Return(call("yy_stop", [Ident("_env")]))])
+        body([Return(self.resource_call("yy_stop"))])
       } else {
         self.stop_body()
       }
