@@ -92,7 +92,7 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
 }
 
 ///|
-/// Configure direct code generation. O0 and O2 currently use the O1 pipeline.
+/// Configure direct code generation. O0 currently uses the O1 pipeline.
 pub fn new(
   optimization_level~ : @codegen.OptimizationLevel = O1,
 ) -> &@codegen.CodeGenerator {

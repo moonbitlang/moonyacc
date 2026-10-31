@@ -70,8 +70,6 @@ fn yy_parse(
   let mut cursor = 0
   let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut last_pos = initial_position
-  let mut error_depth : Int = 0
-  let mut error_suffix_0 : Int = 0
   let mut _yy_token_token : Token? = None
   let mut _yy_token_start : Int = 0
   let mut _yy_token_end : Int = 0
@@ -101,8 +99,6 @@ fn yy_parse(
         _yy_token_token = None
         _yy_token_start = 0
         _yy_token_end = 0
-        error_suffix_0 = 2
-        error_depth = 1
         let _yy_r27 = yy_action_0(_yy_r16)
         let _yy_bind0 = _yy_r27
         let _yy_r28 = _yy_bind0
@@ -112,14 +108,8 @@ fn yy_parse(
       ({
         ()
         _yy_error(
-          ({
-            ()
-            let mut _yy_error_states = @list.List([initial_state])
-            if error_depth > 0 {
-              _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
-            }
-            _yy_error_states
-          }), _yy_token_token, (_yy_token_start, _yy_token_end)
+          @list.List([initial_state]), _yy_token_token,
+          (_yy_token_start, _yy_token_end)
         )
         panic()
       })

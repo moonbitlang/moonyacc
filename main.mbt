@@ -124,7 +124,7 @@ fn cli_command() -> @argparse.Command {
         short='O',
         long="optimization-level",
         action=Append,
-        about="Direct backend optimization level (0, 1, 2; default: 1). Levels 0 and 2 currently use level 1",
+        about="Direct backend optimization level (0, 1, 2; default: 1). Level 2 specializes states; level 0 currently uses level 1",
       ),
       OptionArg(
         "backend",

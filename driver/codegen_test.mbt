@@ -75,7 +75,7 @@ test "direct Unit positions have no register storage" {
 }
 
 ///|
-test "direct optimization levels currently preserve the O1 output" {
+test "default O1 and reserved O0 preserve the same output" {
   let grammar =
     #|%position<Int>
     #|%token<Int> NUMBER
@@ -89,7 +89,7 @@ test "direct optimization levels currently preserve the O1 output" {
       input_mode~,
       generator=@gen_mbt_direct.generator,
     )
-    for optimization_level in [@codegen.OptimizationLevel::O0, O1, O2] {
+    for optimization_level in [@codegen.OptimizationLevel::O0, O1] {
       let output = @driver.compile(
         grammar,
         filename="optimization.mbty",

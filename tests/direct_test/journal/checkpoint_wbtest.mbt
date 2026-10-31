@@ -1,5 +1,6 @@
 ///|
-/// Compare the emitted mutable checkpoint with an immutable reference, across
+/// This grammar still requires a journal. Compare the emitted checkpoint with
+/// an immutable reference, across
 /// reductions that overwrite older states, new shifts, and buffer reuse.
 test "state checkpoint survives nested overwrites and repeated snapshots" {
   let stack : YYStateStack = {
@@ -34,5 +35,22 @@ test "state checkpoint survives nested overwrites and repeated snapshots" {
     assert_eq(actual, snapshot.rev())
     assert_true(stack.undo.length() <= stack.values.length())
     assert_true(stack.undo.length() >= stack.checkpoint - stack.saved_prefix)
+  }
+}
+
+///|
+test "error after nullable reductions still describes the last shifted prefix" {
+  start([NUMBER, NUMBER, N, EOF].map(t => (t, (), ())))
+  start([LP, NUMBER, NUMBER, BAD].map(t => (t, (), ())))
+  try start([NUMBER, NUMBER, BAD].map(t => (t, (), ()))) catch {
+    UnexpectedToken(BAD, _, expected) => {
+      assert_eq(expected.length(), 3)
+      assert_true(expected.any(t => t is TK_NUMBER))
+      assert_true(expected.any(t => t is TK_N))
+      assert_true(expected.any(t => t is TK_EOF))
+    }
+    _ => fail("wrong journal-backed error")
+  } noraise {
+    _ => fail("accepted a terminator from the other prefix")
   }
 }

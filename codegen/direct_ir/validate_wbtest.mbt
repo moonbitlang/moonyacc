@@ -17,6 +17,7 @@ test "snapshot suffix values must be defined LR states" {
   let state : Register = { id: 1, type_: State, }
   let program = fixture([
     {
+      specialize_state: false,
       hint: NoHint,
       origin: Helper,
       parameters: [],
@@ -57,6 +58,7 @@ test "token pattern bindings have checked types and branch-local scope" {
   let fallback : Body = { instructions: [], terminator: Stop, }
   let pattern = TokenPattern::BindToken(1, v, sp, ep)
   let block : Block = {
+    specialize_state: false,
     hint: NoHint,
     origin: Helper,
     parameters: [],
@@ -103,6 +105,7 @@ test "block arguments enforce both types and local SSA scope" {
   let b : Register = { id: 1, type_: Position, }
   let program = fixture([
     {
+      specialize_state: false,
       hint: NoHint,
       origin: Helper,
       parameters: [],
@@ -111,6 +114,7 @@ test "block arguments enforce both types and local SSA scope" {
       terminator: Jump({ target: 1, arguments: [Reg(a)], }),
     },
     {
+      specialize_state: false,
       hint: NoHint,
       origin: Helper,
       parameters: [b],

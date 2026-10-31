@@ -12,6 +12,7 @@ fn graph_program(
   guard! unit is Semantic(type_)
   {
     blocks: edges.map(targets => {
+      specialize_state: false,
       hint: NoHint,
       origin: Helper,
       parameters: [],

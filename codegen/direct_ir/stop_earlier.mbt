@@ -104,6 +104,7 @@ fn Program::share_stop(self : Program) -> Program {
   })
   blocks.push({
     origin: Helper,
+    specialize_state: false,
     hint: NoHint,
     parameters: [],
     lookahead: Present,

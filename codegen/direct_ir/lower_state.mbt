@@ -113,6 +113,10 @@ fn Lowering::lower_state(self : Lowering, state : @lr1.LR1State) -> Unit {
   prefix.append(instructions)
   self.program.blocks[state.num] = {
     origin: Run(state.num),
+    // Menhir selects normal-mode runs with a default unit reduction, avoiding
+    // token-case duplication. This flag grants no stack or state assumption.
+    specialize_state: default_ is Some(Reduce(production)) &&
+    production.rhs.length() == 1,
     hint: NoHint,
     parameters,
     lookahead,
@@ -174,6 +178,7 @@ fn Lowering::accept_edge(self : Lowering, state : @lr1.LR1State) -> Edge {
   let label = self.reserve(Helper)
   self.program.blocks[label] = {
     origin: Helper,
+    specialize_state: false,
     hint: IfCells(1),
     parameters: [],
     lookahead: Any,

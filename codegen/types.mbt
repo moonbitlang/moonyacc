@@ -31,8 +31,8 @@ pub(all) enum InputMode {
 }
 
 ///|
-/// Direct backend optimization level. O1 is the default; O0 and O2 currently
-/// use the O1 pipeline until their distinct policies are implemented.
+/// Direct backend optimization level. O1 is the default; O2 adds bounded state
+/// specialization. O0 currently uses the O1 pipeline.
 pub(all) enum OptimizationLevel {
   O0
   O1

@@ -141,6 +141,7 @@ fn Lowering::reserve(self : Lowering, origin : Origin) -> Int32 {
   let label = self.program.blocks.length()
   self.program.blocks.push({
     origin,
+    specialize_state: false,
     hint: match origin {
       Reduce(production) =>
         IfCells(self.program.actions[production].rhs.length())

@@ -112,11 +112,10 @@ fn Emitter::stack_storage(
       ("depth", Int(1)),
     ]
     if self.diagnostics {
-      initial.append([
-        ("checkpoint", Int(1)),
-        ("saved_prefix", Int(1)),
-        ("undo", Array([])),
-      ])
+      initial.push(("checkpoint", Int(1)))
+    }
+    if self.journal {
+      initial.append([("saved_prefix", Int(1)), ("undo", Array([]))])
     }
     [
       (

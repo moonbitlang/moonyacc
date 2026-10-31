@@ -15,6 +15,7 @@ fn check_block(
   arguments : Array[Value],
 ) -> Block {
   {
+    specialize_state: false,
     hint: NoHint,
     origin: Helper,
     parameters,

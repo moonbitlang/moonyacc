@@ -7,24 +7,30 @@ fn Emitter::block_instructions(
   let statements = []
   let pending = []
   let mut checkpoint = checkpoint
+  let live = self.checkpoints.liveness.points({
+    instructions: block.instructions,
+    terminator: block.terminator,
+  })
   fn flush() {
     if !pending.is_empty() {
       statements.append(self.pop_cells(pending))
       pending.clear()
     }
   }
-  for instruction in block.instructions {
+  for i, instruction in block.instructions {
     if instruction is Pop(cell, regs) &&
       regs.all(reg => reg.map(r => self.erased_register(r)).unwrap_or(true)) {
       pending.push(cell)
     } else {
       // No read, semantic action, lexer call or checkpoint is crossed.
       flush()
-      statements.append(self.instruction(instruction, checkpoint))
+      statements.append(
+        self.instruction(instruction, checkpoint, preserve=live[i + 1]),
+      )
     }
     // Batched pops still advance the logical fact one instruction at a time;
     // flush() emits them before any operation that can observe the depth.
-    checkpoint = checkpoint.step(instruction)
+    checkpoint = checkpoint.step(instruction, preserve=live[i + 1])
   }
   flush()
   (statements, checkpoint)

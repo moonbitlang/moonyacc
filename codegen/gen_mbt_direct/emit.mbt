@@ -7,7 +7,11 @@ fn Emitter::parser_items(
   let items = [self.result_item()]
   if self.has_stack {
     items.push(
-      state_stack_item(self.snapshots.saves, diagnostics=self.diagnostics),
+      state_stack_item(
+        self.physical_saves,
+        diagnostics=self.diagnostics,
+        journal=self.journal,
+      ),
     )
   }
   if self.program.blocks.any(b => {
@@ -40,7 +44,7 @@ fn Emitter::parser_items(
   for index, entry in self.program.entries {
     items.push(self.entry_item(index, entry))
   }
-  if self.diagnostics && self.checkpoints.requires_journal(self.program) {
+  if self.journal {
     items.push(state_push_item(journal=true))
   }
   let has_plain_push = if self.diagnostics {
@@ -52,11 +56,11 @@ fn Emitter::parser_items(
     items.push(state_push_item(journal=false))
   }
   if self.has_stack {
-    if self.snapshots.saves {
-      items.push(state_checkpoint_item())
+    if self.physical_saves {
+      items.push(state_checkpoint_item(journal=self.journal))
     }
     if self.diagnostics {
-      items.push(state_snapshot_item())
+      items.push(state_snapshot_item(journal=self.journal))
     }
   }
   items

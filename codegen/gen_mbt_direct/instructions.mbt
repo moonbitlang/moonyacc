@@ -3,13 +3,14 @@ fn Emitter::instruction(
   self : Emitter,
   instruction : @direct_ir.Instruction,
   checkpoint : @direct_ir.CheckpointFact,
+  preserve~ : Bool,
 ) -> Array[@mbt_ast.Stmt] {
   match instruction {
     EnsureLookahead => [self.read_lookahead()]
     LoadLookahead => [self.read_lookahead(ready=false)]
     RefineLookahead(_) => []
     ConsumeLookahead => self.consume_lookahead()
-    SaveErrorSnapshot(suffix) => self.save_snapshot(suffix)
+    SaveErrorSnapshot(suffix) => self.save_snapshot(suffix, checkpoint)
     ReadPreviousPosition(depth, reg) =>
       if self.erased_register(reg) {
         []
@@ -27,7 +28,7 @@ fn Emitter::instruction(
       }
       statements
     }
-    Push(cell, values) => self.push_cell(cell, values, checkpoint)
+    Push(cell, values) => self.push_cell(cell, values, checkpoint, preserve~)
     Pop(cell, registers) => {
       let statements = self.bindings(0, cell, registers)
       statements.append(self.pop_cells([cell]))
@@ -44,6 +45,7 @@ fn Emitter::push_cell(
   cell : @direct_ir.Cell,
   values : Array[@direct_ir.Value],
   checkpoint : @direct_ir.CheckpointFact,
+  preserve~ : Bool,
 ) -> Array[@mbt_ast.Stmt] {
   let symbol = cell.symbol.unwrap()
   let statements : Array[@mbt_ast.Stmt] = []
@@ -60,7 +62,7 @@ fn Emitter::push_cell(
     statements.push(Augment(depth, Add, Int(1)))
   }
   let state = self.value(values[cell.fields.search(State).unwrap()])
-  let helper = if !self.diagnostics || checkpoint.no_overlap() {
+  let helper = if !checkpoint.needs_journal(preserve~) {
     "yy_stack_push_unprotected"
   } else {
     "yy_stack_push"

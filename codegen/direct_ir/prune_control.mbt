@@ -102,21 +102,11 @@ fn StackFlowPass::prune(
       CaseToken(live, fallback)
     }
     CaseState(value, arms) => {
-      let fact = machine.value(value)
       let live = []
       for (state, branch) in arms {
-        if !fact.states.contains(state) {
-          continue
+        if self.state_branch(machine, value, state) is Some(machine) {
+          live.push((state, self.prune(branch, machine, lookahead)))
         }
-        let machine = machine.copy()
-        if value is Reg(reg) {
-          machine.registers[reg.id] = { ..fact, states: Set([state]), }
-        }
-        if fact.depth == Some(0) {
-          machine.current = Set([state])
-          self.refine(machine)
-        }
-        live.push((state, self.prune(branch, machine, lookahead)))
       }
       if live is [(_, branch), ..] && live.all(p => p.1 == branch) {
         return append_body(instructions, branch)

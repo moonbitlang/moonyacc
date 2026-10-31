@@ -13,6 +13,8 @@ priv struct Emitter {
   shared_context : Bool
   has_stack : Bool
   diagnostics : Bool
+  journal : Bool
+  physical_saves : Bool
   needs_initial_state : Bool
   cache_state : Bool
   consumes_input : Bool
@@ -102,6 +104,8 @@ fn Emitter::with_plan(
     has_stack,
     cache_state: has_stack && reads_state,
     diagnostics,
+    journal: prepared.checkpoints.requires_journal(program),
+    physical_saves: prepared.checkpoints.requires_save(program),
     needs_initial_state: has_stack || reads_state || diagnostics,
     consumes_input: program.blocks
     .iter()

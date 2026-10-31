@@ -53,12 +53,15 @@ test "checkpoint facts join branches, cross loops, and ignore virtual suffix dep
   assert_eq(flow.entry(0).upper, Some(0))
   assert_eq(flow.entry(1).upper, Some(0))
   assert_false(flow.entry(2).no_overlap())
-  assert_eq(flow.entry(3).upper, Some(0))
+  // This join now includes an unprotected write to a dead snapshot. Unlike a
+  // protected push, it does not clamp saved_prefix to the current depth.
+  assert_eq(flow.entry(3).upper, None)
+  assert_false(flow.entry(3).valid)
   assert_false(flow.entry(4).no_overlap())
   assert_true(flow.entries[5] is None)
   assert_false(flow.entry(5).no_overlap())
   assert_false(flow.entry(6).no_overlap())
-  assert_true(flow.requires_journal(source))
+  assert_false(flow.requires_journal(source))
   assert_true(flow.has_unprotected_push(source))
   flow.validate(source)
   let safe = fixture([
@@ -76,18 +79,18 @@ test "the checkpoint checker rejects stronger entry claims and missing edges" {
   let source = checkpoint_fixture()
   let flow = source.checkpoint_flow()
   let invalid : Array[(Int32, CheckpointFact?)] = [
-    (0, Some({ upper: Some(-1), })),
-    (2, Some({ upper: Some(0), })),
+    (0, Some({ ..flow.entry(0), upper: Some(-1), })),
+    (2, Some({ ..flow.entry(2), upper: Some(0), })),
     (3, None),
-    (6, Some({ upper: Some(0), })),
-    (1, Some({ upper: Some(1), })),
+    (6, Some({ ..flow.entry(6), upper: Some(0), })),
+    (1, Some({ ..flow.entry(1), upper: Some(1), })),
   ]
   for (label, claim) in invalid {
     let entries = flow.entries.copy()
     entries[label] = claim
     assert_true(
       try {
-        CheckpointFlow::{ entries, }.validate(source)
+        CheckpointFlow::{ ..flow, entries, }.validate(source)
         false
       } catch {
         _ => true

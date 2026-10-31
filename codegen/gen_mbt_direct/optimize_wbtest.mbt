@@ -53,6 +53,7 @@ test "coalescing keeps duplicated results and incoming parameters distinct" {
   let c : @direct_ir.Register = { id: 3, type_: Position, }
   let d : @direct_ir.Register = { id: 4, type_: Position, }
   let base : @direct_ir.Block = {
+    specialize_state: false,
     hint: NoHint,
     origin: Helper,
     parameters: [],

@@ -56,11 +56,137 @@ fn JournalModel::push(
 }
 
 ///|
-fn JournalModel::capture(self : JournalModel, suffix : Array[Int32]) -> Unit {
-  self.checkpoint = self.depth
-  self.prefix = self.depth
+fn JournalModel::capture(
+  self : JournalModel,
+  suffix : Array[Int32],
+  physical~ : Bool = true,
+) -> Unit {
+  if physical {
+    self.checkpoint = self.depth
+    self.prefix = self.depth
+  }
   self.suffix = suffix
   self.expected = [..self.values[:self.depth], ..suffix]
+}
+
+///|
+test "liveness and repeated-save elimination preserve every bounded observable history" {
+  let initial = JournalModel::{
+    values: [0],
+    undo: [],
+    depth: 1,
+    checkpoint: 1,
+    prefix: 1,
+    suffix: [],
+    expected: [0],
+  }
+  let liveness = SnapshotLiveness::{ entries: [], }
+  fn execute(history : Array[Instruction], observe : Bool) -> Unit raise {
+    let reference = initial.copy()
+    for instruction in history {
+      match instruction {
+        Push(_, [State(value)]) => reference.push(value, journal=true)
+        Pop(_) => reference.depth -= 1
+        SaveErrorSnapshot(suffix) =>
+          reference.capture(
+            suffix.map(v => {
+              guard! v is State(state)
+              state
+            }),
+          )
+        _ => fail("unexpected model instruction")
+      }
+    }
+    let body = Body::{
+      instructions: history,
+      terminator: if observe {
+        Stop
+      } else {
+        Unreachable
+      },
+    }.prune_snapshots(liveness)
+    let points = liveness.points(body)
+    let actual = initial.copy()
+    let mut fact = CheckpointFact::initial()
+    for i, instruction in body.instructions {
+      assert_true(!points[i] || fact.valid)
+      match instruction {
+        Push(_, [State(value)]) =>
+          actual.push(value, journal=fact.needs_journal(preserve=points[i + 1]))
+        Pop(_) => actual.depth -= 1
+        SaveErrorSnapshot(suffix) =>
+          actual.capture(
+            suffix.map(v => {
+              guard! v is State(state)
+              state
+            }),
+            physical=!fact.current,
+          )
+        _ => fail("unexpected optimized instruction")
+      }
+      fact = fact.step(instruction, preserve=points[i + 1])
+      if fact.upper is Some(bound) {
+        assert_true(actual.prefix - actual.depth <= bound)
+      }
+      if fact.valid {
+        assert_eq(actual.snapshot(), actual.expected)
+      }
+      if fact.current {
+        assert_true(fact.valid)
+        assert_eq(actual.prefix, actual.depth)
+        assert_eq(actual.checkpoint, actual.depth)
+        assert_eq(
+          actual.snapshot(),
+          [..actual.values[:actual.depth], ..actual.suffix],
+        )
+      }
+    }
+    assert_eq(actual.values[:actual.depth], reference.values[:reference.depth])
+    if observe {
+      assert_eq(actual.snapshot(), reference.expected)
+    }
+  }
+  fn visit(
+    history : Array[Instruction],
+    depth : Int32,
+    remaining : Int32,
+  ) -> Unit raise {
+    execute(history, true)
+    execute(history, false)
+    if remaining == 0 {
+      return
+    }
+    for operation in 0..<3 {
+      if operation == 1 && depth == 1 {
+        continue
+      }
+      let (instruction, next) = match operation {
+        0 =>
+          (
+            Instruction::Push({ symbol: Some(1), fields: [State], }, [
+              State(remaining),
+            ]),
+            depth + 1,
+          )
+        1 => (checkpoint_pop(), depth - 1)
+        _ =>
+          (
+            SaveErrorSnapshot(
+              if remaining % 2 == 0 {
+                [State(10), State(20)]
+              } else {
+                []
+              },
+            ),
+            depth,
+          )
+      }
+      history.push(instruction)
+      visit(history, next, remaining - 1)
+      ignore(history.pop())
+    }
+  }
+  visit([], 1, 8)
 }
 
 ///|
@@ -133,7 +259,9 @@ test "journal-free pushes preserve checkpoints across every bounded stack histor
   }
   visit(initial, initial.copy(), CheckpointFact::initial(), 9)
   assert_eq(
-    CheckpointFact::{ upper: Some(-2147483648), }.step(checkpoint_push()).upper,
+    CheckpointFact::{ upper: Some(-2147483648), valid: true, current: false, }.step(
+      checkpoint_push(),
+    ).upper,
     Some(-2147483648),
   )
 }

@@ -31,6 +31,7 @@ fn Lowering::goto_block(self : Lowering, lhs : Int32) -> Block {
   }
   {
     origin: Goto(lhs),
+    specialize_state: false,
     hint: IfKnownState,
     parameters: [pred, value, sp, ep],
     lookahead: Any,

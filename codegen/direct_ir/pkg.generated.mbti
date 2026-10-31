@@ -30,6 +30,7 @@ pub(all) struct ActionSignature {
 pub(all) struct Block {
   origin : Origin
   hint : InlineHint
+  specialize_state : Bool
   parameters : Array[Register]
   lookahead : Lookahead
   instructions : Array[Instruction]
@@ -52,16 +53,21 @@ pub(all) struct Cell {
 
 pub struct CheckpointFact {
   upper : Int32?
+  valid : Bool
+  current : Bool
 }
+pub fn CheckpointFact::needs_journal(Self, preserve~ : Bool) -> Bool
 pub fn CheckpointFact::no_overlap(Self) -> Bool
-pub fn CheckpointFact::step(Self, Instruction) -> Self
+pub fn CheckpointFact::step(Self, Instruction, preserve? : Bool) -> Self
 
 pub struct CheckpointFlow {
   entries : Array[CheckpointFact?]
+  liveness : SnapshotLiveness
 }
 pub fn CheckpointFlow::entry(Self, Int32) -> CheckpointFact
 pub fn CheckpointFlow::has_unprotected_push(Self, Program) -> Bool
 pub fn CheckpointFlow::requires_journal(Self, Program) -> Bool
+pub fn CheckpointFlow::requires_save(Self, Program) -> Bool
 pub fn CheckpointFlow::validate(Self, Program) -> Unit raise InvalidProgram
 
 pub(all) enum DiagnosticAction {
@@ -154,6 +160,8 @@ pub fn Program::prepare(Self, StackKnowledge, positions~ : Bool, optimization_le
 pub fn Program::prune_control(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::prune_registers(Self, StackKnowledge, positions~ : Bool) -> Self raise InvalidProgram
 pub fn Program::simplify(Self) -> Self
+pub fn Program::snapshot_liveness(Self) -> SnapshotLiveness raise InvalidProgram
+pub fn Program::specialize_state(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::stack_flow(Self, StackKnowledge) -> StackFlow raise InvalidProgram
 pub fn Program::stop_earlier(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::storage_demand(Self, StackFlow, positions~ : Bool) -> StorageDemand
@@ -163,6 +171,12 @@ pub(all) struct Register {
   id : Int32
   type_ : ValueType
 } derive(Eq)
+
+pub struct SnapshotLiveness {
+  entries : Array[Bool]
+}
+pub fn SnapshotLiveness::points(Self, Body) -> Array[Bool]
+pub fn SnapshotLiveness::validate(Self, Program) -> Unit raise InvalidProgram
 
 pub(all) struct StackCellFact {
   symbol : Int32

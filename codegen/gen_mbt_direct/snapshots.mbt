@@ -1,22 +1,19 @@
 ///|
 priv struct SnapshotPlan {
-  saves : Bool
   width : Int32
 }
 
 ///|
 fn SnapshotPlan::new(blocks : Array[@direct_ir.Block]) -> SnapshotPlan {
-  let mut saves = false
   let mut width = 0
   for block in blocks {
     for instruction in block.all_instructions() {
       if instruction is SaveErrorSnapshot(suffix) {
-        saves = true
         width = Int32::max(width, suffix.length())
       }
     }
   }
-  { saves, width, }
+  { width, }
 }
 
 ///|
@@ -89,11 +86,12 @@ fn SnapshotPlan::capture(
 fn Emitter::save_snapshot(
   self : Emitter,
   suffix : Array[@direct_ir.Value],
+  checkpoint : @direct_ir.CheckpointFact,
 ) -> Array[@mbt_ast.Stmt] {
   self.snapshots.capture(
     suffix.map(v => self.value(v)),
     name => self.machine(name),
-    physical=self.has_stack,
+    physical=self.has_stack && !checkpoint.current,
   )
 }
 

@@ -105,7 +105,6 @@ fn yy_parse(
   ignore(start_pos)
   let mut error_depth : Int = 0
   let mut error_suffix_0 : Int = 0
-  let mut error_suffix_1 : Int = 0
   let mut _yy_token_token : Token? = None
   let mut _yy_token_value : Json = Json::null()
   _yy_scope_1~: while true {
@@ -144,9 +143,6 @@ fn yy_parse(
                 let _yy_r68 = _yy_token_value
                 _yy_token_token = None
                 _yy_token_value = Json::null()
-                error_suffix_0 = 3
-                error_suffix_1 = 4
-                error_depth = 2
                 let _yy_r71 = yy_action_0(_yy_r67, _yy_r68)
                 let _yy_bind0 = _yy_r71
                 let _yy_r72 = _yy_bind0
@@ -172,9 +168,6 @@ fn yy_parse(
       let mut _yy_error_states = @list.List([initial_state])
       if error_depth > 0 {
         _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
-      }
-      if error_depth > 1 {
-        _yy_error_states = @list.cons(error_suffix_1, _yy_error_states)
       }
       _yy_error_states
     }), _yy_token_token, ((), ())

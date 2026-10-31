@@ -2,6 +2,7 @@
 test "virtual diagnostic suffixes have independent scalar storage" {
   let dynamic : @direct_ir.Register = { id: 0, type_: State, }
   let block : @direct_ir.Block = {
+    specialize_state: false,
     hint: NoHint,
     origin: Helper,
     parameters: [],
@@ -11,7 +12,6 @@ test "virtual diagnostic suffixes have independent scalar storage" {
   }
   let plan = SnapshotPlan::new([block])
   assert_eq(plan.width, 3)
-  assert_true(plan.saves)
   assert_eq(plan.storage().map(pair => pair.0.name), [
     "error_depth", "error_suffix_0", "error_suffix_1", "error_suffix_2",
   ])
@@ -32,6 +32,13 @@ test "virtual diagnostic suffixes have independent scalar storage" {
     fail("an ordinary shift must hide the previous virtual suffix")
   }
   let absent = SnapshotPlan::new([])
+  assert_true(
+    plan.capture([Int(9)], name => Ident(name), physical=false)
+    is [
+      Assign(Ident("error_suffix_0"), Int(9)),
+      Assign(Ident("error_depth"), Int(1)),
+    ],
+  )
   assert_true(absent.storage().is_empty())
   assert_true(
     absent.states(Ident("prefix"), name => Ident(name)) is Ident("prefix"),

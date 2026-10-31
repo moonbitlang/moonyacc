@@ -247,18 +247,9 @@ fn StackFlowPass::finish(
         "nonexhaustive LR state case",
       )
       for (state, body) in arms {
-        if !fact.states.contains(state) {
-          continue
+        if self.state_branch(machine, value, state) is Some(branch) {
+          self.body(body, branch, jump)
         }
-        let branch = machine.copy()
-        if value is Reg(reg) {
-          branch.registers[reg.id] = { ..fact, states: Set([state]), }
-        }
-        if fact.depth == Some(0) {
-          branch.current = Set([state])
-          self.refine(branch)
-        }
-        self.body(body, branch, jump)
       }
     }
     Return(entry, _) => {
@@ -278,6 +269,28 @@ fn StackFlowPass::finish(
     Stop => require(!machine.empty_token, "error exit without a cached token")
     Unreachable => ()
   }
+}
+
+///|
+/// Refine a selector and the stack together only when their depth relation is
+/// proved. Shared by analysis, branch pruning and state specialization.
+fn StackFlowPass::state_branch(
+  self : StackFlowPass,
+  machine : StackMachineFact,
+  selector : Value,
+  state : Int32,
+) -> StackMachineFact? raise InvalidProgram {
+  let fact = machine.value(selector)
+  guard fact.states.contains(state) else { None }
+  let branch = machine.copy()
+  if selector is Reg(reg) {
+    branch.registers[reg.id] = { ..fact, states: Set([state]), }
+  }
+  if fact.depth == Some(0) {
+    branch.current = Set([state])
+    self.refine(branch)
+  }
+  Some(branch)
 }
 
 ///|

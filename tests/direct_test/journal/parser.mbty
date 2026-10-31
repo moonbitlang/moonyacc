@@ -1,0 +1,6 @@
+%token NUMBER N EOF BAD LP
+%start<Unit> start
+%%
+start: a b EOF { ()} | LP a BAD { ()};
+a -> Unit: NUMBER a { ()} | NUMBER { ()};
+b -> Unit: N { ()} | { ()};

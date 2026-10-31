@@ -1,0 +1,22 @@
+%{
+let events : Ref[Array[String]] = Ref([])
+%}
+
+%position<Int>
+%token<Int> NUMBER
+%token A B LP RP EOF
+%start<(Int, Int, Int)> start
+
+%%
+
+start: p=prefix v=value padding EOF { events.val.push("start"); (p + v, $startpos(v), $endpos(v))};
+prefix -> Int:
+  | A { events.val.push("prefix-a"); 0}
+  | B { events.val.push("prefix-b"); 100}
+  | { events.val.push("prefix-empty"); 1000};
+value -> Int: factor { events.val.push("value"); $1 + 1};
+factor -> Int: atom { events.val.push("factor"); $1 * 2};
+atom -> Int:
+  | NUMBER { events.val.push("number"); $1}
+  | LP value RP { events.val.push("paren"); $2 + 3};
+padding -> Unit: { events.val.push("epsilon"); ()};

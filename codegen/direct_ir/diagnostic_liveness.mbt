@@ -1,37 +1,41 @@
 ///|
-/// Snapshot stores have no observable effect when there is no error exit.
-/// Keep this observer decision in the IR, shared by all storage layouts.
-fn Program::discard_unobserved_snapshots(self : Program) -> Program {
-  if self.blocks.any(b => b.terminator.can_stop()) {
-    return self
-  }
-  {
-    ..self,
-    blocks: self.blocks.map(b => {
-      let body : Body = {
-        instructions: b.instructions,
-        terminator: b.terminator,
-      }
-      let body = body.without_snapshots()
-      { ..b, instructions: body.instructions, terminator: body.terminator, }
-    }),
-  }
+/// Remove a save only when all continuations replace it or return without
+/// observing it. This changes no parser effects or CFG edges.
+fn Program::discard_unobserved_snapshots(
+  self : Program,
+) -> Program raise InvalidProgram {
+  let live = self.snapshot_liveness()
+  let blocks = self.blocks.map(block => {
+    let body = Body::{
+      instructions: block.instructions,
+      terminator: block.terminator,
+    }.prune_snapshots(live)
+    { ..block, instructions: body.instructions, terminator: body.terminator, }
+  })
+  let program = Program::{ ..self, blocks, }
+  program.validate()
+  program
 }
 
 ///|
-fn Body::without_snapshots(self : Body) -> Body {
+fn Body::prune_snapshots(self : Body, live : SnapshotLiveness) -> Body {
+  let points = live.points(self)
+  let instructions = []
+  for i, instruction in self.instructions {
+    if instruction is SaveErrorSnapshot(_) && !points[i + 1] {
+      continue
+    }
+    instructions.push(instruction)
+  }
   let term = match self.terminator {
     CaseToken(arms, fallback) =>
       CaseToken(
-        arms.map(p => (p.0, p.1.without_snapshots())),
-        fallback.without_snapshots(),
+        arms.map(p => (p.0, p.1.prune_snapshots(live))),
+        fallback.prune_snapshots(live),
       )
     CaseState(value, arms) =>
-      CaseState(value, arms.map(p => (p.0, p.1.without_snapshots())))
+      CaseState(value, arms.map(p => (p.0, p.1.prune_snapshots(live))))
     other => other
   }
-  {
-    instructions: self.instructions.filter(i => !(i is SaveErrorSnapshot(_))),
-    terminator: term,
-  }
+  { instructions, terminator: term, }
 }

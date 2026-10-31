@@ -3,7 +3,11 @@
 /// checkpoint journal saves overwritten integer states once per checkpoint.
 /// Both buffers are bounded by the maximum materialized LR depth. Semantic
 /// arrays are independent and are never retained by diagnostic snapshots.
-fn state_stack_item(saves : Bool, diagnostics~ : Bool) -> @mbt_ast.Item {
+fn state_stack_item(
+  saves : Bool,
+  diagnostics~ : Bool,
+  journal~ : Bool,
+) -> @mbt_ast.Item {
   let fields : Array[@mbt_ast.Field] = [
     {
       name: "values",
@@ -13,8 +17,10 @@ fn state_stack_item(saves : Bool, diagnostics~ : Bool) -> @mbt_ast.Item {
     { name: "depth", type_: type_("Int"), mutable: true, },
   ]
   if diagnostics {
+    fields.push({ name: "checkpoint", type_: type_("Int"), mutable: saves, })
+  }
+  if journal {
     fields.append([
-      { name: "checkpoint", type_: type_("Int"), mutable: saves, },
       { name: "saved_prefix", type_: type_("Int"), mutable: true, },
       {
         name: "undo",
@@ -97,16 +103,27 @@ fn state_push_item(journal~ : Bool) -> @mbt_ast.Item {
 }
 
 ///|
-fn state_checkpoint_item() -> @mbt_ast.Item {
+fn state_checkpoint_item(journal~ : Bool) -> @mbt_ast.Item {
   @mbt_ast.item(
     Function(
       @mbt_ast.function(
         "yy_stack_checkpoint",
         [typed("stack", type_("YYStateStack"))],
-        body([
-          Assign(stack_field("checkpoint"), stack_field("depth")),
-          Assign(stack_field("saved_prefix"), stack_field("depth")),
-        ]),
+        body(
+          [
+            Assign(stack_field("checkpoint"), stack_field("depth")),
+            ..if journal {
+              [
+                @mbt_ast.Stmt::Assign(
+                  stack_field("saved_prefix"),
+                  stack_field("depth"),
+                ),
+              ]
+            } else {
+              []
+            },
+          ],
+        ),
         result=type_("Unit"),
       ),
     ),
@@ -114,25 +131,29 @@ fn state_checkpoint_item() -> @mbt_ast.Item {
 }
 
 ///|
-fn state_snapshot_item() -> @mbt_ast.Item {
+fn state_snapshot_item(journal~ : Bool) -> @mbt_ast.Item {
   let list = @mbt_common.named_type("@list.List", [type_("Int")])
   let i = @mbt_ast.Expr::Ident("i")
-  let value = @mbt_ast.Expr::If(
-    Binary(Less, i, stack_field("saved_prefix")),
-    value_block(Index(stack_field("values"), i)),
-    Some(
-      value_block(
-        Index(
-          stack_field("undo"),
-          Binary(
-            Subtract,
-            Binary(Subtract, stack_field("checkpoint"), i),
-            Int(1),
+  let value = if !journal {
+    @mbt_ast.Expr::Index(stack_field("values"), i)
+  } else {
+    @mbt_ast.Expr::If(
+      Binary(Less, i, stack_field("saved_prefix")),
+      value_block(Index(stack_field("values"), i)),
+      Some(
+        value_block(
+          Index(
+            stack_field("undo"),
+            Binary(
+              Subtract,
+              Binary(Subtract, stack_field("checkpoint"), i),
+              Int(1),
+            ),
           ),
         ),
       ),
-    ),
-  )
+    )
+  }
   @mbt_ast.item(
     Function(
       @mbt_ast.function(

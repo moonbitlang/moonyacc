@@ -152,8 +152,6 @@ priv struct YYStateStack {
   values : Array[Int]
   mut depth : Int
   mut checkpoint : Int
-  mut saved_prefix : Int
-  undo : Array[Int]
 }
 
 ///|
@@ -164,7 +162,7 @@ fn yy_parse(
   let mut cursor = 0
   ignore(initial_pos.unwrap_or_else(() => tokens[0].1))
   let stack : YYStateStack = YYStateStack::{
-    values: [initial_state], depth: 1, checkpoint: 1, saved_prefix: 1, undo: []
+    values: [initial_state], depth: 1, checkpoint: 1
   }
   let mut state : Int = initial_state
   let _yy_stack_0 : Array[Int] = []
@@ -374,7 +372,7 @@ fn yy_parse(
                             _yy_stack_0[_yy_depth_0] = _yy_value_0_0
                           }
                           _yy_depth_0 += 1
-                          yy_stack_push(stack, 11)
+                          yy_stack_push_unprotected(stack, 11)
                           state = 11
                           break _yy_scope_8~
                         })
@@ -418,7 +416,7 @@ fn yy_parse(
                         _yy_stack_0[_yy_depth_0] = _yy_value_0_0
                       }
                       _yy_depth_0 += 1
-                      yy_stack_push(stack, 6)
+                      yy_stack_push_unprotected(stack, 6)
                       state = 6
                       break _yy_scope_7~
                     })
@@ -431,7 +429,7 @@ fn yy_parse(
                         _yy_stack_0[_yy_depth_0] = _yy_value_0_0
                       }
                       _yy_depth_0 += 1
-                      yy_stack_push(stack, 6)
+                      yy_stack_push_unprotected(stack, 6)
                       state = 6
                       break _yy_scope_8~
                     })
@@ -482,7 +480,7 @@ fn yy_parse(
                     _yy_stack_0[_yy_depth_0] = _yy_value_0_0
                   }
                   _yy_depth_0 += 1
-                  yy_stack_push(stack, 13)
+                  yy_stack_push_unprotected(stack, 13)
                   state = 13
                   break _yy_scope_7~
                 })
@@ -495,7 +493,7 @@ fn yy_parse(
                     _yy_stack_0[_yy_depth_0] = _yy_value_0_0
                   }
                   _yy_depth_0 += 1
-                  yy_stack_push(stack, 13)
+                  yy_stack_push_unprotected(stack, 13)
                   state = 13
                   break _yy_scope_8~
                 })
@@ -504,10 +502,6 @@ fn yy_parse(
                   ()
                   _yy_token_token = None
                   _yy_token_ready = false
-                  yy_stack_checkpoint(stack)
-                  error_suffix_0 = 13
-                  error_suffix_1 = 14
-                  error_depth = 2
                   let _yy_r252 = yy_action_0(_yy_value_0_0)
                   stack.depth -= 1
                   state = stack.values[stack.depth - 1]
@@ -665,24 +659,6 @@ pub fn empty(tokens : Array[(Token, Unit, Unit)], initial_pos? : Unit) -> Int ra
 }
 
 ///|
-fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
-  while stack.saved_prefix > stack.depth {
-    stack.saved_prefix -= 1
-    if stack.checkpoint - stack.saved_prefix - 1 == stack.undo.length() {
-      stack.undo.push(stack.values[stack.saved_prefix])
-    } else {
-      stack.undo[stack.checkpoint - stack.saved_prefix - 1] = stack.values[stack.saved_prefix]
-    }
-  }
-  if stack.depth == stack.values.length() {
-    stack.values.push(state)
-  } else {
-    stack.values[stack.depth] = state
-  }
-  stack.depth += 1
-}
-
-///|
 fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
   if stack.depth == stack.values.length() {
     stack.values.push(state)
@@ -695,20 +671,13 @@ fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
 ///|
 fn yy_stack_checkpoint(stack : YYStateStack) -> Unit {
   stack.checkpoint = stack.depth
-  stack.saved_prefix = stack.depth
 }
 
 ///|
 fn yy_stack_snapshot(stack : YYStateStack) -> @list.List[Int] {
   let mut states : @list.List[Int] = @list.List([])
   for i = 0; i < stack.checkpoint; i = i + 1 {
-    states = @list.cons(
-      if i < stack.saved_prefix {
-        stack.values[i]
-      } else {
-        stack.undo[stack.checkpoint - i - 1]
-      }, states
-    )
+    states = @list.cons(stack.values[i], states)
   }
   states
 }

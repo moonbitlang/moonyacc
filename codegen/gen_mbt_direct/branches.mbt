@@ -30,6 +30,7 @@ fn Emitter::inline_body(
   checkpoint : @direct_ir.CheckpointFact,
 ) -> @mbt_ast.Block {
   let block : @direct_ir.Block = {
+    specialize_state: false,
     hint: NoHint,
     origin: Helper,
     parameters: [],

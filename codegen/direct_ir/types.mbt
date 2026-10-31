@@ -145,6 +145,8 @@ pub(all) enum InlineHint {
 pub(all) struct Block {
   origin : Origin
   hint : InlineHint
+  // Producer policy, like Menhir's SpecAllowed. Never an entry-state proof.
+  specialize_state : Bool
   parameters : Array[Register]
   lookahead : Lookahead
   instructions : Array[Instruction]

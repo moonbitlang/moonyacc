@@ -262,8 +262,6 @@ priv struct YYStateStack {
   values : Array[Int]
   mut depth : Int
   mut checkpoint : Int
-  mut saved_prefix : Int
-  undo : Array[Int]
 }
 
 ///|
@@ -275,7 +273,7 @@ fn yy_parse(
   let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut last_pos = initial_position
   let stack : YYStateStack = YYStateStack::{
-    values: [initial_state], depth: 1, checkpoint: 1, saved_prefix: 1, undo: []
+    values: [initial_state], depth: 1, checkpoint: 1
   }
   let mut state : Int = initial_state
   let _yy_stack_0 : Array[Int] = []
@@ -453,7 +451,6 @@ fn yy_parse(
                                     _yy_token_ready = false
                                     _yy_token_start = 0
                                     _yy_token_end = 0
-                                    yy_stack_checkpoint(stack)
                                     error_suffix_0 = 20
                                     error_depth = 1
                                     let _yy_r416 = yy_action_4(_yy_value_2_0)
@@ -555,7 +552,7 @@ fn yy_parse(
                                             _yy_stack_0[_yy_depth_0] = _yy_position_0
                                           }
                                           _yy_depth_0 += 1
-                                          yy_stack_push(stack, 19)
+                                          yy_stack_push_unprotected(stack, 19)
                                           state = 19
                                           break _yy_scope_14~
                                         })
@@ -619,7 +616,7 @@ fn yy_parse(
                                         _yy_stack_0[_yy_depth_0] = _yy_position_0
                                       }
                                       _yy_depth_0 += 1
-                                      yy_stack_push(stack, 15)
+                                      yy_stack_push_unprotected(stack, 15)
                                       state = 15
                                       break _yy_scope_13~
                                     })
@@ -638,7 +635,7 @@ fn yy_parse(
                                         _yy_stack_0[_yy_depth_0] = _yy_position_0
                                       }
                                       _yy_depth_0 += 1
-                                      yy_stack_push(stack, 15)
+                                      yy_stack_push_unprotected(stack, 15)
                                       state = 15
                                       break _yy_scope_14~
                                     })
@@ -699,7 +696,7 @@ fn yy_parse(
                                       _yy_stack_0[_yy_depth_0] = _yy_position_0
                                     }
                                     _yy_depth_0 += 1
-                                    yy_stack_push(stack, 13)
+                                    yy_stack_push_unprotected(stack, 13)
                                     state = 13
                                     break _yy_scope_13~
                                   })
@@ -718,7 +715,7 @@ fn yy_parse(
                                       _yy_stack_0[_yy_depth_0] = _yy_position_0
                                     }
                                     _yy_depth_0 += 1
-                                    yy_stack_push(stack, 13)
+                                    yy_stack_push_unprotected(stack, 13)
                                     state = 13
                                     break _yy_scope_14~
                                   })
@@ -737,7 +734,7 @@ fn yy_parse(
                                       _yy_stack_0[_yy_depth_0] = _yy_position_0
                                     }
                                     _yy_depth_0 += 1
-                                    yy_stack_push(stack, 13)
+                                    yy_stack_push_unprotected(stack, 13)
                                     state = 13
                                     break _yy_scope_15~
                                   })
@@ -807,7 +804,7 @@ fn yy_parse(
                                   _yy_stack_0[_yy_depth_0] = _yy_position_0
                                 }
                                 _yy_depth_0 += 1
-                                yy_stack_push(stack, 22)
+                                yy_stack_push_unprotected(stack, 22)
                                 state = 22
                                 break _yy_scope_13~
                               })
@@ -826,7 +823,7 @@ fn yy_parse(
                                   _yy_stack_0[_yy_depth_0] = _yy_position_0
                                 }
                                 _yy_depth_0 += 1
-                                yy_stack_push(stack, 22)
+                                yy_stack_push_unprotected(stack, 22)
                                 state = 22
                                 break _yy_scope_14~
                               })
@@ -845,7 +842,7 @@ fn yy_parse(
                                   _yy_stack_0[_yy_depth_0] = _yy_position_0
                                 }
                                 _yy_depth_0 += 1
-                                yy_stack_push(stack, 22)
+                                yy_stack_push_unprotected(stack, 22)
                                 state = 22
                                 break _yy_scope_15~
                               })
@@ -857,10 +854,6 @@ fn yy_parse(
                                 _yy_token_ready = false
                                 _yy_token_start = 0
                                 _yy_token_end = 0
-                                yy_stack_checkpoint(stack)
-                                error_suffix_0 = 22
-                                error_suffix_1 = 23
-                                error_depth = 2
                                 let _yy_r429 = yy_action_0(
                                   _yy_value_2_0, _yy_position_0, _yy_position_1
                                 )
@@ -1150,7 +1143,6 @@ fn yy_parse(
               _yy_token_ready = false
               _yy_token_start = 0
               _yy_token_end = 0
-              yy_stack_checkpoint(stack)
               error_suffix_0 = 4
               error_depth = 1
               let _yy_r311 = if stack.depth == 1 {
@@ -1173,7 +1165,6 @@ fn yy_parse(
             _yy_token_ready = false
             _yy_token_start = 0
             _yy_token_end = 0
-            yy_stack_checkpoint(stack)
             error_suffix_0 = 2
             error_depth = 1
             ({
@@ -1202,7 +1193,6 @@ fn yy_parse(
                   _yy_token_ready = false
                   _yy_token_start = 0
                   _yy_token_end = 0
-                  yy_stack_checkpoint(stack)
                   error_suffix_0 = 2
                   error_suffix_1 = 3
                   error_depth = 2
@@ -1267,10 +1257,6 @@ fn yy_parse(
               _yy_token_ready = false
               _yy_token_start = 0
               _yy_token_end = 0
-              yy_stack_checkpoint(stack)
-              error_suffix_0 = 8
-              error_suffix_1 = 9
-              error_depth = 2
               let _yy_r341 = yy_action_9(
                 _yy_value_0_0.unwrap(), _yy_position_0, _yy_position_1
               )
@@ -1314,10 +1300,6 @@ fn yy_parse(
             _yy_token_ready = false
             _yy_token_start = 0
             _yy_token_end = 0
-            yy_stack_checkpoint(stack)
-            error_suffix_0 = 5
-            error_suffix_1 = 6
-            error_depth = 2
             let _yy_r325 = yy_action_11(
               _yy_value_0_0.unwrap(), _yy_position_0, _yy_position_1
             )
@@ -1371,24 +1353,6 @@ pub fn inline_positions(tokens : Array[(Token, Int, Int)], initial_pos? : Int) -
 }
 
 ///|
-fn yy_stack_push(stack : YYStateStack, state : Int) -> Unit {
-  while stack.saved_prefix > stack.depth {
-    stack.saved_prefix -= 1
-    if stack.checkpoint - stack.saved_prefix - 1 == stack.undo.length() {
-      stack.undo.push(stack.values[stack.saved_prefix])
-    } else {
-      stack.undo[stack.checkpoint - stack.saved_prefix - 1] = stack.values[stack.saved_prefix]
-    }
-  }
-  if stack.depth == stack.values.length() {
-    stack.values.push(state)
-  } else {
-    stack.values[stack.depth] = state
-  }
-  stack.depth += 1
-}
-
-///|
 fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
   if stack.depth == stack.values.length() {
     stack.values.push(state)
@@ -1401,20 +1365,13 @@ fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
 ///|
 fn yy_stack_checkpoint(stack : YYStateStack) -> Unit {
   stack.checkpoint = stack.depth
-  stack.saved_prefix = stack.depth
 }
 
 ///|
 fn yy_stack_snapshot(stack : YYStateStack) -> @list.List[Int] {
   let mut states : @list.List[Int] = @list.List([])
   for i = 0; i < stack.checkpoint; i = i + 1 {
-    states = @list.cons(
-      if i < stack.saved_prefix {
-        stack.values[i]
-      } else {
-        stack.undo[stack.checkpoint - i - 1]
-      }, states
-    )
+    states = @list.cons(stack.values[i], states)
   }
   states
 }

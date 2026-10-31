@@ -280,8 +280,6 @@ priv struct YYStateStack {
   values : Array[Int]
   mut depth : Int
   mut checkpoint : Int
-  mut saved_prefix : Int
-  undo : Array[Int]
 }
 
 ///|
@@ -293,7 +291,7 @@ fn yy_parse(
   let initial_position = initial_pos.unwrap_or_else(() => tokens[0].1)
   let mut last_pos = initial_position
   let stack : YYStateStack = YYStateStack::{
-    values: [initial_state], depth: 1, checkpoint: 1, saved_prefix: 1, undo: []
+    values: [initial_state], depth: 1, checkpoint: 1
   }
   let mut state : Int = initial_state
   let _yy_stack_0 : Array[Int] = []
@@ -411,7 +409,6 @@ fn yy_parse(
                       _yy_token_token = None
                       _yy_token_start = None
                       _yy_token_end = None
-                      yy_stack_checkpoint(stack)
                       error_suffix_0 = 20
                       error_depth = 1
                       let _yy_r483 = yy_action_8(_yy_r315)
@@ -439,10 +436,6 @@ fn yy_parse(
                             _yy_token_token = None
                             _yy_token_start = None
                             _yy_token_end = None
-                            yy_stack_checkpoint(stack)
-                            error_suffix_0 = 21
-                            error_suffix_1 = 22
-                            error_depth = 2
                             let _yy_r641 = yy_action_7(_yy_r640)
                             let _yy_bind0 = _yy_r641
                             let _yy_r642 = _yy_bind0
@@ -668,10 +661,6 @@ fn yy_parse(
                                 _yy_token_token = None
                                 _yy_token_start = None
                                 _yy_token_end = None
-                                yy_stack_checkpoint(stack)
-                                error_suffix_0 = 33
-                                error_suffix_1 = 34
-                                error_depth = 2
                                 let _yy_r666 = _yy_stack_1[_yy_depth_1 - 1]
                                 let _yy_r667 = _yy_stack_0[_yy_depth_0 - 1]
                                 let _yy_r668 = yy_action_0(
@@ -736,10 +725,6 @@ fn yy_parse(
             _yy_token_token = None
             _yy_token_start = None
             _yy_token_end = None
-            yy_stack_checkpoint(stack)
-            error_suffix_0 = 15
-            error_suffix_1 = 16
-            error_depth = 2
             let _yy_r463 = yy_action_10(_yy_value_0_0)
             let _yy_bind0 = _yy_r463
             let _yy_r639 = _yy_bind0
@@ -775,7 +760,6 @@ fn yy_parse(
           _yy_token_token = None
           _yy_token_start = None
           _yy_token_end = None
-          yy_stack_checkpoint(stack)
           error_suffix_0 = 2
           error_depth = 1
           ({
@@ -800,7 +784,6 @@ fn yy_parse(
                 _yy_token_token = None
                 _yy_token_start = None
                 _yy_token_end = None
-                yy_stack_checkpoint(stack)
                 error_suffix_0 = 2
                 error_suffix_1 = 3
                 error_depth = 2
@@ -899,7 +882,6 @@ fn yy_parse(
                                   _yy_token_token = None
                                   _yy_token_start = None
                                   _yy_token_end = None
-                                  yy_stack_checkpoint(stack)
                                   error_suffix_0 = 7
                                   error_suffix_1 = 8
                                   error_depth = 2
@@ -966,10 +948,6 @@ fn yy_parse(
                                               _yy_token_token = None
                                               _yy_token_start = None
                                               _yy_token_end = None
-                                              yy_stack_checkpoint(stack)
-                                              error_suffix_0 = 11
-                                              error_suffix_1 = 12
-                                              error_depth = 2
                                               let _yy_r597 = _yy_stack_0[_yy_depth_0 -
                                                 3]
                                               let _yy_r598 = _yy_stack_0[_yy_depth_0 -
@@ -1100,20 +1078,13 @@ fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
 ///|
 fn yy_stack_checkpoint(stack : YYStateStack) -> Unit {
   stack.checkpoint = stack.depth
-  stack.saved_prefix = stack.depth
 }
 
 ///|
 fn yy_stack_snapshot(stack : YYStateStack) -> @list.List[Int] {
   let mut states : @list.List[Int] = @list.List([])
   for i = 0; i < stack.checkpoint; i = i + 1 {
-    states = @list.cons(
-      if i < stack.saved_prefix {
-        stack.values[i]
-      } else {
-        stack.undo[stack.checkpoint - i - 1]
-      }, states
-    )
+    states = @list.cons(stack.values[i], states)
   }
   states
 }

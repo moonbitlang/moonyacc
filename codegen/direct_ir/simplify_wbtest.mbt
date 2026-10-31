@@ -5,6 +5,7 @@ fn forwarding(
   args : Array[Value],
 ) -> Block {
   {
+    specialize_state: false,
     hint: NoHint,
     origin: Helper,
     parameters,
