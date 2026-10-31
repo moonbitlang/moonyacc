@@ -43,8 +43,7 @@ test "stack rewrite checker forwards known values and positions across an action
       ReadPreviousPosition(0, before),
       Action(
         0,
-        [{ value: Reg(read), start: Reg(read_start), end: Reg(read_end), }],
-        Reg(before),
+        [Reg(read), Reg(read_start), Reg(read_end), Reg(before)],
         result,
       ),
       Pop(cell(1), [None, None, None, None]),
@@ -53,27 +52,13 @@ test "stack rewrite checker forwards known values and positions across an action
   )
   let rewritten = check_block(
     parameters,
-    [
-      Action(
-        0,
-        [{ value: Reg(value), start: Reg(start), end: Reg(end), }],
-        Reg(end),
-        result,
-      ),
-    ],
+    [Action(0, [Reg(value), Reg(start), Reg(end), Reg(end)], result)],
     [Reg(result)],
   )
   assert_true(check_stack_rewrite(original, rewritten))
   let wrong_position = check_block(
     parameters,
-    [
-      Action(
-        0,
-        [{ value: Reg(value), start: Reg(start), end: Reg(end), }],
-        Reg(start),
-        result,
-      ),
-    ],
+    [Action(0, [Reg(value), Reg(start), Reg(end), Reg(start)], result)],
     [Reg(result)],
   )
   assert_false(check_stack_rewrite(original, wrong_position))
@@ -139,9 +124,9 @@ test "stack rewrite checker retains action order arguments and lexer timing" {
   let input_value = check_int(5)
   let input_start = check_reg(6, Position)
   let input_end = check_reg(7, Position)
-  let args = [{ value: Reg(value), start: Reg(pos), end: Reg(pos), }]
-  let first : Instruction = Action(0, args, Reg(pos), result)
-  let second : Instruction = Action(1, [], Reg(pos), unit)
+  let args = [Reg(value), Reg(pos), Reg(pos), Reg(pos)]
+  let first : Instruction = Action(0, args, result)
+  let second : Instruction = Action(1, [Reg(pos)], unit)
   let pattern = TokenPattern::BindToken(1, input_value, input_start, input_end)
   let selected : Body = {
     instructions: [ConsumeLookahead],
@@ -159,12 +144,7 @@ test "stack rewrite checker retains action order arguments and lexer timing" {
       [first, EnsureLookahead],
       [EnsureLookahead, first, second],
       [
-        Action(
-          0,
-          [{ value: Reg(other), start: Reg(pos), end: Reg(pos), }],
-          Reg(pos),
-          result,
-        ),
+        Action(0, [Reg(other), Reg(pos), Reg(pos), Reg(pos)], result),
         second,
         EnsureLookahead,
       ],

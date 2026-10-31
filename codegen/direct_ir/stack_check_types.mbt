@@ -37,7 +37,7 @@ priv enum StackCheckEvent {
   CheckPeek(Int32, Cell)
   CheckPop(Int32, Cell)
   CheckPreviousPosition(Int32)
-  CallAction(Int32, Array[StackCheckValue], StackCheckValue, Register)
+  CallAction(Int32, Array[StackCheckValue], Register)
 } derive(Eq)
 
 ///|

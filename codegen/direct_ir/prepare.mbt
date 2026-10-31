@@ -20,10 +20,16 @@ pub fn Program::prepare(
   let program = match optimization_level {
     O0 | O1 | O2 => {
       let program = self.simplify().inline_blocks(cautious=true)
+      let program = program.commute_pushes(knowledge).prune_control(knowledge)
+      // Reachability first narrows demand; dead bindings then expose token
+      // cases that no longer need a match. Final inlining sees the pruned CFG.
       let program = program
-        .commute_pushes(knowledge)
+        .prune_registers(knowledge, positions~)
+        .prune_control(knowledge)
+        .stop_earlier(knowledge)
         .inline_blocks(cautious=false)
-      program.prune_control(knowledge).discard_unobserved_snapshots()
+        .discard_unobserved_snapshots()
+      program.prune_registers(knowledge, positions~)
     }
   }
   let flow = program.stack_flow(knowledge)

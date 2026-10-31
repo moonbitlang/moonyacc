@@ -107,12 +107,7 @@ test "commuting partial cells preserves extraction consumption and action order"
       ConsumeLookahead,
       SaveErrorSnapshot([]),
       Peek(0, partial, [Some(read), None]),
-      Action(
-        0,
-        [{ value: Reg(read), start: Reg(sp), end: Reg(ep), }],
-        Reg(sp),
-        result,
-      ),
+      Action(0, [Reg(read), Reg(sp), Reg(ep), Reg(sp)], result),
       Pop(partial, [None, None]),
     ],
     terminator: Jump({ target: 0, arguments: [Reg(result)], }),

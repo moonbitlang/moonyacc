@@ -1,19 +1,12 @@
 ///|
-fn ActionArgument::map_values(
-  self : ActionArgument,
-  f : (Value) -> Value,
-) -> ActionArgument {
-  { value: f(self.value), start: f(self.start), end: f(self.end), }
-}
-
-///|
 fn Instruction::map_values(
   self : Instruction,
   operand : (Value) -> Value,
   definition : (Register) -> Register,
 ) -> Instruction {
   match self {
-    EnsureLookahead | LoadLookahead | ConsumeLookahead => self
+    EnsureLookahead | LoadLookahead | RefineLookahead(_) | ConsumeLookahead =>
+      self
     SaveErrorSnapshot(suffix) => SaveErrorSnapshot(suffix.map(operand))
     ReadPreviousPosition(depth, reg) =>
       ReadPreviousPosition(depth, definition(reg))
@@ -22,13 +15,8 @@ fn Instruction::map_values(
     Pop(cell, regs) => Pop(cell, regs.map(r => r.map(definition)))
     Peek(depth, cell, regs) =>
       Peek(depth, cell, regs.map(r => r.map(definition)))
-    Action(id, args, before, result) =>
-      Action(
-        id,
-        args.map(a => a.map_values(operand)),
-        operand(before),
-        definition(result),
-      )
+    Action(id, inputs, result) =>
+      Action(id, inputs.map(operand), definition(result))
   }
 }
 

@@ -37,13 +37,6 @@ pub(all) struct Cell {
 } derive(Eq)
 
 ///|
-pub(all) struct ActionArgument {
-  value : Value
-  start : Value
-  end : Value
-} derive(Eq)
-
-///|
 pub(all) enum Token {
   Terminal(Int32)
   EndOfInput
@@ -64,6 +57,9 @@ pub(all) enum Instruction {
   EnsureLookahead
   // Unconditional lexer read, requiring an empty cache.
   LoadLookahead
+  // A data-flow proof, not a token read. StackFlow must independently establish
+  // this singleton domain before the local validator may use its identity.
+  RefineLookahead(Token)
   ConsumeLookahead
   // Snapshot the physical stack plus a virtual suffix of destination states,
   // ordered bottom to top. Values are captured now, not read on the error path.
@@ -74,7 +70,9 @@ pub(all) enum Instruction {
   Push(Cell, Array[Value])
   Pop(Cell, Array[Register?])
   Peek(Int32, Cell, Array[Register?])
-  Action(Int32, Array[ActionArgument], Value, Register)
+  // Operands are ordered by ActionSignature.inputs, including only values
+  // actually read by the action. A dead result does not make the call pure.
+  Action(Int32, Array[Value], Register)
 } derive(Eq)
 
 ///|

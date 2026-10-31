@@ -4,8 +4,8 @@ pub suberror InvalidProgram {
 }
 
 ///|
-/// Check metadata, block interfaces and the lookahead protocol. This does not
-/// prove inter-block stack shapes.
+/// Check metadata, block interfaces and the local lookahead protocol.
+/// StackFlow separately proves stack shapes and data-flow token refinements.
 pub fn Program::validate(self : Program) -> Unit raise InvalidProgram {
   self.validate_metadata()
   let definitions : Map[Int32, Bool] = Map([])

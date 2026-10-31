@@ -6,7 +6,7 @@ priv struct RegisterSupply {
 ///|
 pub fn Instruction::definitions(self : Instruction) -> Array[Register] {
   match self {
-    ReadPreviousPosition(_, reg) | Action(_, _, _, reg) => [reg]
+    ReadPreviousPosition(_, reg) | Action(_, _, reg) => [reg]
     Bind(pairs) => pairs.map(p => p.0)
     Pop(_, regs) | Peek(_, _, regs) => regs.filter_map(r => r)
     _ => []

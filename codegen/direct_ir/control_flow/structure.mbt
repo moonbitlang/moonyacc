@@ -122,9 +122,34 @@ fn Structurer::sequence(
 }
 
 ///|
-pub fn plan(source : @direct_ir.Program) -> Plan raise InvalidControl {
+/// Partition using the target's generated-operation estimates. Costs are
+/// scheduling policy only: the independent CFG checker still validates edges.
+pub fn plan(
+  source : @direct_ir.Program,
+  costs~ : Array[Int32],
+) -> Plan raise InvalidControl {
+  require(costs.length() == source.blocks.length(), "block cost count mismatch")
+  require(costs.all(c => c >= 0), "negative block cost")
+  // Larger blocks already exceed the budget and remain indivisible. Capping
+  // their costs also bounds arithmetic while grouping arbitrarily large CFGs.
+  let costs = costs.map(c => Int32::min(c, REGION_COST + 1))
   let graph = Graph::new(source)
-  let groups = partition(source, graph)
+  build_plan(source, graph, partition(source, graph, costs))
+}
+
+///|
+/// A valid per-block plan for measuring target emission before partitioning.
+/// Every block is an entry, so all transfers can use the existing region ABI.
+pub fn isolate(source : @direct_ir.Program) -> Plan raise InvalidControl {
+  build_plan(source, Graph::new(source), source.blocks.mapi((i, _) => [i]))
+}
+
+///|
+fn build_plan(
+  source : @direct_ir.Program,
+  graph : Graph,
+  groups : Array[Array[Int32]],
+) -> Plan raise InvalidControl {
   let owner = Array::make(source.blocks.length(), -1)
   for region, nodes in groups {
     for node in nodes {

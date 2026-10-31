@@ -22,6 +22,14 @@ fn BlockValidator::instruction(
       )
       self.lookahead = Empty
     }
+    RefineLookahead(token) => {
+      self.program.checked_token(token)
+      self.check(
+        self.lookahead is Present || self.lookahead == On(token),
+        "token refinement requires compatible cached lookahead",
+      )
+      self.lookahead = On(token)
+    }
     SaveErrorSnapshot(suffix) =>
       for state in suffix {
         self.expect(state, State)
@@ -58,8 +66,7 @@ fn BlockValidator::instruction(
       self.check(depth >= 0, "negative stack depth")
       self.bind_cell(cell, bindings)
     }
-    Action(id, args, last_pos, result) =>
-      self.action(id, args, last_pos, result)
+    Action(id, inputs, result) => self.action(id, inputs, result)
   }
 }
 
@@ -93,23 +100,22 @@ fn BlockValidator::bind_token(
 fn BlockValidator::action(
   self : BlockValidator,
   id : Int32,
-  args : Array[ActionArgument],
-  last_pos : Value,
+  inputs : Array[Value],
   result : Register,
 ) -> Unit raise InvalidProgram {
   self.check(id >= 0 && id < self.program.actions.length(), "invalid action")
   let action = self.program.actions[id]
   self.check(action.callable, "cannot call an augmented start action")
-  self.check(args.length() == action.rhs.length(), "action arity mismatch")
-  for i, arg in args {
+  self.check(inputs.length() == action.inputs.length(), "action arity mismatch")
+  for i, input in inputs {
     self.expect(
-      arg.value,
-      Semantic(self.program.checked_symbol(action.rhs[i]).type_),
+      input,
+      match action.inputs[i] {
+        Value(_, type_) => Semantic(type_)
+        Position(_) => Position
+      },
     )
-    self.expect(arg.start, Position)
-    self.expect(arg.end, Position)
   }
-  self.expect(last_pos, Position)
   self.check(
     result.type_ == Semantic(self.program.checked_symbol(action.lhs).type_),
     "action result type mismatch",

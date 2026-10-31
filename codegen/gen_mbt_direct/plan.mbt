@@ -33,14 +33,29 @@ fn Emitter::new(
   support : @mbt_common.Context,
   input_mode : @codegen.InputMode,
 ) -> Emitter {
+  let isolated = @control_flow.isolate(prepared.program) catch {
+    InvalidControl(message) => abort(message)
+  }
+  let probe = Emitter::with_plan(prepared, meta, support, input_mode, isolated)
+  let control = @control_flow.plan(prepared.program, costs=probe.block_costs()) catch {
+    InvalidControl(message) => abort(message)
+  }
+  Emitter::with_plan(prepared, meta, support, input_mode, control)
+}
+
+///|
+fn Emitter::with_plan(
+  prepared : @direct_ir.PreparedProgram,
+  meta : @codegen.MetaProvider,
+  support : @mbt_common.Context,
+  input_mode : @codegen.InputMode,
+  control : @control_flow.Plan,
+) -> Emitter {
   let program = prepared.program
   let flow = prepared.flow
   let demand = prepared.demand
   let needs_initial_position = support.tracks_positions() &&
     flow.previous_initial.iter().any(id => demand.registers.contains(id))
-  let control = @control_flow.plan(program) catch {
-    InvalidControl(message) => abort(message)
-  }
   let has_stack = program.blocks.any(b => {
     b.all_instructions().any(i => i is (Push(_) | Pop(_)))
   })

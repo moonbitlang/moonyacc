@@ -6,7 +6,9 @@ import {
 }
 
 // Values
-pub fn plan(@direct_ir.Program) -> Plan raise InvalidControl
+pub fn isolate(@direct_ir.Program) -> Plan raise InvalidControl
+
+pub fn plan(@direct_ir.Program, costs~ : Array[Int32]) -> Plan raise InvalidControl
 
 // Errors
 pub suberror InvalidControl {

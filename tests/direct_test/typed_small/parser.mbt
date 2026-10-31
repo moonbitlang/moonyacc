@@ -105,8 +105,8 @@ fn yy_parse(
         error_depth = 1
         let _yy_r27 = yy_action_0(_yy_r16)
         let _yy_bind0 = _yy_r27
-        let _yy_r29 = _yy_bind0
-        return YYAccept_0(_yy_r29)
+        let _yy_r28 = _yy_bind0
+        return YYAccept_0(_yy_r28)
       })
     _ =>
       ({

@@ -20,19 +20,12 @@ pub suberror InvalidProgram {
 }
 
 // Types and methods
-pub(all) struct ActionArgument {
-  value : Value
-  start : Value
-  end : Value
-} derive(Eq)
-
 pub(all) struct ActionSignature {
   rhs : Array[Int32]
   lhs : Int32
   inputs : Array[@elab.ActionInput]
   callable : Bool
 }
-pub fn ActionSignature::operands(Self, Array[ActionArgument], Value) -> Array[Value]
 
 pub(all) struct Block {
   origin : Origin
@@ -112,6 +105,7 @@ pub(all) enum InlineHint {
 pub(all) enum Instruction {
   EnsureLookahead
   LoadLookahead
+  RefineLookahead(Token)
   ConsumeLookahead
   SaveErrorSnapshot(Array[Value])
   ReadPreviousPosition(Int32, Register)
@@ -119,7 +113,7 @@ pub(all) enum Instruction {
   Push(Cell, Array[Value])
   Pop(Cell, Array[Register?])
   Peek(Int32, Cell, Array[Register?])
-  Action(Int32, Array[ActionArgument], Value, Register)
+  Action(Int32, Array[Value], Register)
 } derive(Eq)
 pub fn Instruction::definitions(Self) -> Array[Register]
 
@@ -158,8 +152,10 @@ pub fn Program::exhaustive_tokens(Self, Array[TokenPattern]) -> Bool
 pub fn Program::inline_blocks(Self, cautious~ : Bool) -> Self raise InvalidProgram
 pub fn Program::prepare(Self, StackKnowledge, positions~ : Bool, optimization_level? : @codegen.OptimizationLevel) -> PreparedProgram raise InvalidProgram
 pub fn Program::prune_control(Self, StackKnowledge) -> Self raise InvalidProgram
+pub fn Program::prune_registers(Self, StackKnowledge, positions~ : Bool) -> Self raise InvalidProgram
 pub fn Program::simplify(Self) -> Self
 pub fn Program::stack_flow(Self, StackKnowledge) -> StackFlow raise InvalidProgram
+pub fn Program::stop_earlier(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::storage_demand(Self, StackFlow, positions~ : Bool) -> StorageDemand
 pub fn Program::validate(Self) -> Unit raise InvalidProgram
 

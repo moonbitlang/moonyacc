@@ -1,4 +1,28 @@
 ///|
+priv struct RhsValues {
+  value : Value
+  start : Value
+  end : Value
+}
+
+///|
+fn ActionSignature::operands(
+  self : ActionSignature,
+  args : Array[RhsValues],
+  before : Value,
+) -> Array[Value] {
+  self.inputs.map(input => {
+    match input {
+      Value(index, _) => args[index].value
+      Position(BeforeRhs) => before
+      Position(StartOf(index)) => args[index].start
+      Position(EndOf(index)) => args[index].end
+      Position(FirstNonEmpty(_)) => abort("non-atomic action dependency")
+    }
+  })
+}
+
+///|
 fn Lowering::lower_reductions(self : Lowering) -> Unit {
   for production, label in self.reduce_labels {
     self.program.blocks[label] = self.reduction_block(production)
@@ -10,7 +34,7 @@ fn Lowering::read_rhs(
   self : Lowering,
   rhs : Array[Int32],
   instructions : Array[Instruction],
-) -> Array[ActionArgument] {
+) -> Array[RhsValues] {
   let args = []
   for i, symbol in rhs {
     let value = self.fresh(Semantic(self.program.symbols[symbol].type_))
@@ -24,11 +48,7 @@ fn Lowering::read_rhs(
         Some(ep),
       ]),
     )
-    args.push(ActionArgument::{
-      value: Reg(value),
-      start: Reg(sp),
-      end: Reg(ep),
-    })
+    args.push(RhsValues::{ value: Reg(value), start: Reg(sp), end: Reg(ep), })
   }
   args
 }
@@ -41,7 +61,9 @@ fn Lowering::reduction_block(self : Lowering, production : Int32) -> Block {
   let result = self.fresh(Semantic(self.program.symbols[action.lhs].type_))
   let last_pos = self.fresh(Position)
   instructions.push(ReadPreviousPosition(action.rhs.length(), last_pos))
-  instructions.push(Action(production, args, Reg(last_pos), result))
+  instructions.push(
+    Action(production, action.operands(args, Reg(last_pos)), result),
+  )
   // Actions run before any stack mutation. Keep this order visible here.
   for i = action.rhs.length() - 1; i >= 0; i = i - 1 {
     instructions.push(Pop(cell(action.rhs[i]), [None, None, None, None]))

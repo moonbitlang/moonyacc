@@ -77,15 +77,6 @@ priv enum YYResult {
 }
 
 ///|
-priv struct YYStateStack {
-  values : Array[Int]
-  mut depth : Int
-  mut checkpoint : Int
-  mut saved_prefix : Int
-  undo : Array[Int]
-}
-
-///|
 fn yy_input_json(token : Token) -> Json {
   match token {
     VALUE(value) =>
@@ -112,9 +103,6 @@ fn yy_parse(
   initial_state : Int
 ) -> YYResult raise ParseError {
   ignore(start_pos)
-  let stack : YYStateStack = YYStateStack::{
-    values: [initial_state], depth: 1, checkpoint: 1, saved_prefix: 1, undo: []
-  }
   let mut error_depth : Int = 0
   let mut error_suffix_0 : Int = 0
   let mut error_suffix_1 : Int = 0
@@ -138,12 +126,11 @@ fn yy_parse(
           let _yy_r35 = _yy_token_value
           _yy_token_token = None
           _yy_token_value = Json::null()
-          yy_stack_checkpoint(stack)
           error_suffix_0 = 2
           error_depth = 1
           let _yy_r52 = yy_action_1(_yy_r35)
           let _yy_bind0 = _yy_r52
-          let _yy_r68 = _yy_bind0
+          let _yy_r67 = _yy_bind0
           ({
             ()
             let (token, _, _) = read_token()
@@ -154,22 +141,20 @@ fn yy_parse(
             Some(EOF) =>
               ({
                 ()
-                let _yy_r71 = _yy_token_value
+                let _yy_r68 = _yy_token_value
                 _yy_token_token = None
                 _yy_token_value = Json::null()
-                yy_stack_checkpoint(stack)
                 error_suffix_0 = 3
                 error_suffix_1 = 4
                 error_depth = 2
-                let _yy_r75 = yy_action_0(_yy_r68, _yy_r71)
-                let _yy_bind0 = _yy_r75
-                let _yy_r77 = _yy_bind0
-                return YYAccept_0(_yy_r77)
+                let _yy_r71 = yy_action_0(_yy_r67, _yy_r68)
+                let _yy_bind0 = _yy_r71
+                let _yy_r72 = _yy_bind0
+                return YYAccept_0(_yy_r72)
               })
             _ =>
               ({
                 ()
-                yy_stack_push_unprotected(stack, 3)
                 break _yy_scope_1~
               })
           }
@@ -184,7 +169,7 @@ fn yy_parse(
   _yy_error(
     ({
       ()
-      let mut _yy_error_states = yy_stack_snapshot(stack)
+      let mut _yy_error_states = @list.List([initial_state])
       if error_depth > 0 {
         _yy_error_states = @list.cons(error_suffix_0, _yy_error_states)
       }
@@ -202,37 +187,6 @@ pub fn start(read_token : (() -> (Token, Unit, Unit)), start_pos : Unit) -> Json
   match yy_parse(read_token, start_pos, 0, 0) {
     YYAccept_0(result) => result
   }
-}
-
-///|
-fn yy_stack_push_unprotected(stack : YYStateStack, state : Int) -> Unit {
-  if stack.depth == stack.values.length() {
-    stack.values.push(state)
-  } else {
-    stack.values[stack.depth] = state
-  }
-  stack.depth += 1
-}
-
-///|
-fn yy_stack_checkpoint(stack : YYStateStack) -> Unit {
-  stack.checkpoint = stack.depth
-  stack.saved_prefix = stack.depth
-}
-
-///|
-fn yy_stack_snapshot(stack : YYStateStack) -> @list.List[Int] {
-  let mut states : @list.List[Int] = @list.List([])
-  for i = 0; i < stack.checkpoint; i = i + 1 {
-    states = @list.cons(
-      if i < stack.saved_prefix {
-        stack.values[i]
-      } else {
-        stack.undo[stack.checkpoint - i - 1]
-      }, states
-    )
-  }
-  states
 }
 
 ///|

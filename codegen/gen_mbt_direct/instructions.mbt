@@ -7,6 +7,7 @@ fn Emitter::instruction(
   match instruction {
     EnsureLookahead => [self.read_lookahead()]
     LoadLookahead => [self.read_lookahead(ready=false)]
+    RefineLookahead(_) => []
     ConsumeLookahead => self.consume_lookahead()
     SaveErrorSnapshot(suffix) => self.save_snapshot(suffix)
     ReadPreviousPosition(depth, reg) =>
@@ -33,8 +34,7 @@ fn Emitter::instruction(
       statements
     }
     Peek(depth, cell, registers) => self.bindings(depth, cell, registers)
-    Action(id, args, last_pos, result) =>
-      self.action_binding(id, args, last_pos, result)
+    Action(id, inputs, result) => self.action_binding(id, inputs, result)
   }
 }
 

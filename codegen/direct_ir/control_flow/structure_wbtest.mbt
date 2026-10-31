@@ -1,4 +1,9 @@
 ///|
+fn graph_plan(source : @direct_ir.Program) -> Plan raise InvalidControl {
+  plan(source, costs=Array::make(source.blocks.length(), 1))
+}
+
+///|
 fn graph_program(
   edges : Array[Array[Int32]],
   roots : Array[Int32],
@@ -70,7 +75,7 @@ test "all three-node CFGs preserve every edge with single and multiple entries" 
     for roots in [[0], [0, 1, 2]] {
       let source = graph_program(edges, roots)
       source.validate()
-      plan(source).validate() catch {
+      graph_plan(source).validate() catch {
         InvalidControl(message) =>
           fail("graph \{bits}, \{roots.length()} roots: \{message}")
       }
@@ -80,16 +85,16 @@ test "all three-node CFGs preserve every edge with single and multiple entries" 
 
 ///|
 test "natural nested loops and irreducible components use different control forms" {
-  let nested = plan(graph_program([[1, 4], [2], [1, 3], [0], []], [0]))
+  let nested = graph_plan(graph_program([[1, 4], [2], [1, 3], [0], []], [0]))
   assert_eq(nested.regions.length(), 1)
   assert_eq(loop_counts(nested.regions[0].control), (2, 0))
-  let irreducible = plan(graph_program([[1, 2], [2, 3], [1, 3], []], [0]))
+  let irreducible = graph_plan(graph_program([[1, 2], [2, 3], [1, 3], []], [0]))
   assert_eq(loop_counts(irreducible.regions[0].control), (0, 1))
 }
 
 ///|
 test "the control checker rejects a well-scoped break to the wrong successor" {
-  let original = plan(graph_program([[1, 2], [3], [3], []], [0]))
+  let original = graph_plan(graph_program([[1, 2], [3], [3], []], [0]))
   fn corrupt(control : Control) -> Control {
     match control {
       Run(0, routes) => {
@@ -120,10 +125,55 @@ test "the control checker rejects a well-scoped break to the wrong successor" {
 ///|
 test "partition budgets retain cross-region entry interfaces on a long cycle" {
   let source = graph_program(Array::makei(150, i => [(i + 1) % 150]), [0, 75])
-  let result = plan(source)
+  let result = graph_plan(source)
   assert_true(result.regions.length() > 1)
   for region in result.regions {
     assert_true(region.members.length() <= REGION_NODES)
   }
   result.validate()
+}
+
+///|
+test "partition uses target costs and retains indivisible oversized blocks" {
+  let small = graph_program([[1], [2], []], [0])
+  // A complete small parser needs no inter-region ABI, even when its whole
+  // body is larger than the inlining budget used for regional helpers.
+  assert_eq(plan(small, costs=[REGION_COST, 1, 2147483647]).regions.length(), 1)
+  let source = graph_program(
+    Array::makei(REGION_NODES + 1, i => {
+      if i < REGION_NODES {
+        [i + 1]
+      } else {
+        []
+      }
+    }),
+    [0],
+  )
+  assert_eq(
+    plan(source, costs=Array::make(source.blocks.length(), 0)).regions.length(),
+    2,
+  )
+  let costs = Array::make(source.blocks.length(), REGION_COST)
+  costs[0] = 2147483647
+  let weighted = plan(source, costs~)
+  assert_eq(weighted.regions.length(), source.blocks.length())
+  weighted.validate()
+  let isolated = isolate(source)
+  assert_eq(isolated.regions.length(), source.blocks.length())
+  for label, region in isolated.regions {
+    assert_true(region.members == [label])
+    assert_eq(isolated.address(label), label)
+  }
+  let invalid = Array::make(source.blocks.length(), 0)
+  invalid[0] = -1
+  for costs in [[0], invalid] {
+    assert_true(
+      try {
+        ignore(plan(source, costs~))
+        false
+      } catch {
+        InvalidControl(_) => true
+      },
+    )
+  }
 }

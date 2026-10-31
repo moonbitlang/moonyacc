@@ -55,7 +55,7 @@ test "cache contracts carry empty and present facts through joins and loops" {
   assert_true(optimized.blocks[1].lookahead is On(Terminal(1)))
   assert_true(optimized.blocks[2].lookahead is Empty)
   assert_true(optimized.blocks[2].instructions is [LoadLookahead])
-  assert_true(optimized.blocks[3].lookahead is Present)
+  assert_true(optimized.blocks[3].lookahead is On(Terminal(1)))
   assert_true(optimized.blocks[3].instructions.is_empty())
   ignore(optimized.stack_flow(cache_knowledge()))
   // A local declaration is not a proof. Invalid claims must be rejected even
@@ -100,4 +100,48 @@ test "a consumed token and cached EOF require a conditional read at their join" 
   let entry = optimized.stack_flow(cache_knowledge()).entries[1].unwrap()
   assert_true(entry.empty_token)
   assert_true(entry.tokens.contains(EndOfInput))
+}
+
+///|
+test "singleton token proofs survive case removal and reject unsupported refinements" {
+  let block = check_block([], [], [])
+  let base = fixture([block])
+  let program = {
+    ..base,
+    terminal_count: 0,
+    symbols: [base.symbols[0]],
+    blocks: [
+      { ..block, instructions: [EnsureLookahead], terminator: Jump(edge(1)), },
+      {
+        ..block,
+        lookahead: Present,
+        terminator: CaseToken(
+          [(Tokens([EndOfInput]), { instructions: [], terminator: Stop, })],
+          { instructions: [], terminator: Unreachable, },
+        ),
+      },
+    ],
+  }
+  let after = program.prune_control(cache_knowledge())
+  assert_true(
+    after.blocks[0].instructions is [LoadLookahead, RefineLookahead(EndOfInput)],
+  )
+  assert_true(after.blocks[1].terminator is Stop)
+  ignore(after.stack_flow(cache_knowledge()))
+  let invalid = fixture([
+    {
+      ..block,
+      instructions: [EnsureLookahead, RefineLookahead(Terminal(1))],
+      terminator: Stop,
+    },
+  ])
+  invalid.validate()
+  assert_true(
+    try {
+      ignore(invalid.stack_flow(cache_knowledge()))
+      false
+    } catch {
+      InvalidProgram(_) => true
+    },
+  )
 }

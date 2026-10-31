@@ -20,8 +20,11 @@ fn StackFlowPass::prune(
   let instructions = []
   let mut lookahead = lookahead
   for instruction in body.instructions {
-    let redundant = instruction is EnsureLookahead &&
-      lookahead is (Present | On(_))
+    let redundant = match instruction {
+      EnsureLookahead => lookahead is (Present | On(_))
+      RefineLookahead(token) => lookahead == On(token)
+      _ => false
+    }
     let emitted = if instruction is EnsureLookahead && lookahead is Empty {
       Instruction::LoadLookahead
     } else {
@@ -33,11 +36,21 @@ fn StackFlowPass::prune(
           lookahead = Present
         }
       ConsumeLookahead => lookahead = Empty
+      RefineLookahead(token) => lookahead = On(token)
       _ => ()
     }
     self.instruction(instruction, machine)
     if !redundant {
       instructions.push(emitted)
+    }
+  }
+  // Removing a case must not erase the identity proof required by its body
+  // or successor contract. This also handles a lexer with only end-of-input.
+  if !machine.empty_token && machine.tokens.length() == 1 {
+    let token = machine.tokens.iter().next().unwrap()
+    if lookahead != On(token) {
+      instructions.push(RefineLookahead(token))
+      lookahead = On(token)
     }
   }
   let finish = match body.terminator {
@@ -70,9 +83,7 @@ fn StackFlowPass::prune(
           )
         }
       }
-      if lookahead is On(token) &&
-        live is [(Tokens([selected]), branch)] &&
-        selected == token {
+      if remaining.is_empty() && live is [(Tokens(_), branch)] {
         return append_body(instructions, branch)
       }
       // Unmatched tokens retain their cold failure path. A match covering
@@ -136,7 +147,8 @@ fn Program::cold_failure(self : Program, body : Body) -> Bool {
 
 ///|
 /// Remove branches excluded by the whole-CFG fixed point. A binding pattern
-/// remains even for a singleton domain: it defines branch-scoped values.
+/// remains even for a singleton domain while it defines branch-scoped values.
+/// Register pruning can turn a dead binding into a nonbinding pattern first.
 pub fn Program::prune_control(
   self : Program,
   knowledge : StackKnowledge,

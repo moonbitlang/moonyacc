@@ -88,17 +88,17 @@ fn yy_parse(
         0 =>
           ({
             ()
-            break _yy_scope_0~
+            break _yy_scope_1~
           })
         1 =>
           ({
             ()
-            break _yy_scope_1~
+            break _yy_scope_0~
           })
         _ => panic()
       }
     }
-    // run state 0
+    // run state 2
     ({
       ()
       if cursor < tokens.length() {
@@ -113,16 +113,13 @@ fn yy_parse(
         _yy_token_end = last_pos
       }
     })
-    match _yy_token_token {
-      None =>
-        ({
-          ()
-          ignore(yy_action_1())
-          return YYAccept_1(())
-        })
-    }
+    let _yy_r30 = initial_position
+    let _yy_r31 = yy_action_0(_yy_r30)
+    let _yy_bind0 = _yy_r31
+    let _yy_r33 = _yy_bind0
+    return YYAccept_0(_yy_r33)
   }
-  // run state 2
+  // run state 0
   ({
     ()
     if cursor < tokens.length() {
@@ -137,17 +134,8 @@ fn yy_parse(
       _yy_token_end = last_pos
     }
   })
-  match _yy_token_token {
-    None =>
-      ({
-        ()
-        let _yy_r30 = initial_position
-        let _yy_r31 = yy_action_0(_yy_r30)
-        let _yy_bind0 = _yy_r31
-        let _yy_r36 = _yy_bind0
-        return YYAccept_0(_yy_r36)
-      })
-  }
+  ignore(yy_action_1())
+  return YYAccept_1(())
 }
 
 ///|

@@ -129,17 +129,7 @@ test "storage demand follows action inputs across cells and block parameters" {
   let block = {
     ..check_block(
       [value, unused, sp, ep, before],
-      [
-        Action(
-          0,
-          [
-            { value: Reg(value), start: Reg(sp), end: Reg(ep), },
-            { value: Reg(unused), start: Reg(sp), end: Reg(ep), },
-          ],
-          Reg(before),
-          result,
-        ),
-      ],
+      [Action(0, [Reg(value), Reg(before)], result)],
       [],
     ),
     terminator: Return(0, Reg(result)),

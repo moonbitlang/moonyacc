@@ -33,27 +33,13 @@ fn StackCheck::bind_token(
 fn StackCheck::action(
   self : StackCheck,
   id : Int32,
-  args : Array[ActionArgument],
-  before : Value,
+  inputs : Array[Value],
   result : Register,
 ) -> Unit raise InvalidProgram {
-  let values = []
-  for arg in args {
-    let value = self.value(arg.value)
-    let start = self.value(arg.start)
-    let end = self.value(arg.end)
-    require(value.type_() is Semantic(_), "stack rewrite action value type")
-    require(
-      start.type_() == Position && end.type_() == Position,
-      "stack rewrite action positions",
-    )
-    values.append([value, start, end])
-  }
-  let before = self.value(before)
-  require(before.type_() == Position, "stack rewrite action before position")
+  let values = inputs.map(value => self.value(value))
   require(result.type_ is Semantic(_), "stack rewrite action result type")
   self.bind_value(result, SymOutput(result))
-  self.trace.push(CallAction(id, values, before, result))
+  self.trace.push(CallAction(id, values, result))
 }
 
 ///|
@@ -80,6 +66,7 @@ fn StackCheck::instruction(
 ) -> Unit raise InvalidProgram {
   match instruction {
     EnsureLookahead | LoadLookahead => self.trace.push(ReadLookahead)
+    RefineLookahead(_) => ()
     ConsumeLookahead => self.trace.push(AdvanceLookahead)
     SaveErrorSnapshot(suffix) => self.snapshot(suffix)
     ReadPreviousPosition(depth, reg) => self.previous_position(depth, reg)
@@ -87,6 +74,6 @@ fn StackCheck::instruction(
     Push(cell, values) => self.push(cell, values)
     Pop(cell, bindings) => self.read(0, cell, bindings, pop=true)
     Peek(depth, cell, bindings) => self.read(depth, cell, bindings, pop=false)
-    Action(id, args, before, result) => self.action(id, args, before, result)
+    Action(id, inputs, result) => self.action(id, inputs, result)
   }
 }

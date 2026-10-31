@@ -1,6 +1,6 @@
 ///|
-/// Strengthen presence contracts using the whole-CFG fixed point. Existing
-/// identity contracts remain explicit; every incoming edge is rechecked by
+/// Strengthen presence and singleton identity contracts using the whole-CFG
+/// fixed point. Every incoming edge is rechecked by
 /// Program::validate after all block interfaces have been updated together.
 fn StackEntryFact::cache_contract(
   self : StackEntryFact,
@@ -24,11 +24,10 @@ fn StackEntryFact::cache_contract(
       )
     Any => ()
   }
-  if !(previous is Any) {
-    return previous
-  }
   if self.empty_token && self.tokens.is_empty() {
     Empty
+  } else if !self.empty_token && self.tokens.length() == 1 {
+    On(self.tokens.iter().next().unwrap())
   } else if !self.empty_token {
     Present
   } else {

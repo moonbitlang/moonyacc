@@ -1,26 +1,9 @@
 ///|
-/// Logical operands are retained in the IR for checking. This least fixed point
-/// determines which registers and symbol fields need a physical representation.
+/// This least fixed point determines which registers and symbol fields need a
+/// representation. State fields remain available to the logical stack proof.
 pub(all) struct StorageDemand {
   registers : Set[Int32]
   fields : Array[Set[Field]]
-}
-
-///|
-pub fn ActionSignature::operands(
-  self : ActionSignature,
-  args : Array[ActionArgument],
-  before : Value,
-) -> Array[Value] {
-  self.inputs.map(input => {
-    match input {
-      Value(index, _) => args[index].value
-      Position(BeforeRhs) => before
-      Position(StartOf(index)) => args[index].start
-      Position(EndOf(index)) => args[index].end
-      Position(FirstNonEmpty(_)) => abort("non-atomic action dependency")
-    }
-  })
 }
 
 ///|
@@ -57,8 +40,8 @@ pub fn Program::storage_demand(
   fn body(instructions : Array[Instruction], term : Terminator) {
     for instruction in instructions {
       match instruction {
-        Action(id, args, before, _) =>
-          for value in self.actions[id].operands(args, before) {
+        Action(_, inputs, _) =>
+          for value in inputs {
             use_(value)
           }
         SaveErrorSnapshot(suffix) =>

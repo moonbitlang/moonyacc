@@ -422,8 +422,8 @@ fn yy_parse(
   // run state 6
   let _yy_r124 = yy_action_0(_yy_value_2_0.unwrap())
   let _yy_bind0 = _yy_r124
-  let _yy_r126 = _yy_bind0
-  return YYAccept_0(_yy_r126)
+  let _yy_r125 = _yy_bind0
+  return YYAccept_0(_yy_r125)
 }
 
 ///|

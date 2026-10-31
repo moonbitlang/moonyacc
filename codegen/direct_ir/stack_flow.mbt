@@ -77,6 +77,11 @@ fn StackFlowPass::instruction(
       machine.empty_token = true
       machine.tokens = Set([])
     }
+    RefineLookahead(token) =>
+      require(
+        !machine.empty_token && machine.tokens == Set([token]),
+        "token refinement is not proved",
+      )
     Bind(bindings) => {
       let facts = bindings.map(p => machine.value(p.1))
       for i, (reg, _) in bindings {
