@@ -10,7 +10,7 @@ pub fn make_env(value : Int) -> Env {
 }
 
 ///|
-let table : FixedArray[Int] = [10, 20, 30]
+let table : ReadOnlyArray[Int] = [10, 20, 30]
 
 ///|
 pub fn table_value() -> Int {

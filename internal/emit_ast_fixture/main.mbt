@@ -58,7 +58,7 @@ fn main {
     @mbt_ast.item(
       Global(
         "table",
-        Some(Constr(pkg=None, "FixedArray", [int])),
+        Some(Constr(pkg=None, "ReadOnlyArray", [int])),
         Array([Int(10), Int(20), Int(30)]),
       ),
     ),
