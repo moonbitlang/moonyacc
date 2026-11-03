@@ -11,10 +11,13 @@ pub struct Context {
   priv filename : String
   priv mode : @codegen.Mode
   priv input_mode : @codegen.InputMode
+  input_layout : @codegen.InputLayout
   priv actions : @hashmap2.T[@stamp.Stamp, @elab.Action]
   priv reductions : @hashmap2.T[@stamp.Stamp, @elab.Action]
   priv get_action_id : (@elab.Action) -> Int32
   priv pass_before_rhs : Bool
+  priv action_calls : ActionCalls
+  priv typed_actions : Map[@stamp.Stamp, ActionPlan]
   priv override_span_start : Bool
 }
 
@@ -26,7 +29,10 @@ pub fn Context::new(
   filename~ : String,
   mode~ : @codegen.Mode,
   input_mode~ : @codegen.InputMode,
+  input_layout~ : @codegen.InputLayout = Located,
+  action_calls~ : ActionCalls = Indirect,
 ) -> Context {
+  guard! input_layout.accepts_position(meta.position_data_type)
   let actions : @hashmap2.T[@stamp.Stamp, @elab.Action] = @hashmap2.new(
     capacity=16,
   )
@@ -87,9 +93,16 @@ pub fn Context::new(
     filename,
     mode,
     input_mode,
+    input_layout,
     actions,
     reductions,
     pass_before_rhs,
+    action_calls,
+    typed_actions: if action_calls is Direct {
+      action_parameter_plans(actions.iter().map(p => p.1), has_positions)
+    } else {
+      Map([])
+    },
     override_span_start,
     get_action_id: action => ids.get(action.stamp),
   }
@@ -114,7 +127,7 @@ fn Context::data_type(self : Context) -> @elab.TypeExpr {
 }
 
 ///|
-fn Context::tracks_positions(self : Context) -> Bool {
+pub fn Context::tracks_positions(self : Context) -> Bool {
   !(self.meta.position_data_type is Constr(pkg=None, "Unit", []))
 }
 

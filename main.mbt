@@ -42,6 +42,10 @@ async fn write_text_file(file : String, content : String) -> Unit {
 priv suberror CliError {
   UnsupportedMode(String)
   UnsupportedInputMode(String)
+  UnsupportedInputLayout(String)
+  UnsupportedBackend(String)
+  UnsupportedOptimizationLevel(String)
+  ConflictingBackendOptions
 }
 
 ///|
@@ -51,11 +55,14 @@ priv struct CliOptions {
   output_map_file : String?
   mode : @driver.Mode
   input_mode : @driver.InputMode
+  input_layout : @codegen.InputLayout
   external_tokens : Bool
   no_comments : Bool
   no_std : Bool
+  direct : Bool
   table : Bool
   compress : Bool
+  optimization_level : @codegen.OptimizationLevel
   token_payload_rewrite : @driver.TokenPayloadRewrite
   force_int_position : Bool
   print_as_mly_without_actions : Bool
@@ -115,6 +122,18 @@ fn cli_command() -> @argparse.Command {
     ],
     options=[
       OptionArg(
+        "optimization-level",
+        short='O',
+        long="optimization-level",
+        action=Append,
+        about="Direct backend optimization level (0, 1, 2; default: 1). Level 2 specializes states and optimizes runtime storage; level 0 currently uses level 1",
+      ),
+      OptionArg(
+        "backend",
+        long="backend",
+        about="Specify backend (code, direct, table). Default is code",
+      ),
+      OptionArg(
         "output-file",
         short='o',
         long="output-file",
@@ -134,6 +153,11 @@ fn cli_command() -> @argparse.Command {
         "input-mode",
         long="input-mode",
         about="Specify input mode (array, pull). Default is array",
+      ),
+      OptionArg(
+        "input-layout",
+        long="input-layout",
+        about="Input representation (located, token-only). Token-only requires Unit positions; default: located",
       ),
     ],
     positionals=[
@@ -186,6 +210,15 @@ fn parse_input_mode(
 }
 
 ///|
+fn parse_input_layout(layout : String) -> @codegen.InputLayout raise CliError {
+  match layout {
+    "located" => Located
+    "token-only" => TokenOnly
+    _ => raise UnsupportedInputLayout(layout)
+  }
+}
+
+///|
 fn parse_token_payload_rewrite(
   argv : ArrayView[String],
 ) -> @driver.TokenPayloadRewrite {
@@ -201,20 +234,55 @@ fn parse_token_payload_rewrite(
 }
 
 ///|
+fn parse_optimization_level(
+  matches : @argparse.Matches,
+) -> @codegen.OptimizationLevel raise CliError {
+  let mut level : @codegen.OptimizationLevel = O1
+  if matches.values.get("optimization-level") is Some(values) {
+    for value in values {
+      level = match value {
+        "0" => O0
+        "1" => O1
+        "2" => O2
+        _ => raise UnsupportedOptimizationLevel(value)
+      }
+    }
+  }
+  level
+}
+
+///|
 fn parse_cli_args(argv : ArrayView[String]) -> CliOptions raise {
   let matches = cli_command().parse(argv~, env={})
   let compress = flag_value(matches, "compress-table")
+  let legacy_table = compress || flag_value(matches, "table")
+  let (direct, table) = match string_option(matches, "backend") {
+    None => (false, legacy_table)
+    Some("table") => (false, true)
+    Some("direct") | Some("code") as backend => {
+      if legacy_table {
+        raise ConflictingBackendOptions
+      }
+      (backend == Some("direct"), false)
+    }
+    Some(name) => raise UnsupportedBackend(name)
+  }
   {
     input_file: string_value(matches, "input-file", ""),
     output_file: string_value(matches, "output-file", ""),
     output_map_file: string_option(matches, "output-map-file"),
     mode: parse_mode(string_value(matches, "mode", "default")),
     input_mode: parse_input_mode(string_value(matches, "input-mode", "array")),
+    input_layout: parse_input_layout(
+      string_value(matches, "input-layout", "located"),
+    ),
     external_tokens: flag_value(matches, "external-tokens"),
     no_comments: flag_value(matches, "no-comments"),
     no_std: flag_value(matches, "no-std"),
-    table: compress || flag_value(matches, "table"),
+    direct,
+    table,
     compress,
+    optimization_level: parse_optimization_level(matches),
     token_payload_rewrite: parse_token_payload_rewrite(argv),
     force_int_position: flag_value(matches, "force-int-position"),
     print_as_mly_without_actions: flag_value(
@@ -233,6 +301,28 @@ async fn main {
     }
     CliError::UnsupportedInputMode(input_mode_sym) => {
       println_to_stderr("Unsupported input mode: \{input_mode_sym}")
+      exit(1)
+    }
+    CliError::UnsupportedInputLayout(layout) => {
+      println_to_stderr(
+        "Unsupported input layout: \{layout} (expected located or token-only)",
+      )
+      exit(1)
+    }
+    CliError::UnsupportedBackend(name) => {
+      println_to_stderr("Unsupported backend: \{name}")
+      exit(1)
+    }
+    CliError::UnsupportedOptimizationLevel(level) => {
+      println_to_stderr(
+        "Unsupported optimization level: \{level} (expected 0, 1, or 2)",
+      )
+      exit(1)
+    }
+    CliError::ConflictingBackendOptions => {
+      println_to_stderr(
+        "--backend code/direct cannot be combined with --table or --compress-table",
+      )
       exit(1)
     }
     err => {
@@ -254,13 +344,16 @@ async fn main {
     mode=options.mode,
     source_map_builder=source_map,
     input_mode=options.input_mode,
+    input_layout=options.input_layout,
     filename=options.input_file,
     external_tokens=options.external_tokens,
     no_comments=options.no_comments,
     no_std=options.no_std,
     token_payload_rewrite=options.token_payload_rewrite,
     force_int_position=options.force_int_position,
-    generator=if options.table {
+    generator=if options.direct {
+      @gen_mbt_direct.new(optimization_level=options.optimization_level)
+    } else if options.table {
       if options.compress {
         @gen_mbt_table.compress_generator
       } else {

@@ -1,0 +1,79 @@
+///|
+fn StackCheck::bind(
+  self : StackCheck,
+  bindings : Array[(Register, Value)],
+) -> Unit raise InvalidProgram {
+  // Resolve every source before defining any destination: Bind is parallel.
+  let values = bindings.map(pair => self.value(pair.1))
+  for i, (reg, _) in bindings {
+    self.bind_value(reg, values[i])
+  }
+}
+
+///|
+fn StackCheck::bind_token(
+  self : StackCheck,
+  token : Int32,
+  value : Register,
+  start : Register,
+  end : Register,
+) -> Unit raise InvalidProgram {
+  require(value.type_ is Semantic(_), "stack rewrite input value type")
+  require(
+    start.type_ == Position && end.type_ == Position,
+    "stack rewrite input positions",
+  )
+  self.bind_value(value, SymOutput(value))
+  self.bind_value(start, SymOutput(start))
+  self.bind_value(end, SymOutput(end))
+  self.trace.push(ReadInput(token, value, start, end))
+}
+
+///|
+fn StackCheck::action(
+  self : StackCheck,
+  id : Int32,
+  inputs : Array[Value],
+  result : Register,
+) -> Unit raise InvalidProgram {
+  let values = inputs.map(value => self.value(value))
+  require(result.type_ is Semantic(_), "stack rewrite action result type")
+  self.bind_value(result, SymOutput(result))
+  self.trace.push(CallAction(id, values, result))
+}
+
+///|
+fn StackCheck::snapshot(
+  self : StackCheck,
+  suffix : Array[Value],
+) -> Unit raise InvalidProgram {
+  let states = self.suffix.map(cell => {
+    cell.values[cell.cell.fields.search(State).unwrap()]
+  })
+  for value in suffix {
+    let value = self.value(value)
+    require(value.type_() == State, "stack rewrite snapshot state type")
+    states.push(value)
+  }
+  // Both arrays and operands are captured now, before later pops or Bind nodes.
+  self.trace.push(CaptureSnapshot({ removed: self.removed, states, }))
+}
+
+///|
+fn StackCheck::instruction(
+  self : StackCheck,
+  instruction : Instruction,
+) -> Unit raise InvalidProgram {
+  match instruction {
+    EnsureLookahead | LoadLookahead => self.trace.push(ReadLookahead)
+    RefineLookahead(_) => ()
+    ConsumeLookahead => self.trace.push(AdvanceLookahead)
+    SaveErrorSnapshot(suffix) => self.snapshot(suffix)
+    ReadPreviousPosition(depth, reg) => self.previous_position(depth, reg)
+    Bind(bindings) => self.bind(bindings)
+    Push(cell, values) => self.push(cell, values)
+    Pop(cell, bindings) => self.read(0, cell, bindings, pop=true)
+    Peek(depth, cell, bindings) => self.read(depth, cell, bindings, pop=false)
+    Action(id, inputs, result) => self.action(id, inputs, result)
+  }
+}

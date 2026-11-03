@@ -1,0 +1,19 @@
+%{
+let events : Ref[Array[String]] = Ref([])
+%}
+
+%token<Int> NUMBER
+%token PLUS EOF
+%left PLUS
+%start<Int> start empty empty_with_eof
+%type<Int> expr
+
+%%
+
+start: marker expr EOF { $2};
+marker -> Unit: { events.val.push("marker"); ()};
+expr:
+  | NUMBER { events.val.push("number"); $1}
+  | expr PLUS expr { events.val.push("add"); $1 + $3};
+empty: { ignore($loc); 42};
+empty_with_eof: EOF { ignore($loc); 42};

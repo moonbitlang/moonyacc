@@ -3,10 +3,11 @@ package "moonbitlang/yacc_tests/compressed_table_test"
 
 import {
   "moonbitlang/core/debug",
+  "moonbitlang/core/json",
 }
 
 // Values
-pub fn start(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Json raise ParseError
+pub fn start(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> @json.Json raise ParseError
 
 // Errors
 pub suberror ParseError {

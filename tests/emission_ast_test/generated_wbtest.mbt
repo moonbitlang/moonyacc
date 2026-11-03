@@ -26,6 +26,8 @@ test "generated statements, declarations and raw blocks compile and execute" {
   assert_eq(bump(env), 4)
   assert_eq(show_ready(), "ready")
   assert_eq(user_code(), 42)
+  assert_eq(joined_value(true), (7, "left"))
+  assert_eq(joined_value(false), (11, "right"))
   assert_eq(positive(2), 2)
   try positive(-1) catch {
     Failed(-1) => ()

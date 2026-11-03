@@ -15,7 +15,8 @@
 ///|
 /// 0: EndOfInput
 /// 1..<1024: Terminal number + 1
-priv struct EncodedLookaheadSet(@small_int_set.T) derive(Eq)
+#derive(Eq)
+priv struct EncodedLookaheadSet(@small_int_set.T)
 
 ///|
 fn EncodedLookaheadSet::is_singleton(

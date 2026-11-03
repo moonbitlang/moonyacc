@@ -1,0 +1,11 @@
+import {
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/codegen/direct_ir",
+  "moonbitlang/yacc/codegen/direct_ir/control_flow",
+  "moonbitlang/yacc/codegen/mbt_common",
+  "moonbitlang/yacc/codegen/mbt_ast",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/lr1",
+  "moonbitlang/yacc/util/logger_with_cursor",
+}

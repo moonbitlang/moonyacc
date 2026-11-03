@@ -122,6 +122,8 @@ pub(all) enum Expr {
   If(Expr, Block, Block?)
   Match(Expr, Array[(Pattern, Block)])
   Block(Block)
+  /// A non-looping join scope. BreakTo may return a value from this expression.
+  LabelledBlock(String, Block)
   /// A block expression containing user code. The renderer supplies delimiters
   /// and preserves all piece contents and source ranges, including comments.
   Verbatim(Fragment)

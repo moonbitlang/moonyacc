@@ -3,6 +3,7 @@ package "moonbitlang/yacc/codegen"
 
 import {
   "moonbitlang/core/immut/vector",
+  "moonbitlang/core/json",
   "moonbitlang/yacc/elab",
   "moonbitlang/yacc/grm",
   "moonbitlang/yacc/lr1",
@@ -15,6 +16,12 @@ import {
 // Errors
 
 // Types and methods
+pub(all) enum InputLayout {
+  Located
+  TokenOnly
+}
+pub fn InputLayout::accepts_position(Self, @elab.TypeExpr) -> Bool
+
 pub(all) enum InputMode {
   Array
   Pull
@@ -39,22 +46,30 @@ pub(all) struct NonTerminalMeta {
   data_type : @elab.TypeExpr
 }
 
+pub(all) enum OptimizationLevel {
+  O0
+  O1
+  O2
+}
+
 pub(all) struct ProductionMeta {
   action : @elab.Action
 }
 
+#derive(@json.ToJson)
 pub(all) struct SourceMap {
   mappings : Array[SourceMapping]
-} derive(ToJson)
+}
 pub fn SourceMap::new() -> Self
 pub impl SourceMapBuilder for SourceMap
 
+#derive(@json.ToJson)
 pub(all) struct SourceMapping {
   source : String
   original_offset : Int32
   generated_offset : Int32
   length : Int32
-} derive(ToJson)
+}
 
 pub(all) struct TerminalMeta {
   data_type : @elab.TypeExpr
@@ -71,7 +86,7 @@ pub(all) enum TokenPayloadRewrite {
 // Traits
 pub(open) trait CodeGenerator {
   fn codegen_tokens(Self, Array[@grm.Terminal], (String) -> TerminalMeta, &Logger, no_comments~ : Bool, derive_map~ : @array_multimap.T[String, String]) -> Unit
-  fn codegen(Self, @grm.Grammar, @lr1.Automaton, MetaProvider, @logger_with_cursor.LoggerWithCursor, source_map_builder~ : &SourceMapBuilder?, grammar_filename~ : String, external_tokens~ : Bool, no_comments~ : Bool, mode~ : Mode, input_mode~ : InputMode) -> Unit
+  fn codegen(Self, @grm.Grammar, @lr1.Automaton, MetaProvider, @logger_with_cursor.LoggerWithCursor, source_map_builder~ : &SourceMapBuilder?, grammar_filename~ : String, external_tokens~ : Bool, no_comments~ : Bool, mode~ : Mode, input_mode~ : InputMode, input_layout~ : InputLayout) -> Unit
 }
 
 pub trait SourceMapBuilder {

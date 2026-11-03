@@ -8,39 +8,58 @@ pub fn entry_point(
   state~ : @mbt_ast.Expr,
   unbox~ : String,
   input_mode~ : @codegen.InputMode,
+  input_layout~ : @codegen.InputLayout,
 ) -> @mbt_ast.Item {
-  let token : @elab.TypeExpr = Constr(pkg=None, "Token", [])
-  let located : @elab.TypeExpr = Tuple([token, position, position])
+  let input = input_type(input_layout, position)
   let decode : @mbt_ast.Expr = Lambda([Positional("it", None)], {
     statements: [Assert(Is(Ident("it"), Constructor(unbox, [Bind("result")])))],
     result: Some(Ident("result")),
   })
-  let (parameters, arguments) = match input_mode {
+  let (parameters, arguments) : (
+    Array[@mbt_ast.Parameter],
+    Array[@mbt_ast.Argument],
+  ) = match input_mode {
     Array =>
       (
         [
           @mbt_ast.Parameter::Positional(
             "tokens",
-            Some(Constr(pkg=None, "Array", [located])),
+            Some(Constr(pkg=None, "Array", [input])),
           ),
-          Optional("initial_pos", position, None),
+          ..if input_layout is Located {
+            [@mbt_ast.Parameter::Optional("initial_pos", position, None)]
+          } else {
+            []
+          },
         ],
         [
           @mbt_ast.Argument::Positional(Ident("tokens")),
           Positional(state),
           Positional(decode),
-          ForwardOptional("initial_pos"),
+          ..if input_layout is Located {
+            [@mbt_ast.Argument::ForwardOptional("initial_pos")]
+          } else {
+            []
+          },
         ],
       )
     Pull =>
       (
         [
-          @mbt_ast.Parameter::Positional("read_token", Some(Arrow([], located))),
-          Positional("start_pos", Some(position)),
+          @mbt_ast.Parameter::Positional("read_token", Some(Arrow([], input))),
+          ..if input_layout is Located {
+            [@mbt_ast.Parameter::Positional("start_pos", Some(position))]
+          } else {
+            []
+          },
         ],
         [
           @mbt_ast.Argument::Positional(Ident("read_token")),
-          Positional(Ident("start_pos")),
+          ..if input_layout is Located {
+            [@mbt_ast.Argument::Positional(Ident("start_pos"))]
+          } else {
+            []
+          },
           Positional(state),
           Positional(decode),
         ],

@@ -1,0 +1,5 @@
+%position<Int>
+%token<Char> VALUE
+%start<Char> start
+%%
+start: VALUE { $1};

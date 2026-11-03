@@ -13,11 +13,15 @@ import {
 // Values
 pub fn call(String, Array[@mbt_ast.Expr]) -> @mbt_ast.Expr
 
-pub fn entry_point(name~ : String, result~ : @elab.TypeExpr, position~ : @elab.TypeExpr, state~ : @mbt_ast.Expr, unbox~ : String, input_mode~ : @codegen.InputMode) -> @mbt_ast.Item
+pub fn entry_point(name~ : String, result~ : @elab.TypeExpr, position~ : @elab.TypeExpr, state~ : @mbt_ast.Expr, unbox~ : String, input_mode~ : @codegen.InputMode, input_layout~ : @codegen.InputLayout) -> @mbt_ast.Item
+
+pub fn input_type(@codegen.InputLayout, @elab.TypeExpr) -> @elab.TypeExpr
 
 pub fn named_type(String, Array[@elab.TypeExpr]) -> @elab.TypeExpr
 
 pub fn token_items(Array[@grm.Terminal], (String) -> @codegen.TerminalMeta, derive_map~ : @array_multimap.T[String, String]) -> Array[@mbt_ast.Item]
+
+pub fn token_json(String, @mbt_ast.Expr?, @mbt_ast.Expr, @mbt_ast.Expr) -> @mbt_ast.Expr
 
 pub fn type_ident(@elab.TypeExpr) -> String
 
@@ -26,20 +30,35 @@ pub fn value_block(@mbt_ast.Expr) -> @mbt_ast.Block
 // Errors
 
 // Types and methods
+pub(all) enum ActionCalls {
+  Indirect
+  Direct
+}
+
 pub struct Context {
+  input_layout : @codegen.InputLayout
   // private fields
 }
 pub fn Context::action_id(Self, @elab.Action) -> Int32
 pub fn Context::action_items(Self) -> Array[@mbt_ast.Item]
+pub fn Context::action_parameters(Self, @elab.Action) -> Array[@elab.ActionInput]
 pub fn Context::action_runtime(Self) -> Array[@mbt_ast.Item]
+pub fn Context::action_uses_before_rhs(Self, @elab.Action) -> Bool
 pub fn Context::footer(Self) -> Array[@mbt_ast.Item]
 pub fn Context::input_function(Self, Engine) -> @mbt_ast.Item
-pub fn Context::new(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, filename~ : String, mode~ : @codegen.Mode, input_mode~ : @codegen.InputMode) -> Self
+pub fn Context::input_type(Self) -> @elab.TypeExpr
+pub fn Context::is_json_cst(Self) -> Bool
+pub fn Context::new(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, filename~ : String, mode~ : @codegen.Mode, input_mode~ : @codegen.InputMode, input_layout? : @codegen.InputLayout, action_calls? : ActionCalls) -> Self
 pub fn Context::parser_runtime(Self, Engine) -> Array[@mbt_ast.Item]
-pub fn Context::prelude(Self, external_tokens~ : Bool) -> Array[@mbt_ast.Item]
+pub fn Context::preamble(Self, external_tokens~ : Bool) -> Array[@mbt_ast.Item]
+pub fn Context::prelude(Self, external_tokens~ : Bool, require_void? : Bool) -> Array[@mbt_ast.Item]
 pub fn Context::reduction_reference(Self, @elab.Action) -> @mbt_ast.Expr
 pub fn Context::reduction_type(Self) -> @elab.TypeExpr
 pub fn Context::runtime_types(Self, Engine) -> Array[@mbt_ast.Item]
+pub fn Context::tracks_positions(Self) -> Bool
+pub fn Context::typed_action_call(Self, @elab.Action, (@elab.ActionInput) -> @mbt_ast.Expr) -> @mbt_ast.Expr
+pub fn Context::typed_action_items(Self) -> Array[@mbt_ast.Item]
+pub fn Context::typed_action_runtime(Self) -> Array[@mbt_ast.Item]
 
 pub(all) enum Engine {
   Code

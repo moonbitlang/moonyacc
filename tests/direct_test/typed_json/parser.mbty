@@ -1,0 +1,8 @@
+%token<Payload> VALUE INVALID
+%token EOF
+%start start
+
+%%
+
+start: value EOF { ()};
+value: VALUE { ()};

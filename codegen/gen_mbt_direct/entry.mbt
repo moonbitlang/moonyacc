@@ -1,0 +1,80 @@
+///|
+fn Emitter::entry_item(
+  self : Emitter,
+  index : Int32,
+  entry : @direct_ir.Entry,
+) -> @mbt_ast.Item {
+  let position = self.meta.position_data_type
+  let (parameters, arguments) : (
+    Array[@mbt_ast.Parameter],
+    Array[@mbt_ast.Argument],
+  ) = match self.input_mode {
+    Array =>
+      (
+        [
+          typed("tokens", self.tokens_type()),
+          ..if self.support.input_layout is Located {
+            [@mbt_ast.Parameter::Optional("initial_pos", position, None)]
+          } else {
+            []
+          },
+        ],
+        [
+          @mbt_ast.Argument::Positional(Ident("tokens")),
+          Positional(Int(self.control.address(entry.block))),
+          Positional(Int(entry.state)),
+          ..if self.support.input_layout is Located {
+            [@mbt_ast.Argument::ForwardOptional("initial_pos")]
+          } else {
+            []
+          },
+        ],
+      )
+    Pull =>
+      (
+        [
+          typed("read_token", Arrow([], self.support.input_type())),
+          ..if self.support.input_layout is Located {
+            [typed("start_pos", position)]
+          } else {
+            []
+          },
+        ],
+        [
+          @mbt_ast.Argument::Positional(Ident("read_token")),
+          ..if self.support.input_layout is Located {
+            [@mbt_ast.Argument::Positional(Ident("start_pos"))]
+          } else {
+            []
+          },
+          Positional(Int(self.control.address(entry.block))),
+          Positional(Int(entry.state)),
+        ],
+      )
+  }
+  let arms : Array[(@mbt_ast.Pattern, @mbt_ast.Block)] = [
+    (
+      Constructor("YYAccept_\{index}", [Bind("result")]),
+      value_block(@mbt_ast.Expr::Ident("result")),
+    ),
+  ]
+  if self.program.entries.length() > 1 {
+    arms.push((Any, value_block(call("panic", []))))
+  }
+  @mbt_ast.item(
+    Function(
+      @mbt_ast.function(
+        entry.name,
+        parameters,
+        value_block(Match(Call(Ident("yy_parse"), arguments), arms)),
+        result=entry.result_type,
+        effect=if self.region_errors.is_empty() {
+          Default
+        } else {
+          Raises(type_("ParseError"))
+        },
+      ),
+    ),
+    visibility=Public,
+  )
+}

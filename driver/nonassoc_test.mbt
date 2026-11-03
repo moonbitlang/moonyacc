@@ -11,7 +11,7 @@ test "nonassoc generates states with no remaining actions" {
     #|expr: NUMBER { $1 } | expr EQ expr { $1 + $3 };
   for
     generator in [
-      @gen_mbt.generator, @gen_mbt_table.generator, @gen_mbt_table.compress_generator,
+      @gen_mbt.generator, @gen_mbt_direct.generator, @gen_mbt_table.generator, @gen_mbt_table.compress_generator,
     ] {
     ignore(@driver.compile(grammar, filename="nonassoc.mbty", generator~))
   }

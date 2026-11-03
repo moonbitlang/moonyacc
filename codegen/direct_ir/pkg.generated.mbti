@@ -1,0 +1,294 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc/codegen/direct_ir"
+
+import {
+  "moonbitlang/core/set",
+  "moonbitlang/yacc/codegen",
+  "moonbitlang/yacc/elab",
+  "moonbitlang/yacc/grm",
+  "moonbitlang/yacc/lr1",
+}
+
+// Values
+pub fn analyze_stack(@grm.Grammar, @lr1.Automaton) -> StackKnowledge
+
+pub fn lower(@grm.Grammar, @lr1.Automaton, @codegen.MetaProvider, mode~ : @codegen.Mode) -> Program
+
+// Errors
+pub suberror InvalidProgram {
+  InvalidProgram(String)
+}
+
+// Types and methods
+pub(all) struct ActionSignature {
+  rhs : Array[Int32]
+  lhs : Int32
+  inputs : Array[@elab.ActionInput]
+  callable : Bool
+}
+
+pub(all) struct Block {
+  origin : Origin
+  hint : InlineHint
+  specialize_state : Bool
+  parameters : Array[Register]
+  lookahead : Lookahead
+  instructions : Array[Instruction]
+  terminator : Terminator
+}
+pub fn Block::all_instructions(Self) -> Array[Instruction]
+
+#derive(Eq)
+pub(all) struct Body {
+  instructions : Array[Instruction]
+  terminator : Terminator
+}
+pub fn Body::all_instructions(Self) -> Array[Instruction]
+pub fn Body::edge(Self) -> Edge?
+pub fn Body::jump(Edge) -> Self
+
+#derive(Eq)
+pub(all) struct Cell {
+  symbol : Int32?
+  fields : Array[Field]
+}
+
+pub struct CheckpointFact {
+  upper : Int32?
+  valid : Bool
+  current : Bool
+}
+pub fn CheckpointFact::needs_journal(Self, preserve~ : Bool) -> Bool
+pub fn CheckpointFact::no_overlap(Self) -> Bool
+pub fn CheckpointFact::step(Self, Instruction, preserve? : Bool) -> Self
+
+pub struct CheckpointFlow {
+  entries : Array[CheckpointFact?]
+  liveness : SnapshotLiveness
+}
+pub fn CheckpointFlow::entry(Self, Int32) -> CheckpointFact
+pub fn CheckpointFlow::has_unprotected_push(Self, Program) -> Bool
+pub fn CheckpointFlow::requires_journal(Self, Program) -> Bool
+pub fn CheckpointFlow::requires_save(Self, Program) -> Bool
+pub fn CheckpointFlow::validate(Self, Program) -> Unit raise InvalidProgram
+
+pub(all) enum DiagnosticAction {
+  Shift(Int32)
+  Reduce(Int32, Int32)
+  Accept
+}
+
+pub(all) struct DiagnosticState {
+  default_ : DiagnosticAction?
+  actions : Array[(Token, DiagnosticAction)]
+  gotos : Array[(Int32, Int32)]
+}
+
+pub struct DuplicatedContinuations {
+  program : Program
+  sources : Array[Int32]
+}
+
+#derive(Eq)
+pub(all) struct Edge {
+  target : Int32
+  arguments : Array[Value]
+}
+
+pub(all) struct Entry {
+  name : String
+  block : Int32
+  state : Int32
+  result_type : @elab.TypeExpr
+}
+
+#derive(Eq, Hash)
+pub(all) enum Field {
+  State
+  Semantic
+  Start
+  End
+}
+
+#derive(Eq)
+pub(all) enum InlineHint {
+  NoHint
+  Always
+  IfKnownState
+  IfCells(Int32)
+}
+
+#derive(Eq)
+pub(all) enum Instruction {
+  EnsureLookahead
+  LoadLookahead
+  RefineLookahead(Token)
+  ConsumeLookahead
+  SaveErrorSnapshot(Array[Value])
+  ReadPreviousPosition(Int32, Register)
+  Bind(Array[(Register, Value)])
+  Push(Cell, Array[Value])
+  Pop(Cell, Array[Register?])
+  Peek(Int32, Cell, Array[Register?])
+  Action(Int32, Array[Value], Register)
+}
+pub fn Instruction::definitions(Self) -> Array[Register]
+
+#derive(Eq)
+pub(all) enum Lookahead {
+  Any
+  Empty
+  Present
+  On(Token)
+}
+
+pub(all) enum Origin {
+  Run(Int32)
+  Reduce(Int32)
+  Goto(Int32)
+  Helper
+}
+
+pub struct PreparedProgram {
+  program : Program
+  flow : StackFlow
+  demand : StorageDemand
+  checkpoints : CheckpointFlow
+}
+
+pub(all) struct Program {
+  entries : Array[Entry]
+  blocks : Array[Block]
+  symbols : Array[Symbol]
+  terminal_count : Int32
+  actions : Array[ActionSignature]
+  diagnostics : Array[DiagnosticState]
+}
+pub fn Program::checkpoint_flow(Self) -> CheckpointFlow raise InvalidProgram
+pub fn Program::commute_pushes(Self, StackKnowledge) -> Self raise InvalidProgram
+pub fn Program::duplicate_continuations(Self, Array[Int32]) -> DuplicatedContinuations raise InvalidProgram
+pub fn Program::exhaustive_tokens(Self, Array[TokenPattern]) -> Bool
+pub fn Program::inline_blocks(Self, cautious~ : Bool) -> Self raise InvalidProgram
+pub fn Program::merge_continuations(Self) -> Self raise InvalidProgram
+pub fn Program::prepare(Self, StackKnowledge, positions~ : Bool, optimization_level? : @codegen.OptimizationLevel) -> PreparedProgram raise InvalidProgram
+pub fn Program::prepare_emission(Self, StackKnowledge, positions~ : Bool) -> PreparedProgram raise InvalidProgram
+pub fn Program::prune_control(Self, StackKnowledge) -> Self raise InvalidProgram
+pub fn Program::prune_registers(Self, StackKnowledge, positions~ : Bool) -> Self raise InvalidProgram
+pub fn Program::simplify(Self) -> Self
+pub fn Program::snapshot_liveness(Self) -> SnapshotLiveness raise InvalidProgram
+pub fn Program::specialize_state(Self, StackKnowledge) -> Self raise InvalidProgram
+pub fn Program::stack_flow(Self, StackKnowledge) -> StackFlow raise InvalidProgram
+pub fn Program::state_specializations(Self, StackKnowledge) -> StateSpecializations raise InvalidProgram
+pub fn Program::stop_earlier(Self, StackKnowledge) -> Self raise InvalidProgram
+pub fn Program::storage_demand(Self, StackFlow, positions~ : Bool) -> StorageDemand
+pub fn Program::validate(Self) -> Unit raise InvalidProgram
+
+#derive(Eq)
+pub(all) struct Register {
+  id : Int32
+  type_ : ValueType
+}
+
+pub struct SnapshotLiveness {
+  entries : Array[Bool]
+}
+pub fn SnapshotLiveness::points(Self, Body) -> Array[Bool]
+pub fn SnapshotLiveness::validate(Self, Program) -> Unit raise InvalidProgram
+
+pub(all) struct StackCellFact {
+  symbol : Int32
+  predecessors : @set.Set[Int32]
+}
+
+pub(all) struct StackEntryFact {
+  word : Array[StackCellFact]
+  exact : Bool
+  current : @set.Set[Int32]
+  parameters : Array[StateValueFact]
+  empty_token : Bool
+  tokens : @set.Set[Token]
+}
+
+pub(all) struct StackFlow {
+  entries : Array[StackEntryFact?]
+  previous_symbols : Map[Int32, @set.Set[Int32]]
+  previous_initial : @set.Set[Int32]
+  read_above : Map[Int32, Array[Int32]]
+}
+
+pub(all) struct StackKnowledge {
+  transitions : Array[Array[(Int32, Int32)]]
+  short : Array[Array[StackCellFact]]
+  long : Array[Array[StackCellFact]]
+  production_sites : Array[Array[Int32]]
+  entry_origins : Array[@set.Set[Int32]]
+}
+
+pub struct StateSpecializations {
+  // private fields
+}
+pub fn StateSpecializations::apply(Self, Array[Int32], StackKnowledge) -> Program raise InvalidProgram
+pub fn StateSpecializations::candidates(Self) -> Array[Int32]
+pub fn StateSpecializations::prepare(Self, Array[Int32], StackKnowledge, positions~ : Bool) -> PreparedProgram raise InvalidProgram
+pub fn StateSpecializations::savings(Self, Array[Int32]) -> Int32 raise InvalidProgram
+pub fn StateSpecializations::within_budget(Self, Array[Int32]) -> Array[Int32] raise InvalidProgram
+
+pub(all) struct StateValueFact {
+  states : @set.Set[Int32]
+  depth : Int32?
+}
+
+pub(all) struct StorageDemand {
+  registers : @set.Set[Int32]
+  fields : Array[@set.Set[Field]]
+}
+
+pub(all) struct Symbol {
+  name : String
+  type_ : @elab.TypeExpr
+}
+
+#derive(Eq)
+pub(all) enum Terminator {
+  Jump(Edge)
+  CaseToken(Array[(TokenPattern, Body)], Body)
+  CaseState(Value, Array[(Int32, Body)])
+  Return(Int32, Value)
+  Stop
+  Unreachable
+}
+pub fn Terminator::bodies(Self) -> Array[Body]
+pub fn Terminator::can_stop(Self) -> Bool
+pub fn Terminator::successors(Self) -> Array[Int32]
+pub fn Terminator::token_patterns(Self) -> Array[TokenPattern]
+
+#derive(Eq, Hash)
+pub(all) enum Token {
+  Terminal(Int32)
+  EndOfInput
+}
+
+#derive(Eq)
+pub(all) enum TokenPattern {
+  Tokens(Array[Token])
+  BindToken(Int32, Register, Register, Register)
+}
+pub fn TokenPattern::definitions(Self) -> Array[Register]
+pub fn TokenPattern::tokens(Self) -> Array[Token]
+
+#derive(Eq)
+pub(all) enum Value {
+  Reg(Register)
+  State(Int32)
+}
+
+#derive(Eq)
+pub(all) enum ValueType {
+  State
+  Position
+  Semantic(@elab.TypeExpr)
+}
+
+// Type aliases
+
+// Traits

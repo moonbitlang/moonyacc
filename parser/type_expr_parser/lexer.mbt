@@ -13,9 +13,10 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Debug)
 pub suberror LexError {
   Unrecognized(Char, Int32)
-} derive(Debug)
+}
 
 ///|
 priv struct Lexer {

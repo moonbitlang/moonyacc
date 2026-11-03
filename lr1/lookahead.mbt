@@ -13,10 +13,11 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Eq, Compare)
 pub(all) enum Lookahead {
   EndOfInput
   Input(@grm.Terminal)
-} derive(Eq, Compare)
+}
 
 ///|
 pub impl Hash for Lookahead with fn hash_combine(self, hasher) {

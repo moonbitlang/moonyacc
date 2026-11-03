@@ -13,7 +13,8 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-struct Stamp(Int32) derive(Eq, Hash)
+#derive(Eq, Hash)
+struct Stamp(Int32)
 
 ///|
 pub type T = Stamp

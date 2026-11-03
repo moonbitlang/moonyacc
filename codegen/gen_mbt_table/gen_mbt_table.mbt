@@ -13,11 +13,12 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Eq, Compare)
 priv enum CodegenSymbol {
   T(@grm.Terminal)
   NT(@grm.Nonterminal)
   EOI
-} derive(Eq, Compare)
+}
 
 ///|
 fn CodegenSymbol::eoi() -> CodegenSymbol {
@@ -44,13 +45,14 @@ fn CodegenSymbol::encode(self : CodegenSymbol, grammar : @grm.Grammar) -> Int32 
 }
 
 ///|
+#derive(Eq, Compare)
 priv enum CodegenDecision {
   Error
   Accept
   Shift(@lr1.LR1State)
   Reduce(@grm.Production)
   ReduceNoLookahead(@grm.Production)
-} derive(Eq, Compare)
+}
 
 ///|
 fn codegen_tokens(
@@ -205,6 +207,7 @@ fn codegen(
   no_comments~ : Bool = false,
   mode~ : @codegen.Mode = Default,
   input_mode~ : @codegen.InputMode = Array,
+  input_layout~ : @codegen.InputLayout = Located,
   compress~ : Bool = false,
 ) -> Unit {
   ignore(no_comments)
@@ -215,6 +218,7 @@ fn codegen(
     filename=grammar_filename,
     mode~,
     input_mode~,
+    input_layout~,
   )
   let items = context.prelude(external_tokens~)
   items.append(context.runtime_types(Table))
@@ -434,6 +438,7 @@ fn codegen(
         state=Int(state.num),
         unbox="YYObj_" + @mbt_common.type_ident(type_),
         input_mode~,
+        input_layout~,
       ),
     )
   }
@@ -476,6 +481,7 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
   no_comments~,
   mode~,
   input_mode~,
+  input_layout~,
 ) {
   ignore(self)
   codegen(
@@ -489,6 +495,7 @@ impl @codegen.CodeGenerator for CodeGenerator with fn codegen(
     no_comments~,
     mode~,
     input_mode~,
+    input_layout~,
     compress=self.compress,
   )
 }

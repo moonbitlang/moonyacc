@@ -101,6 +101,35 @@ priv struct YYReduction {
 }
 
 ///|
+let yy_reduction_0 : YYReduction = {
+  action: yy_action_0, start_before_rhs: false
+}
+
+///|
+let yy_reduction_1 : YYReduction = {action: yy_action_1, start_before_rhs: true}
+
+///|
+let yy_reduction_2 : YYReduction = {
+  action: yy_action_2, start_before_rhs: false
+}
+
+///|
+let yy_reduction_3 : YYReduction = {action: yy_action_3, start_before_rhs: true}
+
+///|
+let yy_reduction_4 : YYReduction = {
+  action: yy_action_4, start_before_rhs: false
+}
+
+///|
+let yy_reduction_5 : YYReduction = {
+  action: yy_action_5, start_before_rhs: false
+}
+
+///|
+let yy_reduction_6 : YYReduction = {action: yy_action_6, start_before_rhs: true}
+
+///|
 priv enum YYSymbol {
   T_P
   T_A
@@ -128,8 +157,8 @@ fn init {
 ///|
 // file:///./parser.mbty
 // 7|       P x=pair C { [x, $loc(x), $loc($3), $loc, $sloc] }
-fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _sub_action_0_result = yy_action_0(_args[0].2, _args[1:3])
+fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  let _sub_action_0_result = yy_action_7(_args[0].2, _args[1:3])
   guard! _sub_action_0_result is YYObj__Int__Int_(x)
   let _start_pos_of_item1 = _args[1].1
   let _end_pos_of_item1 = _args[2].2
@@ -159,8 +188,8 @@ fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 9|              x=empty C { [x, $loc(x), $loc, $sloc] }
-fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _sub_action_0_result = yy_action_2(_last_pos, _args[0:0])
+fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  let _sub_action_0_result = yy_action_8(_last_pos, _args[0:0])
   guard! _sub_action_0_result is YYObj__Int__Int_(x)
   let _start_pos_of_item0 = _last_pos
   let _end_pos_of_item0 = _last_pos
@@ -180,8 +209,8 @@ fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 10|             P x=empty { [x, $loc(x), $loc, $sloc] }
-fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _sub_action_0_result = yy_action_2(_args[0].2, _args[1:1])
+fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  let _sub_action_0_result = yy_action_8(_args[0].2, _args[1:1])
   guard! _sub_action_0_result is YYObj__Int__Int_(x)
   let _start_pos_of_item1 = _args[0].2
   let _end_pos_of_item1 = _args[0].2
@@ -201,8 +230,8 @@ fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 11|           x=empty { [x, $loc(x), $loc, $sloc] }
-fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _sub_action_0_result = yy_action_2(_last_pos, _args[0:0])
+fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  let _sub_action_0_result = yy_action_8(_last_pos, _args[0:0])
   guard! _sub_action_0_result is YYObj__Int__Int_(x)
   let _start_pos_of_item0 = _last_pos
   let _end_pos_of_item0 = _last_pos
@@ -218,9 +247,9 @@ fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 13|        P x=outer y=empty C { x + [y, $loc(x), $loc(y), $loc($4), $loc, $sloc] }
-fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _sub_action_0_result = yy_action_2(_args[2].2, _args[3:3])
-  let _sub_action_1_result = yy_action_6(_args[0].2, _args[1:3])
+fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  let _sub_action_0_result = yy_action_8(_args[2].2, _args[3:3])
+  let _sub_action_1_result = yy_action_9(_args[0].2, _args[1:3])
   guard! _sub_action_1_result is YYObj_Array__Int__Int__(x)
   guard! _sub_action_0_result is YYObj__Int__Int_(y)
   let _start_pos_of_item1 = _args[0].2
@@ -253,7 +282,7 @@ fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 14|            P x=wrapper C { x + [$loc(x), $loc($3)] }
-fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   guard! _args[1].0 is YYObj_Array__Int__Int__(x)
   let _start_pos_of_item1 = _args[1].1
   let _end_pos_of_item1 = _args[1].2
@@ -268,8 +297,8 @@ fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 15|                              x=outer { x + [$loc, $sloc] }
-fn yy_action_9(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _sub_action_0_result = yy_action_6(_last_pos, _args[0:2])
+fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  let _sub_action_0_result = yy_action_9(_last_pos, _args[0:2])
   guard! _sub_action_0_result is YYObj_Array__Int__Int__(x)
   let _start_pos = _last_pos
   let _end_pos = _args[1].2
@@ -287,9 +316,9 @@ fn yy_action_9(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 19|                                    e=empty p=pair { [e, p, $loc, $sloc] }
-fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  let _sub_action_0_result = yy_action_2(_last_pos, _args[0:0])
-  let _sub_action_1_result = yy_action_0(_last_pos, _args[0:2])
+fn yy_action_9(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+  let _sub_action_0_result = yy_action_8(_last_pos, _args[0:0])
+  let _sub_action_1_result = yy_action_7(_last_pos, _args[0:2])
   guard! _sub_action_0_result is YYObj__Int__Int_(e)
   guard! _sub_action_1_result is YYObj__Int__Int_(p)
   let _start_pos = _last_pos
@@ -308,7 +337,7 @@ fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 17|                            A B { ($startpos, $endpos) }
-fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   let _start_pos = _args[0].1
   let _end_pos = _args[1].2
   YYObj__Int__Int_(
@@ -320,7 +349,7 @@ fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 ///|
 // file:///./parser.mbty
 // 18|                             { $loc }
-fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
   let _start_pos = _last_pos
   let _end_pos = _last_pos
   YYObj__Int__Int_(
@@ -328,35 +357,6 @@ fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
     })
   )
 }
-
-///|
-let yy_reduction_1 : YYReduction = {
-  action: yy_action_1, start_before_rhs: false
-}
-
-///|
-let yy_reduction_3 : YYReduction = {action: yy_action_3, start_before_rhs: true}
-
-///|
-let yy_reduction_4 : YYReduction = {
-  action: yy_action_4, start_before_rhs: false
-}
-
-///|
-let yy_reduction_5 : YYReduction = {action: yy_action_5, start_before_rhs: true}
-
-///|
-let yy_reduction_7 : YYReduction = {
-  action: yy_action_7, start_before_rhs: false
-}
-
-///|
-let yy_reduction_8 : YYReduction = {
-  action: yy_action_8, start_before_rhs: false
-}
-
-///|
-let yy_reduction_9 : YYReduction = {action: yy_action_9, start_before_rhs: true}
 
 ///|
 fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (
@@ -410,7 +410,7 @@ fn yy_state_3(_lookahead : YYSymbol) -> YYDecision {
 ///|
 // [6, wrapper → A B •, C]
 fn yy_state_4(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(2, NT_wrapper, yy_reduction_9)
+  ReduceNoLookahead(2, NT_wrapper, yy_reduction_6)
 }
 
 ///|
@@ -425,7 +425,7 @@ fn yy_state_5(_lookahead : YYSymbol) -> YYDecision {
 ///|
 // [5, propagated → P wrapper C •, $]
 fn yy_state_6(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(3, NT_propagated, yy_reduction_8)
+  ReduceNoLookahead(3, NT_propagated, yy_reduction_5)
 }
 
 ///|
@@ -475,7 +475,7 @@ fn yy_state_11(_lookahead : YYSymbol) -> YYDecision {
 ///|
 // [4, nested → P A B C •, $]
 fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(4, NT_nested, yy_reduction_7)
+  ReduceNoLookahead(4, NT_nested, yy_reduction_4)
 }
 
 ///|
@@ -484,7 +484,7 @@ fn yy_state_12(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_13(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     NT_all_empty => Shift(yy_state_14)
-    EOI => Reduce(0, NT_all_empty, yy_reduction_5)
+    EOI => Reduce(0, NT_all_empty, yy_reduction_3)
     _ => Error
   }
 }
@@ -515,7 +515,7 @@ fn yy_state_16(_lookahead : YYSymbol) -> YYDecision {
 ///|
 // [2, empty_after → P •, $]
 fn yy_state_17(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_empty_after, yy_reduction_4)
+  ReduceNoLookahead(1, NT_empty_after, yy_reduction_2)
 }
 
 ///|
@@ -538,7 +538,7 @@ fn yy_state_19(_lookahead : YYSymbol) -> YYDecision {
 ///|
 // [1, empty_before → C •, $]
 fn yy_state_20(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(1, NT_empty_before, yy_reduction_3)
+  ReduceNoLookahead(1, NT_empty_before, yy_reduction_1)
 }
 
 ///|
@@ -588,7 +588,7 @@ fn yy_state_25(_lookahead : YYSymbol) -> YYDecision {
 ///|
 // [0, multi → P A B C •, $]
 fn yy_state_26(_lookahead : YYSymbol) -> YYDecision {
-  ReduceNoLookahead(4, NT_multi, yy_reduction_1)
+  ReduceNoLookahead(4, NT_multi, yy_reduction_0)
 }
 
 ///|

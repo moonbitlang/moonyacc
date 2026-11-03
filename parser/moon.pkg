@@ -11,4 +11,18 @@ rule(
   command: "moonx moonbitlang/yacc@0.7.24 -- --input-mode pull $input -o $output",
 )
 
-dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")
+// Normalize legacy syntax without shell operators. The intermediate script is
+// not compiled as part of this package.
+rule(name: "format_bootstrap", command: "moonfmt $input -o $output")
+
+dev_build(
+  rule: "moonyacc",
+  input: "parser.mbty",
+  output: "parser.bootstrap.mbtx",
+)
+
+dev_build(
+  rule: "format_bootstrap",
+  input: "parser.bootstrap.mbtx",
+  output: "parser.mbt",
+)

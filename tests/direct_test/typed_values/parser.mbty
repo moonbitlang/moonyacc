@@ -1,0 +1,60 @@
+%{
+pub(all) struct Pos {
+  offset : Int
+}
+pub(all) struct Item {
+  text : String
+  count : Int
+  enabled : Bool
+}
+pub type Mapper = (Int) -> Int
+let visits : Ref[Int] = Ref(0)
+let amount_events : Ref[Array[String]] = Ref([])
+let amount_spans : Ref[Array[(Int, Int, Int)]] = Ref([])
+let _value_0 = 40
+let _sub_action_0_result = 100
+fn nested_text() -> String {
+  let p = Pos::{ offset: 0 }
+  try! text([(TEXT("nested"), p, p), (EOF, p, p)])
+}
+%}
+
+%position<Pos>
+%token<Int> NUMBER
+%token<String> TEXT
+%token<Bool> FLAG
+%token EOF
+%start<Item> item
+%start<Mapper> function
+%start<String> text
+%start<(Int, Int, Int, Int)> hygiene
+
+%%
+
+item: mark word amount flag EOF { Item::{ text: $2, count: $3, enabled: $4 }};
+mark -> Unit: { visits.val += 1; ()};
+word -> String: TEXT { if $1 == "reenter" { nested_text() } else { $1 }};
+amount -> Int: decoded_amount amount_end { amount_events.val.push("amount")
+  amount_spans.val.push(($startpos($1).offset, $endpos($1).offset, $2))
+  $1
+};
+encoded_amount -> (String, Int): NUMBER { amount_events.val.push("encode")
+  ("decode", $1)
+};
+decoded_amount -> Int: encoded_amount { amount_events.val.push($1.0)
+  $1.1
+};
+amount_end -> Int: { amount_events.val.push("end")
+  $endpos.offset
+};
+flag -> Bool: FLAG { $1};
+function: closure EOF { $1};
+closure -> Mapper: NUMBER { let n = $1; x => x + n};
+text: word EOF { $1};
+
+hygiene: named_input global_input position_input inline_input EOF { ($1, $2, $3, $4)};
+named_input -> Int: a=NUMBER _value_0=NUMBER { a + $1};
+global_input -> Int: NUMBER { _value_0 + $1};
+position_input -> Int: NUMBER _start_0=NUMBER { $startpos($1).offset};
+inline_input -> Int: forwarded_number { _sub_action_0_result + $1};
+%inline forwarded_number -> Int: NUMBER { $1};

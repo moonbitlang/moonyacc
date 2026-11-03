@@ -76,7 +76,8 @@ fn item_doc(item : Item) -> Doc {
         HardLine,
         text("}"),
       ])
-    Enum(name, constructors, _) | Suberror(name, constructors, _) => {
+    Enum(name, constructors, deriving)
+    | Suberror(name, constructors, deriving) => {
       let keyword = if item.declaration is Suberror(_) {
         "suberror "
       } else {
@@ -89,24 +90,25 @@ fn item_doc(item : Item) -> Doc {
           cat([text(c.name), delimited("(", ")", c.arguments.map(type_doc))])
         }
       })
-      let tail = match item.declaration {
-        Enum(_, _, deriving) | Suberror(_, _, deriving) =>
-          if deriving.is_empty() {
-            text("")
-          } else {
-            cat([text(" derive"), delimited("(", ")", deriving.map(type_doc))])
-          }
-        _ => text("")
-      }
-      if constructors.is_empty() && item.declaration is Suberror(_) {
-        cat([text(prefix + keyword + name), tail])
+      let derive_attribute = if deriving.is_empty() {
+        text("")
       } else {
         cat([
+          single_line(
+            cat([text("#derive"), delimited("(", ")", deriving.map(type_doc))]),
+          ),
+          HardLine,
+        ])
+      }
+      if constructors.is_empty() && item.declaration is Suberror(_) {
+        cat([derive_attribute, text(prefix + keyword + name)])
+      } else {
+        cat([
+          derive_attribute,
           text(prefix + keyword + name + " {"),
           Nest(cat([HardLine, join_docs(constructors, HardLine)])),
           HardLine,
           text("}"),
-          tail,
         ])
       }
     }

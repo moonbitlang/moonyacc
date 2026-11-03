@@ -1,0 +1,54 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc_tests/direct_test/typed_values"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn function(Array[(Token, Pos, Pos)], initial_pos? : Pos) -> ((Int32) -> Int32) raise ParseError
+
+pub fn hygiene(Array[(Token, Pos, Pos)], initial_pos? : Pos) -> (Int32, Int32, Int32, Int32) raise ParseError
+
+pub fn item(Array[(Token, Pos, Pos)], initial_pos? : Pos) -> Item raise ParseError
+
+pub fn text(Array[(Token, Pos, Pos)], initial_pos? : Pos) -> String raise ParseError
+
+// Errors
+pub suberror ParseError {
+  UnexpectedToken(Token, (Pos, Pos), Array[TokenKind])
+  UnexpectedEndOfInput(Pos, Array[TokenKind])
+}
+
+// Types and methods
+pub(all) struct Item {
+  text : String
+  count : Int32
+  enabled : Bool
+}
+
+pub(all) struct Pos {
+  offset : Int32
+}
+
+pub(all) enum Token {
+  NUMBER(Int32)
+  TEXT(String)
+  FLAG(Bool)
+  EOF
+}
+pub fn Token::kind(Self) -> TokenKind
+
+pub(all) enum TokenKind {
+  TK_NUMBER
+  TK_TEXT
+  TK_FLAG
+  TK_EOF
+}
+pub impl Show for TokenKind
+pub impl @debug.Debug for TokenKind
+
+// Type aliases
+pub type Mapper = (Int32) -> Int32
+
+// Traits

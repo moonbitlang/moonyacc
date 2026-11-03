@@ -18,6 +18,8 @@ pub fn[T] identity(T) -> T
 
 pub fn identity_reader() -> (Int32) -> Int32
 
+pub fn joined_value(Bool) -> (Int32, String)
+
 pub fn literal() -> String
 
 pub fn loop_result(Int32) -> Int32

@@ -62,6 +62,29 @@ pub fn Context::runtime_types(
         visibility=Private,
       ),
     )
+    for _, action in self.reductions {
+      // Inlining preserves the end of the physical RHS. Its start is either
+      // the first physical symbol or the anchor of an erased epsilon prefix.
+      guard! action.span.0 is (BeforeRhs | StartOf(0))
+      guard! action.span.1 ==
+        (if action.arity == 0 {
+          @elab.PositionExpr::BeforeRhs
+        } else {
+          EndOf(action.arity - 1)
+        })
+      items.push(
+        @mbt_ast.item(
+          Global(
+            "yy_reduction_\{self.action_id(action)}",
+            Some(named_type("YYReduction", [])),
+            Record(None, [
+              ("action", Ident("yy_action_\{self.action_id(action)}")),
+              ("start_before_rhs", Bool(action.span.0 is BeforeRhs)),
+            ]),
+          ),
+        ),
+      )
+    }
   }
   if engine is Table {
     items.push(@mbt_ast.item(TypeAlias("YYSymbol", named_type("Int", []))))
@@ -72,23 +95,27 @@ pub fn Context::runtime_types(
 ///|
 fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
   let position = self.meta.position_data_type
-  let located : @elab.TypeExpr = Tuple([
-    named_type("Token", []),
-    position,
-    position,
-  ])
+  let input = self.input_type()
   let parameters = match self.input_mode {
     Array =>
       [
-        typed("tokens", named_type("Array", [located])),
+        typed("tokens", named_type("Array", [input])),
         typed("start", named_type("YYState", [])),
         typed("return_", Arrow([named_type("YYObj", [])], Param("T"))),
-        @mbt_ast.Parameter::Optional("initial_pos", position, None),
+        ..if self.input_layout is Located {
+          [@mbt_ast.Parameter::Optional("initial_pos", position, None)]
+        } else {
+          []
+        },
       ]
     Pull =>
       [
-        typed("read_token", Arrow([], located)),
-        typed("start_pos", position),
+        typed("read_token", Arrow([], input)),
+        ..if self.input_layout is Located {
+          [typed("start_pos", position)]
+        } else {
+          []
+        },
         typed("start", named_type("YYState", [])),
         typed("return_", Arrow([named_type("YYObj", [])], Param("T"))),
       ]
@@ -97,7 +124,9 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
   if self.input_mode is Array {
     body.push(@mbt_ast.Stmt::LetMut("cursor", None, Int(0)))
   }
-  let initial : @mbt_ast.Expr = if self.input_mode is Array {
+  let initial : @mbt_ast.Expr = if self.input_layout is TokenOnly {
+    Unit
+  } else if self.input_mode is Array {
     dot_call(Ident("initial_pos"), "unwrap_or_else", [
       Lambda([], value_block(component(Index(Ident("tokens"), Int(0)), 1))),
     ])
@@ -106,7 +135,7 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
   }
   if self.tracks_positions() {
     body.push(binding("initial_position", initial))
-  } else {
+  } else if self.input_layout is Located {
     // Preserve the entry point's initial-position validation while erasing
     // the internal Unit position fields.
     body.push(Eval(call("ignore", [initial])))
@@ -147,19 +176,23 @@ fn Context::parse_function(self : Context, engine : Engine) -> @mbt_ast.Item {
   }
   let read_statements : Array[@mbt_ast.Stmt] = [
     Let(
-      Tuple([
-        Bind("token"),
-        if self.tracks_positions() {
-          Bind("start_pos")
-        } else {
-          Any
-        },
-        if self.tracks_positions() {
-          Bind("end_pos")
-        } else {
-          Any
-        },
-      ]),
+      if self.input_layout is TokenOnly {
+        Bind("token")
+      } else {
+        Tuple([
+          Bind("token"),
+          if self.tracks_positions() {
+            Bind("start_pos")
+          } else {
+            Any
+          },
+          if self.tracks_positions() {
+            Bind("end_pos")
+          } else {
+            Any
+          },
+        ])
+      },
       None,
       if self.input_mode is Array {
         Index(Ident("tokens"), Ident("cursor"))

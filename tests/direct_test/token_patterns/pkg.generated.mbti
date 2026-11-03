@@ -1,0 +1,33 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc_tests/direct_test/token_patterns"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn start(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Array[(String, Int32, Int32)]
+
+// Errors
+pub suberror ParseError {
+  UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
+  UnexpectedEndOfInput(Int32, Array[TokenKind])
+}
+
+// Types and methods
+pub(all) enum Token {
+  NUMBER(Int32)
+  TEXT(String)
+}
+pub fn Token::kind(Self) -> TokenKind
+
+pub(all) enum TokenKind {
+  TK_NUMBER
+  TK_TEXT
+}
+pub impl Show for TokenKind
+pub impl @debug.Debug for TokenKind
+
+// Type aliases
+
+// Traits

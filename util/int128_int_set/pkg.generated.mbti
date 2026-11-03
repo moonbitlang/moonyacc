@@ -12,7 +12,8 @@ pub fn singleton(Int32) -> Int128IntSet
 
 // Types and methods
 #alias(T)
-type Int128IntSet derive(Compare, Eq, Hash)
+#derive(Compare, Eq, Hash)
+type Int128IntSet
 pub fn Int128IntSet::add(Self, Int32) -> Self
 pub fn Int128IntSet::contains(Self, Int32) -> Bool
 pub fn Int128IntSet::difference(Self, Self) -> Self

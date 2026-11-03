@@ -24,19 +24,22 @@ pub(all) struct Automaton {
 }
 pub fn Automaton::build(@grm.Grammar, user_eoi~ : Bool) -> Self
 
+#derive(Eq, Hash)
 pub(all) struct ConflictLocation {
   state : LR1State
   input : Lookahead
-} derive(Eq, Hash)
+}
 
+#derive(Eq)
 pub(all) enum Decision {
   Shift(LR1State)
   Reduce(@grm.Production)
   Accept
   Conflict(@list.List[Decision])
-} derive(Eq)
+}
 
-pub(all) struct EncodedLR0Item(Int32) derive(Compare, Eq, Hash)
+#derive(Compare, Eq, Hash)
+pub(all) struct EncodedLR0Item(Int32)
 pub fn EncodedLR0Item::decode(Self, @grm.Grammar) -> LR0Item
 pub fn EncodedLR0Item::decode_postdot(Self, @grm.Grammar) -> @grm.Symbol?
 pub fn EncodedLR0Item::decode_production(Self, @grm.Grammar) -> @grm.Production
@@ -56,19 +59,21 @@ pub impl Hash for EncodedLR0ItemSet
 
 type EncodedLR1ItemSet
 
+#derive(Compare, Eq, Hash)
 pub(all) struct LR0Item {
   production : @grm.Production
   dot : Int32
-} derive(Compare, Eq, Hash)
+}
 pub fn LR0Item::new(@grm.Production, Int32) -> Self
 pub fn LR0Item::postdot(Self) -> @grm.Symbol?
 pub fn LR0Item::shift(Self) -> Self
 
+#derive(Compare, Eq)
 pub(all) struct LR1Item {
   production : @grm.Production
   dot : Int32
   lookahead : Lookahead
-} derive(Compare, Eq)
+}
 pub fn LR1Item::core(Self) -> LR0Item
 pub fn LR1Item::postdot(Self) -> @grm.Symbol?
 pub fn LR1Item::shift(Self) -> Self
@@ -95,10 +100,11 @@ pub impl Compare for LR1State
 pub impl Eq for LR1State
 pub impl Hash for LR1State
 
+#derive(Compare, Eq)
 pub(all) enum Lookahead {
   EndOfInput
   Input(@grm.Terminal)
-} derive(Compare, Eq)
+}
 pub impl Hash for Lookahead
 pub impl Show for Lookahead
 

@@ -1,0 +1,8 @@
+%position<Int>
+%start<Int> position
+%start<Unit> unit
+
+%%
+
+position: { $endpos};
+unit: { ()};

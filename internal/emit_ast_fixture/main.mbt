@@ -120,6 +120,35 @@ fn main {
       String("quote:\" slash:\\ interp:\\{x} 😀\r\n\u0000"),
     ),
     value_function("char_literal", type_("Char"), Char('\'')),
+    @mbt_ast.item(
+      Function(
+        @mbt_ast.function(
+          "joined_value",
+          [Positional("flag", Some(type_("Bool")))],
+          body(
+            LabelledBlock("join", {
+              statements: [
+                Eval(
+                  If(
+                    Ident("flag"),
+                    {
+                      statements: [
+                        BreakTo("join", Some(Tuple([Int(7), String("left")]))),
+                      ],
+                      result: None,
+                    },
+                    None,
+                  ),
+                ),
+              ],
+              result: Some(Tuple([Int(11), String("right")])),
+            }),
+          ),
+          result=Tuple([int, string]),
+        ),
+      ),
+      visibility=Public,
+    ),
     @mbt_ast.item(TypeAlias("Reader", Arrow([int], int)), visibility=Public),
     value_function(
       "make_reader",

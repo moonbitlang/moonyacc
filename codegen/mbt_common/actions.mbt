@@ -12,12 +12,10 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
       body.push(
         binding(
           "_sub_action_\{index}_result",
-          call(
-            "yy_action_\{self.action_id(sub.action)}",
-            self.action_arguments(
-              last,
-              Slice(Ident("_args"), Some(Int(sub.start)), Some(Int(sub.end))),
-            ),
+          self.action_call(
+            sub.action,
+            last,
+            Slice(Ident("_args"), Some(Int(sub.start)), Some(Int(sub.end))),
           ),
         ),
       )
@@ -44,29 +42,12 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
           body.push(binding(name, self.position_expr(position)))
       }
     }
-    let clause = action.original_clause_info
-    // Normalize preview line endings before splitting; otherwise a trailing
-    // CR becomes an extra line when the comment renderer processes it.
-    let lines = clause.code
-      .replace_all(old="\r\n", new="\n")
-      .split("\n")
-      .to_array()
-    let digits = Show::to_string(clause.line + lines.length()).length()
-    let comments = ["file:///./" + clause.file]
-    for i, line in lines {
-      comments.push(
-        Show::to_string(clause.line + i + 1).pad_start(digits, ' ') +
-        "|" +
-        (if i == 0 { " ".repeat(clause.column) } else { "" }) +
-        line.to_owned(),
-      )
-    }
     items.push(
       @mbt_ast.item(
         Function(
           @mbt_ast.function(
             "yy_action_\{self.action_id(action)}",
-            if self.pass_before_rhs {
+            if self.action_uses_before_rhs(action) {
               [
                 typed("_last_pos", self.meta.position_data_type),
                 typed("_args", named_type("ArrayView", [self.data_type()])),
@@ -78,79 +59,28 @@ pub fn Context::action_items(self : Context) -> Array[@mbt_ast.Item] {
             result=named_type("YYObj", []),
           ),
         ),
-        comments~,
+        comments=action_comments(action),
       ),
     )
   }
-  if self.override_span_start {
-    for _, action in self.reductions {
-      // Inlining preserves the end of the physical RHS. Its start is either
-      // the first physical symbol or the anchor of an erased epsilon prefix.
-      guard! action.span.0 is (BeforeRhs | StartOf(0))
-      guard! action.span.1 ==
-        (if action.arity == 0 {
-          @elab.PositionExpr::BeforeRhs
-        } else {
-          EndOf(action.arity - 1)
-        })
-      items.push(
-        @mbt_ast.item(
-          Global(
-            "yy_reduction_\{self.action_id(action)}",
-            Some(named_type("YYReduction", [])),
-            Record(None, [
-              ("action", Ident("yy_action_\{self.action_id(action)}")),
-              ("start_before_rhs", Bool(action.span.0 is BeforeRhs)),
-            ]),
-          ),
-        ),
-      )
-    }
-  }
+
   items
 }
 
 ///|
 fn Context::action_body(self : Context, action : @elab.Action) -> @mbt_ast.Expr {
-  let value : @mbt_ast.Expr = match action.body {
-    Default => Unit
-    User(pieces) => {
-      let pieces = pieces.map(piece => {
-        match piece {
-          Text(text, offset~) =>
-            @mbt_ast.Piece::Text(
-              text,
-              Some({ source: self.filename, offset, length: text.length(), }),
-            )
-          Reference(reference, offset~, length~) => {
-            let expr : @mbt_ast.Expr = match reference {
-              Binding(name) => Ident(name)
-              Location(start, end) => Tuple([Ident(start), Ident(end)])
-            }
-            @mbt_ast.Piece::Splice(
-              expr,
-              Some({ source: self.filename, offset, length, }),
-            )
-          }
-        }
-      })
-      Verbatim(@mbt_ast.Fragment(pieces))
-    }
-    JsonCst(name~, rule_index~, clause_index~) => {
-      let args : Array[@mbt_ast.Expr] = [
-        String(name),
-        Int(rule_index),
-        Int(clause_index),
-      ]
-      if self.tracks_positions() {
-        args.push(self.position_expr(action.span.0))
-        args.push(self.position_expr(action.span.1))
-      }
-      args.push(Ident("_args"))
-      return call("yy_json_cst_action", args)
-    }
+  if action.body is JsonCst(_) {
+    call(
+      "yy_json_cst_action",
+      self.json_arguments(
+        action,
+        position => self.position_expr(position),
+        Ident("_args"),
+      ),
+    )
+  } else {
+    call("YYObj_" + type_ident(action.type_), [self.user_action(action)])
   }
-  call("YYObj_" + type_ident(action.type_), [value])
 }
 
 ///|
@@ -172,33 +102,7 @@ fn Context::json_cst_action(self : Context) -> @mbt_ast.Item {
         parameters,
         value_block(
           call("YYObj_Json", [
-            Map([
-              (String("type"), String("NONTERMINAL")),
-              (String("name"), Ident("name")),
-              (String("rule_index"), Ident("rule_index")),
-              (String("clause_index"), Ident("clause_index")),
-              (String("children"), call("args_to_json", [Ident("_args")])),
-              (
-                String("start"),
-                call("ToJson::to_json", [
-                  if self.tracks_positions() {
-                    Ident("start_pos")
-                  } else {
-                    Unit
-                  },
-                ]),
-              ),
-              (
-                String("end"),
-                call("ToJson::to_json", [
-                  if self.tracks_positions() {
-                    Ident("end_pos")
-                  } else {
-                    Unit
-                  },
-                ]),
-              ),
-            ]),
+            self.json_cst_object(call("args_to_json", [Ident("_args")])),
           ]),
         ),
         result=named_type("YYObj", []),

@@ -1,0 +1,36 @@
+%{
+let reductions : Ref[Int] = Ref(0)
+let events : Ref[Array[String]] = Ref([])
+%}
+
+%position<Int>
+%token<Int> NUMBER
+%token PLUS STAR EQ LPAREN RPAREN EOF
+%nonassoc EQ
+%left PLUS
+%left STAR
+%start<(Int, Int, Int)> start
+%start<Array[(Int, Int)]> inline_positions
+%type<Int> expr atom
+
+%%
+
+start: e=expr EOF { (e, $startpos(e), $endpos(e))};
+
+inline_positions: prefix x=anchored EOF { x + [$loc(x)]};
+anchored -> Array[(Int, Int)]:
+  | e=empty NUMBER { [e, $loc, $sloc]}
+  | unit_prefix STAR NUMBER { []};
+%inline prefix: LPAREN { ()} | { ()};
+%inline empty -> (Int, Int): { $loc};
+%inline unit_prefix: { ()};
+
+expr:
+  | atom { $1}
+  | expr PLUS expr { events.val.push("plus"); $1 + $3}
+  | expr STAR expr { $1 * $3}
+  | expr EQ expr { reductions.val += 1; $1 + $3};
+
+%inline atom:
+  | NUMBER { events.val.push("number"); $1}
+  | LPAREN expr RPAREN { $2};

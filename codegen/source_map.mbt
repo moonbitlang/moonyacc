@@ -1,7 +1,8 @@
 ///|
+#derive(ToJson)
 pub(all) struct SourceMap {
   mappings : Array[SourceMapping]
-} derive(ToJson)
+}
 
 ///|
 pub fn SourceMap::new() -> SourceMap {
@@ -9,12 +10,13 @@ pub fn SourceMap::new() -> SourceMap {
 }
 
 ///|
+#derive(ToJson)
 pub(all) struct SourceMapping {
   source : String
   original_offset : Int32
   generated_offset : Int32
   length : Int32
-} derive(ToJson)
+}
 
 ///|
 pub trait SourceMapBuilder {

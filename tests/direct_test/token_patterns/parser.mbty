@@ -1,0 +1,10 @@
+%position<Int>
+%token<Int> NUMBER
+%token<String> TEXT
+%start<Array[(String, Int, Int)]> start
+%%
+start: items {$1};
+items -> Array[(String, Int, Int)]:
+  | n=NUMBER rest=items {[(Show::to_string(n), $startpos(n), $endpos(n)), ..rest]}
+  | t=TEXT rest=items {[(t, $startpos(t), $endpos(t)), ..rest]}
+  | {[]};

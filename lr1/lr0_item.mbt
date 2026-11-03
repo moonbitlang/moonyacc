@@ -13,10 +13,11 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Eq, Compare, Hash)
 pub(all) struct LR0Item {
   production : @grm.Production
   dot : Int32
-} derive(Eq, Compare, Hash)
+}
 
 ///|
 pub fn LR0Item::new(production : @grm.Production, dot : Int32) -> LR0Item {

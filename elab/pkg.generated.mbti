@@ -34,12 +34,20 @@ pub(all) struct Action {
   body : ActionBody
   original_clause_info : OriginalClauseInfo
 }
+pub fn Action::inputs(Self, tracks_positions~ : Bool) -> Array[ActionInput]
 
 pub(all) enum ActionBody {
   Default
   User(Array[ActionPiece])
   JsonCst(name~ : String, rule_index~ : Int32, clause_index~ : Int32)
 }
+
+#derive(Eq)
+pub(all) enum ActionInput {
+  Value(Int32, TypeExpr)
+  Position(PositionExpr)
+}
+pub fn ActionInput::rebase(Self, Int32) -> Self
 
 pub(all) enum ActionPiece {
   Text(String, offset~ : Int32)
@@ -97,12 +105,14 @@ pub(all) struct ParserSpec {
   derive_map : @array_multimap.T[String, String]
 }
 
+#derive(Eq)
 pub(all) enum PositionExpr {
   BeforeRhs
   StartOf(Int32)
   EndOf(Int32)
   FirstNonEmpty(Array[(PositionExpr, PositionExpr)])
-} derive(Eq)
+}
+pub fn PositionExpr::inputs(Self) -> Array[Self]
 pub fn PositionExpr::rebase(Self, Int32) -> Self
 pub fn PositionExpr::substitute(Self, index~ : Int32, arity~ : Int32, span~ : (Self, Self)) -> Self
 pub fn PositionExpr::uses_before_rhs(Self) -> Bool
@@ -141,13 +151,14 @@ pub(all) enum TokenPayloadRewrite {
   NoRewrite
 }
 
+#derive(Compare, Eq)
 pub(all) enum TypeExpr {
   Constr(pkg~ : String?, String, Array[TypeExpr])
   Param(String)
   Option(TypeExpr)
   Tuple(Array[TypeExpr])
   Arrow(Array[TypeExpr], TypeExpr)
-} derive(Compare, Eq)
+}
 pub impl Show for TypeExpr
 
 // Type aliases

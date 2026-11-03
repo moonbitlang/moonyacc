@@ -128,7 +128,7 @@ pub fn token_items(
 }
 
 ///|
-pub fn Context::prelude(
+pub fn Context::preamble(
   self : Context,
   external_tokens~ : Bool,
 ) -> Array[@mbt_ast.Item] {
@@ -178,8 +178,18 @@ pub fn Context::prelude(
     ),
   )
   items.append(derived_extensions("ParseError", error_traits))
+  items
+}
+
+///|
+pub fn Context::prelude(
+  self : Context,
+  external_tokens~ : Bool,
+  require_void~ : Bool = false,
+) -> Array[@mbt_ast.Item] {
+  let items = self.preamble(external_tokens~)
   items.push(@mbt_ast.item(TypeAlias("YYObj", named_type("Error", []))))
-  if self.mode is Default || self.input_mode is Array {
+  if require_void || self.mode is Default || self.input_mode is Array {
     items.push(
       @mbt_ast.item(Suberror("YYObj_Void", [], []), visibility=Private),
     )
@@ -235,38 +245,24 @@ pub fn Context::input_function(
         }
       JsonCst =>
         call("YYObj_Json", [
-          Map([
-            (String("type"), String("TERMINAL")),
-            (String("name"), String(t.name)),
-            (
-              String("data"),
-              if unit {
-                call("Json::null", [])
-              } else {
-                call("ToJson::to_json", [Ident("data")])
-              },
-            ),
-            (
-              String("start"),
-              call("ToJson::to_json", [
-                if self.tracks_positions() {
-                  Ident("_start_pos")
-                } else {
-                  Unit
-                },
-              ]),
-            ),
-            (
-              String("end"),
-              call("ToJson::to_json", [
-                if self.tracks_positions() {
-                  Ident("_end_pos")
-                } else {
-                  Unit
-                },
-              ]),
-            ),
-          ]),
+          token_json(
+            t.name,
+            if unit {
+              None
+            } else {
+              Some(Ident("data"))
+            },
+            if self.tracks_positions() {
+              Ident("_start_pos")
+            } else {
+              Unit
+            },
+            if self.tracks_positions() {
+              Ident("_end_pos")
+            } else {
+              Unit
+            },
+          ),
         ])
     }
     (pattern, value_block(Tuple([engine.terminal(t), payload])))

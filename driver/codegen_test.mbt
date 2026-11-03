@@ -30,7 +30,7 @@ test "JSON CST generation shares nonterminal construction" {
     #|%inline atom: NUMBER { () };
   for
     generator in [
-      @gen_mbt.generator, @gen_mbt_table.generator, @gen_mbt_table.compress_generator,
+      @gen_mbt.generator, @gen_mbt_direct.generator, @gen_mbt_table.generator, @gen_mbt_table.compress_generator,
     ] {
     for input_mode in [@driver.InputMode::Array, Pull] {
       let output = @driver.compile(
@@ -48,5 +48,55 @@ test "JSON CST generation shares nonterminal construction" {
       generator~,
     )
     assert_eq(output.split("\"NONTERMINAL\"").count() - 1, 0)
+  }
+}
+
+///|
+test "direct Unit positions have no register storage" {
+  let grammar =
+    #|%token<Int> NUMBER
+    #|%start<(Unit, Unit)> start empty
+    #|%%
+    #|start: NUMBER { $loc };
+    #|empty: { $loc };
+  for input_mode in [@driver.InputMode::Array, Pull] {
+    for mode in [@driver.Mode::Default, JsonCst] {
+      let output = @driver.compile(
+        grammar,
+        filename="unit_positions.mbty",
+        input_mode~,
+        mode~,
+        generator=@gen_mbt_direct.generator,
+      )
+      assert_false(output.contains("_yy_position_"))
+      assert_false(output.contains("initial_position"))
+    }
+  }
+}
+
+///|
+test "default O1 and reserved O0 preserve the same output" {
+  let grammar =
+    #|%position<Int>
+    #|%token<Int> NUMBER
+    #|%start<Int> start
+    #|%%
+    #|start: NUMBER { $1 };
+  for input_mode in [@driver.InputMode::Array, Pull] {
+    let expected = @driver.compile(
+      grammar,
+      filename="optimization.mbty",
+      input_mode~,
+      generator=@gen_mbt_direct.generator,
+    )
+    for optimization_level in [@codegen.OptimizationLevel::O0, O1] {
+      let output = @driver.compile(
+        grammar,
+        filename="optimization.mbty",
+        input_mode~,
+        generator=@gen_mbt_direct.new(optimization_level~),
+      )
+      assert_eq(output, expected)
+    }
   }
 }

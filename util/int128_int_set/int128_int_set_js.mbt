@@ -13,13 +13,14 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Eq, Compare, Hash)
 #alias(T)
 struct Int128IntSet {
   a : Int32
   b : Int32
   c : Int32
   d : Int32
-} derive(Eq, Compare, Hash)
+}
 
 ///|
 pub fn empty() -> Int128IntSet {

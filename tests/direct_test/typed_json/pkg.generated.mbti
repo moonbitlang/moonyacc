@@ -1,0 +1,41 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc_tests/direct_test/typed_json"
+
+import {
+  "moonbitlang/core/debug",
+  "moonbitlang/core/json",
+}
+
+// Values
+pub fn start(() -> (Token, Unit, Unit), Unit) -> @json.Json raise ParseError
+
+// Errors
+pub suberror ParseError {
+  UnexpectedToken(Token, (Unit, Unit), Array[TokenKind])
+}
+
+// Types and methods
+pub(all) struct Payload {
+  value : Int32
+}
+pub fn Payload::to_json(Self) -> @json.Json
+pub impl @json.ToJson for Payload
+
+pub(all) enum Token {
+  VALUE(Payload)
+  INVALID(Payload)
+  EOF
+}
+pub fn Token::kind(Self) -> TokenKind
+
+pub(all) enum TokenKind {
+  TK_VALUE
+  TK_INVALID
+  TK_EOF
+}
+pub impl Show for TokenKind
+pub impl @debug.Debug for TokenKind
+
+// Type aliases
+
+// Traits

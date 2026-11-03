@@ -1,0 +1,44 @@
+// Generated using `moon info`, DON'T EDIT IT
+package "moonbitlang/yacc_tests/direct_test/pull"
+
+import {
+  "moonbitlang/core/debug",
+}
+
+// Values
+pub fn inline_positions(() -> (Token, Int32, Int32), Int32) -> Array[(Int32, Int32)] raise ParseError
+
+pub fn start(() -> (Token, Int32, Int32), Int32) -> (Int32, Int32, Int32) raise ParseError
+
+// Errors
+pub suberror ParseError {
+  UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
+}
+
+// Types and methods
+pub(all) enum Token {
+  NUMBER(Int32)
+  PLUS
+  STAR
+  EQ
+  LPAREN
+  RPAREN
+  EOF
+}
+pub fn Token::kind(Self) -> TokenKind
+
+pub(all) enum TokenKind {
+  TK_NUMBER
+  TK_PLUS
+  TK_STAR
+  TK_EQ
+  TK_LPAREN
+  TK_RPAREN
+  TK_EOF
+}
+pub impl Show for TokenKind
+pub impl @debug.Debug for TokenKind
+
+// Type aliases
+
+// Traits

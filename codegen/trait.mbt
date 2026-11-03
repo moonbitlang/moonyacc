@@ -22,5 +22,6 @@ pub(open) trait CodeGenerator {
     no_comments~ : Bool,
     mode~ : Mode,
     input_mode~ : InputMode,
+    input_layout~ : InputLayout,
   ) -> Unit
 }

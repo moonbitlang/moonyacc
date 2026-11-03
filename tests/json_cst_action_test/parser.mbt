@@ -91,62 +91,8 @@ priv struct YYReduction {
 }
 
 ///|
-type YYSymbol = Int
-
-///|
-// file:///./parser.mbty
-// 8|       prefix atom EOF { () }
-fn yy_action_1(
-  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
-) -> YYObj {
-  let _sub_action_0_result = yy_action_0(_args[0].2, _args[1:2])
-  yy_json_cst_action("start", 0, 0, _args[0].1, _args[2].2, _args)
-}
-
-///|
-// file:///./parser.mbty
-// 10|              NUMBER { () }
-fn yy_action_0(
-  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
-) -> YYObj {
-  yy_json_cst_action("atom", 2, 0, _args[0].1, _args[0].2, _args)
-}
-
-///|
-// file:///./parser.mbty
-// 9|                 MARK { () }
-fn yy_action_2(
-  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
-) -> YYObj {
-  yy_json_cst_action("prefix", 1, 1, _args[0].1, _args[0].2, _args)
-}
-
-///|
-// file:///./parser.mbty
-// 9|        { () }
-fn yy_action_3(
-  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
-) -> YYObj {
-  yy_json_cst_action("prefix", 1, 0, _last_pos, _last_pos, _args)
-}
-
-///|
-// file:///./parser.mbty
-// 11|               empty NUMBER EOF { () }
-fn yy_action_5(
-  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
-) -> YYObj {
-  let _sub_action_0_result = yy_action_4(_last_pos, _args[0:0])
-  yy_json_cst_action("leading_empty", 3, 0, _last_pos, _args[1].2, _args)
-}
-
-///|
-// file:///./parser.mbty
-// 12|               { () }
-fn yy_action_4(
-  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
-) -> YYObj {
-  yy_json_cst_action("empty", 4, 0, _last_pos, _last_pos, _args)
+let yy_reduction_0 : YYReduction = {
+  action: yy_action_0, start_before_rhs: false
 }
 
 ///|
@@ -155,15 +101,69 @@ let yy_reduction_1 : YYReduction = {
 }
 
 ///|
-let yy_reduction_2 : YYReduction = {
-  action: yy_action_2, start_before_rhs: false
-}
+let yy_reduction_2 : YYReduction = {action: yy_action_2, start_before_rhs: true}
 
 ///|
 let yy_reduction_3 : YYReduction = {action: yy_action_3, start_before_rhs: true}
 
 ///|
-let yy_reduction_5 : YYReduction = {action: yy_action_5, start_before_rhs: true}
+type YYSymbol = Int
+
+///|
+// file:///./parser.mbty
+// 8|       prefix atom EOF { () }
+fn yy_action_0(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  let _sub_action_0_result = yy_action_4(_args[0].2, _args[1:2])
+  yy_json_cst_action("start", 0, 0, _args[0].1, _args[2].2, _args)
+}
+
+///|
+// file:///./parser.mbty
+// 10|              NUMBER { () }
+fn yy_action_4(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  yy_json_cst_action("atom", 2, 0, _args[0].1, _args[0].2, _args)
+}
+
+///|
+// file:///./parser.mbty
+// 9|                 MARK { () }
+fn yy_action_1(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  yy_json_cst_action("prefix", 1, 1, _args[0].1, _args[0].2, _args)
+}
+
+///|
+// file:///./parser.mbty
+// 9|        { () }
+fn yy_action_2(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  yy_json_cst_action("prefix", 1, 0, _last_pos, _last_pos, _args)
+}
+
+///|
+// file:///./parser.mbty
+// 11|               empty NUMBER EOF { () }
+fn yy_action_3(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  let _sub_action_0_result = yy_action_5(_last_pos, _args[0:0])
+  yy_json_cst_action("leading_empty", 3, 0, _last_pos, _args[1].2, _args)
+}
+
+///|
+// file:///./parser.mbty
+// 12|               { () }
+fn yy_action_5(
+  _last_pos : (Int, Int), _args : ArrayView[(YYObj, (Int, Int), (Int, Int))]
+) -> YYObj {
+  yy_json_cst_action("empty", 4, 0, _last_pos, _last_pos, _args)
+}
 
 ///|
 fn yy_input(token : Token, _start_pos : (Int, Int), _end_pos : (Int, Int)) -> (
@@ -214,7 +214,7 @@ let yy_prod_len_table : ReadOnlyArray[Int] = [3, 0, 1, 2]
 
 ///|
 let yy_prod_act_table : ReadOnlyArray[YYReduction] = [
-  yy_reduction_1, yy_reduction_3, yy_reduction_2, yy_reduction_5
+  yy_reduction_0, yy_reduction_2, yy_reduction_1, yy_reduction_3
 ]
 
 ///|
