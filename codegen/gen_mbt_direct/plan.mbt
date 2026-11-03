@@ -8,6 +8,7 @@ priv struct Emitter {
   checkpoints : @direct_ir.CheckpointFlow
   input_mode : @codegen.InputMode
   optimize_resources : Bool
+  locality : Bool
   cache_ready : Bool
   cache_json : Bool
   control : @control_flow.Plan
@@ -42,6 +43,7 @@ fn Emitter::new(
   support : @mbt_common.Context,
   input_mode : @codegen.InputMode,
   optimize_resources~ : Bool = false,
+  locality~ : Bool = false,
 ) -> Emitter {
   let isolated = @control_flow.isolate(prepared.program) catch {
     InvalidControl(message) => abort(message)
@@ -64,7 +66,7 @@ fn Emitter::new(
   let control = @control_flow.plan(prepared.program, costs~) catch {
     InvalidControl(message) => abort(message)
   }
-  Emitter::{
+  let ordinary = Emitter::{
     ..Emitter::with_plan(
       prepared,
       meta,
@@ -75,7 +77,37 @@ fn Emitter::new(
     ),
     block_estimates: costs,
     resources,
+    locality,
   }.select_resources()
+  if !locality {
+    return ordinary
+  }
+  let fixed = @control_flow.plan(prepared.program, costs~, fixed=true) catch {
+    InvalidControl(message) => abort(message)
+  }
+  let before = ordinary.control.transfer_cost()
+  let after = fixed.transfer_cost()
+  guard after.no_worse_than(before) && improved_transfers(before, after) else {
+    ordinary
+  }
+  let candidate = Emitter::{
+    ..Emitter::with_plan(
+      prepared,
+      meta,
+      support,
+      input_mode,
+      fixed,
+      optimize_resources~,
+    ),
+    block_estimates: costs,
+    resources,
+    locality,
+  }.select_resources()
+  if candidate.structured_cost() <= ordinary.structured_cost() {
+    candidate
+  } else {
+    ordinary
+  }
 }
 
 ///|
@@ -123,6 +155,7 @@ fn Emitter::with_plan(
     checkpoints: prepared.checkpoints,
     input_mode,
     optimize_resources,
+    locality: false,
     cache_ready: program.blocks.any(b => {
       b.all_instructions().any(i => i is EnsureLookahead)
     }),

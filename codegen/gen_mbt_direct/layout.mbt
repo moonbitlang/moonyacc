@@ -74,7 +74,7 @@ fn Emitter::assess_layout(
   program : @direct_ir.Program,
   knowledge : @direct_ir.StackKnowledge,
   limit : Int32,
-  reduce_selectors~ : Bool,
+  improve_transfers~ : Bool,
 ) -> (Emitter, Int32)? {
   // A join of equivalent code may need a stack shape our abstract domain
   // cannot express. An unproved candidate is rejected, never forced through.
@@ -90,15 +90,12 @@ fn Emitter::assess_layout(
     self.support,
     self.input_mode,
     optimize_resources=self.optimize_resources,
+    locality=self.locality,
   )
   let before = self.control.transfer_cost()
   let after = candidate.control.transfer_cost()
-  guard after.exits <= before.exits &&
-    (if reduce_selectors {
-      after.selectors < before.selectors
-    } else {
-      after.selectors <= before.selectors
-    }) else {
+  guard after.no_worse_than(before) &&
+    (if improve_transfers { improved_transfers(before, after) } else { true }) else {
     None
   }
   let size = candidate.structured_cost()
@@ -131,31 +128,45 @@ fn Emitter::promising_layout(
   let control = @control_flow.plan(candidate.program, costs~) catch {
     InvalidControl(message) => abort(message)
   }
+  let control = if self.locality {
+    let fixed = @control_flow.plan(candidate.program, costs~, fixed=true) catch {
+      InvalidControl(message) => abort(message)
+    }
+    if fixed.transfer_cost().no_worse_than(control.transfer_cost()) {
+      fixed
+    } else {
+      control
+    }
+  } else {
+    control
+  }
   let before = self.control.transfer_cost()
   let after = control.transfer_cost()
-  after.exits <= before.exits && after.selectors < before.selectors
+  after.no_worse_than(before) && improved_transfers(before, after)
 }
 
 ///|
-/// State specialization and cleanup precede this stage. Repairs to their CFG
-/// are retained only after full re-analysis and structure/emission costing.
+fn improved_transfers(
+  before : @control_flow.TransferCost,
+  after : @control_flow.TransferCost,
+) -> Bool {
+  after.exits < before.exits ||
+  after.selectors + after.entries < before.selectors + before.entries ||
+  after.fixed_exits < before.fixed_exits
+}
+
+///|
+/// Repairs to an admitted CFG are retained only after full re-analysis and
+/// structure/emission costing.
 /// Original IR is the fallback; no guessed state/loop invariant is introduced.
 /// Menhir's tail jumps need no selector lowering. This target-specific policy
 /// accounts for the iterative regions required by MoonBit instead.
-fn layout_emitter(
-  prepared : @direct_ir.PreparedProgram,
+fn repair_layout(
+  emitter : Emitter,
   knowledge : @direct_ir.StackKnowledge,
-  meta : @codegen.MetaProvider,
-  support : @mbt_common.Context,
-  input_mode : @codegen.InputMode,
+  max_trials~ : Int32 = LAYOUT_TRIALS,
 ) -> Emitter {
-  let mut current = Emitter::new(
-    prepared,
-    meta,
-    support,
-    input_mode,
-    optimize_resources=true,
-  )
+  let mut current = emitter
   let initial_size = current.structured_cost()
   let mut current_size = initial_size
   let growth = initial_size / 8
@@ -171,21 +182,21 @@ fn layout_emitter(
         merged,
         knowledge,
         initial_size,
-        reduce_selectors=false,
+        improve_transfers=false,
       )
       is Some((candidate, size)) {
       current = candidate
       current_size = size
     }
   }
-  while trials < LAYOUT_TRIALS {
+  while trials < max_trials {
     let batch = current.duplication_batch(Int32::max(0, limit - current_size))
     if batch.is_empty() {
       break
     }
     let pending = [batch]
     let mut accepted = false
-    while !pending.is_empty() && trials < LAYOUT_TRIALS {
+    while !pending.is_empty() && trials < max_trials {
       let labels = pending.pop().unwrap()
       trials += 1
       let candidate = current.program.duplicate_continuations(labels) catch {
@@ -196,7 +207,7 @@ fn layout_emitter(
           candidate.program,
           knowledge,
           limit,
-          reduce_selectors=true,
+          improve_transfers=true,
         )
         is Some((candidate, size)) {
         current = candidate

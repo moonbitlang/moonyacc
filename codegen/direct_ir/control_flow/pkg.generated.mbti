@@ -8,7 +8,7 @@ import {
 // Values
 pub fn isolate(@direct_ir.Program) -> Plan raise InvalidControl
 
-pub fn plan(@direct_ir.Program, costs~ : Array[Int32]) -> Plan raise InvalidControl
+pub fn plan(@direct_ir.Program, costs~ : Array[Int32], fixed? : Bool) -> Plan raise InvalidControl
 
 // Errors
 pub suberror InvalidControl {
@@ -57,7 +57,10 @@ pub(all) enum Transfer {
 pub struct TransferCost {
   selectors : Int32
   exits : Int32
+  entries : Int32
+  fixed_exits : Int32
 }
+pub fn TransferCost::no_worse_than(Self, Self) -> Bool
 
 // Type aliases
 

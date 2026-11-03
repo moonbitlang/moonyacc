@@ -12,7 +12,8 @@ priv struct StateVersion {
 ///|
 priv struct StateExpansion {
   mut remaining : Int32
-  mut useful : Bool
+  mut savings : Int32
+  mut complete : Bool
 }
 
 ///|
@@ -25,13 +26,16 @@ priv struct StateSpecializer {
   versions : Map[(Int32, Int32), StateVersion]
   pending : Array[StateVersion]
   useful : Set[Int32]
-  mut remaining : Int32
+  savings : Map[Int32, Int32]
+  incomplete : Set[Int32]
+  requests : Map[Int32, Set[Int32]]
+  mut owner : Int32
 }
 
 ///|
-// These bound transformation work, not target code size (owned by emission).
-// Each source body may grow by at most this many logical operations; the
-// whole pass may add at most twice the original IR size before O1 cleanup.
+// Bound each expansion, independently of other requests. An interrupted
+// expansion is discarded as a whole. The finite (source label, state) registry
+// bounds discovery; retained growth and target costs are admission policies.
 const STATE_INLINE_GROWTH = 128
 
 ///|
@@ -43,16 +47,6 @@ fn specialization_cost(body : Body) -> Int32 {
   body.terminator
   .bodies()
   .fold(init=0, (n, branch) => n + specialization_cost(branch))
-}
-
-///|
-fn StateSpecializer::take(self : StateSpecializer, cost : Int32) -> Bool {
-  if cost > self.remaining {
-    false
-  } else {
-    self.remaining -= cost
-    true
-  }
 }
 
 ///|
@@ -78,18 +72,14 @@ fn StateSpecializer::version(
   // A monomorphic source block already retains this fact without cloning.
   guard entry.current.length() > 1 else { original }
   if self.versions.get((original, state)) is Some(version) {
+    self.requests.get_or_init(self.owner, () => Set([])).add(version.label)
     return version.label
   }
-  let cost = target.parameters.length() +
-    specialization_cost({
-      instructions: target.instructions,
-      terminator: target.terminator,
-    })
-  guard self.take(cost) else { original }
   let version = StateVersion::{ original, state, label: self.blocks.length(), }
   self.versions[(original, state)] = version
   self.blocks.push(self.supply.clone_block(target))
   self.pending.push(version)
+  self.requests.get_or_init(self.owner, () => Set([])).add(version.label)
   version.label
 }
 

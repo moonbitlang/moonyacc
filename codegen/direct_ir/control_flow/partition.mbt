@@ -13,6 +13,7 @@ fn partition(
   source : @direct_ir.Program,
   graph : Graph,
   costs : Array[Int32],
+  fixed~ : Bool = false,
 ) -> Array[Array[Int32]] {
   let nodes = source.blocks.mapi((i, _) => i)
   if nodes.length() <= REGION_NODES {
@@ -38,6 +39,7 @@ fn partition(
     current.append(unit_)
     cost += extra
   }
+  let units = []
   for component in graph.components(nodes) {
     let mut cost = 0
     for node in component {
@@ -45,13 +47,21 @@ fn partition(
     }
     if component.length() <= REGION_NODES && cost <= REGION_COST {
       // Preserve a small SCC as a unit rather than cutting its back edges.
-      append(component)
+      units.push(component)
     } else {
       let order = graph.postorder(component)
       for i = order.length() - 1; i >= 0; i = i - 1 {
-        append([order[i]])
+        units.push([order[i]])
       }
     }
+  }
+  let units = if fixed {
+    fixed_successor_units(graph, units, costs)
+  } else {
+    units
+  }
+  for unit_ in units {
+    append(unit_)
   }
   if !current.is_empty() {
     groups.push(current)

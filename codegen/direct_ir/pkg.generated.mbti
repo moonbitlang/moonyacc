@@ -171,6 +171,7 @@ pub fn Program::simplify(Self) -> Self
 pub fn Program::snapshot_liveness(Self) -> SnapshotLiveness raise InvalidProgram
 pub fn Program::specialize_state(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::stack_flow(Self, StackKnowledge) -> StackFlow raise InvalidProgram
+pub fn Program::state_specializations(Self, StackKnowledge) -> StateSpecializations raise InvalidProgram
 pub fn Program::stop_earlier(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::storage_demand(Self, StackFlow, positions~ : Bool) -> StorageDemand
 pub fn Program::validate(Self) -> Unit raise InvalidProgram
@@ -214,6 +215,15 @@ pub(all) struct StackKnowledge {
   production_sites : Array[Array[Int32]]
   entry_origins : Array[@set.Set[Int32]]
 }
+
+pub struct StateSpecializations {
+  // private fields
+}
+pub fn StateSpecializations::apply(Self, Array[Int32], StackKnowledge) -> Program raise InvalidProgram
+pub fn StateSpecializations::candidates(Self) -> Array[Int32]
+pub fn StateSpecializations::prepare(Self, Array[Int32], StackKnowledge, positions~ : Bool) -> PreparedProgram raise InvalidProgram
+pub fn StateSpecializations::savings(Self, Array[Int32]) -> Int32 raise InvalidProgram
+pub fn StateSpecializations::within_budget(Self, Array[Int32]) -> Array[Int32] raise InvalidProgram
 
 pub(all) struct StateValueFact {
   states : @set.Set[Int32]

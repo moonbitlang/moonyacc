@@ -200,7 +200,7 @@ test "state-independent continuations and nonproductive cycles do not retain cop
 }
 
 ///|
-test "a specialized unit chain retains contexts useful only in its successor" {
+fn specialization_chain_fixture() -> (Program, StackKnowledge) {
   let (source, knowledge) = specialization_fixture()
   let base = check_block([], [], [])
   let unit = source.symbols[1].type_
@@ -289,6 +289,12 @@ test "a specialized unit chain retains contexts useful only in its successor" {
     production_sites: [[3], [4]],
     entry_origins: Array::makei(7, _ => Set([0])),
   }
+  (program, knowledge)
+}
+
+///|
+test "a specialized unit chain retains contexts useful only in its successor" {
+  let (program, knowledge) = specialization_chain_fixture()
   let after = program.specialize_state(knowledge)
   for state in [3, 4] {
     assert_eq(
@@ -297,6 +303,81 @@ test "a specialized unit chain retains contexts useful only in its successor" {
     )
   }
   ignore(after.stack_flow(knowledge))
+}
+
+///|
+test "specialization candidates retain complete dependencies and can be rejected without changing the source" {
+  let (source, knowledge) = specialization_chain_fixture()
+  let plan = source.state_specializations(knowledge)
+  let group = plan.groups
+    .search_by(labels => {
+      labels.any(label => {
+        plan.versions.any(v => v.label == label && v.original == 1)
+      })
+    })
+    .unwrap()
+  let selected = plan.within_growth([group], 1024)
+  assert_eq(selected, [group])
+  let after = plan.apply(selected, knowledge)
+  for state in [3, 4] {
+    assert_eq(
+      after.blocks.filter(b => b.origin is Run(s) && s == state).length(),
+      2,
+    )
+  }
+  // Admission cannot keep the first run while dropping the successor which
+  // supplies its only benefit. Every affordable trial contains the whole chain.
+  for budget in 0..<100 {
+    let accepted = plan.within_growth([group], budget)
+    let program = plan.apply(accepted, knowledge)
+    let copies = program.blocks.filter(b => b.origin is Run(3)).length()
+    assert_eq(copies, if accepted.is_empty() { 1 } else { 2 })
+    assert_eq(program.blocks.filter(b => b.origin is Run(4)).length(), copies)
+  }
+  let rejected = plan.apply([], knowledge)
+  assert_eq(rejected.blocks.length(), source.blocks.length())
+  for index, block in rejected.blocks {
+    assert_true(block.instructions == source.blocks[index].instructions)
+    assert_true(block.terminator == source.blocks[index].terminator)
+  }
+  let all = plan.candidates()
+  assert_true(plan.savings(all) > 0)
+  assert_eq(plan.savings(all), plan.savings([..all, ..all]))
+  assert_eq(plan.savings([]), 0)
+  let forward = plan.apply(all, knowledge)
+  let reverse = plan.apply(all.rev(), knowledge)
+  assert_eq(forward.blocks.length(), reverse.blocks.length())
+  for index, block in forward.blocks {
+    assert_true(block.instructions == reverse.blocks[index].instructions)
+    assert_true(block.terminator == reverse.blocks[index].terminator)
+  }
+  assert_true(
+    try {
+      ignore(plan.apply([-1], knowledge))
+      false
+    } catch {
+      InvalidProgram(_) => true
+    },
+  )
+}
+
+///|
+test "a bounded expansion never retains a half-specialized entry" {
+  let (source, knowledge) = specialization_fixture()
+  let blocks = source.blocks.copy()
+  // Pure bindings deliberately exceed the expansion bound before the goto.
+  // The caller must fall back as a whole, without consuming retained budget.
+  let padding = Array::makei(STATE_INLINE_GROWTH, i => {
+    Bind([(check_reg(100 + i, State), State(1))])
+  })
+  blocks[2] = {
+    ..blocks[2],
+    instructions: [..padding, ..blocks[2].instructions],
+  }
+  let source = { ..source, blocks, }
+  let plan = source.state_specializations(knowledge)
+  assert_true(plan.candidates().is_empty())
+  assert_eq(plan.apply([], knowledge).blocks.length(), source.blocks.length())
 }
 
 ///|

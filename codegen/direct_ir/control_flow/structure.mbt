@@ -127,6 +127,7 @@ fn Structurer::sequence(
 pub fn plan(
   source : @direct_ir.Program,
   costs~ : Array[Int32],
+  fixed~ : Bool = false,
 ) -> Plan raise InvalidControl {
   require(costs.length() == source.blocks.length(), "block cost count mismatch")
   require(costs.all(c => c >= 0), "negative block cost")
@@ -134,7 +135,7 @@ pub fn plan(
   // their costs also bounds arithmetic while grouping arbitrarily large CFGs.
   let costs = costs.map(c => Int32::min(c, REGION_COST + 1))
   let graph = Graph::new(source)
-  build_plan(source, graph, partition(source, graph, costs))
+  build_plan(source, graph, partition(source, graph, costs, fixed~))
 }
 
 ///|

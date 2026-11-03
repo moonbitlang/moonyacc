@@ -66,8 +66,9 @@ fn StateSpecializer::state_case(
       raise InvalidProgram("state specialization selects a missing branch")
     }
     let body = arms[index].1
-    expansion.useful = expansion.useful ||
-      (fact.depth is Some(_) && arms.any(p => p.1 != body))
+    if fact.depth is Some(_) && arms.any(p => p.1 != body) {
+      expansion.savings += 1
+    }
     return self.body(
       body,
       self.evaluator.state_branch(machine, selector, state).unwrap(),
@@ -100,10 +101,24 @@ fn StateSpecializer::discard_unproductive(self : StateSpecializer) -> Program {
       }
     }
   }
+  // A candidate depends on complete successor versions. Propagate an
+  // interrupted expansion backward before deciding which closures are useful.
+  let failed = self.incomplete.to_array()
+  while failed.pop() is Some(label) {
+    for previous in reverse[label] {
+      if !self.incomplete.contains(previous) {
+        self.incomplete.add(previous)
+        failed.push(previous)
+      }
+    }
+  }
+  for label in self.incomplete {
+    self.useful.remove(label)
+  }
   let work = self.useful.to_array()
   while work.pop() is Some(label) {
     for previous in reverse[label] {
-      if !self.useful.contains(previous) {
+      if !self.incomplete.contains(previous) && !self.useful.contains(previous) {
         self.useful.add(previous)
         work.push(previous)
       }

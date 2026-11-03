@@ -22,8 +22,19 @@ pub fn Program::prepare(
     O2 => program.specialize_state(knowledge)
     O0 | O1 => program
   }
+  program.prepare_cleanup(knowledge, positions~)
+}
+
+///|
+// Called only after checking the input program. Every transforming pass keeps
+// its own checker, and prepare_emission derives fresh facts for the result.
+fn Program::prepare_cleanup(
+  self : Program,
+  knowledge : StackKnowledge,
+  positions~ : Bool,
+) -> PreparedProgram raise InvalidProgram {
   let program = {
-    let program = program.inline_blocks(cautious=true)
+    let program = self.inline_blocks(cautious=true)
     let program = program.commute_pushes(knowledge).prune_control(knowledge)
     // Reachability first narrows demand; dead bindings then expose token
     // cases that no longer need a match. Final inlining sees the pruned CFG.

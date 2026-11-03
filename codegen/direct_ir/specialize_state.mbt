@@ -1,11 +1,9 @@
 ///|
-fn Program::specialize_state_with_budget(
+pub fn Program::state_specializations(
   self : Program,
   knowledge : StackKnowledge,
-  growth : Int32,
-) -> Program raise InvalidProgram {
+) -> StateSpecializations raise InvalidProgram {
   self.validate()
-  require(growth >= 0, "negative state-specialization budget")
   let pass = StateSpecializer::{
     source: self,
     flow: self.stack_flow(knowledge),
@@ -15,7 +13,10 @@ fn Program::specialize_state_with_budget(
     versions: Map([]),
     pending: [],
     useful: Set([]),
-    remaining: growth,
+    savings: Map([]),
+    incomplete: Set([]),
+    requests: Map([]),
+    owner: 0,
   }
   fn transform(
     original : Int32,
@@ -23,10 +24,12 @@ fn Program::specialize_state_with_budget(
     state : Int32?,
   ) -> Unit raise InvalidProgram {
     let block = pass.blocks[label]
+    pass.owner = label
     let machine = pass.entry(original, block, state?)
     let expansion = StateExpansion::{
       remaining: STATE_INLINE_GROWTH,
-      useful: false,
+      savings: 0,
+      complete: true,
     }
     let body = pass.body(
       { instructions: block.instructions, terminator: block.terminator, },
@@ -34,13 +37,18 @@ fn Program::specialize_state_with_budget(
       Set([original]),
       expansion,
     )
-    pass.blocks[label] = {
-      ..block,
-      instructions: body.instructions,
-      terminator: body.terminator,
-    }
-    if expansion.useful {
-      pass.useful.add(label)
+    if expansion.complete {
+      pass.blocks[label] = {
+        ..block,
+        instructions: body.instructions,
+        terminator: body.terminator,
+      }
+      if expansion.savings > 0 {
+        pass.useful.add(label)
+        pass.savings[label] = expansion.savings
+      }
+    } else {
+      pass.incomplete.add(label)
     }
   }
   for original, _ in self.blocks {
@@ -55,28 +63,36 @@ fn Program::specialize_state_with_budget(
     transform(version.original, version.label, Some(version.state))
   }
   let program = pass.discard_unproductive()
-  // Recompute from real entries, without assuming the recorded contexts.
-  // This checks stack/selector synchronization and final entry types as well
-  // as every surviving version's known-state precondition.
   check_state_versions(program, knowledge, pass.pending)
-  program.compact()
+  StateSpecializations::new(
+    self,
+    program,
+    pass.pending,
+    pass.useful,
+    pass.requests,
+    pass.savings,
+  )
 }
 
 ///|
-/// Bounded state specialization before cautious inlining and PUSH commutation.
-/// Lexer/action/checkpoint operations remain in source order; every fallback
-/// keeps the original general routine when no known state or budget exists.
+fn Program::specialize_state_with_budget(
+  self : Program,
+  knowledge : StackKnowledge,
+  growth : Int32,
+) -> Program raise InvalidProgram {
+  require(growth >= 0, "negative state-specialization budget")
+  let plan = self.state_specializations(knowledge)
+  let selected = plan.within_growth(plan.candidates(), growth)
+  plan.apply(selected, knowledge)
+}
+
+///|
+/// Target-independent admission of complete dependency closures. The MoonBit
+/// emitter additionally assesses cleaned CFGs and their structured layouts.
 pub fn Program::specialize_state(
   self : Program,
   knowledge : StackKnowledge,
 ) -> Program raise InvalidProgram {
-  let size = self.blocks.fold(init=0, (n, b) => {
-    n +
-    b.parameters.length() +
-    specialization_cost({
-      instructions: b.instructions,
-      terminator: b.terminator,
-    })
-  })
+  let size = self.specialization_size()
   self.specialize_state_with_budget(knowledge, size * 2)
 }

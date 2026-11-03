@@ -64,9 +64,11 @@ fn StateSpecializer::jump(
           instructions: target.instructions,
           terminator: target.terminator,
         })
-      if cost <= expansion.remaining && self.take(cost) {
+      if cost <= expansion.remaining {
         expansion.remaining -= cost
-        expansion.useful = expansion.useful || useful
+        if useful {
+          expansion.savings += 1
+        }
         let copy = self.supply.clone_block(target)
         let path = path.copy()
         path.add(edge.target)
@@ -82,6 +84,8 @@ fn StateSpecializer::jump(
           path,
           expansion,
         )
+      } else {
+        expansion.complete = false
       }
     }
   }

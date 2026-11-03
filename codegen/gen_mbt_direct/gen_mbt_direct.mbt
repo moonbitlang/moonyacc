@@ -15,13 +15,6 @@ fn codegen(
 ) -> Unit {
   let knowledge = @direct_ir.analyze_stack(grammar, automaton)
   let program = @direct_ir.lower(grammar, automaton, meta, mode~)
-  let prepared = program.prepare(
-    knowledge,
-    positions=!(meta.position_data_type is Constr(pkg=None, "Unit", [])),
-    optimization_level~,
-  ) catch {
-    InvalidProgram(message) => abort(message)
-  }
   let support = @mbt_common.Context::new(
     grammar,
     automaton,
@@ -35,8 +28,20 @@ fn codegen(
   let items = support.preamble(external_tokens~)
   items.append(support.typed_action_items())
   let emitter = match optimization_level {
-    O2 => layout_emitter(prepared, knowledge, meta, support, input_mode)
-    O0 | O1 => Emitter::new(prepared, meta, support, input_mode)
+    O2 =>
+      specialize_emitter(program, knowledge, meta, support, input_mode) catch {
+        InvalidProgram(message) => abort(message)
+      }
+    O0 | O1 => {
+      let prepared = program.prepare(
+        knowledge,
+        positions=support.tracks_positions(),
+        optimization_level~,
+      ) catch {
+        InvalidProgram(message) => abort(message)
+      }
+      Emitter::new(prepared, meta, support, input_mode)
+    }
   }
   items.append(emitter.parser_items(no_comments~))
   items.append(
