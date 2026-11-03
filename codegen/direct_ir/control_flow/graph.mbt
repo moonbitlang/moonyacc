@@ -18,7 +18,20 @@ fn Graph::new(source : @direct_ir.Program) -> Graph {
       predecessors[target].push(node)
     }
   }
-  { successors, predecessors, roots: Set(source.entries.map(e => e.block)), }
+  let graph = {
+    successors,
+    predecessors,
+    roots: Set(source.entries.map(e => e.block)),
+  }
+  // Give unreachable source components private analysis roots once, before
+  // computing dominance. Region planning must not invent new dominance facts.
+  let nodes = source.blocks.mapi((i, _) => i)
+  for component in graph.components(nodes) {
+    if graph.entries(component).is_empty() {
+      graph.roots.add(component[0])
+    }
+  }
+  graph
 }
 
 ///|

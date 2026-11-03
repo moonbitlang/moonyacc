@@ -74,7 +74,7 @@ pub fn Plan::transfer_cost(self : Plan) -> TransferCost {
                 fixed_exits += 1
               }
             }
-            Break(_) | Continue(_) => ()
+            Next | Break(_) | Continue(_) => ()
           }
         }
       }

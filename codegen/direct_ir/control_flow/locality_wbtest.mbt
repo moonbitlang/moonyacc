@@ -12,7 +12,7 @@ test "fixed continuations stay together across SCCs without splitting a small lo
   costs[2] = 10
   costs[3] = 100
   costs[4] = 100
-  let fixed = plan(source, costs~, fixed=true)
+  let fixed = plan(source, costs~, partitioning=FixedSuccessors)
   fixed.validate()
   assert_eq(fixed.owner[1], fixed.owner[3])
   assert_eq(fixed.owner[2], fixed.owner[3])
@@ -33,7 +33,11 @@ test "fixed continuations stay together across SCCs without splitting a small lo
 test "locality plans preserve cyclic interfaces under node and cost limits" {
   let source = graph_program(Array::makei(150, i => [(i + 1) % 150]), [0, 75])
   for cost in [0, 10, REGION_COST, REGION_COST + 1] {
-    let fixed = plan(source, costs=Array::make(150, cost), fixed=true)
+    let fixed = plan(
+      source,
+      costs=Array::make(150, cost),
+      partitioning=FixedSuccessors,
+    )
     fixed.validate()
     for region in fixed.regions {
       assert_true(region.members.length() <= REGION_NODES)

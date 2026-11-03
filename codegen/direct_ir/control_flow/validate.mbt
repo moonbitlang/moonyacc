@@ -38,12 +38,18 @@ fn ControlCheck::route(
   self : ControlCheck,
   target : Int32,
   route : Transfer,
+  next : Destination?,
 ) -> Unit raise InvalidControl {
   require(
     target >= 0 && target < self.plan.source.blocks.length(),
     "invalid target",
   )
   match route {
+    Next =>
+      require(
+        next is Some(Block(label)) && target == label,
+        "fallthrough changes its CFG destination",
+      )
     Exit => {
       require(
         self.plan.owner[target] != self.region,
@@ -97,7 +103,8 @@ fn ControlCheck::scope(
 /// Independently resolve lexical continuations and compare every source edge.
 /// A Run executes the original instructions and branch tree unchanged, so
 /// these edge checks establish a weak bisimulation modulo administrative
-/// scopes. Scope bodies must not fall through and accidentally iterate.
+/// scopes. Labelled scopes may complete at their checked continuation; loop
+/// bodies must not fall through into an accidental implicit iteration.
 fn ControlCheck::node(
   self : ControlCheck,
   control : Control,
@@ -118,9 +125,9 @@ fn ControlCheck::node(
         guard routes.get(target) is Some(route) else {
           raise InvalidControl("missing CFG edge")
         }
-        self.route(target, route)
+        self.route(target, route, next)
       }
-      false
+      routes.iter().any(p => p.1 is Next)
     }
     Select(arms) => {
       self.selectors.val += 1
@@ -130,9 +137,9 @@ fn ControlCheck::node(
         "entry selector differs from region interface",
       )
       for (target, route) in arms {
-        self.route(target, route)
+        self.route(target, route, next)
       }
-      false
+      arms.any(p => p.1 is Next)
     }
     Sequence(nodes) => {
       require(!nodes.is_empty(), "empty sequence")
@@ -155,7 +162,7 @@ fn ControlCheck::node(
       }
       let breaks = self.breaks.copy()
       breaks[id] = destination
-      require(!{ ..self, breaks, }.node(body, None), "scope body falls through")
+      ignore({ ..self, breaks, }.node(body, next))
       require(self.used_breaks.contains(id), "unused forward scope")
       true
     }
@@ -196,14 +203,15 @@ fn ControlCheck::node(
         Set(cases.map(p => p.0)).length() == cases.length(),
         "duplicate dispatcher case",
       )
+      let mut completes = false
       for (label, body) in cases {
         require(
           first(body) is Block(entry) && entry == label,
           "dispatch selects wrong block",
         )
-        require(!self.node(body, None), "dispatch branch falls through")
+        completes = self.node(body, next) || completes
       }
-      false
+      completes
     }
   }
 }
@@ -216,6 +224,7 @@ pub fn Plan::validate(self : Plan) -> Unit raise InvalidControl {
     "invalid tables",
   )
   require(self.stride > 0, "invalid address stride")
+  require((self.stride & (self.stride - 1)) == 0, "non-binary address stride")
   let members = Set([])
   for index, region in self.regions {
     require(!region.entries.is_empty(), "region has no entry")

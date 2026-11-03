@@ -143,74 +143,68 @@ fn yy_parse(tokens : Array[Token], _entry : Int, initial_state : Int) -> YYResul
   let mut error_suffix_0 : Int = 0
   let mut _yy_token_token : Token? = None
   let mut _yy_value_0_0 : Int = 0
-  _yy_scope_4~: while true {
-    _yy_scope_3~: while true {
-      _yy_scope_2~: while true {
-        _yy_scope_1~: while true {
-          _yy_scope_0~: while true {
-            match _entry {
-              0 =>
-                ({
-                  ()
-                  break _yy_scope_3~
-                })
-              1 =>
-                ({
-                  ()
-                  break _yy_scope_2~
-                })
-              2 =>
-                ({
-                  ()
-                  break _yy_scope_0~
-                })
-              _ => panic()
-            }
-          }
-          // run state 5
-          ({
-            ()
-            if cursor < tokens.length() {
-              let token = tokens[cursor]
-              cursor += 1
-              _yy_token_token = Some(token)
-            } else {
-              _yy_token_token = None
-            }
-          })
-          match _yy_token_token {
-            Some(NUMBER(_)) =>
-              ({
-                ()
-                ignore(yy_action_3())
-                yy_stack_push_unprotected(stack, 7)
-                match _yy_token_token {
-                  Some(NUMBER(_yy_r207)) =>
-                    ({
-                      ()
-                      _yy_token_token = None
-                      yy_stack_checkpoint(stack)
-                      error_suffix_0 = 8
-                      error_depth = 1
-                      let _yy_r217 = yy_action_2(_yy_r207)
-                      _yy_value_0_0 = _yy_r217
-                      break _yy_scope_1~
-                    })
-                  _ =>
-                    ({
-                      ()
-                      break _yy_scope_4~
-                    })
-                }
-              })
-            _ =>
-              ({
-                ()
-                break _yy_scope_4~
-              })
-          }
+  _yy_scope_2~: {
+    _yy_scope_1~: {
+      _yy_scope_0~: {
+        match _entry {
+          0 =>
+            ({
+              ()
+              break _yy_scope_1~
+            })
+          1 =>
+            ({
+              ()
+              break _yy_scope_0~
+            })
+          2 =>
+            ({
+              ()
+            })
+          _ => panic()
         }
-        _yy_loop_5~: for _yy_cycle = () {
+        // run state 5
+        ({
+          ()
+          if cursor < tokens.length() {
+            let token = tokens[cursor]
+            cursor += 1
+            _yy_token_token = Some(token)
+          } else {
+            _yy_token_token = None
+          }
+        })
+        match _yy_token_token {
+          Some(NUMBER(_)) =>
+            ({
+              ()
+              ignore(yy_action_3())
+              yy_stack_push_unprotected(stack, 7)
+              match _yy_token_token {
+                Some(NUMBER(_yy_r207)) =>
+                  ({
+                    ()
+                    _yy_token_token = None
+                    yy_stack_checkpoint(stack)
+                    error_suffix_0 = 8
+                    error_depth = 1
+                    let _yy_r217 = yy_action_2(_yy_r207)
+                    _yy_value_0_0 = _yy_r217
+                  })
+                _ =>
+                  ({
+                    ()
+                    break _yy_scope_2~
+                  })
+              }
+            })
+          _ =>
+            ({
+              ()
+              break _yy_scope_2~
+            })
+        }
+        _yy_loop_3~: for _yy_cycle = () {
           // run state 9
           ({
             ()
@@ -262,12 +256,12 @@ fn yy_parse(tokens : Array[Token], _entry : Int, initial_state : Int) -> YYResul
                       _yy_depth_0 -= 1
                       stack.depth -= 2
                       _yy_value_0_0 = _yy_r287
-                      continue _yy_loop_5~ ()
+                      continue _yy_loop_3~ ()
                     })
                   _ =>
                     ({
                       ()
-                      break _yy_scope_4~
+                      break _yy_scope_2~
                     })
                 }
               })
@@ -284,7 +278,7 @@ fn yy_parse(tokens : Array[Token], _entry : Int, initial_state : Int) -> YYResul
             _ =>
               ({
                 ()
-                break _yy_scope_4~
+                break _yy_scope_2~
               })
           }
         }
@@ -310,7 +304,7 @@ fn yy_parse(tokens : Array[Token], _entry : Int, initial_state : Int) -> YYResul
         _ =>
           ({
             ()
-            break _yy_scope_4~
+            break _yy_scope_2~
           })
       }
     }
@@ -336,7 +330,6 @@ fn yy_parse(tokens : Array[Token], _entry : Int, initial_state : Int) -> YYResul
       _ =>
         ({
           ()
-          break _yy_scope_4~
         })
     }
   }

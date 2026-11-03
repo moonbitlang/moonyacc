@@ -1,27 +1,15 @@
 ///|
 priv struct Structurer {
   graph : Graph
+  forest : LoopForest
   mut next_scope : Int32
 }
 
 ///|
 priv enum Prefix {
   Entries(Array[Int32])
-  Header(Int32)
-  Headers(Array[Int32])
-}
-
-///|
-fn Structurer::prefix(
-  self : Structurer,
-  prefix : Prefix,
-  routes : Map[Int32, Transfer],
-) -> Control {
-  match prefix {
-    Entries(entries) => Select(entries.map(n => (n, routes[n])))
-    Header(node) => self.run(node, routes)
-    Headers(nodes) => Switch(nodes.map(n => (n, self.run(n, routes))))
-  }
+  Header(FlowUnit)
+  Headers(Array[FlowUnit])
 }
 
 ///|
@@ -36,157 +24,127 @@ fn Structurer::run(
   self : Structurer,
   label : Int32,
   routes : Map[Int32, Transfer],
+  fallthrough? : Int32,
 ) -> Control {
   let selected = Map([])
   for target in self.graph.successors[label] {
-    selected[target] = routes.get(target).unwrap_or(Exit)
+    let route = routes.get(target).unwrap_or(Exit)
+    selected[target] = if fallthrough == Some(target) &&
+      route is (Next | Break(_)) {
+      Next
+    } else {
+      route
+    }
   }
   Run(label, selected)
 }
 
 ///|
-/// A cyclic component with one external entry has a dominating header. Remove
-/// that header, recursively structure the remainder, and turn edges back to
-/// it into Continue. Multiple-entry SCCs use a local dispatcher instead.
-fn Structurer::component(
+fn Structurer::prefix(
   self : Structurer,
-  nodes : Array[Int32],
+  prefix : Prefix,
   routes : Map[Int32, Transfer],
+  fallthrough? : Int32,
 ) -> Control {
-  if !self.graph.cyclic(nodes) {
-    return self.run(nodes[0], routes)
+  match prefix {
+    Entries(entries) =>
+      Select(
+        entries.map(node => {
+          let route = routes[node]
+          (
+            node,
+            if fallthrough == Some(node) && route is (Next | Break(_)) {
+              Next
+            } else {
+              route
+            },
+          )
+        }),
+      )
+    Header(unit_) => self.unit(unit_, routes, fallthrough?)
+    Headers(units) =>
+      Switch(
+        units.map(unit_ => {
+          (unit_.entry(), self.unit(unit_, routes, fallthrough?))
+        }),
+      )
   }
-  let loop_id = self.fresh()
-  let nested = routes.copy()
-  match self.graph.entries(nodes) {
-    [header] => {
-      nested[header] = Continue(loop_id)
-      let remaining = nodes.filter(n => n != header)
+}
+
+///|
+fn Structurer::unit(
+  self : Structurer,
+  unit_ : FlowUnit,
+  routes : Map[Int32, Transfer],
+  fallthrough? : Int32,
+) -> Control {
+  match unit_ {
+    Node(node) => self.run(node, routes, fallthrough?)
+    Natural(header) => {
+      let id = self.fresh()
+      let nested = routes.copy()
+      nested[header] = Continue(id)
+      let remaining = self.forest.loops[header].nodes.filter(node => {
+        node != header
+      })
       let body = if remaining.is_empty() {
         self.run(header, nested)
       } else {
-        self.sequence(remaining, nested, Header(header))
+        self.sequence(remaining, nested, Header(Node(header)))
       }
-      Loop(loop_id, body)
-    }
-    headers => {
-      // Cut only the entry nodes, not the entire SCC. The remainder is again
-      // structured recursively and emitted once, including shared tails.
-      guard! !headers.is_empty()
-      for node in headers {
-        nested[node] = Dispatch(loop_id)
-      }
-      let remaining = nodes.filter(n => !headers.contains(n))
-      let body = if remaining.is_empty() {
-        self.prefix(Headers(headers), nested)
-      } else {
-        self.sequence(remaining, nested, Headers(headers))
-      }
-      Dispatch(loop_id, headers, body)
+      Loop(id, body)
     }
   }
 }
 
 ///|
-/// Forward edges cross lexical scopes in condensation order. The prefix is
-/// either an entry selector or the header removed from an enclosing loop.
-/// Each source block is emitted once; no inlining/code growth is hidden here.
-fn Structurer::sequence(
+/// Natural loops are already contracted into units. Remaining cycles can
+/// retain a local dispatcher without routing natural-loop back edges through
+/// it. All transfers still refer to the original source block labels.
+fn Structurer::component(
   self : Structurer,
-  nodes : Array[Int32],
-  inherited : Map[Int32, Transfer],
-  prefix : Prefix,
+  quotient : Quotient,
+  component : Array[Int32],
+  routes : Map[Int32, Transfer],
+  fallthrough? : Int32,
 ) -> Control {
-  let components = self.graph.components(nodes)
-  let scopes = components.map(_ => self.fresh())
-  let routes = inherited.copy()
-  for index, component in components {
-    let multiple = self.graph.cyclic(component) &&
-      self.graph.entries(component).length() != 1
-    for node in component {
-      routes[node] = if multiple {
-        Enter(scopes[index])
+  if !quotient.graph.cyclic(component) {
+    return self.unit(quotient.units[component[0]], routes, fallthrough?)
+  }
+  let id = self.fresh()
+  let headers = quotient.graph.entries(component)
+  guard! !headers.is_empty()
+  let nested = routes.copy()
+  let header_set = Set(headers)
+  let remaining = []
+  for node in component {
+    if !header_set.contains(node) {
+      remaining.append(quotient.units[node].nodes(self.forest))
+    }
+  }
+  match headers {
+    [header] => {
+      let unit_ = quotient.units[header]
+      nested[unit_.entry()] = Continue(id)
+      let body = if remaining.is_empty() {
+        self.unit(unit_, nested)
       } else {
-        Break(scopes[index])
+        self.sequence(remaining, nested, Header(unit_))
       }
+      Loop(id, body)
     }
-  }
-  let mut prefix = self.prefix(prefix, routes)
-  for index, component in components {
-    prefix = Sequence([
-      Scope(scopes[index], prefix),
-      self.component(component, routes),
-    ])
-  }
-  prefix
-}
-
-///|
-/// Partition using the target's generated-operation estimates. Costs are
-/// scheduling policy only: the independent CFG checker still validates edges.
-pub fn plan(
-  source : @direct_ir.Program,
-  costs~ : Array[Int32],
-  fixed~ : Bool = false,
-) -> Plan raise InvalidControl {
-  require(costs.length() == source.blocks.length(), "block cost count mismatch")
-  require(costs.all(c => c >= 0), "negative block cost")
-  // Larger blocks already exceed the budget and remain indivisible. Capping
-  // their costs also bounds arithmetic while grouping arbitrarily large CFGs.
-  let costs = costs.map(c => Int32::min(c, REGION_COST + 1))
-  let graph = Graph::new(source)
-  build_plan(source, graph, partition(source, graph, costs, fixed~))
-}
-
-///|
-/// A valid per-block plan for measuring target emission before partitioning.
-/// Every block is an entry, so all transfers can use the existing region ABI.
-pub fn isolate(source : @direct_ir.Program) -> Plan raise InvalidControl {
-  build_plan(source, Graph::new(source), source.blocks.mapi((i, _) => [i]))
-}
-
-///|
-fn build_plan(
-  source : @direct_ir.Program,
-  graph : Graph,
-  groups : Array[Array[Int32]],
-) -> Plan raise InvalidControl {
-  let owner = Array::make(source.blocks.length(), -1)
-  for region, nodes in groups {
-    for node in nodes {
-      owner[node] = region
-    }
-  }
-  let builder = Structurer::{ graph, next_scope: 0, }
-  let regions = groups.map(nodes => {
-    let entries = graph.entries(nodes)
-    // An unreachable source component still gets a private entry. This keeps
-    // the lowering total without pretending that it is publicly reachable.
-    for component in graph.components(nodes) {
-      if graph.entries(component).is_empty() {
-        let entry = component[0]
-        entries.push(entry)
-        graph.roots.add(entry)
+    _ => {
+      let units = headers.map(header => quotient.units[header])
+      let entries = units.map(unit_ => unit_.entry())
+      for entry in entries {
+        nested[entry] = Dispatch(id)
       }
-    }
-    entries.sort()
-    {
-      members: nodes,
-      entries,
-      control: builder.sequence(nodes, Map([]), Entries(entries)),
-    }
-  })
-  let mut stride = 1
-  for region in regions {
-    stride = Int32::max(stride, region.entries.length())
-  }
-  let addresses = Array::make(source.blocks.length(), -1)
-  for index, region in regions {
-    for offset, entry in region.entries {
-      addresses[entry] = index * stride + offset
+      let body = if remaining.is_empty() {
+        self.prefix(Headers(units), nested)
+      } else {
+        self.sequence(remaining, nested, Headers(units))
+      }
+      Dispatch(id, entries, body)
     }
   }
-  let plan = Plan::{ source, regions, owner, addresses, stride, }
-  plan.validate()
-  plan
 }

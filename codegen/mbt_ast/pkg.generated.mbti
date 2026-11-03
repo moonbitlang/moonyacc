@@ -112,6 +112,7 @@ pub(all) enum Expr {
   If(Expr, Block, Block?)
   Match(Expr, Array[(Pattern, Block)])
   Block(Block)
+  LabelledBlock(String, Block)
   Verbatim(Fragment)
 }
 

@@ -107,60 +107,53 @@ fn yy_parse(
   let mut error_suffix_0 : Int = 0
   let mut _yy_token_token : Token? = None
   let mut _yy_token_value : Json = Json::null()
-  _yy_scope_1~: while true {
-    _yy_scope_0~: while true {
-      break _yy_scope_0~
-    }
-    // run state 0
-    ({
-      ()
-      let (token, _, _) = read_token()
-      _yy_token_token = Some(token)
-      _yy_token_value = yy_input_json(token)
-    })
-    match _yy_token_token {
-      Some(VALUE(_)) =>
+  // run state 0
+  ({
+    ()
+    let (token, _, _) = read_token()
+    _yy_token_token = Some(token)
+    _yy_token_value = yy_input_json(token)
+  })
+  match _yy_token_token {
+    Some(VALUE(_)) =>
+      ({
+        ()
+        let _yy_r35 = _yy_token_value
+        _yy_token_token = None
+        _yy_token_value = Json::null()
+        error_suffix_0 = 2
+        error_depth = 1
+        let _yy_r52 = yy_action_1(_yy_r35)
+        let _yy_bind0 = _yy_r52
+        let _yy_r67 = _yy_bind0
         ({
           ()
-          let _yy_r35 = _yy_token_value
-          _yy_token_token = None
-          _yy_token_value = Json::null()
-          error_suffix_0 = 2
-          error_depth = 1
-          let _yy_r52 = yy_action_1(_yy_r35)
-          let _yy_bind0 = _yy_r52
-          let _yy_r67 = _yy_bind0
-          ({
-            ()
-            let (token, _, _) = read_token()
-            _yy_token_token = Some(token)
-            _yy_token_value = yy_input_json(token)
-          })
-          match _yy_token_token {
-            Some(EOF) =>
-              ({
-                ()
-                let _yy_r68 = _yy_token_value
-                _yy_token_token = None
-                _yy_token_value = Json::null()
-                let _yy_r71 = yy_action_0(_yy_r67, _yy_r68)
-                let _yy_bind0 = _yy_r71
-                let _yy_r72 = _yy_bind0
-                return YYAccept_0(_yy_r72)
-              })
-            _ =>
-              ({
-                ()
-                break _yy_scope_1~
-              })
-          }
+          let (token, _, _) = read_token()
+          _yy_token_token = Some(token)
+          _yy_token_value = yy_input_json(token)
         })
-      _ =>
-        ({
-          ()
-          break _yy_scope_1~
-        })
-    }
+        match _yy_token_token {
+          Some(EOF) =>
+            ({
+              ()
+              let _yy_r68 = _yy_token_value
+              _yy_token_token = None
+              _yy_token_value = Json::null()
+              let _yy_r71 = yy_action_0(_yy_r67, _yy_r68)
+              let _yy_bind0 = _yy_r71
+              let _yy_r72 = _yy_bind0
+              return YYAccept_0(_yy_r72)
+            })
+          _ =>
+            ({
+              ()
+            })
+        }
+      })
+    _ =>
+      ({
+        ()
+      })
   }
   _yy_error(
     ({

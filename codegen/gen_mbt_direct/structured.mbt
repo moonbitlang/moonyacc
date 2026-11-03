@@ -15,6 +15,7 @@ fn Emitter::control_transfer(
   transfer : @control_flow.Transfer,
 ) -> Array[@mbt_ast.Stmt] {
   match transfer {
+    Next => []
     Break(scope) => [BreakTo(scope_name(scope), None)]
     Continue(loop_) => [ContinueTo(loop_name(loop_), [Unit])]
     Enter(scope) =>
@@ -57,17 +58,14 @@ fn Emitter::structured(
     }
     Scope(id, inner) =>
       body([
-        LabelledLoop(
-          scope_name(id),
-          While(Bool(true), self.structured(inner, no_comments)),
-        ),
+        Eval(LabelledBlock(scope_name(id), self.structured(inner, no_comments))),
       ])
     Loop(id, inner) | Dispatch(id, _, inner) =>
       body([
         LabelledLoop(
           loop_name(id),
           // A conditionless functional loop has no implicit fallthrough.
-          // Its Unit carrier is erased by MoonBit; no PC is passed here.
+          // Unit is only a syntactic carrier; no PC is passed here.
           For(
             [("_yy_cycle", Unit)],
             None,

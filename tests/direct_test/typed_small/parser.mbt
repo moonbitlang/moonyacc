@@ -73,9 +73,6 @@ fn yy_parse(
   let mut _yy_token_token : Token? = None
   let mut _yy_token_start : Int = 0
   let mut _yy_token_end : Int = 0
-  _yy_scope_0~: while true {
-    break _yy_scope_0~
-  }
   // run state 0
   ({
     ()

@@ -123,6 +123,8 @@ fn ResourceAnalyzer::expr(
       }
       self.expr(value).then(joined)
     }
-    Block(body) => self.block(body)
+    // A labelled block executes once. The existing may-exit summary keeps
+    // early/outer breaks conservative without pretending this is a loop.
+    Block(body) | LabelledBlock(_, body) => self.block(body)
   }
 }

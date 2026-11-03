@@ -79,7 +79,7 @@ fn expression_cost(expr : @mbt_ast.Expr) -> Int32 {
       1 +
       expression_cost(value) +
       arms.fold(init=0, (n, p) => n + pattern_cost(p.0) + emission_cost(p.1))
-    Block(block) => emission_cost(block)
+    Block(block) | LabelledBlock(_, block) => emission_cost(block)
     Verbatim(_) => abort("region cost must not inspect user code")
   }
 }

@@ -13,10 +13,12 @@ pub(all) enum Control {
 }
 
 ///|
+/// Next uses the checked lexical continuation without an extra branch.
 /// Break/Continue are lexically scoped. Enter first selects an entry of a
 /// multiple-entry component; Dispatch selects its next iteration. Exit returns
 /// to the outer driver, never calls another region.
 pub(all) enum Transfer {
+  Next
   Break(Int32)
   Enter(Int32)
   Continue(Int32)

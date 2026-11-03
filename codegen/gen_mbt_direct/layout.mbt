@@ -125,24 +125,23 @@ fn Emitter::promising_layout(
       (if selected.contains(target) { self.block_estimates[target] } else { 0 })
     })
   })
-  let control = @control_flow.plan(candidate.program, costs~) catch {
-    InvalidControl(message) => abort(message)
+  let analysis = @control_flow.analyze(candidate.program)
+  let before = self.control.transfer_cost()
+  let policies = if self.locality {
+    [@control_flow.Loops, WholeLoops, Joins, FixedSuccessors]
+  } else {
+    [@control_flow.Loops, WholeLoops]
   }
-  let control = if self.locality {
-    let fixed = @control_flow.plan(candidate.program, costs~, fixed=true) catch {
+  for partitioning in policies {
+    let control = analysis.plan(costs~, partitioning~) catch {
       InvalidControl(message) => abort(message)
     }
-    if fixed.transfer_cost().no_worse_than(control.transfer_cost()) {
-      fixed
-    } else {
-      control
+    let after = control.transfer_cost()
+    if after.no_worse_than(before) && improved_transfers(before, after) {
+      return true
     }
-  } else {
-    control
   }
-  let before = self.control.transfer_cost()
-  let after = control.transfer_cost()
-  after.no_worse_than(before) && improved_transfers(before, after)
+  false
 }
 
 ///|

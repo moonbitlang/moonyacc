@@ -45,7 +45,8 @@ fn Emitter::new(
   optimize_resources~ : Bool = false,
   locality~ : Bool = false,
 ) -> Emitter {
-  let isolated = @control_flow.isolate(prepared.program) catch {
+  let analysis = @control_flow.analyze(prepared.program)
+  let isolated = analysis.isolate() catch {
     InvalidControl(message) => abort(message)
   }
   let probe = Emitter::with_plan(
@@ -63,7 +64,7 @@ fn Emitter::new(
   }
   let probe = Emitter::{ ..probe, resources, }.select_resources()
   let costs = probe.block_costs()
-  let control = @control_flow.plan(prepared.program, costs~) catch {
+  let control = analysis.plan(costs~) catch {
     InvalidControl(message) => abort(message)
   }
   let ordinary = Emitter::{
@@ -79,35 +80,7 @@ fn Emitter::new(
     resources,
     locality,
   }.select_resources()
-  if !locality {
-    return ordinary
-  }
-  let fixed = @control_flow.plan(prepared.program, costs~, fixed=true) catch {
-    InvalidControl(message) => abort(message)
-  }
-  let before = ordinary.control.transfer_cost()
-  let after = fixed.transfer_cost()
-  guard after.no_worse_than(before) && improved_transfers(before, after) else {
-    ordinary
-  }
-  let candidate = Emitter::{
-    ..Emitter::with_plan(
-      prepared,
-      meta,
-      support,
-      input_mode,
-      fixed,
-      optimize_resources~,
-    ),
-    block_estimates: costs,
-    resources,
-    locality,
-  }.select_resources()
-  if candidate.structured_cost() <= ordinary.structured_cost() {
-    candidate
-  } else {
-    ordinary
-  }
+  ordinary.choose_partitions(prepared, analysis)
 }
 
 ///|

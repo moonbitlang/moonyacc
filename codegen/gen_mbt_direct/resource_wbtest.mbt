@@ -48,6 +48,25 @@ test "resource effects distinguish definite definitions and helper may-writes" {
 }
 
 ///|
+test "a labelled join does not turn a conditional write into a definite kill" {
+  let analyzer = resource_fixture()
+  let counter = analyzer.catalog.stored(0)
+  let ready = analyzer.catalog.stored(1)
+  let effect = analyzer.expr(
+    LabelledBlock(
+      "done",
+      body([
+        Eval(If(ready, body([BreakTo("done", None)]), None)),
+        Assign(counter, Int(7)),
+      ]),
+    ),
+  )
+  assert_true(effect.reads == Set([1]))
+  assert_true(effect.kills.is_empty())
+  assert_true(effect.writes == Set([0]))
+}
+
+///|
 test "resource liveness joins loops and rejects a missing edge dependency" {
   let analyzer = resource_fixture()
   let counter = analyzer.catalog.stored(0)

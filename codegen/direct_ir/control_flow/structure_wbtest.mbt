@@ -94,7 +94,7 @@ test "natural nested loops and irreducible components use different control form
 }
 
 ///|
-test "the control checker rejects a well-scoped break to the wrong successor" {
+test "the control checker rejects a well-scoped transfer to the wrong successor" {
   let original = graph_plan(graph_program([[1, 2], [3], [3], []], [0]))
   fn corrupt(control : Control) -> Control {
     match control {

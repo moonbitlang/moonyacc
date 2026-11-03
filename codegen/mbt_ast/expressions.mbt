@@ -364,6 +364,8 @@ fn expr_doc(expr : Expr, minimum~ : Int32 = 0) -> Doc {
         ]),
         0,
       )
+    LabelledBlock(label, body) =>
+      (cat([text(label + "~: "), block_doc(body)]), 0)
     Block(body) =>
       // A leading unit makes every block unambiguous with record literals,
       // without inspecting which statements or final expression it contains.

@@ -64,6 +64,16 @@ pub fn char_literal() -> Char {
 }
 
 ///|
+pub fn joined_value(flag : Bool) -> (Int, String) {
+  join~: {
+    if flag {
+      break join~ (7, "left")
+    }
+    (11, "right")
+  }
+}
+
+///|
 pub type Reader = ((Int) -> Int)
 
 ///|

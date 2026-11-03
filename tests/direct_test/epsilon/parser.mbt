@@ -82,21 +82,18 @@ fn yy_parse(
   let mut _yy_token_token : Token? = None
   let mut _yy_token_start : Int = 0
   let mut _yy_token_end : Int = 0
-  _yy_scope_1~: while true {
-    _yy_scope_0~: while true {
-      match _entry {
-        0 =>
-          ({
-            ()
-            break _yy_scope_1~
-          })
-        1 =>
-          ({
-            ()
-            break _yy_scope_0~
-          })
-        _ => panic()
-      }
+  _yy_scope_0~: {
+    match _entry {
+      0 =>
+        ({
+          ()
+          break _yy_scope_0~
+        })
+      1 =>
+        ({
+          ()
+        })
+      _ => panic()
     }
     // run state 2
     ({

@@ -141,279 +141,274 @@ fn yy_parse(
   let mut _yy_value_3_0 : Int = 0
   let mut _yy_state_0 : Int = 0
   let mut _yy_control : Int = 0
-  _yy_scope_3~: while true {
-    _yy_scope_2~: while true {
-      _yy_scope_1~: while true {
-        _yy_scope_0~: while true {
-          break _yy_scope_0~
+  _yy_scope_2~: {
+    _yy_scope_0~: {
+      // run state 0
+      ({
+        ()
+        if cursor < tokens.length() {
+          let (token, sp, ep) = tokens[cursor]
+          cursor += 1
+          _yy_token_token = Some(token)
+          _yy_token_start = sp
+          _yy_token_end = ep
+        } else {
+          _yy_token_token = None
+          _yy_token_start = last_pos
+          _yy_token_end = last_pos
         }
-        // run state 0
-        ({
-          ()
-          if cursor < tokens.length() {
-            let (token, sp, ep) = tokens[cursor]
-            cursor += 1
-            _yy_token_token = Some(token)
-            _yy_token_start = sp
-            _yy_token_end = ep
-          } else {
-            _yy_token_token = None
-            _yy_token_start = last_pos
-            _yy_token_end = last_pos
-          }
-        })
-        match _yy_token_token {
-          None =>
-            ({
-              ()
-              let _yy_r73 = yy_action_3()
-              _yy_value_2_0 = Some(_yy_r73)
-              break _yy_scope_3~
-            })
-          Some(NUMBER(_yy_r53)) =>
-            ({
-              ()
-              let _yy_r54 = _yy_token_start
-              let _yy_r55 = _yy_token_end
-              _yy_value_3_0 = _yy_r53
-              _yy_position_0 = _yy_r54
-              _yy_position_1 = _yy_r55
-              _yy_control = 3
-              break _yy_scope_1~
-            })
-          Some(TEXT(_yy_r56)) =>
-            ({
-              ()
-              let _yy_r57 = _yy_token_start
-              let _yy_r58 = _yy_token_end
-              _yy_value_0_0 = _yy_r56
-              _yy_position_0 = _yy_r57
-              _yy_position_1 = _yy_r58
-              _yy_control = 1
-              break _yy_scope_1~
-            })
-        }
+      })
+      match _yy_token_token {
+        None =>
+          ({
+            ()
+            let _yy_r73 = yy_action_3()
+            _yy_value_2_0 = Some(_yy_r73)
+            break _yy_scope_2~
+          })
+        Some(NUMBER(_yy_r53)) =>
+          ({
+            ()
+            let _yy_r54 = _yy_token_start
+            let _yy_r55 = _yy_token_end
+            _yy_value_3_0 = _yy_r53
+            _yy_position_0 = _yy_r54
+            _yy_position_1 = _yy_r55
+            _yy_control = 3
+            break _yy_scope_0~
+          })
+        Some(TEXT(_yy_r56)) =>
+          ({
+            ()
+            let _yy_r57 = _yy_token_start
+            let _yy_r58 = _yy_token_end
+            _yy_value_0_0 = _yy_r56
+            _yy_position_0 = _yy_r57
+            _yy_position_1 = _yy_r58
+            _yy_control = 1
+            break _yy_scope_0~
+          })
       }
-      _yy_loop_4~: for _yy_cycle = () {
+    }
+    _yy_scope_1~: {
+      _yy_loop_3~: for _yy_cycle = () {
         match _yy_control {
           1 =>
             ({
               ()
-              // run state 2
-              if _yy_depth_0 == _yy_stack_0.length() {
-                _yy_stack_0.push(_yy_value_0_0)
-              } else {
-                _yy_stack_0[_yy_depth_0] = _yy_value_0_0
-              }
-              _yy_depth_0 += 1
-              if _yy_depth_1 == _yy_stack_1.length() {
-                _yy_stack_1.push(_yy_position_0)
-              } else {
-                _yy_stack_1[_yy_depth_1] = _yy_position_0
-              }
-              _yy_depth_1 += 1
-              if _yy_depth_2 == _yy_stack_2.length() {
-                _yy_stack_2.push(_yy_position_1)
-              } else {
-                _yy_stack_2[_yy_depth_2] = _yy_position_1
-              }
-              _yy_depth_2 += 1
-              yy_stack_push_unprotected(stack, 2)
-              state = 2
-              last_pos = _yy_token_end
-              _yy_token_token = None
-              _yy_token_start = 0
-              _yy_token_end = 0
-              ({
-                ()
-                if cursor < tokens.length() {
-                  let (token, sp, ep) = tokens[cursor]
-                  cursor += 1
-                  _yy_token_token = Some(token)
-                  _yy_token_start = sp
-                  _yy_token_end = ep
+              _yy_loop_4~: for _yy_cycle = () {
+                // run state 2
+                if _yy_depth_0 == _yy_stack_0.length() {
+                  _yy_stack_0.push(_yy_value_0_0)
                 } else {
-                  _yy_token_token = None
-                  _yy_token_start = last_pos
-                  _yy_token_end = last_pos
+                  _yy_stack_0[_yy_depth_0] = _yy_value_0_0
                 }
-              })
-              match _yy_token_token {
-                None =>
-                  ({
-                    ()
-                    let _yy_r81 = yy_action_3()
-                    _yy_value_2_0 = Some(_yy_r81)
-                    _yy_control = 2
-                    break _yy_scope_2~
-                  })
-                Some(NUMBER(_yy_r60)) =>
-                  ({
-                    ()
-                    let _yy_r61 = _yy_token_start
-                    let _yy_r62 = _yy_token_end
-                    _yy_value_3_0 = _yy_r60
-                    _yy_position_0 = _yy_r61
-                    _yy_position_1 = _yy_r62
-                    _yy_control = 3
-                    continue _yy_loop_4~ ()
-                  })
-                Some(TEXT(_yy_r63)) =>
-                  ({
-                    ()
-                    let _yy_r64 = _yy_token_start
-                    let _yy_r65 = _yy_token_end
-                    _yy_value_0_0 = _yy_r63
-                    _yy_position_0 = _yy_r64
-                    _yy_position_1 = _yy_r65
-                    _yy_control = 1
-                    continue _yy_loop_4~ ()
-                  })
+                _yy_depth_0 += 1
+                if _yy_depth_1 == _yy_stack_1.length() {
+                  _yy_stack_1.push(_yy_position_0)
+                } else {
+                  _yy_stack_1[_yy_depth_1] = _yy_position_0
+                }
+                _yy_depth_1 += 1
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_position_1)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_position_1
+                }
+                _yy_depth_2 += 1
+                yy_stack_push_unprotected(stack, 2)
+                state = 2
+                last_pos = _yy_token_end
+                _yy_token_token = None
+                _yy_token_start = 0
+                _yy_token_end = 0
+                ({
+                  ()
+                  if cursor < tokens.length() {
+                    let (token, sp, ep) = tokens[cursor]
+                    cursor += 1
+                    _yy_token_token = Some(token)
+                    _yy_token_start = sp
+                    _yy_token_end = ep
+                  } else {
+                    _yy_token_token = None
+                    _yy_token_start = last_pos
+                    _yy_token_end = last_pos
+                  }
+                })
+                match _yy_token_token {
+                  None =>
+                    ({
+                      ()
+                      let _yy_r81 = yy_action_3()
+                      _yy_value_2_0 = Some(_yy_r81)
+                      _yy_control = 2
+                      break _yy_scope_1~
+                    })
+                  Some(NUMBER(_yy_r60)) =>
+                    ({
+                      ()
+                      let _yy_r61 = _yy_token_start
+                      let _yy_r62 = _yy_token_end
+                      _yy_value_3_0 = _yy_r60
+                      _yy_position_0 = _yy_r61
+                      _yy_position_1 = _yy_r62
+                      _yy_control = 3
+                      continue _yy_loop_3~ ()
+                    })
+                  Some(TEXT(_yy_r63)) =>
+                    ({
+                      ()
+                      let _yy_r64 = _yy_token_start
+                      let _yy_r65 = _yy_token_end
+                      _yy_value_0_0 = _yy_r63
+                      _yy_position_0 = _yy_r64
+                      _yy_position_1 = _yy_r65
+                      continue _yy_loop_4~ ()
+                    })
+                }
               }
             })
           3 =>
             ({
               ()
-              // run state 4
-              if _yy_depth_3 == _yy_stack_3.length() {
-                _yy_stack_3.push(_yy_value_3_0)
-              } else {
-                _yy_stack_3[_yy_depth_3] = _yy_value_3_0
-              }
-              _yy_depth_3 += 1
-              if _yy_depth_1 == _yy_stack_1.length() {
-                _yy_stack_1.push(_yy_position_0)
-              } else {
-                _yy_stack_1[_yy_depth_1] = _yy_position_0
-              }
-              _yy_depth_1 += 1
-              if _yy_depth_2 == _yy_stack_2.length() {
-                _yy_stack_2.push(_yy_position_1)
-              } else {
-                _yy_stack_2[_yy_depth_2] = _yy_position_1
-              }
-              _yy_depth_2 += 1
-              yy_stack_push_unprotected(stack, 4)
-              state = 4
-              last_pos = _yy_token_end
-              _yy_token_token = None
-              _yy_token_start = 0
-              _yy_token_end = 0
-              ({
-                ()
-                if cursor < tokens.length() {
-                  let (token, sp, ep) = tokens[cursor]
-                  cursor += 1
-                  _yy_token_token = Some(token)
-                  _yy_token_start = sp
-                  _yy_token_end = ep
+              _yy_loop_5~: for _yy_cycle = () {
+                // run state 4
+                if _yy_depth_3 == _yy_stack_3.length() {
+                  _yy_stack_3.push(_yy_value_3_0)
                 } else {
-                  _yy_token_token = None
-                  _yy_token_start = last_pos
-                  _yy_token_end = last_pos
+                  _yy_stack_3[_yy_depth_3] = _yy_value_3_0
                 }
-              })
-              match _yy_token_token {
-                None =>
-                  ({
-                    ()
-                    let _yy_r101 = yy_action_3()
-                    _yy_value_2_0 = Some(_yy_r101)
-                    _yy_control = 4
-                    break _yy_scope_2~
-                  })
-                Some(NUMBER(_yy_r66)) =>
-                  ({
-                    ()
-                    let _yy_r67 = _yy_token_start
-                    let _yy_r68 = _yy_token_end
-                    _yy_value_3_0 = _yy_r66
-                    _yy_position_0 = _yy_r67
-                    _yy_position_1 = _yy_r68
-                    _yy_control = 3
-                    continue _yy_loop_4~ ()
-                  })
-                Some(TEXT(_yy_r69)) =>
-                  ({
-                    ()
-                    let _yy_r70 = _yy_token_start
-                    let _yy_r71 = _yy_token_end
-                    _yy_value_0_0 = _yy_r69
-                    _yy_position_0 = _yy_r70
-                    _yy_position_1 = _yy_r71
-                    _yy_control = 1
-                    continue _yy_loop_4~ ()
-                  })
+                _yy_depth_3 += 1
+                if _yy_depth_1 == _yy_stack_1.length() {
+                  _yy_stack_1.push(_yy_position_0)
+                } else {
+                  _yy_stack_1[_yy_depth_1] = _yy_position_0
+                }
+                _yy_depth_1 += 1
+                if _yy_depth_2 == _yy_stack_2.length() {
+                  _yy_stack_2.push(_yy_position_1)
+                } else {
+                  _yy_stack_2[_yy_depth_2] = _yy_position_1
+                }
+                _yy_depth_2 += 1
+                yy_stack_push_unprotected(stack, 4)
+                state = 4
+                last_pos = _yy_token_end
+                _yy_token_token = None
+                _yy_token_start = 0
+                _yy_token_end = 0
+                ({
+                  ()
+                  if cursor < tokens.length() {
+                    let (token, sp, ep) = tokens[cursor]
+                    cursor += 1
+                    _yy_token_token = Some(token)
+                    _yy_token_start = sp
+                    _yy_token_end = ep
+                  } else {
+                    _yy_token_token = None
+                    _yy_token_start = last_pos
+                    _yy_token_end = last_pos
+                  }
+                })
+                match _yy_token_token {
+                  None =>
+                    ({
+                      ()
+                      let _yy_r101 = yy_action_3()
+                      _yy_value_2_0 = Some(_yy_r101)
+                      _yy_control = 4
+                      break _yy_scope_1~
+                    })
+                  Some(NUMBER(_yy_r66)) =>
+                    ({
+                      ()
+                      let _yy_r67 = _yy_token_start
+                      let _yy_r68 = _yy_token_end
+                      _yy_value_3_0 = _yy_r66
+                      _yy_position_0 = _yy_r67
+                      _yy_position_1 = _yy_r68
+                      continue _yy_loop_5~ ()
+                    })
+                  Some(TEXT(_yy_r69)) =>
+                    ({
+                      ()
+                      let _yy_r70 = _yy_token_start
+                      let _yy_r71 = _yy_token_end
+                      _yy_value_0_0 = _yy_r69
+                      _yy_position_0 = _yy_r70
+                      _yy_position_1 = _yy_r71
+                      _yy_control = 1
+                      continue _yy_loop_3~ ()
+                    })
+                }
               }
             })
           _ => panic()
         }
       }
     }
-    _yy_loop_5~: for _yy_cycle = () {
-      _yy_scope_6~: while true {
-        match _yy_control {
-          2 =>
-            ({
-              ()
-              // run state 3
-              let _yy_r87 = _yy_stack_0[_yy_depth_0 - 1]
-              let _yy_r88 = _yy_stack_1[_yy_depth_1 - 1]
-              let _yy_r89 = _yy_stack_2[_yy_depth_2 - 1]
-              let _yy_r94 = yy_action_2(
-                _yy_r87, _yy_value_2_0.unwrap(), _yy_r88, _yy_r89
-              )
-              _yy_depth_0 -= 1
-              _yy_depth_1 -= 1
-              _yy_depth_2 -= 1
-              stack.depth -= 1
-              state = stack.values[stack.depth - 1]
-              let _yy_r95 = state
-              _yy_state_0 = _yy_r95
-              _yy_value_2_0 = Some(_yy_r94)
-              break _yy_scope_6~
-            })
-          4 =>
-            ({
-              ()
-              // run state 5
-              let _yy_r107 = _yy_stack_3[_yy_depth_3 - 1]
-              let _yy_r108 = _yy_stack_1[_yy_depth_1 - 1]
-              let _yy_r109 = _yy_stack_2[_yy_depth_2 - 1]
-              let _yy_r114 = yy_action_1(
-                _yy_r107, _yy_value_2_0.unwrap(), _yy_r108, _yy_r109
-              )
-              _yy_depth_3 -= 1
-              _yy_depth_1 -= 1
-              _yy_depth_2 -= 1
-              stack.depth -= 1
-              state = stack.values[stack.depth - 1]
-              let _yy_r115 = state
-              _yy_state_0 = _yy_r115
-              _yy_value_2_0 = Some(_yy_r114)
-              break _yy_scope_6~
-            })
-          _ => panic()
-        }
+    _yy_loop_6~: for _yy_cycle = () {
+      match _yy_control {
+        2 =>
+          ({
+            ()
+            // run state 3
+            let _yy_r87 = _yy_stack_0[_yy_depth_0 - 1]
+            let _yy_r88 = _yy_stack_1[_yy_depth_1 - 1]
+            let _yy_r89 = _yy_stack_2[_yy_depth_2 - 1]
+            let _yy_r94 = yy_action_2(
+              _yy_r87, _yy_value_2_0.unwrap(), _yy_r88, _yy_r89
+            )
+            _yy_depth_0 -= 1
+            _yy_depth_1 -= 1
+            _yy_depth_2 -= 1
+            stack.depth -= 1
+            state = stack.values[stack.depth - 1]
+            let _yy_r95 = state
+            _yy_state_0 = _yy_r95
+            _yy_value_2_0 = Some(_yy_r94)
+          })
+        4 =>
+          ({
+            ()
+            // run state 5
+            let _yy_r107 = _yy_stack_3[_yy_depth_3 - 1]
+            let _yy_r108 = _yy_stack_1[_yy_depth_1 - 1]
+            let _yy_r109 = _yy_stack_2[_yy_depth_2 - 1]
+            let _yy_r114 = yy_action_1(
+              _yy_r107, _yy_value_2_0.unwrap(), _yy_r108, _yy_r109
+            )
+            _yy_depth_3 -= 1
+            _yy_depth_1 -= 1
+            _yy_depth_2 -= 1
+            stack.depth -= 1
+            state = stack.values[stack.depth - 1]
+            let _yy_r115 = state
+            _yy_state_0 = _yy_r115
+            _yy_value_2_0 = Some(_yy_r114)
+          })
+        _ => panic()
       }
       // goto items
       match _yy_state_0 {
         0 =>
           ({
             ()
-            break _yy_scope_3~
+            break _yy_scope_2~
           })
         2 =>
           ({
             ()
             _yy_control = 2
-            continue _yy_loop_5~ ()
+            continue _yy_loop_6~ ()
           })
         4 =>
           ({
             ()
             _yy_control = 4
-            continue _yy_loop_5~ ()
+            continue _yy_loop_6~ ()
           })
         _ => panic()
       }

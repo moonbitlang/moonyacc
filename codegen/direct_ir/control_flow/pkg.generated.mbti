@@ -6,9 +6,11 @@ import {
 }
 
 // Values
+pub fn analyze(@direct_ir.Program) -> Analysis
+
 pub fn isolate(@direct_ir.Program) -> Plan raise InvalidControl
 
-pub fn plan(@direct_ir.Program, costs~ : Array[Int32], fixed? : Bool) -> Plan raise InvalidControl
+pub fn plan(@direct_ir.Program, costs~ : Array[Int32], partitioning? : Partitioning) -> Plan raise InvalidControl
 
 // Errors
 pub suberror InvalidControl {
@@ -16,6 +18,12 @@ pub suberror InvalidControl {
 }
 
 // Types and methods
+pub struct Analysis {
+  // private fields
+}
+pub fn Analysis::isolate(Self) -> Plan raise InvalidControl
+pub fn Analysis::plan(Self, costs~ : Array[Int32], partitioning? : Partitioning) -> Plan raise InvalidControl
+
 pub(all) enum Control {
   Run(Int32, Map[Int32, Transfer])
   Sequence(Array[Control])
@@ -26,6 +34,13 @@ pub(all) enum Control {
   Select(Array[(Int32, Transfer)])
 }
 pub fn Control::uses_dispatch(Self) -> Bool
+
+pub(all) enum Partitioning {
+  Loops
+  WholeLoops
+  Joins
+  FixedSuccessors
+}
 
 pub struct Plan {
   source : @direct_ir.Program
@@ -47,6 +62,7 @@ pub struct Region {
 }
 
 pub(all) enum Transfer {
+  Next
   Break(Int32)
   Enter(Int32)
   Continue(Int32)
