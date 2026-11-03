@@ -23,13 +23,14 @@ pub(all) enum Associativity {
 pub type Code = String
 
 ///|
+#derive(Eq, Compare)
 pub(all) enum TypeExpr {
   Constr(pkg~ : String?, String, Array[TypeExpr])
   Param(String)
   Option(TypeExpr)
   Tuple(Array[TypeExpr])
   Arrow(Array[TypeExpr], TypeExpr)
-} derive(Eq, Compare)
+}
 
 ///|
 pub impl Show for TypeExpr with fn output(self, logger) {
@@ -145,13 +146,14 @@ pub(all) struct Action {
 }
 
 ///|
+#derive(Eq)
 pub(all) enum PositionExpr {
   BeforeRhs
   StartOf(Int32)
   EndOf(Int32)
   // Fall back to the last span's end, or BeforeRhs if there are no spans.
   FirstNonEmpty(Array[(PositionExpr, PositionExpr)])
-} derive(Eq)
+}
 
 ///|
 pub(all) struct OriginalClauseInfo {

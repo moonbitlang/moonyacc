@@ -1,58 +1,66 @@
 ///|
 /// Logical value types. A target ABI may box Semantic values without changing
 /// the IR's types or its block interfaces.
+#derive(Eq)
 pub(all) enum ValueType {
   State
   Position
   Semantic(@elab.TypeExpr)
-} derive(Eq)
+}
 
 ///|
 /// IDs are unique across a program; definitions are local to one block.
+#derive(Eq)
 pub(all) struct Register {
   id : Int32
   type_ : ValueType
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 pub(all) enum Value {
   Reg(Register)
   State(Int32)
-} derive(Eq)
+}
 
 ///|
+#derive(Eq, Hash)
 pub(all) enum Field {
   State
   Semantic
   Start
   End
-} derive(Eq, Hash)
+}
 
 ///|
 /// Fields describe a logical cell, not a concrete tuple/array representation.
 /// None denotes an opaque prefix cell: only its state may be peeked.
+#derive(Eq)
 pub(all) struct Cell {
   symbol : Int32?
   fields : Array[Field]
-} derive(Eq)
+}
 
 ///|
+#derive(Eq, Hash)
 pub(all) enum Token {
   Terminal(Int32)
   EndOfInput
-} derive(Eq, Hash)
+}
 
 ///|
 /// Cached lookahead is an explicit machine resource. Any imposes no precondition;
 /// On also witnesses the identity of the cached token.
+#derive(Eq)
 pub(all) enum Lookahead {
   Any
   Empty
   Present
   On(Token)
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 pub(all) enum Instruction {
   EnsureLookahead
   // Unconditional lexer read, requiring an empty cache.
@@ -73,25 +81,28 @@ pub(all) enum Instruction {
   // Operands are ordered by ActionSignature.inputs, including only values
   // actually read by the action. A dead result does not make the call pure.
   Action(Int32, Array[Value], Register)
-} derive(Eq)
+}
 
 ///|
 /// Jump arguments are evaluated in parallel, before binding target parameters.
+#derive(Eq)
 pub(all) struct Edge {
   target : Int32
   arguments : Array[Value]
-} derive(Eq)
+}
 
 ///|
 /// A binding pattern selects one real token and defines its logical semantic
 /// value and span in the branch scope. It never reads the lexer or converts a
 /// JsonCst payload: these effects belong to loading the lookahead resource.
+#derive(Eq)
 pub(all) enum TokenPattern {
   Tokens(Array[Token])
   BindToken(Int32, Register, Register, Register)
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 pub(all) enum Terminator {
   Jump(Edge)
   CaseToken(Array[(TokenPattern, Body)], Body)
@@ -99,15 +110,16 @@ pub(all) enum Terminator {
   Return(Int32, Value)
   Stop
   Unreachable
-} derive(Eq)
+}
 
 ///|
 /// Branches are extended basic blocks. Their definitions are scoped below the
 /// branch; only explicit Jump arguments can escape to another CFG block.
+#derive(Eq)
 pub(all) struct Body {
   instructions : Array[Instruction]
   terminator : Terminator
-} derive(Eq)
+}
 
 ///|
 pub fn Body::jump(edge : Edge) -> Body {
@@ -134,12 +146,13 @@ pub(all) enum Origin {
 
 ///|
 /// Producer-supplied optimization policy, never a typing assumption.
+#derive(Eq)
 pub(all) enum InlineHint {
   NoHint
   Always
   IfKnownState
   IfCells(Int32)
-} derive(Eq)
+}
 
 ///|
 pub(all) struct Block {

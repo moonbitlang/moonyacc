@@ -7,11 +7,12 @@ pub fn build((BuilderContext) -> Unit) -> Grammar
 // Errors
 
 // Types and methods
+#derive(Eq)
 pub(all) enum Associativity {
   LeftAssoc
   RightAssoc
   NonAssoc
-} derive(Eq)
+}
 
 pub struct BuilderContext {
   // private fields
@@ -37,11 +38,12 @@ pub impl Eq for Nonterminal
 pub impl Hash for Nonterminal
 pub impl Show for Nonterminal
 
+#derive(Eq)
 pub(all) enum Nullability {
   Null
   Nullable
   NonNullable
-} derive(Eq)
+}
 
 pub(all) struct Production {
   mut num : Int32
@@ -55,10 +57,11 @@ pub impl Eq for Production
 pub impl Hash for Production
 pub impl Show for Production
 
+#derive(Compare, Eq, Hash)
 pub(all) enum Symbol {
   T(Terminal)
   NT(Nonterminal)
-} derive(Compare, Eq, Hash)
+}
 pub impl Show for Symbol
 
 pub(all) struct Terminal {

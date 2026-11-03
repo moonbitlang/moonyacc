@@ -3,17 +3,20 @@ package "moonbitlang/yacc_tests/calc_jsoncst_test"
 
 import {
   "moonbitlang/core/debug",
+  "moonbitlang/core/json",
 }
 
 // Values
-pub fn start(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
+pub fn start(() -> (Token, Int32, Int32), Int32) -> @json.Json raise ParseError
 
 // Errors
+#derive(@debug.Debug)
 pub suberror ParseError {
   UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
-} derive(@debug.Debug)
+}
 
 // Types and methods
+#derive(@debug.Debug)
 pub(all) enum Token {
   EOF
   NUMBER
@@ -22,7 +25,7 @@ pub(all) enum Token {
   STAR
   LPAREN
   RPAREN
-} derive(@debug.Debug)
+}
 pub fn Token::kind(Self) -> TokenKind
 
 pub(all) enum TokenKind {

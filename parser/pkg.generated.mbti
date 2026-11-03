@@ -25,6 +25,7 @@ pub suberror ParseError {
 type Lexer
 pub fn Lexer::next_token(Self) -> (Token, Int32, Int32) raise LexError
 
+#derive(@debug.Debug)
 pub(all) enum Token {
   EOF
   IDENT(String)
@@ -56,7 +57,7 @@ pub(all) enum Token {
   BAR
   EQ
   SEMI
-} derive(@debug.Debug)
+}
 pub fn Token::kind(Self) -> TokenKind
 
 pub(all) enum TokenKind {

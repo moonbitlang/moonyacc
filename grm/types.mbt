@@ -33,11 +33,12 @@
 // rule listed in the specification is chosen for reduction
 
 ///|
+#derive(Eq)
 pub(all) enum Associativity {
   LeftAssoc
   RightAssoc
   NonAssoc
-} derive(Eq)
+}
 
 ///|
 pub(all) struct Terminal {
@@ -67,11 +68,12 @@ pub impl Show for Terminal with fn output(self, logger) -> Unit {
 }
 
 ///|
+#derive(Eq)
 pub(all) enum Nullability {
   Null // Alwasy produces epsilon
   Nullable // May produce epsilon
   NonNullable // Never produces epsilon
-} derive(Eq)
+}
 
 ///|
 pub(all) struct Nonterminal {
@@ -101,10 +103,11 @@ pub impl Show for Nonterminal with fn output(self, logger) {
 }
 
 ///|
+#derive(Eq, Compare, Hash)
 pub(all) enum Symbol {
   T(Terminal)
   NT(Nonterminal)
-} derive(Eq, Compare, Hash)
+}
 
 ///|
 pub impl Show for Symbol with fn output(self, logger) -> Unit {

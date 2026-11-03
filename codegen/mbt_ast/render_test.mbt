@@ -41,6 +41,49 @@ test "emission represents field calls and expression grouping structurally" {
 }
 
 ///|
+test "deriving uses attributes before enum and suberror declarations" {
+  let int : @elab.TypeExpr = Constr(pkg=None, "Int", [])
+  let debug : @elab.TypeExpr = Constr(pkg=None, "Debug", [])
+  let eq : @elab.TypeExpr = Constr(pkg=None, "Eq", [])
+  let items = [
+    @mbt_ast.item(
+      Enum("Token", [{ name: "Number", arguments: [int], }], [eq, debug]),
+      visibility=PublicAll,
+      attributes=[{ name: "doc", arguments: [Positional(Ident("hidden"))], }],
+    ),
+    @mbt_ast.item(
+      Suberror("Failure", [{ name: "Failed", arguments: [int], }], [debug]),
+      visibility=Public,
+    ),
+    @mbt_ast.item(Suberror("Opaque", [], []), visibility=Public),
+  ]
+  inspect(
+    @mbt_ast.render(items).source,
+    content=(
+      #|///|
+      #|#doc(hidden)
+      #|#derive(Eq, Debug)
+      #|pub(all) enum Token {
+      #|  Number(Int)
+      #|}
+      #|
+      #|///|
+      #|#derive(Debug)
+      #|pub suberror Failure {
+      #|  Failed(Int)
+      #|}
+      #|
+      #|///|
+      #|pub suberror Opaque
+      #|
+    ),
+  )
+  let narrow = @mbt_ast.render(items, width=1).source
+  assert_true(narrow.contains("#derive(Eq, Debug)\npub(all) enum Token"))
+  assert_true(narrow.contains("#derive(Debug)\npub suberror Failure"))
+}
+
+///|
 test "delimited lists group by width regardless of expression kind" {
   let output = @mbt_ast.render(
     [

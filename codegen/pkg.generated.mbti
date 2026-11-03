@@ -3,6 +3,7 @@ package "moonbitlang/yacc/codegen"
 
 import {
   "moonbitlang/core/immut/vector",
+  "moonbitlang/core/json",
   "moonbitlang/yacc/elab",
   "moonbitlang/yacc/grm",
   "moonbitlang/yacc/lr1",
@@ -55,18 +56,20 @@ pub(all) struct ProductionMeta {
   action : @elab.Action
 }
 
+#derive(@json.ToJson)
 pub(all) struct SourceMap {
   mappings : Array[SourceMapping]
-} derive(ToJson)
+}
 pub fn SourceMap::new() -> Self
 pub impl SourceMapBuilder for SourceMap
 
+#derive(@json.ToJson)
 pub(all) struct SourceMapping {
   source : String
   original_offset : Int32
   generated_offset : Int32
   length : Int32
-} derive(ToJson)
+}
 
 pub(all) struct TerminalMeta {
   data_type : @elab.TypeExpr

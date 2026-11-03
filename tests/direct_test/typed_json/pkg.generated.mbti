@@ -3,10 +3,11 @@ package "moonbitlang/yacc_tests/direct_test/typed_json"
 
 import {
   "moonbitlang/core/debug",
+  "moonbitlang/core/json",
 }
 
 // Values
-pub fn start(() -> (Token, Unit, Unit), Unit) -> Json raise ParseError
+pub fn start(() -> (Token, Unit, Unit), Unit) -> @json.Json raise ParseError
 
 // Errors
 pub suberror ParseError {
@@ -17,8 +18,8 @@ pub suberror ParseError {
 pub(all) struct Payload {
   value : Int32
 }
-pub fn Payload::to_json(Self) -> Json
-pub impl ToJson for Payload
+pub fn Payload::to_json(Self) -> @json.Json
+pub impl @json.ToJson for Payload
 
 pub(all) enum Token {
   VALUE(Payload)

@@ -17,6 +17,7 @@ pub(all) enum Control {
 /// Break/Continue are lexically scoped. Enter first selects an entry of a
 /// multiple-entry component; Dispatch selects its next iteration. Exit returns
 /// to the outer driver, never calls another region.
+#derive(Eq)
 pub(all) enum Transfer {
   Next
   Break(Int32)
@@ -24,7 +25,7 @@ pub(all) enum Transfer {
   Continue(Int32)
   Dispatch(Int32)
   Exit
-} derive(Eq)
+}
 
 ///|
 pub struct Region {

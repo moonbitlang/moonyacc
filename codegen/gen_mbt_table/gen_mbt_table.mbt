@@ -13,11 +13,12 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Eq, Compare)
 priv enum CodegenSymbol {
   T(@grm.Terminal)
   NT(@grm.Nonterminal)
   EOI
-} derive(Eq, Compare)
+}
 
 ///|
 fn CodegenSymbol::eoi() -> CodegenSymbol {
@@ -44,13 +45,14 @@ fn CodegenSymbol::encode(self : CodegenSymbol, grammar : @grm.Grammar) -> Int32 
 }
 
 ///|
+#derive(Eq, Compare)
 priv enum CodegenDecision {
   Error
   Accept
   Shift(@lr1.LR1State)
   Reduce(@grm.Production)
   ReduceNoLookahead(@grm.Production)
-} derive(Eq, Compare)
+}
 
 ///|
 fn codegen_tokens(

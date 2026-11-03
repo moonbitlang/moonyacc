@@ -1,12 +1,13 @@
 ///|
+#derive(Debug)
 pub(all) enum Token {
   EOF
   IDENT(String)
   STRING(String)
   LANGLE_CODE_RANGLE(String)
-  LBRACE_CODE_RBRACE((String, Int, Array[@ast.SubstItem]))
-  PERCENT_LBRACE_CODE_PERCENT_RBRACE((String, Int, Int))
-  PERCENT_PERCENT_CODE_EOF((String, Int, Int))
+  LBRACE_CODE_RBRACE((String, Int32, Array[@ast.SubstItem]))
+  PERCENT_LBRACE_CODE_PERCENT_RBRACE((String, Int32, Int32))
+  PERCENT_PERCENT_CODE_EOF((String, Int32, Int32))
   PKG_AND_IDENT((String, String))
   PERCENT_PERCENT
   PERCENT_START
@@ -30,7 +31,7 @@ pub(all) enum Token {
   BAR
   EQ
   SEMI
-} derive(Debug)
+}
 
 ///|
 #deprecated("Use Debug::to_repr instead")
@@ -149,7 +150,7 @@ pub impl Show for TokenKind with fn output(self, logger) {
       TK_BAR => "\"|\""
       TK_EQ => "\"=\""
       TK_SEMI => "\";\""
-    }
+    },
   )
 }
 
@@ -197,7 +198,7 @@ pub impl Debug for TokenKind with fn to_repr(self) {
 
 ///|
 pub suberror ParseError {
-  UnexpectedToken(Token, (Int, Int), Array[TokenKind])
+  UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
 }
 
 ///|
@@ -213,7 +214,7 @@ priv suberror YYObj_Array_String_ {
 
 ///|
 priv suberror YYObj_Option_Unit_ {
-  YYObj_Option_Unit_(Option[Unit])
+  YYObj_Option_Unit_(Unit?)
 }
 
 ///|
@@ -342,7 +343,7 @@ priv suberror YYObj__ast_PrecSymbol_ {
 
 ///|
 priv suberror YYObj___ast_Code__Int__Int__ {
-  YYObj___ast_Code__Int__Int__((@ast.Code, Int, Int)?)
+  YYObj___ast_Code__Int__Int__((@ast.Code, Int32, Int32)?)
 }
 
 ///|
@@ -352,28 +353,28 @@ priv suberror YYObj__String__String_ {
 
 ///|
 priv suberror YYObj__String__Int__Int_ {
-  YYObj__String__Int__Int_((String, Int, Int))
+  YYObj__String__Int__Int_((String, Int32, Int32))
 }
 
 ///|
 priv suberror YYObj__String__Int__Array__ast_SubstItem__ {
   YYObj__String__Int__Array__ast_SubstItem__(
-    (String, Int, Array[@ast.SubstItem])
+    (String, Int32, Array[@ast.SubstItem])
   )
 }
 
 ///|
-type YYState = ((YYSymbol) -> YYDecision)
+type YYState = (YYSymbol) -> YYDecision
 
 ///|
-type YYAction = ((Int, ArrayView[(YYObj, Int, Int)]) -> YYObj)
+type YYAction = (Int32, ArrayView[(YYObj, Int32, Int32)]) -> YYObj
 
 ///|
 priv enum YYDecision {
   Accept
   Shift(YYState)
-  Reduce(Int, YYSymbol, YYAction)
-  ReduceNoLookahead(Int, YYSymbol, YYAction)
+  Reduce(Int32, YYSymbol, YYAction)
+  ReduceNoLookahead(Int32, YYSymbol, YYAction)
   Error
 }
 
@@ -464,99 +465,136 @@ fn init {
 // 46|    }
 // 47|    { decls, rules: rule_list.to_array() }
 // 48|  }
-fn yy_action_0(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_0(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__list_List__ast_Declaration_(decl_list)
   guard! _args[2].0 is YYObj__list_List__ast_Rule_(rule_list)
   guard! _args[3].0 is YYObj___ast_Code__Int__Int__(trailer)
   YYObj__ast_ParserSpec(
-    ({(); 
-    let decls = decl_list.to_array()
-    match trailer {
-      Some((code, utf8_pos, subst)) => {
-        decls.push(Trailer(code, utf8_pos, subst))
+    {
+      ()
+      let decls = decl_list.to_array()
+      match trailer {
+        Some((code, utf8_pos, subst)) =>
+          decls.push(Trailer(code, utf8_pos, subst))
+        None => ()
       }
-      None => ()
-    }
-    { decls, rules: rule_list.to_array() }
-  
-    })
+      { decls, rules: rule_list.to_array(), }
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 78|    code=PERCENT_LBRACE_CODE_PERCENT_RBRACE { Some(code) }
-fn yy_action_1(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_1(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__String__Int__Int_(code)
   YYObj___ast_Code__Int__Int__(
-    ({();  Some(code) 
-    })
+    {
+      ()
+      Some(code)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 79|    code=PERCENT_PERCENT_CODE_EOF { Some(code) }
-fn yy_action_2(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_2(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__String__Int__Int_(code)
   YYObj___ast_Code__Int__Int__(
-    ({();  Some(code) 
-    })
+    {
+      ()
+      Some(code)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 80|    { None }
-fn yy_action_3(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_3(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   YYObj___ast_Code__Int__Int__(
-    ({();  None 
-    })
+    {
+      ()
+      None
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 74|    rule=rule rule_list=rule_list { @list.cons(rule, rule_list) }
-fn yy_action_4(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_4(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Rule(rule)
   guard! _args[1].0 is YYObj__list_List__ast_Rule_(rule_list)
   YYObj__list_List__ast_Rule_(
-    ({();  @list.cons(rule, rule_list) 
-    })
+    {
+      ()
+      @list.cons(rule, rule_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 73|    rule=rule { @list.cons(rule, List([])) }
-fn yy_action_5(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_5(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Rule(rule)
   YYObj__list_List__ast_Rule_(
-    ({();  @list.cons(rule, List([])) 
-    })
+    {
+      ()
+      @list.cons(rule, List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 84|    rule_no_modifiers { $1 }
-fn yy_action_6(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_6(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Rule(_dollar1)
   YYObj__ast_Rule(
-    ({();  _dollar1 
-    })
+    {
+      ()
+      _dollar1
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 85|    "%inline" rule_no_modifiers { { ..$2, inline: true } }
-fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_7(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_Rule(_dollar2)
   YYObj__ast_Rule(
-    ({();  { .._dollar2, inline: true } 
-    })
+    {
+      ()
+      { .._dollar2, inline: true, }
+    },
   )
 }
 
@@ -565,17 +603,28 @@ fn yy_action_7(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 // 89|    nonterminal=symbol type_=opt_rule_return_type ":" clause_list=clause_list option(";") {
 // 90|    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }
 // 91|  }
-fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_8(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Symbol(nonterminal)
   guard! _args[1].0 is YYObj__ast_TypeExpr_(type_)
-  guard! _args[3].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    clause_list
-  )
+  guard! _args[3].0
+    is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
+      clause_list
+    )
   YYObj__ast_Rule(
-    ({(); 
-    { inline: false, nonterminal, generic_params: [], params: [], type_, clauses: clause_list.to_array() }
-  
-    })
+    {
+      ()
+      {
+        inline: false,
+        nonterminal,
+        generic_params: [],
+        params: [],
+        type_,
+        clauses: clause_list.to_array(),
+      }
+    },
   )
 }
 
@@ -584,146 +633,211 @@ fn yy_action_8(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
 // 92|    nonterminal=symbol generic_params=opt_rule_generic_params "(" param_list=nonempty_rule_param_list ")" type_=opt_rule_return_type ":" clause_list=clause_list option(";") {
 // 93|    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }
 // 94|  }
-fn yy_action_9(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_9(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Symbol(nonterminal)
   guard! _args[1].0 is YYObj_Array_String_(generic_params)
   guard! _args[3].0 is YYObj__list_List__String___ast_TypeExpr___(param_list)
   guard! _args[5].0 is YYObj__ast_TypeExpr_(type_)
-  guard! _args[7].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    clause_list
-  )
+  guard! _args[7].0
+    is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
+      clause_list
+    )
   YYObj__ast_Rule(
-    ({(); 
-    { inline: false, nonterminal, generic_params, params: param_list.to_array(),  type_, clauses: clause_list.to_array() }
-  
-    })
+    {
+      ()
+      {
+        inline: false,
+        nonterminal,
+        generic_params,
+        params: param_list.to_array(),
+        type_,
+        clauses: clause_list.to_array(),
+      }
+    },
   )
 }
 
 ///|
 // file:///./stdlib.mbty
 // 5|    X { Some($1) }
-fn yy_action_10(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_10(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   let _dollar1 = ()
   YYObj_Option_Unit_(
-    ({();  Some(_dollar1) 
-    })
+    {
+      ()
+      Some(_dollar1)
+    },
   )
 }
 
 ///|
 // file:///./stdlib.mbty
 // 4|    { None }
-fn yy_action_11(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_11(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   YYObj_Option_Unit_(
-    ({();  None 
-    })
+    {
+      ()
+      None
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 147|    "|" nonempty_clause_list { $2 }
-fn yy_action_12(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard! _args[1].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    _dollar2
-  )
+fn yy_action_12(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
+  guard! _args[1].0
+    is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
+      _dollar2
+    )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    ({();  _dollar2 
-    })
+    {
+      ()
+      _dollar2
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 148|    nonempty_clause_list { $1 }
-fn yy_action_13(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
-  guard! _args[0].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    _dollar1
-  )
+fn yy_action_13(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
+  guard! _args[0].0
+    is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
+      _dollar1
+    )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    ({();  _dollar1 
-    })
+    {
+      ()
+      _dollar1
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 153|    clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, List([])), action), clause_list) }
-fn yy_action_15(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_15(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   let _sub_action_0_result = yy_action_14(_last_pos, _args[0:1])
   guard! _sub_action_0_result is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
-  guard! _args[3].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    clause_list
-  )
+  guard! _args[3].0
+    is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
+      clause_list
+    )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    ({();  @list.cons((@list.cons(clause_woa, List([])), action), clause_list) 
-    })
+    {
+      ()
+      @list.cons((@list.cons(clause_woa, List([])), action), clause_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 152|    clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, List([])), action), List([])) }
-fn yy_action_16(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_16(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   let _sub_action_0_result = yy_action_14(_last_pos, _args[0:1])
   guard! _sub_action_0_result is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    ({();  @list.cons((@list.cons(clause_woa, List([])), action), List([])) 
-    })
+    {
+      ()
+      @list.cons((@list.cons(clause_woa, List([])), action), List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 162|    nonempty_clause_without_action { $1 }
-fn yy_action_14(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_14(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_ClauseWithoutAction(_dollar1)
   YYObj__ast_ClauseWithoutAction(
-    ({();  _dollar1 
-    })
+    {
+      ()
+      _dollar1
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 153|    clause_woa=clause_without_action action=clause_action "|" clause_list=nonempty_clause_list { @list.cons((@list.cons(clause_woa, List([])), action), clause_list) }
-fn yy_action_18(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_18(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   let _sub_action_0_result = yy_action_17(_last_pos, _args[0:1])
   guard! _sub_action_0_result is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
-  guard! _args[3].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    clause_list
-  )
+  guard! _args[3].0
+    is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
+      clause_list
+    )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    ({();  @list.cons((@list.cons(clause_woa, List([])), action), clause_list) 
-    })
+    {
+      ()
+      @list.cons((@list.cons(clause_woa, List([])), action), clause_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 152|    clause_woa=clause_without_action action=clause_action { @list.cons((@list.cons(clause_woa, List([])), action), List([])) }
-fn yy_action_19(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_19(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   let _sub_action_0_result = yy_action_17(_last_pos, _args[0:1])
   guard! _sub_action_0_result is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    ({();  @list.cons((@list.cons(clause_woa, List([])), action), List([])) 
-    })
+    {
+      ()
+      @list.cons((@list.cons(clause_woa, List([])), action), List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 161|    empty_clause_without_action { $1 }
-fn yy_action_17(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_17(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_ClauseWithoutAction(_dollar1)
   YYObj__ast_ClauseWithoutAction(
-    ({();  _dollar1 
-    })
+    {
+      ()
+      _dollar1
+    },
   )
 }
 
@@ -733,17 +847,25 @@ fn yy_action_17(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 155|    guard! clause_list is More((clause_woa_list, action), tail=tail_clause_list)
 // 156|    @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)
 // 157|  }
-fn yy_action_20(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_20(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_ClauseWithoutAction(clause_woa)
-  guard! _args[2].0 is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    clause_list
-  )
+  guard! _args[2].0
+    is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
+      clause_list
+    )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    ({(); 
-    guard! clause_list is More((clause_woa_list, action), tail=tail_clause_list)
-    @list.cons((@list.cons(clause_woa, clause_woa_list), action), tail_clause_list)
-  
-    })
+    {
+      ()
+      guard! clause_list
+        is More((clause_woa_list, action), tail=tail_clause_list)
+      @list.cons(
+        (@list.cons(clause_woa, clause_woa_list), action),
+        tail_clause_list,
+      )
+    },
   )
 }
 
@@ -753,778 +875,1075 @@ fn yy_action_20(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj 
 // 175|      let (code, utf8_pos, subst) = code
 // 176|      { code: Some({ code, utf8_pos, subst }), loc: ($startpos, $endpos - $startpos) }
 // 177|  }
-fn yy_action_21(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_21(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__String__Int__Array__ast_SubstItem__(code)
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
   let _end_pos = if _args.length() == 0 {
     _last_pos
   } else {
     _args[_args.length() - 1].2
   }
   YYObj__ast_ClauseAction(
-    ({(); 
+    {
+      ()
       let (code, utf8_pos, subst) = code
-      { code: Some({ code, utf8_pos, subst }), loc: (_start_pos, _end_pos - _start_pos) }
-  
-    })
+      {
+        code: Some({ code, utf8_pos, subst, }),
+        loc: (_start_pos, _end_pos - _start_pos),
+      }
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 166|    prec=rule_prec { { items: [], prec, loc: ($startpos, $endpos - $startpos) } }
-fn yy_action_22(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_22(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_PrecSymbol_(prec)
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
   let _end_pos = if _args.length() == 0 {
     _last_pos
   } else {
     _args[_args.length() - 1].2
   }
   YYObj__ast_ClauseWithoutAction(
-    ({();  { items: [], prec, loc: (_start_pos, _end_pos - _start_pos) } 
-    })
+    {
+      ()
+      { items: [], prec, loc: (_start_pos, _end_pos - _start_pos), }
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 170|    item_list=nonempty_item_list prec=rule_prec { { items: item_list.to_array(), prec, loc: ($startpos, $endpos - $startpos) } }
-fn yy_action_23(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_23(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__list_List__ast_ClauseItem_(item_list)
   guard! _args[1].0 is YYObj__ast_PrecSymbol_(prec)
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
   let _end_pos = if _args.length() == 0 {
     _last_pos
   } else {
     _args[_args.length() - 1].2
   }
   YYObj__ast_ClauseWithoutAction(
-    ({();  { items: item_list.to_array(), prec, loc: (_start_pos, _end_pos - _start_pos) } 
-    })
+    {
+      ()
+      {
+        items: item_list.to_array(),
+        prec,
+        loc: (_start_pos, _end_pos - _start_pos),
+      }
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 181|    "%prec" symbol=prec_symbol { Some(symbol) }
-fn yy_action_24(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_24(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_PrecSymbol(symbol)
   YYObj__ast_PrecSymbol_(
-    ({();  Some(symbol) 
-    })
+    {
+      ()
+      Some(symbol)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 187|    item=item item_list=nonempty_item_list { @list.cons(item, item_list) }
-fn yy_action_25(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_25(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_ClauseItem(item)
   guard! _args[1].0 is YYObj__list_List__ast_ClauseItem_(item_list)
   YYObj__list_List__ast_ClauseItem_(
-    ({();  @list.cons(item, item_list) 
-    })
+    {
+      ()
+      @list.cons(item, item_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 186|    item=item { @list.cons(item, List([])) }
-fn yy_action_26(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_26(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_ClauseItem(item)
   YYObj__list_List__ast_ClauseItem_(
-    ({();  @list.cons(item, List([])) 
-    })
+    {
+      ()
+      @list.cons(item, List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 191|    term=term { { binder: None, term: term } }
-fn yy_action_27(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_27(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Term(term)
   YYObj__ast_ClauseItem(
-    ({();  { binder: None, term: term } 
-    })
+    {
+      ()
+      { binder: None, term, }
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 192|    binder=IDENT "=" term=term { { binder: Some(binder), term: term } }
-fn yy_action_28(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_28(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(binder)
   guard! _args[2].0 is YYObj__ast_Term(term)
   YYObj__ast_ClauseItem(
-    ({();  { binder: Some(binder), term: term } 
-    })
+    {
+      ()
+      { binder: Some(binder), term, }
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 197|    symbol=symbol "(" nonempty_comma_term_list ")" { RuleCall(symbol, symbol_loc=($startpos(symbol), $endpos(symbol)), $3.to_array()) }
-fn yy_action_29(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_29(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Symbol(symbol)
   let _start_pos_of_item0 = _args[0].1
   let _end_pos_of_item0 = _args[0].2
   guard! _args[2].0 is YYObj__list_List__ast_Term_(_dollar3)
   YYObj__ast_Term(
-    ({();  RuleCall(symbol, symbol_loc=(_start_pos_of_item0, _end_pos_of_item0), _dollar3.to_array()) 
-    })
+    {
+      ()
+      RuleCall(
+        symbol,
+        symbol_loc=(_start_pos_of_item0, _end_pos_of_item0),
+        _dollar3.to_array(),
+      )
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 203|    term=term "," term_list=nonempty_comma_term_list { @list.cons(term, term_list) }
-fn yy_action_30(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_30(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Term(term)
   guard! _args[2].0 is YYObj__list_List__ast_Term_(term_list)
   YYObj__list_List__ast_Term_(
-    ({();  @list.cons(term, term_list) 
-    })
+    {
+      ()
+      @list.cons(term, term_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 202|    term=term { @list.cons(term, List([])) }
-fn yy_action_31(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_31(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Term(term)
   YYObj__list_List__ast_Term_(
-    ({();  @list.cons(term, List([])) 
-    })
+    {
+      ()
+      @list.cons(term, List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 196|    symbol=symbol { Symbol(symbol, loc=($startpos, $endpos)) }
-fn yy_action_32(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_32(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Symbol(symbol)
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
   let _end_pos = if _args.length() == 0 {
     _last_pos
   } else {
     _args[_args.length() - 1].2
   }
   YYObj__ast_Term(
-    ({();  Symbol(symbol, loc=(_start_pos, _end_pos)) 
-    })
+    {
+      ()
+      Symbol(symbol, loc=(_start_pos, _end_pos))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 198|    image=STRING { Image(image, loc=($startpos, $endpos)) }
-fn yy_action_33(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_33(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(image)
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
   let _end_pos = if _args.length() == 0 {
     _last_pos
   } else {
     _args[_args.length() - 1].2
   }
   YYObj__ast_Term(
-    ({();  Image(image, loc=(_start_pos, _end_pos)) 
-    })
+    {
+      ()
+      Image(image, loc=(_start_pos, _end_pos))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 182|    { None }
-fn yy_action_34(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_34(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   YYObj__ast_PrecSymbol_(
-    ({();  None 
-    })
+    {
+      ()
+      None
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 106|    IDENT ":" type_expr "," nonempty_rule_param_list { @list.cons(($1, Some($3)), $5) }
-fn yy_action_35(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_35(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   guard! _args[2].0 is YYObj__ast_TypeExpr(_dollar3)
   guard! _args[4].0 is YYObj__list_List__String___ast_TypeExpr___(_dollar5)
   YYObj__list_List__String___ast_TypeExpr___(
-    ({();  @list.cons((_dollar1, Some(_dollar3)), _dollar5) 
-    })
+    {
+      ()
+      @list.cons((_dollar1, Some(_dollar3)), _dollar5)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 104|    IDENT ":" type_expr { @list.cons(($1, Some($3)), List([])) }
-fn yy_action_36(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_36(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   guard! _args[2].0 is YYObj__ast_TypeExpr(_dollar3)
   YYObj__list_List__String___ast_TypeExpr___(
-    ({();  @list.cons((_dollar1, Some(_dollar3)), List([])) 
-    })
+    {
+      ()
+      @list.cons((_dollar1, Some(_dollar3)), List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 105|    IDENT "," nonempty_rule_param_list { @list.cons(($1, None), $3) }
-fn yy_action_37(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_37(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   guard! _args[2].0 is YYObj__list_List__String___ast_TypeExpr___(_dollar3)
   YYObj__list_List__String___ast_TypeExpr___(
-    ({();  @list.cons((_dollar1, None), _dollar3) 
-    })
+    {
+      ()
+      @list.cons((_dollar1, None), _dollar3)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 103|    IDENT { @list.cons(($1, None), List([])) }
-fn yy_action_38(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_38(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   YYObj__list_List__String___ast_TypeExpr___(
-    ({();  @list.cons((_dollar1, None), List([])) 
-    })
+    {
+      ()
+      @list.cons((_dollar1, None), List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 98|    "->" type_=type_expr { Some(type_) }
-fn yy_action_39(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_39(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_TypeExpr(type_)
   YYObj__ast_TypeExpr_(
-    ({();  Some(type_) 
-    })
+    {
+      ()
+      Some(type_)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 136|    PKG_AND_IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=Some($1.0), $1.1, $3.to_array()) }
-fn yy_action_40(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_40(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__String__String_(_dollar1)
   guard! _args[2].0 is YYObj__list_List__ast_TypeExpr_(_dollar3)
   YYObj__ast_TypeExpr(
-    ({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, _dollar3.to_array()) 
-    })
+    {
+      ()
+      Constr(pkg=Some(_dollar1.0), _dollar1.1, _dollar3.to_array())
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 121|    "(" ")" "->" type_expr { Arrow([], $4) }
-fn yy_action_41(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_41(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[3].0 is YYObj__ast_TypeExpr(_dollar4)
   YYObj__ast_TypeExpr(
-    ({();  Arrow([], _dollar4) 
-    })
+    {
+      ()
+      Arrow([], _dollar4)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 122|    "(" type_expr ")" "->" type_expr { Arrow([$2], $5) }
-fn yy_action_42(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_42(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard! _args[4].0 is YYObj__ast_TypeExpr(_dollar5)
   YYObj__ast_TypeExpr(
-    ({();  Arrow([_dollar2], _dollar5) 
-    })
+    {
+      ()
+      Arrow([_dollar2], _dollar5)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 138|    "(" type_expr ")" { $2 }
-fn yy_action_43(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_43(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   YYObj__ast_TypeExpr(
-    ({();  _dollar2 
-    })
+    {
+      ()
+      _dollar2
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 123|    "(" type_expr "," ")" "->" type_expr { Arrow([$2], $6) }
-fn yy_action_44(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_44(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard! _args[5].0 is YYObj__ast_TypeExpr(_dollar6)
   YYObj__ast_TypeExpr(
-    ({();  Arrow([_dollar2], _dollar6) 
-    })
+    {
+      ()
+      Arrow([_dollar2], _dollar6)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 129|    postfix_type_expr "?" { Option($1) }
-fn yy_action_45(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_45(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
   YYObj__ast_TypeExpr(
-    ({();  Option(_dollar1) 
-    })
+    {
+      ()
+      Option(_dollar1)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 120|    postfix_type_expr { $1 }
-fn yy_action_46(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_46(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
   YYObj__ast_TypeExpr(
-    ({();  _dollar1 
-    })
+    {
+      ()
+      _dollar1
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 124|    "(" type_expr "," nonempty_type_expr_list ")" "->" type_expr { Arrow(@list.cons($2, $4).to_array(), $7) }
-fn yy_action_47(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_47(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard! _args[3].0 is YYObj__list_List__ast_TypeExpr_(_dollar4)
   guard! _args[6].0 is YYObj__ast_TypeExpr(_dollar7)
   YYObj__ast_TypeExpr(
-    ({();  Arrow(@list.cons(_dollar2, _dollar4).to_array(), _dollar7) 
-    })
+    {
+      ()
+      Arrow(@list.cons(_dollar2, _dollar4).to_array(), _dollar7)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 137|    "(" type_expr "," nonempty_type_expr_list ")" { Tuple(@list.cons($2, $4).to_array()) }
-fn yy_action_48(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_48(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_TypeExpr(_dollar2)
   guard! _args[3].0 is YYObj__list_List__ast_TypeExpr_(_dollar4)
   YYObj__ast_TypeExpr(
-    ({();  Tuple(@list.cons(_dollar2, _dollar4).to_array()) 
-    })
+    {
+      ()
+      Tuple(@list.cons(_dollar2, _dollar4).to_array())
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 128|    basic_type_expr { $1 }
-fn yy_action_49(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_49(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_TypeExpr(_dollar1)
   YYObj__ast_TypeExpr(
-    ({();  _dollar1 
-    })
+    {
+      ()
+      _dollar1
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 135|    IDENT "[" nonempty_type_expr_list "]" { Constr(pkg=None, $1, $3.to_array()) }
-fn yy_action_50(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_50(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   guard! _args[2].0 is YYObj__list_List__ast_TypeExpr_(_dollar3)
   YYObj__ast_TypeExpr(
-    ({();  Constr(pkg=None, _dollar1, _dollar3.to_array()) 
-    })
+    {
+      ()
+      Constr(pkg=None, _dollar1, _dollar3.to_array())
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 133|    IDENT { Constr(pkg=None, $1, []) }
-fn yy_action_51(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_51(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   YYObj__ast_TypeExpr(
-    ({();  Constr(pkg=None, _dollar1, []) 
-    })
+    {
+      ()
+      Constr(pkg=None, _dollar1, [])
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 143|    type_expr=type_expr "," type_expr_list=nonempty_type_expr_list { @list.cons(type_expr, type_expr_list) }
-fn yy_action_52(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_52(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_TypeExpr(type_expr)
   guard! _args[2].0 is YYObj__list_List__ast_TypeExpr_(type_expr_list)
   YYObj__list_List__ast_TypeExpr_(
-    ({();  @list.cons(type_expr, type_expr_list) 
-    })
+    {
+      ()
+      @list.cons(type_expr, type_expr_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 142|    type_expr=type_expr { @list.cons(type_expr, List([])) }
-fn yy_action_53(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_53(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_TypeExpr(type_expr)
   YYObj__list_List__ast_TypeExpr_(
-    ({();  @list.cons(type_expr, List([])) 
-    })
+    {
+      ()
+      @list.cons(type_expr, List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 134|    PKG_AND_IDENT { Constr(pkg=Some($1.0), $1.1, []) }
-fn yy_action_54(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_54(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__String__String_(_dollar1)
   YYObj__ast_TypeExpr(
-    ({();  Constr(pkg=Some(_dollar1.0), _dollar1.1, []) 
-    })
+    {
+      ()
+      Constr(pkg=Some(_dollar1.0), _dollar1.1, [])
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 111|    "[" nonempty_comma_ident_list "]" { $2.to_array() }
-fn yy_action_55(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_55(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__list_List_String_(_dollar2)
   YYObj_Array_String_(
-    ({();  _dollar2.to_array() 
-    })
+    {
+      ()
+      _dollar2.to_array()
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 116|    IDENT "," nonempty_comma_ident_list { @list.cons($1, $3) }
-fn yy_action_56(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_56(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   guard! _args[2].0 is YYObj__list_List_String_(_dollar3)
   YYObj__list_List_String_(
-    ({();  @list.cons(_dollar1, _dollar3) 
-    })
+    {
+      ()
+      @list.cons(_dollar1, _dollar3)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 115|    IDENT { @list.cons($1, List([])) }
-fn yy_action_57(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_57(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(_dollar1)
   YYObj__list_List_String_(
-    ({();  @list.cons(_dollar1, List([])) 
-    })
+    {
+      ()
+      @list.cons(_dollar1, List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 99|    { None }
-fn yy_action_58(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_58(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   YYObj__ast_TypeExpr_(
-    ({();  None 
-    })
+    {
+      ()
+      None
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 110|    { [] }
-fn yy_action_59(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_59(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   YYObj_Array_String_(
-    ({();  [] 
-    })
+    {
+      ()
+      []
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 52|    decl=decl decl_list=decl_list { @list.cons(decl, decl_list) }
-fn yy_action_60(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_60(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Declaration(decl)
   guard! _args[1].0 is YYObj__list_List__ast_Declaration_(decl_list)
   YYObj__list_List__ast_Declaration_(
-    ({();  @list.cons(decl, decl_list) 
-    })
+    {
+      ()
+      @list.cons(decl, decl_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 57|    PERCENT_LBRACE_CODE_PERCENT_RBRACE { Header($1.0, $1.1, $1.2) }
-fn yy_action_61(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_61(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__String__Int__Int_(_dollar1)
   YYObj__ast_Declaration(
-    ({();  Header(_dollar1.0, _dollar1.1, _dollar1.2) 
-    })
+    {
+      ()
+      Header(_dollar1.0, _dollar1.1, _dollar1.2)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 58|    "%start" symbol_list=nonempty_symbol_with_loc_list { Start(symbol_list.to_array(), type_=None) }
-fn yy_action_62(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_62(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__list_List__ast_SymbolWithLoc_(symbol_list)
   YYObj__ast_Declaration(
-    ({();  Start(symbol_list.to_array(), type_=None) 
-    })
+    {
+      ()
+      Start(symbol_list.to_array(), type_=None)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 59|    "%start" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_with_loc_list { Start(symbol_list.to_array(), type_=Some(type_)) }
-fn yy_action_63(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_63(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj_String(type_)
   guard! _args[2].0 is YYObj__list_List__ast_SymbolWithLoc_(symbol_list)
   YYObj__ast_Declaration(
-    ({();  Start(symbol_list.to_array(), type_=Some(type_)) 
-    })
+    {
+      ()
+      Start(symbol_list.to_array(), type_=Some(type_))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 60|    "%token" symbol_list=nonempty_symbol_with_loc_list { Token(symbol_list.to_array(), type_=None) }
-fn yy_action_64(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_64(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__list_List__ast_SymbolWithLoc_(symbol_list)
   YYObj__ast_Declaration(
-    ({();  Token(symbol_list.to_array(), type_=None) 
-    })
+    {
+      ()
+      Token(symbol_list.to_array(), type_=None)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 61|    "%token" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_with_loc_list { Token(symbol_list.to_array(), type_=Some(type_)) }
-fn yy_action_65(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_65(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj_String(type_)
   guard! _args[2].0 is YYObj__list_List__ast_SymbolWithLoc_(symbol_list)
   YYObj__ast_Declaration(
-    ({();  Token(symbol_list.to_array(), type_=Some(type_)) 
-    })
+    {
+      ()
+      Token(symbol_list.to_array(), type_=Some(type_))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 63|    "%token" type_=LANGLE_CODE_RANGLE symbol=symbol_with_loc image=STRING { Token1(symbol, type_=Some(type_), image=image) }
-fn yy_action_66(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_66(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj_String(type_)
   guard! _args[2].0 is YYObj__ast_SymbolWithLoc(symbol)
   guard! _args[3].0 is YYObj_String(image)
   YYObj__ast_Declaration(
-    ({();  Token1(symbol, type_=Some(type_), image=image) 
-    })
+    {
+      ()
+      Token1(symbol, type_=Some(type_), image~)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 62|    "%token" symbol=symbol_with_loc image=STRING { Token1(symbol, type_=None, image=image) }
-fn yy_action_67(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_67(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__ast_SymbolWithLoc(symbol)
   guard! _args[2].0 is YYObj_String(image)
   YYObj__ast_Declaration(
-    ({();  Token1(symbol, type_=None, image=image) 
-    })
+    {
+      ()
+      Token1(symbol, type_=None, image~)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 64|    "%type" type_=LANGLE_CODE_RANGLE symbol_list=nonempty_symbol_with_loc_list { Type(symbol_list.to_array(), type_=type_) }
-fn yy_action_68(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_68(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj_String(type_)
   guard! _args[2].0 is YYObj__list_List__ast_SymbolWithLoc_(symbol_list)
   YYObj__ast_Declaration(
-    ({();  Type(symbol_list.to_array(), type_=type_) 
-    })
+    {
+      ()
+      Type(symbol_list.to_array(), type_~)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 208|    symbol=symbol_with_loc symbol_list=nonempty_symbol_with_loc_list { @list.cons(symbol, symbol_list) }
-fn yy_action_69(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_69(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_SymbolWithLoc(symbol)
   guard! _args[1].0 is YYObj__list_List__ast_SymbolWithLoc_(symbol_list)
   YYObj__list_List__ast_SymbolWithLoc_(
-    ({();  @list.cons(symbol, symbol_list) 
-    })
+    {
+      ()
+      @list.cons(symbol, symbol_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 207|    symbol=symbol_with_loc { @list.cons(symbol, List([])) }
-fn yy_action_70(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_70(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_SymbolWithLoc(symbol)
   YYObj__list_List__ast_SymbolWithLoc_(
-    ({();  @list.cons(symbol, List([])) 
-    })
+    {
+      ()
+      @list.cons(symbol, List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 222|    symbol=symbol { { symbol, loc: ($startpos, $endpos) } }
-fn yy_action_71(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_71(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Symbol(symbol)
-  let _start_pos = if _args.length() == 0 {
-    _last_pos
-  } else {
-    _args[0].1
-  }
+  let _start_pos = if _args.length() == 0 { _last_pos } else { _args[0].1 }
   let _end_pos = if _args.length() == 0 {
     _last_pos
   } else {
     _args[_args.length() - 1].2
   }
   YYObj__ast_SymbolWithLoc(
-    ({();  { symbol, loc: (_start_pos, _end_pos) } 
-    })
+    {
+      ()
+      { symbol, loc: (_start_pos, _end_pos), }
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 65|    "%position" type_=LANGLE_CODE_RANGLE { Position(type_=type_) }
-fn yy_action_72(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_72(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj_String(type_)
   YYObj__ast_Declaration(
-    ({();  Position(type_=type_) 
-    })
+    {
+      ()
+      Position(type_~)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 66|    "%left" symbol_list=nonempty_prec_symbol_list { Left(symbol_list.to_array()) }
-fn yy_action_73(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_73(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__list_List__ast_PrecSymbol_(symbol_list)
   YYObj__ast_Declaration(
-    ({();  Left(symbol_list.to_array()) 
-    })
+    {
+      ()
+      Left(symbol_list.to_array())
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 67|    "%right" symbol_list=nonempty_prec_symbol_list { Right(symbol_list.to_array()) }
-fn yy_action_74(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_74(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__list_List__ast_PrecSymbol_(symbol_list)
   YYObj__ast_Declaration(
-    ({();  Right(symbol_list.to_array()) 
-    })
+    {
+      ()
+      Right(symbol_list.to_array())
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 68|    "%nonassoc" symbol_list=nonempty_prec_symbol_list { Nonassoc(symbol_list.to_array()) }
-fn yy_action_75(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_75(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj__list_List__ast_PrecSymbol_(symbol_list)
   YYObj__ast_Declaration(
-    ({();  Nonassoc(symbol_list.to_array()) 
-    })
+    {
+      ()
+      Nonassoc(symbol_list.to_array())
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 213|    symbol=prec_symbol symbol_list=nonempty_prec_symbol_list { @list.cons(symbol, symbol_list) }
-fn yy_action_76(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_76(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_PrecSymbol(symbol)
   guard! _args[1].0 is YYObj__list_List__ast_PrecSymbol_(symbol_list)
   YYObj__list_List__ast_PrecSymbol_(
-    ({();  @list.cons(symbol, symbol_list) 
-    })
+    {
+      ()
+      @list.cons(symbol, symbol_list)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 212|    symbol=prec_symbol { @list.cons(symbol, List([])) }
-fn yy_action_77(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_77(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_PrecSymbol(symbol)
   YYObj__list_List__ast_PrecSymbol_(
-    ({();  @list.cons(symbol, List([])) 
-    })
+    {
+      ()
+      @list.cons(symbol, List([]))
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 217|    symbol=symbol { Symbol(symbol) }
-fn yy_action_78(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_78(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj__ast_Symbol(symbol)
   YYObj__ast_PrecSymbol(
-    ({();  Symbol(symbol) 
-    })
+    {
+      ()
+      Symbol(symbol)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 218|    image=STRING { Image(image) }
-fn yy_action_79(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_79(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(image)
   YYObj__ast_PrecSymbol(
-    ({();  Image(image) 
-    })
+    {
+      ()
+      Image(image)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 226|    ident=IDENT { ident }
-fn yy_action_80(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_80(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[0].0 is YYObj_String(ident)
   YYObj__ast_Symbol(
-    ({();  ident 
-    })
+    {
+      ()
+      ident
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 69|    "%derive" traits=LANGLE_CODE_RANGLE type_=IDENT { Derive(traits=traits, type_=type_) }
-fn yy_action_81(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_81(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   guard! _args[1].0 is YYObj_String(traits)
   guard! _args[2].0 is YYObj_String(type_)
   YYObj__ast_Declaration(
-    ({();  Derive(traits=traits, type_=type_) 
-    })
+    {
+      ()
+      Derive(traits~, type_~)
+    },
   )
 }
 
 ///|
 // file:///./parser.mbty
 // 53|    { List([]) }
-fn yy_action_82(_last_pos : Int, _args : ArrayView[(YYObj, Int, Int)]) -> YYObj {
+fn yy_action_82(
+  _last_pos : Int32,
+  _args : ArrayView[(YYObj, Int32, Int32)],
+) -> YYObj {
   YYObj__list_List__ast_Declaration_(
-    ({();  List([]) 
-    })
+    {
+      ()
+      List([])
+    },
   )
 }
 
 ///|
-fn yy_input(token : Token, _start_pos : Int, _end_pos : Int) -> (
-  YYSymbol, YYObj
-) {
+fn yy_input(
+  token : Token,
+  _start_pos : Int32,
+  _end_pos : Int32,
+) -> (YYSymbol, YYObj) {
   match token {
     EOF => (T_EOF, YYObj_Void)
     IDENT(data) => (T_IDENT, YYObj_String(data))
@@ -1680,8 +2099,16 @@ fn yy_state_9(_lookahead : YYSymbol) -> YYDecision {
     NT_symbol => Shift(yy_state_8)
     NT_prec_symbol => Shift(yy_state_9)
     NT_nonempty_prec_symbol_list => Shift(yy_state_10)
-    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT | T_PERCENT_START | T_PERCENT_TOKEN | T_PERCENT_TYPE | T_PERCENT_POSITION | T_PERCENT_LEFT | T_PERCENT_RIGHT | T_PERCENT_NONASSOC | T_PERCENT_DERIVE =>
-      Reduce(1, NT_nonempty_prec_symbol_list, yy_action_77)
+    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE
+    | T_PERCENT_PERCENT
+    | T_PERCENT_START
+    | T_PERCENT_TOKEN
+    | T_PERCENT_TYPE
+    | T_PERCENT_POSITION
+    | T_PERCENT_LEFT
+    | T_PERCENT_RIGHT
+    | T_PERCENT_NONASSOC
+    | T_PERCENT_DERIVE => Reduce(1, NT_nonempty_prec_symbol_list, yy_action_77)
     _ => Error
   }
 }
@@ -1805,7 +2232,16 @@ fn yy_state_21(_lookahead : YYSymbol) -> YYDecision {
     NT_symbol => Shift(yy_state_20)
     NT_symbol_with_loc => Shift(yy_state_21)
     NT_nonempty_symbol_with_loc_list => Shift(yy_state_22)
-    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT | T_PERCENT_START | T_PERCENT_TOKEN | T_PERCENT_TYPE | T_PERCENT_POSITION | T_PERCENT_LEFT | T_PERCENT_RIGHT | T_PERCENT_NONASSOC | T_PERCENT_DERIVE =>
+    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE
+    | T_PERCENT_PERCENT
+    | T_PERCENT_START
+    | T_PERCENT_TOKEN
+    | T_PERCENT_TYPE
+    | T_PERCENT_POSITION
+    | T_PERCENT_LEFT
+    | T_PERCENT_RIGHT
+    | T_PERCENT_NONASSOC
+    | T_PERCENT_DERIVE =>
       Reduce(1, NT_nonempty_symbol_with_loc_list, yy_action_70)
     _ => Error
   }
@@ -1858,7 +2294,16 @@ fn yy_state_25(_lookahead : YYSymbol) -> YYDecision {
     NT_symbol_with_loc => Shift(yy_state_21)
     NT_nonempty_symbol_with_loc_list => Shift(yy_state_22)
     T_STRING => Shift(yy_state_26)
-    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT | T_PERCENT_START | T_PERCENT_TOKEN | T_PERCENT_TYPE | T_PERCENT_POSITION | T_PERCENT_LEFT | T_PERCENT_RIGHT | T_PERCENT_NONASSOC | T_PERCENT_DERIVE =>
+    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE
+    | T_PERCENT_PERCENT
+    | T_PERCENT_START
+    | T_PERCENT_TOKEN
+    | T_PERCENT_TYPE
+    | T_PERCENT_POSITION
+    | T_PERCENT_LEFT
+    | T_PERCENT_RIGHT
+    | T_PERCENT_NONASSOC
+    | T_PERCENT_DERIVE =>
       Reduce(1, NT_nonempty_symbol_with_loc_list, yy_action_70)
     _ => Error
   }
@@ -1902,7 +2347,16 @@ fn yy_state_28(_lookahead : YYSymbol) -> YYDecision {
     NT_symbol_with_loc => Shift(yy_state_21)
     NT_nonempty_symbol_with_loc_list => Shift(yy_state_22)
     T_STRING => Shift(yy_state_29)
-    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT | T_PERCENT_START | T_PERCENT_TOKEN | T_PERCENT_TYPE | T_PERCENT_POSITION | T_PERCENT_LEFT | T_PERCENT_RIGHT | T_PERCENT_NONASSOC | T_PERCENT_DERIVE =>
+    T_PERCENT_LBRACE_CODE_PERCENT_RBRACE
+    | T_PERCENT_PERCENT
+    | T_PERCENT_START
+    | T_PERCENT_TOKEN
+    | T_PERCENT_TYPE
+    | T_PERCENT_POSITION
+    | T_PERCENT_LEFT
+    | T_PERCENT_RIGHT
+    | T_PERCENT_NONASSOC
+    | T_PERCENT_DERIVE =>
       Reduce(1, NT_nonempty_symbol_with_loc_list, yy_action_70)
     _ => Error
   }
@@ -2806,8 +3260,13 @@ fn yy_state_93(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_94(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_LPAREN => Shift(yy_state_95)
-    T_IDENT | T_STRING | T_LBRACE_CODE_RBRACE | T_PERCENT_PREC | T_RPAREN | T_COMMA | T_BAR =>
-      Reduce(1, NT_term, yy_action_32)
+    T_IDENT
+    | T_STRING
+    | T_LBRACE_CODE_RBRACE
+    | T_PERCENT_PREC
+    | T_RPAREN
+    | T_COMMA
+    | T_BAR => Reduce(1, NT_term, yy_action_32)
     _ => Error
   }
 }
@@ -2888,8 +3347,12 @@ fn yy_state_100(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_101(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_EQ => Shift(yy_state_102)
-    T_IDENT | T_STRING | T_LBRACE_CODE_RBRACE | T_PERCENT_PREC | T_LPAREN | T_BAR =>
-      Reduce(1, NT_symbol, yy_action_80)
+    T_IDENT
+    | T_STRING
+    | T_LBRACE_CODE_RBRACE
+    | T_PERCENT_PREC
+    | T_LPAREN
+    | T_BAR => Reduce(1, NT_symbol, yy_action_80)
     _ => Error
   }
 }
@@ -3080,8 +3543,12 @@ fn yy_state_116(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_117(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_BAR => Shift(yy_state_118)
-    T_EOF | T_IDENT | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF | T_PERCENT_INLINE | T_SEMI =>
-      Reduce(2, NT_nonempty_clause_list, yy_action_19)
+    T_EOF
+    | T_IDENT
+    | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE
+    | T_PERCENT_PERCENT_CODE_EOF
+    | T_PERCENT_INLINE
+    | T_SEMI => Reduce(2, NT_nonempty_clause_list, yy_action_19)
     _ => Error
   }
 }
@@ -3135,8 +3602,12 @@ fn yy_state_119(_lookahead : YYSymbol) -> YYDecision {
 fn yy_state_120(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_BAR => Shift(yy_state_121)
-    T_EOF | T_IDENT | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF | T_PERCENT_INLINE | T_SEMI =>
-      Reduce(2, NT_nonempty_clause_list, yy_action_16)
+    T_EOF
+    | T_IDENT
+    | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE
+    | T_PERCENT_PERCENT_CODE_EOF
+    | T_PERCENT_INLINE
+    | T_SEMI => Reduce(2, NT_nonempty_clause_list, yy_action_16)
     _ => Error
   }
 }
@@ -3241,8 +3712,11 @@ fn yy_state_126(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_SEMI => Shift(yy_state_127)
     NT_option_SEMI_ => Shift(yy_state_128)
-    T_EOF | T_IDENT | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF | T_PERCENT_INLINE =>
-      Reduce(0, NT_option_SEMI_, yy_action_11)
+    T_EOF
+    | T_IDENT
+    | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE
+    | T_PERCENT_PERCENT_CODE_EOF
+    | T_PERCENT_INLINE => Reduce(0, NT_option_SEMI_, yy_action_11)
     _ => Error
   }
 }
@@ -3317,8 +3791,11 @@ fn yy_state_131(_lookahead : YYSymbol) -> YYDecision {
   match _lookahead {
     T_SEMI => Shift(yy_state_127)
     NT_option_SEMI_ => Shift(yy_state_132)
-    T_EOF | T_IDENT | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE | T_PERCENT_PERCENT_CODE_EOF | T_PERCENT_INLINE =>
-      Reduce(0, NT_option_SEMI_, yy_action_11)
+    T_EOF
+    | T_IDENT
+    | T_PERCENT_LBRACE_CODE_PERCENT_RBRACE
+    | T_PERCENT_PERCENT_CODE_EOF
+    | T_PERCENT_INLINE => Reduce(0, NT_option_SEMI_, yy_action_11)
     _ => Error
   }
 }
@@ -3429,102 +3906,100 @@ fn yy_state_142(_lookahead : YYSymbol) -> YYDecision {
 
 ///|
 fn[T] yy_parse(
-  read_token : (() -> (Token, Int, Int)), start_pos : Int, start : YYState,
-  return_ : ((YYObj) -> T)
+  read_token : () -> (Token, Int32, Int32),
+  start_pos : Int32,
+  start : YYState,
+  return_ : (YYObj) -> T,
 ) -> T raise ParseError {
   let mut state_stack : @list.List[YYState] = @list.List([start])
-  let data_stack : Array[(YYObj, Int, Int)] = []
+  let data_stack : Array[(YYObj, Int32, Int32)] = []
   let mut last_pos = start_pos
   let mut state = start
-  let mut lookahead : (YYSymbol, (YYObj, Int, Int), Token)? = None
+  let mut lookahead : (YYSymbol, (YYObj, Int32, Int32), Token)? = None
   let mut last_shifted_state_stack = state_stack
   while true {
     let decision = match state(EOI) {
-      (ReduceNoLookahead(_) | Accept) as t => t
+      ReduceNoLookahead(_) | Accept as t => t
       _ =>
         match lookahead {
           Some(la) => state(la.0)
-          None =>
-            ({
-              ()
-              let (token, start_pos, end_pos) = read_token()
-              let (symbol, data) = yy_input(token, start_pos, end_pos)
-              lookahead = Some((symbol, (data, start_pos, end_pos), token))
-              state(symbol)
-            })
+          None => {
+            ()
+            let (token, start_pos, end_pos) = read_token()
+            let (symbol, data) = yy_input(token, start_pos, end_pos)
+            lookahead = Some((symbol, (data, start_pos, end_pos), token))
+            state(symbol)
+          }
         }
     }
     match decision {
-      Accept =>
-        ({
-          ()
-          return return_(data_stack.unsafe_pop().0)
-        })
-      Shift(next_state) =>
-        ({
-          ()
-          guard! lookahead is Some(la)
-          data_stack.push(la.1)
-          state_stack = @list.cons(next_state, state_stack)
-          last_shifted_state_stack = state_stack
-          state = next_state
-          last_pos = la.1.2
-          lookahead = None
-        })
-      Reduce(count, symbol, action) | ReduceNoLookahead(count, symbol, action) =>
-        ({
-          ()
-          for count = count, symbol = symbol, action = action {
-            let args = data_stack[data_stack.length() - count:]
-            let data = action(last_pos, args)
-            let (start_pos, end_pos) = if args.length() == 0 {
-              (last_pos, last_pos)
-            } else {
-              (args[0].1, args[args.length() - 1].2)
-            }
-            for _ in 0..<count {
-              ignore(data_stack.unsafe_pop())
-              state_stack = state_stack.unsafe_tail()
-            }
-            state = state_stack.unsafe_head()
-            data_stack.push((data, start_pos, end_pos))
-            match state(symbol) {
-              Accept =>
-                ({
-                  ()
-                  return return_(data_stack.unsafe_pop().0)
-                })
-              Shift(next_state) =>
-                ({
-                  ()
-                  state_stack = @list.cons(next_state, state_stack)
-                  state = next_state
-                  break ()
-                })
-              Reduce(count, symbol, action) | ReduceNoLookahead(
-                count, symbol, action
-              ) =>
-                ({
-                  ()
-                  continue count, symbol, action
-                })
-              _ => panic()
-            }
+      Accept => {
+        ()
+        return return_(data_stack.unsafe_pop().0)
+      }
+      Shift(next_state) => {
+        ()
+        guard! lookahead is Some(la)
+        data_stack.push(la.1)
+        state_stack = @list.cons(next_state, state_stack)
+        last_shifted_state_stack = state_stack
+        state = next_state
+        last_pos = la.1.2
+        lookahead = None
+      }
+      Reduce(count, symbol, action)
+      | ReduceNoLookahead(count, symbol, action) => {
+        ()
+        for count = count, symbol = symbol, action = action {
+          let args = data_stack[data_stack.length() - count:]
+          let data = action(last_pos, args)
+          let (start_pos, end_pos) = if args.length() == 0 {
+            (last_pos, last_pos)
+          } else {
+            (args[0].1, args[args.length() - 1].2)
           }
-        })
-      Error =>
-        ({
-          ()
-          let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
-          error(last_shifted_state_stack, token, (start_pos, end_pos))
-        })
+          for _ in 0..<count {
+            ignore(data_stack.unsafe_pop())
+            state_stack = state_stack.unsafe_tail()
+          }
+          state = state_stack.unsafe_head()
+          data_stack.push((data, start_pos, end_pos))
+          match state(symbol) {
+            Accept => {
+              ()
+              return return_(data_stack.unsafe_pop().0)
+            }
+            Shift(next_state) => {
+              ()
+              state_stack = @list.cons(next_state, state_stack)
+              state = next_state
+              break ()
+            }
+            Reduce(count, symbol, action)
+            | ReduceNoLookahead(count, symbol, action) => {
+              ()
+              continue count, symbol, action
+            }
+            _ => panic()
+          }
+        }
+      }
+      Error => {
+        ()
+        let (_, (_, start_pos, end_pos), token) = lookahead.unwrap()
+        error(last_shifted_state_stack, token, (start_pos, end_pos))
+      }
     }
   }
   panic()
 }
 
 ///|
-fn error(stack : @list.List[YYState], token : Token, loc : (Int, Int)) -> Unit raise ParseError {
+fn error(
+  stack : @list.List[YYState],
+  token : Token,
+  loc : (Int32, Int32),
+) -> Unit raise ParseError {
   let expected = []
   fn try_add(symbol : YYSymbol, kind : TokenKind) {
     fn go(stack : @list.List[YYState]) {
@@ -3533,64 +4008,77 @@ fn error(stack : @list.List[YYState], token : Token, loc : (Int, Int)) -> Unit r
         More(state, ..) =>
           match state(symbol) {
             Accept | Shift(_) => expected.push(kind)
-            Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) =>
-              ({
-                ()
-                fn inner_go(stack : @list.List[YYState], count, symbol) {
-                  let stack = stack.drop(count)
-                  guard! stack is More(state, ..)
-                  match state(symbol) {
-                    Shift(state) => go(@list.cons(state, stack))
-                    Reduce(count, symbol, _) | ReduceNoLookahead(
-                      count, symbol, _
-                    ) =>
-                      inner_go(stack, count, symbol)
-                    _ => panic()
-                  }
+            Reduce(count, symbol, _) | ReduceNoLookahead(count, symbol, _) => {
+              ()
+              fn inner_go(stack : @list.List[YYState], count, symbol) {
+                let stack = stack.drop(count)
+                guard! stack is More(state, ..)
+                match state(symbol) {
+                  Shift(state) => go(@list.cons(state, stack))
+                  Reduce(count, symbol, _)
+                  | ReduceNoLookahead(count, symbol, _) =>
+                    inner_go(stack, count, symbol)
+                  _ => panic()
                 }
-                inner_go(stack, count, symbol)
-              })
+              }
+              inner_go(stack, count, symbol)
+            }
             Error => ()
           }
       }
     }
     go(stack)
   }
-  for term in ([
-    (T_EOF, TK_EOF), (T_IDENT, TK_IDENT), (T_STRING, TK_STRING),
-    (T_LANGLE_CODE_RANGLE, TK_LANGLE_CODE_RANGLE),
-    (T_LBRACE_CODE_RBRACE, TK_LBRACE_CODE_RBRACE),
-    (
-      T_PERCENT_LBRACE_CODE_PERCENT_RBRACE,
-      TK_PERCENT_LBRACE_CODE_PERCENT_RBRACE
-    ), (T_PERCENT_PERCENT_CODE_EOF, TK_PERCENT_PERCENT_CODE_EOF),
-    (T_PKG_AND_IDENT, TK_PKG_AND_IDENT),
-    (T_PERCENT_PERCENT, TK_PERCENT_PERCENT),
-    (T_PERCENT_START, TK_PERCENT_START), (T_PERCENT_TOKEN, TK_PERCENT_TOKEN),
-    (T_PERCENT_TYPE, TK_PERCENT_TYPE),
-    (T_PERCENT_POSITION, TK_PERCENT_POSITION),
-    (T_PERCENT_LEFT, TK_PERCENT_LEFT), (T_PERCENT_RIGHT, TK_PERCENT_RIGHT),
-    (T_PERCENT_NONASSOC, TK_PERCENT_NONASSOC),
-    (T_PERCENT_PREC, TK_PERCENT_PREC), (T_PERCENT_DERIVE, TK_PERCENT_DERIVE),
-    (T_PERCENT_INLINE, TK_PERCENT_INLINE), (T_LBRACKET, TK_LBRACKET),
-    (T_RBRACKET, TK_RBRACKET), (T_LPAREN, TK_LPAREN), (T_RPAREN, TK_RPAREN),
-    (T_COMMA, TK_COMMA), (T_ARROW, TK_ARROW), (T_QUESTION, TK_QUESTION),
-    (T_COLON, TK_COLON), (T_BAR, TK_BAR), (T_EQ, TK_EQ), (T_SEMI, TK_SEMI)
-  ] : Array[(YYSymbol, TokenKind)]) {
+  for
+    term in (
+      [
+        (T_EOF, TK_EOF),
+        (T_IDENT, TK_IDENT),
+        (T_STRING, TK_STRING),
+        (T_LANGLE_CODE_RANGLE, TK_LANGLE_CODE_RANGLE),
+        (T_LBRACE_CODE_RBRACE, TK_LBRACE_CODE_RBRACE),
+        (
+          T_PERCENT_LBRACE_CODE_PERCENT_RBRACE,
+          TK_PERCENT_LBRACE_CODE_PERCENT_RBRACE,
+        ),
+        (T_PERCENT_PERCENT_CODE_EOF, TK_PERCENT_PERCENT_CODE_EOF),
+        (T_PKG_AND_IDENT, TK_PKG_AND_IDENT),
+        (T_PERCENT_PERCENT, TK_PERCENT_PERCENT),
+        (T_PERCENT_START, TK_PERCENT_START),
+        (T_PERCENT_TOKEN, TK_PERCENT_TOKEN),
+        (T_PERCENT_TYPE, TK_PERCENT_TYPE),
+        (T_PERCENT_POSITION, TK_PERCENT_POSITION),
+        (T_PERCENT_LEFT, TK_PERCENT_LEFT),
+        (T_PERCENT_RIGHT, TK_PERCENT_RIGHT),
+        (T_PERCENT_NONASSOC, TK_PERCENT_NONASSOC),
+        (T_PERCENT_PREC, TK_PERCENT_PREC),
+        (T_PERCENT_DERIVE, TK_PERCENT_DERIVE),
+        (T_PERCENT_INLINE, TK_PERCENT_INLINE),
+        (T_LBRACKET, TK_LBRACKET),
+        (T_RBRACKET, TK_RBRACKET),
+        (T_LPAREN, TK_LPAREN),
+        (T_RPAREN, TK_RPAREN),
+        (T_COMMA, TK_COMMA),
+        (T_ARROW, TK_ARROW),
+        (T_QUESTION, TK_QUESTION),
+        (T_COLON, TK_COLON),
+        (T_BAR, TK_BAR),
+        (T_EQ, TK_EQ),
+        (T_SEMI, TK_SEMI),
+      ] : Array[(YYSymbol, TokenKind)]) {
     try_add(term.0, term.1)
   }
   raise UnexpectedToken(token, loc, expected)
 }
 
 ///|
-pub fn spec(read_token : (() -> (Token, Int, Int)), start_pos : Int) -> @ast.ParserSpec raise ParseError {
-  yy_parse(
-    read_token, start_pos, yy_state_0,
-    (it) =>
-      ({
-        ()
-        guard! it is YYObj__ast_ParserSpec(result)
-        result
-      })
-  )
+pub fn spec(
+  read_token : () -> (Token, Int32, Int32),
+  start_pos : Int32,
+) -> @ast.ParserSpec raise ParseError {
+  yy_parse(read_token, start_pos, yy_state_0, it => {
+    ()
+    guard! it is YYObj__ast_ParserSpec(result)
+    result
+  })
 }

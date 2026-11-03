@@ -16,7 +16,8 @@ pub fn singleton(Int32) -> SmallIntSet
 
 // Types and methods
 #alias(T)
-type SmallIntSet derive(Compare, Eq, @debug.Debug)
+#derive(Compare, Eq, @debug.Debug)
+type SmallIntSet
 pub fn SmallIntSet::add(Self, Int32) -> Self
 pub fn SmallIntSet::contains(Self, Int32) -> Bool
 pub fn SmallIntSet::difference(Self, Self) -> Self

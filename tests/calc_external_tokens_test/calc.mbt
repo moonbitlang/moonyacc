@@ -1,8 +1,9 @@
 ///|
+#derive(Debug)
 pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
   UnexpectedEndOfInput(Int, Array[TokenKind])
-} derive(Debug)
+}
 
 ///|
 #deprecated("Use Debug::to_repr instead")

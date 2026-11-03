@@ -12,18 +12,22 @@ pub fn parse(String) -> @ast.TypeExpr raise ParseOrLexError
 pub fn parse_type_expr(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> @ast.TypeExpr raise ParseError
 
 // Errors
+#derive(@debug.Debug)
 pub suberror LexError {
   Unrecognized(Char, Int32)
-} derive(@debug.Debug)
+}
 
+#derive(@debug.Debug)
 pub suberror ParseError {
   UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
   UnexpectedEndOfInput(Int32, Array[TokenKind])
-} derive(@debug.Debug)
+}
 
-type ParseOrLexError derive(@debug.Debug)
+#derive(@debug.Debug)
+type ParseOrLexError
 
 // Types and methods
+#derive(@debug.Debug)
 pub(all) enum Token {
   EOF
   LPAREN
@@ -35,7 +39,7 @@ pub(all) enum Token {
   QUESTION
   IDENT(String)
   PKG_AND_IDENT((String, String))
-} derive(@debug.Debug)
+}
 pub fn Token::kind(Self) -> TokenKind
 
 pub(all) enum TokenKind {

@@ -7,7 +7,8 @@ formatter(ignore: [ "parser.mbt" ])
 
 rule(
   name: "moonyacc",
-  command: "moonx moonbitlang/yacc@0.7.24 -- --input-mode array $input -o $output",
+  // Normalize legacy syntax from the pinned bootstrap generator.
+  command: "moonx moonbitlang/yacc@0.7.24 -- --input-mode array $input -o $output && moonfmt -w $output",
 )
 
 dev_build(rule: "moonyacc", input: "parser.mbty", output: "parser.mbt")

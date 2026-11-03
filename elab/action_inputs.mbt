@@ -1,10 +1,11 @@
 ///|
 /// Semantic dependencies of an elaborated action. Both optimizer liveness and
 /// target calling conventions consume this description; naming belongs to emission.
+#derive(Eq)
 pub(all) enum ActionInput {
   Value(Int32, TypeExpr)
   Position(PositionExpr)
-} derive(Eq)
+}
 
 ///|
 #deprecated("Use Eq::equal or Eq::not_equal instead")

@@ -13,7 +13,8 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
-pub(all) struct EncodedLR0Item(Int32) derive(Eq, Compare, Hash)
+#derive(Eq, Compare, Hash)
+pub(all) struct EncodedLR0Item(Int32)
 
 ///|
 pub fn EncodedLR0Item::new(

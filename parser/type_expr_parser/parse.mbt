@@ -13,10 +13,11 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Debug)
 suberror ParseOrLexError {
   ParseError(ParseError)
   LexError(LexError)
-} derive(Debug)
+}
 
 ///|
 pub fn parse(str : String) -> @ast.TypeExpr raise ParseOrLexError {

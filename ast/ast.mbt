@@ -13,15 +13,17 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(ToJson)
 pub(all) struct ParserSpec {
   decls : Array[Declaration]
   rules : Array[Rule]
-} derive(ToJson)
+}
 
 ///|
 pub type Code = String
 
 ///|
+#derive(Eq, Compare, Debug, ToJson(style="legacy"))
 pub(all) enum SubstItemDesc {
   Dollar(Int32)
   StartPos
@@ -32,36 +34,40 @@ pub(all) enum SubstItemDesc {
   LocOf(ClauseItemIdent)
   SymbolStartPos
   Sloc
-} derive(Eq, Compare, Debug, ToJson(style="legacy"))
+}
 
 ///|
+#derive(Eq, Compare, Debug, ToJson(style="legacy"))
 pub(all) enum ClauseItemIdent {
   Dollar(Int32)
   Name(Code)
-} derive(Eq, Compare, Debug, ToJson(style="legacy"))
+}
 
 ///|
+#derive(Debug, ToJson)
 pub(all) struct SubstItem {
   start : Int32
   end : Int32
   desc : SubstItemDesc
-} derive(Debug, ToJson)
+}
 
 ///|
 pub type Symbol = String
 
 ///|
+#derive(Debug, ToJson(style="legacy"))
 pub(all) enum TypeExpr {
   Constr(pkg~ : String?, String, Array[TypeExpr])
   Option(TypeExpr)
   Tuple(Array[TypeExpr])
   Arrow(Array[TypeExpr], TypeExpr)
-} derive(Debug, ToJson(style="legacy"))
+}
 
 ///|
 pub type TypeString = String
 
 ///|
+#derive(ToJson(style="legacy"))
 pub(all) enum Declaration {
   Header(Code, Int32, Int32) // (code, utf8_pos, utf8_len)
   Trailer(Code, Int32, Int32) // (code, utf8_pos, utf8_len)
@@ -74,15 +80,17 @@ pub(all) enum Declaration {
   Left(Array[PrecSymbol])
   Right(Array[PrecSymbol])
   Nonassoc(Array[PrecSymbol])
-} derive(ToJson(style="legacy"))
+}
 
 ///|
+#derive(ToJson)
 pub(all) struct SymbolWithLoc {
   symbol : Symbol
   loc : (Int32, Int32) // (utf8_pos, utf8_pos)
-} derive(ToJson)
+}
 
 ///|
+#derive(ToJson)
 pub(all) struct Rule {
   inline : Bool
   nonterminal : Symbol
@@ -90,43 +98,49 @@ pub(all) struct Rule {
   params : Array[(String, TypeExpr?)]
   type_ : TypeExpr?
   clauses : Array[(@list.List[ClauseWithoutAction], ClauseAction)]
-} derive(ToJson)
+}
 
 ///|
+#derive(ToJson)
 pub(all) struct ClauseWithoutAction {
   items : Array[ClauseItem]
   prec : PrecSymbol?
   loc : (Int32, Int32) // (utf8_pos, utf8_len)
-} derive(ToJson)
+}
 
 ///|
+#derive(ToJson)
 pub(all) struct ClauseAction {
   code : CodeWithSubst?
   loc : (Int32, Int32) // (utf8_pos, utf8_len)
-} derive(ToJson)
+}
 
 ///|
+#derive(ToJson)
 pub(all) struct CodeWithSubst {
   code : Code
   utf8_pos : Int32
   subst : Array[SubstItem]
-} derive(ToJson)
+}
 
 ///|
+#derive(ToJson)
 pub(all) struct ClauseItem {
   binder : Code?
   term : Term
-} derive(ToJson)
+}
 
 ///|
+#derive(ToJson(style="legacy"))
 pub(all) enum Term {
   Symbol(Symbol, loc~ : (Int32, Int32))
   Image(String, loc~ : (Int32, Int32))
   RuleCall(Symbol, symbol_loc~ : (Int32, Int32), Array[Term])
-} derive(ToJson(style="legacy"))
+}
 
 ///|
+#derive(ToJson(style="legacy"))
 pub(all) enum PrecSymbol {
   Symbol(Symbol)
   Image(String)
-} derive(ToJson(style="legacy"))
+}

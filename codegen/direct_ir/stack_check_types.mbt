@@ -1,34 +1,39 @@
 ///|
 /// Symbols here describe executions of the existing IR, not grammar semantics.
+#derive(Eq)
 priv enum StackCheckValue {
   SymParameter(Register)
   SymOutput(Register)
   SymState(Int32)
   SymPrefixField(Int32, Field, ValueType)
   SymPreviousPosition(Int32)
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 priv struct StackCheckCell {
   cell : Cell
   values : Array[StackCheckValue]
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 priv struct StackCheckStack {
   removed : Int32
   suffix : Array[StackCheckCell]
-} derive(Eq)
+}
 
 ///|
 /// Diagnostics observe state identities, including the state at the opaque
 /// prefix boundary, but never semantic values or source positions.
+#derive(Eq)
 priv struct StackCheckSnapshot {
   removed : Int32
   states : Array[StackCheckValue]
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 priv enum StackCheckEvent {
   ReadLookahead
   ReadInput(Int32, Register, Register, Register)
@@ -38,15 +43,17 @@ priv enum StackCheckEvent {
   CheckPop(Int32, Cell)
   CheckPreviousPosition(Int32)
   CallAction(Int32, Array[StackCheckValue], Register)
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 priv struct StackCheckEdge {
   target : Int32
   arguments : Array[StackCheckValue]
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 priv enum StackCheckTerminator {
   CheckJump(StackCheckEdge)
   CheckCaseToken(Array[(Array[Token], StackCheckBranch)], StackCheckBranch)
@@ -54,14 +61,15 @@ priv enum StackCheckTerminator {
   CheckReturn(Int32, StackCheckValue)
   CheckStop
   CheckUnreachable
-} derive(Eq)
+}
 
 ///|
+#derive(Eq)
 priv struct StackCheckBranch {
   stack : StackCheckStack
   trace : Array[StackCheckEvent]
   terminator : StackCheckTerminator
-} derive(Eq)
+}
 
 ///|
 priv struct StackCheck {

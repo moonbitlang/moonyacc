@@ -1,4 +1,5 @@
 ///|
+#derive(Debug)
 pub(all) enum Token {
   NUMBER(Int)
   PLUS
@@ -6,7 +7,7 @@ pub(all) enum Token {
   STAR
   LPAREN
   RPAREN
-} derive(Debug)
+}
 
 ///|
 #deprecated("Use Debug::to_repr instead")
@@ -73,10 +74,11 @@ pub impl Debug for TokenKind with fn to_repr(self) {
 }
 
 ///|
+#derive(Debug)
 pub suberror ParseError {
   UnexpectedToken(Token, (Int, Int), Array[TokenKind])
   UnexpectedEndOfInput(Int, Array[TokenKind])
-} derive(Debug)
+}
 
 ///|
 #deprecated("Use Debug::to_repr instead")

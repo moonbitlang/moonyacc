@@ -38,18 +38,20 @@ pub(all) struct Block {
 }
 pub fn Block::all_instructions(Self) -> Array[Instruction]
 
+#derive(Eq)
 pub(all) struct Body {
   instructions : Array[Instruction]
   terminator : Terminator
-} derive(Eq)
+}
 pub fn Body::all_instructions(Self) -> Array[Instruction]
 pub fn Body::edge(Self) -> Edge?
 pub fn Body::jump(Edge) -> Self
 
+#derive(Eq)
 pub(all) struct Cell {
   symbol : Int32?
   fields : Array[Field]
-} derive(Eq)
+}
 
 pub struct CheckpointFact {
   upper : Int32?
@@ -87,10 +89,11 @@ pub struct DuplicatedContinuations {
   sources : Array[Int32]
 }
 
+#derive(Eq)
 pub(all) struct Edge {
   target : Int32
   arguments : Array[Value]
-} derive(Eq)
+}
 
 pub(all) struct Entry {
   name : String
@@ -99,20 +102,23 @@ pub(all) struct Entry {
   result_type : @elab.TypeExpr
 }
 
+#derive(Eq, Hash)
 pub(all) enum Field {
   State
   Semantic
   Start
   End
-} derive(Eq, Hash)
+}
 
+#derive(Eq)
 pub(all) enum InlineHint {
   NoHint
   Always
   IfKnownState
   IfCells(Int32)
-} derive(Eq)
+}
 
+#derive(Eq)
 pub(all) enum Instruction {
   EnsureLookahead
   LoadLookahead
@@ -125,15 +131,16 @@ pub(all) enum Instruction {
   Pop(Cell, Array[Register?])
   Peek(Int32, Cell, Array[Register?])
   Action(Int32, Array[Value], Register)
-} derive(Eq)
+}
 pub fn Instruction::definitions(Self) -> Array[Register]
 
+#derive(Eq)
 pub(all) enum Lookahead {
   Any
   Empty
   Present
   On(Token)
-} derive(Eq)
+}
 
 pub(all) enum Origin {
   Run(Int32)
@@ -176,10 +183,11 @@ pub fn Program::stop_earlier(Self, StackKnowledge) -> Self raise InvalidProgram
 pub fn Program::storage_demand(Self, StackFlow, positions~ : Bool) -> StorageDemand
 pub fn Program::validate(Self) -> Unit raise InvalidProgram
 
+#derive(Eq)
 pub(all) struct Register {
   id : Int32
   type_ : ValueType
-} derive(Eq)
+}
 
 pub struct SnapshotLiveness {
   entries : Array[Bool]
@@ -240,6 +248,7 @@ pub(all) struct Symbol {
   type_ : @elab.TypeExpr
 }
 
+#derive(Eq)
 pub(all) enum Terminator {
   Jump(Edge)
   CaseToken(Array[(TokenPattern, Body)], Body)
@@ -247,34 +256,38 @@ pub(all) enum Terminator {
   Return(Int32, Value)
   Stop
   Unreachable
-} derive(Eq)
+}
 pub fn Terminator::bodies(Self) -> Array[Body]
 pub fn Terminator::can_stop(Self) -> Bool
 pub fn Terminator::successors(Self) -> Array[Int32]
 pub fn Terminator::token_patterns(Self) -> Array[TokenPattern]
 
+#derive(Eq, Hash)
 pub(all) enum Token {
   Terminal(Int32)
   EndOfInput
-} derive(Eq, Hash)
+}
 
+#derive(Eq)
 pub(all) enum TokenPattern {
   Tokens(Array[Token])
   BindToken(Int32, Register, Register, Register)
-} derive(Eq)
+}
 pub fn TokenPattern::definitions(Self) -> Array[Register]
 pub fn TokenPattern::tokens(Self) -> Array[Token]
 
+#derive(Eq)
 pub(all) enum Value {
   Reg(Register)
   State(Int32)
-} derive(Eq)
+}
 
+#derive(Eq)
 pub(all) enum ValueType {
   State
   Position
   Semantic(@elab.TypeExpr)
-} derive(Eq)
+}
 
 // Type aliases
 

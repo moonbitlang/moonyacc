@@ -3,26 +3,27 @@ package "moonbitlang/yacc_tests/ocaml_jsoncst_test"
 
 import {
   "moonbitlang/core/debug",
+  "moonbitlang/core/json",
 }
 
 // Values
 pub let binary_search_ml : String
 
-pub fn implementation(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
+pub fn implementation(() -> (Token, Int32, Int32), Int32) -> @json.Json raise ParseError
 
-pub fn interface(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
+pub fn interface(() -> (Token, Int32, Int32), Int32) -> @json.Json raise ParseError
 
 pub fn new_lexer(String) -> Lexer
 
-pub fn parse_core_type(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
+pub fn parse_core_type(() -> (Token, Int32, Int32), Int32) -> @json.Json raise ParseError
 
-pub fn parse_expression(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
+pub fn parse_expression(() -> (Token, Int32, Int32), Int32) -> @json.Json raise ParseError
 
-pub fn parse_pattern(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
+pub fn parse_pattern(() -> (Token, Int32, Int32), Int32) -> @json.Json raise ParseError
 
-pub fn toplevel_phrase(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
+pub fn toplevel_phrase(() -> (Token, Int32, Int32), Int32) -> @json.Json raise ParseError
 
-pub fn use_file(() -> (Token, Int32, Int32), Int32) -> Json raise ParseError
+pub fn use_file(() -> (Token, Int32, Int32), Int32) -> @json.Json raise ParseError
 
 // Errors
 pub suberror ParseError {

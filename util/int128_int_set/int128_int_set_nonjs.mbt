@@ -13,10 +13,11 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Eq, Compare, Hash)
 struct Int128IntSet {
   a : Int64
   b : Int64
-} derive(Eq, Compare, Hash)
+}
 
 ///|
 pub type T = Int128IntSet

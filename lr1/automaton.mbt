@@ -47,13 +47,14 @@ pub impl Show for LR1ItemGroup with fn output(self, logger) {
 }
 
 ///|
+#derive(Eq)
 pub(all) enum Decision {
   Shift(LR1State)
   Reduce(@grm.Production)
   Accept
   // Error
   Conflict(@list.List[Decision])
-} derive(Eq)
+}
 
 ///|
 priv struct LR0Node {
@@ -128,10 +129,11 @@ pub fn LR1State::set_action(
 }
 
 ///|
+#derive(Eq, Hash)
 pub(all) struct ConflictLocation {
   state : LR1State
   input : Lookahead
-} derive(Eq, Hash)
+}
 
 ///|
 pub(all) struct Automaton {

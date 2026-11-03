@@ -1,6 +1,10 @@
 // Generated using `moon info`, DON'T EDIT IT
 package "moonbitlang/yacc/util/array_multimap"
 
+import {
+  "moonbitlang/core/json",
+}
+
 // Values
 pub fn[K, V] new() -> T[K, V]
 
@@ -11,7 +15,7 @@ type T[K, V]
 pub fn[K : Hash + Eq, V : Eq] T::add(Self[K, V], K, V) -> Unit
 pub fn[K : Hash + Eq, V] T::copy(Self[K, V]) -> Self[K, V]
 pub fn[K : Hash + Eq, V] T::get(Self[K, V], K) -> Array[V]
-pub impl[K : Eq + Hash + Show, V : ToJson] ToJson for T[K, V]
+pub impl[K : Eq + Hash + Show, V : @json.ToJson] @json.ToJson for T[K, V]
 
 // Type aliases
 

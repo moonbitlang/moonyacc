@@ -13,11 +13,12 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Eq, Compare)
 pub(all) struct LR1Item {
   production : @grm.Production
   dot : Int32
   lookahead : Lookahead
-} derive(Eq, Compare)
+}
 
 ///|
 pub fn LR1Item::core(self : LR1Item) -> LR0Item {

@@ -9,12 +9,14 @@ import {
 pub fn start(Array[(Token, Int32, Int32)], initial_pos? : Int32) -> Int32 raise ParseError
 
 // Errors
+#derive(@debug.Debug)
 pub suberror ParseError {
   UnexpectedToken(Token, (Int32, Int32), Array[TokenKind])
   UnexpectedEndOfInput(Int32, Array[TokenKind])
-} derive(@debug.Debug)
+}
 
 // Types and methods
+#derive(@debug.Debug)
 pub(all) enum Token {
   NUMBER(Int32)
   PLUS
@@ -22,7 +24,7 @@ pub(all) enum Token {
   STAR
   LPAREN
   RPAREN
-} derive(@debug.Debug)
+}
 pub fn Token::kind(Self) -> TokenKind
 
 pub(all) enum TokenKind {

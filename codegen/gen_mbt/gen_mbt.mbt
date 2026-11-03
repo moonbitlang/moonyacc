@@ -13,11 +13,12 @@
 // along with this program; if not, see <https://www.gnu.org/licenses/>.
 
 ///|
+#derive(Eq, Compare)
 priv enum CodegenSymbol {
   T(@grm.Terminal)
   NT(@grm.Nonterminal)
   EOI
-} derive(Eq, Compare)
+}
 
 ///|
 fn CodegenSymbol::to_string(self : CodegenSymbol) -> String {
@@ -29,12 +30,13 @@ fn CodegenSymbol::to_string(self : CodegenSymbol) -> String {
 }
 
 ///|
+#derive(Eq, Compare)
 priv enum CodegenDecision {
   Accept
   Shift(Int32)
   Reduce(Int32, @grm.Nonterminal, Int32)
   ReduceNoLookahead(Int32, @grm.Nonterminal, Int32)
-} derive(Eq, Compare)
+}
 
 ///|
 fn derive_nonterminal_ident(nont : @grm.Nonterminal) -> String {
