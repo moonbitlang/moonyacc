@@ -72,7 +72,7 @@ priv struct CliOptions {
 fn cli_command() -> @argparse.Command {
   Command(
     "moonyacc",
-    version="moonyacc 0.7.21",
+    version=MODULE_VERSION,
     disable_version_flag=true,
     flags=[
       FlagArg(
