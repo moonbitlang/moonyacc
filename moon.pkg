@@ -11,6 +11,13 @@ import {
   "moonbitlang/yacc/codegen/gen_mbt_table",
 }
 
+rule(
+  name: "gen_version",
+  command: "moonx moonbit-community/gen_version@0.0.2 -o $output",
+)
+
+dev_build(rule: "gen_version", input: "moon.mod", output: "version.mbt")
+
 supported_targets = "wasm+native"
 
 pkgtype(kind: "executable")
