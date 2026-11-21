@@ -1,3 +1,10 @@
+## Unreleased
+
+- Add the direct backend (`--backend direct`) with typed semantic actions, checked stack transformations, and structured control flow.
+- Add direct optimization levels: O1 by default, O2 with bounded state specialization and runtime storage optimization, and O0 currently using the O1 pipeline.
+- Add `--input-layout token-only` for array and pull input with `Unit` positions across all backends.
+- Emit derived traits using MoonBit's `#derive(...)` attribute syntax.
+
 ## 0.7.0
 
 - feat: add --table option to use table-driven parser engine.

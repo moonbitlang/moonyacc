@@ -1,16 +1,42 @@
 # MoonYacc
 
-https://moonyacc-playground.netlify.app/
+MoonYacc is an LR(1) parser generator for the MoonBit programming language.
 
-MoonYacc is a LR(1) parser generator for MoonBit programming language.
-
-See [calc.mbty](https://github.com/moonbitlang/moonyacc/blob/master/src/tests/calc_test/calc.mbty) for an example of grammar.
-
-See [MANUAL.md](https://github.com/moonbitlang/moonyacc/blob/master/doc/MANUAL.md) for more details.
+[Playground](https://moonyacc-playground.netlify.app/) · [Manual](doc/MANUAL.md) · [Calculator grammar](tests/calc_array_input_mode_test/calc.mbty)
 
 ## Features
 
-- Compatible with ocamlyacc's syntax
+- ocamlyacc-style grammars, typed token payloads, and MoonBit semantic actions.
+- Named bindings, token aliases, inline rules, and parameterized grammar rules.
+- Code, direct, and table backends, with optional table compression.
+- Array and pull input, custom source positions, and a token-only input layout.
+- Expected-token diagnostics, source maps, and JSON concrete syntax tree generation.
+
+## Quick start
+
+From a checkout with a current stable MoonBit toolchain supporting `#derive` attributes (v0.10.19 or later):
+
+```sh
+moon update
+moon run --target wasm . -- --backend direct tests/calc_array_input_mode_test/calc.mbty
+```
+
+This prints a direct parser for the calculator grammar. Add `-o path/to/parser.mbt` to write it to an existing directory. See the [manual](doc/MANUAL.md#how-to-use-moonyacc-in-a-moonbit-project) for a build rule and a complete parser call.
+
+These documents describe the current source tree. A Mooncakes release can be run with `moonx moonbitlang/yacc -- ...`; select a release containing the options you need and pin its version in reproducible builds.
+
+## Backends
+
+| Backend | Selection | Generated parser |
+| --- | --- | --- |
+| Code (default) | `--backend code` | State functions return decisions to a shared parser runtime. |
+| Direct | `--backend direct` | Typed actions and optimized stack operations execute through structured control flow. |
+| Table | `--backend table` or `--table` | A shared parser runtime looks up decisions in a dense table. |
+| Compressed table | `--compress-table` | Encoded table data is expanded during initialization, then uses the table runtime. |
+
+The direct backend defaults to `-O1`. `-O2` adds bounded state specialization and runtime storage optimizations; it can increase generation time and code size, so benchmark your grammar and target. `-O0` currently uses the O1 pipeline. Optimization levels apply to the direct backend and do not select it automatically.
+
+All backends support both input modes and layouts. See [backend selection](doc/MANUAL.md#choosing-a-backend) and [generated parser interfaces](doc/MANUAL.md#using-the-generated-parser) for details.
 
 ## Status
 
@@ -18,14 +44,4 @@ This software is in alpha stage. Though it may have some issues, it is already u
 
 ## Acknowledgements
 
-This project, moonyacc, incorporates and adapts two key algorithms from Menhir, a powerful parser generator:
-
-### LR(0) Closure Algorithm:
-
-The LR(0) closure algorithm is used to compute the closure of a set of LR(0) items, which is a fundamental step in constructing the LR(0) automaton. This algorithm has been adapted and implemented in moonyacc to support the generation of LR(0) automaton.
-
-### LR(1) Pager's Algorithm:
-
-The LR(1) Pager's algorithm is used to efficiently compute the LR(1) states and their transitions. It is a critical component for building LR(1) parsers with reduced state space. This algorithm has been adapted to enhance the parsing capabilities of moonyacc.
-
-Both algorithms have been reimplemented and integrated into moonyacc to provide robust and efficient parsing functionality. While the core ideas are inspired by Menhir, the implementation has been tailored to fit the architecture and goals of this project.
+MoonYacc adapts Menhir's LR(0) closure and Pager-style LR(1) construction algorithms. The direct backend's typed stack transformations and state specialization are also informed by Menhir's StackLang backend. These ideas are implemented for MoonBit's types, runtime, and control-flow facilities.
