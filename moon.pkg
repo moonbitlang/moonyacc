@@ -1,7 +1,6 @@
 import {
   "moonbitlang/core/argparse",
   "moonbitlang/core/env",
-  "moonbitlang/async",
   "moonbitlang/async/fs",
   "moonbitlang/async/stdio",
   "moonbitlang/yacc/driver",

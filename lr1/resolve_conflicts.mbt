@@ -18,13 +18,13 @@ pub(all) enum ResolveConflictError {
     LR1State,
     Lookahead,
     Array[@grm.Production],
-    @grm.Production
+    @grm.Production,
   )
   Shift_reduce_conflict_resolved_without_precedence(
     LR1State,
     Lookahead,
     LR1State,
-    @grm.Production
+    @grm.Production,
   )
 }
 

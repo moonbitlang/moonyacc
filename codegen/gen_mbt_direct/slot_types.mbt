@@ -54,7 +54,7 @@ fn value_slot(
       | "UInt16"
       | "Float"
       | "Double",
-      []
+      [],
     ) => Some(Int(0))
     Constr(pkg=None, "Bool", []) => Some(Bool(false))
     Constr(pkg=None, "Char", []) => Some(Char('\u0000'))

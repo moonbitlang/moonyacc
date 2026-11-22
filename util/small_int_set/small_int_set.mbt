@@ -107,7 +107,7 @@ pub fn SmallIntSet::iter(self : SmallIntSet) -> Iter[Int32] {
     return Iter::empty()
   }
   let mut word = self.0[1 + i]
-  Iter::new(fn() {
+  Iter(fn() {
     if bitmask == 0 {
       return None
     }

@@ -320,14 +320,14 @@ priv suberror YYObj__list_List__ast_SymbolWithLoc_ {
 ///|
 priv suberror YYObj__list_List__String___ast_TypeExpr___ {
   YYObj__list_List__String___ast_TypeExpr___(
-    @list.List[(String, @ast.TypeExpr?)]
+    @list.List[(String, @ast.TypeExpr?)],
   )
 }
 
 ///|
 priv suberror YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__ {
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-    @list.List[(@list.List[@ast.ClauseWithoutAction], @ast.ClauseAction)]
+    @list.List[(@list.List[@ast.ClauseWithoutAction], @ast.ClauseAction)],
   )
 }
 
@@ -359,7 +359,7 @@ priv suberror YYObj__String__Int__Int_ {
 ///|
 priv suberror YYObj__String__Int__Array__ast_SubstItem__ {
   YYObj__String__Int__Array__ast_SubstItem__(
-    (String, Int32, Array[@ast.SubstItem])
+    (String, Int32, Array[@ast.SubstItem]),
   )
 }
 
@@ -611,7 +611,7 @@ fn yy_action_8(
   guard! _args[1].0 is YYObj__ast_TypeExpr_(type_)
   guard! _args[3].0
     is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-      clause_list
+      clause_list,
     )
   YYObj__ast_Rule(
     {
@@ -643,7 +643,7 @@ fn yy_action_9(
   guard! _args[5].0 is YYObj__ast_TypeExpr_(type_)
   guard! _args[7].0
     is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-      clause_list
+      clause_list,
     )
   YYObj__ast_Rule(
     {
@@ -700,7 +700,7 @@ fn yy_action_12(
 ) -> YYObj {
   guard! _args[1].0
     is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-      _dollar2
+      _dollar2,
     )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
     {
@@ -719,7 +719,7 @@ fn yy_action_13(
 ) -> YYObj {
   guard! _args[0].0
     is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-      _dollar1
+      _dollar1,
     )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
     {
@@ -741,7 +741,7 @@ fn yy_action_15(
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
   guard! _args[3].0
     is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-      clause_list
+      clause_list,
     )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
     {
@@ -797,7 +797,7 @@ fn yy_action_18(
   guard! _args[1].0 is YYObj__ast_ClauseAction(action)
   guard! _args[3].0
     is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-      clause_list
+      clause_list,
     )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
     {
@@ -854,7 +854,7 @@ fn yy_action_20(
   guard! _args[0].0 is YYObj__ast_ClauseWithoutAction(clause_woa)
   guard! _args[2].0
     is YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
-      clause_list
+      clause_list,
     )
   YYObj__list_List___list_List__ast_ClauseWithoutAction____ast_ClauseAction__(
     {

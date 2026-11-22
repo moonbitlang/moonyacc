@@ -107,7 +107,7 @@ fn Lexer::scan_action_code(
         }
       ((re"^\$" + (re"[0-9]+" as digits)) as raw, after=rest) => {
         buf.write_string(raw.to_owned())
-        let index = @string.parse_int(digits, base=10) catch {
+        let index = @string.parse_int(digits, radix=10) catch {
           err => abort(Show::to_string(err))
         }
         subst.push({
@@ -129,7 +129,7 @@ fn Lexer::scan_action_code(
       ) => {
         buf.write_string(raw.to_owned())
         let arg : @ast.ClauseItemIdent = if argument.has_prefix("$") {
-          let index = @string.parse_int(argument[1:], base=10) catch {
+          let index = @string.parse_int(argument[1:], radix=10) catch {
             err => abort(Show::to_string(err))
           }
           Dollar(index)

@@ -58,7 +58,7 @@ pub fn[K, V] T::size(self : T[K, V]) -> Int32 {
 ///|
 pub fn[K, V] T::iter(self : T[K, V]) -> Iter[(K, V)] {
   let mut current_entry = self.entry
-  Iter::new(fn() {
+  Iter(fn() {
     if current_entry is Some(entry) {
       current_entry = entry.prev
       return Some((entry.key, entry.value))

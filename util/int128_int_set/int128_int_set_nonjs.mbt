@@ -86,7 +86,7 @@ pub fn Int128IntSet::iter(self : Int128IntSet) -> Iter[Int32] {
   let mut bitmask = self.a
   let mut has_rest = true
   let mut offset = 0
-  Iter::new(fn() {
+  Iter(fn() {
     if bitmask == 0 {
       if has_rest {
         bitmask = self.b
