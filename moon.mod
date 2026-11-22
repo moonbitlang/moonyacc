@@ -1,6 +1,6 @@
 name = "moonbitlang/yacc"
 
-version = "0.7.26"
+version = "0.7.27"
 
 import {
   "moonbitlang/async@0.22.4",
